@@ -7,7 +7,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | Etapa | Situação | Data | Resumo |
 |---|---|---|---|
 | 1 — O projeto | concluída | 2026-10-24 | Estrutura inicial do projeto, Express, Vite, UI base, testes unitários e E2E |
-| 2 — Identidade e casca | pendente | | Identidade visual, primitivas, trilho, gavetas, inspetor, etc. |
+| 2 — Identidade e casca | concluída | 2026-10-24 | Identidade visual, primitivas, fontes OFL, casca, gavetas, inspetor, ajustes, Ctrl+K |
 | 3 — Modelo de dados | pendente | | Formato do documento e validações |
 | 4 — Renderizador | pendente | | Desenho de camadas, mesclagens, recortes |
 | 5 — Texto | pendente | | Renderização de textos, fontes e tintas |
@@ -38,6 +38,44 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ---
 
+## Etapa 2 — Identidade visual e casca da interface
+
+### Feito
+- Download automatizado de fontes OFL da interface (`IM Fell English` e `Courier Prime`) do repositório `google/fonts` (commit `e7db6ca603fd4862010383ff17ffd6cc4ffac1c0`) via `scripts/fonts/fetch.js`, com integridade garantida por SHA-256 em `scripts/fonts/fonts.lock.json`.
+- Substituição da camada de tokens `--tt-*` pela camada `--at-*` em `src/ui/theme.css`, definindo tipografia editorial, cores da bancada noturna, tinta ferrogálica, papel envelhecido, cera e violeta UV.
+- Implementação das primitivas visuais em `src/ui/primitives.css` e `src/ui/primitives.js`:
+  - `.at-tape`: fita crepe com pontas serrilhadas e Courier Prime.
+  - `.at-stamp`: carimbo com borda dupla e falha de tinta via máscara procedural SVG `feTurbulence`.
+  - `.at-card`: cartão de papel com rotação determinística estável por id (`tiltOf`).
+  - `.at-note`: bilhete preso por fita crepe para notificações.
+  - `.at-desk`: superfície da bancada com vinheta radial da luminária.
+  - `.at-btn` e `.at-icon-btn`: botões táteis nos tons ultravioleta, cera e neutro da mesa.
+- Estrutura completa da casca em `src/ui/shell.js`:
+  - Trilho (80px) com botões táteis, área de recentes e atalhos.
+  - Gavetas laterais deslizantes (360px) para Documentos, Biblioteca e Modelos.
+  - Bancada central (`.at-desk`) com ilustração vetorial SVG (`src/ui/illustrations.js`) e estado vazio.
+  - Rodapé discreto indicando "Salvando neste navegador".
+  - Inspetor lateral direito (320px) com abas Propriedades, Preencher, Camadas e Histórico.
+- Notificações em formato de bilhete em `src/ui/notify.js` com empilhamento de até 3 notas e animação física de assentamento.
+- Menu de contexto flutuante em `src/ui/context-menu.js` com reposicionamento automático na tela e navegação por teclado.
+- Paleta de comandos (Ctrl+K) em `src/ui/palette.js` com suporte a busca insensível a acentos/maiúsculas, palavras em qualquer ordem e registro dinâmico de comandos da casca.
+- Painel de Ajustes da mesa em `src/ui/settings.js` com 5 texturas procedurais de bancada (Madeira, Feltro, Couro, Concreto, Preto), intensidade/temperatura da luminária, unidades de medida e suporte a redução de animação persistidos em `localStorage`.
+- Script de captura de referência `scripts/capture.js` com geração de 8 imagens em `docs/referencias/` (6 do Ateliê e 2 da Ficha).
+
+### Comparativo Visual (Ateliê vs. Ficha)
+- **Comum**: Fundo escuro imersivo, tipografia editorial marcante, layout estruturado com trilho de navegação lateral à esquerda, paleta rápida de comandos via Ctrl+K com atalhos em rodapé e elementos que remetem a recortes táteis de papel.
+- **Próprio do Ateliê**: O Ateliê é concebido como a bancada noturna de um artesão/falsificador sob iluminação quente de luminária ajustável, destacando-se pelo violeta de luz negra (`--at-uv`), títulos colados com fita crepe serrilhada, carimbos de borracha granulados e micro-rotações físicas nos cartões.
+
+### Validação
+- `npm test`: 16 testes unitários passando (taxas de contraste conferidas, fontes mínimas >= 11px, `tiltOf` estável, busca da paleta sem acentos e fora de ordem).
+- `npm run test:e2e`: teste ponta a ponta com Playwright executando todas as interações da casca, gavetas, teclado (Esc, setas, Enter), Ctrl+K, troca de material nos ajustes com persistência após recarregamento e verificação de redução de movimento.
+- `scripts/capture.js`: gerou todas as 8 capturas em 1600x950 em `docs/referencias/`.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 2.
+
+---
+
 ## Etapa 1 — O projeto
 
 ### Feito
@@ -62,4 +100,3 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ### Pendências reais
 - Nenhuma pendência na Etapa 1.
-

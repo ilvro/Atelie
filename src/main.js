@@ -1,10 +1,11 @@
 import './ui/styles.css';
+import { createShell } from './ui/shell.js';
 
-const app = document.getElementById('app');
-if (app) {
-  app.innerHTML = `
-    <h1 class="app-title">Ateliê</h1>
-    <p class="app-status">Em construção</p>
-  `;
+const appRoot = document.getElementById('app');
+if (appRoot) {
+  window.__atelie = createShell(appRoot, {
+    onAction(action) {
+      // Shell actions hook
+    }
+  });
 }
-

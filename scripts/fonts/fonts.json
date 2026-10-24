@@ -1,0 +1,17 @@
+[
+  {
+    "family": "IM Fell English",
+    "path": "ofl/imfellenglish",
+    "files": ["IMFeENrm28P.ttf", "IMFeENit28P.ttf"],
+    "license": "OFL.txt",
+    "use": "ui"
+  },
+  {
+    "family": "Courier Prime",
+    "path": "ofl/courierprime",
+    "files": ["CourierPrime-Regular.ttf", "CourierPrime-Bold.ttf"],
+    "license": "OFL.txt",
+    "use": "ui"
+  }
+]
+

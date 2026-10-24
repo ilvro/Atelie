@@ -162,7 +162,7 @@ Medido com `ag-psd` 30.2.0 em três arquivos (um jornal, um relatório policial 
 | Etapa | Situação | Data | Nota |
 |---|---|---|---|
 | 1 | feita | 24/10/2026 | Estrutura inicial, Express, Vite, UI base, testes unitários e E2E |
-| 2 | pendente | | |
+| 2 | feita | 24/10/2026 | Identidade visual, primitivas, fontes OFL, casca, gavetas, inspetor, ajustes, Ctrl+K |
 | 3 | pendente | | |
 | 4 | pendente | | |
 | 5 | pendente | | |

@@ -9,20 +9,22 @@ const luminance = color => { const n = parseInt(color.slice(1), 16); return .212
 const contrast = (a, b) => { const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x); return (hi + .05) / (lo + .05); };
 
 test('no font size is smaller than 11px', async () => {
-  const css = await read('styles.css');
+  const css = (await read('styles.css')) + '\n' + (await read('primitives.css'));
   for (const [, size] of css.matchAll(/font-size:\s*([0-9.]+)px/g)) assert.ok(Number(size) >= 11, `font-size ${size}px`);
   for (const [, size] of css.matchAll(/font:[^;}]*?\b([0-9.]+)px/g)) assert.ok(Number(size) >= 11, `font shorthand ${size}px`);
 });
 
 test('muted and body text keep their contrast on the dark surfaces', async () => {
   const theme = await read('theme.css');
-  assert.ok(contrast(hex(theme, 'tt-muted'), hex(theme, 'tt-surface-1')) >= 4.5);
-  assert.ok(contrast(hex(theme, 'tt-text'), hex(theme, 'tt-bg')) >= 12);
-  assert.ok(contrast(hex(theme, 'tt-accent-ink'), hex(theme, 'tt-accent')) >= 7);
+  assert.ok(contrast(hex(theme, 'at-muted'), hex(theme, 'at-desk-2')) >= 4.5);
+  assert.ok(contrast(hex(theme, 'at-text'), hex(theme, 'at-desk')) >= 12);
+  assert.ok(contrast(hex(theme, 'at-uv-ink'), hex(theme, 'at-uv')) >= 7);
+  assert.ok(contrast(hex(theme, 'at-uv'), hex(theme, 'at-desk-2')) >= 4.5);
+  assert.ok(contrast(hex(theme, 'at-ink'), hex(theme, 'at-paper')) >= 12);
+  assert.ok(contrast(hex(theme, 'at-wax'), hex(theme, 'at-desk-2')) >= 3);
 });
 
 test('colours live in the theme, not in the stylesheet', async () => {
   const css = await read('styles.css');
   assert.ok((css.match(/#[0-9a-fA-F]{3,8}\b/g) ?? []).length <= 15);
 });
-

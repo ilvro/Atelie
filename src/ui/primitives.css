@@ -1,0 +1,264 @@
+/* --- Primitivas do Ateliê --- */
+
+/* Fita crepe: títulos de seção e identificadores */
+.at-tape {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--at-font-type);
+  font-weight: 700;
+  font-size: var(--eco-fs-13);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--at-ink);
+  background-color: color-mix(in srgb, var(--at-paper) 88%, transparent);
+  padding: 4px 18px 5px;
+  clip-path: polygon(
+    0 10%, 3px 0, 6px 12%, 9px 2%, 100% 0,
+    98% 18%, 100% 36%, 98% 54%, 100% 72%, 98% 90%, 100% 100%,
+    9px 98%, 6px 100%, 0 92%, 2% 74%, 0 56%, 2% 38%, 0 20%
+  );
+  transform: rotate(-1.5deg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+}
+
+/* Carimbo: estados e carimbos de borracha */
+.at-stamp {
+  display: inline-block;
+  padding: 4px 10px;
+  font-family: var(--at-font-type);
+  font-weight: 700;
+  font-size: var(--eco-fs-12);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  border: 2px solid currentColor;
+  outline: 1px solid currentColor;
+  outline-offset: 2px;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 7 -1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mask-size: 100px 100px;
+}
+
+.at-stamp.is-ink {
+  color: var(--at-ink);
+  border-color: var(--at-ink);
+}
+
+.at-stamp.is-wax {
+  color: var(--at-wax);
+  border-color: var(--at-wax);
+}
+
+.at-stamp.is-uv {
+  color: var(--at-uv);
+  border-color: var(--at-uv);
+  text-shadow: 0 0 8px var(--at-uv-glow);
+}
+
+/* Cartão de papel sobre a bancada */
+.at-card {
+  position: relative;
+  background-color: var(--at-paper);
+  color: var(--at-ink);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  border-radius: var(--eco-radius-s);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  transition: transform var(--eco-fast) var(--eco-ease), box-shadow var(--eco-fast) var(--eco-ease);
+}
+
+.at-card:hover {
+  transform: translateY(-2px) rotate(0deg) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+}
+
+/* Bilhete preso com fita (toasts, notas) */
+.at-note {
+  position: relative;
+  background-color: var(--at-paper);
+  color: var(--at-ink);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  border-radius: var(--eco-radius-s);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  padding: var(--eco-space-4);
+  font-family: var(--eco-font-ui);
+  font-size: var(--eco-fs-13);
+  line-height: 1.4;
+}
+
+.at-note::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1deg);
+  width: 52px;
+  height: 16px;
+  background-color: color-mix(in srgb, var(--at-paper) 80%, transparent);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  clip-path: polygon(0 10%, 100% 0, 97% 90%, 3% 100%);
+  pointer-events: none;
+}
+
+/* A bancada / mesa de trabalho */
+.at-desk {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--at-desk);
+  background-image: radial-gradient(
+    circle at var(--at-lamp-x, 50%) var(--at-lamp-y, 45%),
+    color-mix(in srgb, var(--at-lamp) calc(var(--at-lamp-intensity, 1) * 11%), transparent),
+    transparent 75%
+  );
+}
+
+/* Botões do Ateliê */
+.at-btn {
+  font-family: var(--eco-font-ui);
+  font-size: var(--eco-fs-13);
+  font-weight: 600;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--eco-space-2);
+  padding: 8px 14px;
+  border-radius: var(--eco-radius-s);
+  cursor: pointer;
+  border: 1px solid var(--at-line);
+  background: var(--at-desk-3);
+  color: var(--at-text);
+  transition: background var(--eco-fast) var(--eco-ease),
+              border-color var(--eco-fast) var(--eco-ease),
+              color var(--eco-fast) var(--eco-ease),
+              box-shadow var(--eco-fast) var(--eco-ease);
+}
+
+.at-btn:hover {
+  background: var(--at-line);
+  border-color: var(--at-line-strong);
+}
+
+.at-btn:focus-visible {
+  outline: 2px solid var(--at-uv);
+  outline-offset: 2px;
+}
+
+.at-btn.is-primary {
+  background: var(--at-uv);
+  color: var(--at-uv-ink);
+  border-color: var(--at-uv-strong);
+}
+
+.at-btn.is-primary:hover {
+  background: var(--at-uv-strong);
+}
+
+.at-btn.is-danger {
+  background: var(--at-wax);
+  color: #ffffff;
+  border-color: var(--at-wax);
+}
+
+.at-btn.is-danger:hover {
+  background: color-mix(in srgb, var(--at-wax) 85%, #000);
+}
+
+/* Botões de ícone */
+.at-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--eco-radius-s);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--at-text-2);
+  cursor: pointer;
+  padding: 0;
+  transition: background var(--eco-fast) var(--eco-ease),
+              color var(--eco-fast) var(--eco-ease);
+}
+
+.at-icon-btn:hover {
+  background: var(--at-desk-3);
+  color: var(--at-text);
+}
+
+.at-icon-btn.active {
+  background: var(--at-desk-3);
+  color: var(--at-uv);
+}
+
+.at-icon-btn:focus-visible {
+  outline: 2px solid var(--at-uv);
+  outline-offset: 1px;
+}
+
+/* Tooltip com atalho */
+[data-tip] {
+  position: relative;
+}
+
+[data-tip]:hover::after,
+[data-tip]:focus-visible::after {
+  content: attr(data-tip) '  ' attr(data-key);
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: pre;
+  padding: 5px 9px;
+  border-radius: var(--eco-radius-s);
+  background: var(--eco-black);
+  color: var(--at-text);
+  font: 600 var(--eco-fs-12) var(--eco-font-ui);
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--at-line);
+}
+
+[data-tip-side="top"]:hover::after,
+[data-tip-side="top"]:focus-visible::after {
+  left: 50%;
+  top: auto;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%);
+}
+
+[data-tip-side="bottom"]:hover::after,
+[data-tip-side="bottom"]:focus-visible::after {
+  left: 50%;
+  top: calc(100% + 8px);
+  transform: translateX(-50%);
+}
+
+[data-tip-side="left"]:hover::after,
+[data-tip-side="left"]:focus-visible::after {
+  left: auto;
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Respeito a animações reduzidas */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body.reduce-motion *,
+body.reduce-motion *::before,
+body.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
