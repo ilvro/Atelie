@@ -213,6 +213,8 @@ export function createHandout({
     name,
     category: '',
     tags: [],
+    folder: null,
+    favorite: false,
     page: {
       width,
       height,
@@ -367,6 +369,18 @@ export function validateHandout(value) {
       fail(`tags[${i}]`, `Cada tag deve ter até ${HANDOUT_LIMITS.tag} caracteres.`);
     }
   });
+
+  if (value.folder !== undefined && value.folder !== null) {
+    if (typeof value.folder !== 'string' || value.folder.length > 80) {
+      fail('folder', 'Pasta deve ser null ou ID com até 80 caracteres.');
+    }
+  }
+
+  if (value.favorite !== undefined) {
+    if (typeof value.favorite !== 'boolean') {
+      fail('favorite', 'Favorito deve ser booleano.');
+    }
+  }
 
   if (!isPlainObject(value.page)) fail('page', 'Página inválida.');
   const [minSize, maxSize] = HANDOUT_LIMITS.size;

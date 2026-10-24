@@ -3,6 +3,9 @@ import path from 'node:path';
 import { mkdir } from 'node:fs/promises';
 import { projectDir, defaultDataDir, defaultExpansionsDir, collectionDir, defaultAllowedOrigins } from './paths.js';
 import { HttpError } from './storage.js';
+import { register as registerLibrary } from './routes/library.js';
+import { register as registerHandouts } from './routes/handouts.js';
+import { register as registerUploads } from './routes/uploads.js';
 
 export async function createApp({
   dataDir = defaultDataDir(),
@@ -24,6 +27,10 @@ export async function createApp({
   app.get('/api/atelie/health', (_req, res) => {
     res.json({ status: 'ok', app: 'atelie', contract: 1 });
   });
+
+  await registerLibrary(app, { collection, expansionsDir });
+  await registerHandouts(app, { dataDir });
+  await registerUploads(app, { dataDir });
 
   // Unknown API paths must never resolve to index.html.
   app.use('/api', (_req, _res, next) => next(new HttpError(404, 'API_NOT_FOUND', 'Rota de API não encontrada.')));

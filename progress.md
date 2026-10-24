@@ -11,7 +11,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 3 — Modelo de dados | concluída | 2026-10-24 | Formato do documento, camadas, limites, mesclagens e validações |
 | 4 — Renderizador | concluída | 2026-10-24 | Desenho de camadas em Canvas 2D, mesclagens, recorte, ajustes e luz UV |
 | 5 — Texto | concluída | 2026-10-24 | Diagramação pura, 4 estilos de tinta, carregador FontFace e testes |
-| 6 — Armazenamento | pendente | | IndexedDB, servidor, biblioteca, coleções |
+| 6 — Armazenamento | concluída | 2026-10-24 | IndexedDB, rotas de biblioteca, documentos, lixeira e envios |
 | 7 — Editor | pendente | | Palco, camadas, desfazer/refazer, propriedades |
 | 8 — Manipulação | pendente | | Mover, redimensionar, girar camadas |
 | 9 — Ferramentas do editor | pendente | | Guias, réguas, conta-gotas, colar imagens |
@@ -35,6 +35,52 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 27 — Documentação | pendente | | Manuais, guia de uso e licenças |
 | 28 — Integração Tabletop | pendente | | Consumo e interação direta dentro do Tabletop |
 | 29 — Expansão no navegador | pendente | | Expansão local no navegador (opcional) |
+
+---
+
+## Etapa 6 — Armazenamento
+
+### Feito
+- Criação dos arquivos base da coleção da casa em `public/colecao/library.json` e documentação de integridade em `public/colecao/README.md`.
+- Expansão do modelo canônico em `src/domain/handouts.js` com suporte aos campos opcionais `folder` (string até 80 caracteres ou null) e `favorite` (booleano), incluindo validações rigorosas e testes em `tests/handouts.test.js`.
+- Adição de rotas de biblioteca em `server/routes/library.js`:
+  - Agregação de origens (`casa` e expansões de `data-private/expansoes/` em ordem alfabética).
+  - Cache de manifestos por data de modificação (`mtimeMs`).
+  - Desduplicação de itens com prioridade para a casa e aviso no console.
+  - Ocultação de camadas (`kind: 'layer'`) da listagem geral, permitindo consulta direta por ID e entrega de arquivos.
+  - Resolução de modelos (`kind: 'template'`) incluindo a estrutura do documento em `handout`.
+  - Serviço seguro de arquivos com verificação estrita contra travessia de diretório (`safeResolve`) e cabeçalho `Cache-Control: public, max-age=31536000, immutable`.
+- Adição de rotas de documentos em `server/routes/handouts.js`:
+  - Listagem com sumários ordenados por data de atualização e detecção de prévias existentes.
+  - Leitura, criação (iniciando em revisão 1) e gravação atômica via `atomicWrite`.
+  - Controle estrito de concorrência com verificação de revisão (HTTP 409 em conflitos).
+  - Versionamento mantendo as últimas 30 revisões em `versions/<id>/<rev>.json`.
+  - Lixeira com registro de `deletedAt`, restauração atômica e purga definitiva.
+  - Remoção automática de itens da lixeira com mais de 30 dias durante a listagem.
+  - Armazenamento e entrega de prévias WebP/PNG de até 2 MB.
+- Adição de rotas de envios de imagem em `server/routes/uploads.js`:
+  - Validação estrita de cabeçalhos binários para PNG (`89 50 4E 47`), JPEG (`FF D8 FF`) e WebP (`RIFF....WEBP`) sem bibliotecas externas.
+  - Extração de largura e altura direto dos metadados do cabeçalho binário e rejeição de arquivos inválidos (HTTP 422).
+  - Identificadores no padrão `up-[0-9a-f]{12}`, índice em `index.json`, serviço estático imutável e exclusão.
+- Criação do cliente unificado em `src/data/api.js`:
+  - Implementação completa do modo navegador (`mode: 'browser'`) usando IndexedDB `atelie-v1:<scope>` com stores `handouts`, `versions` (mantendo as 10 últimas), `trash`, `uploads` e `previews`.
+  - Implementação do modo servidor (`mode: 'server'`) mapeando as rotas REST `/api/atelie/*`.
+  - Consulta estática da coleção da casa via `fetch` em modo navegador.
+  - Detecção automática de ambiente e requisição de persistência via `navigator.storage.persist()`.
+  - Integração do cliente `api` em `src/main.js` e atualização do badge de armazenamento do rodapé.
+- Criação de suítes de testes:
+  - `tests/library-server.test.js`: carregamento de coleção e expansões, fusão, desduplicação, modelos, segurança e falha de instalação se faltar `public/colecao/library.json`.
+  - `tests/handouts-server.test.js`: fluxo completo de CRUD, revisões, conflitos 409, histórico de versões, lixeira, restauração, auto-purga de 30 dias e prévias.
+  - `tests/uploads-server.test.js`: validação de cabeçalhos binários (PNG 3x2), rejeição de texto falso (422), listagem, serviço e exclusão.
+  - `tests/e2e/storage-browser.test.js`: teste ponta a ponta com Playwright em servidor puramente estático, criando documento no IndexedDB, recarregando a página e validando persistência e catálogo estático.
+
+### Validação
+- `npm test`: 45 testes unitários passando (100% de sucesso).
+- `npm run test:e2e`: 3 suítes de teste Playwright passando com sucesso (renderização, shell e persistência no navegador).
+- `curl http://127.0.0.1:3011/api/atelie/library`: responde com `{"sources":[{"id":"casa","name":"Coleção do Ateliê"}],"items":[]}`.
+
+### Pendências reais
+- CORS e rotas de assado para o Tabletop reservadas para a etapa 18, conforme planejado.
 
 ---
 

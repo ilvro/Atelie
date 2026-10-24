@@ -261,3 +261,25 @@ test('back accepts null and { handoutId: uuid } and rejects other formats', () =
   });
 });
 
+test('folder and favorite accept valid values and reject invalid types', () => {
+  const doc = createHandout();
+  assert.equal(doc.folder, null);
+  assert.equal(doc.favorite, false);
+  assert.doesNotThrow(() => validateHandout(doc));
+
+  doc.folder = 'pasta-misterios';
+  doc.favorite = true;
+  assert.doesNotThrow(() => validateHandout(doc));
+
+  doc.folder = 123;
+  assert.throws(() => validateHandout(doc), (err) => {
+    return err instanceof ValidationError && err.path === 'folder';
+  });
+
+  doc.folder = null;
+  doc.favorite = 'yes';
+  assert.throws(() => validateHandout(doc), (err) => {
+    return err instanceof ValidationError && err.path === 'favorite';
+  });
+});
+

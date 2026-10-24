@@ -3,6 +3,7 @@ import { createShell } from './ui/shell.js';
 import { renderHandout } from './render/handout-render.js';
 import { createHandoutImages } from './data/handout-images.js';
 import { createHandoutFonts } from './data/handout-fonts.js';
+import { api } from './data/api.js';
 
 const appRoot = document.getElementById('app');
 if (appRoot) {
@@ -12,6 +13,11 @@ if (appRoot) {
     },
   });
 
+  const badgeEl = appRoot.querySelector('#desk-storage-badge span');
+  if (badgeEl) {
+    badgeEl.textContent = api.mode === 'browser' ? 'Salvando neste navegador' : 'Conectado ao servidor local';
+  }
+
   if (typeof window !== 'undefined') {
     const images = createHandoutImages();
     const fonts = createHandoutFonts();
@@ -19,6 +25,7 @@ if (appRoot) {
 
     const atelieApi = {
       ...shell,
+      api,
       renderHandout: async (handout, { scale = 0.25, light = 'normal', at = [] } = {}) => {
         const canvas = document.createElement('canvas');
         const res = await renderHandout(canvas, handout, {

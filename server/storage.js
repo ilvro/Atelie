@@ -1,5 +1,6 @@
 import { open, readFile, rename, unlink } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
+import path from 'node:path';
 
 export class HttpError extends Error {
   constructor(status, code, message, details = {}) {
@@ -11,12 +12,40 @@ export class HttpError extends Error {
 }
 
 export const documentId = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+export const itemIdPattern = /^[a-z0-9][a-z0-9-]{0,119}$/;
+export const uploadIdPattern = /^up-[0-9a-f]{12}$/;
 
 export function assertId(id, pattern = documentId) {
   if (typeof id !== 'string' || !pattern.test(id)) {
     throw new HttpError(422, 'INVALID_ID', 'Identificador inválido.');
   }
   return id;
+}
+
+export function assertItemId(id) {
+  if (typeof id !== 'string' || !itemIdPattern.test(id)) {
+    throw new HttpError(404, 'NOT_FOUND', 'Item não encontrado.');
+  }
+  return id;
+}
+
+export function assertUploadId(id) {
+  if (typeof id !== 'string' || !uploadIdPattern.test(id)) {
+    throw new HttpError(404, 'NOT_FOUND', 'Upload não encontrado.');
+  }
+  return id;
+}
+
+export function safeResolve(baseDir, relativePath) {
+  if (!relativePath || typeof relativePath !== 'string') {
+    throw new HttpError(404, 'NOT_FOUND', 'Caminho inválido.');
+  }
+  const target = path.resolve(baseDir, relativePath);
+  const rel = path.relative(baseDir, target);
+  if (rel.startsWith('..') || path.isAbsolute(rel)) {
+    throw new HttpError(404, 'NOT_FOUND', 'Caminho fora da pasta permitida.');
+  }
+  return target;
 }
 
 export function assertRevision(revision) {
