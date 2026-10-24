@@ -8,7 +8,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 |---|---|---|---|
 | 1 — O projeto | concluída | 2026-10-24 | Estrutura inicial do projeto, Express, Vite, UI base, testes unitários e E2E |
 | 2 — Identidade e casca | concluída | 2026-10-24 | Identidade visual, primitivas, fontes OFL, casca, gavetas, inspetor, ajustes, Ctrl+K |
-| 3 — Modelo de dados | pendente | | Formato do documento e validações |
+| 3 — Modelo de dados | concluída | 2026-10-24 | Formato do documento, camadas, limites, mesclagens e validações |
 | 4 — Renderizador | pendente | | Desenho de camadas, mesclagens, recortes |
 | 5 — Texto | pendente | | Renderização de textos, fontes e tintas |
 | 6 — Armazenamento | pendente | | IndexedDB, servidor, biblioteca, coleções |
@@ -35,6 +35,28 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 27 — Documentação | pendente | | Manuais, guia de uso e licenças |
 | 28 — Integração Tabletop | pendente | | Consumo e interação direta dentro do Tabletop |
 | 29 — Expansão no navegador | pendente | | Expansão local no navegador (opcional) |
+
+---
+
+## Etapa 3 — Modelo de dados
+
+### Feito
+- Criação de `src/domain/errors.js` exportando a classe `ValidationError` com caminho e mensagem formatados.
+- Criação de `src/domain/handouts.js` definindo a estrutura canônica de dados de documentos do Ateliê:
+  - Formato JSON canônico: schema 1, ID UUID, revisão, nome, categoria, tags, dimensões/cor de fundo da página, lista de camadas, campos de preenchimento ("Preencher"), tipo de origem e referência opcional de verso (`back`).
+  - 5 tipos de camada com blocos de propriedades exclusivos: `image`, `text`, `shape`, `adjust` e `effect`.
+  - Mapeamento completo de modos de mesclagem em `BLEND_MODES` (16 modos nativos + 4 modos de compatibilidade Photoshop mapeados via `canvasOperation`).
+  - Dimensões padrão em `PAGE_PRESETS` (A4 retrato/paisagem, carta, recorte de jornal, polaroid, telegrama, cartão, bilhete, quadrado).
+  - Funções puras imutáveis: `createHandout`, fábricas (`imageLayer`, `textLayer`, `shapeLayer`, `adjustLayer`, `effectLayer`), `addLayer`, `updateLayer`, `removeLayer`, `moveLayer`, `duplicateLayer`, `setField`, `fillFields`, `layerAt` e `libraryRefs`.
+  - Função de validação rigorosa `validateHandout(doc)` que verifica limites, integridade de cores hexadecimais, unicidade de IDs de camadas, ordem estrita de pontos de curva e referências válidas de campos e verso.
+- Criação da suíte de testes em `tests/handouts.test.js` cobrindo todos os 9 cenários do plano com 100% de sucesso.
+
+### Validação
+- `npm test`: 25 testes passando (100% de sucesso).
+- `npm run test:e2e`: teste ponta a ponta Playwright passando normalmente.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 3.
 
 ---
 
