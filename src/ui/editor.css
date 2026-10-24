@@ -632,3 +632,294 @@
   color: var(--eco-text-muted);
 }
 
+/* ============================================================
+   Etapa 9: Réguas, Guias, Histórico, Mini-Barra, Cores e Alinhar
+   ============================================================ */
+
+/* Réguas e Guias */
+.stage-ruler-corner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background: var(--at-desk-2);
+  border-right: 1px solid var(--at-line);
+  border-bottom: 1px solid var(--at-line);
+  z-index: 15;
+}
+
+.stage-ruler {
+  position: absolute;
+  z-index: 14;
+  cursor: crosshair;
+}
+
+.stage-ruler-h {
+  top: 0;
+  left: 20px;
+  right: 0;
+  height: 20px;
+}
+
+.stage-ruler-v {
+  top: 20px;
+  left: 0;
+  bottom: 0;
+  width: 20px;
+}
+
+.stage-doc-guides {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 8;
+}
+
+.stage-doc-guide-x,
+.stage-doc-guide-y {
+  position: absolute;
+  pointer-events: auto;
+  background: var(--at-uv);
+  box-shadow: 0 0 3px var(--at-uv-glow);
+}
+
+.stage-doc-guide-x {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  cursor: ew-resize;
+}
+
+.stage-doc-guide-y {
+  left: 0;
+  right: 0;
+  height: 1px;
+  cursor: ns-resize;
+}
+
+.stage-doc-guide-x.ghost,
+.stage-doc-guide-y.ghost {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Histórico */
+.history-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--eco-space-3);
+  padding: var(--eco-space-3);
+}
+
+.history-panel-header {
+  font-family: var(--at-font-mono);
+  font-size: var(--eco-fs-xs);
+  color: var(--eco-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-bottom: var(--eco-space-2);
+  border-bottom: 1px solid var(--at-line);
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.history-step-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--eco-space-2);
+  padding: 6px var(--eco-space-3);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--eco-radius-sm);
+  color: var(--eco-text);
+  font-family: var(--at-font-body);
+  font-size: var(--eco-fs-sm);
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--eco-fast) var(--eco-ease);
+}
+
+.history-step-btn:hover {
+  background: var(--at-desk-2);
+}
+
+.history-step-btn.is-current {
+  background: var(--at-desk-2);
+  border-color: var(--at-uv);
+  font-weight: bold;
+}
+
+.history-step-btn.is-undone {
+  color: var(--eco-text-muted);
+  opacity: 0.6;
+}
+
+.history-step-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.history-step-btn.is-current .history-step-indicator {
+  background: var(--at-uv);
+  box-shadow: 0 0 4px var(--at-uv-glow);
+}
+
+.history-step-label {
+  flex: 1;
+}
+
+.history-step-idx {
+  font-family: var(--at-font-mono);
+  font-size: var(--eco-fs-xs);
+  color: var(--eco-text-muted);
+}
+
+/* Mini-barra sobre a seleção */
+.stage-selection-bar {
+  position: absolute;
+  height: 34px;
+  background: var(--at-desk-2);
+  border: 1px solid var(--at-line-strong);
+  border-radius: var(--eco-radius-m);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 6px;
+  z-index: 15;
+  white-space: nowrap;
+}
+
+.sel-bar-btn {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--eco-radius-sm);
+  background: transparent;
+  border: none;
+  color: var(--eco-text);
+  cursor: pointer;
+  font-size: var(--eco-fs-xs);
+}
+
+.sel-bar-btn:hover {
+  background: var(--at-line);
+}
+
+.sel-bar-sep {
+  width: 1px;
+  height: 18px;
+  background: var(--at-line-strong);
+  margin: 0 2px;
+}
+
+.sel-bar-blend-select {
+  height: 24px;
+  background: var(--at-desk-0);
+  border: 1px solid var(--at-line);
+  border-radius: var(--eco-radius-sm);
+  color: var(--eco-text);
+  font-family: var(--at-font-body);
+  font-size: var(--eco-fs-xs);
+  padding: 0 4px;
+}
+
+/* Alinhar */
+.align-actions-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--eco-space-2);
+  margin-top: var(--eco-space-3);
+}
+
+.align-buttons-row {
+  display: flex;
+  gap: 6px;
+}
+
+.align-btn {
+  flex: 1;
+  height: 32px;
+  background: var(--at-desk-2);
+  border: 1px solid var(--at-line);
+  border-radius: var(--eco-radius-sm);
+  color: var(--eco-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--eco-fs-sm);
+  transition: background var(--eco-fast) var(--eco-ease), border-color var(--eco-fast) var(--eco-ease);
+}
+
+.align-btn:hover:not(:disabled) {
+  background: var(--at-line);
+  border-color: var(--at-uv);
+}
+
+/* Amostras de cor (No documento e Recentes) */
+.color-swatches-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+  margin-bottom: var(--eco-space-2);
+}
+
+.color-swatches-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.color-swatches-label {
+  font-family: var(--at-font-mono);
+  font-size: 11px;
+  color: var(--eco-text-muted);
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.color-swatches-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.color-swatch-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--eco-radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  padding: 0;
+  transition: transform var(--eco-fast) var(--eco-ease);
+}
+
+.color-swatch-btn:hover {
+  transform: scale(1.15);
+  border-color: #ffffff;
+}
+
+/* Conta-gotas Loupe */
+.stage-eyedropper-loupe {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+}
+

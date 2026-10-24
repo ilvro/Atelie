@@ -8,6 +8,64 @@ import {
   normalizeHex,
 } from '../ui/controls.js';
 import { BLEND_MODES, updateLayer } from '../domain/handouts.js';
+import { boxCorners } from './geometry.js';
+
+export function getDocumentColors(handout) {
+  const colors = new Set();
+  if (!handout) return [];
+  for (const layer of handout.layers || []) {
+    if (layer.kind === 'text' && layer.text?.color) {
+      colors.add(layer.text.color.toLowerCase());
+    }
+    if (layer.kind === 'shape') {
+      if (layer.shape?.fill) colors.add(layer.shape.fill.toLowerCase());
+      if (layer.shape?.stroke) colors.add(layer.shape.stroke.toLowerCase());
+    }
+    if (layer.kind === 'image' && layer.image?.tint?.color) {
+      colors.add(layer.image.tint.color.toLowerCase());
+    }
+  }
+  return Array.from(colors).slice(0, 12);
+}
+
+export function saveRecentColor(hex) {
+  if (!hex || typeof hex !== 'string') return;
+  const clean = hex.toLowerCase();
+  try {
+    const list = JSON.parse(localStorage.getItem('atelie-recent-colors') || '[]');
+    const filtered = list.filter(c => c !== clean);
+    filtered.unshift(clean);
+    localStorage.setItem('atelie-recent-colors', JSON.stringify(filtered.slice(0, 8)));
+  } catch {
+    // ignore
+  }
+}
+
+export function alignLayer(layer, alignType, page) {
+  const corners = boxCorners(layer);
+  const minX = Math.min(...corners.map(c => c[0]));
+  const maxX = Math.max(...corners.map(c => c[0]));
+  const minY = Math.min(...corners.map(c => c[1]));
+  const maxY = Math.max(...corners.map(c => c[1]));
+  const rotW = maxX - minX;
+  const rotH = maxY - minY;
+
+  let dx = 0;
+  let dy = 0;
+
+  if (alignType === 'left') dx = -minX;
+  else if (alignType === 'center-h') dx = page.width / 2 - (minX + rotW / 2);
+  else if (alignType === 'right') dx = page.width - maxX;
+  else if (alignType === 'top') dy = -minY;
+  else if (alignType === 'center-v') dy = page.height / 2 - (minY + rotH / 2);
+  else if (alignType === 'bottom') dy = page.height - maxY;
+
+  return {
+    ...layer,
+    x: Math.round(layer.x + dx),
+    y: Math.round(layer.y + dy),
+  };
+}
 
 export function createPropertiesPanel(container, { state, api } = {}) {
   let isImageModalOpen = false;
@@ -70,6 +128,10 @@ export function createPropertiesPanel(container, { state, api } = {}) {
       state.edit(next, { label: 'Alterar preenchimento', coalesce: `${layer.id}-fill` });
       render();
       return;
+    }
+
+    if (path.endsWith('.color') || path === 'shape.fill' || path === 'shape.stroke') {
+      saveRecentColor(parsed);
     }
 
     const prev = getDeep(layer, pathParts);
@@ -192,6 +254,37 @@ export function createPropertiesPanel(container, { state, api } = {}) {
 
     const blendOptions = BLEND_MODES.map(([id, name]) => [id, name]);
 
+    function renderColorSwatchesHTML(targetField) {
+      const docColors = getDocumentColors(state.handout);
+      let recentColors = [];
+      try {
+        recentColors = JSON.parse(localStorage.getItem('atelie-recent-colors') || '[]');
+      } catch {}
+
+      if (!docColors.length && !recentColors.length) return '';
+
+      return `
+        <div class="color-swatches-section" data-for="${targetField}">
+          ${docColors.length ? `
+            <div class="color-swatches-row">
+              <span class="color-swatches-label">No documento</span>
+              <div class="color-swatches-grid">
+                ${docColors.map(c => `<button type="button" class="color-swatch-btn" data-color="${c}" data-target="${targetField}" style="background-color: ${c};" title="${c}"></button>`).join('')}
+              </div>
+            </div>
+          ` : ''}
+          ${recentColors.length ? `
+            <div class="color-swatches-row">
+              <span class="color-swatches-label">Recentes</span>
+              <div class="color-swatches-grid">
+                ${recentColors.map(c => `<button type="button" class="color-swatch-btn" data-color="${c}" data-target="${targetField}" style="background-color: ${c};" title="${c}"></button>`).join('')}
+              </div>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
     // Common properties HTML
     let html = `
       <div class="properties-panel ${isLocked ? 'is-locked' : ''}">
@@ -226,6 +319,18 @@ export function createPropertiesPanel(container, { state, api } = {}) {
 
           ${checkField('h:clip', 'Recortar na camada de baixo', layer.clip)}
           ${choiceField('h:light', 'Iluminação', layer.light, [['both', 'Sempre'], ['normal', 'Comum'], ['uv', 'Luz UV']], { disabled: isLocked })}
+
+          <div class="field align-actions-field">
+            <span class="field-label">Alinhar à página</span>
+            <div class="align-buttons-row">
+              <button type="button" class="at-icon-btn align-btn" data-align="left" title="Alinhar à esquerda" ${stateAttr}>⇤</button>
+              <button type="button" class="at-icon-btn align-btn" data-align="center-h" title="Centro horizontal" ${stateAttr}>⇥⇤</button>
+              <button type="button" class="at-icon-btn align-btn" data-align="right" title="Alinhar à direita" ${stateAttr}>⇥</button>
+              <button type="button" class="at-icon-btn align-btn" data-align="top" title="Alinhar ao topo" ${stateAttr}>⤒</button>
+              <button type="button" class="at-icon-btn align-btn" data-align="center-v" title="Centro vertical" ${stateAttr}>↕</button>
+              <button type="button" class="at-icon-btn align-btn" data-align="bottom" title="Alinhar à base" ${stateAttr}>⤓</button>
+            </div>
+          </div>
         </fieldset>
     `;
 
@@ -264,6 +369,7 @@ export function createPropertiesPanel(container, { state, api } = {}) {
 
           ${numberField('h:text.size', 'Tamanho · px', txt.size, { min: 6, max: 200, step: 1, disabled: isLocked })}
           ${colorField('h:text.color', 'Cor da tinta', txt.color || '#1d1b24')}
+          ${renderColorSwatchesHTML('h:text.color')}
 
           ${choiceField('h:text.align', 'Alinhamento', txt.align, [
             ['left', 'Esquerda', '⟸'],
@@ -329,6 +435,7 @@ export function createPropertiesPanel(container, { state, api } = {}) {
 
           <legend class="prop-legend" style="margin-top: 12px;">Tingimento</legend>
           ${colorField('h:image.tint.color', 'Cor do tingimento', img.tint?.color || '#ffeedd')}
+          ${renderColorSwatchesHTML('h:image.tint.color')}
           ${numberField('h:image.tint.amount', 'Intensidade · %', Math.round((img.tint?.amount || 0) * 100), { min: 0, max: 100, step: 1, disabled: isLocked })}
         </fieldset>
       `;
@@ -340,9 +447,11 @@ export function createPropertiesPanel(container, { state, api } = {}) {
           ${choiceField('h:shape.type', 'Tipo', shp.type, [['rect', 'Retângulo'], ['ellipse', 'Elipse'], ['line', 'Linha']], { disabled: isLocked })}
 
           ${colorField('h:shape.fill', 'Preenchimento', shp.fill || '#ffffff')}
+          ${renderColorSwatchesHTML('h:shape.fill')}
           ${checkField('h:shape.noFill', 'Sem preenchimento', shp.fill === null)}
 
           ${colorField('h:shape.stroke', 'Contorno', shp.stroke || '#000000')}
+          ${renderColorSwatchesHTML('h:shape.stroke')}
           ${numberField('h:shape.strokeWidth', 'Espessura · px', shp.strokeWidth || 0, { min: 0, max: 50, step: 1, disabled: isLocked })}
           ${numberField('h:shape.radius', 'Arredondamento · px', shp.radius || 0, { min: 0, max: 200, step: 1, disabled: isLocked })}
         </fieldset>
@@ -379,6 +488,26 @@ export function createPropertiesPanel(container, { state, api } = {}) {
         renderImagePickerModal(layer);
       });
     }
+
+    container.querySelectorAll('.align-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const alignType = btn.dataset.align;
+        const curLayer = getSelectedLayer();
+        if (!curLayer || curLayer.locked) return;
+        const aligned = alignLayer(curLayer, alignType, state.handout.page);
+        state.edit(updateLayer(state.handout, curLayer.id, aligned), { label: `Alinhar ${alignType}` });
+      });
+    });
+
+    container.querySelectorAll('.color-swatch-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetField = btn.dataset.target;
+        const color = btn.dataset.color;
+        applyFieldChange(targetField, color);
+        saveRecentColor(color);
+        render();
+      });
+    });
   }
 
   // Handle direct inputs (e.g. typing in textarea or name input)
@@ -389,11 +518,18 @@ export function createPropertiesPanel(container, { state, api } = {}) {
     }
   });
 
-  // Handle select / checkbox changes
+  // Handle select / checkbox / hex changes
   container.addEventListener('change', event => {
     const field = event.target.dataset?.field;
     if (field) {
       applyFieldChange(field, event.target.type === 'checkbox' ? event.target.checked : event.target.value, false);
+    } else if (event.target.dataset?.hex) {
+      const hexField = event.target.dataset.hex;
+      const code = normalizeHex(event.target.value);
+      if (code) {
+        applyFieldChange(hexField, code, false);
+        saveRecentColor(code);
+      }
     }
   });
 

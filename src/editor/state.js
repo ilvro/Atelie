@@ -3,13 +3,22 @@
  * Pure data model managing the open handout, selection, dirty flag, and coalescing undo history.
  */
 export function createEditorState(initialHandout, { now = () => Date.now(), limit = 100 } = {}) {
-  let currentHandout = initialHandout;
   let savedSnapshot = initialHandout;
   let selectedLayerId = initialHandout.layers?.[0]?.id ?? null;
   let isDirty = false;
 
-  const undoStack = [];
-  const redoStack = [];
+  // History is modeled as a list of step snapshots:
+  // [ { label, handout, time, coalesce } ]
+  const history = [
+    {
+      label: 'Documento aberto',
+      handout: initialHandout,
+      time: now(),
+      coalesce: null,
+    },
+  ];
+  let currentIndex = 0;
+
   const listeners = new Set();
 
   function emit(change) {
@@ -30,7 +39,7 @@ export function createEditorState(initialHandout, { now = () => Date.now(), limi
 
   return {
     get handout() {
-      return currentHandout;
+      return history[currentIndex].handout;
     },
 
     get selection() {
@@ -42,11 +51,24 @@ export function createEditorState(initialHandout, { now = () => Date.now(), limi
     },
 
     get canUndo() {
-      return undoStack.length > 0;
+      return currentIndex > 0;
     },
 
     get canRedo() {
-      return redoStack.length > 0;
+      return currentIndex < history.length - 1;
+    },
+
+    get stepIndex() {
+      return currentIndex;
+    },
+
+    get steps() {
+      return history.map((step, idx) => ({
+        index: idx,
+        label: step.label,
+        isCurrent: idx === currentIndex,
+        isUndone: idx > currentIndex,
+      }));
     },
 
     select(layerId) {
@@ -56,73 +78,81 @@ export function createEditorState(initialHandout, { now = () => Date.now(), limi
     },
 
     edit(nextHandout, { label = '', coalesce = null } = {}) {
-      if (nextHandout === currentHandout) {
+      const current = history[currentIndex].handout;
+      if (nextHandout === current) {
         return;
       }
 
       const currentTime = now();
-      const lastStep = undoStack.at(-1);
+      const currentStep = history[currentIndex];
 
-      if (coalesce && lastStep && lastStep.coalesce === coalesce && (currentTime - lastStep.time) < 600) {
-        // Coalesce with the last step: preserve the previous handout snapshot, update time
-        lastStep.time = currentTime;
+      if (
+        coalesce &&
+        currentStep &&
+        currentStep.coalesce === coalesce &&
+        currentTime - currentStep.time < 600
+      ) {
+        // Coalesce with current step: update handout and timestamp
+        currentStep.handout = nextHandout;
+        currentStep.time = currentTime;
+        if (label) currentStep.label = label;
       } else {
-        // New undo step
-        undoStack.push({
-          handout: currentHandout,
-          coalesce,
+        // Truncate any future undone steps
+        history.splice(currentIndex + 1);
+
+        // Push new step
+        history.push({
+          label: label || 'Edição',
+          handout: nextHandout,
           time: currentTime,
-          label,
+          coalesce,
         });
 
-        if (undoStack.length > limit) {
-          undoStack.shift();
+        currentIndex = history.length - 1;
+
+        // Enforce history limit
+        while (history.length > limit + 1) {
+          history.shift();
+          currentIndex = Math.max(0, currentIndex - 1);
         }
       }
 
-      redoStack.length = 0;
-      currentHandout = nextHandout;
-      isDirty = currentHandout !== savedSnapshot;
-      pruneSelection(currentHandout);
+      isDirty = history[currentIndex].handout !== savedSnapshot;
+      pruneSelection(history[currentIndex].handout);
 
       emit({ type: 'edit', label });
     },
 
     undo() {
-      if (!undoStack.length) return;
-
-      const prev = undoStack.pop();
-      redoStack.push({
-        handout: currentHandout,
-      });
-
-      currentHandout = prev.handout;
-      isDirty = currentHandout !== savedSnapshot;
-      pruneSelection(currentHandout);
-
+      if (currentIndex <= 0) return;
+      currentIndex--;
+      isDirty = history[currentIndex].handout !== savedSnapshot;
+      pruneSelection(history[currentIndex].handout);
       emit({ type: 'undo' });
     },
 
     redo() {
-      if (!redoStack.length) return;
-
-      const next = redoStack.pop();
-      undoStack.push({
-        handout: currentHandout,
-        time: now(),
-        coalesce: null,
-      });
-
-      currentHandout = next.handout;
-      isDirty = currentHandout !== savedSnapshot;
-      pruneSelection(currentHandout);
-
+      if (currentIndex >= history.length - 1) return;
+      currentIndex++;
+      isDirty = history[currentIndex].handout !== savedSnapshot;
+      pruneSelection(history[currentIndex].handout);
       emit({ type: 'redo' });
     },
 
-    markSaved(savedHandout = currentHandout) {
-      currentHandout = savedHandout;
-      savedSnapshot = currentHandout;
+    goTo(index) {
+      if (typeof index !== 'number') return;
+      const target = Math.max(0, Math.min(history.length - 1, Math.round(index)));
+      if (target === currentIndex) return;
+
+      currentIndex = target;
+      isDirty = history[currentIndex].handout !== savedSnapshot;
+      pruneSelection(history[currentIndex].handout);
+      emit({ type: 'goto', index: currentIndex });
+    },
+
+    markSaved(savedHandout = history[currentIndex].handout) {
+      history[currentIndex].handout = savedHandout;
+      savedSnapshot = savedHandout;
       isDirty = false;
       emit({ type: 'saved' });
     },
@@ -133,4 +163,3 @@ export function createEditorState(initialHandout, { now = () => Date.now(), limi
     },
   };
 }
-

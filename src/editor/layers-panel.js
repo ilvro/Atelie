@@ -170,6 +170,7 @@ export function createLayersPanel(container, { state, onAction = () => {} } = {}
       }
 
       if (newLayer) {
+        isPlusMenuOpen = false;
         // Place above selected layer, or at top
         let insertIndex = handout.layers.length;
         if (selectedId) {

@@ -123,3 +123,40 @@ test('editor state: markSaved clears dirty flag, new edit re-enables it', () => 
   assert.equal(state.dirty, true);
 });
 
+test('editor state: steps list and goTo navigation', () => {
+  const initial = createHandout({ name: 'Passo 0' });
+  const state = createEditorState(initial);
+
+  assert.equal(state.steps.length, 1);
+  assert.equal(state.steps[0].label, 'Documento aberto');
+  assert.equal(state.steps[0].isCurrent, true);
+  assert.equal(state.steps[0].isUndone, false);
+
+  state.edit({ ...initial, name: 'Passo 1' }, { label: 'Adicionar Texto' });
+  state.edit({ ...initial, name: 'Passo 2' }, { label: 'Mover Camada' });
+  state.edit({ ...initial, name: 'Passo 3' }, { label: 'Girar Camada' });
+
+  assert.equal(state.steps.length, 4);
+  assert.equal(state.stepIndex, 3);
+  assert.equal(state.steps[3].isCurrent, true);
+  assert.equal(state.handout.name, 'Passo 3');
+
+  // Navigate to step 1
+  state.goTo(1);
+  assert.equal(state.stepIndex, 1);
+  assert.equal(state.handout.name, 'Passo 1');
+  assert.equal(state.steps[1].isCurrent, true);
+  assert.equal(state.steps[2].isUndone, true);
+  assert.equal(state.steps[3].isUndone, true);
+
+  // Navigate to step 0 (initial)
+  state.goTo(0);
+  assert.equal(state.stepIndex, 0);
+  assert.equal(state.handout.name, 'Passo 0');
+
+  // Navigate back to step 3
+  state.goTo(3);
+  assert.equal(state.stepIndex, 3);
+  assert.equal(state.handout.name, 'Passo 3');
+});
+

@@ -283,3 +283,27 @@ test('folder and favorite accept valid values and reject invalid types', () => {
   });
 });
 
+test('guides accepts { x: [numbers], y: [numbers] } and rejects invalid types', () => {
+  const doc = createHandout();
+  assert.deepEqual(doc.guides, { x: [], y: [] });
+  assert.doesNotThrow(() => validateHandout(doc));
+
+  doc.guides = { x: [100, 250.5], y: [0, 500] };
+  assert.doesNotThrow(() => validateHandout(doc));
+
+  doc.guides = { x: ['invalid'] };
+  assert.throws(() => validateHandout(doc), (err) => {
+    return err instanceof ValidationError && err.path === 'guides.x';
+  });
+
+  doc.guides = { x: [], y: [NaN] };
+  assert.throws(() => validateHandout(doc), (err) => {
+    return err instanceof ValidationError && err.path === 'guides.y';
+  });
+
+  doc.guides = 'invalid';
+  assert.throws(() => validateHandout(doc), (err) => {
+    return err instanceof ValidationError && err.path === 'guides';
+  });
+});
+

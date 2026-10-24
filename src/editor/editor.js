@@ -2,10 +2,23 @@ import { createEditorState } from './state.js';
 import { createStage } from './stage.js';
 import { createLayersPanel } from './layers-panel.js';
 import { createPropertiesPanel } from './properties-panel.js';
+import { createHistoryPanel } from './history-panel.js';
 import { renderIcon, escapeHTML as esc } from '../ui/icons.js';
 import { stamp } from '../ui/primitives.js';
-import { createHandout, PAGE_PRESETS, removeLayer, duplicateLayer, moveLayer, updateLayer } from '../domain/handouts.js';
-import { moveBox } from './geometry.js';
+import {
+  createHandout,
+  PAGE_PRESETS,
+  removeLayer,
+  duplicateLayer,
+  moveLayer,
+  updateLayer,
+  addLayer,
+  textLayer,
+  imageLayer,
+  shapeLayer,
+} from '../domain/handouts.js';
+import { moveBox, layerAtPoint } from './geometry.js';
+import { contextMenu } from '../ui/context-menu.js';
 
 export function createEditor(shell, { api, images, fonts } = {}) {
   const deskStage = document.getElementById('desk-stage');
@@ -15,6 +28,10 @@ export function createEditor(shell, { api, images, fonts } = {}) {
   let stage = null;
   let layersPanel = null;
   let propertiesPanel = null;
+  let historyPanel = null;
+
+  // Local clipboard memory for copy/paste between tabs and documents
+  let copiedLayerMemory = null;
 
   // Document bar
   const docBar = document.createElement('div');
@@ -47,8 +64,11 @@ export function createEditor(shell, { api, images, fonts } = {}) {
 
   // Stage container
   const stageContainer = document.createElement('div');
-  stageContainer.style.width = '100%';
-  stageContainer.style.height = '100%';
+  stageContainer.style.position = 'absolute';
+  stageContainer.style.top = '52px';
+  stageContainer.style.left = '0';
+  stageContainer.style.right = '0';
+  stageContainer.style.bottom = '0';
 
   deskStage.innerHTML = '';
   deskStage.appendChild(docBar);
@@ -70,11 +90,11 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     sizeStamp.textContent = `${doc.page.width} × ${doc.page.height}`;
     undoBtn.disabled = !state.canUndo;
     redoBtn.disabled = !state.canRedo;
-    undoBtn.classList.toggle('is-disabled', !state.canUndo);
-    redoBtn.classList.toggle('is-disabled', !state.canRedo);
   }
 
   function triggerArchiveAnimation() {
+    stampOverlay.classList.remove('active');
+    void stampOverlay.offsetWidth;
     stampOverlay.classList.add('active');
     setTimeout(() => {
       stampOverlay.classList.remove('active');
@@ -87,7 +107,11 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       const recents = list.slice(0, 5).map(item => ({
         id: item.id,
         name: item.name,
-        preview: item.preview ? (api.mode === 'browser' ? null : `api/atelie/handouts/${item.id}/preview`) : null,
+        preview: item.preview
+          ? api.mode === 'browser'
+            ? null
+            : `api/atelie/handouts/${item.id}/preview`
+          : null,
       }));
       shell.rail.setRecent(recents);
     } catch {
@@ -183,10 +207,6 @@ export function createEditor(shell, { api, images, fonts } = {}) {
   }
 
   function loadHandout(handout) {
-    if (state) {
-      // clean up previous state listeners
-    }
-
     state = createEditorState(handout);
 
     if (stage) {
@@ -209,12 +229,22 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     propertiesPanel = createPropertiesPanel(propertiesWrap, { state, api });
     shell.inspector.panel('properties', propertiesWrap);
 
+    const historyWrap = document.createElement('div');
+    historyPanel = createHistoryPanel(historyWrap, { state });
+    shell.inspector.panel('history', historyWrap);
+
     state.subscribe(change => {
       updateDocBar();
-      if (change.type === 'edit' || change.type === 'undo' || change.type === 'redo') {
+      if (
+        change.type === 'edit' ||
+        change.type === 'undo' ||
+        change.type === 'redo' ||
+        change.type === 'goto'
+      ) {
         stage.show(state.handout);
         layersPanel.render();
         propertiesPanel.render();
+        historyPanel.render();
       } else if (change.type === 'select') {
         stage.select(state.selection);
         layersPanel.render();
@@ -280,17 +310,25 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       if (!list.length) {
         grid.innerHTML = '<p class="drawer-empty-hint">Nenhum documento arquivado ainda.</p>';
       } else {
-        grid.innerHTML = list.map(item => `
+        grid.innerHTML = list
+          .map(
+            item => `
           <button type="button" class="doc-card-btn" data-id="${esc(item.id)}">
             <div class="doc-card-preview">
-              ${item.preview ? `<img src="${esc(api.mode === 'browser' ? '' : `api/atelie/handouts/${item.id}/preview`)}" alt="" />` : renderIcon('doc', 24)}
+              ${
+                item.preview
+                  ? `<img src="${esc(api.mode === 'browser' ? '' : `api/atelie/handouts/${item.id}/preview`)}" alt="" />`
+                  : renderIcon('doc', 24)
+              }
             </div>
             <div class="doc-card-info">
               <span class="doc-card-name">${esc(item.name)}</span>
               <span class="doc-card-meta">${new Date(item.updatedAt).toLocaleDateString('pt-BR')} · Rev ${item.revision}</span>
             </div>
           </button>
-        `).join('');
+        `
+          )
+          .join('');
 
         grid.querySelectorAll('.doc-card-btn').forEach(btn => {
           btn.addEventListener('click', async () => {
@@ -317,9 +355,356 @@ export function createEditor(shell, { api, images, fonts } = {}) {
   // Initialize documents drawer panel
   renderDocumentsDrawer();
 
-  // Keyboard shortcuts
+  // Helper actions for layers
+  function duplicateSelected() {
+    if (!state?.selection) return;
+    const next = duplicateLayer(state.handout, state.selection);
+    state.edit(next, { label: 'Duplicar camada' });
+  }
+
+  function removeSelected() {
+    if (!state?.selection) return;
+    const selId = state.selection;
+    const next = removeLayer(state.handout, selId);
+    state.edit(next, { label: 'Excluir camada' });
+  }
+
+  function moveSelected(delta) {
+    if (!state?.selection) return;
+    const idx = state.handout.layers.findIndex(l => l.id === state.selection);
+    const target = idx + delta;
+    if (target >= 0 && target < state.handout.layers.length) {
+      const next = moveLayer(state.handout, state.selection, target);
+      state.edit(next, { label: delta > 0 ? 'Subir camada' : 'Descer camada' });
+    }
+  }
+
+  function moveSelectedTo(targetIdx) {
+    if (!state?.selection) return;
+    const next = moveLayer(state.handout, state.selection, targetIdx);
+    state.edit(next, { label: 'Reordenar camada' });
+  }
+
+  function toggleLockSelected() {
+    if (!state?.selection) return;
+    const l = state.handout.layers.find(x => x.id === state.selection);
+    if (!l) return;
+    const next = updateLayer(state.handout, l.id, { locked: !l.locked });
+    state.edit(next, { label: l.locked ? 'Destravar camada' : 'Travar camada' });
+  }
+
+  function toggleVisibleSelected() {
+    if (!state?.selection) return;
+    const l = state.handout.layers.find(x => x.id === state.selection);
+    if (!l) return;
+    const next = updateLayer(state.handout, l.id, { visible: !l.visible });
+    state.edit(next, { label: l.visible ? 'Ocultar camada' : 'Exibir camada' });
+  }
+
+  function copySelected() {
+    if (!state?.selection) return;
+    const layer = state.handout.layers.find(l => l.id === state.selection);
+    if (!layer) return;
+    copiedLayerMemory = structuredClone(layer);
+    if (typeof window !== 'undefined') {
+      window.__atelieCopiedLayer = copiedLayerMemory;
+    }
+    try {
+      navigator.clipboard?.writeText?.('atelie-layer:v1:' + JSON.stringify(copiedLayerMemory)).catch(() => {});
+    } catch {}
+    shell.notify('Camada copiada', { tone: 'info' });
+  }
+
+  function pasteCopiedLayer(sourceLayer, atPos = null) {
+    if (!state || !sourceLayer) return;
+    const cloned = structuredClone(sourceLayer);
+    cloned.id = 'l-' + Math.random().toString(36).slice(2, 10);
+    if (atPos) {
+      cloned.x = Math.round(atPos[0] - cloned.width / 2);
+      cloned.y = Math.round(atPos[1] - cloned.height / 2);
+    } else {
+      cloned.x += 20;
+      cloned.y += 20;
+    }
+
+    let insertIdx = state.handout.layers.length;
+    if (state.selection) {
+      const idx = state.handout.layers.findIndex(l => l.id === state.selection);
+      if (idx >= 0) insertIdx = idx + 1;
+    }
+
+    const next = addLayer(state.handout, cloned, insertIdx);
+    state.edit(next, { label: `Colar ${cloned.name}` });
+    state.select(cloned.id);
+  }
+
+  function addTextAt(pos) {
+    if (!state) return;
+    const newL = textLayer({
+      name: 'Texto',
+      x: Math.round(pos[0] - 300),
+      y: Math.round(pos[1] - 100),
+      width: 600,
+      height: 200,
+    });
+    const next = addLayer(state.handout, newL);
+    state.edit(next, { label: 'Adicionar texto' });
+    state.select(newL.id);
+  }
+
+  function addImageAt(pos) {
+    if (!state) return;
+    const newL = imageLayer({
+      name: 'Imagem',
+      x: Math.round(pos[0] - 300),
+      y: Math.round(pos[1] - 200),
+      width: 600,
+      height: 400,
+    });
+    const next = addLayer(state.handout, newL);
+    state.edit(next, { label: 'Adicionar imagem' });
+    state.select(newL.id);
+  }
+
+  function triggerEyedropper() {
+    if (!stage) return;
+    stage.activateEyedropper(color => {
+      const focusedInput = document.activeElement?.closest?.('.field')?.querySelector?.('input[type="color"]');
+      if (focusedInput) {
+        focusedInput.value = color;
+        focusedInput.dispatchEvent(new Event('change', { bubbles: true }));
+        return;
+      }
+
+      const selId = state?.selection;
+      if (!selId) return;
+      const layer = state.handout.layers.find(l => l.id === selId);
+      if (!layer || layer.locked) return;
+
+      if (layer.kind === 'text') {
+        const next = updateLayer(state.handout, selId, { text: { ...layer.text, color } });
+        state.edit(next, { label: 'Conta-gotas: cor da tinta' });
+      } else if (layer.kind === 'shape') {
+        const next = updateLayer(state.handout, selId, { shape: { ...layer.shape, fill: color } });
+        state.edit(next, { label: 'Conta-gotas: cor de preenchimento' });
+      } else if (layer.kind === 'image') {
+        const next = updateLayer(state.handout, selId, {
+          image: { ...layer.image, tint: { ...(layer.image.tint || {}), color } },
+        });
+        state.edit(next, { label: 'Conta-gotas: cor de tingimento' });
+      }
+    });
+  }
+
+  // --- External Image Drag-and-Drop & Paste ---
+  deskStage.addEventListener('dragover', event => {
+    event.preventDefault();
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = 'copy';
+    }
+  });
+
+  deskStage.addEventListener('drop', async event => {
+    event.preventDefault();
+    const dt = event.dataTransfer;
+    if (!dt || !dt.files || !dt.files.length) return;
+
+    const files = Array.from(dt.files).filter(f => f.type.startsWith('image/'));
+    if (!files.length) return;
+
+    const pageWrap = deskStage.querySelector('.stage-page-wrap');
+    if (!pageWrap || !state) return;
+    const pRect = pageWrap.getBoundingClientRect();
+    const zoom = stage.getZoom();
+    let dropX = (event.clientX - pRect.left) / zoom;
+    let dropY = (event.clientY - pRect.top) / zoom;
+    if (
+      (!event.clientX && !event.clientY) ||
+      dropX < 0 ||
+      dropX > state.handout.page.width ||
+      dropY < 0 ||
+      dropY > state.handout.page.height
+    ) {
+      dropX = state.handout.page.width / 2;
+      dropY = state.handout.page.height / 2;
+    }
+
+    shell.notify('Enviando imagem…', { tone: 'info' });
+    let cascade = 0;
+
+    for (const file of files) {
+      try {
+        const uploaded = await api.uploads.send(file);
+        const pageWidth = state.handout.page.width;
+        const maxW = pageWidth * 0.5;
+        const w = Math.min(uploaded.width || maxW, maxW);
+        const h =
+          uploaded.width && uploaded.height
+            ? Math.round(w * (uploaded.height / uploaded.width))
+            : Math.round(w * 0.75);
+        const posX = Math.round(dropX - w / 2) + cascade;
+        const posY = Math.round(dropY - h / 2) + cascade;
+
+        const newL = imageLayer({
+          name: file.name.replace(/\.[^.]+$/, '') || 'Imagem',
+          x: posX,
+          y: posY,
+          width: w,
+          height: h,
+          image: { src: { upload: uploaded.id }, fit: 'contain' },
+        });
+
+        const next = addLayer(state.handout, newL);
+        state.edit(next, { label: 'Adicionar imagem' });
+        state.select(newL.id);
+        cascade += 20;
+      } catch (err) {
+        shell.notify(`Erro ao enviar imagem: ${err.message}`, { tone: 'error' });
+      }
+    }
+  });
+
+  window.addEventListener('paste', async event => {
+    const isEditingField =
+      ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) ||
+      document.activeElement?.isContentEditable;
+    if (isEditingField) return;
+
+    // Check if clipboard contains an image file
+    const items = event.clipboardData?.items || [];
+    for (const item of items) {
+      if (item.type.startsWith('image/')) {
+        event.preventDefault();
+        const file = item.getAsFile();
+        if (file) {
+          shell.notify('Enviando imagem…', { tone: 'info' });
+          try {
+            const uploaded = await api.uploads.send(file);
+            const pageWidth = state.handout.page.width;
+            const maxW = pageWidth * 0.5;
+            const w = Math.min(uploaded.width || maxW, maxW);
+            const h =
+              uploaded.width && uploaded.height
+                ? Math.round(w * (uploaded.height / uploaded.width))
+                : Math.round(w * 0.75);
+            const x = Math.round((pageWidth - w) / 2);
+            const y = Math.round((state.handout.page.height - h) / 2);
+
+            const newL = imageLayer({
+              name: 'Imagem colada',
+              x,
+              y,
+              width: w,
+              height: h,
+              image: { src: { upload: uploaded.id }, fit: 'contain' },
+            });
+
+            const next = addLayer(state.handout, newL);
+            state.edit(next, { label: 'Colar imagem' });
+            state.select(newL.id);
+            return;
+          } catch (err) {
+            shell.notify(`Erro ao colar imagem: ${err.message}`, { tone: 'error' });
+            return;
+          }
+        }
+      }
+    }
+
+    // Check if clipboard text contains atelie-layer:v1:
+    let text = '';
+    try {
+      text = event.clipboardData?.getData('text/plain') || '';
+    } catch {}
+
+    if (text.startsWith('atelie-layer:v1:')) {
+      event.preventDefault();
+      try {
+        const raw = text.slice('atelie-layer:v1:'.length);
+        const parsed = JSON.parse(raw);
+        pasteCopiedLayer(parsed);
+      } catch {
+        // ignore
+      }
+    } else if (copiedLayerMemory) {
+      event.preventDefault();
+      pasteCopiedLayer(copiedLayerMemory);
+    }
+  });
+
+  // --- Context Menu on Desk / Stage ---
+  deskStage.addEventListener('contextmenu', event => {
+    event.preventDefault();
+    event.stopPropagation();
+    const pageWrap = deskStage.querySelector('.stage-page-wrap');
+    if (!pageWrap || !state) return;
+
+    const pRect = pageWrap.getBoundingClientRect();
+    const zoom = stage.getZoom();
+    const pageX = (event.clientX - pRect.left) / zoom;
+    const pageY = (event.clientY - pRect.top) / zoom;
+
+    const hit = layerAtPoint(state.handout, [pageX, pageY]);
+    if (hit) {
+      state.select(hit.id);
+      contextMenu.open({
+        x: event.clientX,
+        y: event.clientY,
+        items: [
+          { label: 'Duplicar', key: 'Ctrl+D', run: () => duplicateSelected() },
+          { label: 'Copiar', key: 'Ctrl+C', run: () => copySelected() },
+          {
+            label: 'Colar',
+            key: 'Ctrl+V',
+            run: () =>
+              pasteCopiedLayer(
+                copiedLayerMemory || (typeof window !== 'undefined' ? window.__atelieCopiedLayer : null),
+                [pageX, pageY]
+              ),
+          },
+          'separator',
+          { label: 'Trazer para frente', key: 'Ctrl+]', run: () => moveSelected(+1) },
+          { label: 'Enviar para trás', key: 'Ctrl+[', run: () => moveSelected(-1) },
+          { label: 'Para o topo', run: () => moveSelectedTo(state.handout.layers.length - 1) },
+          { label: 'Para o fundo', run: () => moveSelectedTo(0) },
+          'separator',
+          { label: hit.locked ? 'Destravar' : 'Travar', run: () => toggleLockSelected() },
+          { label: hit.visible ? 'Ocultar' : 'Exibir', run: () => toggleVisibleSelected() },
+          'separator',
+          { label: 'Excluir', key: 'Del', danger: true, run: () => removeSelected() },
+        ],
+      });
+    } else if (
+      pageX >= 0 &&
+      pageX <= state.handout.page.width &&
+      pageY >= 0 &&
+      pageY <= state.handout.page.height
+    ) {
+      contextMenu.open({
+        x: event.clientX,
+        y: event.clientY,
+        items: [
+          {
+            label: 'Colar',
+            key: 'Ctrl+V',
+            run: () =>
+              pasteCopiedLayer(
+                copiedLayerMemory || (typeof window !== 'undefined' ? window.__atelieCopiedLayer : null),
+                [pageX, pageY]
+              ),
+          },
+          'separator',
+          { label: 'Adicionar texto aqui', run: () => addTextAt([pageX, pageY]) },
+          { label: 'Adicionar imagem aqui', run: () => addImageAt([pageX, pageY]) },
+        ],
+      });
+    }
+  });
+
+  // --- Keyboard shortcuts ---
   window.addEventListener('keydown', event => {
-    const isEditingField = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) ||
+    const isEditingField =
+      ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) ||
       document.activeElement?.isContentEditable;
 
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') {
@@ -337,25 +722,37 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       } else {
         state?.undo();
       }
-    } else if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'y') {
+      return;
+    }
+
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'y') {
       event.preventDefault();
       state?.redo();
-    } else if (event.key === 'Delete' || event.key === 'Backspace') {
+      return;
+    }
+
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'c') {
       if (state?.selection) {
         event.preventDefault();
-        const selId = state.selection;
-        const next = removeLayer(state.handout, selId);
-        state.edit(next, { label: 'Excluir camada' });
+        copySelected();
       }
-    } else if (event.key === 'Escape') {
-      state?.select(null);
+      return;
+    }
+
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'v') {
+      const memory =
+        copiedLayerMemory || (typeof window !== 'undefined' ? window.__atelieCopiedLayer : null);
+      if (memory) {
+        event.preventDefault();
+        pasteCopiedLayer(memory);
+        return;
+      }
     }
 
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'd') {
       if (state?.selection) {
         event.preventDefault();
-        const next = duplicateLayer(state.handout, state.selection);
-        state.edit(next, { label: 'Duplicar camada' });
+        duplicateSelected();
       }
       return;
     }
@@ -363,11 +760,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     if ((event.ctrlKey || event.metaKey) && event.key === ']') {
       if (state?.selection) {
         event.preventDefault();
-        const idx = state.handout.layers.findIndex(l => l.id === state.selection);
-        if (idx >= 0 && idx < state.handout.layers.length - 1) {
-          const next = moveLayer(state.handout, state.selection, idx + 1);
-          state.edit(next, { label: 'Subir camada' });
-        }
+        moveSelected(+1);
       }
       return;
     }
@@ -375,12 +768,26 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     if ((event.ctrlKey || event.metaKey) && event.key === '[') {
       if (state?.selection) {
         event.preventDefault();
-        const idx = state.handout.layers.findIndex(l => l.id === state.selection);
-        if (idx > 0) {
-          const next = moveLayer(state.handout, state.selection, idx - 1);
-          state.edit(next, { label: 'Descer camada' });
-        }
+        moveSelected(-1);
       }
+      return;
+    }
+
+    if (event.shiftKey && event.key.toLowerCase() === 'r' && !event.ctrlKey && !event.metaKey) {
+      event.preventDefault();
+      stage?.toggleRulers();
+      return;
+    }
+
+    if (
+      event.key.toLowerCase() === 'i' &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey &&
+      !event.shiftKey
+    ) {
+      event.preventDefault();
+      triggerEyedropper();
       return;
     }
 
@@ -413,6 +820,15 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       }
       return;
     }
+
+    if (event.key === 'Delete' || event.key === 'Backspace') {
+      if (state?.selection) {
+        event.preventDefault();
+        removeSelected();
+      }
+    } else if (event.key === 'Escape') {
+      state?.select(null);
+    }
   });
 
   // Warn before unload if dirty
@@ -422,6 +838,115 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       event.returnValue = '';
     }
   });
+
+  // --- Register Ctrl+K Commands ---
+  const paletteCommands = [
+    {
+      id: 'doc:archive',
+      label: 'Arquivar documento',
+      hint: 'Ctrl+S',
+      category: 'Documento',
+      run: () => archiveDocument(),
+    },
+    {
+      id: 'doc:undo',
+      label: 'Desfazer',
+      hint: 'Ctrl+Z',
+      category: 'Edição',
+      run: () => state?.undo(),
+    },
+    {
+      id: 'doc:redo',
+      label: 'Refazer',
+      hint: 'Ctrl+Y',
+      category: 'Edição',
+      run: () => state?.redo(),
+    },
+    {
+      id: 'layer:duplicate',
+      label: 'Duplicar camada',
+      hint: 'Ctrl+D',
+      category: 'Camada',
+      run: () => duplicateSelected(),
+    },
+    {
+      id: 'layer:remove',
+      label: 'Excluir camada',
+      hint: 'Del',
+      category: 'Camada',
+      run: () => removeSelected(),
+    },
+    {
+      id: 'layer:add-text',
+      label: 'Adicionar texto',
+      category: 'Inserir',
+      run: () => addTextAt([state.handout.page.width / 2, state.handout.page.height / 2]),
+    },
+    {
+      id: 'layer:add-image',
+      label: 'Adicionar imagem',
+      category: 'Inserir',
+      run: () => addImageAt([state.handout.page.width / 2, state.handout.page.height / 2]),
+    },
+    {
+      id: 'layer:add-rect',
+      label: 'Adicionar retângulo',
+      category: 'Inserir',
+      run: () => {
+        const newL = shapeLayer({
+          name: 'Retângulo',
+          x: Math.round(state.handout.page.width / 2 - 200),
+          y: Math.round(state.handout.page.height / 2 - 150),
+          width: 400,
+          height: 300,
+          shape: { type: 'rect', fill: '#ffffff', stroke: null, strokeWidth: 0 },
+        });
+        state.edit(addLayer(state.handout, newL), { label: 'Adicionar Retângulo' });
+        state.select(newL.id);
+      },
+    },
+    {
+      id: 'stage:rulers',
+      label: 'Mostrar / Ocultar réguas',
+      hint: 'Shift+R',
+      category: 'Visualização',
+      run: () => stage?.toggleRulers(),
+    },
+    {
+      id: 'stage:eyedropper',
+      label: 'Conta-gotas',
+      hint: 'I',
+      category: 'Ferramentas',
+      run: () => triggerEyedropper(),
+    },
+    {
+      id: 'stage:fit',
+      label: 'Caber na tela',
+      category: 'Visualização',
+      run: () => stage?.zoom('fit'),
+    },
+    {
+      id: 'stage:zoom-100',
+      label: 'Zoom 100 %',
+      category: 'Visualização',
+      run: () => stage?.zoom(1.0),
+    },
+  ];
+
+  PAGE_PRESETS.forEach(([id, name]) => {
+    paletteCommands.push({
+      id: `doc:new-${id}`,
+      label: `Novo documento: ${name}`,
+      category: 'Documento',
+      run: () => {
+        confirmUnsavedChanges(() => {
+          loadHandout(createHandout({ preset: id }));
+        });
+      },
+    });
+  });
+
+  shell.palette.register(paletteCommands);
 
   // Initial load
   async function init() {
@@ -469,8 +994,14 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     get stage() {
       return stage;
     },
+    open: loadHandout,
     loadHandout,
+    createHandout,
+    createDocument: options => loadHandout(createHandout(options)),
     archive: archiveDocument,
+    duplicateSelected,
+    copySelected,
+    pasteCopiedLayer,
+    triggerEyedropper,
   };
 }
-

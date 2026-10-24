@@ -261,7 +261,7 @@ export function createShell(root, { onAction } = {}) {
   // Desk context menu
   desk.addEventListener('contextmenu', (e) => {
     // Only trigger if clicking on the desk background or empty state
-    if (e.target.closest('#desk-stage') || e.target === desk) {
+    if (e.target.closest('.desk-empty-state') || e.target === desk) {
       e.preventDefault();
       contextMenu.open({
         x: e.clientX,

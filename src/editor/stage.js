@@ -11,6 +11,8 @@ import {
   layerAtPoint,
 } from './geometry.js';
 import { updateLayer } from '../domain/handouts.js';
+import { createRulers } from './rulers.js';
+import { createSelectionBar } from './selection-bar.js';
 
 const MIN_ZOOM = 0.1;
 const MAX_ZOOM = 4.0;
@@ -57,6 +59,10 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
   let nextRequest = null;
   let editingLayerId = null;
 
+  // Eyedropper state
+  let isEyedropperActive = false;
+  let eyedropperCallback = null;
+
   container.innerHTML = `
     <div class="stage-viewport" tabindex="0" role="region" aria-label="Mesa de trabalho">
       <div class="stage-scroll-canvas">
@@ -99,6 +105,30 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
   const inlineTextEditor = container.querySelector('.stage-inline-text-editor');
   const zoomLevelEl = container.querySelector('.stage-zoom-level');
 
+  const rulers = createRulers(viewport, pageWrap, {
+    getHandout: () => currentHandout,
+    onEdit: (next, meta) => onEdit(next, meta),
+    getZoom: () => currentZoom,
+  });
+
+  const selectionBar = createSelectionBar(pageWrap, {
+    state: {
+      get handout() {
+        return currentHandout;
+      },
+      get selection() {
+        return selectedLayerId;
+      },
+      edit: (next, meta) => onEdit(next, meta),
+    },
+    getZoom: () => currentZoom,
+  });
+
+  const loupe = document.createElement('div');
+  loupe.className = 'stage-eyedropper-loupe';
+  loupe.style.display = 'none';
+  document.body.appendChild(loupe);
+
   function updateZoomLabel() {
     zoomLevelEl.textContent = `${Math.round(currentZoom * 100)} %`;
   }
@@ -123,12 +153,14 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
   function updateSelectionOutline() {
     if (!currentHandout || !selectedLayerId || editingLayerId) {
       outline.style.display = 'none';
+      selectionBar.hide();
       return;
     }
 
     const layer = currentHandout.layers.find(l => l.id === selectedLayerId);
     if (!layer || !layer.visible) {
       outline.style.display = 'none';
+      selectionBar.hide();
       return;
     }
 
@@ -151,6 +183,8 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
         hEl.style.cursor = getHandleCursor(handle, rot);
       });
     }
+
+    selectionBar.update();
   }
 
   async function performRender(handout, options) {
@@ -180,6 +214,7 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
     });
 
     updateSelectionOutline();
+    rulers.draw();
   }
 
   function scheduleRender(handout, options = {}) {
@@ -287,12 +322,15 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
   let activeGesture = null;
 
   outline.addEventListener('pointerdown', event => {
+    if (event.button !== 0) return;
     if (!currentHandout || !selectedLayerId || editingLayerId) return;
     const layer = currentHandout.layers.find(l => l.id === selectedLayerId);
     if (!layer || layer.locked) return;
 
     const rotateHandle = event.target.closest('.stage-rotate-handle');
     const resizeHandle = event.target.closest('.stage-handle');
+
+    selectionBar.hide();
 
     if (rotateHandle) {
       event.preventDefault();
@@ -339,10 +377,10 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
 
       const gestureId = 'drag-' + Math.random().toString(36).slice(2, 9);
 
-      // Snap targets: page borders + center, and other visible, unrotated layers
+      // Snap targets: page borders + center, document guides, and other visible, unrotated layers
       const targets = {
-        x: [0, currentHandout.page.width / 2, currentHandout.page.width],
-        y: [0, currentHandout.page.height / 2, currentHandout.page.height],
+        x: [0, currentHandout.page.width / 2, currentHandout.page.width, ...(currentHandout.guides?.x || [])],
+        y: [0, currentHandout.page.height / 2, currentHandout.page.height, ...(currentHandout.guides?.y || [])],
       };
 
       for (const other of currentHandout.layers) {
@@ -428,6 +466,7 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
       // Ignore
     }
     activeGesture = null;
+    selectionBar.update();
   }
 
   window.addEventListener('pointerup', endGesture);
@@ -441,6 +480,93 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
       event.preventDefault();
       event.stopPropagation();
       startInlineTextEdit(layer.id);
+    }
+  });
+
+  // Eyedropper pointer handler
+  function activateEyedropper(onPick) {
+    isEyedropperActive = true;
+    eyedropperCallback = onPick;
+    loupe.style.display = 'block';
+    viewport.style.cursor = 'crosshair';
+  }
+
+  function deactivateEyedropper() {
+    isEyedropperActive = false;
+    eyedropperCallback = null;
+    loupe.style.display = 'none';
+    viewport.style.cursor = '';
+  }
+
+  function sampleCanvasColor(clientX, clientY) {
+    const canvasRect = canvas.getBoundingClientRect();
+    if (
+      clientX >= canvasRect.left &&
+      clientX <= canvasRect.right &&
+      clientY >= canvasRect.top &&
+      clientY <= canvasRect.bottom
+    ) {
+      const scaleX = canvas.width / canvasRect.width;
+      const scaleY = canvas.height / canvasRect.height;
+      const px = Math.floor((clientX - canvasRect.left) * scaleX);
+      const py = Math.floor((clientY - canvasRect.top) * scaleY);
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+      try {
+        const data = ctx.getImageData(px, py, 1, 1).data;
+        return (
+          '#' +
+          [data[0], data[1], data[2]]
+            .map(b => b.toString(16).padStart(2, '0'))
+            .join('')
+        );
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  }
+
+  window.addEventListener('pointermove', event => {
+    if (!isEyedropperActive) return;
+    loupe.style.left = `${event.clientX}px`;
+    loupe.style.top = `${event.clientY}px`;
+
+    const hex = sampleCanvasColor(event.clientX, event.clientY);
+    if (hex) {
+      loupe.style.backgroundColor = hex;
+    }
+  });
+
+  window.addEventListener(
+    'click',
+    event => {
+      if (!isEyedropperActive) return;
+      event.preventDefault();
+      event.stopPropagation();
+      let hex = sampleCanvasColor(event.clientX, event.clientY);
+      if (!hex) {
+        const color = loupe.style.backgroundColor;
+        hex = color;
+        const match = color.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        if (match) {
+          hex =
+            '#' +
+            [parseInt(match[1]), parseInt(match[2]), parseInt(match[3])]
+              .map(n => n.toString(16).padStart(2, '0'))
+              .join('');
+        }
+      }
+      const cb = eyedropperCallback;
+      deactivateEyedropper();
+      if (hex) cb?.(hex);
+    },
+    true
+  );
+
+  window.addEventListener('keydown', event => {
+    if (isEyedropperActive && event.key === 'Escape') {
+      event.preventDefault();
+      deactivateEyedropper();
     }
   });
 
@@ -472,8 +598,15 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
 
   // Click on stage for layer hit testing
   pageWrap.addEventListener('click', event => {
-    if (!currentHandout || activeGesture) return;
-    if (event.target.closest('.stage-selection-outline') || event.target.closest('.stage-inline-text-editor')) return;
+    if (!currentHandout || activeGesture || isEyedropperActive) return;
+    if (
+      event.target.closest('.stage-selection-outline') ||
+      event.target.closest('.stage-inline-text-editor') ||
+      event.target.closest('.stage-selection-bar') ||
+      event.target.closest('.stage-doc-guide-x') ||
+      event.target.closest('.stage-doc-guide-y')
+    )
+      return;
 
     const rect = pageWrap.getBoundingClientRect();
     const clickX = event.clientX - rect.left;
@@ -489,6 +622,7 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
 
   // Clicking on background outside page deselects
   viewport.addEventListener('click', event => {
+    if (isEyedropperActive) return;
     if (event.target === viewport || event.target.classList.contains('stage-scroll-canvas')) {
       selectedLayerId = null;
       updateSelectionOutline();
@@ -515,7 +649,16 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
     startInlineTextEdit(layerId) {
       startInlineTextEdit(layerId);
     },
+    toggleRulers() {
+      return rulers.toggle();
+    },
+    activateEyedropper(onPick) {
+      activateEyedropper(onPick);
+    },
     destroy() {
+      rulers.destroy();
+      selectionBar.destroy();
+      loupe.remove();
       container.innerHTML = '';
     },
   };

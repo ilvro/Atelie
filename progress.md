@@ -14,7 +14,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 6 — Armazenamento | concluída | 2026-10-24 | IndexedDB, rotas de biblioteca, documentos, lixeira e envios |
 | 7 — Editor | concluída | 2026-10-24 | Palco, camadas, desfazer/refazer, propriedades, arquivamento e uploads |
 | 8 — Manipulação | concluída | 2026-10-24 | Mover, redimensionar, girar, encaixe, atalhos e edição inline de texto |
-| 9 — Ferramentas do editor | pendente | | Guias, réguas, conta-gotas, colar imagens |
+| 9 — Ferramentas do editor | concluída | 2026-10-24 | Guias, réguas, histórico navegável, mini-barra, conta-gotas, colar imagens, alinhar |
 | 10 — Documentos e rascunho | pendente | | Gestão de documentos, rascunho automático |
 | 11 — Efeitos procedurais | pendente | | Desgaste, manchas, dobras, queimado, sangue |
 | 12 — Coleção papéis e texturas | pendente | | Coleção da casa: papéis e sobreposições |
@@ -35,6 +35,65 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 27 — Documentação | pendente | | Manuais, guia de uso e licenças |
 | 28 — Integração Tabletop | pendente | | Consumo e interação direta dentro do Tabletop |
 | 29 — Expansão no navegador | pendente | | Expansão local no navegador (opcional) |
+
+---
+
+## Etapa 9 — Ferramentas do editor
+
+### Feito
+- **Réguas e Guias** (`src/editor/rulers.js`):
+  - Réguas interativas de 20 px no topo e à esquerda da mesa, com marcas adaptativas ao zoom calculadas para manter distância mínima de 48 px em tela (passos selecionados entre 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000 px ou mm).
+  - Conversões matemáticas puras `pxToMm` e `mmToPx` a 150 DPI (1 mm = 150 / 25,4 px), com teste em `tests/rulers.test.js`.
+  - Ativação/desativação das réguas via atalho **Shift+R** e comando na paleta.
+  - Criação de guias magnéticas arrastando a partir da régua horizontal (eixo Y) ou vertical (eixo X).
+  - Remoção de guias ao arrastar para fora dos limites da página e edição de valor exato com duplo clique.
+  - Guias salvas no modelo do documento (`handout.guides = { x: [], y: [] }`) com validação estrita em `src/domain/handouts.js`.
+  - Magnetismo magnético (`snapBox`) do palco integrado com as guias do documento em tempo real.
+- **Histórico Navegável** (`src/editor/history-panel.js` e `src/editor/state.js`):
+  - Aba **Histórico** no inspetor lateral apresentando lista de passos em ordem cronológica reversa, passo atual destacado e passos desfeitos em cinza.
+  - Navegação temporal com múltiplos undo/redo ao clicar diretamente em qualquer passo histórico (`state.goTo(index)`).
+  - Exposição de `state.steps` e `state.stepIndex` testados unitariamente em `tests/editor-state.test.js`.
+- **Mini-barra Flutuante sobre a Seleção** (`src/editor/selection-bar.js`):
+  - Barra de ferramentas compacta ancorada acima da camada selecionada (`.at-desk-2`), acompanhando zoom e rolagem e invertendo para baixo quando próxima ao topo da página.
+  - Ações rápidas: Duplicar (Ctrl+D), Trazer para frente (Ctrl+]), Enviar para trás (Ctrl+[), seletor de mesclagem rápida (Normal, Multiplicação, Sobrepor, Luz suave, Divisão de tela), Travar/Destravar e Excluir.
+- **Conta-gotas** (`I`):
+  - Lupa com anel de mira circular de 32 px que segue o cursor e mostra em tempo real a cor exata sob o ponteiro amostrada do canvas via `ctx.getImageData` de 1 px.
+  - Aplica a cor diretamente ao campo de cor focado ou à cor da tinta/preenchimento da camada selecionada. Cancelamento via `Escape`.
+- **Paleta de Cores e Recentes** (`src/editor/properties-panel.js`):
+  - "Cores do documento": amostras dinâmicas (até 12 cores) extraídas de todas as camadas de texto, forma e tingimento do documento ativo.
+  - "Recentes": histórico persistente em `localStorage` das últimas 8 cores selecionadas.
+  - Amostras clicáveis com foco imediato e aplicação direta nos campos de cor.
+- **Imagens Externas (Arrastar e Colar)** (`src/editor/editor.js`):
+  - Drag-and-drop de arquivos de imagem direto do sistema operacional para o palco, com envio via `api.uploads.send` e criação automática de camada de imagem centralizada no ponto solto com proporção original (largura máxima de 50% da página).
+  - Suporte a múltiplos arquivos soltos em cascata com deslocamento progressivo de 20 px.
+  - Colar de imagem via `Ctrl+V` da área de transferência nativa.
+- **Copiar e Colar Camadas entre Documentos** (`src/editor/editor.js`):
+  - `Ctrl+C` serializa a camada selecionada para a área de transferência do sistema (`atelie-layer:v1:` + JSON) e para memória local.
+  - `Ctrl+V` cola a camada com novo ID único, deslocada 20 px, funcionando perfeitamente entre documentos e abas.
+- **Alinhamento à Página** (`src/editor/properties-panel.js`):
+  - Linha de 6 botões no painel de propriedades: Alinhar à esquerda, Centro horizontal, Direita, Topo, Centro vertical, Base.
+  - Cálculo geométrico considerando a rotação (`boxCorners(layer)`) para alinhar a caixa envolvente girada aos limites da folha.
+- **Menu de Contexto no Palco** (`src/editor/editor.js`):
+  - Botão direito numa camada: Duplicar, Copiar, Colar, Trazer para frente, Enviar para trás, Para o topo, Para o fundo, Travar, Ocultar e Excluir (estilo destrutivo em `--at-wax`).
+  - Botão direito na página vazia: Colar, Adicionar texto aqui, Adicionar imagem aqui.
+  - Prevenção de propagação indevida para o menu da mesa (`desk`).
+- **Ações na Paleta de Comandos (Ctrl+K)** (`src/editor/editor.js`):
+  - Registro de todas as ações operacionais do editor com atalhos de teclado correspondentes: Novo documento (todos os presets), Arquivar, Desfazer, Refazer, Duplicar camada, Excluir camada, Adicionar texto/imagem/retângulo, Mostrar réguas, Conta-gotas, Caber na tela e Zoom 100%.
+- **Testes**:
+  - `tests/rulers.test.js`: passo adaptativo por zoom e conversão px ↔ mm a 150 DPI.
+  - `tests/editor-state.test.js`: `steps` e navegação `goTo`.
+  - `tests/handouts.test.js`: formato e validação de `guides: { x: [], y: [] }`.
+  - `tests/e2e/editor-tools.test.js`: suite completa de ponta a ponta cobrindo todos os 10 requisitos da etapa.
+  - Captura de imagem de referência salva em `docs/referencias/atelie-editor-ferramentas.png`.
+
+### Validação
+- `npm test`: 61 testes unitários passando 100%.
+- `npm run test:e2e`: 6 suítes completas de Playwright passando 100%.
+- `npm run build`: bundle de produção Vite gerado sem nenhum erro.
+- Captura de referência `docs/referencias/atelie-editor-ferramentas.png` gerada com sucesso.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 9. O editor agora possui o conjunto completo de ferramentas operacionais profissionais.
 
 ---
 

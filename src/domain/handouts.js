@@ -215,6 +215,7 @@ export function createHandout({
     tags: [],
     folder: null,
     favorite: false,
+    guides: { x: [], y: [] },
     page: {
       width,
       height,
@@ -379,6 +380,22 @@ export function validateHandout(value) {
   if (value.favorite !== undefined) {
     if (typeof value.favorite !== 'boolean') {
       fail('favorite', 'Favorito deve ser booleano.');
+    }
+  }
+
+  if (value.guides !== undefined && value.guides !== null) {
+    if (!isPlainObject(value.guides)) {
+      fail('guides', 'Guias deve ser um objeto com listas x e y.');
+    }
+    if (value.guides.x !== undefined) {
+      if (!Array.isArray(value.guides.x) || !value.guides.x.every(n => typeof n === 'number' && Number.isFinite(n))) {
+        fail('guides.x', 'Guias x deve ser uma lista de números finitos.');
+      }
+    }
+    if (value.guides.y !== undefined) {
+      if (!Array.isArray(value.guides.y) || !value.guides.y.every(n => typeof n === 'number' && Number.isFinite(n))) {
+        fail('guides.y', 'Guias y deve ser uma lista de números finitos.');
+      }
     }
   }
 
