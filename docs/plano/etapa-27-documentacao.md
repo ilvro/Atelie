@@ -1,4 +1,4 @@
-# Etapa 26 — Documentação e ajuda
+# Etapa 27 — Documentação e ajuda
 
 Leia antes: `00-LEIA-PRIMEIRO.md` (inteiro, inclusive a tabela "Andamento"), `PLANO-INTERFACE.md`, `CONTRATO-TABLETOP.md`, `README.md`, `progress.md`, `src/ui/shell.js`, `src/ui/palette.js`.
 
@@ -14,7 +14,7 @@ Botão **Ajuda** do trilho (tecla **?** fora de campos) abre uma gaveta com:
 - **Atalhos** — tabela gerada de uma lista única `src/ui/shortcuts.js` (a mesma usada nas dicas `data-key` e no Ctrl+K; um teste confere que cada atalho listado tem quem o trate).
 - **Camadas e mesclagem** — uma frase por modo útil para papel (multiplicação para manchas e texto sobre papel; sobrepor e luz suave para amassados; divisão de tela para luz; recorte para colocar algo só dentro de outra camada).
 - **Luz UV** — o que é e como criar uma camada que só aparece sob ela.
-- **Usar no Tabletop** — o que a etapa 27 permite, e o endereço do Ateliê que o Tabletop deve usar.
+- **Usar no Tabletop** — o que a etapa 28 permite, e o endereço do Ateliê que o Tabletop deve usar.
 - **Coleção e expansões** — o que vem com o app e como uma expansão se instala (link para `docs/MANUTENCAO.md` no modo servidor).
 
 Cada seção com o título em `.at-tape`. Busca no topo filtra as seções.
@@ -36,4 +36,4 @@ Cada seção com o título em `.at-tape`. Busca no topo filtra as seções.
 ## Pronto quando
 
 - [ ] Testes passam; `npm test` e os E2E passam.
-- [ ] A tabela "Andamento" de `00-LEIA-PRIMEIRO.md` está completa até a 26.
+- [ ] A tabela "Andamento" de `00-LEIA-PRIMEIRO.md` está completa até a 27.

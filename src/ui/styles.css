@@ -1,0 +1,41 @@
+@import './theme.css';
+
+:root {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--tt-bg);
+  color: var(--tt-text);
+  font-family: var(--eco-font-ui);
+  font-size: var(--eco-fs-14);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+#app {
+  padding: var(--eco-space-6);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.app-title {
+  font-family: var(--eco-font-display);
+  font-size: var(--eco-fs-34);
+  font-weight: 700;
+  color: var(--tt-accent);
+  margin: 0 0 var(--eco-space-2) 0;
+}
+
+.app-status {
+  color: var(--tt-muted);
+  font-size: var(--eco-fs-14);
+  margin: 0;
+}
+

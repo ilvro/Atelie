@@ -128,7 +128,7 @@ Só `transform` e `opacity`; `--eco-ease` e as durações `--eco-fast/mid/slow`.
 | **Luz UV** que muda o clima de toda a interface | 19 |
 | **Modo Leitura**: só a folha na mesa, em tela cheia; **lupa** que segue o cursor; **lanterna UV** (um círculo que revela a camada UV só onde passa); virar para o verso; setas passam entre documentos de uma pasta (como o carrossel da Ficha) | 20 |
 | Exportar PNG (tela e 300 ppp) e imprimir em tamanho real | 21 |
-| Ajuda no app com atalhos e "como começar" | 26 |
+| Ajuda no app com atalhos e "como começar" | 27 |
 
 ## 7. Qualidade (vale em todas as etapas)
 

@@ -22,7 +22,16 @@ O Ateliê é **completo sozinho**. Ele traz a sua própria **coleção da casa**
 
 **Expansões** são bibliotecas a mais, instaladas na máquina e privadas (`data-private/expansoes/<id>/`). A primeira é o acervo do *Arquivos Confidenciais* (etapas 22 a 25): ele **melhora** o Ateliê (mais centenas de modelos e milhares de elementos), mas nada depende dele. Itens de expansão aparecem misturados na biblioteca, com um selo da origem, e podem ser filtrados.
 
-O Ateliê também roda **sem servidor**, como site estático (modo navegador, etapa 6): só a coleção da casa, com os documentos guardados no navegador.
+## Onde os apps rodam
+
+Os dois serão **publicados no GitHub Pages da mesma conta** (`https://<conta>.github.io/Tabletop/` e `https://<conta>.github.io/Atelie/`), sem contas de usuário nem servidor público. Por isso:
+
+- o modo principal do Ateliê é o **modo navegador** (etapa 6): os documentos de cada pessoa ficam no navegador dela (IndexedDB), a coleção da casa vem como arquivos estáticos;
+- os dois apps ficam na **mesma origem** (o caminho não conta), e a integração usa um banco de troca no navegador e um `BroadcastChannel` (caminho A do contrato);
+- o servidor Node do Ateliê continua existindo para **desenvolvimento** e para quem quiser rodar localmente (caminho C), e é onde rodam os importadores de expansão;
+- se um dia um dos dois ganhar domínio próprio, a integração continua pela janela (caminho B).
+
+Detalhes em [`CONTRATO-TABLETOP.md`](CONTRATO-TABLETOP.md); publicação na etapa 26.
 
 ## Onde fica
 
@@ -33,7 +42,7 @@ O Ateliê também roda **sem servidor**, como site estático (modo navegador, et
 | Vite (desenvolvimento) | `http://127.0.0.1:5174` | `http://127.0.0.1:5173` |
 | API | `/api/atelie/…` | `/api/tabletop/…` |
 
-As etapas 1 a 26 acontecem **só** no Ateliê. A etapa 27 acontece **só** no Tabletop e liga os dois pelo contrato de [`CONTRATO-TABLETOP.md`](CONTRATO-TABLETOP.md). Nenhuma etapa do Ateliê importa código do Tabletop: quando uma etapa diz "copie de `../Tabletop/…`", é cópia, com o teste junto.
+As etapas 1 a 27 acontecem **só** no Ateliê (a 29, opcional, também). A etapa 28 acontece **só** no Tabletop e liga os dois pelo contrato de [`CONTRATO-TABLETOP.md`](CONTRATO-TABLETOP.md). Nenhuma etapa do Ateliê importa código do Tabletop: quando uma etapa diz "copie de `../Tabletop/…`", é cópia, com o teste junto.
 
 ## Arquivos de apoio
 
@@ -67,7 +76,7 @@ O acervo pago tem 78 pacotes de documentos, mais de 2 500 imagens soltas e PSDs 
 | 15 | `etapa-15-biblioteca.md` | Gaveta Biblioteca e modo "Preencher" | 7, 12, 13, 14 |
 | 16 | `etapa-16-colecao-modelos.md` | Coleção da casa: 36 modelos próprios | 9, 15 |
 | 17 | `etapa-17-inicio-e-galeria.md` | Tela de início, gaveta Modelos, primeira visita | 10, 16 |
-| 18 | `etapa-18-assar-e-entregar.md` | Assar em PNG, rotas do contrato com CORS, link direto, aviso para o Tabletop | 7 |
+| 18 | `etapa-18-assar-e-entregar.md` | Assar em PNG e entregar ao Tabletop pelos três caminhos do contrato (banco de troca, janela, HTTP) | 7, 10 |
 | 19 | `etapa-19-luz-uv.md` | Camadas UV, escurecimento, clima UV da interface, assado UV | 18 |
 | 20 | `etapa-20-modo-leitura.md` | Leitura em tela cheia: lupa, lanterna UV, verso, carrossel | 10, 19 |
 | 21 | `etapa-21-exportar-e-imprimir.md` | Exportar PNG e folha de impressão | 4 |
@@ -75,10 +84,12 @@ O acervo pago tem 78 pacotes de documentos, mais de 2 500 imagens soltas e PSDs 
 | 23 | `etapa-23-psd-leitura.md` | **Expansão**: ler a estrutura dos PSDs (relatório) | 1 |
 | 24 | `etapa-24-psd-compositor.md` | **Expansão**: compor as camadas de um PSD em Node | 23 |
 | 25 | `etapa-25-psd-modelos.md` | **Expansão**: PSD vira modelo editável | 24, 5 |
-| 26 | `etapa-26-documentacao.md` | Ajuda no app, guia de uso, manutenção, licenças | 1–25 |
-| 27 | `etapa-27-integracao-tabletop.md` | **No Tabletop**: documentos do Ateliê na cena, editar, atualizar, UV na inspeção, tutorial | 18, 19 |
+| 26 | `etapa-26-publicar-no-pages.md` | Publicar o Ateliê no GitHub Pages (workflow, build estático, conferências) | 18, 21 |
+| 27 | `etapa-27-documentacao.md` | Ajuda no app, guia de uso, manutenção, licenças | 1–26 |
+| 28 | `etapa-28-integracao-tabletop.md` | **No Tabletop**: documentos do Ateliê na cena pelos três caminhos, editar, atualizar, UV na inspeção, tutorial | 18, 19, 26 |
+| 29 | `etapa-29-expansao-no-navegador.md` | **Opcional**: instalar uma expansão no próprio navegador, para usá-la no site publicado sem publicá-la | 22, 25, 26 |
 
-As etapas de expansão (22 a 25) podem ser feitas em qualquer momento depois das dependências, mas **o app tem de estar completo e bonito antes delas**: elas melhoram, não completam.
+As etapas de expansão (22 a 25, e a opcional 29) podem ser feitas em qualquer momento depois das dependências, mas **o app tem de estar completo e bonito antes delas**: elas melhoram, não completam.
 
 ## Como entregar uma etapa a quem implementa
 
@@ -86,7 +97,7 @@ Mande uma etapa por conversa (ou por vez), com esta mensagem, trocando o número
 
 > Você vai implementar a **etapa N** do Ateliê de documentos (`/home/ilvro/Documents/Projects/Atelie`). Leia, nesta ordem: `AGENTS.md` (se já existir), `docs/plano/00-LEIA-PRIMEIRO.md` e `docs/plano/etapa-NN-….md`. Faça **só** o que essa etapa pede, na ordem em que ela pede, e leia só os arquivos de código que ela manda ler. Quando todos os itens de "Pronto quando" estiverem verdadeiros, pare e me mostre: o que mudou (arquivos), a saída dos testes, e o que ficou pendente. Não comece a próxima etapa.
 
-Para a etapa 27, troque o projeto para o Tabletop: "Você vai implementar a etapa 27 … no Tabletop (`/home/ilvro/Documents/Projects/Tabletop`). Leia `AGENTS.md` do Tabletop, `../Atelie/docs/plano/00-LEIA-PRIMEIRO.md`, `../Atelie/docs/plano/CONTRATO-TABLETOP.md` e `../Atelie/docs/plano/etapa-27-integracao-tabletop.md`."
+Para a etapa 28, troque o projeto para o Tabletop: "Você vai implementar a etapa 28 … no Tabletop (`/home/ilvro/Documents/Projects/Tabletop`). Leia `AGENTS.md` do Tabletop, `../Atelie/docs/plano/00-LEIA-PRIMEIRO.md`, `../Atelie/docs/plano/CONTRATO-TABLETOP.md` e `../Atelie/docs/plano/etapa-28-integracao-tabletop.md`."
 
 Para as etapas com interface, acrescente à mensagem: "Siga `docs/plano/PLANO-INTERFACE.md` em tudo o que for visual."
 
@@ -150,7 +161,7 @@ Medido com `ag-psd` 30.2.0 em três arquivos (um jornal, um relatório policial 
 
 | Etapa | Situação | Data | Nota |
 |---|---|---|---|
-| 1 | pendente | | |
+| 1 | feita | 24/10/2026 | Estrutura inicial, Express, Vite, UI base, testes unitários e E2E |
 | 2 | pendente | | |
 | 3 | pendente | | |
 | 4 | pendente | | |
@@ -177,3 +188,5 @@ Medido com `ag-psd` 30.2.0 em três arquivos (um jornal, um relatório policial 
 | 25 | pendente | | |
 | 26 | pendente | | |
 | 27 | pendente | | |
+| 28 | pendente | | |
+| 29 | pendente (opcional) | | |

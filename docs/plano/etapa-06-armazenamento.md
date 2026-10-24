@@ -7,7 +7,9 @@ Leia antes: `00-LEIA-PRIMEIRO.md`, `etapa-03-modelo-de-dados.md` (formato), `ser
 1. Guardar os documentos da pessoa (JSON) com revisão, **versões anteriores** e **lixeira**.
 2. Receber imagens enviadas (fotos de personagens, mapas, brasões).
 3. Servir a **biblioteca**, que junta duas origens: a **coleção da casa** (`public/colecao/`, do próprio Ateliê) e as **expansões** (`data-private/expansoes/<id>/`, privadas).
-4. Um cliente único em `src/data/api.js`, com **modo servidor** e **modo navegador** (sem servidor, como site estático).
+4. Um cliente único em `src/data/api.js`, com **modo navegador** e **modo servidor**.
+
+**O modo navegador é o principal**: é o do site publicado no GitHub Pages (etapa 26), onde não há servidor nem contas. Todas as funções (documentos, versões, lixeira, envios, pastas da etapa 10) têm de existir e ser testadas nele. O modo servidor é para desenvolvimento, para rodar localmente e para os importadores de expansão.
 
 As rotas de assado e o CORS para o Tabletop ficam para a etapa 18.
 
@@ -15,7 +17,7 @@ As rotas de assado e o CORS para o Tabletop ficam para a etapa 18.
 
 | O quê | Modo servidor | Modo navegador | No git? |
 |---|---|---|---|
-| Documentos | `<dataDir>/handouts/<id>.json`, `<id>.preview.webp` | IndexedDB `atelie-v1`, store `handouts` | os do servidor, sim |
+| Documentos | `<dataDir>/handouts/<id>.json`, `<id>.preview.webp` | IndexedDB `atelie-v1:<caminho base>`, store `handouts` | os do servidor, sim |
 | Versões | `<dataDir>/handouts/versions/<id>/<revisão>.json` (as últimas 30) | store `versions` (as últimas 10) | sim |
 | Lixeira | `<dataDir>/handouts/trash/<id>.json` (30 dias) | store `trash` | sim |
 | Imagens enviadas | `<dataDir>/uploads/<id>.<ext>`, `index.json` | store `uploads` (Blob) | sim |
@@ -106,8 +108,9 @@ export const api = {
 };
 ```
 
-- **Modo**: `browser` quando `import.meta.env.VITE_ATELIE_STORAGE === 'browser'` ou quando `GET /api/atelie/health` falha na abertura (página servida como arquivo estático); senão `server`.
-- **Modo navegador**: documentos, versões, lixeira e envios em IndexedDB (`atelie-v1`), com a mesma semântica de revisão (conflito → `ApiError` 409). A biblioteca lê `colecao/library.json` direto como arquivo estático (`fetch`), com `sources: [{ id: 'casa', … }]`; `fileURL(item)` é `colecao/<file>`. Uma faixa discreta no rodapé diz "Salvando neste navegador" (etapa 2 cria o lugar).
+- **Modo**: `browser` quando `import.meta.env.VITE_ATELIE_STORAGE === 'browser'` (o build do Pages, etapa 26), quando a página está em `*.github.io`, ou quando `GET /api/atelie/health` falha na abertura; senão `server`.
+- **Espaço**: no modo navegador, peça `navigator.storage.persist()` na primeira vez que a pessoa arquivar um documento (para o navegador não apagar os dados sob pressão de espaço) e mostre nos Ajustes o uso (`navigator.storage.estimate()`).
+- **Modo navegador**: documentos, versões, lixeira e envios em IndexedDB `atelie-v1:<caminho base>` (o caminho de `document.baseURI`, como o Tabletop faz com `tabletop-library-v1:<caminho>`, para dois Ateliês publicados na mesma conta nunca se misturarem), com a mesma semântica de revisão (conflito → `ApiError` 409). A biblioteca lê `colecao/library.json` direto como arquivo estático (`fetch`), com `sources: [{ id: 'casa', … }]`; `fileURL(item)` é `colecao/<file>`. Uma faixa discreta no rodapé diz "Salvando neste navegador" (etapa 2 cria o lugar).
 - URLs relativas à página: `new URL(caminho, document.baseURI)`.
 
 ## Testes

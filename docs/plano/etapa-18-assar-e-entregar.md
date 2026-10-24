@@ -1,86 +1,88 @@
-# Etapa 18 — Assar e entregar
+# Etapa 18 — Assar e entregar ao Tabletop
 
-Leia antes: `00-LEIA-PRIMEIRO.md`, **`CONTRATO-TABLETOP.md` (inteiro)**, `src/editor/editor.js`, `src/render/handout-render.js`, `src/data/api.js`, `server/app.js`, `server/routes/handouts.js`, `server/paths.js` (`defaultAllowedOrigins`).
+Leia antes: `00-LEIA-PRIMEIRO.md` (seção "Onde os apps rodam"), **`CONTRATO-TABLETOP.md` (inteiro)**, `src/editor/editor.js`, `src/editor/navigator.js`, `src/render/handout-render.js`, `src/data/api.js`, `server/app.js`, `server/routes/handouts.js`, `server/paths.js` (`defaultAllowedOrigins`).
 
 ## Objetivo
 
-Tudo o que o Tabletop (ou qualquer outro programa) precisa para usar um documento do ateliê, exatamente como está no contrato:
+O Ateliê entrega documentos prontos (imagens assadas) ao Tabletop pelos **três caminhos** do contrato, com a mesma interface para a pessoa:
 
-1. ao salvar, o editor **assa** o documento em PNG (e em UV, se tiver camadas UV) e envia ao servidor;
-2. o servidor oferece a lista, a prévia e os assados por HTTP com CORS para as origens permitidas;
-3. a página abre direto um documento por link (`?handout=`, `?new=`) e, quando foi aberta por outra janela autorizada, avisa que salvou.
+- **A — navegador compartilhado** (os dois publicados no GitHub Pages da mesma conta): ao arquivar, grava no banco de troca `mesa-handouts-v1` e avisa por `BroadcastChannel('mesa:handout')`;
+- **B — janela** (qualquer origem): atende o Tabletop que o abriu com `?pick=1`, `?handout=` ou `?new=`, e devolve o documento por `postMessage`;
+- **C — HTTP** (servidores locais): rotas de leitura com CORS.
 
-Nesta etapa o assado UV usa as camadas `light: 'uv'` como já são desenhadas (regra da etapa 4); o visual completo da luz UV vem na etapa 19.
+Nesta etapa o assado UV usa as camadas `light: 'uv'` como já são desenhadas (regra da etapa 4); o visual completo vem na etapa 19.
 
-## Assar (`src/editor/bake.js`)
+## 1. Assar (`src/editor/bake.js`)
 
 ```js
 /** The PNGs of a handout for other programs: normal light always, UV only when a visible layer is 'uv'. Long side 2048. */
-export async function bakeHandout(handout, { images, fonts })
-// → { normal: Blob, uv: Blob | null }
+export async function bakeHandout(handout, { images, fonts })     // → { normal: Blob, uv: Blob | null, width, height }
 export const hasUvLayers = handout => handout.layers.some(layer => layer.visible && layer.light === 'uv')
+/** What travels (contract, section 2). */
+export function deliveryOf(handout, { preview, bakes, source })   // → Delivery
+export const summaryOf = (handout, source) => ({ id, name, category, tags, revision, updatedAt, hasUv, source })
 ```
 
-Depois de `save`/`create` e da prévia, o editor envia: `PUT /api/atelie/handouts/:id/bake?light=normal&revision=<revisão salva>` (e `?light=uv&revision=…` quando houver; quando não houver, `DELETE /api/atelie/handouts/:id/bake?light=uv` para não sobrar um assado velho). Corpo cru `image/png`, até 30 MB. O servidor grava `<dataDir>/handouts/<id>.bake-normal.png` / `<id>.bake-uv.png` e a revisão em que foi assado em `<id>.bake.json` (`{ normal: revisão, uv: revisão | null }`). Assado com revisão diferente da revisão atual do documento → `409`.
+Ao **arquivar** (depois de gravar e gerar a prévia), o editor assa uma vez e usa o resultado nos caminhos ativos. Mostre "Arquivando…" e o carimbo ao fim; um erro no assado não perde o documento arquivado ("Arquivado, mas a entrega ao Tabletop falhou: <motivo>").
 
-Mostre "Salvando…" e depois "Salvo" no cabeçalho; um erro no assado não perde o documento salvo (avise "Salvo, mas o assado falhou: <motivo>").
+`source` = o endereço base do Ateliê (`new URL('.', document.baseURI).href`).
 
-## Rotas do contrato (em `server/routes/handouts.js`)
-
-Siga a seção 2 do contrato, com estes detalhes:
-
-- `GET /api/atelie/handouts` passa a incluir `hasUv` (verdadeiro se existe assado UV da revisão atual).
-- `GET /api/atelie/handouts/:id/bake?light=normal|uv` → o PNG, `X-Atelie-Revision`, `Cache-Control: no-cache`; `404` se não houver.
-- `PUT` e `DELETE` de assado: **sem** CORS (só a própria página do ateliê grava).
-
-### CORS (`server/cors.js`)
+## 2. Caminho A — banco de troca (`src/data/exchange.js`)
 
 ```js
-/** Lets the allowed origins read (GET and HEAD only); everything else is same-origin. */
-export function readOnlyCors(allowedOrigins) // → middleware Express
-// Se req.headers.origin estiver na lista: Access-Control-Allow-Origin = essa origem, Vary: Origin,
-// Access-Control-Expose-Headers: X-Atelie-Revision. Para OPTIONS de uma origem permitida pedindo GET: 204 com
-// Access-Control-Allow-Methods: GET, HEAD. Origem fora da lista: não acrescenta nada.
+export const EXCHANGE_DB = 'mesa-handouts-v1';
+export function openExchange(indexedDB = globalThis.indexedDB)      // versão 1; cria as stores 'handouts' (keyPath 'id') e 'bakes' (keyPath ['id', 'light'])
+export async function publish(db, summary, preview, bakes)          // uma transação: grava o resumo (com preview Blob) e os assados; remove o 'uv' antigo se bakes.uv for null
+export async function unpublish(db, id)                             // remove o resumo e os assados
+export const channel = () => new BroadcastChannel('mesa:handout')
+export const savedMessage = (summary) => ({ app: 'atelie', contract: 1, type: 'handout-saved', id: summary.id, revision: summary.revision, source: summary.source })
 ```
 
-Aplique em `/api/atelie/health`, `/api/atelie/handouts` (lista), `…/:id/preview` e `…/:id/bake` (GET).
+- Arquivar → `publish` e `channel().postMessage(savedMessage(...))`. Mover para a lixeira → `unpublish` + `handout-removed`. Restaurar → `publish`.
+- Ajustes → **Compartilhar com o Tabletop neste navegador** (ligado por padrão; em `atelie-settings`). Ao desligar, `unpublish` de todos os documentos deste Ateliê (os de `source` igual). Ao ligar, publica todos (assando os que ainda não têm assado: mostre progresso).
+- Funciona nos **dois** modos (navegador e servidor), sempre que houver IndexedDB.
 
-## Link direto e aviso de "salvo"
-
-O servidor injeta na página a lista de origens permitidas, para o navegador saber a quem pode responder: ao servir o `index.html`, troque o marcador `<!-- ATELIE_CONFIG -->` (coloque-o no `<head>` do `index.html`) por `<script>window.__ATELIE_CONFIG__ = { allowedOrigins: [...] };</script>` (escape com `JSON.stringify` e troque `<` por `<`). No Vite em desenvolvimento, use a lista padrão de `server/paths.js` (um `define` no `vite.config.js`).
-
-`src/editor/handoff.js`:
+## 3. Caminho B — janela (`src/editor/handoff.js`)
 
 ```js
-/** Where to tell about saves: the `from` origin of the URL if allowed and there is an opener, else null. */
-export function handoffTarget(location, opener, allowedOrigins)
-/** The message of the contract (section 4). */
-export const savedMessage = (handout, hasUv) => ({ app: 'atelie', contract: 1, type: 'handout-saved', id: handout.id, revision: handout.revision, name: handout.name, hasUv })
+/** The Tabletop that opened this window: { from, nonce, mode: 'pick' | 'edit' | 'new' } or null. */
+export function handoffRequest(location, opener)
+export const validFrom = origin => /^https:\/\/[^/]+$/.test(origin) || /^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(origin)
+export const deliveredMessage = (nonce, delivery) => ({ app: 'atelie', contract: 1, type: 'delivered', nonce, delivery })
 ```
 
-Depois de salvar **e** assar, se `handoffTarget(...)` não for nulo: `window.opener.postMessage(savedMessage(...), target)`. Mostre no cabeçalho um selo "Ligado ao Tabletop" enquanto houver destino.
+- `?pick=1&from=…&nonce=…`: a página abre com a gaveta Documentos aberta e um cabeçalho "**O Tabletop pediu um documento**"; cada documento ganha o botão **Enviar ao Tabletop**. Escolher assa (se o assado da revisão atual não estiver no banco de troca), envia `delivered` para `window.opener` com `targetOrigin = from`, mostra "Enviado" e fecha a janela em 1 s.
+- `?handout=<id>&from=…&nonce=…` e `?new=<preset>&from=…&nonce=…`: o editor abre normalmente, com um carimbo "**Ligado ao Tabletop**" na barra do documento; **a cada arquivar**, envia `delivered`.
+- Só responde se `validFrom(from)` e `window.opener` existir; sem isso, ignora os parâmetros (a página funciona normalmente).
+- Não defina `Cross-Origin-Opener-Policy` em lugar nenhum (nem por cabeçalho no servidor de desenvolvimento): ele cortaria a ligação com o Tabletop.
 
-`?handout=<id>` e `?new=<preset>` já funcionam desde a etapa 7; confira que continuam funcionando com `&from=…` junto.
+## 4. Caminho C — HTTP (servidor de desenvolvimento)
+
+Siga a seção 5 do contrato:
+
+- Ao arquivar no modo servidor, o editor envia os assados: `PUT /api/atelie/handouts/:id/bake?light=normal&revision=<n>` (e `uv`, ou `DELETE …?light=uv` quando não houver), corpo `image/png` até 30 MB. O servidor grava `<dataDir>/handouts/<id>.bake-normal.png`, `<id>.bake-uv.png` e `<id>.bake.json` (`{ normal: revisão, uv: revisão | null }`); revisão diferente da atual → `409`.
+- `GET /api/atelie/handouts` inclui `hasUv`; `GET …/:id/bake?light=…` devolve o PNG com `X-Atelie-Revision` e `Cache-Control: no-cache`.
+- `server/cors.js`: `readOnlyCors(allowedOrigins)` — para origens da lista: `Access-Control-Allow-Origin` = a origem, `Vary: Origin`, `Access-Control-Expose-Headers: X-Atelie-Revision`; `OPTIONS` de origem permitida pedindo `GET` → `204` com `GET, HEAD`; outras origens, nada. Aplique em `health`, lista, prévia e `bake` (GET). `PUT`/`DELETE` nunca têm CORS.
 
 ## Testes
 
-`tests/contract.test.js` (servidor real):
+Node:
 
-1. `GET /api/atelie/health` → `{ status: 'ok', app: 'atelie', contract: 1 }`, com `Access-Control-Allow-Origin: http://127.0.0.1:3001` quando o pedido vem com essa origem, e **sem** o cabeçalho para `http://evil.example`.
-2. `OPTIONS` de origem permitida → `204` com `GET, HEAD`; `PUT` de assado com `Origin: http://127.0.0.1:3001` não ganha cabeçalhos de CORS.
-3. Criar documento, `PUT` assado normal (PNG pequeno) → `GET …/bake?light=normal` devolve o PNG e `X-Atelie-Revision: 1`; `…?light=uv` → `404`; a lista mostra `hasUv: false`.
-4. Salvar a revisão 2 sem assar → `GET …/bake` ainda devolve o assado da revisão 1 com `X-Atelie-Revision: 1` (o Tabletop compara); `PUT` de assado dizendo revisão 1 depois da 2 → `409`.
-5. O `index.html` servido contém `window.__ATELIE_CONFIG__` com as origens, sem `<` cru dentro do JSON.
+- `tests/handoff.test.js`: `handoffRequest` lê os três modos e devolve `null` sem `opener`, sem `nonce` ou com `from` inválido; `validFrom` aceita `https://conta.github.io` e `http://127.0.0.1:3001`, recusa `http://exemplo.com`, `javascript:`, e origens com caminho; `deliveredMessage` e `savedMessage` têm exatamente os campos do contrato.
+- `tests/bake.test.js`: `summaryOf`/`deliveryOf` (campos do contrato), `hasUvLayers`.
+- `tests/contract-http.test.js` (servidor real): `health` com e sem origem permitida; `OPTIONS`; `PUT` de assado sem CORS; ciclo `PUT` → `GET bake` com `X-Atelie-Revision`; `409` de revisão velha; `hasUv` na lista.
 
-`tests/handoff.test.js` (Node): `handoffTarget` com `from` permitido e opener → a origem; sem opener → null; `from` fora da lista → null; `from` mal formado → null. `savedMessage` tem exatamente os campos do contrato.
+E2E:
 
-`tests/e2e/handoff.test.js`: uma página "falsa do Tabletop" servida num segundo servidor Express em outra porta, que faz `window.open('<ateliê>/?new=a4&from=<origem dela>')` e registra as mensagens recebidas; no ateliê, desenhar um retângulo e salvar → a página falsa recebe `handout-saved` com `contract: 1`; um `fetch` dela a `…/bake?light=normal` funciona (CORS) e devolve um PNG. A segunda porta precisa estar em `allowedOrigins` (passe a lista ao `createApp` do teste).
+- `tests/e2e/exchange.test.js` (**caminho A**): numa mesma origem de teste, arquivar um documento com camada UV → numa segunda página da mesma origem, `mesa-handouts-v1` tem o resumo e os dois assados da mesma revisão, e um `BroadcastChannel('mesa:handout')` aberto nela recebeu `handout-saved`; mover para a lixeira remove e avisa `handout-removed`; desligar "Compartilhar com o Tabletop" esvazia.
+- `tests/e2e/handoff.test.js` (**caminho B**): uma página "falsa do Tabletop" servida em outra porta abre `<ateliê>/?pick=1&from=<origem dela>&nonce=abc`; no Ateliê, **Enviar ao Tabletop** num documento → a página falsa recebe `delivered` com `nonce: 'abc'`, um `Blob` PNG em `delivery.bakes.normal` (confira a assinatura `89 50 4E 47`) e a janela fecha; o modo `?handout=` envia a cada arquivar.
+- Rode o caminho A também com o build do modo navegador (`VITE_ATELIE_STORAGE=browser`), servido como estático.
 
 ## Pronto quando
 
 - [ ] Testes passam; `npm test` e os E2E passam.
-- [ ] Cada linha das seções 2, 3 e 4 do `CONTRATO-TABLETOP.md` tem um teste que a confere (anote, no fim do contrato, qual teste cobre qual linha).
+- [ ] No fim do `CONTRATO-TABLETOP.md`, a lista "qual teste cobre qual seção" (2, 3, 4 e 5).
 
 ## Não faça
 
-- Nada no Tabletop (etapa 27). Não mude o contrato: se algo nele estiver errado ou impossível, pare e avise.
+- Nada no Tabletop (etapa 28). Não mude o contrato: se algo nele estiver errado ou impossível, pare e avise.

@@ -4,7 +4,7 @@ Leia antes: `00-LEIA-PRIMEIRO.md`, `PLANO-INTERFACE.md`, `src/domain/handouts.js
 
 ## Objetivo
 
-Um documento pode ter um texto ou marca que só aparece sob luz ultravioleta (como os pacotes "com Luz UV" do *Arquivos Confidenciais*). No editor, a pessoa vê e edita as duas versões; o assado UV (etapa 18) passa a ter o visual completo. A luz UV **na mesa**, durante a inspeção no Tabletop, é a etapa 27.
+Um documento pode ter um texto ou marca que só aparece sob luz ultravioleta (como os pacotes "com Luz UV" do *Arquivos Confidenciais*). No editor, a pessoa vê e edita as duas versões; o assado UV (etapa 18) passa a ter o visual completo. A luz UV **na mesa**, durante a inspeção no Tabletop, é a etapa 28.
 
 ## Formato
 

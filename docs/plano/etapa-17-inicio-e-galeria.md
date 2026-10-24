@@ -25,7 +25,7 @@ Aparece na mesa quando não há documento aberto (e no botão **Mesa** do trilho
 
 - **Folhas em branco**: um `.at-card` por `PAGE_PRESETS`, desenhado na proporção da página (altura fixa de 120 px), com o nome em Courier Prime. Clicar cria o documento com a animação de abrir.
 - **Continuar**: os recentes com a prévia; clicar abre.
-- **Modelos em destaque**: um por categoria da coleção (escolha fixa por categoria, a primeira em ordem alfabética; a etapa 26 pode refinar), com o nome embaixo; clicar abre o modelo (cópia) e já na aba Preencher.
+- **Modelos em destaque**: um por categoria da coleção (escolha fixa por categoria, a primeira em ordem alfabética; a etapa 27 pode refinar), com o nome embaixo; clicar abre o modelo (cópia) e já na aba Preencher.
 - Tudo navegável por teclado (setas entre cartões dentro de cada fileira, Tab entre fileiras).
 
 ## Gaveta Modelos (`src/editor/templates-drawer.js`)
