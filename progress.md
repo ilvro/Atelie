@@ -9,7 +9,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 1 — O projeto | concluída | 2026-10-24 | Estrutura inicial do projeto, Express, Vite, UI base, testes unitários e E2E |
 | 2 — Identidade e casca | concluída | 2026-10-24 | Identidade visual, primitivas, fontes OFL, casca, gavetas, inspetor, ajustes, Ctrl+K |
 | 3 — Modelo de dados | concluída | 2026-10-24 | Formato do documento, camadas, limites, mesclagens e validações |
-| 4 — Renderizador | pendente | | Desenho de camadas, mesclagens, recortes |
+| 4 — Renderizador | concluída | 2026-10-24 | Desenho de camadas em Canvas 2D, mesclagens, recorte, ajustes e luz UV |
 | 5 — Texto | pendente | | Renderização de textos, fontes e tintas |
 | 6 — Armazenamento | pendente | | IndexedDB, servidor, biblioteca, coleções |
 | 7 — Editor | pendente | | Palco, camadas, desfazer/refazer, propriedades |
@@ -35,6 +35,37 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 27 — Documentação | pendente | | Manuais, guia de uso e licenças |
 | 28 — Integração Tabletop | pendente | | Consumo e interação direta dentro do Tabletop |
 | 29 — Expansão no navegador | pendente | | Expansão local no navegador (opcional) |
+
+---
+
+## Etapa 4 — Renderizador
+
+### Feito
+- Criação de `src/domain/wrap.js` copiando `wrapText` de Tabletop e testes em `tests/wrap.test.js`.
+- Criação de `src/domain/handout-pixels.js` com matemática pura de filtros e cores:
+  - `cssFilter`: conversão de parâmetros de filtro em string CSS com escala para desfoque.
+  - `applyAdjustPixels`: manipulação direta de buffers RGBA (curvas por interpolação linear, escala de cinza, sépia W3C, brilho, contraste, saturação, rotação de matiz e inversão).
+  - `blendChannel`: cálculo separável de canais para todos os modos da especificação (multiply, screen, overlay, soft-light, hard-light, color-dodge, color-burn, linear-burn, etc.).
+- Criação de `src/render/handout-text.js` com implementação inicial mínima de renderização de texto (`drawTextLayer`).
+- Criação de `src/data/handout-images.js` gerenciando carregamento assíncrono e cache de `ImageBitmap` para recursos da biblioteca e envios.
+- Criação de `src/render/handout-render.js` contendo o motor de renderização `renderHandout`:
+  - `visibleIn`: filtro por visibilidade e modo de luz (`normal` vs `uv`).
+  - `clipGroups`: agrupamento de camadas base e máscaras de recorte (`clip: true`).
+  - `layerMatrix`: cálculo de translação ao centro da caixa, rotação e espelhamento (`flipX`, `flipY`).
+  - `fitRect`: cálculo de corte e posicionamento (`contain`, `cover`, `stretch` e `crop` percentual).
+  - Composição com até 3 canvases reutilizáveis para grupos de recorte e máscaras de canal alfa.
+  - Suporte a camadas de ajuste globais e recortadas, xadrez cinza 50% para imagens ausentes e aviso de efeitos pendentes.
+- Suporte a diagnóstico em `src/main.js` (`?diagnostics`) expondo `window.__atelie.renderHandout`.
+- Suíte de testes unitários puros em `tests/handout-render.test.js`.
+- Suíte de testes de renderização de pixels no navegador com Playwright em `tests/e2e/handout-render.test.js`.
+
+### Validação
+- `npm test`: 32 testes unitários passando.
+- `npm run test:e2e`: 2 suítes de teste de ponta a ponta Playwright passando (shell + renderização de pixels).
+- `npm run build`: gerando build estático sem erros.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 4.
 
 ---
 
