@@ -3,6 +3,9 @@ import { createStage } from './stage.js';
 import { createLayersPanel } from './layers-panel.js';
 import { createPropertiesPanel } from './properties-panel.js';
 import { createHistoryPanel } from './history-panel.js';
+import { createNavigator, recordRecent, getRecentIds } from './navigator.js';
+import { saveDraft, loadDraft, removeDraft, draftDecision } from './draft.js';
+import { folderPath } from '../domain/folders.js';
 import { renderIcon, escapeHTML as esc } from '../ui/icons.js';
 import { stamp } from '../ui/primitives.js';
 import {
@@ -57,6 +60,33 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     </div>
   `;
 
+  // Readonly banner for multi-tab awareness
+  const readonlyBanner = document.createElement('div');
+  readonlyBanner.className = 'desk-readonly-banner';
+  readonlyBanner.style.display = 'none';
+  readonlyBanner.innerHTML = `
+    <div class="desk-readonly-message">
+      ${renderIcon('lock', 16)}
+      <span>Aberto em outra aba · Você está em modo somente leitura</span>
+    </div>
+    <button type="button" class="at-btn is-primary claim-edit-btn">Editar aqui</button>
+  `;
+
+  // Draft bar
+  const draftBar = document.createElement('div');
+  draftBar.className = 'desk-draft-bar';
+  draftBar.style.display = 'none';
+  draftBar.innerHTML = `
+    <div class="desk-draft-info">
+      <span class="at-stamp is-accent" style="font-size:11px; padding:1px 6px;">RASCUNHO</span>
+      <span class="desk-draft-text">Não arquivado</span>
+    </div>
+    <div class="desk-draft-actions">
+      <button type="button" class="at-btn is-sm draft-discard-btn">Descartar rascunho</button>
+      <button type="button" class="at-btn is-sm is-primary draft-archive-btn">Arquivar</button>
+    </div>
+  `;
+
   // Stamp overlay for saved animation
   const stampOverlay = document.createElement('div');
   stampOverlay.className = 'archive-stamp-overlay';
@@ -72,6 +102,8 @@ export function createEditor(shell, { api, images, fonts } = {}) {
 
   deskStage.innerHTML = '';
   deskStage.appendChild(docBar);
+  deskStage.appendChild(readonlyBanner);
+  deskStage.appendChild(draftBar);
   deskStage.appendChild(stageContainer);
   deskStage.appendChild(stampOverlay);
 
@@ -80,6 +112,95 @@ export function createEditor(shell, { api, images, fonts } = {}) {
   const undoBtn = docBar.querySelector('[data-action="undo"]');
   const redoBtn = docBar.querySelector('[data-action="redo"]');
   const archiveBtn = docBar.querySelector('[data-action="archive"]');
+
+  // State variables for draft and multi-tab
+  let hasDraft = false;
+  let draftSaved = true;
+  let draftTimer = null;
+  const tabId = 'tab-' + Math.random().toString(36).slice(2, 10);
+  let isReadOnly = false;
+  let broadcastChannel = null;
+
+  function updateStageLayout() {
+    let top = 52;
+    if (isReadOnly) {
+      readonlyBanner.style.display = 'flex';
+      readonlyBanner.style.top = `${top}px`;
+      top += 38;
+    } else {
+      readonlyBanner.style.display = 'none';
+    }
+    if (hasDraft) {
+      draftBar.style.display = 'flex';
+      draftBar.style.top = `${top}px`;
+      top += 36;
+    } else {
+      draftBar.style.display = 'none';
+    }
+    stageContainer.style.top = `${top}px`;
+  }
+
+  function setReadOnly(ro) {
+    isReadOnly = ro;
+    archiveBtn.disabled = isReadOnly;
+    nameInput.disabled = isReadOnly;
+    undoBtn.disabled = isReadOnly || !state?.canUndo;
+    redoBtn.disabled = isReadOnly || !state?.canRedo;
+    updateStageLayout();
+  }
+
+  if (typeof BroadcastChannel !== 'undefined') {
+    broadcastChannel = new BroadcastChannel('atelie');
+    broadcastChannel.onmessage = (event) => {
+      const msg = event.data;
+      if (!msg || !state?.handout?.id) return;
+      if (msg.handoutId !== state.handout.id) return;
+
+      if (msg.type === 'check-open' && msg.tabId !== tabId && !isReadOnly) {
+        broadcastChannel.postMessage({
+          type: 'claim-active',
+          handoutId: state.handout.id,
+          ownerTabId: tabId,
+        });
+      } else if (msg.type === 'claim-active' && msg.ownerTabId !== tabId) {
+        setReadOnly(true);
+      } else if (msg.type === 'claim-edit' && msg.tabId !== tabId) {
+        setReadOnly(true);
+      }
+    };
+  }
+
+  readonlyBanner.querySelector('.claim-edit-btn')?.addEventListener('click', () => {
+    setReadOnly(false);
+    broadcastChannel?.postMessage({
+      type: 'claim-edit',
+      handoutId: state?.handout?.id,
+      tabId,
+    });
+    shell.notify('Você agora está editando este documento.', { tone: 'info' });
+  });
+
+  draftBar.querySelector('.draft-archive-btn')?.addEventListener('click', () => {
+    archiveDocument();
+  });
+
+  draftBar.querySelector('.draft-discard-btn')?.addEventListener('click', async () => {
+    if (!state?.handout?.id) return;
+    if (window.confirm('Descartar as alterações deste rascunho?')) {
+      await removeDraft(state.handout.id);
+      hasDraft = false;
+      draftSaved = true;
+      updateStageLayout();
+      try {
+        const original = await api.handouts.read(state.handout.id);
+        loadHandout(original, { skipDraftCheck: true });
+        shell.notify('Rascunho descartado.', { tone: 'info' });
+      } catch {
+        const fresh = createHandout({ preset: 'a4' });
+        loadHandout(fresh, { skipDraftCheck: true });
+      }
+    }
+  });
 
   function updateDocBar() {
     if (!state) return;
@@ -133,6 +254,12 @@ export function createEditor(shell, { api, images, fonts } = {}) {
 
       state.markSaved(saved);
 
+      // Clear draft on archive
+      await removeDraft(saved.id);
+      hasDraft = false;
+      draftSaved = true;
+      updateStageLayout();
+
       // Generate thumbnail preview (480px width)
       try {
         const previewCanvas = document.createElement('canvas');
@@ -162,7 +289,8 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       }
 
       await updateRecentRail();
-      renderDocumentsDrawer();
+      navigatorInstance?.render();
+      refreshPaletteCache();
     } catch (err) {
       shell.notify(`Não foi possível arquivar: ${err.message}`, { tone: 'error' });
     }
@@ -206,7 +334,100 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     });
   }
 
-  function loadHandout(handout) {
+  function showDraftPrompt({ title, message, primaryText, secondaryText }) {
+    return new Promise(resolve => {
+      const backdrop = document.createElement('div');
+      backdrop.className = 'at-modal-backdrop draft-recovery-modal';
+      backdrop.innerHTML = `
+        <div class="at-modal" role="dialog" aria-modal="true" aria-label="${esc(title)}">
+          <header class="at-modal-header">
+            <h3 class="at-modal-title">${esc(title)}</h3>
+          </header>
+          <div class="at-modal-body">
+            <p>${esc(message)}</p>
+            <div class="modal-dialog-actions" style="display:flex; justify-content:flex-end; gap:8px; margin-top:20px;">
+              <button type="button" class="at-btn modal-discard-btn draft-discard-prompt-btn">${esc(secondaryText)}</button>
+              <button type="button" class="at-btn is-primary modal-recover-btn draft-recover-btn">${esc(primaryText)}</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(backdrop);
+
+      backdrop.querySelector('.draft-discard-prompt-btn').addEventListener('click', () => {
+        backdrop.remove();
+        resolve(false);
+      });
+
+      backdrop.querySelector('.draft-recover-btn').addEventListener('click', () => {
+        backdrop.remove();
+        resolve(true);
+      });
+    });
+  }
+
+  async function checkDraftRecovery(handout) {
+    if (!handout || !handout.id) return handout;
+    try {
+      const draft = await loadDraft(handout.id);
+      const decision = draftDecision({ draft, serverHandout: handout });
+
+      if (decision === 'offer') {
+        const dateStr = draft.savedAt ? new Date(draft.savedAt).toLocaleString('pt-BR') : '';
+        const shouldRecover = await showDraftPrompt({
+          title: 'Alterações não arquivadas',
+          message: `Há alterações não arquivadas de ${dateStr}. Deseja recuperar essas alterações?`,
+          primaryText: 'Recuperar',
+          secondaryText: 'Descartar',
+        });
+
+        if (shouldRecover) {
+          hasDraft = true;
+          draftSaved = true;
+          return draft.handout;
+        } else {
+          await removeDraft(handout.id);
+          hasDraft = false;
+          draftSaved = true;
+          return handout;
+        }
+      } else if (decision === 'conflict') {
+        const shouldCopy = await showDraftPrompt({
+          title: 'Conflito de rascunho',
+          message: 'O documento mudou desde o seu rascunho. Deseja abrir o rascunho como uma nova cópia?',
+          primaryText: 'Abrir como cópia',
+          secondaryText: 'Descartar',
+        });
+
+        if (shouldCopy) {
+          const copy = structuredClone(draft.handout);
+          copy.id = 'h-' + Math.random().toString(36).slice(2, 10);
+          copy.name = `${copy.name} (Rascunho)`;
+          copy.revision = 0;
+          await removeDraft(handout.id);
+          hasDraft = true;
+          draftSaved = false;
+          return copy;
+        } else {
+          await removeDraft(handout.id);
+          hasDraft = false;
+          draftSaved = true;
+          return handout;
+        }
+      }
+    } catch (err) {
+      console.warn('[atelie] Erro ao verificar rascunho:', err);
+    }
+    return handout;
+  }
+
+  async function loadHandout(inputHandout, { skipDraftCheck = false } = {}) {
+    let handout = inputHandout;
+    if (!skipDraftCheck) {
+      handout = await checkDraftRecovery(inputHandout);
+    }
+
     state = createEditorState(handout);
 
     if (stage) {
@@ -230,7 +451,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     shell.inspector.panel('properties', propertiesWrap);
 
     const historyWrap = document.createElement('div');
-    historyPanel = createHistoryPanel(historyWrap, { state });
+    historyPanel = createHistoryPanel(historyWrap, { state, api, images, fonts, shell });
     shell.inspector.panel('history', historyWrap);
 
     state.subscribe(change => {
@@ -245,6 +466,22 @@ export function createEditor(shell, { api, images, fonts } = {}) {
         layersPanel.render();
         propertiesPanel.render();
         historyPanel.render();
+
+        if (change.type === 'edit' && !isReadOnly) {
+          hasDraft = true;
+          draftSaved = false;
+          updateStageLayout();
+
+          if (draftTimer) clearTimeout(draftTimer);
+          draftTimer = setTimeout(async () => {
+            try {
+              await saveDraft(state.handout, state.handout.revision || 1);
+              draftSaved = true;
+            } catch (err) {
+              console.warn('[atelie] Erro ao salvar rascunho:', err);
+            }
+          }, 800);
+        }
       } else if (change.type === 'select') {
         stage.select(state.selection);
         layersPanel.render();
@@ -255,6 +492,21 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     stage.show(state.handout);
     updateDocBar();
     stage.zoom('fit');
+
+    setReadOnly(false);
+    updateStageLayout();
+
+    if (broadcastChannel && handout.id) {
+      broadcastChannel.postMessage({
+        type: 'check-open',
+        handoutId: handout.id,
+        tabId,
+      });
+    }
+
+    recordRecent(handout.id);
+    navigatorInstance?.render();
+    refreshPaletteCache();
 
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -277,83 +529,124 @@ export function createEditor(shell, { api, images, fonts } = {}) {
   redoBtn.addEventListener('click', () => state?.redo());
   archiveBtn.addEventListener('click', () => archiveDocument());
 
-  // Documents drawer
-  async function renderDocumentsDrawer() {
-    const content = document.createElement('div');
-    content.className = 'docs-drawer-view';
+  // Navigator Drawer panel
+  const navigatorWrap = document.createElement('div');
+  navigatorWrap.className = 'docs-navigator-container';
+  navigatorWrap.style.height = '100%';
 
-    content.innerHTML = `
-      <div class="docs-drawer-actions">
-        <button type="button" class="at-btn is-primary docs-new-btn" data-action="new-doc">
-          ${renderIcon('plus', 14)}
-          <span>Novo Documento</span>
-        </button>
-      </div>
-      <div class="docs-grid" id="docs-drawer-grid">
-        <p class="drawer-loading">Carregando documentos...</p>
-      </div>
-    `;
-
-    const grid = content.querySelector('#docs-drawer-grid');
-    const newBtn = content.querySelector('.docs-new-btn');
-
-    newBtn.addEventListener('click', () => {
+  let navigatorInstance = null;
+  navigatorInstance = createNavigator(navigatorWrap, {
+    api,
+    shell,
+    onOpenDocument: async (id) => {
+      confirmUnsavedChanges(async () => {
+        try {
+          const doc = await api.handouts.read(id);
+          await loadHandout(doc);
+          shell.drawer.close();
+        } catch (err) {
+          shell.notify(`Erro ao abrir documento: ${err.message}`, { tone: 'error' });
+        }
+      });
+    },
+    onCreateDocument: () => {
       confirmUnsavedChanges(() => {
         const doc = createHandout({ preset: 'a4' });
         loadHandout(doc);
         shell.drawer.close();
       });
-    });
+    },
+    getCurrentHandoutId: () => state?.handout?.id,
+  });
 
+  shell.drawer.panel('documents', navigatorWrap);
+
+  // Ctrl+K Palette Document Provider
+  let paletteDocumentsCache = [];
+
+  async function refreshPaletteCache() {
     try {
-      const list = await api.handouts.list();
-      if (!list.length) {
-        grid.innerHTML = '<p class="drawer-empty-hint">Nenhum documento arquivado ainda.</p>';
-      } else {
-        grid.innerHTML = list
-          .map(
-            item => `
-          <button type="button" class="doc-card-btn" data-id="${esc(item.id)}">
-            <div class="doc-card-preview">
-              ${
-                item.preview
-                  ? `<img src="${esc(api.mode === 'browser' ? '' : `api/atelie/handouts/${item.id}/preview`)}" alt="" />`
-                  : renderIcon('doc', 24)
-              }
-            </div>
-            <div class="doc-card-info">
-              <span class="doc-card-name">${esc(item.name)}</span>
-              <span class="doc-card-meta">${new Date(item.updatedAt).toLocaleDateString('pt-BR')} · Rev ${item.revision}</span>
-            </div>
-          </button>
-        `
-          )
-          .join('');
+      const handouts = await api.handouts.list();
+      let folders = [];
+      if (api.folders) {
+        const fd = await api.folders.list();
+        folders = fd.folders || [];
+      }
+      const folderMap = new Map(folders.map(f => [f.id, f]));
+      const recentIds = getRecentIds();
 
-        grid.querySelectorAll('.doc-card-btn').forEach(btn => {
-          btn.addEventListener('click', async () => {
-            const id = btn.dataset.id;
-            confirmUnsavedChanges(async () => {
-              try {
-                const doc = await api.handouts.read(id);
-                loadHandout(doc);
-                shell.drawer.close();
-              } catch (err) {
-                shell.notify(`Erro ao abrir documento: ${err.message}`, { tone: 'error' });
-              }
-            });
-          });
+      const items = [];
+
+      // Actions
+      items.push({
+        title: 'Nova pasta',
+        subtitle: 'Pastas de documentos',
+        group: 'Ações',
+        icon: 'folder',
+        run: () => {
+          shell.drawer.open('documents');
+          navigatorInstance?.promptNewFolder();
+        },
+      });
+
+      items.push({
+        title: 'Abrir lixeira',
+        subtitle: 'Ver documentos excluídos',
+        group: 'Ações',
+        icon: 'trash',
+        run: () => {
+          shell.drawer.open('documents');
+          navigatorInstance?.filterTrash();
+        },
+      });
+
+      // Folders
+      for (const folder of folders) {
+        const path = folderPath(folders, folder.id).join(' / ');
+        items.push({
+          title: `Pasta: ${folder.name}`,
+          subtitle: path,
+          group: 'Pastas',
+          icon: 'folder',
+          run: () => {
+            shell.drawer.open('documents');
+            navigatorInstance?.openFolder(folder.id);
+          },
         });
       }
-    } catch (err) {
-      grid.innerHTML = `<p class="drawer-error-hint">Erro ao carregar: ${esc(err.message)}</p>`;
-    }
 
-    shell.drawer.panel('documents', content);
+      // Handouts: recents first
+      const sorted = handouts.slice().sort((a, b) => {
+        const idxA = recentIds.indexOf(a.id);
+        const idxB = recentIds.indexOf(b.id);
+        if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+        if (idxA !== -1) return -1;
+        if (idxB !== -1) return 1;
+        return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+      });
+
+      for (const h of sorted) {
+        const f = h.folder ? folderMap.get(h.folder) : null;
+        const sub = f ? folderPath(folders, f.id).join(' / ') : 'Sem pasta';
+        items.push({
+          title: h.name,
+          subtitle: sub,
+          group: 'Documentos',
+          icon: 'doc',
+          run: () => {
+            confirmUnsavedChanges(async () => {
+              const doc = await api.handouts.read(h.id);
+              await loadHandout(doc);
+            });
+          },
+        });
+      }
+
+      paletteDocumentsCache = items;
+    } catch {}
   }
 
-  // Initialize documents drawer panel
-  renderDocumentsDrawer();
+  shell.palette.register(() => paletteDocumentsCache);
 
   // Helper actions for layers
   function duplicateSelected() {
@@ -831,9 +1124,9 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     }
   });
 
-  // Warn before unload if dirty
+  // Warn before unload if dirty and draft was not saved
   window.addEventListener('beforeunload', event => {
-    if (state?.dirty) {
+    if (state?.dirty && !draftSaved) {
       event.preventDefault();
       event.returnValue = '';
     }
@@ -951,6 +1244,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
   // Initial load
   async function init() {
     await updateRecentRail();
+    await refreshPaletteCache();
 
     let initialDoc = null;
     if (typeof window !== 'undefined') {
@@ -982,7 +1276,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       initialDoc = createHandout({ preset: 'a4' });
     }
 
-    loadHandout(initialDoc);
+    await loadHandout(initialDoc);
   }
 
   init();

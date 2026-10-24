@@ -35,14 +35,16 @@ export const palette = {
     const all = [];
     for (const provider of providers) {
       try {
-        const items = provider(query) || [];
-        all.push(...items);
+        const items = typeof provider === 'function' ? provider(query) : provider;
+        if (Array.isArray(items)) {
+          all.push(...items);
+        }
       } catch (err) {
         console.error('Error in palette provider:', err);
       }
     }
     return all.filter(item => {
-      const searchTarget = `${item.title || ''} ${item.subtitle || ''} ${item.group || ''}`;
+      const searchTarget = `${item.title || item.label || ''} ${item.subtitle || item.category || ''} ${item.group || ''}`;
       return matchesWords(searchTarget, query);
     });
   },
@@ -103,13 +105,15 @@ export const palette = {
       resultsContainer.innerHTML = currentResults.map((item, idx) => {
         const iconSvg = item.icon ? renderIcon(item.icon, 16) : renderIcon('doc', 16);
         const activeClass = idx === activeIndex ? ' active' : '';
-        const keyTag = item.key ? `<kbd class="at-palette-item-key">${esc(item.key)}</kbd>` : '';
+        const keyVal = item.key || item.hint;
+        const keyTag = keyVal ? `<kbd class="at-palette-item-key">${esc(keyVal)}</kbd>` : '';
         const subtitleTag = item.subtitle ? `<span class="at-palette-item-sub">${esc(item.subtitle)}</span>` : '';
+        const titleText = item.title || item.label || '';
         return `
           <div class="at-palette-item${activeClass}" role="option" aria-selected="${idx === activeIndex}" data-index="${idx}">
             <span class="at-palette-item-icon">${iconSvg}</span>
             <div class="at-palette-item-content">
-              <span class="at-palette-item-title">${esc(item.title)}</span>
+              <span class="at-palette-item-title">${esc(titleText)}</span>
               ${subtitleTag}
             </div>
             ${keyTag}

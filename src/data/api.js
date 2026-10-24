@@ -1,5 +1,6 @@
 import { ApiError } from './errors.js';
 import { validateHandout } from '../domain/handouts.js';
+import { validateFolders } from '../domain/folders.js';
 
 export { ApiError };
 
@@ -58,10 +59,10 @@ export function createApi({
       return Promise.reject(new Error('IndexedDB não suportado neste ambiente.'));
     }
     return new Promise((resolve, reject) => {
-      const req = databaseFactory.open(dbName, 1);
+      const req = databaseFactory.open(dbName, 2);
       req.onupgradeneeded = () => {
         const db = req.result;
-        for (const name of ['handouts', 'versions', 'trash', 'uploads', 'previews']) {
+        for (const name of ['handouts', 'versions', 'trash', 'uploads', 'previews', 'folders']) {
           if (!db.objectStoreNames.contains(name)) {
             db.createObjectStore(name);
           }
@@ -517,6 +518,48 @@ export function createApi({
     },
   };
 
+  const browserFolders = {
+    async list() {
+      return transact(['folders'], 'readonly', (tx, resolve, stop) => {
+        const req = tx.objectStore('folders').get('current');
+        req.onerror = () => stop(req.error);
+        req.onsuccess = () => {
+          if (!req.result) {
+            resolve({ folders: [], revision: 1 });
+          } else {
+            resolve(req.result);
+          }
+        };
+      });
+    },
+
+    async save(folders, expectedRevision) {
+      validateFolders(folders);
+      await requestPersistOnce();
+      return transact(['folders'], 'readwrite', (tx, resolve, stop) => {
+        const store = tx.objectStore('folders');
+        const getReq = store.get('current');
+        getReq.onerror = () => stop(getReq.error);
+        getReq.onsuccess = () => {
+          const current = getReq.result || { folders: [], revision: 1 };
+          if (expectedRevision !== undefined && expectedRevision !== null) {
+            if (Number(expectedRevision) !== current.revision) {
+              return stop(new ApiError('Conflito de revisão nas pastas.', 409, {
+                code: 'REVISION_CONFLICT',
+                currentRevision: current.revision,
+              }));
+            }
+          }
+          const nextRevision = (current.revision || 1) + 1;
+          const payload = { folders, revision: nextRevision };
+          const putReq = store.put(payload, 'current');
+          putReq.onerror = () => stop(putReq.error);
+          putReq.onsuccess = () => resolve(payload);
+        };
+      });
+    },
+  };
+
   // --- SERVER MODE (REST API) ---
   async function fetchJson(path, options = {}) {
     const url = new URL(path, baseURI).href;
@@ -663,9 +706,25 @@ export function createApi({
     },
   };
 
+  const serverFolders = {
+    async list() {
+      return await fetchJson('api/atelie/folders');
+    },
+
+    async save(folders, expectedRevision) {
+      validateFolders(folders);
+      return await fetchJson('api/atelie/folders', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ folders, expectedRevision }),
+      });
+    },
+  };
+
   return {
     mode,
     handouts: mode === 'browser' ? browserHandouts : serverHandouts,
+    folders: mode === 'browser' ? browserFolders : serverFolders,
     trash: mode === 'browser' ? browserTrash : serverTrash,
     library: mode === 'browser' ? browserLibrary : serverLibrary,
     uploads: mode === 'browser' ? browserUploads : serverUploads,

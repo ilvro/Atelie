@@ -15,7 +15,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 7 — Editor | concluída | 2026-10-24 | Palco, camadas, desfazer/refazer, propriedades, arquivamento e uploads |
 | 8 — Manipulação | concluída | 2026-10-24 | Mover, redimensionar, girar, encaixe, atalhos e edição inline de texto |
 | 9 — Ferramentas do editor | concluída | 2026-10-24 | Guias, réguas, histórico navegável, mini-barra, conta-gotas, colar imagens, alinhar |
-| 10 — Documentos e rascunho | pendente | | Gestão de documentos, rascunho automático |
+| 10 — Documentos e rascunho | concluída | 2026-10-24 | Navegador com pastas, fixados, favoritos, recentes; rascunho automático; versões; lixeira; abas |
 | 11 — Efeitos procedurais | pendente | | Desgaste, manchas, dobras, queimado, sangue |
 | 12 — Coleção papéis e texturas | pendente | | Coleção da casa: papéis e sobreposições |
 | 13 — Coleção elementos | pendente | | Coleção da casa: vetores, carimbos, fitas |
@@ -35,6 +35,61 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 27 — Documentação | pendente | | Manuais, guia de uso e licenças |
 | 28 — Integração Tabletop | pendente | | Consumo e interação direta dentro do Tabletop |
 | 29 — Expansão no navegador | pendente | | Expansão local no navegador (opcional) |
+
+---
+
+## Etapa 10 — Documentos e rascunho
+
+### Feito
+- **Pastas (`src/domain/folders.js` + servidor)**:
+  - Funções puras: `createFolder`, `renameFolder`, `moveFolder` (com verificação rigorosa impedindo mover uma pasta para dentro de si mesma ou de qualquer descendente), `removeFolder` (com promoção automática de pastas filhas para o `parentId` da excluída) e `folderPath` (retornando a sequência ordenada de nomes de pastas da raiz ao nó folha).
+  - Rotas no servidor Express em `server/routes/folders.js`: `GET /api/atelie/folders` e `PUT /api/atelie/folders` com persistência atômica em `<dataDir>/folders.json` e controle de concorrência com verificação de `expectedRevision` (retornando 409 em caso de conflito e 422 para payloads inválidos).
+  - Suporte completo no modo navegador via store IndexedDB `folders` com versão 2 do banco de dados em `src/data/api.js`.
+- **Gaveta Documentos / Navegador (`src/editor/navigator.js`)**:
+  - Barra de ferramentas superior com campo de busca insensível a acentos e maiúsculas (usando `normalizeText` e `matchesWords`) que casa título do documento, categoria, tags e caminho de pastas.
+  - Filtros em chips interativos: **Todos · Favoritos · Recentes · Lixeira**.
+  - Seções organizadas: **Fixados** (suporte a até 8 documentos com reordenação e persistência em `localStorage`), **Recentes** (os 10 últimos abertos), **Pastas** (árvore hierárquica recolhível com contador de itens e suporte a cores customizadas) e **Sem pasta**.
+  - Linha de documento com miniatura em papel `.at-card` inclinada deterministicamente via `tiltOf`, título, data relativa em português (`formatRelativeTime`), estrela de favorito e clipe `.at-clip` fixado no documento atualmente aberto na bancada.
+  - Drag-and-drop completo: arrastar um documento para o cabeçalho de uma pasta move o documento; arrastar uma pasta para outra pasta aninha hierarquicamente; arrastar para "Sem pasta" desvincula da pasta.
+  - Menu de contexto nativo com botão direito ou botão de opções:
+    - No documento: Abrir, Abrir em nova aba, Duplicar, Renomear, Mover para…, Fixar/Desafixar, Favoritar e Excluir.
+    - Na pasta: Nova subpasta, Renomear, Cor da pasta e Excluir.
+  - Filtro da Lixeira listando itens deletados com data relativa ("excluído há N dias"), botão de **Restaurar** e botão de **Apagar de vez** com confirmação prévia.
+  - Navegação e ações por teclado: setas ↑ e ↓ para navegar entre documentos, Enter para abrir, F2 para renomear e Delete para mover para a lixeira.
+- **Rascunho Automático Local (`src/editor/draft.js`)**:
+  - Gravação automática local com debounce de 800 ms no IndexedDB dedicado `atelie-drafts` (`{ handout, baseRevision, savedAt }`), funcional tanto no modo servidor quanto no modo navegador.
+  - Barra visual de rascunho `.desk-draft-bar` posicionada abaixo da barra do documento com carimbo `.at-stamp` "RASCUNHO", texto "Não arquivado" e botões [Arquivar] e [Descartar rascunho].
+  - Mecanismo puro de decisão `draftDecision({ draft, serverHandout })` categorizando entre `'none'`, `'offer'` e `'conflict'`.
+  - Modal de recuperação no carregamento oferecendo "Recuperar" ou "Descartar", e tratamento de conflito ("Abrir rascunho como cópia" ou "Descartar").
+  - Limpeza automática de rascunho após arquivamento bem-sucedido.
+  - Proteção `beforeunload` inteligente que só intercepta o fechamento de página caso o rascunho não tenha conseguido ser gravado localmente no IndexedDB.
+- **Versões Anteriores (`src/editor/history-panel.js`)**:
+  - Abas no painel Inspetor Histórico: `[Passos da sessão] [Versões arquivadas]`.
+  - Listagem de todas as versões salvas de `api.handouts.versions(id)` com data formatada e número de revisão.
+  - Prévia instantânea desenhada em canvas pequeno via `renderHandout`.
+  - Botão **Restaurar esta versão**, gerando uma nova edição na mesa sem sobrescrever o histórico preexistente.
+- **Integração de Documentos na Paleta de Comandos (Ctrl+K)**:
+  - Provedor dinâmico em `shell.palette` que pesquisa documentos e pastas com nome da pasta como subtítulo, destacando documentos recentes quando a busca está vazia.
+  - Ações diretas: "Nova pasta" e "Abrir lixeira".
+- **Coordenação Concorrente entre Abas (`BroadcastChannel('atelie')`)**:
+  - Bloqueio automático de edição ao abrir o mesmo documento em duas abas simultâneas, mantendo a segunda aba em modo somente leitura com banner `.desk-readonly-banner`.
+  - Ação "Editar aqui" para reivindicar a titularidade da edição, transferindo o status de somente leitura para a outra aba.
+- **Testes e Validação**:
+  - `tests/folders.test.js`: 7 testes unitários cobrindo criação, renomeação, movimentação (com proibição de ciclos/descendentes), remoção com promoção de filhas e `folderPath`.
+  - `tests/folders-server.test.js`: rotas REST de pastas e detecção de conflito de revisão 409.
+  - `tests/draft.test.js`: lógica pura de `draftDecision` e persistência no IndexedDB mock.
+  - `tests/e2e/navigator.test.js`: E2E completo cobrindo fluxo de pastas, drag/move, busca sem acento, fixados, favoritos, lixeira, recuperação de rascunho pós-reload, restauração de versões e Ctrl+K.
+  - `tests/e2e/tabs.test.js`: E2E de concorrência multi-aba via `BroadcastChannel`.
+  - Captura de tela de referência salva em `docs/referencias/atelie-documentos.png`.
+
+### Validação
+- `npm test`: 71 testes unitários passando 100%.
+- `npm run test:e2e`: 8 suítes completas de Playwright passando 100%.
+- `npm run build`: bundle de produção Vite gerado sem nenhum erro.
+- Captura de referência `docs/referencias/atelie-documentos.png` gerada com sucesso.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 10. Toda a gestão de documentos, pastas, rascunhos, versões e multi-aba está completamente funcional e testada.
 
 ---
 
