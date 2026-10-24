@@ -31,7 +31,7 @@ Todas as rotas abaixo respondem a `GET` com CORS para as origens de `ATELIE_ALLO
 | `GET /api/atelie/handouts/:id/bake?light=normal` | PNG assado da **última** revisão, lado maior 2048; cabeçalho `X-Atelie-Revision: <n>`; `Cache-Control: no-cache`. `404` se ainda não foi assado |
 | `GET /api/atelie/handouts/:id/bake?light=uv` | o mesmo, sob luz UV; `404` se o documento não tem camadas UV |
 
-O assado é feito **no navegador do ateliê ao salvar** (o servidor não desenha): ver etapa 13.
+O assado é feito **no navegador do ateliê ao salvar** (o servidor não desenha): ver etapa 18.
 
 ## 3. Abrir o ateliê a partir do Tabletop
 
@@ -42,7 +42,7 @@ O Tabletop abre uma janela (`window.open(url, 'atelie')`) com:
 | `<ateliê>/?handout=<id>&from=<origem do Tabletop>` | abre esse documento para editar |
 | `<ateliê>/?new=a4&from=<origem>` | abre um documento novo (qualquer `PAGE_PRESETS`) |
 
-`from` é a origem exata do Tabletop (`location.origin`), codificada com `encodeURIComponent`. O ateliê só aceita `from` presente em `ATELIE_ALLOWED_ORIGINS` (o servidor injeta a lista na página, ver etapa 13); fora dela, ignora o parâmetro.
+`from` é a origem exata do Tabletop (`location.origin`), codificada com `encodeURIComponent`. O ateliê só aceita `from` presente em `ATELIE_ALLOWED_ORIGINS` (o servidor injeta a lista na página, ver etapa 18); fora dela, ignora o parâmetro.
 
 ## 4. Mensagens do Ateliê para o Tabletop
 
@@ -65,9 +65,9 @@ Em **Ajustes**, "Ateliê de documentos · endereço", padrão `http://127.0.0.1:
 ## 7. Versões
 
 - `contract: 1` em `health` e nas mensagens. Um lado que receber outra versão ignora e mostra no console uma vez: "Ateliê com contrato N; este Tabletop entende 1".
-- O formato do documento (`schema` da etapa 2) é interno do ateliê: o Tabletop não lê camadas.
+- O formato do documento (`schema` da etapa 3) é interno do ateliê: o Tabletop não lê camadas.
 
 ## Testes de contrato
 
-- No Ateliê (etapa 13): `tests/contract.test.js` sobe o servidor e confere cada rota da seção 2, os cabeçalhos de CORS para uma origem permitida e a falta deles para outra, e o formato da mensagem (função pura `savedMessage(handout)`).
-- No Tabletop (etapa 18): um servidor falso do ateliê no próprio teste (Express com as rotas da seção 2 servindo um PNG fixo) e a janela do ateliê simulada mandando a mensagem da seção 4.
+- No Ateliê (etapa 18): `tests/contract.test.js` sobe o servidor e confere cada rota da seção 2, os cabeçalhos de CORS para uma origem permitida e a falta deles para outra, e o formato da mensagem (função pura `savedMessage(handout)`).
+- No Tabletop (etapa 27): um servidor falso do ateliê no próprio teste (Express com as rotas da seção 2 servindo um PNG fixo) e a janela do ateliê simulada mandando a mensagem da seção 4.

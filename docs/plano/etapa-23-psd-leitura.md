@@ -1,10 +1,10 @@
-# Etapa 10 — Ler a estrutura dos PSDs (relatório)
+# Etapa 23 — Ler a estrutura dos PSDs (relatório)
 
-Leia antes: `00-LEIA-PRIMEIRO.md` (inclusive "O que a análise dos PSDs mostrou"), `scripts/library/lib/manifest.js` e `catalog.js` (etapa 8), `server/paths.js`.
+Leia antes: `00-LEIA-PRIMEIRO.md` (inclusive "O que a análise dos PSDs mostrou"), `scripts/library/lib/manifest.js` e `catalog.js` (etapa 22), `server/paths.js`.
 
 ## Objetivo
 
-Ler os PSDs do acervo **sem exportar imagem nenhuma** e produzir: (1) uma árvore normalizada de cada arquivo, que as etapas 11 e 12 usam; (2) um relatório que diz, para o acervo inteiro, o que existe (mesclagens, ajustes, fontes, textos, variações, UV) e quais arquivos são fáceis ou difíceis de importar. Isso guia as etapas seguintes com dados reais, em vez de suposições.
+Ler os PSDs do acervo **sem exportar imagem nenhuma** e produzir: (1) uma árvore normalizada de cada arquivo, que as etapas 24 e 25 usam; (2) um relatório que diz, para o acervo inteiro, o que existe (mesclagens, ajustes, fontes, textos, variações, UV) e quais arquivos são fáceis ou difíceis de importar. Isso guia as etapas seguintes com dados reais, em vez de suposições.
 
 ```
 npm run library:psd-report -- --source "<pasta do Arquivos Confidenciais>" [--bundle "Bundle 4"] [--file "<caminho de um .psd>"] [--limit 20]
@@ -13,7 +13,7 @@ npm run library:psd-report -- --source "<pasta do Arquivos Confidenciais>" [--bu
 ## Fatos medidos (24/10/2026, `ag-psd` 30.2.0)
 
 - `readPsd(buffer, { skipLayerImageData: true, skipCompositeImageData: true, skipThumbnail: true })` lê só a estrutura, rápido e com pouca memória.
-- Para ler pixels (etapa 11), o `ag-psd` exige um canvas. No Node, basta este *stub* (coloque em `scripts/library/lib/psd-canvas.js` e chame uma vez antes de ler):
+- Para ler pixels (etapa 24), o `ag-psd` exige um canvas. No Node, basta este *stub* (coloque em `scripts/library/lib/psd-canvas.js` e chame uma vez antes de ler):
 
 ```js
 import { initializeCanvas } from 'ag-psd';
@@ -42,7 +42,7 @@ tests/handouts-psd-tree.test.js
 ## Árvore normalizada (`psd-tree.js`)
 
 ```js
-export const PSD_BLENDS = {   // ag-psd → id do ateliê (BLEND_MODES da etapa 2); null = sem equivalente
+export const PSD_BLENDS = {   // ag-psd → id do ateliê (BLEND_MODES da etapa 3); null = sem equivalente
   'normal': 'normal', 'pass through': 'pass-through', 'multiply': 'multiply', 'screen': 'screen', 'overlay': 'overlay',
   'soft light': 'soft-light', 'hard light': 'hard-light', 'darken': 'darken', 'lighten': 'lighten',
   'color dodge': 'color-dodge', 'color burn': 'color-burn', 'linear dodge': 'linear-dodge', 'linear burn': 'linear-burn',
@@ -105,11 +105,11 @@ export function textBoxInDocument(text, outer = null)
 Para cada `.psd`/`.psb` encontrado (ordem alfabética, um por vez):
 
 1. Leia só a estrutura, depois os PSBs ligados que forem PSD (`linkedFiles[i].data` começando com `8BPS`), com o mesmo `readPsd`.
-2. `normalizeTree`, e grave `<biblioteca>/reports/psd/<slug do caminho relativo>.json` com: `{ file, bytes, width, height, nodes, texts: textNodes(...), variants, uv: [nomes], fonts: [postscript], blends: { nome: n }, adjustments: { tipo: n }, effects: { nome: n }, unsupported: [...], perspective: n, score }`.
+2. `normalizeTree`, e grave `<expansão>/reports/psd/<slug do caminho relativo>.json` com: `{ file, bytes, width, height, nodes, texts: textNodes(...), variants, uv: [nomes], fonts: [postscript], blends: { nome: n }, adjustments: { tipo: n }, effects: { nome: n }, unsupported: [...], perspective: n, score }`.
 3. `score` (0–100, só para ordenar o trabalho): começa em 100; −5 por mesclagem sem equivalente, −3 por tipo de ajuste diferente de `hue/saturation`, `black & white`, `brightness/contrast`, `invert`, `levels`; −10 por objeto inteligente em perspectiva; −2 por efeito de camada (até −20); −15 se não houver texto nenhum (é só imagem); mínimo 0.
 4. Erro num arquivo (PSD corrompido, sem memória) vai para a lista de erros; o script continua.
 
-No fim, `<biblioteca>/reports/psd-summary.json` e `psd-summary.md` (tabela legível): total de arquivos e de bytes; contagem de cada mesclagem, ajuste, efeito; **fontes usadas** com quantos arquivos usam cada uma e se ela já está na biblioteca (procure pelo `postscript` nos itens `font` do `library.json`); os 20 de maior e os 20 de menor `score`; erros.
+No fim, `<expansão>/reports/psd-summary.json` e `psd-summary.md` (tabela legível): total de arquivos e de bytes; contagem de cada mesclagem, ajuste, efeito; **fontes usadas** com quantos arquivos usam cada uma e se ela já está na biblioteca (procure pelo `postscript` nos itens `font` do `library.json`); os 20 de maior e os 20 de menor `score`; erros.
 
 Rode com `node --max-old-space-size=8192` (já no `package.json`). Mostre o progresso a cada arquivo (`[12/430] Bundle 4/…/3- Recorte de Jornal.psd · 0,4 s`).
 
@@ -128,8 +128,8 @@ Monte objetos **no formato do ag-psd à mão** (não precisa de PSD de verdade):
 ## Pronto quando
 
 - [ ] Testes passam; `npm test` passa.
-- [ ] Rodado de verdade em pelo menos 3 pacotes (`--bundle "Bundle 4"`, `"Bundle 2"`, `"Bundle 59"`) e no acervo inteiro se der tempo. Anote no `progress.md` o tempo, as cinco mesclagens e os cinco ajustes mais comuns e as fontes que faltam na biblioteca: são os dados que a etapa 11 usa para priorizar.
+- [ ] Rodado de verdade em pelo menos 3 pacotes (`--bundle "Bundle 4"`, `"Bundle 2"`, `"Bundle 59"`) e no acervo inteiro se der tempo. Anote no `progress.md` o tempo, as cinco mesclagens e os cinco ajustes mais comuns e as fontes que faltam na biblioteca: são os dados que a etapa 24 usa para priorizar.
 
 ## Não faça
 
-- Não grave imagem nenhuma. Não escreva fora de `defaultLibraryDir()`. Não modifique nada no HD.
+- Não grave imagem nenhuma. Não escreva fora de `expansionDir('arquivos-confidenciais')`. Não modifique nada no HD.

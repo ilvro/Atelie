@@ -19,7 +19,7 @@ Atelie/
   .gitignore
   scripts/
     dev.js                    # servidor + Vite juntos (cópia adaptada do Tabletop)
-    library/                  # scripts de importação (etapas 8, 10, 12); por enquanto só um README.md
+    library/                  # scripts de importação (etapas 22, 23, 25); por enquanto só um README.md
   server/
     index.js                  # escuta ATELIE_PORT (padrão 3011)
     app.js                    # createApp({ dataDir, libraryDir, allowedOrigins })
@@ -40,7 +40,8 @@ Atelie/
     server.test.js
     e2e/shell.test.js
   data/                       # documentos e envios do usuário (criados em execução)
-  data-private/               # biblioteca importada (NÃO vai para o git)
+  public/colecao/             # coleção da casa: papéis, elementos, fontes e modelos próprios (VAI para o git e para o build)
+  data-private/expansoes/     # expansões importadas, como o Arquivos Confidenciais (NÃO vai para o git)
 ```
 
 ## Arquivos, um por um
@@ -91,22 +92,25 @@ import { fileURLToPath } from 'node:url';
 export const projectDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 /** The person's documents and uploads. */
 export const defaultDataDir = (env = process.env) => path.resolve(env.ATELIE_DATA_DIR || path.join(projectDir, 'data'));
-/** The private library imported from the paid collection: never tracked, never public. */
-export const defaultLibraryDir = (env = process.env) => path.resolve(env.ATELIE_LIBRARY_DIR || path.join(projectDir, 'data-private', 'library'));
+/** The house collection: papers, elements, fonts and templates of the Ateliê itself, tracked and published with the app. */
+export const collectionDir = path.join(projectDir, 'public', 'colecao');
+/** Expansions (private libraries such as the Arquivos Confidenciais): never tracked, never public. One folder per expansion. */
+export const defaultExpansionsDir = (env = process.env) => path.resolve(env.ATELIE_EXPANSIONS_DIR || path.join(projectDir, 'data-private', 'expansoes'));
+export const expansionDir = (id, env = process.env) => path.join(defaultExpansionsDir(env), id);
 /** Origins allowed to read documents across origins (the Tabletop). */
 export const defaultAllowedOrigins = (env = process.env) => (env.ATELIE_ALLOWED_ORIGINS || 'http://127.0.0.1:3001,http://localhost:3001,http://127.0.0.1:5173,http://localhost:5173').split(',').map(origin => origin.trim()).filter(Boolean);
 ```
 
 ### `server/app.js`
 
-`export async function createApp({ dataDir = defaultDataDir(), libraryDir = defaultLibraryDir(), allowedOrigins = defaultAllowedOrigins(), distDir = path.join(projectDir, 'dist') } = {})` que:
+`export async function createApp({ dataDir = defaultDataDir(), expansionsDir = defaultExpansionsDir(), collection = collectionDir, allowedOrigins = defaultAllowedOrigins(), distDir = path.join(projectDir, 'dist') } = {})` que:
 
 - cria `dataDir` se não existir;
 - `GET /api/atelie/health` → `{ status: 'ok', app: 'atelie', contract: 1 }`;
 - serve `dist/` como estático e devolve `dist/index.html` para rotas que não começam com `/api/` (como o Tabletop faz);
 - trata erros como o Tabletop (`HttpError` → status e `{ error: { message } }`).
 
-Guarde `dataDir`, `libraryDir` e `allowedOrigins` em `app.locals` para as próximas etapas.
+Guarde `dataDir`, `expansionsDir`, `collection` e `allowedOrigins` em `app.locals` para as próximas etapas.
 
 ### `server/index.js`
 
@@ -122,7 +126,7 @@ Cópia adaptada do `../Tabletop/scripts/dev.js`: troque `TABLETOP_*` por `ATELIE
 
 ### `index.html` e `src/main.js`
 
-Página com `<html lang="pt-BR">`, título "Ateliê de documentos", `<div id="app"></div>` e `src/main.js` que importa `./ui/styles.css` e mostra um cabeçalho com uma `.tt-tag` "Ateliê" e um parágrafo "Em construção". Fundo e cores pelos tokens do tema.
+Página com `<html lang="pt-BR">`, título "Ateliê de documentos", `<div id="app"></div>` e `src/main.js` que importa `./ui/styles.css` e mostra um título "Ateliê" e um parágrafo "Em construção" (a identidade visual chega na etapa 2). Fundo e cores pelos tokens do tema.
 
 ### `src/ui/icons.js`
 
@@ -135,13 +139,14 @@ Depois de copiar, acrescente ao objeto `paths`: `doc: '<path d="M6 3h8l4 4v14H6z
 
 - Plano e regras: docs/plano/00-LEIA-PRIMEIRO.md. Implemente uma etapa por vez.
 - Mantenha progress.md atualizado: concluído, validação, pendências reais.
-- O acervo do Arquivos Confidenciais é privado: nunca no git, em public/ ou em dist/; só em data-private/.
+- A coleção da casa (public/colecao/) é do próprio Ateliê e vai para o git. Expansões, como o Arquivos Confidenciais, são privadas: nunca no git, em public/ ou em dist/; só em data-private/expansoes/.
+- O app tem de ser completo sem expansão nenhuma.
 - O contrato com o Tabletop está em docs/plano/CONTRATO-TABLETOP.md; não o mude sem mudar os dois lados.
 ```
 
 ### `README.md`
 
-Três parágrafos: o que é; `npm install`, `npm run dev` e os endereços; onde ficam os dados e a biblioteca.
+Três parágrafos: o que é; `npm install`, `npm run dev` e os endereços; onde ficam os dados, a coleção da casa e as expansões (e que o app funciona completo sem nenhuma expansão).
 
 ### git
 
@@ -152,7 +157,8 @@ Três parágrafos: o que é; `npm install`, `npm run dev` e os endereços; onde 
 `tests/privacy.test.js`:
 
 - `.gitignore` contém `data-private/`;
-- `defaultLibraryDir({})` termina em `data-private/library`; com `ATELIE_LIBRARY_DIR` usa o valor;
+- `defaultExpansionsDir({})` termina em `data-private/expansoes`; com `ATELIE_EXPANSIONS_DIR` usa o valor; `expansionDir('x', {})` termina em `data-private/expansoes/x`;
+- `collectionDir` termina em `public/colecao` (a coleção da casa é pública de propósito);
 - nenhum arquivo em `src/` contém `from 'ag-psd'`, `from 'sharp'` ou `from 'fflate'`;
 - `vite.config.js` não menciona `data-private`.
 

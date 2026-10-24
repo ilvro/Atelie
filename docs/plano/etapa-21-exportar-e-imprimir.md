@@ -1,4 +1,4 @@
-# Etapa 16 — Exportar e imprimir
+# Etapa 21 — Exportar e imprimir
 
 Leia antes: `00-LEIA-PRIMEIRO.md`, `src/render/handout-render.js`, `src/editor/editor.js`, `src/data/handout-images.js`, `src/data/handout-fonts.js`.
 
@@ -8,7 +8,7 @@ Levar o documento para fora do ateliê: um PNG em alta resolução (para Discord
 
 ## Exportar imagem
 
-Botão **Exportar ▾** no cabeçalho do ateliê, com:
+O botão **Exportar** do trilho (e "Exportar" no menu de contexto de um documento) abre uma gaveta com:
 
 - **PNG · tela** (lado maior 2048 px) e **PNG · impressão** (300 ppp: escala `300 / 150 = 2` sobre o tamanho do documento, ou seja, 2480 × 3508 para A4);
 - **Sob luz UV** (só aparece se houver camadas `uv`);

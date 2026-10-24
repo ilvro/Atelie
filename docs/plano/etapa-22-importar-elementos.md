@@ -1,6 +1,6 @@
-# Etapa 8 — Importar elementos, símbolos e fontes
+# Etapa 22 — Importar elementos, símbolos e fontes
 
-Leia antes: `00-LEIA-PRIMEIRO.md` (inclusive "Referências"), `etapa-05-armazenamento.md` (seção "Formato da biblioteca"), `server/paths.js`, `server/storage.js` (`atomicWrite`).
+Leia antes: `00-LEIA-PRIMEIRO.md` (inclusive "Referências"), `etapa-06-armazenamento.md` (seção "Formato da biblioteca"), `server/paths.js`, `server/storage.js` (`atomicWrite`).
 
 ## Objetivo
 
@@ -9,6 +9,16 @@ Um script de linha de comando que lê as imagens soltas, os símbolos e as fonte
 ```
 npm run library:elements -- --source "/home/ilvro/Documents/RPG - Conteúdo/RPG - Conteúdo/Arquivos Confidenciais" [--only assets|symbols|fonts] [--limit 50] [--dry-run]
 ```
+
+## A expansão
+
+Tudo vai para `expansionDir('arquivos-confidenciais')` = `data-private/expansoes/arquivos-confidenciais/`, que é uma **expansão**: o Ateliê funciona completo sem ela (coleção da casa, etapas 12 a 16) e a usa quando existe. Na primeira execução, grave `expansion.json`:
+
+```js
+{ id: 'arquivos-confidenciais', name: 'Arquivos Confidenciais', description: 'Acervo da comunidade de Ordem Paranormal (Catarse). Uso pessoal.', license: 'uso pessoal, não redistribuir', createdAt }
+```
+
+Os ids dos itens desta expansão começam com `ac-` (`ac-el-…`, `ac-font-…`, `ac-tpl-…`), para nunca colidir com a coleção da casa (`casa-…`) nem com outra expansão. Ajuste `elementId` e `fontId` abaixo para acrescentar o prefixo.
 
 ## O que o acervo tem (medido em 24/10/2026)
 
@@ -22,7 +32,7 @@ npm run library:elements -- --source "/home/ilvro/Documents/RPG - Conteúdo/RPG 
 ```
 scripts/library/import-elements.js     # CLI: lê argumentos, chama as funções abaixo, imprime um resumo
 scripts/library/lib/catalog.js         # funções puras: categoria, tags, ids
-scripts/library/lib/font-names.js      # lê a tabela 'name' e 'OS/2' de TTF/OTF
+scripts/lib/font-names.js              # já existe (etapa 14): lê nomes de TTF/OTF
 scripts/library/lib/manifest.js        # ler, mesclar e gravar library.json
 tests/handouts-import-elements.test.js
 ```
@@ -51,17 +61,9 @@ export function fontId(postscriptName)      // 'font-' + slug(postscriptName)
 - `attribution`: se a pasta tiver um `Atribuição*.txt`, guarde o texto (até 2 000 caracteres).
 - Símbolos (`--only symbols`): igual, com categoria `Símbolos` seguida da subpasta, se houver.
 
-### Fontes (`font-names.js`)
+### Fontes
 
-```js
-/** Family, style and names of a TrueType/OpenType font from its 'name' and 'OS/2' tables; null if it is not one. */
-export function readFontNames(buffer)
-// → { family, subfamily, postscript, fullName, weight, italic }
-// family: nameID 16 se existir, senão 1; subfamily: 17 ou 2; postscript: 6; fullName: 4.
-// Prefira registros platformID 3 (Windows, UTF-16BE, languageID 0x0409) e, na falta, platformID 1 (Mac Roman).
-// weight: OS/2.usWeightClass (padrão 400); italic: bit 0 de OS/2.fsSelection.
-// Aceita assinaturas 0x00010000, 'true', 'OTTO'. Coleções 'ttcf' → null (anote "coleção não suportada").
-```
+Use `readFontNames` de `scripts/lib/font-names.js` (criado na etapa 14). Fontes que já existem na coleção da casa (mesmo `postscript`) não são copiadas para a expansão.
 
 - Procure fontes soltas e dentro de `.zip` (abra com `fflate.unzipSync`, ignore `__MACOSX/` e arquivos começando com `._`).
 - `fonts/<fontId>.<ext>`; item `{ id, kind: 'font', name: fullName, category: 'Fontes', tags: [família em minúsculas, nome do pacote], file, family, postscript, weight, style: italic ? 'italic' : 'normal', source: { bundle, path } }`.
@@ -76,11 +78,11 @@ export function mergeItems(manifest, items, { replaceKinds })  // substitui iten
 export async function writeManifest(libraryDir, manifest)      // ordena por kind, categoria, nome; grava com atomicWrite; atualiza generatedAt
 ```
 
-O importador de elementos **nunca** apaga itens `template` e `layer` (da etapa 12).
+O importador de elementos **nunca** apaga itens `template` e `layer` (da etapa 25).
 
 ### Execução incremental e relatório
 
-- `<biblioteca>/state/elements-index.json`: `{ [caminhoRelativo]: { size, mtimeMs, id, sha1 } }`. Arquivo com mesmo tamanho e data é pulado sem ler.
+- `<expansão>/state/elements-index.json`: `{ [caminhoRelativo]: { size, mtimeMs, id, sha1 } }`. Arquivo com mesmo tamanho e data é pulado sem ler.
 - Ao fim: `reports/elements-<AAAA-MM-DD-HHmm>.json` com `{ scanned, created, updated, skipped, duplicates, errors: [{ path, message }], tooLarge: [...] }` e um resumo de cinco linhas no terminal.
 - O HD é lento: leia um arquivo por vez; gere com `sharp` em no máximo 4 tarefas ao mesmo tempo.
 - `--dry-run`: não grava nada, só o resumo. `--limit N`: para depois de N arquivos (para testar).
@@ -90,17 +92,17 @@ O importador de elementos **nunca** apaga itens `template` e `layer` (da etapa 1
 
 1. `stripCount`, `categoryOf`, `displayName`, `tagsOf` com os exemplos de cima, inclusive `Assets/2024/10-2024/Doodles (30).png` → categoria `Doodles`.
 2. `elementId` é igual em duas chamadas e diferente para caminhos diferentes; `slug('Papéis Amassados')` é `papeis-amassados`.
-3. `readFontNames` com uma fonte mínima montada no próprio teste (cabeçalho sfnt + tabelas `name` e `OS/2` só com os campos usados): família, PostScript, peso 700 e itálico corretos; buffer qualquer → `null`.
+3. Uma fonte com o mesmo `postscript` de uma fonte da coleção da casa não é copiada.
 4. `mergeItems` substitui por id e, com `replaceKinds: ['element']`, remove elementos antigos sem tocar em `template`.
-5. De ponta a ponta numa pasta temporária: gere com `sharp` duas imagens PNG (uma copiada duas vezes com nomes diferentes) e um `.zip` com a fonte de teste do item 3, em `Assets/2023/01-2023/Sangue (2)/` e `Documentos/Bundle 1 - X/Fontes - Bundle 1/`; rode a função principal do script com `--source` nessa pasta e a biblioteca noutra → `library.json` tem 1 elemento (a duplicata virou tag), 1 fonte com o `postscript` certo, os arquivos existem e a prévia tem lado maior 320. Rodar de novo cria 0 e pula 3.
+5. De ponta a ponta numa pasta temporária: gere com `sharp` duas imagens PNG (uma copiada duas vezes com nomes diferentes) e um `.zip` com uma fonte mínima (monte como em `tests/font-names.test.js`), em `Assets/2023/01-2023/Sangue (2)/` e `Documentos/Bundle 1 - X/Fontes - Bundle 1/`; rode a função principal do script com `--source` nessa pasta e a biblioteca noutra → `library.json` tem 1 elemento (a duplicata virou tag), 1 fonte com o `postscript` certo, os arquivos existem e a prévia tem lado maior 320. Rodar de novo cria 0 e pula 3.
 
 ## Pronto quando
 
 - [ ] Testes passam; `npm test` passa.
-- [ ] Rodado de verdade com `--limit 200` no acervo do usuário: a biblioteca aparece em `data-private/library`, `curl …/api/atelie/library` lista os itens, e `git status` continua limpo.
+- [ ] Rodado de verdade com `--limit 200` no acervo do usuário: a biblioteca aparece em `data-private/expansoes/arquivos-confidenciais`, `curl …/api/atelie/library` lista os itens, e `git status` continua limpo.
 - [ ] Anote no `progress.md` quanto tempo levou o `--limit 200` e o tamanho da pasta gerada, para estimar o acervo inteiro.
 
 ## Não faça
 
-- Não leia PSDs (etapas 10–12).
-- Não escreva nada fora de `defaultLibraryDir()`. Não modifique nada no HD.
+- Não leia PSDs (etapas 23 a 25).
+- Não escreva nada fora de `expansionDir('arquivos-confidenciais')`. Não modifique nada no HD.

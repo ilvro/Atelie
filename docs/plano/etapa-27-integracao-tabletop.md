@@ -1,4 +1,4 @@
-# Etapa 18 — Integração no Tabletop
+# Etapa 27 — Integração no Tabletop
 
 **Esta etapa acontece no Tabletop** (`/home/ilvro/Documents/Projects/Tabletop`), não no Ateliê. Siga o `AGENTS.md` do **Tabletop** (inclusive manter o `progress.md` dele).
 

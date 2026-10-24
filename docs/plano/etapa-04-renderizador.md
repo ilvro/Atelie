@@ -1,18 +1,18 @@
-# Etapa 3 — Renderizador
+# Etapa 4 — Renderizador
 
-Leia antes: `00-LEIA-PRIMEIRO.md`, `etapa-02-modelo-de-dados.md` (o formato), `src/domain/handouts.js`, `../Tabletop/src/render/page-textures.js` (só leitura, para ver o estilo de desenho em canvas 2D do ecossistema), `src/main.js`.
+Leia antes: `00-LEIA-PRIMEIRO.md`, `etapa-03-modelo-de-dados.md` (o formato), `src/domain/handouts.js`, `../Tabletop/src/render/page-textures.js` (só leitura, para ver o estilo de desenho em canvas 2D do ecossistema), `src/main.js`.
 
 ## Objetivo
 
-Desenhar um documento num canvas, igual no editor, na exportação e no assado que vai para o Tabletop. Esta etapa cobre imagens, formas, ajustes, mesclagem, opacidade, recorte e luz (normal/UV). Texto entra numa versão mínima (a etapa 4 completa). Efeitos procedurais ficam para a etapa 15.
+Desenhar um documento num canvas, igual no editor, na exportação e no assado que vai para o Tabletop. Esta etapa cobre imagens, formas, ajustes, mesclagem, opacidade, recorte e luz (normal/UV). Texto entra numa versão mínima (a etapa 5 completa). Efeitos procedurais ficam para a etapa 11.
 
 ## Arquivos
 
 | Arquivo | O que tem |
 |---|---|
-| `src/domain/handout-pixels.js` | Matemática de pixels **pura** (sem DOM), usada aqui como reserva e pelo importador na etapa 11 |
+| `src/domain/handout-pixels.js` | Matemática de pixels **pura** (sem DOM), usada aqui como reserva e pelo importador na etapa 24 |
 | `src/render/handout-render.js` | `renderHandout` e os auxiliares geométricos |
-| `src/render/handout-text.js` | `drawTextLayer` mínimo (a etapa 4 substitui o conteúdo) |
+| `src/render/handout-text.js` | `drawTextLayer` mínimo (a etapa 5 substitui o conteúdo) |
 | `src/data/handout-images.js` | Carregar e guardar em cache as imagens das camadas |
 | `src/domain/wrap.js` | `wrapText`, **copiada** de `../Tabletop/src/domain/inspectables.js` (a função e o comentário), com o teste dela em `tests/wrap.test.js` (copie os casos de `wrapText` de `../Tabletop/tests/inspectables.test.js`) |
 | `tests/handout-render.test.js` | Testes das partes puras |
@@ -46,7 +46,7 @@ export function applyAdjustPixels(data, adjust)
 // Ordem: curve (tabela de 256 valores por interpolação linear entre os pontos, aplicada a R, G e B), grayscale (luminância 0.2126/0.7152/0.0722, misturada por grayscale), sepia (matriz W3C), brightness (multiplica por 1+b),
 // contrast ((v-128)*(1+c)+128), saturation (mistura com a luminância por 1+s), hue (rotação W3C de hue-rotate), invert. Clampa 0–255. Alfa intacto.
 
-/** Separable blend of one channel, 0–1, for the modes of BLEND_MODES (used by the importer, etapa 11). */
+/** Separable blend of one channel, 0–1, for the modes of BLEND_MODES (used by the importer, etapa 24). */
 export function blendChannel(mode, backdrop, source)
 // normal, multiply, screen, overlay, soft-light (fórmula W3C), hard-light, darken, lighten, color-dodge, color-burn, difference, exclusion,
 // linear-dodge (min(1, b + s)), linear-burn (max(0, b + s - 1))
@@ -85,8 +85,8 @@ Use canvases temporários do tamanho da página e **reuse-os** entre camadas (no
 /** An image source of a layer as an ImageBitmap, cached by key; null when it cannot load. */
 export function createHandoutImages({ fetchBlob = url => fetch(url).then(r => r.ok ? r.blob() : null) } = {})
 // → { load(src): Promise<ImageBitmap|null>, url(src): string, clear() }
-// src.library → `api/atelie/library/${encodeURIComponent(id)}/file` (a rota nasce na etapa 5; até lá, null)
-// src.upload  → `api/atelie/uploads/${encodeURIComponent(id)}/file` (a rota nasce na etapa 5)
+// src.library → `api/atelie/library/${encodeURIComponent(id)}/file` (a rota nasce na etapa 6; até lá, null)
+// src.upload  → `api/atelie/uploads/${encodeURIComponent(id)}/file` (a rota nasce na etapa 6)
 // Monte as URLs relativas à página: new URL(caminho, document.baseURI).href
 ```
 
@@ -127,5 +127,5 @@ renderHandout: async (handout, { scale = .25, light = 'normal', at = [] } = {}) 
 
 ## Não faça
 
-- Não crie o editor (etapa 6). Não asse (etapa 13).
+- Não crie o editor (etapa 7). Não asse (etapa 18).
 - Não use WebGL nesta etapa.

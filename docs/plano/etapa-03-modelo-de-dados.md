@@ -1,4 +1,4 @@
-# Etapa 2 — Modelo de dados
+# Etapa 3 — Modelo de dados
 
 Leia antes: `00-LEIA-PRIMEIRO.md`. Para ver o estilo de validação que o ecossistema usa (só leitura): `../Tabletop/src/domain/inspectables.js` (`validateInspectable`) e `../Tabletop/src/domain/validation.js` (a classe `ValidationError`).
 
@@ -25,6 +25,7 @@ Um documento tem uma página e camadas empilhadas **de baixo para cima** (`layer
   fields: [ { layerId: 'l-nome', label: 'Nome do suspeito' }, { layerId: 'l-foto', label: 'Foto do suspeito' } ],
                                     // campos do modo "Preencher" (camadas de texto ou de imagem); até 60
   source: { kind: 'blank' },        // 'blank' | 'template' (templateId) | 'import' (file, bundle)
+  back: null,                       // ou { handoutId }: o documento que é o verso deste (cartão-postal, foto com dedicatória); o verso aponta de volta
 }
 ```
 
@@ -43,14 +44,14 @@ Um documento tem uma página e camadas empilhadas **de baixo para cima** (`layer
   width: 1240, height: 1754,   // > 0, até 8192
   rotation: 0,          // graus, -360..360, em torno do centro da caixa
   clip: false,          // true: só aparece onde a camada imediatamente abaixo tem pixels (máscara de recorte)
-  light: 'both',        // 'both' | 'normal' | 'uv' — em que luz a camada aparece (etapa 14)
+  light: 'both',        // 'both' | 'normal' | 'uv' — em que luz a camada aparece (etapa 19)
 }
 ```
 
 ### Por tipo
 
 ```js
-// image: uma imagem da biblioteca ou uma imagem enviada pela pessoa (etapa 5)
+// image: uma imagem da biblioteca ou uma imagem enviada pela pessoa (etapa 6)
 image: {
   src: { library: 'el-sangue-0007' } | { upload: 'up-1a2b3c4d5e6f' } | null,
   fit: 'stretch',                // 'stretch' | 'cover' | 'contain'
@@ -74,7 +75,7 @@ text: {
   letterSpacing: 0,                 // milésimos de em, -200..1000
   box: 'area',                      // 'area' quebra na largura; 'point' não quebra
   fit: 'overflow',                  // 'overflow' | 'shrink' (diminui até caber na caixa)
-  ink: { style: 'clean', wear: 0, seed: 1 },   // 'clean' | 'typewriter' | 'handwriting' | 'stamp'; wear 0–1; seed inteiro (etapa 4)
+  ink: { style: 'clean', wear: 0, seed: 1 },   // 'clean' | 'typewriter' | 'handwriting' | 'stamp'; wear 0–1; seed inteiro (etapa 5)
 }
 
 // shape
@@ -85,7 +86,7 @@ shape: { type: 'rect', fill: '#000000' | null, stroke: '#000000' | null, strokeW
 adjust: { grayscale: 0, sepia: 0, brightness: 0, contrast: 0, saturation: 0, hue: 0, invert: false, curve: null }
                                     // curve: null ou [[entrada, saída], …] 0–255, 2 a 16 pontos com entrada crescente (curvas e níveis importados do Photoshop)
 
-// effect: gerado por código, sem imagem (etapa 15)
+// effect: gerado por código, sem imagem (etapa 11)
 effect: { type: 'crumple', seed: 1, amount: .5, params: {} }
                                     // type 'crumple' | 'fold' | 'stain' | 'burn' | 'tear' | 'damp' | 'fade' | 'blood' | 'grain'
 ```
@@ -164,6 +165,7 @@ export function libraryRefs(handout)                                         // 
 6. `validateHandout` rejeita, com o caminho certo na mensagem: `kind` desconhecido; `opacity` 1.5; `blend` 'foo'; camada `text` sem `text`; camada `text` com `image`; id repetido; `fields` apontando para camada inexistente ou para uma forma; `curve` com entradas fora de ordem; 201 camadas; página 50 px; cor `'red'`.
 7. `canvasOperation('linear-burn')` é `'multiply'` e `canvasOperation('nada')` é `'source-over'`.
 8. `libraryRefs` devolve imagens e fontes da biblioteca, sem repetir.
+9. `back` aceita `null` e `{ handoutId: <uuid> }`; recusa outro formato.
 
 ## Pronto quando
 
@@ -172,5 +174,5 @@ export function libraryRefs(handout)                                         // 
 
 ## Não faça
 
-- Não desenhe nada (etapa 3). Não crie interface.
-- Não assar nem exportar (etapas 13 e 16).
+- Não desenhe nada (etapa 4). Não crie interface.
+- Não assar nem exportar (etapas 18 e 21).

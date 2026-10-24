@@ -1,4 +1,4 @@
-# Etapa 15 — Efeitos procedurais
+# Etapa 11 — Efeitos procedurais
 
 Leia antes: `00-LEIA-PRIMEIRO.md`, `src/domain/handouts.js` (camada `effect`), `src/render/handout-render.js`, `../Tabletop/src/render/page-textures.js` (só leitura; `drawPaper`: grão, manchas de café, bordas escurecidas e dobras já existem para os papéis atuais; reaproveite as ideias), `src/editor/layers-panel.js` (menu "+").
 

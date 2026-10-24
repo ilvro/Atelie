@@ -1,6 +1,6 @@
-# Etapa 12 — PSD vira modelo editável
+# Etapa 25 — PSD vira modelo editável
 
-Leia antes: `00-LEIA-PRIMEIRO.md`, `etapa-02-modelo-de-dados.md` (formato, inclusive `adjust.curve` e campos de imagem), `etapa-10-psd-leitura.md`, `etapa-11-psd-compositor.md`, `scripts/library/lib/psd-tree.js`, `psd-geometry.js`, `compose.js`, `adjust.js`, `manifest.js`, `catalog.js`, `src/domain/handouts.js`.
+Leia antes: `00-LEIA-PRIMEIRO.md`, `etapa-03-modelo-de-dados.md` (formato, inclusive `adjust.curve` e campos de imagem), `etapa-23-psd-leitura.md`, `etapa-24-psd-compositor.md`, `scripts/library/lib/psd-tree.js`, `psd-geometry.js`, `compose.js`, `adjust.js`, `manifest.js`, `catalog.js`, `src/domain/handouts.js`.
 
 ## Objetivo
 
@@ -24,19 +24,19 @@ tests/e2e/handout-templates.test.js
 
 ## Conversão (`psd-to-handout.js`)
 
-Escala: a mesma da etapa 11 (`scale = min(1, 1240 / largura)` para A4; em geral lado maior ≤ 2048). A página do modelo tem `width × scale` por `height × scale`.
+Escala: a mesma da etapa 24 (`scale = min(1, 1240 / largura)` para A4; em geral lado maior ≤ 2048). A página do modelo tem `width × scale` por `height × scale`.
 
 Percorra a árvore de baixo para cima, produzindo uma **lista plana** de camadas do ateliê:
 
 | Nó | Vira |
 |---|---|
 | grupo `pass-through` | nada; os filhos entram na lista (opacidade do grupo multiplica a deles; máscara do grupo é aplicada ao alfa de cada filho) e o nome do grupo vai no início do nome (`"Com Rasgo · Amassado"`) |
-| grupo com outro modo | **uma** camada `image`: o grupo composto isolado (etapa 11, regra 3), com o modo e a opacidade do grupo |
+| grupo com outro modo | **uma** camada `image`: o grupo composto isolado (etapa 24, regra 3), com o modo e a opacidade do grupo |
 | grupo de variação (de `variantGroups`) | como `pass-through`, mas as camadas do grupo oculto entram com `visible: false`, e o nome começa com `"Variação · <nome do grupo>"` |
-| grupo UV (`looksLikeUv`) | os filhos entram com `light: 'uv'` (só aparecem com luz UV, etapa 14) |
+| grupo UV (`looksLikeUv`) | os filhos entram com `light: 'uv'` (só aparecem com luz UV, etapa 19) |
 | `pixel` | camada `image` com os pixels da camada (máscara aplicada no alfa), posição e tamanho dos bounds × scale, `blend`, `opacity`, `clip` |
 | `smart` afim **sem texto dentro** | igual a `pixel` (pixels rasterizados da própria camada) |
-| `smart` afim **com texto dentro** | (a) uma camada `image` com o conteúdo do PSB **composto sem os textos** (etapa 11 com `skip` nos textos), transformado pelo afim para o lugar dos cantos, com o modo e a opacidade do objeto; (b) cada texto do PSB como camada `text` (abaixo), na posição transformada, com o **mesmo modo e opacidade** do objeto |
+| `smart` afim **com texto dentro** | (a) uma camada `image` com o conteúdo do PSB **composto sem os textos** (etapa 24 com `skip` nos textos), transformado pelo afim para o lugar dos cantos, com o modo e a opacidade do objeto; (b) cada texto do PSB como camada `text` (abaixo), na posição transformada, com o **mesmo modo e opacidade** do objeto |
 | `smart` em perspectiva | camada `image` rasterizada; textos dentro ficam de fora e entram no relatório |
 | `text` | camada `text` (abaixo) |
 | `adjust` mapeável | camada `adjust` (tabela abaixo), com `clip` e `opacity`; máscara de ajuste é ignorada com aviso |
@@ -56,7 +56,7 @@ Ajustes → `adjust`:
 
 Texto → camada `text`:
 
-- Caixa: `textBoxInDocument` (etapa 10) × scale; `rotation` da matriz.
+- Caixa: `textBoxInDocument` (etapa 23) × scale; `rotation` da matriz.
 - `content` = `text.text` com `\r` trocado por `\n`.
 - `size` = `fontSize × escalaDaMatriz × scale`; `lineHeight` = `leading / fontSize` (se `autoLeading`, `paragraphStyle.autoLeading ?? 1.2`); `letterSpacing` = `tracking`.
 - `align`: `left`→`left`, `center`→`center`, `right`→`right`, qualquer `justify-*`→`justify`. `box`: `shapeType 'box'` → `area`, `'point'` → `point`. `fit: 'overflow'`.
@@ -68,7 +68,7 @@ Texto → camada `text`:
 
 Vagas de imagem: camadas `pixel` ou `smart` cujo nome case com `/foto|imagem|retrato|brasão|brasao|coloque|insira|sua imagem|placeholder/i` viram campo de imagem (`label` = nome), mantendo os pixels originais como imagem inicial.
 
-**Juntar para não ter camadas demais**: depois da lista pronta, junte (componha num só raster, etapa 11) sequências de camadas `image` vizinhas que sejam todas `normal`, sem `clip`, sem `light: 'uv'`, que não sejam campo e não tenham variação. A primeira sequência vira "Fundo". Meta: um modelo típico com 5 a 20 camadas.
+**Juntar para não ter camadas demais**: depois da lista pronta, junte (componha num só raster, etapa 24) sequências de camadas `image` vizinhas que sejam todas `normal`, sem `clip`, sem `light: 'uv'`, que não sejam campo e não tenham variação. A primeira sequência vira "Fundo". Meta: um modelo típico com 5 a 20 camadas.
 
 Rasters: cada camada `image` grava um `templates/<tplId>/<nn>.webp` (`quality: 88`, alfa preservado, recortado aos pixels não transparentes para economizar) e vira item `kind: 'layer'` no manifesto com id `<tplId>--<nn>`; a camada aponta para `src: { library: '<tplId>--<nn>' }`.
 
@@ -84,24 +84,24 @@ export function matchFont(postscript, fonts)
 
 ## Gravação, id e categoria
 
-- `tplId` = `'tpl-' + slug(categoria) + '-' + slug(nome do arquivo sem número inicial) + '-' + 6 hex do sha1 do caminho` (estável).
+- `tplId` = `'ac-tpl-' + slug(categoria) + '-' + slug(nome do arquivo sem número inicial) + '-' + 6 hex do sha1 do caminho` (estável).
 - Categoria: nome do pacote sem `Bundle N - `, sem `miniBundle`, sem `[ESPECIAL]`, sem `Rework`, sem `(PARTE n)`: `Bundle 59 - Rework Documentos Policiais com Luz UV` → `Documentos Policiais com Luz UV`. Para a pasta do usuário: o nome da pasta de origem (ex.: `Vaesen`).
 - Nome: o nome do arquivo sem extensão e sem o número inicial (`2- Relatório Policial` → `Relatório Policial`).
 - Tags: palavras da categoria e do nome; `uv` se tiver camadas UV; `variações` se tiver variação.
 - Item `kind: 'template'`: `{ id, kind, name, category, tags, file: 'templates/<id>.json', preview: 'previews/<id>.webp' (a composição do PSD, lado maior 480), width, height, source: { bundle, path }, fields: n, layers: n }`.
 - `templates/<id>.json` é o documento (passe por `validateHandout` antes de gravar; se falhar, não grave e registre o erro).
-- Incremental como na etapa 8 (`state/psd-index.json` por tamanho e data); `--force` refaz.
+- Incremental como na etapa 22 (`state/psd-index.json` por tamanho e data); `--force` refaz.
 
 ## Validação de cada modelo
 
-1. **Sem texto**: componha (etapa 11) o modelo inteiro **sem as camadas de texto** e compare com a composição do PSD **com as caixas de texto apagadas da comparação** (pixels dentro das caixas não contam). Grave `mae` e `bad` no relatório. Limite para aceitar automaticamente: `mae ≤ 8` e `bad ≤ 5 %`. Acima disso, o modelo é gravado mesmo assim, mas com a tag `revisar` e o motivo no relatório.
+1. **Sem texto**: componha (etapa 24) o modelo inteiro **sem as camadas de texto** e compare com a composição do PSD **com as caixas de texto apagadas da comparação** (pixels dentro das caixas não contam). Grave `mae` e `bad` no relatório. Limite para aceitar automaticamente: `mae ≤ 8` e `bad ≤ 5 %`. Acima disso, o modelo é gravado mesmo assim, mas com a tag `revisar` e o motivo no relatório.
 2. **Com texto** (no navegador, E2E): renderize o modelo com `window.__atelie.renderHandout` e compare com `original.png`; o limite é mais folgado (`mae ≤ 18`), porque o texto do canvas nunca é idêntico ao do Photoshop.
 
 Relatório por modelo em `reports/templates/<id>.json` (`mae`, `bad`, `missingFonts`, `warnings`, camadas, campos, tempo) e um resumo `reports/templates-summary.md` com quantos foram aceitos, quantos ficaram com `revisar` e as fontes que mais faltam.
 
 ## Testes
 
-`tests/handouts-psd-to-handout.test.js` (árvores e pixels montados à mão, como na etapa 11):
+`tests/handouts-psd-to-handout.test.js` (árvores e pixels montados à mão, como na etapa 24):
 
 1. Grupo `pass-through` "Com Rasgo" com um pixel `soft-light` → camada `image` "Com Rasgo · <nome>" com `blend: 'soft-light'`.
 2. Dois grupos irmãos de variação, um oculto → as camadas do oculto vêm com `visible: false` e prefixo "Variação ·".
@@ -117,7 +117,7 @@ Relatório por modelo em `reports/templates/<id>.json` (`mae`, `bad`, `missingFo
 ## Pronto quando
 
 - [ ] Testes passam; `npm test` passa.
-- [ ] Rodado nos três arquivos de referência da etapa 11 e em pelo menos um pacote inteiro (`--bundle "Bundle 4"`): os modelos abrem no ateliê, o texto troca, as variações ligam e desligam; números no `progress.md`.
+- [ ] Rodado nos três arquivos de referência da etapa 24 e em pelo menos um pacote inteiro (`--bundle "Bundle 4"`): os modelos abrem no ateliê, o texto troca, as variações ligam e desligam; números no `progress.md`.
 - [ ] Rodado em `Bundle 59` (UV): as camadas UV ficam com `light: 'uv'`.
 
 ## Não faça

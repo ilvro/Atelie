@@ -1,4 +1,4 @@
-# Etapa 7 — Mover, redimensionar, girar e escrever no palco
+# Etapa 8 — Mover, redimensionar, girar e escrever no palco
 
 Leia antes: `00-LEIA-PRIMEIRO.md`, `src/editor/stage.js`, `src/editor/state.js`, `src/editor/editor.js`, `src/domain/handouts.js`.
 
@@ -28,7 +28,7 @@ export function layerAtPoint(handout, point)          // a camada mais alta, vis
 
 ## No palco
 
-- Sobre a camada selecionada: contorno em `--tt-accent`, 8 puxadores quadrados de 10 px (tamanho de tela, não muda com o zoom) e um puxador redondo de girar 28 px acima do lado de cima.
+- Sobre a camada selecionada: contorno em `--at-uv`, 8 puxadores quadrados de 10 px (tamanho de tela, não muda com o zoom) e um puxador redondo de girar 28 px acima do lado de cima.
 - **Arrastar o corpo** move; **puxadores** redimensionam (Shift mantém a proporção; Alt redimensiona a partir do centro); **girar** (Shift encaixa em 15°).
 - Durante o arraste, `state.edit(…, { coalesce: 'drag-' + idDoGesto })`, com um `idDoGesto` novo a cada `pointerdown`: o gesto inteiro vira um passo de desfazer. Use `setPointerCapture`.
 - **Guias**: com a caixa sem rotação, `snapBox` com limiar de 6 px de tela (÷ zoom); as guias aparecem como linhas finas magenta sobre o palco enquanto encaixam. Ctrl durante o arraste desliga o encaixe.

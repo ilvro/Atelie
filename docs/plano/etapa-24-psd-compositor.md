@@ -1,10 +1,10 @@
-# Etapa 11 — Compor as camadas de um PSD em Node
+# Etapa 24 — Compor as camadas de um PSD em Node
 
-Leia antes: `00-LEIA-PRIMEIRO.md`, `etapa-10-psd-leitura.md` (a árvore normalizada e o stub de canvas), `scripts/library/lib/psd-tree.js`, `src/domain/handout-pixels.js` (`blendChannel`, `applyAdjustPixels`), `<biblioteca>/reports/psd-summary.md` (gerado na etapa 10: quais mesclagens e ajustes aparecem de verdade).
+Leia antes: `00-LEIA-PRIMEIRO.md`, `etapa-23-psd-leitura.md` (a árvore normalizada e o stub de canvas), `scripts/library/lib/psd-tree.js`, `src/domain/handout-pixels.js` (`blendChannel`, `applyAdjustPixels`), `<expansão>/reports/psd-summary.md` (gerado na etapa 23: quais mesclagens e ajustes aparecem de verdade).
 
 ## Objetivo
 
-Reconstruir a imagem de um PSD a partir das camadas, em Node, para a etapa 12 poder **separar** o que é fundo do que é editável. Medimos a qualidade comparando com a composição que o próprio Photoshop salvou no arquivo (`psd.imageData`).
+Reconstruir a imagem de um PSD a partir das camadas, em Node, para a etapa 25 poder **separar** o que é fundo do que é editável. Medimos a qualidade comparando com a composição que o próprio Photoshop salvou no arquivo (`psd.imageData`).
 
 Não precisa ser perfeito: precisa ficar **parecido o bastante** para que um fundo reconstruído, com os textos desenhados pelo ateliê por cima, pareça o original. A métrica e os limites estão no fim.
 
@@ -48,7 +48,7 @@ export function compositeLayer(target, layer, { mode, opacity, mask, clipAlpha, 
 
 ```js
 export async function composeTree(tree, pixels, { scale, skip = () => false, warnings = [] })
-// pixels(node) → { buffer, mask } já reduzidos (lidos do ag-psd por quem chama). skip(node) → true para pular (ex.: textos na etapa 12).
+// pixels(node) → { buffer, mask } já reduzidos (lidos do ag-psd por quem chama). skip(node) → true para pular (ex.: textos na etapa 25).
 // → buffer do documento inteiro na escala.
 ```
 
@@ -57,9 +57,9 @@ Regras, de baixo para cima em cada lista de filhos:
 1. Nó invisível: pula (com seus filhos).
 2. **Grupo `pass-through`**: os filhos são compostos **direto** no buffer atual (como se o grupo não existisse), com a opacidade do grupo multiplicando a de cada filho. A máscara do grupo, se houver, também multiplica.
 3. **Grupo com outro modo**: compõe os filhos num buffer transparente separado e depois compõe esse buffer no atual com o modo, opacidade e máscara do grupo.
-4. **Recorte**: um nó sem `clipping` seguido de nós com `clipping` forma um grupo de recorte (mesma regra da etapa 3): a base é composta normalmente; cada recortada é composta usando como `clipAlpha` o alfa **da base** (o buffer da base sozinha, antes das recortadas).
+4. **Recorte**: um nó sem `clipping` seguido de nós com `clipping` forma um grupo de recorte (mesma regra da etapa 4): a base é composta normalmente; cada recortada é composta usando como `clipAlpha` o alfa **da base** (o buffer da base sozinha, antes das recortadas).
 5. **pixel** e **smart**: usam os pixels rasterizados da própria camada (`layer.imageData`; o `ag-psd` guarda o objeto inteligente já desenhado). Efeitos de camada são **ignorados**: some o nome em `warnings` (uma vez por tipo).
-6. **text**: também tem pixels rasterizados na camada; componha-os (a etapa 12 decide quando pular).
+6. **text**: também tem pixels rasterizados na camada; componha-os (a etapa 25 decide quando pular).
 7. **adjust**: aplica o ajuste ao buffer atual (ou, se `clipping`, só onde a base tem alfa, usando `clipAlpha`), misturando o resultado com a opacidade × máscara do ajuste. Tipos não implementados: pula e avisa.
 8. Mesclagem `unsupported:*`: compõe como `normal` e avisa.
 
@@ -67,7 +67,7 @@ Máscaras: `layer.mask` vem com bounds e `defaultColor` (fora dos bounds vale `d
 
 ## Ajustes (`adjust.js`)
 
-Implemente, na ordem de prioridade (ajuste a ordem pelo `psd-summary.md` da etapa 10):
+Implemente, na ordem de prioridade (ajuste a ordem pelo `psd-summary.md` da etapa 23):
 
 | Tipo (`ag-psd`) | Como |
 |---|---|
@@ -91,7 +91,7 @@ export function compareBuffers(a, b)   // mesmo tamanho → { mae, bad } — mae
 node --max-old-space-size=8192 scripts/library/psd-check.js --file "<psd>"
 ```
 
-Lê o PSD com pixels (`useImageDataCanvas()` antes; `readPsd(buffer, { useImageData: true })`), compõe a árvore toda, reduz `psd.imageData` para a mesma escala e grava em `<biblioteca>/reports/psd-check/<slug>/`: `original.png`, `nosso.png`, `diferenca.png` (|a − b| × 4, para ver onde erra) e `resultado.json` (`mae`, `bad`, `warnings`, tempo, memória máxima). No terminal: uma linha com `mae` e `bad`.
+Lê o PSD com pixels (`useImageDataCanvas()` antes; `readPsd(buffer, { useImageData: true })`), compõe a árvore toda, reduz `psd.imageData` para a mesma escala e grava em `<expansão>/reports/psd-check/<slug>/`: `original.png`, `nosso.png`, `diferenca.png` (|a − b| × 4, para ver onde erra) e `resultado.json` (`mae`, `bad`, `warnings`, tempo, memória máxima). No terminal: uma linha com `mae` e `bad`.
 
 **Limites de aceitação**, medidos nos três arquivos de referência abaixo:
 
@@ -123,5 +123,5 @@ Se um não atingir, olhe `diferenca.png`, descubra qual regra ou ajuste falta, e
 
 ## Não faça
 
-- Não crie modelos (etapa 12). Não grave nada fora de `reports/psd-check/`.
+- Não crie modelos (etapa 25). Não grave nada fora de `reports/psd-check/`.
 - Não implemente efeitos de camada (sombra, brilho, chanfro): só avise.

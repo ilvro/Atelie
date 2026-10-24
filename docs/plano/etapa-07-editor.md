@@ -1,41 +1,31 @@
-# Etapa 6 — O editor
+# Etapa 7 — O editor
 
-Leia antes: `00-LEIA-PRIMEIRO.md`, `../Tabletop/docs/DESIGN_SYSTEM.md` (só leitura), `src/main.js`, `src/ui/styles.css`, `src/domain/handouts.js`, `src/render/handout-render.js`, `src/data/api.js`, `src/data/handout-images.js`, `src/data/handout-fonts.js`, `src/ui/controls.js` (`numberField`, `colorField`, `checkField`, `choiceField`, `bindControls`), `src/ui/icons.js`.
+Leia antes: `00-LEIA-PRIMEIRO.md`, `PLANO-INTERFACE.md`, `src/ui/shell.js`, `src/ui/primitives.js`, `src/ui/notify.js`, `src/main.js`, `src/ui/styles.css`, `src/domain/handouts.js`, `src/render/handout-render.js`, `src/data/api.js`, `src/data/handout-images.js`, `src/data/handout-fonts.js`, `src/ui/controls.js` (`numberField`, `colorField`, `checkField`, `choiceField`, `bindControls`), `src/ui/icons.js`.
 
 ## Objetivo
 
-A página do app vira o editor: abrir um documento, ver a página, escolher e mudar camadas pelo painel, desfazer, salvar e abrir de novo. **Sem** arrastar no palco (etapa 7) e **sem** biblioteca (etapa 9): imagens vêm só das imagens enviadas (etapa 5).
+A página do app vira o editor: abrir um documento, ver a página, escolher e mudar camadas pelo painel, desfazer, salvar e abrir de novo. **Sem** arrastar no palco (etapa 8) e **sem** biblioteca (etapa 15): imagens vêm só das imagens enviadas (etapa 6).
 
 ## Como fica
 
-```
-┌──────────────────────────────────────────────────────────────────────────────┐
-│ ATELIÊ  [Nome do documento____]  A4·retrato   ↶ ↷   − 50% +   [Novo] [Abrir] [Salvar] │
-├──────────────┬────────────────────────────────────────────┬──────────────────┤
-│ CAMADAS   [+]│                                            │ PROPRIEDADES     │
-│ 👁 🔒 Título │          (página sobre fundo xadrez,       │ Nome             │
-│ 👁 🔒 Texto  │           centrada, com sombra)            │ X Y L A Rotação  │
-│ 👁 🔒 Mancha │                                            │ Opacidade        │
-│ 👁 🔒 Papel  │                                            │ Mesclagem ▾      │
-│              │                                            │ (campos do tipo) │
-│ [Abrir…]     │                                            │                  │
-└──────────────┴────────────────────────────────────────────┴──────────────────┘
-```
+Siga **`PLANO-INTERFACE.md`** (seções 3 a 5). O editor mora na casca da etapa 2:
 
-- A página inteira (`#app`) é uma grade de três colunas e um cabeçalho, ocupando `100dvh`, sem rolagem da página (cada coluna rola sozinha).
-- Título `ATELIÊ` em `.tt-tag`; nome do documento num campo de texto grande na fonte `--eco-font-display`.
-- Lista de camadas **de cima para baixo** (a camada de cima do documento aparece primeiro), como no Photoshop.
+- **Barra do documento** no topo da mesa: nome do documento num campo na fonte `--at-font-display` (sem maiúsculas forçadas), o tamanho da página em `.at-stamp` pequeno, desfazer/refazer, Luz UV (desabilitado até a etapa 19) e **Arquivar** (`.at-btn.is-primary`).
+- **Mesa**: a página com sombra de papel, centralizada; barra de zoom flutuante no canto inferior direito (− 60 % + e "caber").
+- **Inspetor**: aba **Propriedades** (da camada selecionada) e aba **Camadas** (a lista, de cima para baixo, como no Photoshop, com miniatura de 40 px de cada camada renderizada à parte e guardada até a camada mudar).
+- **Gaveta Documentos**: nesta etapa, uma lista simples dos documentos salvos (prévia em `.at-card`, nome, data) e o botão **Novo** (com os `PAGE_PRESETS`); a etapa 10 a transforma no navegador completo.
+- **Trilho**: os recentes (`shell.rail.setRecent`) passam a mostrar os últimos 5 documentos abertos.
 
 ## Arquivos
 
 | Arquivo | O que tem |
 |---|---|
 | `src/editor/state.js` | Estado e histórico, **puro** (testável no Node) |
-| `src/editor/editor.js` | `createEditor(root, deps)`: monta a página, liga tudo; `src/main.js` o chama |
+| `src/editor/editor.js` | `createEditor(shell, deps)`: monta o editor na casca, liga tudo; `src/main.js` o chama |
 | `src/editor/stage.js` | Palco: render, zoom, centralizar |
 | `src/editor/layers-panel.js` | HTML da lista de camadas e do menu "+" |
 | `src/editor/properties-panel.js` | HTML das propriedades da camada selecionada |
-| `src/ui/editor.css` | Estilos; importado em `src/main.js` com `import './ui/editor.css';` depois de `styles.css` |
+| `src/ui/editor.css` | Estilos do editor (só tokens `--at-*` e `--eco-*`); importado em `src/main.js` |
 | `tests/editor-state.test.js`, `tests/e2e/editor.test.js` | Testes |
 
 ## `src/editor/state.js`
@@ -86,7 +76,7 @@ export function createStage(container, { images, fonts })
 - Renderiza com `renderHandout(canvas, handout, { scale: zoom × devicePixelRatio, loadImage: images.load, loadFont: fonts.load })` e define `canvas.style.width = page.width × zoom` px.
 - Agrupe pedidos: no máximo um render por quadro (`requestAnimationFrame`); se chegar um novo pedido durante um render assíncrono, renderize de novo no fim só com o último.
 - Zoom: botões − / + (×0,8 / ×1,25), `fit` (cabe no palco), limites 10 %–400 %; Ctrl + roda do mouse sobre o palco também.
-- Camada selecionada: um retângulo tracejado em `--tt-accent` desenhado num `<div>` sobreposto (posição e tamanho × zoom, `transform: rotate(...)`), não no canvas. (Os puxadores vêm na etapa 7.)
+- Camada selecionada: um retângulo tracejado em `--at-uv` desenhado num `<div>` sobreposto (posição e tamanho × zoom, `transform: rotate(...)`), não no canvas. (Os puxadores vêm na etapa 8.)
 - Clique no palco seleciona a camada mais alta cuja caixa (girada) contém o ponto; clique fora de tudo limpa a seleção.
 
 ## Menu "+" de camadas
@@ -97,15 +87,15 @@ Botões na linha de cada camada: olho (`visible`), cadeado (`locked`; camada tra
 
 ## Abrir, novo, salvar
 
-- **Salvar** (Ctrl+S): `create` na primeira vez e `save` depois, usando `api.handouts`; em seguida gera a prévia (render com largura 480 px → `canvas.toDataURL('image/webp', .82)`) e `savePreview`. Erro → um aviso no rodapé (crie `src/ui/notify.js`: uma faixa que some em 4 s, `role="status"`).
-- **Abrir…**: uma lista (no lugar das camadas, com "Voltar") dos documentos salvos com prévia, nome e data; clicar abre. Se houver alterações não salvas, `confirm('Descartar as alterações do documento aberto?')`.
+- **Arquivar** (Ctrl+S): `create` na primeira vez e `save` depois, usando `api.handouts`; em seguida gera a prévia (render com largura 480 px → `canvas.toDataURL('image/webp', .82)`) e `savePreview`. Sucesso: o carimbo **ARQUIVADO** desce sobre o canto da página (seção 4 do plano de interface). Erro: `notify(…, { tone: 'error' })` da casca.
+- **Abrir**: pela gaveta Documentos; clicar num documento abre com a animação de troca (seção 4 do plano). Se houver alterações não arquivadas, um diálogo próprio (não `confirm`) com **Arquivar e abrir**, **Descartar** e **Cancelar**.
 - **Novo**: escolher um `PAGE_PRESETS` numa lista simples; cria com `createHandout`.
-- Sair da página com alterações não salvas: `beforeunload` pede confirmação.
+- Sair da página com alterações não arquivadas: `beforeunload` pede confirmação (a etapa 10 troca isso pelo rascunho automático).
 - O endereço acompanha o documento: `history.replaceState` com `?handout=<id>` depois de salvar ou abrir; abrir a página com `?handout=<id>` carrega esse documento; `?new=a4` (ou outro preset) começa um novo. Sem parâmetro: o último documento aberto (`localStorage`, `atelie-last`), ou um A4 novo.
 
 ## Teclado
 
-Ctrl+Z / Ctrl+Shift+Z (ou Ctrl+Y) desfazem e refazem, Ctrl+S salva, Delete exclui a camada selecionada, Esc tira a seleção. Nada disso dispara com o foco num campo de texto (`input`, `textarea`, `select`, `[contenteditable]`), exceto Ctrl+S.
+Ctrl+Z / Ctrl+Shift+Z (ou Ctrl+Y) desfazem e refazem, Ctrl+S arquiva, Delete exclui a camada selecionada, Esc tira a seleção. Nada disso dispara com o foco num campo de texto (`input`, `textarea`, `select`, `[contenteditable]`), exceto Ctrl+S.
 
 ## Testes
 
@@ -123,7 +113,7 @@ Ctrl+Z / Ctrl+Shift+Z (ou Ctrl+Y) desfazem e refazem, Ctrl+S salva, Delete exclu
 2. "+" → Texto; em Propriedades, escrever "Querida Lia" e tamanho 80 → o pixel no centro da caixa de texto escurece (leia com `canvas.getContext('2d').getImageData` pelo `page.evaluate`).
 3. Ctrl+Z volta o tamanho; Ctrl+Z de novo volta o texto inteiro (a digitação foi um passo).
 4. Mesclagem "Multiplicação" e opacidade 50 % gravam no documento (o estado exposto em `window.__atelie.editor` só com `?diagnostics`).
-5. Salvar → recarregar a página com `?handout=<id>` recupera as camadas; Abrir… mostra o documento com prévia.
+5. Arquivar → o carimbo aparece; recarregar com `?handout=<id>` recupera as camadas; a gaveta Documentos mostra o documento com prévia; o trilho mostra-o nos recentes.
 8. Enviar uma imagem PNG gerada no teste (`setInputFiles`) e escolhê-la numa camada de imagem → o canvas mostra a cor dela.
 6. Ocultar a camada (olho) → o texto some do canvas; travar → o painel fica desabilitado.
 7. Reordenar com ↑ muda a ordem no documento.
@@ -135,4 +125,4 @@ Ctrl+Z / Ctrl+Shift+Z (ou Ctrl+Y) desfazem e refazem, Ctrl+S salva, Delete exclu
 
 ## Não faça
 
-- Nada de puxadores ou arrastar no palco (etapa 7), biblioteca (etapa 9), assado (etapa 13).
+- Nada de puxadores ou arrastar no palco (etapa 8), biblioteca (etapa 15), assado (etapa 18).

@@ -1,4 +1,4 @@
-# Etapa 13 — Assar e entregar
+# Etapa 18 — Assar e entregar
 
 Leia antes: `00-LEIA-PRIMEIRO.md`, **`CONTRATO-TABLETOP.md` (inteiro)**, `src/editor/editor.js`, `src/render/handout-render.js`, `src/data/api.js`, `server/app.js`, `server/routes/handouts.js`, `server/paths.js` (`defaultAllowedOrigins`).
 
@@ -10,7 +10,7 @@ Tudo o que o Tabletop (ou qualquer outro programa) precisa para usar um document
 2. o servidor oferece a lista, a prévia e os assados por HTTP com CORS para as origens permitidas;
 3. a página abre direto um documento por link (`?handout=`, `?new=`) e, quando foi aberta por outra janela autorizada, avisa que salvou.
 
-Nesta etapa o assado UV usa as camadas `light: 'uv'` como já são desenhadas (regra da etapa 3); o visual completo da luz UV vem na etapa 14.
+Nesta etapa o assado UV usa as camadas `light: 'uv'` como já são desenhadas (regra da etapa 4); o visual completo da luz UV vem na etapa 19.
 
 ## Assar (`src/editor/bake.js`)
 
@@ -60,7 +60,7 @@ export const savedMessage = (handout, hasUv) => ({ app: 'atelie', contract: 1, t
 
 Depois de salvar **e** assar, se `handoffTarget(...)` não for nulo: `window.opener.postMessage(savedMessage(...), target)`. Mostre no cabeçalho um selo "Ligado ao Tabletop" enquanto houver destino.
 
-`?handout=<id>` e `?new=<preset>` já funcionam desde a etapa 6; confira que continuam funcionando com `&from=…` junto.
+`?handout=<id>` e `?new=<preset>` já funcionam desde a etapa 7; confira que continuam funcionando com `&from=…` junto.
 
 ## Testes
 
@@ -83,4 +83,4 @@ Depois de salvar **e** assar, se `handoffTarget(...)` não for nulo: `window.ope
 
 ## Não faça
 
-- Nada no Tabletop (etapa 18). Não mude o contrato: se algo nele estiver errado ou impossível, pare e avise.
+- Nada no Tabletop (etapa 27). Não mude o contrato: se algo nele estiver errado ou impossível, pare e avise.

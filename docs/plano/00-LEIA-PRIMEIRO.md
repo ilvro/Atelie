@@ -4,14 +4,25 @@ Plano escrito em 24 de outubro de 2026 para ser implementado **uma etapa por vez
 
 ## O que é
 
-Um aplicativo próprio, **separado do Tabletop**, para criar e editar documentos de RPG (*handouts*): cartas, jornais, fichas policiais, telegramas, polaroides, diários. Parecido com um Photoshop pequeno e especializado. A pessoa:
+Um aplicativo próprio, **separado do Tabletop**, para criar e editar documentos de RPG (*handouts*): cartas, jornais, fichas policiais, telegramas, polaroides, diários. Parecido com um Photoshop pequeno e especializado, com cara de **bancada de artesão** (ver `PLANO-INTERFACE.md`). A pessoa:
 
-1. começa de um **modelo** (importado dos PSDs do *Arquivos Confidenciais* ou feito no próprio ateliê) ou de uma folha em branco;
-2. troca textos, fontes, imagens, manchas, carimbos, dobras e desgaste, camada por camada;
+1. começa de um **modelo** ou de uma folha em branco;
+2. troca textos, fontes, imagens, manchas, carimbos, dobras e desgaste, camada por camada, ou só **preenche os campos** do modelo;
 3. pode esconder um texto que só aparece sob **luz UV**;
-4. exporta PNG ou imprime, e, com o Tabletop, usa o documento na cena (uma carta na mesa que os jogadores pegam para ler).
+4. lê em tela cheia com lupa e lanterna UV, exporta PNG, imprime, e, com o Tabletop, usa o documento na cena (uma carta na mesa que os jogadores pegam para ler).
 
-O objetivo principal é usar **todo o acervo** de documentos que hoje vive em PSDs no HD, sem abrir o Photoshop.
+## A coleção da casa e as expansões
+
+O Ateliê é **completo sozinho**. Ele traz a sua própria **coleção da casa** (`public/colecao/`, no git e no site), toda feita para ele, com licença própria ou livre:
+
+- 16 papéis em 3 idades e ~60 texturas de sobreposição (manchas, sangue, água, queimado, amassados, dobras, digitais, rasgos), geradas por código (etapa 12);
+- ~140 elementos vetoriais: carimbos, selos, clipes, fitas, etiquetas, lacres, molduras, ornamentos, emblemas fictícios, símbolos, marcas à mão (etapa 13);
+- 26 famílias de fontes livres: máquina de escrever, à mão, impressão antiga, jornal, gótica, estêncil, tela (etapa 14);
+- 36 modelos prontos, feitos no próprio Ateliê (etapa 16).
+
+**Expansões** são bibliotecas a mais, instaladas na máquina e privadas (`data-private/expansoes/<id>/`). A primeira é o acervo do *Arquivos Confidenciais* (etapas 22 a 25): ele **melhora** o Ateliê (mais centenas de modelos e milhares de elementos), mas nada depende dele. Itens de expansão aparecem misturados na biblioteca, com um selo da origem, e podem ser filtrados.
+
+O Ateliê também roda **sem servidor**, como site estático (modo navegador, etapa 6): só a coleção da casa, com os documentos guardados no navegador.
 
 ## Onde fica
 
@@ -22,36 +33,52 @@ O objetivo principal é usar **todo o acervo** de documentos que hoje vive em PS
 | Vite (desenvolvimento) | `http://127.0.0.1:5174` | `http://127.0.0.1:5173` |
 | API | `/api/atelie/…` | `/api/tabletop/…` |
 
-As etapas 1 a 17 acontecem **só** no Ateliê. A etapa 18 acontece **só** no Tabletop e liga os dois pelo contrato de [`CONTRATO-TABLETOP.md`](CONTRATO-TABLETOP.md). Nenhuma etapa do Ateliê importa código do Tabletop: quando uma etapa diz "copie de `../Tabletop/…`", é cópia, com o teste junto.
+As etapas 1 a 26 acontecem **só** no Ateliê. A etapa 27 acontece **só** no Tabletop e liga os dois pelo contrato de [`CONTRATO-TABLETOP.md`](CONTRATO-TABLETOP.md). Nenhuma etapa do Ateliê importa código do Tabletop: quando uma etapa diz "copie de `../Tabletop/…`", é cópia, com o teste junto.
+
+## Arquivos de apoio
+
+| Arquivo | Para quê |
+|---|---|
+| [`PLANO-INTERFACE.md`](PLANO-INTERFACE.md) | Identidade visual, tokens, primitivas, movimento, estrutura da tela e padrões de qualidade. **Toda etapa com interface segue este arquivo.** |
+| [`CONTRATO-TABLETOP.md`](CONTRATO-TABLETOP.md) | O que o Ateliê oferece ao Tabletop e como os dois conversam. |
 
 ## Por que em etapas pequenas
 
-O acervo tem 78 pacotes de documentos, mais de 2 500 imagens soltas e PSDs de até 340 MB, com camadas de ajuste, modos de mesclagem, máscaras e objetos inteligentes aninhados. Nada disso precisa existir de uma vez. Cada etapa entrega algo que funciona e tem teste; a seguinte só começa com a anterior pronta.
+O acervo pago tem 78 pacotes de documentos, mais de 2 500 imagens soltas e PSDs de até 340 MB; a coleção própria tem centenas de itens; a interface tem dezenas de detalhes. Nada disso precisa existir de uma vez. Cada etapa entrega algo que funciona e tem teste; a seguinte só começa com a anterior pronta.
 
 ## Ordem das etapas
 
 | # | Arquivo | Entrega | Depende de |
 |---|---|---|---|
-| 1 | `etapa-01-projeto.md` | O projeto: pastas, servidor, Vite, tokens visuais, testes, git | — |
-| 2 | `etapa-02-modelo-de-dados.md` | O formato de um documento e a validação | 1 |
-| 3 | `etapa-03-renderizador.md` | Desenhar um documento num canvas: imagens, formas, mesclagem, recorte, ajustes | 2 |
-| 4 | `etapa-04-texto.md` | Texto: caixa, quebra de linha, alinhamento, fontes, tintas | 3 |
-| 5 | `etapa-05-armazenamento.md` | Salvar documentos, enviar imagens, ler a biblioteca | 2 |
-| 6 | `etapa-06-editor.md` | O editor: palco, zoom, lista de camadas, propriedades, desfazer | 3, 4, 5 |
-| 7 | `etapa-07-manipulacao.md` | Mover, redimensionar e girar no palco; escrever no lugar | 6 |
-| 8 | `etapa-08-importar-elementos.md` | Script que importa as imagens soltas, símbolos e fontes do HD | 1, 5 |
-| 9 | `etapa-09-biblioteca.md` | Navegar e usar a biblioteca no editor; modo "Preencher" | 6, 8 |
-| 10 | `etapa-10-psd-leitura.md` | Ler a estrutura dos PSDs e gerar um relatório | 1 |
-| 11 | `etapa-11-psd-compositor.md` | Compor as camadas de um PSD em Node | 10 |
-| 12 | `etapa-12-psd-modelos.md` | Transformar um PSD num modelo editável e validar contra o original | 11, 4 |
-| 13 | `etapa-13-assar-e-entregar.md` | Assar o documento em PNG, link direto, aviso para quem abriu o ateliê | 6 |
-| 14 | `etapa-14-luz-uv.md` | Camadas UV, visualização e assado UV | 13 |
-| 15 | `etapa-15-efeitos-procedurais.md` | Amassado, dobras, manchas, queimado, rasgado, sangue sem o acervo | 3 |
-| 16 | `etapa-16-exportar-e-imprimir.md` | Exportar PNG e folha de impressão | 3 |
-| 17 | `etapa-17-docs-e-exemplos.md` | Documentação de uso e manutenção, documentos de exemplo | 1–16 |
-| 18 | `etapa-18-integracao-tabletop.md` | **No Tabletop**: usar documentos do ateliê na cena, editar, atualizar, UV na inspeção, tutorial | 13, 14 |
+| 1 | `etapa-01-projeto.md` | O projeto: pastas, servidor, Vite, testes, git | — |
+| 2 | `etapa-02-identidade-e-casca.md` | Identidade visual, fontes da interface, primitivas, trilho, gavetas, inspetor, avisos, menu de contexto, Ctrl+K, Ajustes da mesa | 1 |
+| 3 | `etapa-03-modelo-de-dados.md` | O formato de um documento e a validação | 1 |
+| 4 | `etapa-04-renderizador.md` | Desenhar um documento: imagens, formas, mesclagem, recorte, ajustes | 3 |
+| 5 | `etapa-05-texto.md` | Texto: caixa, quebra, alinhamento, fontes, tintas | 4 |
+| 6 | `etapa-06-armazenamento.md` | Documentos, versões, lixeira, envios, biblioteca (casa + expansões), modo navegador | 3 |
+| 7 | `etapa-07-editor.md` | O editor na casca: palco, camadas, propriedades, desfazer, arquivar | 2, 4, 5, 6 |
+| 8 | `etapa-08-manipulacao.md` | Mover, redimensionar, girar, escrever no lugar | 7 |
+| 9 | `etapa-09-ferramentas-do-editor.md` | Réguas e guias, histórico, mini-barra, conta-gotas, colar e arrastar imagens, alinhar, cores | 8 |
+| 10 | `etapa-10-documentos-e-rascunho.md` | Navegador com pastas, fixados, favoritos, recentes; rascunho automático; versões; lixeira | 7 |
+| 11 | `etapa-11-efeitos-procedurais.md` | Amassado, dobras, manchas, queimado, rasgado, sangue, grão (camadas `effect`) | 4 |
+| 12 | `etapa-12-colecao-papeis-e-texturas.md` | Coleção da casa: papéis e texturas gerados por código | 6, 11 |
+| 13 | `etapa-13-colecao-elementos.md` | Coleção da casa: carimbos, selos, clipes, fitas, lacres, molduras, símbolos, marcas | 12 |
+| 14 | `etapa-14-colecao-fontes.md` | Coleção da casa: 26 fontes livres e o seletor de fontes | 2, 6 |
+| 15 | `etapa-15-biblioteca.md` | Gaveta Biblioteca e modo "Preencher" | 7, 12, 13, 14 |
+| 16 | `etapa-16-colecao-modelos.md` | Coleção da casa: 36 modelos próprios | 9, 15 |
+| 17 | `etapa-17-inicio-e-galeria.md` | Tela de início, gaveta Modelos, primeira visita | 10, 16 |
+| 18 | `etapa-18-assar-e-entregar.md` | Assar em PNG, rotas do contrato com CORS, link direto, aviso para o Tabletop | 7 |
+| 19 | `etapa-19-luz-uv.md` | Camadas UV, escurecimento, clima UV da interface, assado UV | 18 |
+| 20 | `etapa-20-modo-leitura.md` | Leitura em tela cheia: lupa, lanterna UV, verso, carrossel | 10, 19 |
+| 21 | `etapa-21-exportar-e-imprimir.md` | Exportar PNG e folha de impressão | 4 |
+| 22 | `etapa-22-importar-elementos.md` | **Expansão**: importar imagens, símbolos e fontes do *Arquivos Confidenciais* | 6, 14 |
+| 23 | `etapa-23-psd-leitura.md` | **Expansão**: ler a estrutura dos PSDs (relatório) | 1 |
+| 24 | `etapa-24-psd-compositor.md` | **Expansão**: compor as camadas de um PSD em Node | 23 |
+| 25 | `etapa-25-psd-modelos.md` | **Expansão**: PSD vira modelo editável | 24, 5 |
+| 26 | `etapa-26-documentacao.md` | Ajuda no app, guia de uso, manutenção, licenças | 1–25 |
+| 27 | `etapa-27-integracao-tabletop.md` | **No Tabletop**: documentos do Ateliê na cena, editar, atualizar, UV na inspeção, tutorial | 18, 19 |
 
-As etapas 8, 10 e 15 podem ser feitas a qualquer momento depois das suas dependências.
+As etapas de expansão (22 a 25) podem ser feitas em qualquer momento depois das dependências, mas **o app tem de estar completo e bonito antes delas**: elas melhoram, não completam.
 
 ## Como entregar uma etapa a quem implementa
 
@@ -59,7 +86,9 @@ Mande uma etapa por conversa (ou por vez), com esta mensagem, trocando o número
 
 > Você vai implementar a **etapa N** do Ateliê de documentos (`/home/ilvro/Documents/Projects/Atelie`). Leia, nesta ordem: `AGENTS.md` (se já existir), `docs/plano/00-LEIA-PRIMEIRO.md` e `docs/plano/etapa-NN-….md`. Faça **só** o que essa etapa pede, na ordem em que ela pede, e leia só os arquivos de código que ela manda ler. Quando todos os itens de "Pronto quando" estiverem verdadeiros, pare e me mostre: o que mudou (arquivos), a saída dos testes, e o que ficou pendente. Não comece a próxima etapa.
 
-Para a etapa 18, troque o projeto para o Tabletop: "Você vai implementar a etapa 18 … no Tabletop (`/home/ilvro/Documents/Projects/Tabletop`). Leia `AGENTS.md` do Tabletop, `../Atelie/docs/plano/00-LEIA-PRIMEIRO.md`, `../Atelie/docs/plano/CONTRATO-TABLETOP.md` e `../Atelie/docs/plano/etapa-18-integracao-tabletop.md`."
+Para a etapa 27, troque o projeto para o Tabletop: "Você vai implementar a etapa 27 … no Tabletop (`/home/ilvro/Documents/Projects/Tabletop`). Leia `AGENTS.md` do Tabletop, `../Atelie/docs/plano/00-LEIA-PRIMEIRO.md`, `../Atelie/docs/plano/CONTRATO-TABLETOP.md` e `../Atelie/docs/plano/etapa-27-integracao-tabletop.md`."
+
+Para as etapas com interface, acrescente à mensagem: "Siga `docs/plano/PLANO-INTERFACE.md` em tudo o que for visual."
 
 Ao receber a resposta, confira o "Pronto quando" você mesmo (rode os testes) antes de mandar a etapa seguinte.
 
@@ -67,10 +96,10 @@ Ao receber a resposta, confira o "Pronto quando" você mesmo (rode os testes) an
 
 1. **Antes de começar**, leia `AGENTS.md` (criado na etapa 1), este arquivo e o arquivo da etapa. Leia só os arquivos de código que a etapa manda ler.
 2. **Faça só o que a etapa pede.** Se achar que falta algo, anote em "Pendências" no `progress.md`; não implemente.
-3. **Nunca** coloque arquivos do *Arquivos Confidenciais* (PSDs, imagens, fontes) no git, em `public/` ou em `dist/`. É um produto pago, para uso pessoal. Tudo o que vem dele vai para a pasta privada da biblioteca (`data-private/`), que está no `.gitignore`.
+3. **Nunca** coloque arquivos do *Arquivos Confidenciais* (PSDs, imagens, fontes) no git, em `public/` ou em `dist/`. É um produto pago, para uso pessoal: vai só para `data-private/expansoes/`, que está no `.gitignore`. A **coleção da casa** (`public/colecao/`) é o oposto: é do Ateliê, vai para o git, e só pode ter coisas feitas para ele ou com licença livre registrada (nada copiado nem derivado do acervo pago).
 4. **Estilo**: JavaScript puro com módulos ES, sem framework, sem biblioteca de componentes, sem CDN. Comentários em inglês, curtos, explicando o porquê; textos de interface em português do Brasil. Funções puras em módulos próprios, cobertas por `tests/*.test.js` (`node --test`). Siga o arquivo vizinho.
 5. **Dependências**: só as que a etapa 1 lista. As de importação (`ag-psd`, `sharp`, `fflate`) são `devDependencies` usadas só pelos scripts; nada delas entra no código do navegador.
-6. **Interface**: use os tokens e primitivas copiados na etapa 1 (`--eco-*`, `--tt-*`, `.tt-tag`, `.tt-display`) e os controles de `src/ui/controls.js` (também copiados). Nenhuma fonte menor que 11 px (há teste). Toda animação respeita `prefers-reduced-motion`.
+6. **Interface**: siga `PLANO-INTERFACE.md` (tokens `--eco-*` e `--at-*`, primitivas `.at-*`, movimento, estrutura). Nenhuma fonte menor que 11 px (há teste). Toda animação respeita `prefers-reduced-motion`.
 7. **Ao terminar a etapa**:
    - `npm test` sem falhas;
    - os testes E2E que a etapa lista: `npm run build && node --test --test-concurrency=1 tests/e2e/<arquivo>.test.js`;
@@ -88,8 +117,11 @@ Ao receber a resposta, confira o "Pronto quando" você mesmo (rode os testes) an
 | **modelo** | Um documento pronto para ser copiado, com campos marcados para preencher. |
 | **elemento** | Uma imagem solta da biblioteca: papel, mancha, sangue, fita, prendedor, símbolo, carimbo, moldura. |
 | **envio** (*upload*) | Uma imagem que a pessoa enviou ao ateliê (uma foto de NPC, um mapa). |
-| **biblioteca** | Os modelos, elementos e fontes importados, na pasta privada. |
+| **biblioteca** | Tudo o que se pode usar num documento: a coleção da casa mais as expansões instaladas. |
+| **coleção da casa** | Papéis, texturas, elementos, fontes e modelos do próprio Ateliê (`public/colecao/`). |
+| **expansão** | Uma biblioteca privada a mais, instalada na máquina (`data-private/expansoes/<id>/`), como o *Arquivos Confidenciais*. |
 | **assar** (*bake*) | Renderizar o documento num PNG, para exportar e para o Tabletop. |
+| **arquivar** | Salvar no servidor (ou no navegador), com o carimbo; diferente do rascunho automático. |
 | **UV** | Camadas que só aparecem sob luz ultravioleta. |
 
 ## Referências
@@ -97,7 +129,8 @@ Ao receber a resposta, confira o "Pronto quando" você mesmo (rode os testes) an
 - Acervo: `/home/ilvro/Documents/RPG - Conteúdo/RPG - Conteúdo/Arquivos Confidenciais` (link para `/media/hd/Arquivos Confidenciais`, num HD; leitura lenta). Pastas: `Documentos/Bundle N - …` (PSDs, `Prévias`, `Fontes`), `Assets/<ano>/<mês>/<categoria>` (PNG/JPG soltos), `Símbolos/<ano>/<mês>`, `EXTRAS`, `EXTRAS (2)`.
 - Documentos que o usuário já fez (PSD, e PNG/PDF em `PDFs | Imagens`): `/home/ilvro/Documents/RPG - Conteúdo/RPG - Conteúdo/Campanhas/Vaesen/Documentos/`.
 - Como o Tabletop lida hoje com documentos na cena: `../Tabletop/docs/DOCUMENTOS_INTERATIVOS.md` (só leitura, para contexto).
-- Sistema visual compartilhado: `../Tabletop/docs/DESIGN_SYSTEM.md` e `../Tabletop/src/ui/theme.css` (copiados na etapa 1).
+- Sistema visual compartilhado: `../Tabletop/docs/DESIGN_SYSTEM.md` e `../Tabletop/src/ui/theme.css` (a camada `eco` é copiada na etapa 1).
+- Projeto irmão de referência de experiência: `../Ficha teste - Ordem II` (ver `PLANO-INTERFACE.md`).
 
 ## O que a análise dos PSDs mostrou (24/10/2026)
 
@@ -135,3 +168,12 @@ Medido com `ag-psd` 30.2.0 em três arquivos (um jornal, um relatório policial 
 | 16 | pendente | | |
 | 17 | pendente | | |
 | 18 | pendente | | |
+| 19 | pendente | | |
+| 20 | pendente | | |
+| 21 | pendente | | |
+| 22 | pendente | | |
+| 23 | pendente | | |
+| 24 | pendente | | |
+| 25 | pendente | | |
+| 26 | pendente | | |
+| 27 | pendente | | |

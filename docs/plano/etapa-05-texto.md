@@ -1,6 +1,6 @@
-# Etapa 4 — Texto
+# Etapa 5 — Texto
 
-Leia antes: `00-LEIA-PRIMEIRO.md`, a seção `text` de `etapa-02-modelo-de-dados.md`, `src/render/handout-text.js` (a versão mínima da etapa 3), `src/domain/wrap.js` (`wrapText`). Para ideias (só leitura): `../Tabletop/src/domain/inspectables.js` (`layoutPageText`).
+Leia antes: `00-LEIA-PRIMEIRO.md`, a seção `text` de `etapa-03-modelo-de-dados.md`, `src/render/handout-text.js` (a versão mínima da etapa 4), `src/domain/wrap.js` (`wrapText`). Para ideias (só leitura): `../Tabletop/src/domain/inspectables.js` (`layoutPageText`).
 
 ## Objetivo
 
@@ -77,7 +77,7 @@ export function createHandoutFonts({ url = id => new URL(`api/atelie/library/${e
 // document.fonts.add, await load(); cache pela chave `${library}|${weight}|${italic}`. Falha → false e um aviso no console uma vez.
 ```
 
-`renderHandout` (etapa 3) já recebe `loadFont`; passe `fonts.load` nas chamadas do diagnóstico e, depois, do ateliê.
+`renderHandout` (etapa 4) já recebe `loadFont`; passe `fonts.load` nas chamadas do diagnóstico e, depois, do ateliê.
 
 ## Testes
 
