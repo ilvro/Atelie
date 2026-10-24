@@ -1,9 +1,11 @@
 import './ui/styles.css';
+import './ui/editor.css';
 import { createShell } from './ui/shell.js';
 import { renderHandout } from './render/handout-render.js';
 import { createHandoutImages } from './data/handout-images.js';
 import { createHandoutFonts } from './data/handout-fonts.js';
 import { api } from './data/api.js';
+import { createEditor } from './editor/editor.js';
 
 const appRoot = document.getElementById('app');
 if (appRoot) {
@@ -23,9 +25,12 @@ if (appRoot) {
     const fonts = createHandoutFonts();
     const isDiagnostics = window.location.search.includes('diagnostics');
 
+    const editor = createEditor(shell, { api, images, fonts });
+
     const atelieApi = {
       ...shell,
       api,
+      ...(isDiagnostics && editor ? { editor } : {}),
       renderHandout: async (handout, { scale = 0.25, light = 'normal', at = [] } = {}) => {
         const canvas = document.createElement('canvas');
         const res = await renderHandout(canvas, handout, {

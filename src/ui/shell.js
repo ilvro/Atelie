@@ -331,7 +331,14 @@ export function createShell(root, { onAction } = {}) {
   return {
     desk,
     inspector: {
-      tab(name) {
+      tab(name, elementOrRenderer) {
+        if (elementOrRenderer !== undefined) {
+          inspectorPanels.set(name, elementOrRenderer);
+          if (activeTab === name) {
+            inspectorContent.innerHTML = '';
+            inspectorContent.appendChild(typeof elementOrRenderer === 'function' ? elementOrRenderer() : elementOrRenderer);
+          }
+        }
         const btn = root.querySelector(`.inspector-tab[data-tab="${name}"]`);
         btn?.click();
       },

@@ -12,7 +12,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 4 — Renderizador | concluída | 2026-10-24 | Desenho de camadas em Canvas 2D, mesclagens, recorte, ajustes e luz UV |
 | 5 — Texto | concluída | 2026-10-24 | Diagramação pura, 4 estilos de tinta, carregador FontFace e testes |
 | 6 — Armazenamento | concluída | 2026-10-24 | IndexedDB, rotas de biblioteca, documentos, lixeira e envios |
-| 7 — Editor | pendente | | Palco, camadas, desfazer/refazer, propriedades |
+| 7 — Editor | concluída | 2026-10-24 | Palco, camadas, desfazer/refazer, propriedades, arquivamento e uploads |
 | 8 — Manipulação | pendente | | Mover, redimensionar, girar camadas |
 | 9 — Ferramentas do editor | pendente | | Guias, réguas, conta-gotas, colar imagens |
 | 10 — Documentos e rascunho | pendente | | Gestão de documentos, rascunho automático |
@@ -35,6 +35,56 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 27 — Documentação | pendente | | Manuais, guia de uso e licenças |
 | 28 — Integração Tabletop | pendente | | Consumo e interação direta dentro do Tabletop |
 | 29 — Expansão no navegador | pendente | | Expansão local no navegador (opcional) |
+
+---
+
+## Etapa 7 — O editor
+
+### Feito
+- **Estado e histórico puro** (`src/editor/state.js`):
+  - Histórico de desfazer/refazer com imutabilidade estrita dos documentos de `src/domain/handouts.js`.
+  - Agrupamento temporal com chave `coalesce` dentro de uma janela de 600 ms para digitação e controles deslizantes.
+  - Limite configurável de passos (descarte dos mais antigos).
+  - Remoção automática de seleção (`selection = null`) quando a camada selecionada deixa de existir após desfazer.
+  - Testes unitários puros em `tests/editor-state.test.js` cobrindo 5 cenários (100% de sucesso).
+- **Palco interativo** (`src/editor/stage.js`):
+  - Canvas centralizado com fundo xadrez e sombra física de papel.
+  - Renderização via `renderHandout` com coalescência de quadros em `requestAnimationFrame`.
+  - Controle de zoom de 10% a 400% e função de ajuste ("Caber" / `fit`), barra flutuante no canto inferior direito e atalho Ctrl + roda do mouse.
+  - Retângulo delimitador tracejado em `--at-uv` para a camada selecionada em elemento sobreposto com suporte à rotação.
+  - Seleção por clique no palco com hit testing de ponto em polígonos rotacionados e clique fora para desseleção.
+- **Painel de camadas** (`src/editor/layers-panel.js`):
+  - Apresentação no modelo Photoshop (da camada superior para a inferior).
+  - Menu "+" de adição de camadas (Texto, Imagem, Retângulo, Elipse, Linha e Ajuste de cor) inserindo acima da selecionada.
+  - Alternância de visibilidade (`visible`) e trava (`locked`).
+  - Reordenação por botões de seta (↑ / ↓) e por arrastar-e-soltar nativo (HTML5 drag-and-drop).
+  - Ações de duplicação, exclusão e renomeação direta com duplo clique.
+- **Inspetor de propriedades** (`src/editor/properties-panel.js`):
+  - Controles comuns para todas as camadas (`name`, coordenadas `x`, `y`, dimensões `width`, `height`, `rotation`, `opacity`, `blend`, `clip`, `light`).
+  - Propriedades de texto com seleção de fontes do sistema, alinhamento horizontal/vertical, entrelinha, espaçamento entre letras, modo de caixa (`area`/`point`), encolhimento para caber (`fit: 'shrink'`), 4 estilos de tinta (`clean`, `typewriter`, `handwriting`, `stamp`), desgaste (`wear`) e semente de ruído (`seed`).
+  - Propriedades de imagem com miniaturas, modal de seleção e envio de imagens via `api.uploads` (`input[type="file"]`), espelhamento horizontal/vertical, modos de enquadramento (`stretch`, `cover`, `contain`), matiz e filtros visuais.
+  - Formas vetoriais (tipo, preenchimento, contorno, raio) e camadas de ajuste de cor.
+  - Banner informativo e desativação de campos quando a camada está travada.
+- **Estilização do editor** (`src/ui/editor.css`):
+  - Interface construída exclusivamente com tokens `--at-*` e `--eco-*`, cumprindo tamanhos mínimos de fonte `>= 11px`.
+- **Orquestração e atalhos** (`src/editor/editor.js` e `src/main.js`):
+  - Barra do documento superior com nome editável, tamanho em selo `.at-stamp`, botões desfazer/refazer e botão **Arquivar** (Ctrl+S).
+  - Animação imersiva de carimbo **ARQUIVADO** e geração automática de prévia em WebP (480 px) via `api.handouts.savePreview`.
+  - Gaveta de documentos com listagem rápida dos documentos salvos e botão **Novo** com presets de página.
+  - Atualização do trilho lateral com os últimos 5 documentos abertos.
+  - Atalhos de teclado globais: Ctrl+Z (desfazer), Ctrl+Shift+Z / Ctrl+Y (refazer), Ctrl+S (arquivar), Delete (excluir camada selecionada) e Esc (limpar seleção), respeitando campos com foco.
+  - Diálogo modal para confirmação de alterações não salvas ao abrir outro documento ou criar um novo, e proteção `beforeunload`.
+  - Navegação e sincronização de URL (`?handout=<id>`, `?new=<preset>` e preservação de `&diagnostics`).
+- **Testes de ponta a ponta** (`tests/e2e/editor.test.js`):
+  - 8 cenários cobrindo abertura com presets, edição de texto, desfazer/refazer, propriedades, arquivamento com persistência e recarga, upload e visualização de imagem, visibilidade, travamento e reordenação.
+
+### Validação
+- `npm test`: 50 testes unitários passando.
+- `npm run test:e2e`: 4 suítes E2E completas passando no Playwright.
+- `npm run build`: compilação do Vite concluída sem erros ou alertas de módulo.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 7. A manipulação direta no palco (puxadores de canto para redimensionamento, rotação e arrastar com o mouse) será implementada na Etapa 8.
 
 ---
 

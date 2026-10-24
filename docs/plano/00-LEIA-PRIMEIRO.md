@@ -167,7 +167,7 @@ Medido com `ag-psd` 30.2.0 em três arquivos (um jornal, um relatório policial 
 | 4 | feita | 24/10/2026 | Renderizador em Canvas 2D: formas, imagens, mesclagens, recorte, ajustes e luz UV |
 | 5 | feita | 24/10/2026 | Diagramação pura, 4 estilos de tinta, carregador FontFace, testes unitários e E2E |
 | 6 | feita | 24/10/2026 | Armazenamento: IndexedDB, rotas de biblioteca, documentos, lixeira e envios |
-| 7 | pendente | | |
+| 7 | feita | 24/10/2026 | Editor integrado: estado, palco, inspetor de camadas e propriedades, histórico e arquivamento |
 | 8 | pendente | | |
 | 9 | pendente | | |
 | 10 | pendente | | |
