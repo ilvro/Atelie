@@ -432,6 +432,148 @@ test('handout rendering: multiply blend, clipping masks, adjustments, UV light, 
   const hasDarkPixel = res6.pixels.some(([r, g, b]) => r < 80 && g < 80 && b < 80);
   assert.ok(hasDarkPixel, 'At least one pixel in the text area should be dark (rendered glyph)');
 
+  // 7. Texto "MMMM" em typewriter com wear: 1 renderizado duas vezes -> pixels idênticos em 20 pontos
+  const resTypewriter = await page.evaluate(async () => {
+    const doc = {
+      schema: 1,
+      id: '00000000-0000-0000-0000-000000000007',
+      revision: 0,
+      name: 'Typewriter Determinism Test',
+      category: '',
+      tags: [],
+      page: { width: 400, height: 400, background: '#ffffff' },
+      layers: [
+        {
+          id: 'tw-layer',
+          name: 'Typewriter Layer',
+          kind: 'text',
+          visible: true,
+          locked: false,
+          opacity: 1,
+          blend: 'normal',
+          x: 50,
+          y: 50,
+          width: 300,
+          height: 100,
+          rotation: 0,
+          clip: false,
+          light: 'both',
+          text: {
+            content: 'MMMM',
+            font: { family: 'Courier Prime', library: null, weight: 400, italic: false },
+            size: 40,
+            color: '#000000',
+            align: 'left',
+            valign: 'top',
+            lineHeight: 1.25,
+            letterSpacing: 0,
+            box: 'area',
+            fit: 'overflow',
+            ink: { style: 'typewriter', wear: 1, seed: 123 },
+          },
+        },
+      ],
+      fields: [],
+      source: { kind: 'blank' },
+      back: null,
+    };
+
+    const points = [];
+    for (let x = 60; x <= 160; x += 25) {
+      for (let y = 60; y <= 100; y += 10) {
+        points.push([x, y]);
+      }
+    }
+    const samplePoints = points.slice(0, 20);
+
+    const r1 = await window.__atelie.renderHandout(doc, { scale: 1, at: samplePoints });
+    const r2 = await window.__atelie.renderHandout(doc, { scale: 1, at: samplePoints });
+    return {
+      pixels1: r1.pixels,
+      pixels2: r2.pixels,
+    };
+  });
+
+  assert.equal(resTypewriter.pixels1.length, 20);
+  assert.deepEqual(resTypewriter.pixels1, resTypewriter.pixels2, 'Rendered pixels at 20 points should be 100% identical between renders');
+
+  // 8. Texto centralizado numa caixa simétrica: a soma de pixels escuros na metade esquerda e na direita difere menos de 15%
+  const resSymmetry = await page.evaluate(async () => {
+    const doc = {
+      schema: 1,
+      id: '00000000-0000-0000-0000-000000000008',
+      revision: 0,
+      name: 'Centered Text Symmetry Test',
+      category: '',
+      tags: [],
+      page: { width: 400, height: 200, background: '#ffffff' },
+      layers: [
+        {
+          id: 'sym-layer',
+          name: 'Symmetric Layer',
+          kind: 'text',
+          visible: true,
+          locked: false,
+          opacity: 1,
+          blend: 'normal',
+          x: 0,
+          y: 0,
+          width: 400,
+          height: 200,
+          rotation: 0,
+          clip: false,
+          light: 'both',
+          text: {
+            content: 'TESTE SIMETRICO',
+            font: { family: 'serif', library: null, weight: 700, italic: false },
+            size: 36,
+            color: '#000000',
+            align: 'center',
+            valign: 'middle',
+            lineHeight: 1.25,
+            letterSpacing: 0,
+            box: 'area',
+            fit: 'overflow',
+            ink: { style: 'clean', wear: 0, seed: 1 },
+          },
+        },
+      ],
+      fields: [],
+      source: { kind: 'blank' },
+      back: null,
+    };
+
+    const res = await window.__atelie.renderHandout(doc, { scale: 1 });
+    const canvas = res.canvas;
+    const ctx = canvas.getContext('2d');
+    const imgData = ctx.getImageData(0, 0, 400, 200).data;
+
+    let leftDark = 0;
+    let rightDark = 0;
+
+    for (let y = 0; y < 200; y++) {
+      for (let x = 0; x < 400; x++) {
+        const idx = (y * 400 + x) * 4;
+        const r = imgData[idx];
+        const g = imgData[idx + 1];
+        const b = imgData[idx + 2];
+        const isDark = r < 200 && g < 200 && b < 200;
+        if (isDark) {
+          if (x < 200) leftDark++;
+          else rightDark++;
+        }
+      }
+    }
+
+    return { leftDark, rightDark };
+  });
+
+  assert.ok(resSymmetry.leftDark > 50, `left side should have dark pixels: ${resSymmetry.leftDark}`);
+  assert.ok(resSymmetry.rightDark > 50, `right side should have dark pixels: ${resSymmetry.rightDark}`);
+  const maxDark = Math.max(resSymmetry.leftDark, resSymmetry.rightDark);
+  const diffPct = Math.abs(resSymmetry.leftDark - resSymmetry.rightDark) / maxDark;
+  assert.ok(diffPct < 0.15, `difference between left and right dark pixels (${diffPct * 100}%) should be < 15%`);
+
   assert.deepEqual(errors, []);
 });
 

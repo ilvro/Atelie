@@ -165,7 +165,7 @@ Medido com `ag-psd` 30.2.0 em três arquivos (um jornal, um relatório policial 
 | 2 | feita | 24/10/2026 | Identidade visual, primitivas, fontes OFL, casca, gavetas, inspetor, ajustes, Ctrl+K |
 | 3 | feita | 24/10/2026 | Modelo de dados dos documentos, camadas, limites, mesclagens e validação |
 | 4 | feita | 24/10/2026 | Renderizador em Canvas 2D: formas, imagens, mesclagens, recorte, ajustes e luz UV |
-| 5 | pendente | | |
+| 5 | feita | 24/10/2026 | Diagramação pura, 4 estilos de tinta, carregador FontFace, testes unitários e E2E |
 | 6 | pendente | | |
 | 7 | pendente | | |
 | 8 | pendente | | |

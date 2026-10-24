@@ -1,47 +1,178 @@
-import { wrapText } from '../domain/wrap.js';
+import { layoutText, inkJitter, prng } from '../domain/handout-text-layout.js';
+
+function getFontFallback(inkStyle) {
+  if (inkStyle === 'typewriter') return '"Courier New", "Liberation Mono", monospace';
+  if (inkStyle === 'handwriting') return '"Segoe Print", "Bradley Hand", "Comic Neue", "Comic Sans MS", "URW Chancery L", cursive';
+  return 'Georgia, "DejaVu Serif", serif';
+}
+
+function getFontString(font, px, inkStyle) {
+  const italic = font?.italic ? 'italic ' : '';
+  const weight = font?.weight || 400;
+  const family = font?.family || 'IM Fell English';
+  const fallback = getFontFallback(inkStyle);
+  return `${italic}${weight} ${px}px "${family}", ${fallback}`;
+}
+
+function createOffscreenCanvas(width, height) {
+  if (typeof OffscreenCanvas !== 'undefined') {
+    return new OffscreenCanvas(width, height);
+  }
+  if (typeof document !== 'undefined' && typeof document.createElement === 'function') {
+    const c = document.createElement('canvas');
+    c.width = width;
+    c.height = height;
+    return c;
+  }
+  return null;
+}
 
 /**
- * Minimal text renderer for Etapa 4. Replaced and expanded in Etapa 5.
+ * Renders a text layer with typography layout, alignments, letter-spacing and ink styles.
  */
 export function drawTextLayer(ctx, layer, scale = 1) {
   const txt = layer.text;
-  if (!txt || !txt.content) return;
+  if (!txt || !txt.content || String(txt.content).trim() === '') {
+    return;
+  }
+
+  const ink = {
+    style: 'clean',
+    wear: 0,
+    seed: 1,
+    ...(txt.ink || {}),
+  };
+
+  const measure = (t, px) => {
+    ctx.font = getFontString(txt.font, px, ink.style);
+    return ctx.measureText(t).width;
+  };
+
+  const layout = layoutText(txt.content, {
+    measure,
+    width: layer.width,
+    height: layer.height,
+    size: txt.size || 16,
+    lineHeight: txt.lineHeight ?? 1.25,
+    letterSpacing: txt.letterSpacing ?? 0,
+    align: txt.align || 'left',
+    valign: txt.valign || 'top',
+    box: txt.box || 'area',
+    fit: txt.fit || 'overflow',
+    minSize: (txt.size || 16) * 0.4,
+  });
+
+  if (!layout.lines.length) {
+    return;
+  }
 
   const w = layer.width * scale;
   const h = layer.height * scale;
-  const fontSize = (txt.size || 16) * scale;
-  const lineHeight = txt.lineHeight || 1.25;
-  const family = txt.font?.family || 'IM Fell English';
-  const weight = txt.font?.weight || 400;
-  const italic = txt.font?.italic ? 'italic ' : '';
+  const canvasFontSize = layout.size * scale;
+  const isStampWithWear = ink.style === 'stamp' && ink.wear > 0;
 
-  ctx.save();
-  ctx.font = `${italic}${weight} ${fontSize}px "${family}", serif`;
-  ctx.fillStyle = txt.color || '#1d1b24';
-  ctx.textBaseline = 'top';
-  ctx.textAlign = 'left';
+  let drawCtx = ctx;
+  let tempCanvas = null;
+  let startX = -w / 2;
+  let startY = -h / 2;
 
-  let lines = [];
-  if (txt.box === 'area') {
-    const measure = str => ctx.measureText(str).width;
-    const res = wrapText(txt.content, measure, w);
-    lines = res.lines;
-  } else {
-    lines = String(txt.content).split('\n');
-  }
-
-  const startX = -w / 2;
-  const startY = -h / 2;
-  const stepY = fontSize * lineHeight;
-
-  for (let i = 0; i < lines.length; i++) {
-    const y = startY + i * stepY;
-    if (y + fontSize > h / 2 && txt.fit === 'overflow') {
-      // In minimal mode, keep drawing or clipping
+  if (isStampWithWear) {
+    const cw = Math.max(1, Math.ceil(w));
+    const ch = Math.max(1, Math.ceil(Math.max(h, layout.height * scale)));
+    tempCanvas = createOffscreenCanvas(cw, ch);
+    if (tempCanvas) {
+      drawCtx = tempCanvas.getContext('2d');
+      startX = 0;
+      startY = 0;
     }
-    ctx.fillText(lines[i], startX, y);
   }
 
-  ctx.restore();
-}
+  drawCtx.save();
+  drawCtx.font = getFontString(txt.font, canvasFontSize, ink.style);
+  drawCtx.fillStyle = txt.color || '#1d1b24';
+  drawCtx.textBaseline = 'alphabetic';
+  drawCtx.textAlign = 'left';
 
+  const isFastPath = ink.style === 'clean' && (txt.letterSpacing || 0) === 0;
+
+  if (isFastPath) {
+    for (const line of layout.lines) {
+      const lineY = startY + line.y * scale;
+      if (txt.align === 'justify' && line.width === layer.width && line.words.length > 1) {
+        for (const word of line.words) {
+          drawCtx.fillText(word.text, startX + word.x * scale, lineY);
+        }
+      } else {
+        drawCtx.fillText(line.text, startX + line.x * scale, lineY);
+      }
+    }
+  } else {
+    let glyphIndex = 0;
+    const extraSpace = (canvasFontSize * (txt.letterSpacing || 0)) / 1000;
+    const baseAlpha = drawCtx.globalAlpha;
+
+    for (const line of layout.lines) {
+      const lineY = startY + line.y * scale;
+      for (const word of line.words) {
+        let curX = startX + word.x * scale;
+        for (const char of word.text) {
+          const charW = drawCtx.measureText(char).width;
+          if (ink.style === 'clean') {
+            drawCtx.fillText(char, curX, lineY);
+          } else {
+            const jitter = inkJitter(ink.style, {
+              seed: ink.seed,
+              index: glyphIndex,
+              size: canvasFontSize,
+              wear: ink.wear,
+            });
+
+            drawCtx.save();
+            const gx = curX + jitter.dx;
+            const gy = lineY + jitter.dy;
+            drawCtx.translate(gx, gy);
+            if (jitter.rotate) drawCtx.rotate(jitter.rotate);
+            if (jitter.scale !== 1) drawCtx.scale(jitter.scale, jitter.scale);
+            drawCtx.globalAlpha = baseAlpha * jitter.alpha;
+            drawCtx.fillText(char, 0, 0);
+
+            if (jitter.ghost) {
+              drawCtx.save();
+              drawCtx.globalAlpha = baseAlpha * jitter.ghost.alpha;
+              drawCtx.fillText(char, jitter.ghost.dx, jitter.ghost.dy);
+              drawCtx.restore();
+            }
+            drawCtx.restore();
+          }
+          curX += charW + extraSpace;
+          glyphIndex++;
+        }
+      }
+    }
+  }
+
+  drawCtx.restore();
+
+  if (tempCanvas) {
+    // Stamp erosion with destination-out
+    const cw = tempCanvas.width;
+    const ch = tempCanvas.height;
+    const tempCtx = tempCanvas.getContext('2d');
+    tempCtx.save();
+    tempCtx.globalCompositeOperation = 'destination-out';
+    tempCtx.fillStyle = '#000000';
+
+    const numDots = Math.round(cw * ch * 0.003 * ink.wear);
+    for (let i = 0; i < numDots; i++) {
+      const rx = prng(ink.seed, i, 11) * cw;
+      const ry = prng(ink.seed, i, 22) * ch;
+      const rsize = 1 + Math.floor(prng(ink.seed, i, 33) * 2.5);
+      const ralpha = 0.4 + prng(ink.seed, i, 44) * 0.6;
+      tempCtx.globalAlpha = ralpha;
+      tempCtx.fillRect(rx, ry, rsize, rsize);
+    }
+    tempCtx.restore();
+
+    ctx.drawImage(tempCanvas, -w / 2, -h / 2);
+  }
+}

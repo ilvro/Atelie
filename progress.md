@@ -10,7 +10,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 2 — Identidade e casca | concluída | 2026-10-24 | Identidade visual, primitivas, fontes OFL, casca, gavetas, inspetor, ajustes, Ctrl+K |
 | 3 — Modelo de dados | concluída | 2026-10-24 | Formato do documento, camadas, limites, mesclagens e validações |
 | 4 — Renderizador | concluída | 2026-10-24 | Desenho de camadas em Canvas 2D, mesclagens, recorte, ajustes e luz UV |
-| 5 — Texto | pendente | | Renderização de textos, fontes e tintas |
+| 5 — Texto | concluída | 2026-10-24 | Diagramação pura, 4 estilos de tinta, carregador FontFace e testes |
 | 6 — Armazenamento | pendente | | IndexedDB, servidor, biblioteca, coleções |
 | 7 — Editor | pendente | | Palco, camadas, desfazer/refazer, propriedades |
 | 8 — Manipulação | pendente | | Mover, redimensionar, girar camadas |
@@ -35,6 +35,47 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 27 — Documentação | pendente | | Manuais, guia de uso e licenças |
 | 28 — Integração Tabletop | pendente | | Consumo e interação direta dentro do Tabletop |
 | 29 — Expansão no navegador | pendente | | Expansão local no navegador (opcional) |
+
+---
+
+## Etapa 5 — Texto
+
+### Feito
+- Criação de `src/domain/handout-text-layout.js` com motor puro de diagramação e jitter tipográfico determinístico:
+  - `layoutText`: quebra de linha por palavras (`box: 'area'`) e quebra explícita por nova linha (`box: 'point'`), fatiamento por caracteres de palavras que excedem a largura da caixa, suporte a `letterSpacing` em milésimos de em incorporado à medição.
+  - Alinhamento horizontal: `left`, `center`, `right` e `justify` (distribuição uniforme do espaço restante entre palavras com última linha de parágrafo preservada à esquerda).
+  - Alinhamento vertical: `top`, `middle` e `bottom` (deslocamento vertical da linha de base de acordo com a altura útil da caixa).
+  - Encolhimento automático `fit: 'shrink'` por busca binária em 12 passos até `minSize`, sinalizando `overflow: true` caso o limite mínimo não caiba.
+  - `inkJitter`: variação orgânica e determinística de glifos baseada em PRNG mulberry32 (`prng`), sem uso de `Math.random`:
+    - `clean`: traçado nítido e estritamente neutro.
+    - `typewriter`: oscilação em `dx` e `dy`, enfraquecimento de fita gasta (`alpha`) e batida dupla (`ghost`) a cada ~12 caracteres.
+    - `handwriting`: micro-rotações, oscilação de escala e ondulação senoidal lenta ao longo da linha.
+    - `stamp`: rotação sutil uniforme por camada (`seed`), desgaste de tinta e ausência de ghost.
+    - Com `wear: 0`, todos os estilos permanecem perfeitamente neutros.
+- Implementação completa de `src/render/handout-text.js` (`drawTextLayer`):
+  - Resolução de cadeia de fontes e fallbacks conforme o estilo (`Courier New` para máquina, `cursive` para escrita à mão, `serif` para demais).
+  - Caminho rápido para texto `clean` com `letterSpacing: 0`.
+  - Renderização glifo a glifo para fontes estilizadas, preservando caracteres com acentos e emojis, com aplicação de jitter, transformações matriciais e batida fantasma (`ghost`).
+  - Erosão granulada para `stamp` com desgaste via `destination-out` com ruído determinístico (pontos de 1–3 px) em buffer temporário.
+  - Regra de não desenhar nada quando o conteúdo de texto for vazio ou só espaços.
+- Criação de `src/data/handout-fonts.js`:
+  - Carregador e cache assíncrono de fontes da biblioteca via API `FontFace` do navegador.
+  - Cache pela chave `${library}|${weight}|${italic}`.
+  - Resolução graciosa com aviso no console caso o arquivo da fonte falhe, permitindo que os fallbacks desenhem normalmente.
+- Integração de `createHandoutFonts` e `loadFont` em `src/main.js`.
+- Criação da suíte de testes unitários `tests/handout-text.test.js` com 8 cenários cobrindo todas as regras da especificação.
+- Adição de testes E2E em `tests/e2e/handout-render.test.js`:
+  - Verificação de determinismo pixel a pixel de 20 pontos de amostragem em texto `typewriter` com `wear: 1`.
+  - Verificação de simetria geométrica de texto centralizado (diferença de pixels escuros entre metades < 15%).
+
+### Validação
+- `npm test`: 40 testes unitários passando (100% de sucesso).
+- `npm run test:e2e`: 2 suítes Playwright de ponta a ponta passando com sucesso.
+- `npm run build`: build de produção do Vite executado sem erros.
+- `grep -n "Math.random" src/domain/handout-text-layout.js src/render/handout-text.js src/data/handout-fonts.js`: zero ocorrências.
+
+### Pendências reais
+- Vários estilos tipográficos dentro de um mesmo bloco (ex.: uma palavra em negrito e outra normal) não implementados, conforme planejado para etapas futuras.
 
 ---
 

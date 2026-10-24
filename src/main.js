@@ -2,6 +2,7 @@ import './ui/styles.css';
 import { createShell } from './ui/shell.js';
 import { renderHandout } from './render/handout-render.js';
 import { createHandoutImages } from './data/handout-images.js';
+import { createHandoutFonts } from './data/handout-fonts.js';
 
 const appRoot = document.getElementById('app');
 if (appRoot) {
@@ -13,6 +14,7 @@ if (appRoot) {
 
   if (typeof window !== 'undefined') {
     const images = createHandoutImages();
+    const fonts = createHandoutFonts();
     const isDiagnostics = window.location.search.includes('diagnostics');
 
     const atelieApi = {
@@ -23,6 +25,7 @@ if (appRoot) {
           scale,
           light,
           loadImage: src => images.load(src),
+          loadFont: font => fonts.load(font),
         });
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
         const pixels = at.map(([x, y]) => {
