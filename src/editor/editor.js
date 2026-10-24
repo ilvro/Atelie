@@ -4,7 +4,8 @@ import { createLayersPanel } from './layers-panel.js';
 import { createPropertiesPanel } from './properties-panel.js';
 import { renderIcon, escapeHTML as esc } from '../ui/icons.js';
 import { stamp } from '../ui/primitives.js';
-import { createHandout, PAGE_PRESETS, removeLayer } from '../domain/handouts.js';
+import { createHandout, PAGE_PRESETS, removeLayer, duplicateLayer, moveLayer, updateLayer } from '../domain/handouts.js';
+import { moveBox } from './geometry.js';
 
 export function createEditor(shell, { api, images, fonts } = {}) {
   const deskStage = document.getElementById('desk-stage');
@@ -196,6 +197,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       images,
       fonts,
       onSelect: layerId => state.select(layerId),
+      onEdit: (nextHandout, meta) => state.edit(nextHandout, meta),
     });
 
     // Inspector panels
@@ -347,6 +349,69 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       }
     } else if (event.key === 'Escape') {
       state?.select(null);
+    }
+
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'd') {
+      if (state?.selection) {
+        event.preventDefault();
+        const next = duplicateLayer(state.handout, state.selection);
+        state.edit(next, { label: 'Duplicar camada' });
+      }
+      return;
+    }
+
+    if ((event.ctrlKey || event.metaKey) && event.key === ']') {
+      if (state?.selection) {
+        event.preventDefault();
+        const idx = state.handout.layers.findIndex(l => l.id === state.selection);
+        if (idx >= 0 && idx < state.handout.layers.length - 1) {
+          const next = moveLayer(state.handout, state.selection, idx + 1);
+          state.edit(next, { label: 'Subir camada' });
+        }
+      }
+      return;
+    }
+
+    if ((event.ctrlKey || event.metaKey) && event.key === '[') {
+      if (state?.selection) {
+        event.preventDefault();
+        const idx = state.handout.layers.findIndex(l => l.id === state.selection);
+        if (idx > 0) {
+          const next = moveLayer(state.handout, state.selection, idx - 1);
+          state.edit(next, { label: 'Descer camada' });
+        }
+      }
+      return;
+    }
+
+    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
+      if (state?.selection) {
+        const layer = state.handout.layers.find(l => l.id === state.selection);
+        if (layer && !layer.locked) {
+          event.preventDefault();
+          const step = event.shiftKey ? 10 : 1;
+          let dx = 0;
+          let dy = 0;
+          if (event.key === 'ArrowLeft') dx = -step;
+          else if (event.key === 'ArrowRight') dx = step;
+          else if (event.key === 'ArrowUp') dy = -step;
+          else if (event.key === 'ArrowDown') dy = step;
+          const next = updateLayer(state.handout, layer.id, moveBox(layer, dx, dy));
+          state.edit(next, { label: 'Mover camada', coalesce: 'nudge-' + layer.id });
+        }
+      }
+      return;
+    }
+
+    if (event.key === 'Enter') {
+      if (state?.selection) {
+        const layer = state.handout.layers.find(l => l.id === state.selection);
+        if (layer && layer.kind === 'text' && !layer.locked && stage) {
+          event.preventDefault();
+          stage.startInlineTextEdit(layer.id);
+        }
+      }
+      return;
     }
   });
 

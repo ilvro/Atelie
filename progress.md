@@ -13,7 +13,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 5 — Texto | concluída | 2026-10-24 | Diagramação pura, 4 estilos de tinta, carregador FontFace e testes |
 | 6 — Armazenamento | concluída | 2026-10-24 | IndexedDB, rotas de biblioteca, documentos, lixeira e envios |
 | 7 — Editor | concluída | 2026-10-24 | Palco, camadas, desfazer/refazer, propriedades, arquivamento e uploads |
-| 8 — Manipulação | pendente | | Mover, redimensionar, girar camadas |
+| 8 — Manipulação | concluída | 2026-10-24 | Mover, redimensionar, girar, encaixe, atalhos e edição inline de texto |
 | 9 — Ferramentas do editor | pendente | | Guias, réguas, conta-gotas, colar imagens |
 | 10 — Documentos e rascunho | pendente | | Gestão de documentos, rascunho automático |
 | 11 — Efeitos procedurais | pendente | | Desgaste, manchas, dobras, queimado, sangue |
@@ -35,6 +35,52 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 27 — Documentação | pendente | | Manuais, guia de uso e licenças |
 | 28 — Integração Tabletop | pendente | | Consumo e interação direta dentro do Tabletop |
 | 29 — Expansão no navegador | pendente | | Expansão local no navegador (opcional) |
+
+---
+
+## Etapa 8 — Manipulação
+
+### Feito
+- **Geometria pura** (`src/editor/geometry.js`):
+  - Operações matemáticas completas em coordenadas de documento:
+    - `boxCorners(box)`: cálculo dos 4 cantos rotacionados (`nw`, `ne`, `se`, `sw`) em torno do centro.
+    - `pointInBox(point, box)`: teste de inclusão de ponto em polígonos rotacionados.
+    - `moveBox(box, dx, dy)`: translação da caixa.
+    - `resizeBox(box, handle, pointer, options)`: redimensionamento orientado ao puxador com ancoragem oposta fixa ou a partir do centro (`fromCenter: true`), preservação opcional de proporção (`keepAspect: true`) e limite mínimo (`min: 4`).
+    - `rotateBox(box, pointer, options)`: cálculo angular do puxador de topo (+90°) com encaixe em múltiplos de 15° (`snap: true`).
+    - `snapBox(box, targets, threshold)`: alinhamento magnético às bordas e centros em X e Y para caixas sem rotação.
+    - `layerAtPoint(handout, point)`: seleção da camada mais alta visível e destravada.
+  - Suíte de 7 testes unitários em `tests/editor-geometry.test.js` cobrindo todas as fórmulas e casos de borda.
+- **Manipulação interativa no palco** (`src/editor/stage.js`):
+  - Contorno tracejado em `--at-uv` sobre a camada selecionada, com contorno neutro e sem puxadores quando bloqueada (`locked`).
+  - Arraste do corpo da camada com captura de ponteiro (`setPointerCapture`) e coalescência de histórico (`coalesce: 'drag-' + id`).
+  - 8 puxadores de redimensionamento quadrados com tamanho fixo em tela (10 px), suporte a Shift (manter proporção) e Alt (redimensionar a partir do centro).
+  - Cursores CSS dinâmicos nos puxadores ajustados conforme a rotação da camada em passos de 45° (`ns-resize`, `nesw-resize`, `ew-resize`, `nwse-resize`).
+  - Puxador redondo de rotação 28 px acima do topo com haste vertical, com suporte a Shift para encaixe em múltiplos de 15°.
+  - Linhas guia magnéticas de encaixe em magenta (`.stage-guide-x` e `.stage-guide-y`) exibidas durante o alinhamento com bordas e centros da página e de outras camadas visíveis, desativáveis temporariamente segurando `Ctrl`.
+- **Edição de texto no lugar (inline text editing)**:
+  - Duplo clique no texto (ou `Enter` com camada de texto selecionada) abre um `<textarea>` transparente diretamente sobre a caixa da camada com mesma tipografia, tamanho escalado pelo zoom, alinhamento, entrelinha e rotação.
+  - Ocultação da camada no canvas durante a edição para visualização nítida.
+  - Coalescência de digitação (`coalesce: 'type-' + id`) para desfazer a edição inteira em um único passo.
+  - Fechamento com `Escape` ou clique fora com isolamento de propagação para não desselecionar a camada.
+- **Atalhos de teclado no palco** (`src/editor/editor.js`):
+  - Setas direcionais movem 1 px (ou 10 px com `Shift`), agrupando toques rápidos (< 600 ms) via `coalesce: 'nudge-' + id`.
+  - `Ctrl+D` duplica a camada selecionada.
+  - `Ctrl+]` e `Ctrl+[` sobem e descem a camada na pilha de camadas.
+  - `Enter` aciona a edição inline de texto.
+  - `Delete` / `Backspace` remove a camada selecionada e `Escape` limpa a seleção.
+- **Estilização temática** (`src/ui/editor.css`):
+  - Estilos dedicados para puxadores, haste de giro, guias magnéticas e textarea de edição inline com variáveis `--at-*`.
+- **Testes de ponta a ponta** (`tests/e2e/editor.test.js`):
+  - 6 novos cenários cobrindo translação com zoom (100 px em tela com zoom 50% = 200 px no documento com desfazer em um Ctrl+Z), redimensionamento unilateral e proporcional, rotação com encaixe de 15°, magnetismo ao centro da página, edição de texto inline com duplo clique e movimento com Shift+seta.
+
+### Validação
+- `npm test`: 57 testes unitários passando 100%.
+- `npm run test:e2e`: 5 suítes completas de Playwright passando.
+- `npm run build`: bundle de produção compilado com sucesso.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 8. Seleção múltipla, agrupar camadas e alinhar várias de uma vez ficam para etapas posteriores conforme especificado no plano.
 
 ---
 

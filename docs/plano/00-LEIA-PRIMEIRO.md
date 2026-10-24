@@ -168,7 +168,7 @@ Medido com `ag-psd` 30.2.0 em três arquivos (um jornal, um relatório policial 
 | 5 | feita | 24/10/2026 | Diagramação pura, 4 estilos de tinta, carregador FontFace, testes unitários e E2E |
 | 6 | feita | 24/10/2026 | Armazenamento: IndexedDB, rotas de biblioteca, documentos, lixeira e envios |
 | 7 | feita | 24/10/2026 | Editor integrado: estado, palco, inspetor de camadas e propriedades, histórico e arquivamento |
-| 8 | pendente | | |
+| 8 | feita | 24/10/2026 | Manipulação no palco: mover, redimensionar, girar, guias de encaixe, atalhos e edição inline de texto |
 | 9 | pendente | | |
 | 10 | pendente | | |
 | 11 | pendente | | |

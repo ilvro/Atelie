@@ -1,23 +1,81 @@
 import { renderHandout } from '../render/handout-render.js';
 import { renderIcon } from '../ui/icons.js';
+import {
+  HANDLES,
+  boxCorners,
+  pointInBox,
+  moveBox,
+  resizeBox,
+  rotateBox,
+  snapBox,
+  layerAtPoint,
+} from './geometry.js';
+import { updateLayer } from '../domain/handouts.js';
 
 const MIN_ZOOM = 0.1;
 const MAX_ZOOM = 4.0;
 
-export function createStage(container, { images, fonts, onSelect = () => {} } = {}) {
+function getHandleCursor(handle, rotation = 0) {
+  const baseAngles = {
+    n: 0,
+    ne: 45,
+    e: 90,
+    se: 135,
+    s: 180,
+    sw: 225,
+    w: 270,
+    nw: 315,
+  };
+  const base = baseAngles[handle];
+  if (base === undefined) return 'default';
+  const total = (((base + rotation) % 360) + 360) % 360;
+  const octant = Math.round(total / 45) % 8;
+  switch (octant) {
+    case 0:
+    case 4:
+      return 'ns-resize';
+    case 1:
+    case 5:
+      return 'nesw-resize';
+    case 2:
+    case 6:
+      return 'ew-resize';
+    case 3:
+    case 7:
+      return 'nwse-resize';
+    default:
+      return 'default';
+  }
+}
+
+export function createStage(container, { images, fonts, onSelect = () => {}, onEdit = () => {} } = {}) {
   let currentHandout = null;
   let currentLight = 'normal';
   let currentZoom = 0.6;
   let selectedLayerId = null;
   let isRendering = false;
   let nextRequest = null;
+  let editingLayerId = null;
 
   container.innerHTML = `
     <div class="stage-viewport" tabindex="0" role="region" aria-label="Mesa de trabalho">
       <div class="stage-scroll-canvas">
         <div class="stage-page-wrap">
           <canvas class="stage-canvas"></canvas>
-          <div class="stage-selection-outline" aria-hidden="true"></div>
+          <div class="stage-guides-overlay" aria-hidden="true"></div>
+          <div class="stage-selection-outline" aria-hidden="true">
+            <div class="stage-rotate-stem"></div>
+            <div class="stage-rotate-handle" data-handle="rot" title="Girar (Shift: 15°)"></div>
+            <div class="stage-handle" data-handle="nw"></div>
+            <div class="stage-handle" data-handle="n"></div>
+            <div class="stage-handle" data-handle="ne"></div>
+            <div class="stage-handle" data-handle="e"></div>
+            <div class="stage-handle" data-handle="se"></div>
+            <div class="stage-handle" data-handle="s"></div>
+            <div class="stage-handle" data-handle="sw"></div>
+            <div class="stage-handle" data-handle="w"></div>
+          </div>
+          <textarea class="stage-inline-text-editor" style="display:none;" spellcheck="false"></textarea>
         </div>
       </div>
       <div class="stage-zoom-bar">
@@ -37,14 +95,33 @@ export function createStage(container, { images, fonts, onSelect = () => {} } = 
   const pageWrap = container.querySelector('.stage-page-wrap');
   const canvas = container.querySelector('.stage-canvas');
   const outline = container.querySelector('.stage-selection-outline');
+  const guidesOverlay = container.querySelector('.stage-guides-overlay');
+  const inlineTextEditor = container.querySelector('.stage-inline-text-editor');
   const zoomLevelEl = container.querySelector('.stage-zoom-level');
 
   function updateZoomLabel() {
     zoomLevelEl.textContent = `${Math.round(currentZoom * 100)} %`;
   }
 
+  function renderGuides(guides = []) {
+    guidesOverlay.innerHTML = '';
+    if (!guides || !guides.length) return;
+
+    for (const guide of guides) {
+      const el = document.createElement('div');
+      if (guide.axis === 'x') {
+        el.className = 'stage-guide-x';
+        el.style.left = `${Math.round(guide.at * currentZoom)}px`;
+      } else {
+        el.className = 'stage-guide-y';
+        el.style.top = `${Math.round(guide.at * currentZoom)}px`;
+      }
+      guidesOverlay.appendChild(el);
+    }
+  }
+
   function updateSelectionOutline() {
-    if (!currentHandout || !selectedLayerId) {
+    if (!currentHandout || !selectedLayerId || editingLayerId) {
       outline.style.display = 'none';
       return;
     }
@@ -57,15 +134,23 @@ export function createStage(container, { images, fonts, onSelect = () => {} } = 
 
     const w = layer.width * currentZoom;
     const h = layer.height * currentZoom;
-    const cx = layer.x * currentZoom;
-    const cy = layer.y * currentZoom;
+    const rot = layer.rotation || 0;
 
     outline.style.display = 'block';
     outline.style.width = `${Math.round(w)}px`;
     outline.style.height = `${Math.round(h)}px`;
-    outline.style.left = `${Math.round(cx - w / 2)}px`;
-    outline.style.top = `${Math.round(cy - h / 2)}px`;
-    outline.style.transform = `rotate(${layer.rotation || 0}deg)`;
+    outline.style.left = `${Math.round(layer.x * currentZoom)}px`;
+    outline.style.top = `${Math.round(layer.y * currentZoom)}px`;
+    outline.style.transform = `rotate(${rot}deg)`;
+    outline.classList.toggle('is-locked', Boolean(layer.locked));
+
+    // Update cursor for each handle based on rotation
+    if (!layer.locked) {
+      outline.querySelectorAll('.stage-handle').forEach(hEl => {
+        const handle = hEl.dataset.handle;
+        hEl.style.cursor = getHandleCursor(handle, rot);
+      });
+    }
   }
 
   async function performRender(handout, options) {
@@ -78,7 +163,16 @@ export function createStage(container, { images, fonts, onSelect = () => {} } = 
     pageWrap.style.width = `${Math.round(handout.page.width * currentZoom)}px`;
     pageWrap.style.height = `${Math.round(handout.page.height * currentZoom)}px`;
 
-    await renderHandout(canvas, handout, {
+    // If a text layer is currently being edited inline, hide it from the canvas render
+    let docToRender = handout;
+    if (editingLayerId) {
+      docToRender = {
+        ...handout,
+        layers: handout.layers.map(l => (l.id === editingLayerId ? { ...l, visible: false } : l)),
+      };
+    }
+
+    await renderHandout(canvas, docToRender, {
       scale,
       light: options.light || currentLight,
       loadImage: images?.load,
@@ -123,6 +217,233 @@ export function createStage(container, { images, fonts, onSelect = () => {} } = 
     }
   }
 
+  // --- Inline Text Editing ---
+  function startInlineTextEdit(layerId) {
+    if (!currentHandout) return;
+    const layer = currentHandout.layers.find(l => l.id === layerId);
+    if (!layer || layer.kind !== 'text' || layer.locked) return;
+
+    editingLayerId = layer.id;
+    updateSelectionOutline();
+    scheduleRender(currentHandout);
+
+    const txt = layer.text || {};
+    inlineTextEditor.style.left = `${Math.round(layer.x * currentZoom)}px`;
+    inlineTextEditor.style.top = `${Math.round(layer.y * currentZoom)}px`;
+    inlineTextEditor.style.width = `${Math.round(layer.width * currentZoom)}px`;
+    inlineTextEditor.style.height = `${Math.round(layer.height * currentZoom)}px`;
+    inlineTextEditor.style.transform = `rotate(${layer.rotation || 0}deg)`;
+    inlineTextEditor.style.fontFamily = txt.font?.family || 'IM Fell English';
+    inlineTextEditor.style.fontSize = `${(txt.size || 32) * currentZoom}px`;
+    inlineTextEditor.style.fontStyle = txt.font?.italic ? 'italic' : 'normal';
+    inlineTextEditor.style.fontWeight = txt.font?.weight || 400;
+    inlineTextEditor.style.color = txt.color || '#1d1b24';
+    inlineTextEditor.style.textAlign = txt.align || 'left';
+    inlineTextEditor.style.lineHeight = String(txt.lineHeight || 1.2);
+    inlineTextEditor.value = txt.content || '';
+    inlineTextEditor.style.display = 'block';
+
+    inlineTextEditor.focus();
+    inlineTextEditor.select();
+  }
+
+  function finishInlineTextEdit() {
+    if (!editingLayerId) return;
+    inlineTextEditor.style.display = 'none';
+    const finishedId = editingLayerId;
+    editingLayerId = null;
+
+    if (currentHandout) {
+      scheduleRender(currentHandout);
+      updateSelectionOutline();
+    }
+  }
+
+  inlineTextEditor.addEventListener('input', () => {
+    if (!editingLayerId || !currentHandout) return;
+    const layer = currentHandout.layers.find(l => l.id === editingLayerId);
+    if (!layer) return;
+
+    const next = updateLayer(currentHandout, layer.id, {
+      text: { ...layer.text, content: inlineTextEditor.value },
+    });
+    onEdit(next, { label: 'Editar texto', coalesce: `type-${layer.id}` });
+  });
+
+  inlineTextEditor.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      event.stopPropagation();
+      finishInlineTextEdit();
+      viewport.focus();
+    }
+  });
+
+  inlineTextEditor.addEventListener('blur', () => {
+    finishInlineTextEdit();
+  });
+
+  // --- Pointer Gestures: Move, Resize, Rotate ---
+  let activeGesture = null;
+
+  outline.addEventListener('pointerdown', event => {
+    if (!currentHandout || !selectedLayerId || editingLayerId) return;
+    const layer = currentHandout.layers.find(l => l.id === selectedLayerId);
+    if (!layer || layer.locked) return;
+
+    const rotateHandle = event.target.closest('.stage-rotate-handle');
+    const resizeHandle = event.target.closest('.stage-handle');
+
+    if (rotateHandle) {
+      event.preventDefault();
+      event.stopPropagation();
+      rotateHandle.setPointerCapture(event.pointerId);
+
+      const gestureId = 'rotate-' + Math.random().toString(36).slice(2, 9);
+      activeGesture = {
+        type: 'rotate',
+        gestureId,
+        layerId: layer.id,
+        startBox: { ...layer },
+        handleEl: rotateHandle,
+        pointerId: event.pointerId,
+      };
+      return;
+    }
+
+    if (resizeHandle) {
+      event.preventDefault();
+      event.stopPropagation();
+      resizeHandle.setPointerCapture(event.pointerId);
+
+      const handle = resizeHandle.dataset.handle;
+      const gestureId = 'resize-' + Math.random().toString(36).slice(2, 9);
+      activeGesture = {
+        type: 'resize',
+        gestureId,
+        layerId: layer.id,
+        handle,
+        startBox: { ...layer },
+        handleEl: resizeHandle,
+        pointerId: event.pointerId,
+      };
+      return;
+    }
+
+    // Drag body to move
+    if (event.target === outline) {
+      event.preventDefault();
+      event.stopPropagation();
+      outline.setPointerCapture(event.pointerId);
+      outline.classList.add('is-dragging');
+
+      const gestureId = 'drag-' + Math.random().toString(36).slice(2, 9);
+
+      // Snap targets: page borders + center, and other visible, unrotated layers
+      const targets = {
+        x: [0, currentHandout.page.width / 2, currentHandout.page.width],
+        y: [0, currentHandout.page.height / 2, currentHandout.page.height],
+      };
+
+      for (const other of currentHandout.layers) {
+        if (other.id !== layer.id && other.visible && !other.locked && !(other.rotation % 360)) {
+          targets.x.push(other.x, other.x + other.width / 2, other.x + other.width);
+          targets.y.push(other.y, other.y + other.height / 2, other.y + other.height);
+        }
+      }
+
+      activeGesture = {
+        type: 'move',
+        gestureId,
+        layerId: layer.id,
+        startBox: { ...layer },
+        startPointer: [event.clientX, event.clientY],
+        targets,
+        pointerId: event.pointerId,
+      };
+    }
+  });
+
+  window.addEventListener('pointermove', event => {
+    if (!activeGesture || !currentHandout) return;
+
+    if (activeGesture.type === 'move') {
+      const dx = (event.clientX - activeGesture.startPointer[0]) / currentZoom;
+      const dy = (event.clientY - activeGesture.startPointer[1]) / currentZoom;
+      const moved = moveBox(activeGesture.startBox, dx, dy);
+
+      let finalBox = moved;
+      if (!event.ctrlKey && !(moved.rotation % 360)) {
+        const threshold = 6 / currentZoom;
+        const { box: snapped, guides } = snapBox(moved, activeGesture.targets, threshold);
+        finalBox = snapped;
+        renderGuides(guides);
+      } else {
+        renderGuides([]);
+      }
+
+      const next = updateLayer(currentHandout, activeGesture.layerId, finalBox);
+      onEdit(next, { label: 'Mover camada', coalesce: activeGesture.gestureId });
+    } else if (activeGesture.type === 'resize') {
+      const pageRect = pageWrap.getBoundingClientRect();
+      const pointerPage = [
+        (event.clientX - pageRect.left) / currentZoom,
+        (event.clientY - pageRect.top) / currentZoom,
+      ];
+      const keepAspect = event.shiftKey;
+      const fromCenter = event.altKey;
+
+      const resized = resizeBox(activeGesture.startBox, activeGesture.handle, pointerPage, {
+        keepAspect,
+        fromCenter,
+      });
+
+      const next = updateLayer(currentHandout, activeGesture.layerId, resized);
+      onEdit(next, { label: 'Redimensionar camada', coalesce: activeGesture.gestureId });
+    } else if (activeGesture.type === 'rotate') {
+      const pageRect = pageWrap.getBoundingClientRect();
+      const pointerPage = [
+        (event.clientX - pageRect.left) / currentZoom,
+        (event.clientY - pageRect.top) / currentZoom,
+      ];
+      const snap = event.shiftKey;
+
+      const newRot = rotateBox(activeGesture.startBox, pointerPage, { snap });
+      const next = updateLayer(currentHandout, activeGesture.layerId, { rotation: newRot });
+      onEdit(next, { label: 'Girar camada', coalesce: activeGesture.gestureId });
+    }
+  });
+
+  function endGesture() {
+    if (!activeGesture) return;
+    renderGuides([]);
+    outline.classList.remove('is-dragging');
+    try {
+      if (activeGesture.handleEl && activeGesture.handleEl.hasPointerCapture(activeGesture.pointerId)) {
+        activeGesture.handleEl.releasePointerCapture(activeGesture.pointerId);
+      } else if (outline.hasPointerCapture(activeGesture.pointerId)) {
+        outline.releasePointerCapture(activeGesture.pointerId);
+      }
+    } catch {
+      // Ignore
+    }
+    activeGesture = null;
+  }
+
+  window.addEventListener('pointerup', endGesture);
+  window.addEventListener('pointercancel', endGesture);
+
+  // Double click for inline text editing
+  outline.addEventListener('dblclick', event => {
+    if (!currentHandout || !selectedLayerId) return;
+    const layer = currentHandout.layers.find(l => l.id === selectedLayerId);
+    if (layer && layer.kind === 'text' && !layer.locked) {
+      event.preventDefault();
+      event.stopPropagation();
+      startInlineTextEdit(layer.id);
+    }
+  });
+
   // Zoom controls click
   viewport.addEventListener('click', event => {
     const actionBtn = event.target.closest('[data-action]');
@@ -138,16 +459,21 @@ export function createStage(container, { images, fonts, onSelect = () => {} } = 
   });
 
   // Ctrl + Wheel to zoom
-  viewport.addEventListener('wheel', event => {
-    if (!event.ctrlKey) return;
-    event.preventDefault();
-    const factor = event.deltaY < 0 ? 1.15 : 0.85;
-    setZoom(currentZoom * factor);
-  }, { passive: false });
+  viewport.addEventListener(
+    'wheel',
+    event => {
+      if (!event.ctrlKey) return;
+      event.preventDefault();
+      const factor = event.deltaY < 0 ? 1.15 : 0.85;
+      setZoom(currentZoom * factor);
+    },
+    { passive: false }
+  );
 
   // Click on stage for layer hit testing
   pageWrap.addEventListener('click', event => {
-    if (!currentHandout) return;
+    if (!currentHandout || activeGesture) return;
+    if (event.target.closest('.stage-selection-outline') || event.target.closest('.stage-inline-text-editor')) return;
 
     const rect = pageWrap.getBoundingClientRect();
     const clickX = event.clientX - rect.left;
@@ -155,25 +481,7 @@ export function createStage(container, { images, fonts, onSelect = () => {} } = 
     const pageX = clickX / currentZoom;
     const pageY = clickY / currentZoom;
 
-    let hit = null;
-    const layers = currentHandout.layers || [];
-
-    for (let i = layers.length - 1; i >= 0; i--) {
-      const layer = layers[i];
-      if (!layer.visible || layer.locked) continue;
-
-      const rad = -((layer.rotation || 0) * Math.PI) / 180;
-      const dx = pageX - layer.x;
-      const dy = pageY - layer.y;
-      const localX = dx * Math.cos(rad) - dy * Math.sin(rad);
-      const localY = dx * Math.sin(rad) + dy * Math.cos(rad);
-
-      if (Math.abs(localX) <= layer.width / 2 && Math.abs(localY) <= layer.height / 2) {
-        hit = layer;
-        break;
-      }
-    }
-
+    const hit = layerAtPoint(currentHandout, [pageX, pageY]);
     selectedLayerId = hit ? hit.id : null;
     updateSelectionOutline();
     onSelect(selectedLayerId);
@@ -204,9 +512,11 @@ export function createStage(container, { images, fonts, onSelect = () => {} } = 
       selectedLayerId = layerId;
       updateSelectionOutline();
     },
+    startInlineTextEdit(layerId) {
+      startInlineTextEdit(layerId);
+    },
     destroy() {
       container.innerHTML = '';
     },
   };
 }
-

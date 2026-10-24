@@ -38,10 +38,115 @@
   position: absolute;
   border: 1.5px dashed var(--at-uv);
   box-shadow: 0 0 6px var(--at-uv-glow);
-  pointer-events: none;
   box-sizing: border-box;
   transform-origin: center center;
   z-index: 10;
+  cursor: grab;
+  touch-action: none;
+}
+
+.stage-selection-outline.is-locked {
+  border-color: var(--at-line-strong);
+  box-shadow: none;
+  cursor: default;
+}
+
+.stage-selection-outline.is-dragging {
+  cursor: grabbing;
+}
+
+.stage-handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--at-desk-0);
+  border: 1.5px solid var(--at-uv);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+  z-index: 12;
+  transform: translate(-50%, -50%);
+  touch-action: none;
+}
+
+.stage-selection-outline.is-locked .stage-handle,
+.stage-selection-outline.is-locked .stage-rotate-stem,
+.stage-selection-outline.is-locked .stage-rotate-handle {
+  display: none;
+}
+
+.stage-handle[data-handle="nw"] { left: 0%; top: 0%; }
+.stage-handle[data-handle="n"]  { left: 50%; top: 0%; }
+.stage-handle[data-handle="ne"] { left: 100%; top: 0%; }
+.stage-handle[data-handle="e"]  { left: 100%; top: 50%; }
+.stage-handle[data-handle="se"] { left: 100%; top: 100%; }
+.stage-handle[data-handle="s"]  { left: 50%; top: 100%; }
+.stage-handle[data-handle="sw"] { left: 0%; top: 100%; }
+.stage-handle[data-handle="w"]  { left: 0%; top: 50%; }
+
+.stage-rotate-stem {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  width: 1px;
+  height: 28px;
+  background: var(--at-uv);
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.stage-rotate-handle {
+  top: -28px;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  cursor: crosshair;
+  background: var(--at-desk-0);
+  border: 1.5px solid var(--at-uv);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+  transform: translate(-50%, -50%);
+  z-index: 12;
+  touch-action: none;
+}
+
+.stage-guides-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9;
+}
+
+.stage-guide-x {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--at-uv);
+  box-shadow: 0 0 4px var(--at-uv-glow);
+}
+
+.stage-guide-y {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--at-uv);
+  box-shadow: 0 0 4px var(--at-uv-glow);
+}
+
+.stage-inline-text-editor {
+  position: absolute;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  border: 1.5px dashed var(--at-uv);
+  outline: none;
+  background: transparent;
+  resize: none;
+  overflow: hidden;
+  z-index: 20;
+  transform-origin: center center;
 }
 
 /* Barra de zoom flutuante */

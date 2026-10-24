@@ -244,3 +244,211 @@ test('editor e2e: presets, text editing, undo/redo, blend/opacity, archive, visi
   assert.deepEqual(errors, []);
 });
 
+test('editor manipulation e2e: drag, resize, rotate, snap, inline text, keyboard nudge', { timeout: 90_000 }, async (t) => {
+  const dataDir = await mkdtemp(path.join(os.tmpdir(), 'atelie-manip-e2e-'));
+  const distDir = path.join(projectDir, 'dist');
+  const app = await createApp({ dataDir, distDir });
+  const server = app.listen(0, '127.0.0.1');
+  await once(server, 'listening');
+  const baseUrl = `http://127.0.0.1:${server.address().port}`;
+
+  const browser = await chromium.launch({
+    executablePath: process.env.TABLETOP_BROWSER_PATH || chromium.executablePath(),
+    headless: true,
+    args: ['--no-sandbox', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'],
+  });
+
+  t.after(async () => {
+    await browser.close();
+    await new Promise(r => server.close(r));
+    await rm(dataDir, { recursive: true, force: true });
+  });
+
+  const page = await browser.newPage({ viewport: { width: 1400, height: 900 } });
+  const errors = [];
+  page.on('pageerror', err => errors.push(err.message));
+
+  await page.goto(`${baseUrl}/?new=a4&diagnostics`);
+  await page.waitForFunction(() => !!window.__atelie?.editor?.state);
+
+  // Set zoom to 50%
+  await page.evaluate(() => window.__atelie.editor.stage.zoom(0.5));
+  await page.waitForTimeout(100);
+
+  // Add rectangle
+  await page.click('.inspector-tab[data-tab="layers"]');
+  await page.click('[data-action="toggle-add-menu"]');
+  await page.click('[data-add="rect"]');
+  await page.waitForTimeout(100);
+
+  // 8. Drag rectangle 100 px on screen with 50% zoom -> moves 200 px in document; Ctrl+Z undoes
+  const startPos = await page.evaluate(() => {
+    const l = window.__atelie.editor.state.handout.layers.find(x => x.name === 'Retângulo');
+    return { x: l.x, y: l.y };
+  });
+
+  const outline = page.locator('.stage-selection-outline');
+  await outline.waitFor({ state: 'visible' });
+  const box1 = await outline.boundingBox();
+  const startX = box1.x + box1.width / 2;
+  const startY = box1.y + box1.height / 2;
+
+  await page.mouse.move(startX, startY);
+  await page.mouse.down();
+  await page.keyboard.down('Control'); // avoid snap during this displacement
+  await page.mouse.move(startX + 100, startY, { steps: 5 });
+  await page.keyboard.up('Control');
+  await page.mouse.up();
+  await page.waitForTimeout(100);
+
+  const movedPos = await page.evaluate(() => {
+    const l = window.__atelie.editor.state.handout.layers.find(x => x.name === 'Retângulo');
+    return { x: l.x, y: l.y };
+  });
+  assert.equal(movedPos.x, startPos.x + 200);
+
+  await page.keyboard.press('Control+z');
+  await page.waitForTimeout(100);
+  const undonePos = await page.evaluate(() => {
+    const l = window.__atelie.editor.state.handout.layers.find(x => x.name === 'Retângulo');
+    return { x: l.x, y: l.y };
+  });
+  assert.equal(undonePos.x, startPos.x);
+
+  // 9. Handle 'e' increases only width; with Shift on 'se', aspect ratio is preserved
+  const origDims = await page.evaluate(() => {
+    const l = window.__atelie.editor.state.handout.layers.find(x => x.name === 'Retângulo');
+    return { w: l.width, h: l.height };
+  });
+
+  const handleE = page.locator('.stage-handle[data-handle="e"]');
+  const eBox = await handleE.boundingBox();
+  await page.mouse.move(eBox.x + eBox.width / 2, eBox.y + eBox.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(eBox.x + eBox.width / 2 + 50, eBox.y + eBox.height / 2, { steps: 5 });
+  await page.mouse.up();
+  await page.waitForTimeout(100);
+
+  const afterE = await page.evaluate(() => {
+    const l = window.__atelie.editor.state.handout.layers.find(x => x.name === 'Retângulo');
+    return { w: l.width, h: l.height };
+  });
+  assert.ok(afterE.w > origDims.w, 'Width should increase with handle e');
+  assert.equal(afterE.h, origDims.h, 'Height should remain unchanged with handle e');
+
+  // Handle 'se' with Shift
+  const handleSE = page.locator('.stage-handle[data-handle="se"]');
+  const seBox = await handleSE.boundingBox();
+  const aspectBefore = afterE.w / afterE.h;
+
+  await page.mouse.move(seBox.x + seBox.width / 2, seBox.y + seBox.height / 2);
+  await page.mouse.down();
+  await page.keyboard.down('Shift');
+  await page.mouse.move(seBox.x + seBox.width / 2 + 60, seBox.y + seBox.height / 2 + 30, { steps: 5 });
+  await page.keyboard.up('Shift');
+  await page.mouse.up();
+  await page.waitForTimeout(100);
+
+  const afterSE = await page.evaluate(() => {
+    const l = window.__atelie.editor.state.handout.layers.find(x => x.name === 'Retângulo');
+    return { w: l.width, h: l.height };
+  });
+  const aspectAfter = afterSE.w / afterSE.h;
+  assert.ok(Math.abs(aspectAfter - aspectBefore) < 0.05, 'Aspect ratio should be preserved with Shift');
+
+  // 10. Rotate with Shift ends in multiple of 15°
+  const rotHandle = page.locator('.stage-rotate-handle');
+  const rotBox = await rotHandle.boundingBox();
+  await page.mouse.move(rotBox.x + rotBox.width / 2, rotBox.y + rotBox.height / 2);
+  await page.mouse.down();
+  await page.keyboard.down('Shift');
+  await page.mouse.move(rotBox.x + 80, rotBox.y + 40, { steps: 5 });
+  await page.keyboard.up('Shift');
+  await page.mouse.up();
+  await page.waitForTimeout(100);
+
+  const rotVal = await page.evaluate(() => {
+    const l = window.__atelie.editor.state.handout.layers.find(x => x.name === 'Retângulo');
+    return l.rotation;
+  });
+  assert.equal(rotVal % 15, 0, `Rotation ${rotVal} must be multiple of 15`);
+
+  // 11. Dragging near center of page snaps to center: x = (page - width) / 2
+  await page.evaluate(() => {
+    const doc = window.__atelie.editor.state.handout;
+    const rect = doc.layers.find(x => x.name === 'Retângulo');
+    const targetX = (doc.page.width - rect.width) / 2;
+    // Put rect 5 px away from center in document (well within 12 px snap threshold at 50% zoom)
+    window.__atelie.editor.state.edit({
+      ...doc,
+      layers: doc.layers.map(l => (l.id === rect.id ? { ...l, rotation: 0, x: targetX - 5, y: 300 } : l)),
+    });
+  });
+  await page.waitForTimeout(100);
+
+  const outlineSnap = page.locator('.stage-selection-outline');
+  const snapBoxBounds = await outlineSnap.boundingBox();
+  const cX = snapBoxBounds.x + snapBoxBounds.width / 2;
+  const cY = snapBoxBounds.y + snapBoxBounds.height / 2;
+
+  // Tiny nudge of 1 px without Ctrl -> triggers snapBox
+  await page.mouse.move(cX, cY);
+  await page.mouse.down();
+  await page.mouse.move(cX + 1, cY, { steps: 2 });
+  await page.mouse.up();
+  await page.waitForTimeout(100);
+
+  const snappedX = await page.evaluate(() => {
+    const doc = window.__atelie.editor.state.handout;
+    const l = doc.layers.find(x => x.name === 'Retângulo');
+    return { x: l.x, expected: (doc.page.width - l.width) / 2 };
+  });
+  assert.equal(snappedX.x, snappedX.expected, 'Layer should snap exactly to horizontal center of page');
+
+  // 12. Double click on text, type "Gustav", Esc -> text.content is "Gustav"; Ctrl+Z undoes
+  await page.click('[data-action="toggle-add-menu"]');
+  await page.click('[data-add="text"]');
+  await page.waitForTimeout(100);
+
+  const textOutline = page.locator('.stage-selection-outline');
+  await textOutline.dblclick();
+
+  const inlineText = page.locator('.stage-inline-text-editor');
+  await inlineText.waitFor({ state: 'visible' });
+  await inlineText.fill('Gustav');
+  await page.keyboard.press('Escape');
+  await inlineText.waitFor({ state: 'hidden' });
+  await page.waitForTimeout(100);
+
+  const textContent = await page.evaluate(() => {
+    const l = window.__atelie.editor.state.handout.layers.find(x => x.kind === 'text');
+    return l.text.content;
+  });
+  assert.equal(textContent, 'Gustav');
+
+  await page.keyboard.press('Control+z');
+  await page.waitForTimeout(100);
+  const undoneText = await page.evaluate(() => {
+    const l = window.__atelie.editor.state.handout.layers.find(x => x.kind === 'text');
+    return l.text.content;
+  });
+  assert.equal(undoneText, 'Escreva aqui');
+
+  // 13. Arrow key with Shift moves 10 px
+  const xBeforeShift = await page.evaluate(() => {
+    const l = window.__atelie.editor.state.handout.layers.find(x => x.kind === 'text');
+    return l.x;
+  });
+
+  await page.keyboard.press('Shift+ArrowRight');
+  await page.waitForTimeout(100);
+
+  const xAfterShift = await page.evaluate(() => {
+    const l = window.__atelie.editor.state.handout.layers.find(x => x.kind === 'text');
+    return l.x;
+  });
+  assert.equal(xAfterShift, xBeforeShift + 10, 'Shift+ArrowRight should move layer by 10 px');
+
+  assert.deepEqual(errors, []);
+});
+
