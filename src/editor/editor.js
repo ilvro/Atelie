@@ -110,7 +110,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   // Stamp overlay for saved animation
   const stampOverlay = document.createElement('div');
   stampOverlay.className = 'archive-stamp-overlay';
-  stampOverlay.innerHTML = stamp('ARQUIVADO', { tone: 'default', tilt: -4 });
+  stampOverlay.innerHTML = stamp('ARQUIVADO', { tone: 'wax', tilt: -4 });
 
   // Stage container
   const stageContainer = document.createElement('div');

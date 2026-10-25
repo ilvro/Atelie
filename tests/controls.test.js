@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { numberField, choiceField, splitLabel, normalizeHex, colorField } from '../src/ui/controls.js';
+import { numberField, choiceField, splitLabel, normalizeHex, colorField, bindControls } from '../src/ui/controls.js';
 
 test('labels give up their unit and hint to the control', () => {
   assert.deepEqual(splitLabel('Largura do rejunte · % · da peça'), { name: 'Largura do rejunte', unit: '%', hint: 'da peça' });
@@ -44,4 +44,60 @@ test('a colour field has a box for its code, and codes are read in the usual way
   assert.equal(normalizeHex('#abc'), '#aabbcc');
   for (const wrong of ['', '#12', 'red', '#12345g', '#1234567']) assert.equal(normalizeHex(wrong), null, wrong);
 });
+
+test('bindControls steps number inputs on mouse wheel', () => {
+  const listeners = {};
+  const root = {
+    querySelectorAll: () => [],
+    addEventListener: (type, fn) => { listeners[type] = fn; },
+  };
+  let committed = null;
+  bindControls(root, target => { committed = target; });
+
+  const input = {
+    tagName: 'INPUT',
+    type: 'number',
+    value: '10',
+    step: '1',
+    min: '0',
+    max: '100',
+    closest: () => null,
+    dispatchEvent: () => {},
+  };
+
+  // Wheel up -> increment
+  let prevented = false;
+  listeners.wheel({
+    target: input,
+    deltaY: -100,
+    shiftKey: false,
+    altKey: false,
+    preventDefault: () => { prevented = true; },
+  });
+  assert.equal(prevented, true);
+  assert.equal(input.value, '11');
+  assert.equal(committed, input);
+
+  // Wheel with Shift -> step by 10
+  listeners.wheel({
+    target: input,
+    deltaY: -100,
+    shiftKey: true,
+    altKey: false,
+    preventDefault: () => {},
+  });
+  assert.equal(input.value, '21');
+
+  // Wheel down beyond min (clamped to 0)
+  input.value = '2';
+  listeners.wheel({
+    target: input,
+    deltaY: 100,
+    shiftKey: true,
+    altKey: false,
+    preventDefault: () => {},
+  });
+  assert.equal(input.value, '0');
+});
+
 

@@ -109,6 +109,40 @@ export function bindControls(root, commit) {
       commit(number); 
     }
   });
+
+  // Mouse wheel smoothly steps number inputs (Shift = 10x, Alt = 0.1x)
+  root.addEventListener('wheel', event => {
+    const target = event.target;
+    if (!target || target.tagName !== 'INPUT' || target.type !== 'number' || target.disabled || target.readOnly) return;
+
+    event.preventDefault();
+    const step = Number(target.step) || 1;
+    const factor = event.shiftKey ? 10 : (event.altKey ? 0.1 : 1);
+    const delta = (event.deltaY < 0 ? 1 : -1) * step * factor;
+    let nextVal = Number(target.value || 0) + delta;
+
+    if (target.min !== '' && !isNaN(Number(target.min))) nextVal = Math.max(Number(target.min), nextVal);
+    if (target.max !== '' && !isNaN(Number(target.max))) nextVal = Math.min(Number(target.max), nextVal);
+
+    const stepDecimals = Math.max(
+      (String(step * factor).split('.')[1] || '').length,
+      (String(target.value).split('.')[1] || '').length
+    );
+    target.value = format(Number(nextVal.toFixed(Math.min(stepDecimals, 3))));
+
+    const rangeField = target.closest('.range-field');
+    if (rangeField) {
+      const range = rangeField.querySelector('[data-range]');
+      if (range) {
+        range.value = target.value;
+        syncProgress(range);
+      }
+    }
+
+    target.dispatchEvent(new Event('input', { bubbles: true }));
+    commit(target);
+  }, { passive: false });
+
   root.addEventListener('click', event => {
     const choice = event.target.closest?.('[data-choice]'), select = choice?.closest('.choice-field')?.querySelector('select');
     if (!select || select.disabled || select.value === choice.dataset.choice) return;

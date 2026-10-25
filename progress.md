@@ -41,6 +41,38 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | Refinamento de Tipografia e Camadas | concluída | 2026-10-25 | Geometria e alinhamento de textos, proporção de fontes mistas, recorte de caixas de texto, e painel de camadas com pastas, cores e snippets |
 | Refinamento de Expansões na Gaveta de Modelos | concluída | 2026-10-25 | Botão direto de instalação de expansão na gaveta Modelos, atalho em buscas vazias e mensagens claras sobre PSDs brutos |
 | Qualidade de Vida · Fase 0 — Inserção de Camadas | concluída | 2026-10-25 | Função pura insertionIndex, papéis acima de papéis existentes, assets acima da seleção ou no topo, addLayer estrito, rolagem e flash no painel |
+| Refinamento Visual e Ergonomia de UI | concluída | 2026-10-25 | Ergonomia de campos numéricos (scroll wheel com Shift/Alt), tokens CSS limpos, carimbos de estado (ARQUIVADO/RASCUNHO), botões de alinhamento com feedback e contraste tipográfico |
+
+---
+
+## Refinamento Visual e Ergonomia de UI
+
+### Feito
+- **Ergonomia e Controle Interativo de Campos Numéricos (`src/ui/controls.js` e `tests/controls.test.js`)**:
+  - Suporte nativo ao scroll do mouse (`wheel`) em todos os campos numéricos da interface com prevenção de rolagem acidental da página.
+  - Aceleração inteligente com teclado: tecla `Shift` multiplica o passo por 10× (ajuste rápido) e tecla `Alt` refina o passo por 0,1× (ajuste milimétrico fino).
+  - Respeito estrito aos limites `min` e `max`, sincronização instantânea com controles deslizantes companheiros (`data-range`) e disparo de eventos de alteração e histórico/desfazer.
+  - Teste unitário adicionado validando incrementos, multiplicadores de tecla e limitação por faixa.
+- **Saneamento e Correção de Tokens de Tema (`src/ui/editor.css` e `src/ui/primitives.css`)**:
+  - Eliminação de referências órfãs a tokens inexistentes (`--at-desk-0` e `--at-desk-1`), substituídos pelos tokens canônicos do sistema (`--at-desk-2` para painéis e barras, `--at-desk-3` para campos e botões, `--at-paper` para pinos e papel).
+  - Normalização de tamanhos de fonte abaixo de 11px em todos os componentes de controle, chips e painéis secundários, assegurando conformidade com acessibilidade e contraste.
+- **Identidade e Feedback dos Carimbos (`src/ui/primitives.css`, `src/editor/editor.js` e `src/ui/editor.css`)**:
+  - Implementação das variantes `.at-stamp.is-default` (texto secundário da mesa) e `.at-stamp.is-accent` (luz quente/lâmpada para rascunhos e conexões Tabletop).
+  - Animação tátil de carimbada física ao salvar/arquivar documento (`.archive-stamp-overlay` com keyframe `stamp-settle` em tom de lacre/cera vermelha `is-wax`, escala dinâmica 1,45× para 1× e leve tremor mecânico).
+- **Alinhamento e Feedback de Ações (`src/ui/editor.css`)**:
+  - Micro-interações táteis nos botões de alinhamento (`.align-btn:active` com leve compressão e tom violeta translúcido).
+  - Feedback aprimorado no seletor e amostras de cores (`.color-swatch-btn` com anel de brilho UV `--at-uv-glow` e foco visível acessível por teclado).
+  - Destaque editorial no campo de título do documento (`.at-doc-name-input`) ao passar o mouse sem comprometer a leitura do texto.
+- **Conversor JIT de Bundles e Tipografia Dominante (`src/editor/client-psd-converter.js`)**:
+  - Seleção refinada de `dominantStyle` e `dominantParagraphStyle` baseada na contagem real de caracteres por trecho para conversão instantânea de PSDs diretamente no cliente, mantendo a proporção visual exata dos blocos de texto sem quebras ou sobreposições indesejadas.
+
+### Validação
+- `npm test`: 168 testes unitários passando 100%.
+- `npm run build` e `npm run build:pages`: ambos os builds concluídos sem erros.
+- Testes E2E do editor, ferramentas, troca e navegação validados com Playwright.
+
+### Pendências reais
+- Nenhuma pendência neste ciclo de refinamento visual.
 
 ---
 

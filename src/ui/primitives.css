@@ -56,6 +56,16 @@
   text-shadow: 0 0 8px var(--at-uv-glow);
 }
 
+.at-stamp.is-default {
+  color: var(--at-text-2);
+  border-color: var(--at-text-2);
+}
+
+.at-stamp.is-accent {
+  color: var(--at-lamp);
+  border-color: var(--at-lamp);
+}
+
 /* Cartão de papel sobre a bancada */
 .at-card {
   position: relative;

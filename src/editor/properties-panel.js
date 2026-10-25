@@ -335,29 +335,31 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
       const uv = page.uv ?? { tint: '#2b1d52', strength: 0.65 };
       container.innerHTML = `
         <div class="properties-panel">
-          <div class="panel-section">
-            <div class="panel-section-title">Página</div>
-            <div class="control-row">
+          <div class="prop-empty-hint">
+            <span class="prop-empty-icon">${renderIcon('crop', 16)}</span>
+            <span>Nenhuma camada selecionada. Edite as propriedades da folha abaixo ou selecione um item no palco.</span>
+          </div>
+
+          <fieldset class="prop-group">
+            <legend class="prop-legend">Página</legend>
+            <div class="field-row">
               <label class="field measure-field">
-                <span class="field-label">Tamanho<small>Largura × Altura</small></span>
+                <span class="field-label">Dimensões<small>Largura × Altura</small></span>
                 <span class="value-box">
                   <input type="text" value="${page.width} × ${page.height} px" readonly disabled />
                 </span>
               </label>
             </div>
-            <div class="control-row">
-              ${colorField('page:background', 'Fundo', page.background && page.background !== '#00000000' ? page.background : '#ffffff')}
-            </div>
-          </div>
-          <div class="panel-section">
-            <div class="panel-section-title">Escurecer sob UV</div>
-            <div class="control-row">
-              ${colorField('page:uv.tint', 'Cor', uv.tint || '#2b1d52')}
-            </div>
-            <div class="control-row">
-              ${numberField('page:uv.strength', 'Força · %', Math.round((uv.strength ?? 0.65) * 100), { min: 0, max: 100, step: 1 })}
-            </div>
-          </div>
+            ${colorField('page:background', 'Cor do fundo', page.background && page.background !== '#00000000' ? page.background : '#ffffff')}
+            ${renderColorSwatchesHTML('page:background')}
+          </fieldset>
+
+          <fieldset class="prop-group">
+            <legend class="prop-legend">Luz UV na Folha</legend>
+            ${colorField('page:uv.tint', 'Tonalidade UV', uv.tint || '#2b1d52')}
+            ${renderColorSwatchesHTML('page:uv.tint')}
+            ${numberField('page:uv.strength', 'Escurecimento · %', Math.round((uv.strength ?? 0.65) * 100), { min: 0, max: 100, step: 1 })}
+          </fieldset>
         </div>
       `;
       bindControls(container, el => {

@@ -267,17 +267,52 @@ export async function convertPsdJit({
         const t = node.text;
         const boxDoc = textBoxInDocument(t);
 
+        // Select dominant style run and paragraph style by character length
+        let dominantStyle = t.style || {};
+        if (Array.isArray(t.styleRuns) && t.styleRuns.length > 0) {
+          let maxLen = -1;
+          let bestStyle = null;
+          for (const run of t.styleRuns) {
+            const len = run.length ?? 0;
+            if (len > maxLen && run.style) {
+              maxLen = len;
+              bestStyle = run.style;
+            }
+          }
+          if (bestStyle) {
+            dominantStyle = { ...bestStyle, ...dominantStyle };
+          }
+        }
+
+        let dominantPara = t.paragraphStyle || {};
+        if (Array.isArray(t.paragraphStyleRuns) && t.paragraphStyleRuns.length > 0) {
+          let maxLen = -1;
+          let bestPara = null;
+          for (const run of t.paragraphStyleRuns) {
+            const len = run.length ?? 0;
+            if (len > maxLen && run.style) {
+              maxLen = len;
+              bestPara = run.style;
+            }
+          }
+          if (bestPara) {
+            dominantPara = { ...bestPara, ...dominantPara };
+          }
+        }
+
         const lx = Math.round(boxDoc.x * scale);
         const ly = Math.round(boxDoc.y * scale);
         const lw = Math.max(1, Math.round(boxDoc.width * scale));
         const lh = Math.max(1, Math.round(boxDoc.height * scale));
         const rot = Math.round((boxDoc.rotation || 0) * 10) / 10;
-        const fontSize = Math.max(6, Math.round((t.size || 14) * (boxDoc.scale || 1) * scale));
-        const color = parseHexColor(t.color);
+        const rawSize = dominantStyle.fontSize ?? t.size ?? 14;
+        const fontSize = Math.max(6, Math.round(rawSize * (boxDoc.scale || 1) * scale));
+        const color = parseHexColor(dominantStyle.fillColor || t.color);
         const content = String(t.content || t.text || '').replace(/\r\n|\r/g, '\n');
-        const postscript = t.postscript || t.font?.name || null;
+        const postscript = dominantStyle.font?.name || t.postscript || t.font?.name || null;
         const fontName = postscript || 'IM Fell English';
-        const align = t.justification === 'center' ? 'center' : (t.justification === 'right' ? 'right' : 'left');
+        const rawJust = dominantPara.justification || t.justification;
+        const align = rawJust === 'center' ? 'center' : (rawJust === 'right' ? 'right' : 'left');
 
         const layerId = `layer-text-${layerIndex++}`;
         const fieldLabel = node.name || `Campo ${layerIndex - 1}`;

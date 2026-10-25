@@ -59,13 +59,20 @@
   position: absolute;
   width: 10px;
   height: 10px;
-  background: var(--at-desk-0);
+  background: var(--at-paper);
   border: 1.5px solid var(--at-uv);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
   box-sizing: border-box;
   z-index: 12;
   transform: translate(-50%, -50%);
   touch-action: none;
+  transition: transform var(--eco-fast) var(--eco-ease), background var(--eco-fast) var(--eco-ease);
+}
+
+.stage-handle:hover {
+  transform: translate(-50%, -50%) scale(1.25);
+  background: var(--at-uv);
 }
 
 .stage-selection-outline.is-locked .stage-handle,
@@ -101,13 +108,19 @@
   height: 12px;
   border-radius: 50%;
   cursor: crosshair;
-  background: var(--at-desk-0);
+  background: var(--at-paper);
   border: 1.5px solid var(--at-uv);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
   box-sizing: border-box;
   transform: translate(-50%, -50%);
   z-index: 12;
   touch-action: none;
+  transition: transform var(--eco-fast) var(--eco-ease), background var(--eco-fast) var(--eco-ease);
+}
+
+.stage-rotate-handle:hover {
+  transform: translate(-50%, -50%) scale(1.25);
+  background: var(--at-uv);
 }
 
 .stage-guides-overlay {
@@ -218,6 +231,11 @@
   transition: border-color var(--eco-fast) var(--eco-ease), background var(--eco-fast) var(--eco-ease);
 }
 
+.at-doc-name-input:hover:not(:focus) {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--at-line);
+}
+
 .at-doc-name-input:focus {
   outline: none;
   background: var(--eco-surface-raised);
@@ -238,14 +256,21 @@
   right: 32px;
   pointer-events: none;
   z-index: 100;
-  transform: scale(1.35) rotate(-6deg);
+  transform: scale(1.4) rotate(-8deg);
   opacity: 0;
   transition: transform var(--eco-fast) cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity var(--eco-fast) var(--eco-ease);
 }
 
 .archive-stamp-overlay.active {
-  transform: scale(1) rotate(-6deg);
+  animation: stamp-settle 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
   opacity: 1;
+}
+
+@keyframes stamp-settle {
+  0% { transform: scale(1.45) rotate(-8deg); opacity: 0; }
+  65% { transform: scale(0.96) rotate(-3.5deg); opacity: 1; }
+  85% { transform: scale(1.02) rotate(-4.5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-4deg); opacity: 1; }
 }
 
 /* Painel de Camadas */
@@ -756,14 +781,14 @@
   top: 100%;
   left: 20px;
   z-index: 100;
-  background: #181926;
+  background: var(--at-desk-2);
   border: 1px solid var(--at-uv);
   border-radius: 6px;
   padding: 6px;
   display: grid;
   grid-template-columns: repeat(4, 18px);
   gap: 6px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.65);
 }
 
 .layer-color-swatch {
@@ -812,6 +837,27 @@
 .properties-panel.is-locked fieldset {
   pointer-events: none;
   opacity: 0.6;
+}
+
+.prop-empty-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed var(--at-line);
+  border-radius: var(--eco-radius-md);
+  font-size: var(--eco-fs-xs);
+  color: var(--at-muted);
+  line-height: 1.4;
+}
+
+.prop-empty-icon {
+  color: var(--at-uv);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .locked-banner {
@@ -1201,13 +1247,15 @@
 
 .sel-bar-blend-select {
   height: 24px;
-  background: var(--at-desk-0);
+  background: var(--at-desk-3);
   border: 1px solid var(--at-line);
   border-radius: var(--eco-radius-sm);
-  color: var(--eco-text);
-  font-family: var(--at-font-body);
+  color: var(--at-text);
+  font-family: var(--eco-font-ui);
   font-size: var(--eco-fs-xs);
-  padding: 0 4px;
+  padding: 0 6px;
+  outline: none;
+  cursor: pointer;
 }
 
 /* Alinhar */
@@ -1241,6 +1289,11 @@
 .align-btn:hover:not(:disabled) {
   background: var(--at-line);
   border-color: var(--at-uv);
+}
+
+.align-btn:active:not(:disabled) {
+  transform: scale(0.95);
+  background: color-mix(in srgb, var(--at-uv) 20%, var(--at-desk-3));
 }
 
 /* Amostras de cor (No documento e Recentes) */
@@ -1279,12 +1332,18 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
   padding: 0;
-  transition: transform var(--eco-fast) var(--eco-ease);
+  transition: transform var(--eco-fast) var(--eco-ease), border-color var(--eco-fast) var(--eco-ease);
 }
 
 .color-swatch-btn:hover {
   transform: scale(1.15);
-  border-color: #ffffff;
+  border-color: var(--at-paper);
+  box-shadow: 0 0 6px var(--at-uv-glow);
+}
+
+.color-swatch-btn:focus-visible {
+  outline: 2px solid var(--at-uv);
+  outline-offset: 1px;
 }
 
 /* Conta-gotas Loupe */
@@ -1888,7 +1947,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 6px 10px;
-  background: var(--at-desk-1);
+  background: var(--at-desk-3);
   border: 1px solid var(--at-line);
   border-radius: var(--eco-radius-s);
   color: var(--at-text);
@@ -1949,7 +2008,7 @@
 .font-search-input {
   width: 100%;
   padding: 6px 10px;
-  background: var(--at-desk-1);
+  background: var(--at-desk-3);
   border: 1px solid var(--at-line);
   border-radius: var(--eco-radius-s);
   color: var(--at-text);
@@ -2038,7 +2097,7 @@
 
 .library-top-bar {
   padding: 12px 14px 10px 14px;
-  background: var(--at-desk-1);
+  background: var(--at-desk-2);
   border-bottom: 1px solid var(--at-line);
   display: flex;
   flex-direction: column;
@@ -2124,12 +2183,12 @@
 }
 
 .category-arrow {
-  font-size: 10px;
+  font-size: 11px;
   opacity: 0.7;
 }
 
 .category-count {
-  font-size: 10px;
+  font-size: 11px;
   opacity: 0.8;
   font-family: var(--at-font-type);
 }
@@ -2201,7 +2260,7 @@
 }
 
 .library-expansion-stamp {
-  font-size: 9px;
+  font-size: 11px;
   padding: 1px 3px;
   flex-shrink: 0;
 }
@@ -2235,7 +2294,7 @@
 .library-hover-preview {
   position: fixed;
   width: 240px;
-  background: var(--at-desk-1);
+  background: var(--at-desk-2);
   border: 1px solid var(--at-line-strong);
   border-radius: 6px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.75);
@@ -2430,7 +2489,7 @@
 }
 
 .fill-field-type-badge {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--at-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -2481,7 +2540,7 @@
 }
 
 .fill-image-thumb-empty {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--at-muted);
 }
 
@@ -2527,7 +2586,7 @@ html[data-light="uv"] .desk-doc-bar {
   align-items: center;
   justify-content: center;
   font-family: var(--at-font-type);
-  font-size: 10px;
+  font-size: var(--eco-fs-xs, 11px);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
