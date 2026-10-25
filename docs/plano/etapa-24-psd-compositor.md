@@ -118,8 +118,8 @@ Se um não atingir, olhe `diferenca.png`, descubra qual regra ou ajuste falta, e
 
 ## Pronto quando
 
-- [ ] Testes passam; `npm test` passa.
-- [ ] `psd-check.js` atinge os limites nos três arquivos de referência; os números estão no `progress.md` e na tabela "Andamento".
+- [x] Testes passam; `npm test` passa.
+- [x] `psd-check.js` atinge os limites nos três arquivos de referência; os números estão no `progress.md` e na tabela "Andamento".
 
 ## Não faça
 

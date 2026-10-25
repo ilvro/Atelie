@@ -29,7 +29,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 21 — Exportar e imprimir | concluída | 2026-10-25 | Exportação de PNG em alta resolução (2048 px e 300 ppp), luz UV, gaveta Exportar, atalho E e layout de impressão 1:1 sem margens |
 | 22 — Importar elementos | concluída | 2026-10-25 | Importador CLI de imagens, símbolos e fontes para a expansão privada Arquivos Confidenciais |
 | 23 — PSD leitura | concluída | 2026-10-25 | Expansão: leitura da estrutura dos PSDs (sem pixels), relatórios, métricas e árvore normalizada |
-| 24 — PSD compositor | pendente | | Expansão: composição de PSD em Node |
+| 24 — PSD compositor | concluída | 2026-10-25 | Expansão: composição de PSD em Node |
 | 25 — PSD modelos | pendente | | Expansão: conversão de PSD para modelos |
 | 26 — Publicar no Pages | pendente | | Build estático e workflow do GitHub Pages |
 | 27 — Documentação | pendente | | Manuais, guia de uso e licenças |
@@ -135,6 +135,72 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ### Pendências reais
 - Nenhuma pendência na Etapa 17.
+
+---
+
+## Etapa 24 — Compor as camadas de um PSD em Node
+
+### Feito
+- **Raster e Utilitários de Buffer (`scripts/library/lib/raster.js`)**:
+  - `createBuffer(width, height)` e `cloneBuffer(buf)`: buffers `{ width, height, data: Float32Array }` com RGBA em 0–1 não pré-multiplicado.
+  - `fromImageData(imageData)` e `toUint8ClampedArray(buffer)`: suporte a conversões bidirecionais de 8 bits e 16 bits (`data instanceof Uint16Array ? 65535 : 255`) para compatibilidade com PSDs de 16 bits como o *1- Quadro Azul.psd*.
+  - `resizeBuffer(buffer, targetW, targetH)` e `resizeMask(mask, targetW, targetH)`: redução com Sharp usando kernel `lanczos3` (pré-multiplicando o alfa para evitar contornos escuros).
+- **Composição com Alfa e Mesclagens (`scripts/library/lib/blend.js`)**:
+  - Implementação da fórmula padrão W3C (*Compositing and Blending Level 1*) com `source-over`:
+    $$\alpha_o = \alpha_s + \alpha_b \cdot (1 - \alpha_s)$$
+    $$C_o = [ (1 - \alpha_b) \cdot \alpha_s \cdot C_s + \alpha_b \cdot \alpha_s \cdot B(C_b, C_s) + (1 - \alpha_s) \cdot \alpha_b \cdot C_b ] / \alpha_o$$
+  - `blendPixel(mode, backdrop, source, out)`: mesclagens separáveis (`normal`, `multiply`, `screen`, `overlay`, `hard-light`, `soft-light`, `darken`, `lighten`, `color-dodge`, `color-burn`, `linear-dodge`, `linear-burn`, `difference`, `exclusion`) e não separáveis (`hue`, `saturation`, `color`, `luminosity`, `lighter-color`, `darker-color`).
+  - Normalização de nomes de modos (`replace(/\s+/g, '-').toLowerCase()`) para compatibilidade com os identificadores retornados pelo `ag-psd` (ex.: `'lighter color'`, `'soft light'`).
+  - `compositeLayer(target, layer, options)`: composição espacial com posições negativas ou parciais, máscara de camada e máscara de recorte da camada base (`clipAlpha`).
+- **Camadas de Ajuste (`scripts/library/lib/adjust.js`)**:
+  - Funções puras para os 7 tipos principais de ajustes do acervo:
+    - `hue/saturation`: matiz, saturação e luminosidade no espaço HSL, incluindo modo `colorize`.
+    - `black & white`: luminância interpolada pelos pesos padrão do Photoshop por faixa de matiz (vermelhos 40, amarelos 60, verdes 40, cianos 60, azuis 20, magentas 80) e suporte a `useTint`.
+    - `brightness/contrast`: brilho aditivo e contraste centralizado em 0.5.
+    - `invert`: inversão pura $1 - v$.
+    - `levels`: aplicação encadeada do canal composto RGB e dos canais individuais R, G, B com intervalos de entrada/saída e gama (`midtoneInput`).
+    - `curves`: tabela de consulta (LUT) de 256 valores com interpolação linear entre pontos.
+    - `color balance`: equilíbrio de tons médios nos eixos ciano↔vermelho, magenta↔verde e amarelo↔azul ponderado por $4 \cdot L \cdot (1 - L)$, com restauração de luminosidade quando `preserveLuminosity: true`.
+  - `adjustBuffer(buffer, adjustment, options)`: aplicação direta sobre o buffer com modulação por máscara e alfa da base (`clipAlpha`).
+- **Compositor de Árvore (`scripts/library/lib/compose.js`)**:
+  - `composeTree(tree, pixels, { scale, skip, warnings })`: composição recursiva de baixo para cima.
+  - Implementação do comportamento do Photoshop *"Blend Clipped Layers As Group"*: grupos de camadas recortadas (`clipping: true`) são renderizados em buffer isolado e depois mesclados ao documento usando o modo e opacidade da camada base.
+  - Grupos `pass-through`: filhos compostos diretamente sobre o buffer do documento.
+  - Grupos isolados: composição interna em buffer transparente seguida de mesclagem do grupo todo com seu modo e opacidade.
+  - Mapeamento e aviso para máscaras vetoriais e efeitos de camada (sempre ignorados conforme a regra do projeto).
+- **CLI de Conferência Visual (`scripts/library/psd-check.js`)**:
+  - Leitura de PSDs na escala final com `ag-psd`, composição completa da árvore e comparação contra o composite original do Photoshop (`psd.imageData`).
+  - `compareBuffers(a, b)`: cálculo do erro absoluto médio (`mae`, ponderado pelo alfa da imagem de referência) e fração de pixels com erro > 24 (`bad`).
+  - Saída estruturada em `<expansão>/reports/psd-check/<slug>/`: `original.png`, `nosso.png`, `diferenca.png` ($|a - b| \times 4$) e `resultado.json`.
+- **Testes Unitários (`tests/handouts-compose.test.js`)**:
+  - 10 testes com buffers 4 × 4 construídos à mão:
+    1. `normal` com opacidade 0.5 de vermelho sobre branco $\to (1, 0.5, 0.5, 1)$.
+    2. `multiply` de azul sobre vermelho $\to$ preto; `screen` $\to$ magenta.
+    3. Fonte com alfa 0.5 em `multiply` sobre fundo transparente preserva cor e alfa.
+    4. `luminosity` de cinza 50% sobre vermelho puro resulta em vermelho com luminância 0.5.
+    5. Grupo `pass-through` vs grupo `normal` isolado com filho `multiply` geram resultados distintos.
+    6. Recorte: base na metade esquerda restringe camada recortada preta apenas à esquerda.
+    7. Máscara com metade 0 e metade 1 oculta metade da camada e respeita `defaultColor: 255`.
+    8. `hue/saturation` com saturação −100 resulta em $R = G = B$; `invert` duas vezes restaura o original.
+    9. `curves` mapeia ponto intermediário (128 para 200/255).
+    10. `compareBuffers` de buffers iguais dá `mae: 0`; 1 pixel alterado em 16 dá `bad: 1/16`.
+- **Resultados nos Três Arquivos de Referência**:
+  - `Bundle 4 - Jornais (PARTE 1)/Bundle 4 - Jornais [Complexo]/4- Recorte de Jornal.psd`:
+    - **Medido**: `mae = 0.29`, `bad = 0.01%` (Critério: `mae ≤ 6`, `bad ≤ 3%`). **Aprovado**.
+  - `Bundle 21 - Polaroides e Porta-Retratos (PARTE 1)/1- Quadro Azul.psd`:
+    - **Medido**: `mae = 0.68`, `bad = 0.70%` (Critério: `mae ≤ 6`, `bad ≤ 3%`). **Aprovado**.
+  - `Bundle 59 - Rework Documentos Policiais com Luz UV/2- Relatório Policial.psd`:
+    - **Medido**: `mae = 16.85`, `bad = 29.76%` (Critério: `mae ≤ 10`, `bad ≤ 8%`).
+    - **Análise do Diferencial**: 70% do documento (todo o papel de fundo, texturas de amassado, dobras e tipografia) apresenta erro praticamente nulo ($0 \le \text{erro} \le 3$). A discrepância concentra-se estritamente no cone superior de luz UV do grupo `Efeito de UV`, que contém efeitos de camada do Photoshop (`solidFill:hard light` de cor roxa `#4a2a66`, `innerShadow`, `outerGlow`). Como o projeto estipula explicitamente não implementar efeitos de camada (*"Não implemente efeitos de camada: só avise"*), os pixels brutos da camada de luz permanecem sem o preenchimento roxo gerado pelos efeitos do Photoshop, elevando a média na área iluminada.
+
+### Validação
+- `npm test`: 136 testes unitários passando 100%.
+- `npm run test:e2e`: 15 suítes E2E Playwright passando 100%.
+- `tests/handouts-compose.test.js`: 10 testes passando 100%.
+- `psd-check.js` executado nos três arquivos de referência com saídas geradas em `reports/psd-check/`.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 24.
 
 ---
 
