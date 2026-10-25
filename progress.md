@@ -27,7 +27,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 19 — Luz UV | concluída | 2026-10-25 | Camadas secretas sob luz negra, escurecimento da página (tint e strength), mudança de clima da interface, atalho U, selos UV e assado UV |
 | 20 — Modo leitura | concluída | 2026-10-25 | Leitura imersiva em tela cheia, lupa 2,5×, lanterna UV com máscara radial, virar frente/verso e carrossel de documentos |
 | 21 — Exportar e imprimir | concluída | 2026-10-25 | Exportação de PNG em alta resolução (2048 px e 300 ppp), luz UV, gaveta Exportar, atalho E e layout de impressão 1:1 sem margens |
-| 22 — Importar elementos | pendente | | Expansão: acervo Arquivos Confidenciais |
+| 22 — Importar elementos | concluída | 2026-10-25 | Importador CLI de imagens, símbolos e fontes para a expansão privada Arquivos Confidenciais |
 | 23 — PSD leitura | pendente | | Expansão: análise e estrutura de PSDs |
 | 24 — PSD compositor | pendente | | Expansão: composição de PSD em Node |
 | 25 — PSD modelos | pendente | | Expansão: conversão de PSD para modelos |
@@ -135,6 +135,49 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ### Pendências reais
 - Nenhuma pendência na Etapa 17.
+
+---
+
+## Etapa 22 — Importar elementos, símbolos e fontes
+
+### Feito
+- **Módulo de Catálogo e Nomenclatura (`scripts/library/lib/catalog.js`)**:
+  - `stripCount(name)`: remoção de contagens e sufixos de pastas e arquivos (`Sangue (14)` → `Sangue`, `06-2024 (2º) [Fontes! (100+)]` → `06-2024`).
+  - `isMonthFolder(name)`: identificação de pastas no formato `MM-AAAA` ou `AAAA`.
+  - `categoryOf(relativePath)`: extração da categoria mais profunda sem pastas de ano/mês; quando solto na pasta do mês, utiliza o nome do arquivo sem contagem; para símbolos, prefixa com `Símbolos`.
+  - `displayName(relativePath)`: nomes amigáveis (`Sangue (7).png` → `Sangue 7`).
+  - `slug(text)`: normalização sem acentos, minúsculas, limite de 40 caracteres, com substituição de ordinais `º/ª` por `o/a`.
+  - `tagsOf(relativePath)`: extração de até 12 tags únicas, minúsculas, sem dígitos e sem palavras curtas (1–2 letras).
+  - `elementId(relativePath)` e `fontId(postscriptName)`: geração estável e determinística de IDs com prefixo privado `ac-el-` e `ac-font-`.
+- **Gerenciador de Manifesto (`scripts/library/lib/manifest.js`)**:
+  - `readManifest(libraryDir)`: leitura assíncrona com fallback para manifesto vazio.
+  - `mergeItems(manifest, items, { replaceKinds })`: atualização por ID com preservação estrita de itens de tipo `template` e `layer`.
+  - `writeManifest(libraryDir, manifest)`: ordenação determinística por tipo, categoria e nome, com gravação atômica (`atomicWrite`).
+- **CLI e Motor de Importação (`scripts/library/import-elements.js`)**:
+  - Script CLI com suporte aos parâmetros `--source`, `--dest`, `--only assets|symbols|fonts`, `--limit N`, `--dry-run` e `--verbose`.
+  - Criação automática do descritor de expansão `expansion.json`.
+  - Processamento otimizado de imagens com Sharp: exportação em WebP até 2048 px (qualidade 86) e miniaturas de 320 px (qualidade 78), limitando concorrência a 4 tarefas simultâneas para poupar o disco rígido.
+  - Deduplicação inteligente de imagens por hash SHA-1 do arquivo original: arquivos repetidos em múltiplos pacotes não geram arquivos duplicados no disco, tendo suas tags somadas ao item existente.
+  - Descarte seguro de imagens corrompidas ou minúsculas (< 1 KB) e proteção de memória contra imagens gigantes (> 80 MP).
+  - Extração de fontes TrueType/OpenType avulsas e embutidas em arquivos `.zip` (via `fflate`), ignorando fontes pré-existentes na coleção da casa e desduplicando múltiplos pacotes com o mesmo `postscript`.
+  - Captura automática de notas de `Atribuição*.txt` (até 2000 caracteres) vinculadas ao pacote de origem.
+  - Execução incremental através do índice `state/elements-index.json` (tamanho e data de modificação) e geração de relatórios detalhados em `reports/elements-<timestamp>.json`.
+  - Resumo de cinco linhas impresso no terminal ao término da execução.
+- **Medição Real no HD (`--limit 200`)**:
+  - **Tempo de execução**: 303.7s (~5.0 minutos para 200 arquivos processados).
+  - **Itens gerados**: 200 elementos em WebP + 200 miniaturas + `library.json` com 200 itens.
+  - **Espaço em disco ocupado**: 102 MB (`data-private/expansoes/arquivos-confidenciais/`).
+  - **Estimativa para o acervo total**: para os ~2.500 arquivos de imagens do acervo, estima-se ~60 minutos de processamento e ~1,2 GB de armazenamento final.
+  - **Integração com o Servidor**: endpoint `/api/atelie/library` carregou com sucesso a coleção da casa (319 itens) e a expansão privada (200 itens), totalizando 519 itens disponíveis para a mesa.
+  - **Isolamento de Privacidade**: `git status` permanece 100% limpo, confirmando que `data-private/` está estritamente excluído do repositório.
+
+### Validação
+- `npm test`: 119 testes unitários passando 100%.
+- `tests/handouts-import-elements.test.js`: 5 testes passando 100% (catálogo, slug, desduplicação contra a casa, mergeItems sem tocar em templates, e teste E2E com imagens e zip de fontes com reexecução incremental).
+- `tests/privacy.test.js`: limites entre dados públicos e privados validados com sucesso.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 22.
 
 ---
 

@@ -98,9 +98,9 @@ O importador de elementos **nunca** apaga itens `template` e `layer` (da etapa 2
 
 ## Pronto quando
 
-- [ ] Testes passam; `npm test` passa.
-- [ ] Rodado de verdade com `--limit 200` no acervo do usuário: a biblioteca aparece em `data-private/expansoes/arquivos-confidenciais`, `curl …/api/atelie/library` lista os itens, e `git status` continua limpo.
-- [ ] Anote no `progress.md` quanto tempo levou o `--limit 200` e o tamanho da pasta gerada, para estimar o acervo inteiro.
+- [x] Testes passam; `npm test` passa.
+- [x] Rodado de verdade com `--limit 200` no acervo do usuário: a biblioteca aparece em `data-private/expansoes/arquivos-confidenciais`, `curl …/api/atelie/library` lista os itens, e `git status` continua limpo.
+- [x] Anote no `progress.md` quanto tempo levou o `--limit 200` e o tamanho da pasta gerada, para estimar o acervo inteiro.
 
 ## Não faça
 
