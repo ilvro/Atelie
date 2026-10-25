@@ -28,8 +28,8 @@ import {
 import { moveBox, layerAtPoint } from './geometry.js';
 import { contextMenu } from '../ui/context-menu.js';
 import { handoffRequest, deliveredMessage } from './handoff.js';
-import { bakeHandout, summaryOf, deliveryOf } from './bake.js';
-import { openExchange, publish, channel, savedMessage, unpublishBySource } from '../data/exchange.js';
+import { bakeHandout, summaryOf, deliveryOf, previewOf, blobToDataUrl } from './bake.js';
+import { openExchange, publish, channel, savedMessage, unpublishBySource, readPublished } from '../data/exchange.js';
 import { getSettings } from '../ui/settings.js';
 
 export function createEditor(shell, { api, images, fonts } = {}) {
@@ -58,6 +58,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     <div class="desk-doc-title-area">
       <input type="text" class="at-doc-name-input" aria-label="Nome do documento" value="" />
       <span class="at-stamp is-default desk-size-stamp"></span>
+      <span class="at-stamp is-uv desk-uv-stamp" style="display: none;">UV</span>
       ${handoff && (handoff.mode === 'edit' || handoff.mode === 'new') ? `<span class="at-stamp is-accent at-handoff-stamp" title="Ligado ao Tabletop">Ligado ao Tabletop</span>` : ''}
     </div>
     <div class="desk-doc-actions">
@@ -67,7 +68,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       <button type="button" class="at-icon-btn" data-action="redo" title="Refazer (Ctrl+Y)" aria-label="Refazer">
         ${renderIcon('redo', 16)}
       </button>
-      <button type="button" class="at-btn is-disabled" title="Disponível na etapa 19" disabled>
+      <button type="button" class="at-btn" data-action="toggle-uv" aria-pressed="false" title="Luz UV (U)">
         Luz UV
       </button>
       <button type="button" class="at-btn is-primary" data-action="archive">
@@ -203,6 +204,32 @@ export function createEditor(shell, { api, images, fonts } = {}) {
   const undoBtn = docBar.querySelector('[data-action="undo"]');
   const redoBtn = docBar.querySelector('[data-action="redo"]');
   const archiveBtn = docBar.querySelector('[data-action="archive"]');
+  const uvBtn = docBar.querySelector('[data-action="toggle-uv"]');
+  const uvStamp = docBar.querySelector('.desk-uv-stamp');
+
+  let currentLight = 'normal';
+
+  function toggleUvLight() {
+    currentLight = currentLight === 'uv' ? 'normal' : 'uv';
+    const isUv = currentLight === 'uv';
+    if (uvBtn) uvBtn.setAttribute('aria-pressed', isUv ? 'true' : 'false');
+    if (isUv) {
+      document.documentElement.dataset.light = 'uv';
+      if (uvStamp) uvStamp.style.display = 'inline-block';
+    } else {
+      delete document.documentElement.dataset.light;
+      if (uvStamp) uvStamp.style.display = 'none';
+    }
+    if (state?.handout && stage) {
+      stage.show(state.handout, { light: currentLight });
+    }
+  }
+
+  if (uvBtn) {
+    uvBtn.addEventListener('click', () => {
+      toggleUvLight();
+    });
+  }
 
   // State variables for draft and multi-tab
   let hasDraft = false;
@@ -365,65 +392,79 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       draftSaved = true;
       updateStageLayout();
 
-      // Generate thumbnail preview (480px width)
-      let previewBlob = null;
+      const source = (typeof document !== 'undefined' && document.baseURI)
+        ? new URL('.', document.baseURI).href
+        : 'http://127.0.0.1:3011/';
+
+      // One high-resolution render feeds the thumbnail and every delivery path.
+      let bakes = null;
+      let bakeError = null;
       try {
-        const previewCanvas = document.createElement('canvas');
-        const aspect = doc.page.height / doc.page.width;
-        previewCanvas.width = 480;
-        previewCanvas.height = Math.round(480 * aspect);
-        const { renderHandout } = await import('../render/handout-render.js');
-        await renderHandout(previewCanvas, saved, {
-          scale: 480 / doc.page.width,
-          loadImage: images?.load,
-          loadFont: fonts?.load,
-        });
-        const dataUrl = previewCanvas.toDataURL('image/webp', 0.82);
-        await api.handouts.savePreview(saved, dataUrl);
-        if (previewCanvas.toBlob) {
-          previewBlob = await new Promise(r => previewCanvas.toBlob(r, 'image/webp', 0.82));
-        }
+        bakes = await bakeHandout(saved, { images, fonts });
+      } catch (err) {
+        bakeError = err;
+        console.warn('[atelie] Erro ao assar documento:', err);
+      }
+
+      let previewBlob = bakes?.preview ?? null;
+      try {
+        if (!previewBlob) previewBlob = await previewOf(saved, { images, fonts });
+        if (previewBlob) await api.handouts.savePreview(saved, await blobToDataUrl(previewBlob));
       } catch (err) {
         console.warn('[atelie] Erro ao gerar prévia:', err);
       }
 
-      // High-resolution bake and delivery to Tabletop
-      try {
-        const bakes = await bakeHandout(saved, { images, fonts });
-        const source = (typeof document !== 'undefined' && document.baseURI)
-          ? new URL('.', document.baseURI).href
-          : 'http://127.0.0.1:3011/';
-
+      // Each delivery path is independent: a failure in one must not block the others.
+      const deliveryErrors = [];
+      if (bakeError) {
+        deliveryErrors.push(bakeError);
+      } else {
         // Caminho C: Servidor
         if (api.mode === 'server') {
-          await api.handouts.saveBake(saved.id, 'normal', saved.revision, bakes.normal);
-          if (bakes.uv) {
-            await api.handouts.saveBake(saved.id, 'uv', saved.revision, bakes.uv);
-          } else {
-            await api.handouts.removeBake(saved.id, 'uv', saved.revision).catch(() => {});
+          try {
+            await api.handouts.saveBake(saved.id, 'normal', saved.revision, bakes.normal);
+            if (bakes.uv) {
+              await api.handouts.saveBake(saved.id, 'uv', saved.revision, bakes.uv);
+            } else {
+              await api.handouts.removeBake(saved.id, 'uv', saved.revision).catch(() => {});
+            }
+          } catch (err) {
+            console.warn('[atelie] Erro ao enviar assado ao servidor:', err);
+            deliveryErrors.push(err);
           }
         }
 
         // Caminho A: Banco de troca (IndexedDB)
         if (getSettings().shareWithTabletop !== false && typeof indexedDB !== 'undefined') {
-          const db = await openExchange();
-          const summary = summaryOf(saved, source);
-          await publish(db, summary, previewBlob, bakes);
           try {
-            channel().postMessage(savedMessage(summary));
-          } catch (chErr) {
-            console.warn('[atelie] Erro ao avisar no BroadcastChannel:', chErr);
+            const db = await openExchange();
+            const summary = summaryOf(saved, source);
+            await publish(db, summary, previewBlob, bakes);
+            try {
+              channel().postMessage(savedMessage(summary));
+            } catch (chErr) {
+              console.warn('[atelie] Erro ao avisar no BroadcastChannel:', chErr);
+            }
+          } catch (err) {
+            console.warn('[atelie] Erro ao publicar no banco de troca:', err);
+            deliveryErrors.push(err);
           }
         }
 
         // Caminho B: Janela (postMessage)
         if (handoff && window.opener && (handoff.mode === 'edit' || handoff.mode === 'new')) {
-          const delivery = deliveryOf(saved, { preview: previewBlob, bakes, source });
-          window.opener.postMessage(deliveredMessage(handoff.nonce, delivery), handoff.from);
+          try {
+            const delivery = deliveryOf(saved, { preview: previewBlob, bakes, source });
+            window.opener.postMessage(deliveredMessage(handoff.nonce, delivery), handoff.from);
+          } catch (err) {
+            console.warn('[atelie] Erro ao entregar pela janela:', err);
+            deliveryErrors.push(err);
+          }
         }
-      } catch (bakeErr) {
-        console.warn('[atelie] Erro na entrega ao Tabletop:', bakeErr);
-        shell.notify(`Arquivado, mas a entrega ao Tabletop falhou: ${bakeErr.message}`, { tone: 'error' });
+      }
+
+      if (deliveryErrors.length) {
+        shell.notify(`Arquivado, mas a entrega ao Tabletop falhou: ${deliveryErrors[0].message}`, { tone: 'error' });
       }
 
       triggerArchiveAnimation();
@@ -581,6 +622,11 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       handout = await checkDraftRecovery(inputHandout);
     }
 
+    currentLight = 'normal';
+    if (uvBtn) uvBtn.setAttribute('aria-pressed', 'false');
+    delete document.documentElement.dataset.light;
+    if (uvStamp) uvStamp.style.display = 'none';
+
     state = createEditorState(handout);
     hideStartScreen();
 
@@ -597,7 +643,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
 
     // Inspector panels
     const layersWrap = document.createElement('div');
-    layersPanel = createLayersPanel(layersWrap, { state });
+    layersPanel = createLayersPanel(layersWrap, { state, getLight: () => currentLight });
     shell.inspector.panel('layers', layersWrap);
 
     const propertiesWrap = document.createElement('div');
@@ -626,7 +672,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
         change.type === 'redo' ||
         change.type === 'goto'
       ) {
-        stage.show(state.handout);
+        stage.show(state.handout, { light: currentLight });
         layersPanel.render();
         propertiesPanel.render();
         historyPanel.render();
@@ -654,7 +700,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       }
     });
 
-    stage.show(state.handout);
+    stage.show(state.handout, { light: currentLight });
     updateDocBar();
     stage.zoom('fit');
 
@@ -946,6 +992,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       y: Math.round(pos[1] - 100),
       width: 600,
       height: 200,
+      light: currentLight === 'uv' ? 'uv' : 'both',
     });
     const next = addLayer(state.handout, newL);
     state.edit(next, { label: 'Adicionar texto' });
@@ -960,6 +1007,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       y: Math.round(pos[1] - 200),
       width: 600,
       height: 400,
+      light: currentLight === 'uv' ? 'uv' : 'both',
     });
     const next = addLayer(state.handout, newL);
     state.edit(next, { label: 'Adicionar imagem' });
@@ -1051,6 +1099,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
             height: Math.round(h),
             blend: defaults.blend,
             opacity: defaults.opacity ?? 1,
+            light: currentLight === 'uv' ? 'uv' : 'both',
             image: {
               src: { library: item.id },
               fit: defaults.cover ? 'cover' : 'contain',
@@ -1110,6 +1159,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
           y: posY,
           width: w,
           height: h,
+          light: currentLight === 'uv' ? 'uv' : 'both',
           image: { src: { upload: uploaded.id }, fit: 'contain' },
         });
 
@@ -1155,6 +1205,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
               y,
               width: w,
               height: h,
+              light: currentLight === 'uv' ? 'uv' : 'both',
               image: { src: { upload: uploaded.id }, fit: 'contain' },
             });
 
@@ -1351,6 +1402,18 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       return;
     }
 
+    if (
+      event.key.toLowerCase() === 'u' &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey &&
+      !event.shiftKey
+    ) {
+      event.preventDefault();
+      toggleUvLight();
+      return;
+    }
+
     if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
       if (state?.selection) {
         const layer = state.handout.layers.find(l => l.id === state.selection);
@@ -1459,11 +1522,19 @@ export function createEditor(shell, { api, images, fonts } = {}) {
           y: Math.round(state.handout.page.height / 2 - 150),
           width: 400,
           height: 300,
+          light: currentLight === 'uv' ? 'uv' : 'both',
           shape: { type: 'rect', fill: '#ffffff', stroke: null, strokeWidth: 0 },
         });
         state.edit(addLayer(state.handout, newL), { label: 'Adicionar Retângulo' });
         state.select(newL.id);
       },
+    },
+    {
+      id: 'view:toggle-uv',
+      label: 'Luz UV',
+      hint: 'U',
+      category: 'Visualização',
+      run: () => toggleUvLight(),
     },
     {
       id: 'stage:rulers',
@@ -1664,16 +1735,25 @@ export function createEditor(shell, { api, images, fonts } = {}) {
           shell.notify('Sincronizando documentos com o Tabletop...', { tone: 'info' });
           const db = await openExchange();
           const list = await api.handouts.list();
+          let done = 0;
           for (const item of list) {
+            done += 1;
             try {
               const doc = await api.handouts.read(item.id);
-              const bakes = await bakeHandout(doc, { images, fonts });
               const summary = summaryOf(doc, source);
-              await publish(db, summary, null, bakes);
+              // Documents already published at this exact revision are not baked again.
+              const already = await readPublished(db, doc.id, doc.revision, { hasUv: summary.hasUv });
+              if (!already) {
+                shell.notify(`Sincronizando ${done}/${list.length}: ${doc.name || 'Sem nome'}…`, { tone: 'info' });
+                const bakes = await bakeHandout(doc, { images, fonts });
+                await publish(db, summary, bakes.preview, bakes);
+              }
               try { channel().postMessage(savedMessage(summary)); } catch {}
             } catch (err) {
               console.warn('[atelie] Erro ao assar documento:', err);
             }
+            // Give the interface a chance to breathe between documents.
+            await new Promise(resolve => setTimeout(resolve, 0));
           }
           shell.notify('Documentos sincronizados com o Tabletop.', { tone: 'info' });
         } catch (err) {
@@ -1711,5 +1791,9 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     get startScreen() {
       return startScreen;
     },
+    get light() {
+      return currentLight;
+    },
+    toggleUvLight,
   };
 }

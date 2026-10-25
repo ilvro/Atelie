@@ -78,6 +78,37 @@ function createOffscreenOrElementCanvas(width, height) {
   return null;
 }
 
+export const PREVIEW_WIDTH = 480;
+
+/** Scales an already rendered canvas down to a WebP thumbnail (480 px wide). */
+export async function previewFromCanvas(source, handout) {
+  const height = Math.max(1, Math.round(PREVIEW_WIDTH * (handout.page.height / handout.page.width)));
+  const canvas = createOffscreenOrElementCanvas(PREVIEW_WIDTH, height);
+  if (!canvas) return null;
+  const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(source, 0, 0, PREVIEW_WIDTH, height);
+  return canvasToBlob(canvas, 'image/webp');
+}
+
+/** Renders the thumbnail on its own, for when there is no bake to scale down. */
+export async function previewOf(handout, { images, fonts } = {}) {
+  const scale = PREVIEW_WIDTH / handout.page.width;
+  const canvas = createOffscreenOrElementCanvas(PREVIEW_WIDTH, Math.max(1, Math.round(handout.page.height * scale)));
+  const { renderHandout } = await import('../render/handout-render.js');
+  await renderHandout(canvas, handout, { scale, loadImage: images?.load, loadFont: fonts?.load });
+  return canvasToBlob(canvas, 'image/webp');
+}
+
+export function blobToDataUrl(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+}
+
 /**
  * Bakes high-resolution PNGs of a handout:
  * Normal light always, UV light only when hasUvLayers is true.
@@ -85,7 +116,7 @@ function createOffscreenOrElementCanvas(width, height) {
  *
  * @param {object} handout
  * @param {{ images?: object, fonts?: object }} options
- * @returns {Promise<{ normal: Blob, uv: Blob | null, width: number, height: number }>}
+ * @returns {Promise<{ normal: Blob, uv: Blob | null, preview: Blob | null, width: number, height: number }>}
  */
 export async function bakeHandout(handout, { images, fonts } = {}) {
   const maxSide = Math.max(handout.page.width, handout.page.height);
@@ -104,6 +135,13 @@ export async function bakeHandout(handout, { images, fonts } = {}) {
     loadFont: fonts?.load,
   });
   const normalBlob = await canvasToBlob(normalCanvas, 'image/png');
+  // The thumbnail is scaled down from this render instead of rendering the document a second time.
+  let previewBlob = null;
+  try {
+    previewBlob = await previewFromCanvas(normalCanvas, handout);
+  } catch {
+    previewBlob = null;
+  }
 
   // UV bake
   let uvBlob = null;
@@ -121,6 +159,7 @@ export async function bakeHandout(handout, { images, fonts } = {}) {
   return {
     normal: normalBlob,
     uv: uvBlob,
+    preview: previewBlob,
     width,
     height,
   };

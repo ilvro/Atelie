@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { mkdir, readdir, readFile, unlink, stat, rm } from 'node:fs/promises';
+import { mkdir, readdir, readFile, unlink, stat, rm, rename } from 'node:fs/promises';
 import express from 'express';
 import { HttpError, assertId, assertRevision, checkRevision, atomicWrite, readJSON } from '../storage.js';
 import { readOnlyCors } from '../cors.js';
@@ -19,6 +19,34 @@ export async function register(app, { dataDir, allowedOrigins = [] }) {
 
   const cors = readOnlyCors(allowedOrigins);
 
+  // Files that live next to a document (preview and bakes). They follow it to the trash and back.
+  const SIDECARS = ['preview.webp', 'preview.png', 'bake-normal.png', 'bake-uv.png', 'bake.json'];
+  const assetsTrashDir = id => path.join(trashDir, `${id}.assets`);
+
+  async function moveSidecars(id, fromDir, toDir) {
+    await mkdir(toDir, { recursive: true });
+    for (const name of SIDECARS) {
+      await rename(path.join(fromDir, `${id}.${name}`), path.join(toDir, `${id}.${name}`)).catch(err => {
+        if (err.code !== 'ENOENT') throw err;
+      });
+    }
+  }
+
+  // bake.json is read-modify-write: serialize it per document so concurrent PUTs of 'normal' and 'uv' do not lose each other.
+  const bakeLocks = new Map();
+  function withBakeLock(id, task) {
+    const run = (bakeLocks.get(id) ?? Promise.resolve()).catch(() => {}).then(task);
+    const tail = run.catch(() => {});
+    bakeLocks.set(id, tail);
+    tail.then(() => {
+      if (bakeLocks.get(id) === tail) bakeLocks.delete(id);
+    });
+    return run;
+  }
+
+  // Summaries are cached by file size and mtime, so listing does not parse every document again.
+  const summaryCache = new Map();
+
   // Middleware for JSON and image bodies
   const jsonParser = express.json({ limit: '10mb' });
   const rawPreviewParser = express.raw({ type: ['image/webp', 'image/png'], limit: '2mb' });
@@ -37,34 +65,39 @@ export async function register(app, { dataDir, allowedOrigins = [] }) {
         if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) continue;
 
         try {
-          const doc = JSON.parse(await readFile(path.join(handoutsDir, file), 'utf8'));
-          let hasPreview = false;
-          try {
-            await stat(path.join(handoutsDir, `${id}.preview.webp`));
-            hasPreview = true;
-          } catch {
-            try {
-              await stat(path.join(handoutsDir, `${id}.preview.png`));
-              hasPreview = true;
-            } catch {
-              hasPreview = false;
-            }
+          const full = path.join(handoutsDir, file);
+          const info = await stat(full);
+          const stamp = `${info.size}:${info.mtimeMs}`;
+          let entry = summaryCache.get(id);
+          if (!entry || entry.stamp !== stamp) {
+            const doc = JSON.parse(await readFile(full, 'utf8'));
+            entry = {
+              stamp,
+              summary: {
+                id: doc.id,
+                name: doc.name,
+                category: doc.category || '',
+                tags: doc.tags || [],
+                folder: doc.folder ?? null,
+                favorite: doc.favorite ?? false,
+                revision: doc.revision,
+                updatedAt: doc.updatedAt || new Date().toISOString(),
+                hasUv: Array.isArray(doc.layers) && doc.layers.some(l => l.visible && l.light === 'uv'),
+              },
+            };
+            summaryCache.set(id, entry);
           }
 
-          const hasUv = Array.isArray(doc.layers) && doc.layers.some(l => l.visible && l.light === 'uv');
+          let hasPreview = false;
+          for (const ext of ['webp', 'png']) {
+            try {
+              await stat(path.join(handoutsDir, `${id}.preview.${ext}`));
+              hasPreview = true;
+              break;
+            } catch {}
+          }
 
-          items.push({
-            id: doc.id,
-            name: doc.name,
-            category: doc.category || '',
-            tags: doc.tags || [],
-            folder: doc.folder ?? null,
-            favorite: doc.favorite ?? false,
-            revision: doc.revision,
-            updatedAt: doc.updatedAt || new Date().toISOString(),
-            preview: hasPreview,
-            hasUv,
-          });
+          items.push({ ...entry.summary, preview: hasPreview });
         } catch {
           // ignore broken file
         }
@@ -257,6 +290,7 @@ export async function register(app, { dataDir, allowedOrigins = [] }) {
 
       await atomicWrite(trashFile, JSON.stringify({ ...current, deletedAt }, null, 2));
       await unlink(file);
+      await withBakeLock(id, () => moveSidecars(id, handoutsDir, assetsTrashDir(id)));
 
       res.status(204).end();
     } catch (err) {
@@ -283,6 +317,7 @@ export async function register(app, { dataDir, allowedOrigins = [] }) {
             await unlink(filePath).catch(() => {});
             const id = file.replace('.json', '');
             await rm(path.join(versionsDir, id), { recursive: true, force: true }).catch(() => {});
+            await rm(assetsTrashDir(id), { recursive: true, force: true }).catch(() => {});
             continue;
           }
 
@@ -318,6 +353,10 @@ export async function register(app, { dataDir, allowedOrigins = [] }) {
       const targetFile = path.join(handoutsDir, `${id}.json`);
       await atomicWrite(targetFile, JSON.stringify(doc, null, 2));
       await unlink(trashFile);
+      await withBakeLock(id, async () => {
+        await moveSidecars(id, assetsTrashDir(id), handoutsDir);
+        await rm(assetsTrashDir(id), { recursive: true, force: true }).catch(() => {});
+      });
 
       res.json({ handout: doc });
     } catch (err) {
@@ -335,6 +374,7 @@ export async function register(app, { dataDir, allowedOrigins = [] }) {
       });
 
       await rm(path.join(versionsDir, id), { recursive: true, force: true }).catch(() => {});
+      await rm(assetsTrashDir(id), { recursive: true, force: true }).catch(() => {});
       res.status(204).end();
     } catch (err) {
       next(err);
@@ -364,8 +404,10 @@ export async function register(app, { dataDir, allowedOrigins = [] }) {
         throw new HttpError(413, 'BODY_TOO_LARGE', 'Prévia deve ter até 2 MB.');
       }
 
-      const previewFile = path.join(handoutsDir, `${id}.preview.webp`);
-      await atomicWrite(previewFile, buffer);
+      const isPng = buffer.length > 4 && buffer[0] === 0x89 && buffer[1] === 0x50 && buffer[2] === 0x4e && buffer[3] === 0x47;
+      const ext = isPng ? 'png' : 'webp';
+      await atomicWrite(path.join(handoutsDir, `${id}.preview.${ext}`), buffer);
+      await unlink(path.join(handoutsDir, `${id}.preview.${isPng ? 'webp' : 'png'}`)).catch(() => {});
       res.status(204).end();
     } catch (err) {
       next(err);
@@ -426,16 +468,17 @@ export async function register(app, { dataDir, allowedOrigins = [] }) {
         throw new HttpError(422, 'INVALID_IMAGE', 'Formato deve ser PNG.');
       }
 
-      const bakeFile = path.join(handoutsDir, `${id}.bake-${light}.png`);
-      await atomicWrite(bakeFile, buf);
+      await withBakeLock(id, async () => {
+        await atomicWrite(path.join(handoutsDir, `${id}.bake-${light}.png`), buf);
 
-      const infoFile = path.join(handoutsDir, `${id}.bake.json`);
-      let bakeInfo = { normal: null, uv: null };
-      try {
-        bakeInfo = JSON.parse(await readFile(infoFile, 'utf8'));
-      } catch {}
-      bakeInfo[light] = rev;
-      await atomicWrite(infoFile, JSON.stringify(bakeInfo, null, 2));
+        const infoFile = path.join(handoutsDir, `${id}.bake.json`);
+        let bakeInfo = { normal: null, uv: null };
+        try {
+          bakeInfo = JSON.parse(await readFile(infoFile, 'utf8'));
+        } catch {}
+        bakeInfo[light] = rev;
+        await atomicWrite(infoFile, JSON.stringify(bakeInfo, null, 2));
+      });
 
       res.status(204).end();
     } catch (err) {
@@ -459,18 +502,19 @@ export async function register(app, { dataDir, allowedOrigins = [] }) {
         checkRevision(current, rev);
       }
 
-      const bakeFile = path.join(handoutsDir, `${id}.bake-${light}.png`);
-      await unlink(bakeFile).catch(err => {
-        if (err.code !== 'ENOENT') throw err;
-      });
+      await withBakeLock(id, async () => {
+        await unlink(path.join(handoutsDir, `${id}.bake-${light}.png`)).catch(err => {
+          if (err.code !== 'ENOENT') throw err;
+        });
 
-      const infoFile = path.join(handoutsDir, `${id}.bake.json`);
-      let bakeInfo = { normal: null, uv: null };
-      try {
-        bakeInfo = JSON.parse(await readFile(infoFile, 'utf8'));
-      } catch {}
-      bakeInfo[light] = null;
-      await atomicWrite(infoFile, JSON.stringify(bakeInfo, null, 2));
+        const infoFile = path.join(handoutsDir, `${id}.bake.json`);
+        let bakeInfo = { normal: null, uv: null };
+        try {
+          bakeInfo = JSON.parse(await readFile(infoFile, 'utf8'));
+        } catch {}
+        bakeInfo[light] = null;
+        await atomicWrite(infoFile, JSON.stringify(bakeInfo, null, 2));
+      });
 
       res.status(204).end();
     } catch (err) {

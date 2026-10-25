@@ -122,6 +122,7 @@ export function createApi({
               revision: doc.revision,
               updatedAt: doc.updatedAt || new Date().toISOString(),
               preview: pSet.has(doc.id),
+              hasUv: Array.isArray(doc.layers) && doc.layers.some(l => l.visible && l.light === 'uv'),
             }));
             list.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
             resolve(list);

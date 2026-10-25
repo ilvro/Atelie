@@ -2210,3 +2210,59 @@
   animation: selection-pulse 0.5s ease-out;
 }
 
+/* --- Luz UV: Mudança de clima da interface --- */
+html[data-light="uv"] .at-desk {
+  background-color: #0b0914 !important;
+  background-image: none !important;
+  transition: background-color var(--eco-mid) var(--eco-ease);
+}
+
+html[data-light="uv"] .at-btn.is-primary,
+html[data-light="uv"] .inspector-tab.active,
+html[data-light="uv"] .rail-btn.active,
+html[data-light="uv"] .desk-doc-bar {
+  box-shadow: 0 0 12px var(--at-uv-glow);
+  transition: box-shadow var(--eco-mid) var(--eco-ease);
+}
+
+.desk-doc-actions button[data-action="toggle-uv"][aria-pressed="true"] {
+  background: var(--at-uv);
+  color: var(--at-uv-ink);
+  border-color: var(--at-uv);
+  box-shadow: 0 0 10px var(--at-uv-glow);
+}
+
+.desk-uv-stamp {
+  margin-left: 4px;
+}
+
+/* Selos de luz UV nas camadas */
+.layer-uv-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--at-font-type);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 2px 5px;
+  border-radius: 2px;
+  margin-left: 6px;
+  flex-shrink: 0;
+}
+
+.layer-uv-badge.is-uv {
+  color: var(--at-uv);
+  border: 1px solid var(--at-uv);
+  background: color-mix(in srgb, var(--at-uv) 18%, transparent);
+  box-shadow: 0 0 6px var(--at-uv-glow);
+}
+
+.layer-uv-badge.is-normal {
+  color: var(--at-muted);
+  border: 1px solid var(--at-line);
+  background: color-mix(in srgb, var(--at-desk-3) 80%, transparent);
+}
+

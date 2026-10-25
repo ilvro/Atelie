@@ -167,6 +167,41 @@ test('templates instantiation, fill mode, double-sided linking and UV e2e', { ti
     });
     assert.notEqual(canvasBefore3, canvasAfter3, 'Canvas do diário deve atualizar ao editar data');
 
+    // Verify that hidden UV message appears only under UV light
+    const hasGreenMessageNormal = await page.evaluate(() => {
+      const canvas = document.querySelector('.stage-canvas') || document.querySelector('canvas');
+      const ctx = canvas.getContext('2d');
+      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      let greenCount = 0;
+      for (let i = 0; i < imgData.length; i += 4) {
+        // Look for fluorescent green #22ff88 (R ~34, G ~255, B ~136)
+        if (imgData[i] < 100 && imgData[i + 1] > 200 && imgData[i + 2] > 80) {
+          greenCount++;
+        }
+      }
+      return greenCount > 5;
+    });
+    assert.equal(hasGreenMessageNormal, false, 'Mensagem oculta do Diário de culto não deve aparecer em luz normal');
+
+    // Turn ON UV light via button or shortcut U
+    await page.evaluate(() => document.activeElement?.blur());
+    await page.click('button[data-action="toggle-uv"]');
+    await page.waitForTimeout(400);
+
+    const hasGreenMessageUV = await page.evaluate(() => {
+      const canvas = document.querySelector('.stage-canvas') || document.querySelector('canvas');
+      const ctx = canvas.getContext('2d');
+      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      let greenCount = 0;
+      for (let i = 0; i < imgData.length; i += 4) {
+        if (imgData[i] < 100 && imgData[i + 1] > 200 && imgData[i + 2] > 80) {
+          greenCount++;
+        }
+      }
+      return greenCount > 5;
+    });
+    assert.equal(hasGreenMessageUV, true, 'Mensagem oculta do Diário de culto deve aparecer sob luz UV');
+
     assert.deepEqual(errors, []);
   } finally {
     await browser.close();

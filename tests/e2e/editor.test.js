@@ -315,6 +315,13 @@ test('editor manipulation e2e: drag, resize, rotate, snap, inline text, keyboard
   });
   assert.equal(undonePos.x, startPos.x);
 
+  // Wait for outline to reposition back to startPos
+  await page.waitForFunction(expectedX => {
+    const o = document.querySelector('.stage-selection-outline');
+    const zoom = window.__atelie.editor.stage.getZoom();
+    return o && Math.abs(parseInt(o.style.left, 10) - Math.round(expectedX * zoom)) <= 2;
+  }, startPos.x);
+
   // 9. Handle 'e' increases only width; with Shift on 'se', aspect ratio is preserved
   const origDims = await page.evaluate(() => {
     const l = window.__atelie.editor.state.handout.layers.find(x => x.name === 'Retângulo');
@@ -327,7 +334,7 @@ test('editor manipulation e2e: drag, resize, rotate, snap, inline text, keyboard
   const eBox = await handleE.boundingBox();
   await page.mouse.move(eBox.x + eBox.width / 2, eBox.y + eBox.height / 2);
   await page.mouse.down();
-  await page.mouse.move(eBox.x + eBox.width / 2 + 50, eBox.y + eBox.height / 2, { steps: 5 });
+  await page.mouse.move(eBox.x + eBox.width / 2 + 50, eBox.y + eBox.height / 2, { steps: 2 });
   await page.mouse.up();
   await page.waitForTimeout(100);
 
@@ -527,6 +534,92 @@ test('editor manipulation e2e: drag, resize, rotate, snap, inline text, keyboard
     return dark;
   });
   assert.notEqual(canvasPixelsAfter, canvasPixelsBefore, 'Canvas should update when changing to handwritten font');
+
+  // 15. Etapa 19: Luz UV toggle, atmosphere shift, new layer with light: 'uv', and UV bake archive
+  // Deselect layer and remove focus from inputs
+  await page.evaluate(() => {
+    document.activeElement?.blur();
+    window.__atelie.editor.state.select(null);
+  });
+  await page.waitForTimeout(100);
+
+  // Sample canvas background pixel before UV
+  const bgBeforeUV = await page.evaluate(() => {
+    const canvas = document.querySelector('.stage-canvas');
+    const ctx = canvas.getContext('2d');
+    const pixel = ctx.getImageData(20, 20, 1, 1).data;
+    return [pixel[0], pixel[1], pixel[2]];
+  });
+
+  // Press 'u' to toggle UV light
+  await page.keyboard.press('u');
+  await page.waitForTimeout(300);
+
+  const uvState = await page.evaluate(() => {
+    const isLightUv = document.documentElement.dataset.light === 'uv';
+    const uvBtn = document.querySelector('[data-action="toggle-uv"]');
+    const uvStamp = document.querySelector('.desk-uv-stamp');
+    const isBtnPressed = uvBtn?.getAttribute('aria-pressed') === 'true';
+    const isStampVisible = uvStamp && getComputedStyle(uvStamp).display !== 'none';
+    const canvas = document.querySelector('.stage-canvas');
+    const ctx = canvas.getContext('2d');
+    const pixel = ctx.getImageData(20, 20, 1, 1).data;
+    return {
+      isLightUv,
+      isBtnPressed,
+      isStampVisible,
+      bgPixel: [pixel[0], pixel[1], pixel[2]],
+    };
+  });
+
+  assert.equal(uvState.isLightUv, true, 'document.documentElement.dataset.light must be "uv"');
+  assert.equal(uvState.isBtnPressed, true, 'button "Luz UV" must have aria-pressed="true"');
+  assert.equal(uvState.isStampVisible, true, 'UV stamp must be visible in document bar');
+  assert.ok(
+    uvState.bgPixel[0] < bgBeforeUV[0] &&
+    uvState.bgPixel[1] < bgBeforeUV[1] &&
+    uvState.bgPixel[2] < bgBeforeUV[2],
+    `canvas background must darken under UV: before=${bgBeforeUV}, after=${uvState.bgPixel}`
+  );
+
+  // Add new layer with UV light ON
+  await page.click('.inspector-tab[data-tab="layers"]');
+  await page.click('[data-action="toggle-add-menu"]');
+  await page.click('[data-add="text"]');
+  await page.waitForTimeout(200);
+
+  const newLayerLight = await page.evaluate(() => {
+    const layers = window.__atelie.editor.state.handout.layers;
+    const latest = layers[layers.length - 1];
+    return latest?.light;
+  });
+  assert.equal(newLayerLight, 'uv', 'Layer created with UV light active must have light: "uv"');
+
+  const uvBadgeVisible = await page.evaluate(() => {
+    const badge = document.querySelector('.layer-uv-badge.is-uv');
+    return Boolean(badge && badge.textContent.includes('UV'));
+  });
+  assert.equal(uvBadgeVisible, true, 'Layer item in layers panel must show purple UV badge');
+
+  // Archive document and verify hasUv: true and UV bake
+  await page.click('[data-action="archive"]');
+  await page.waitForSelector('.archive-stamp-overlay.active', { timeout: 10000 });
+  await page.waitForFunction(() => {
+    const btn = document.querySelector('[data-action="archive"]');
+    return btn && !btn.disabled && !btn.textContent.includes('Arquivando');
+  }, { timeout: 10000 });
+
+  const currentDocId = await page.evaluate(() => window.__atelie.editor.state.handout.id);
+  const handoutsListRes = await fetch(`${baseUrl}/api/atelie/handouts`);
+  const handoutsList = await handoutsListRes.json();
+  const currentSummary = handoutsList.find(h => h.id === currentDocId);
+
+  assert.ok(currentSummary, 'Saved document must appear in handouts list');
+  assert.equal(currentSummary.hasUv, true, 'Saved document with UV layer must have hasUv: true');
+
+  const bakeUvRes = await fetch(`${baseUrl}/api/atelie/handouts/${currentDocId}/bake?type=uv`);
+  assert.equal(bakeUvRes.status, 200, 'GET /api/atelie/handouts/:id/bake?type=uv must return 200');
+  assert.equal(bakeUvRes.headers.get('content-type'), 'image/png');
 
   assert.deepEqual(errors, []);
 });

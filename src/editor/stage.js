@@ -220,6 +220,7 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
   function scheduleRender(handout, options = {}) {
     currentHandout = handout;
     if (options.light) currentLight = options.light;
+    updateSelectionOutline();
     nextRequest = { handout, options };
 
     if (isRendering) return;

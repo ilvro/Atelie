@@ -10,8 +10,8 @@ import {
   folderPath,
 } from '../domain/folders.js';
 import { handoffRequest, deliveredMessage } from './handoff.js';
-import { bakeHandout, summaryOf, deliveryOf } from './bake.js';
-import { openExchange, publish, unpublish, channel, removedMessage, savedMessage } from '../data/exchange.js';
+import { bakeHandout, summaryOf, deliveryOf, previewOf } from './bake.js';
+import { openExchange, publish, unpublish, channel, removedMessage, savedMessage, readPublished } from '../data/exchange.js';
 import { getSettings } from '../ui/settings.js';
 
 export function formatRelativeTime(dateInput) {
@@ -305,7 +305,7 @@ export function createNavigator(container, {
               ? new URL('.', document.baseURI).href
               : 'http://127.0.0.1:3011/';
             const summary = summaryOf(restored, source);
-            await publish(db, summary, null, bakes);
+            await publish(db, summary, bakes.preview, bakes);
             channel().postMessage(savedMessage(summary));
           }
         } catch (exErr) {
@@ -771,25 +771,28 @@ export function createNavigator(container, {
         btn.textContent = 'Enviando…';
         try {
           const doc = await api.handouts.read(id);
-          const bakes = await bakeHandout(doc, { images, fonts });
 
+          // Reuse what the exchange database already holds for this revision; bake only when it does not.
+          let bakes = null;
           let previewBlob = null;
-          try {
-            const aspect = doc.page.height / doc.page.width;
-            const previewCanvas = document.createElement('canvas');
-            previewCanvas.width = 480;
-            previewCanvas.height = Math.round(480 * aspect);
-            const { renderHandout } = await import('../render/handout-render.js');
-            await renderHandout(previewCanvas, doc, {
-              scale: 480 / doc.page.width,
-              loadImage: images?.load,
-              loadFont: fonts?.load,
-            });
-            if (previewCanvas.toBlob) {
-              previewBlob = await new Promise(r => previewCanvas.toBlob(r, 'image/webp', 0.82));
+          if (typeof indexedDB !== 'undefined') {
+            try {
+              const published = await readPublished(await openExchange(), doc.id, doc.revision, { hasUv: doc.layers.some(l => l.visible && l.light === 'uv') });
+              if (published) ({ bakes, preview: previewBlob } = published);
+            } catch (pubErr) {
+              console.warn('[atelie] Troca indisponível no pick:', pubErr);
             }
-          } catch (pErr) {
-            console.warn('[atelie] Erro na prévia do pick:', pErr);
+          }
+          if (!bakes) {
+            bakes = await bakeHandout(doc, { images, fonts });
+            previewBlob = bakes.preview;
+          }
+          if (!previewBlob) {
+            try {
+              previewBlob = await previewOf(doc, { images, fonts });
+            } catch (pErr) {
+              console.warn('[atelie] Erro na prévia do pick:', pErr);
+            }
           }
 
           const source = (typeof document !== 'undefined' && document.baseURI)

@@ -46,8 +46,8 @@ Em `renderHandout(…, { light: 'uv' })`:
 
 ## Pronto quando
 
-- [ ] Testes passam; `npm test` passa.
-- [ ] O modelo "Diário de culto · com UV" (etapa 16, se já existir) mostra a mensagem só com a luz UV.
+- [x] Testes passam; `npm test` passa.
+- [x] O modelo "Diário de culto · com UV" (etapa 16, se já existir) mostra a mensagem só com a luz UV.
 - [ ] Com a etapa 25 feita: um modelo do `Bundle 59` mostra o texto escondido ao ligar a luz UV no editor.
 
 ## Não faça

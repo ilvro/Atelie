@@ -100,6 +100,60 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
   }
 
   function applyFieldChange(field, rawValue, isInputEvent = false) {
+    if (field?.startsWith('page:')) {
+      const pageKey = field.slice(5);
+      const handout = state.handout;
+      const page = handout.page || {};
+
+      if (pageKey === 'background') {
+        const next = {
+          ...handout,
+          page: {
+            ...page,
+            background: String(rawValue || '#ffffff'),
+          },
+        };
+        state.edit(next, { label: 'Alterar fundo da página', coalesce: 'page-bg' });
+        saveRecentColor(rawValue);
+        return;
+      }
+
+      if (pageKey === 'uv.tint') {
+        const currentUv = page.uv ?? { tint: '#2b1d52', strength: 0.65 };
+        const next = {
+          ...handout,
+          page: {
+            ...page,
+            uv: {
+              ...currentUv,
+              tint: String(rawValue || '#2b1d52'),
+            },
+          },
+        };
+        state.edit(next, { label: 'Alterar cor de UV da página', coalesce: 'page-uv-tint' });
+        saveRecentColor(rawValue);
+        return;
+      }
+
+      if (pageKey === 'uv.strength') {
+        const currentUv = page.uv ?? { tint: '#2b1d52', strength: 0.65 };
+        const strengthVal = Math.max(0, Math.min(100, Number(rawValue) || 0)) / 100;
+        const next = {
+          ...handout,
+          page: {
+            ...page,
+            uv: {
+              ...currentUv,
+              strength: strengthVal,
+            },
+          },
+        };
+        state.edit(next, { label: 'Alterar escurecimento sob UV', coalesce: 'page-uv-strength' });
+        return;
+      }
+      return;
+    }
+
     const layer = getSelectedLayer();
     if (!layer || layer.locked) return;
 
@@ -277,12 +331,38 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
     const layer = getSelectedLayer();
 
     if (!layer) {
+      const page = state.handout.page || { width: 1240, height: 1754, background: '#ffffff' };
+      const uv = page.uv ?? { tint: '#2b1d52', strength: 0.65 };
       container.innerHTML = `
-        <div class="panel-empty">
-          <p>Nenhuma camada selecionada.</p>
-          <small>Clique em uma camada na lista ou na mesa para inspecionar suas propriedades.</small>
+        <div class="properties-panel">
+          <div class="panel-section">
+            <div class="panel-section-title">Página</div>
+            <div class="control-row">
+              <label class="field measure-field">
+                <span class="field-label">Tamanho<small>Largura × Altura</small></span>
+                <span class="value-box">
+                  <input type="text" value="${page.width} × ${page.height} px" readonly disabled />
+                </span>
+              </label>
+            </div>
+            <div class="control-row">
+              ${colorField('page:background', 'Fundo', page.background && page.background !== '#00000000' ? page.background : '#ffffff')}
+            </div>
+          </div>
+          <div class="panel-section">
+            <div class="panel-section-title">Escurecer sob UV</div>
+            <div class="control-row">
+              ${colorField('page:uv.tint', 'Cor', uv.tint || '#2b1d52')}
+            </div>
+            <div class="control-row">
+              ${numberField('page:uv.strength', 'Força · %', Math.round((uv.strength ?? 0.65) * 100), { min: 0, max: 100, step: 1 })}
+            </div>
+          </div>
         </div>
       `;
+      bindControls(container, el => {
+        applyFieldChange(el.dataset.field, el.value);
+      });
       return;
     }
 
@@ -689,10 +769,16 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
     }
   }
 
-  // Handle direct inputs (e.g. typing in textarea or name input)
+  // Handle direct inputs (e.g. typing in textarea or name input, dragging slider or color picker)
   container.addEventListener('input', event => {
     const field = event.target.dataset?.field;
-    if (field && (event.target.tagName === 'TEXTAREA' || event.target.type === 'text')) {
+    if (
+      field &&
+      (event.target.tagName === 'TEXTAREA' ||
+        event.target.type === 'text' ||
+        event.target.type === 'range' ||
+        event.target.type === 'color')
+    ) {
       applyFieldChange(field, event.target.value, true);
     }
   });

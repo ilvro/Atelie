@@ -18,6 +18,7 @@ import {
   layerAt,
   libraryRefs,
   canvasOperation,
+  DEFAULT_PAGE_UV,
 } from '../src/domain/handouts.js';
 import { ValidationError } from '../src/domain/errors.js';
 
@@ -304,6 +305,65 @@ test('guides accepts { x: [numbers], y: [numbers] } and rejects invalid types', 
   doc.guides = 'invalid';
   assert.throws(() => validateHandout(doc), (err) => {
     return err instanceof ValidationError && err.path === 'guides';
+  });
+});
+
+test('page.uv validates tint and strength, allows absent uv, and rejects invalid configurations', () => {
+  const doc = createHandout();
+  assert.deepEqual(doc.page.uv, DEFAULT_PAGE_UV);
+  assert.doesNotThrow(() => validateHandout(doc));
+
+  // Absent page.uv is valid
+  const docNoUv = structuredClone(doc);
+  delete docNoUv.page.uv;
+  assert.doesNotThrow(() => validateHandout(docNoUv));
+
+  // Custom valid page.uv
+  const docCustom = structuredClone(doc);
+  docCustom.page.uv = { tint: '#123456', strength: 0 };
+  assert.doesNotThrow(() => validateHandout(docCustom));
+  docCustom.page.uv.strength = 1;
+  assert.doesNotThrow(() => validateHandout(docCustom));
+  docCustom.page.uv.strength = 0.5;
+  assert.doesNotThrow(() => validateHandout(docCustom));
+
+  // Invalid: page.uv not an object
+  const docBadObj = structuredClone(doc);
+  docBadObj.page.uv = 'not-an-object';
+  assert.throws(() => validateHandout(docBadObj), (err) => {
+    return err instanceof ValidationError && err.path === 'page.uv';
+  });
+
+  // Invalid: tint not #rrggbb
+  const docBadTint = structuredClone(doc);
+  docBadTint.page.uv = { tint: 'red', strength: 0.5 };
+  assert.throws(() => validateHandout(docBadTint), (err) => {
+    return err instanceof ValidationError && err.path === 'page.uv.tint';
+  });
+
+  const docBadTintAlpha = structuredClone(doc);
+  docBadTintAlpha.page.uv = { tint: '#12345678', strength: 0.5 };
+  assert.throws(() => validateHandout(docBadTintAlpha), (err) => {
+    return err instanceof ValidationError && err.path === 'page.uv.tint';
+  });
+
+  // Invalid: strength out of range or not a number
+  const docBadStrengthNeg = structuredClone(doc);
+  docBadStrengthNeg.page.uv = { tint: '#2b1d52', strength: -0.1 };
+  assert.throws(() => validateHandout(docBadStrengthNeg), (err) => {
+    return err instanceof ValidationError && err.path === 'page.uv.strength';
+  });
+
+  const docBadStrengthHigh = structuredClone(doc);
+  docBadStrengthHigh.page.uv = { tint: '#2b1d52', strength: 1.05 };
+  assert.throws(() => validateHandout(docBadStrengthHigh), (err) => {
+    return err instanceof ValidationError && err.path === 'page.uv.strength';
+  });
+
+  const docBadStrengthNaN = structuredClone(doc);
+  docBadStrengthNaN.page.uv = { tint: '#2b1d52', strength: NaN };
+  assert.throws(() => validateHandout(docBadStrengthNaN), (err) => {
+    return err instanceof ValidationError && err.path === 'page.uv.strength';
   });
 });
 

@@ -99,6 +99,18 @@ test('clipGroups organizes clipping groups according to base and clipped rules',
   assert.equal(groups2[0].base.id, 'B');
   assert.deepEqual(groups2[0].clipped.map(l => l.id), ['C']);
   assert.equal(groups2[1].base.id, 'D');
+
+  // Under UV light, 'both' layers are grouped first and 'uv' layers afterwards
+  const both1 = { id: 'both1', visible: true, clip: false, light: 'both' };
+  const uvMiddle = { id: 'uvMiddle', visible: true, clip: false, light: 'uv' };
+  const both2 = { id: 'both2', visible: true, clip: false, light: 'both' };
+  const normalLayer = { id: 'normalLayer', visible: true, clip: false, light: 'normal' };
+
+  const uvGroups = clipGroups([both1, uvMiddle, both2, normalLayer], 'uv');
+  assert.equal(uvGroups.length, 3);
+  assert.equal(uvGroups[0].base.id, 'both1');
+  assert.equal(uvGroups[1].base.id, 'both2');
+  assert.equal(uvGroups[2].base.id, 'uvMiddle');
 });
 
 test('visibleIn correctly respects visibility and light modes', () => {

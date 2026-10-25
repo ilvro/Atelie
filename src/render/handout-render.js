@@ -1,16 +1,11 @@
-import { canvasOperation } from '../domain/handouts.js';
+import { canvasOperation, DEFAULT_PAGE_UV } from '../domain/handouts.js';
 import { cssFilter, applyAdjustPixels } from '../domain/handout-pixels.js';
 import { drawTextLayer } from './handout-text.js';
 import { drawEffect, drawCutMask } from './handout-effects.js';
 
 export const visibleIn = (layer, light) => layer.visible && (layer.light === 'both' || layer.light === light);
 
-/**
- * Groups layers into clipping groups based on visibility in the given light.
- * The first visible layer is always a base even if layer.clip is true.
- */
-export function clipGroups(layers, light = 'normal') {
-  const visible = layers.filter(l => visibleIn(l, light));
+function groupLayers(visible) {
   const groups = [];
   let currentGroup = null;
 
@@ -23,6 +18,20 @@ export function clipGroups(layers, light = 'normal') {
     }
   }
   return groups;
+}
+
+/**
+ * Groups layers into clipping groups based on visibility in the given light.
+ * The first visible layer is always a base even if layer.clip is true.
+ */
+export function clipGroups(layers, light = 'normal') {
+  if (light === 'uv') {
+    const both = layers.filter(l => l.visible && l.light === 'both');
+    const uv = layers.filter(l => l.visible && l.light === 'uv');
+    return [...groupLayers(both), ...groupLayers(uv)];
+  }
+  const visible = layers.filter(l => visibleIn(l, light));
+  return groupLayers(visible);
 }
 
 /**
@@ -387,113 +396,142 @@ export async function renderHandout(
 
   await Promise.all([...imagePromises, ...fontPromises]);
 
-  // Composition with clipping groups
-  const groups = clipGroups(handout.layers, light);
-
   let groupCanvas = null;
   let baseCanvas = null;
   let tempCanvas = null;
 
-  const needsBuffers = groups.some(g => g.clipped.length > 0 || g.base.kind === 'adjust');
-  if (needsBuffers) {
-    groupCanvas = createPageCanvas(pw, ph);
-    baseCanvas = createPageCanvas(pw, ph);
-    tempCanvas = createPageCanvas(pw, ph);
+  function ensureBuffers(groupList) {
+    const needsBuffers = groupList.some(g => g.clipped.length > 0 || g.base.kind === 'adjust');
+    if (needsBuffers && !groupCanvas) {
+      groupCanvas = createPageCanvas(pw, ph);
+      baseCanvas = createPageCanvas(pw, ph);
+      tempCanvas = createPageCanvas(pw, ph);
+    }
   }
 
-  const groupCtx = groupCanvas?.getContext('2d');
-  const baseCtx = baseCanvas?.getContext('2d');
-  const tempCtx = tempCanvas?.getContext('2d');
+  function renderGroupList(groups) {
+    const groupCtx = groupCanvas?.getContext('2d');
+    const baseCtx = baseCanvas?.getContext('2d');
+    const tempCtx = tempCanvas?.getContext('2d');
 
-  for (const group of groups) {
-    const { base, clipped } = group;
+    for (const group of groups) {
+      const { base, clipped } = group;
 
-    // Full-page adjust without clip
-    if (base.kind === 'adjust' && clipped.length === 0) {
-      tempCtx.setTransform(1, 0, 0, 1, 0, 0);
-      tempCtx.clearRect(0, 0, pw, ph);
-      tempCtx.drawImage(canvas, 0, 0);
+      // Full-page adjust without clip
+      if (base.kind === 'adjust' && clipped.length === 0) {
+        tempCtx.setTransform(1, 0, 0, 1, 0, 0);
+        tempCtx.clearRect(0, 0, pw, ph);
+        tempCtx.drawImage(canvas, 0, 0);
 
-      applyAdjustment(tempCanvas, ctx, base.adjust, scale, base.opacity);
-      continue;
-    }
+        applyAdjustment(tempCanvas, ctx, base.adjust, scale, base.opacity);
+        continue;
+      }
 
-    // Simple layer without clipping
-    if (clipped.length === 0) {
+      // Simple layer without clipping
+      if (clipped.length === 0) {
+        if (isCutEffect(base)) {
+          applyCutEffect(ctx, base, pw, ph, scale);
+        }
+        ctx.save();
+        ctx.globalAlpha = base.opacity;
+        ctx.globalCompositeOperation = canvasOperation(base.blend);
+        drawLayer(ctx, base, scale, loadedImages, missing, warnings);
+        ctx.restore();
+        continue;
+      }
+
+      // Layer with clipping group
+      groupCtx.setTransform(1, 0, 0, 1, 0, 0);
+      groupCtx.clearRect(0, 0, pw, ph);
+
+      baseCtx.setTransform(1, 0, 0, 1, 0, 0);
+      baseCtx.clearRect(0, 0, pw, ph);
+
+      // 1. Draw base layer into groupCanvas and baseCanvas
       if (isCutEffect(base)) {
         applyCutEffect(ctx, base, pw, ph, scale);
       }
+      drawLayer(groupCtx, base, scale, loadedImages, missing, warnings);
+      baseCtx.drawImage(groupCanvas, 0, 0);
+
+      // 2. Draw each clipped layer
+      for (const clippedLayer of clipped) {
+        tempCtx.setTransform(1, 0, 0, 1, 0, 0);
+        tempCtx.clearRect(0, 0, pw, ph);
+
+        if (clippedLayer.kind === 'adjust') {
+          // Adjust clipped: applies to groupCanvas, clipped by baseCanvas alpha
+          tempCtx.drawImage(groupCanvas, 0, 0);
+          const adjCanvas = createPageCanvas(pw, ph);
+          const adjCtx = adjCanvas.getContext('2d');
+          applyAdjustment(tempCanvas, adjCtx, clippedLayer.adjust, scale, 1);
+
+          // Mask with base alpha
+          adjCtx.globalCompositeOperation = 'destination-in';
+          adjCtx.drawImage(baseCanvas, 0, 0);
+
+          // Blend onto group
+          groupCtx.save();
+          groupCtx.globalAlpha = clippedLayer.opacity;
+          groupCtx.globalCompositeOperation = 'source-over';
+          groupCtx.drawImage(adjCanvas, 0, 0);
+          groupCtx.restore();
+        } else {
+          if (isCutEffect(clippedLayer)) {
+            applyCutEffect(groupCtx, clippedLayer, pw, ph, scale);
+          }
+          drawLayer(tempCtx, clippedLayer, scale, loadedImages, missing, warnings);
+
+          // Clip by base alpha
+          tempCtx.save();
+          tempCtx.globalCompositeOperation = 'destination-in';
+          tempCtx.drawImage(baseCanvas, 0, 0);
+          tempCtx.restore();
+
+          // Blend onto group
+          groupCtx.save();
+          groupCtx.globalAlpha = clippedLayer.opacity;
+          groupCtx.globalCompositeOperation = canvasOperation(clippedLayer.blend);
+          groupCtx.drawImage(tempCanvas, 0, 0);
+          groupCtx.restore();
+        }
+      }
+
+      // 3. Composite groupCanvas onto main canvas with base's opacity and blend
       ctx.save();
       ctx.globalAlpha = base.opacity;
       ctx.globalCompositeOperation = canvasOperation(base.blend);
-      drawLayer(ctx, base, scale, loadedImages, missing, warnings);
+      ctx.drawImage(groupCanvas, 0, 0);
       ctx.restore();
-      continue;
+    }
+  }
+
+  if (light === 'uv') {
+    const bothGroups = clipGroups(handout.layers.filter(l => l.visible && l.light === 'both'), 'both');
+    const uvGroups = clipGroups(handout.layers.filter(l => l.visible && l.light === 'uv'), 'uv');
+
+    ensureBuffers([...bothGroups, ...uvGroups]);
+
+    // 1. Draw both layers in order (not normal, not uv)
+    renderGroupList(bothGroups);
+
+    // 2. Apply darkening: multiply with tint and globalAlpha = strength over entire page
+    const { tint = DEFAULT_PAGE_UV.tint, strength = DEFAULT_PAGE_UV.strength } = handout.page?.uv ?? DEFAULT_PAGE_UV;
+    if (strength > 0) {
+      ctx.save();
+      ctx.globalCompositeOperation = 'multiply';
+      ctx.globalAlpha = strength;
+      ctx.fillStyle = tint;
+      ctx.fillRect(0, 0, pw, ph);
+      ctx.restore();
     }
 
-    // Layer with clipping group
-    groupCtx.setTransform(1, 0, 0, 1, 0, 0);
-    groupCtx.clearRect(0, 0, pw, ph);
-
-    baseCtx.setTransform(1, 0, 0, 1, 0, 0);
-    baseCtx.clearRect(0, 0, pw, ph);
-
-    // 1. Draw base layer into groupCanvas and baseCanvas
-    if (isCutEffect(base)) {
-      applyCutEffect(ctx, base, pw, ph, scale);
-    }
-    drawLayer(groupCtx, base, scale, loadedImages, missing, warnings);
-    baseCtx.drawImage(groupCanvas, 0, 0);
-
-    // 2. Draw each clipped layer
-    for (const clippedLayer of clipped) {
-      tempCtx.setTransform(1, 0, 0, 1, 0, 0);
-      tempCtx.clearRect(0, 0, pw, ph);
-
-      if (clippedLayer.kind === 'adjust') {
-        // Adjust clipped: applies to groupCanvas, clipped by baseCanvas alpha
-        tempCtx.drawImage(groupCanvas, 0, 0);
-        const adjCanvas = createPageCanvas(pw, ph);
-        const adjCtx = adjCanvas.getContext('2d');
-        applyAdjustment(tempCanvas, adjCtx, clippedLayer.adjust, scale, 1);
-
-        // Mask with base alpha
-        adjCtx.globalCompositeOperation = 'destination-in';
-        adjCtx.drawImage(baseCanvas, 0, 0);
-
-        // Blend onto group
-        groupCtx.save();
-        groupCtx.globalAlpha = clippedLayer.opacity;
-        groupCtx.globalCompositeOperation = 'source-over';
-        groupCtx.drawImage(adjCanvas, 0, 0);
-        groupCtx.restore();
-      } else {
-        if (isCutEffect(clippedLayer)) {
-          applyCutEffect(groupCtx, clippedLayer, pw, ph, scale);
-        }
-        drawLayer(tempCtx, clippedLayer, scale, loadedImages, missing, warnings);
-
-        // Clip by base alpha
-        tempCtx.save();
-        tempCtx.globalCompositeOperation = 'destination-in';
-        tempCtx.drawImage(baseCanvas, 0, 0);
-        tempCtx.restore();
-
-        // Blend onto group
-        groupCtx.save();
-        groupCtx.globalAlpha = clippedLayer.opacity;
-        groupCtx.globalCompositeOperation = canvasOperation(clippedLayer.blend);
-        groupCtx.drawImage(tempCanvas, 0, 0);
-        groupCtx.restore();
-      }
-    }
-
-    // 3. Composite groupCanvas onto main canvas with base's opacity and blend
-    ctx.save();
-    ctx.globalAlpha = base.opacity;
-    ctx.globalCompositeOperation = canvasOperation(base.blend);
-    ctx.drawImage(groupCanvas, 0, 0);
-    ctx.restore();
+    // 3. Draw uv layers in document order on top
+    renderGroupList(uvGroups);
+  } else {
+    const groups = clipGroups(handout.layers, light);
+    ensureBuffers(groups);
+    renderGroupList(groups);
   }
 
   return {

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, rm } from 'node:fs/promises';
+import { mkdtemp, rm, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import { once } from 'node:events';
@@ -177,3 +177,77 @@ test('contract HTTP: health, CORS read-only, bake cycle, revision conflicts, and
   assert.equal(getDeletedUv.status, 404);
 });
 
+
+test('contract HTTP: sidecar files follow the trash, bake writes do not race, PNG previews keep their type, list stays fresh', async (t) => {
+  const dataDir = await mkdtemp(path.join(os.tmpdir(), 'atelie-sidecars-'));
+  const app = await createApp({ dataDir, allowedOrigins: [] });
+  const server = app.listen(0, '127.0.0.1');
+  await once(server, 'listening');
+  const baseUrl = `http://127.0.0.1:${server.address().port}`;
+  t.after(async () => {
+    await new Promise(r => server.close(r));
+    await rm(dataDir, { recursive: true, force: true });
+  });
+
+  const doc = createHandout({ preset: 'a4' });
+  doc.name = 'Com assados';
+  const created = await fetch(`${baseUrl}/api/atelie/handouts`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ handout: doc }),
+  });
+  assert.equal(created.status, 201);
+  const { handout } = await created.json();
+  const bakeUrl = light => `${baseUrl}/api/atelie/handouts/${handout.id}/bake?light=${light}&revision=${handout.revision}`;
+  const png = { 'Content-Type': 'image/png' };
+
+  // Concurrent bake writes: both revisions must end up in bake.json.
+  const [a, b] = await Promise.all([
+    fetch(bakeUrl('normal'), { method: 'PUT', headers: png, body: VALID_PNG }),
+    fetch(bakeUrl('uv'), { method: 'PUT', headers: png, body: VALID_PNG }),
+  ]);
+  assert.equal(a.status, 204);
+  assert.equal(b.status, 204);
+  const info = JSON.parse(await readFile(path.join(dataDir, 'handouts', `${handout.id}.bake.json`), 'utf8'));
+  assert.deepEqual(info, { normal: handout.revision, uv: handout.revision });
+
+  // A PNG preview is stored and served as PNG.
+  const previewPut = await fetch(`${baseUrl}/api/atelie/handouts/${handout.id}/preview`, { method: 'PUT', headers: png, body: VALID_PNG });
+  assert.equal(previewPut.status, 204);
+  const previewGet = await fetch(`${baseUrl}/api/atelie/handouts/${handout.id}/preview`);
+  assert.equal(previewGet.headers.get('content-type').split(';')[0], 'image/png');
+
+  // The list reflects a changed document even though summaries are cached.
+  const before = await (await fetch(`${baseUrl}/api/atelie/handouts`)).json();
+  assert.equal(before[0].name, 'Com assados');
+  const renamed = { ...handout, name: 'Renomeado' };
+  const put = await fetch(`${baseUrl}/api/atelie/handouts/${handout.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ handout: renamed, expectedRevision: handout.revision }),
+  });
+  assert.equal(put.status, 200);
+  const after = await (await fetch(`${baseUrl}/api/atelie/handouts`)).json();
+  assert.equal(after[0].name, 'Renomeado');
+
+  // Trash: bakes and preview stop being served and leave the live folder.
+  const removed = await fetch(`${baseUrl}/api/atelie/handouts/${handout.id}`, { method: 'DELETE' });
+  assert.equal(removed.status, 204);
+  assert.equal((await fetch(`${baseUrl}/api/atelie/handouts/${handout.id}/bake?light=normal`)).status, 404);
+  assert.equal((await fetch(`${baseUrl}/api/atelie/handouts/${handout.id}/preview`)).status, 404);
+  const live = await readdir(path.join(dataDir, 'handouts'));
+  assert.deepEqual(live.filter(f => f.startsWith(handout.id)), []);
+
+  // Restore brings them back.
+  const restored = await fetch(`${baseUrl}/api/atelie/trash/${handout.id}/restore`, { method: 'POST' });
+  assert.equal(restored.status, 200);
+  assert.equal((await fetch(`${baseUrl}/api/atelie/handouts/${handout.id}/bake?light=uv`)).status, 200);
+  assert.equal((await fetch(`${baseUrl}/api/atelie/handouts/${handout.id}/preview`)).status, 200);
+
+  // Permanent purge removes everything.
+  await fetch(`${baseUrl}/api/atelie/handouts/${handout.id}`, { method: 'DELETE' });
+  const purged = await fetch(`${baseUrl}/api/atelie/trash/${handout.id}`, { method: 'DELETE' });
+  assert.equal(purged.status, 204);
+  const trashLeft = await readdir(path.join(dataDir, 'handouts', 'trash'));
+  assert.deepEqual(trashLeft, []);
+});

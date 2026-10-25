@@ -24,7 +24,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 16 — Coleção modelos | concluída | 2026-10-24 | Coleção da casa: 39 modelos próprios em 8 categorias, gerador de modelos, frente/verso, UV e folha de contato |
 | 17 — Início e galeria | concluída | 2026-10-24 | Tela de abertura, 9 folhas em branco, continuar, 8 modelos em destaque, expansões, boas-vindas e gaveta Modelos |
 | 18 — Assar e entregar | concluída | 2026-10-25 | Assado em alta resolução (2048 px) e entrega ao Tabletop pelos 3 caminhos do contrato (A: mesa-handouts-v1, B: postMessage, C: HTTP e CORS) |
-| 19 — Luz UV | pendente | | Camadas secretas visíveis sob luz negra |
+| 19 — Luz UV | concluída | 2026-10-25 | Camadas secretas sob luz negra, escurecimento da página (tint e strength), mudança de clima da interface, atalho U, selos UV e assado UV |
 | 20 — Modo leitura | pendente | | Leitura imersiva, lupa, lanterna UV, verso |
 | 21 — Exportar e imprimir | pendente | | Exportação em alta resolução e folha A4 |
 | 22 — Importar elementos | pendente | | Expansão: acervo Arquivos Confidenciais |
@@ -138,6 +138,57 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ---
 
+## Etapa 19 — Luz UV
+
+### Feito
+- **Modelo de Dados (`src/domain/handouts.js`)**:
+  - `page.uv`: campo opcional de configuração `{ tint: '#2b1d52', strength: 0.65 }`.
+  - Constante imutável `DEFAULT_PAGE_UV = Object.freeze({ tint: '#2b1d52', strength: 0.65 })`.
+  - `createHandout` inicializa com `uv: { ...DEFAULT_PAGE_UV }`.
+  - Validação estrita em `validateHandout`: `page.uv` opcional/objeto, `tint` em formato hexadecimal de 6 dígitos (`#rrggbb`), `strength` numérico entre 0 e 1.
+- **Renderização sob Luz UV (`src/render/handout-render.js`)**:
+  - `renderHandout(canvas, handout, { light: 'uv' })`:
+    1. Renderiza todas as camadas visíveis com `light: 'both'`, respeitando grupos de recorte.
+    2. Aplica escurecimento com `multiply`: `ctx.fillStyle = tint` e `ctx.globalAlpha = strength` sobre o canvas inteiro da página.
+    3. Renderiza todas as camadas visíveis com `light: 'uv'` na ordem do documento sobre o escurecimento.
+  - Assegura que camadas UV no meio da lista sejam compostas por cima do escurecimento sem serem afetadas pelo filtro da página.
+- **Clima da Interface e Controles no Editor (`src/editor/editor.js`, `src/ui/editor.css`)**:
+  - Botão **Luz UV** na barra do documento com estado de acessibilidade `aria-pressed="true|false"` e tooltip indicando atalho.
+  - Carimbo **UV** (`.at-stamp.is-uv`) visível na barra do documento quando a luz ultravioleta está ligada.
+  - Atalho de teclado **U** (ignora inputs e textareas ativos) para alternar a luz UV.
+  - Mudança de clima completa da interface: `document.documentElement.dataset.light = 'uv'`.
+  - CSS com transições suaves em `--eco-mid`:
+    - Bancada (`.at-desk`) escurece para `#0b0914` e a vinheta quente da luminária é apagada (`background-image: none !important`).
+    - Destaques (aba ativa, botão primário, barra de documento) ganham brilho violeta `box-shadow: 0 0 12px var(--at-uv-glow)`.
+  - Novas camadas criadas enquanto a luz UV está ligada recebem automaticamente `light: 'uv'`; desligada, `both`.
+- **Painel de Camadas (`src/editor/layers-panel.js`)**:
+  - Selo visual de luz para cada camada:
+    - Camadas `uv`: badge roxo `.layer-uv-badge.is-uv` com texto "UV" e brilho ultravioleta.
+    - Camadas `normal`: badge neutro `.layer-uv-badge.is-normal` com texto "sem UV".
+- **Painel de Propriedades (`src/editor/properties-panel.js`)**:
+  - Quando nenhuma camada está selecionada, o painel exibe as propriedades da **Página**:
+    - Tamanho em px (somente leitura).
+    - Cor de fundo (`page.background`) com seletor de cor e amostras.
+    - Seção **Escurecer sob UV**: seletor de cor `tint` e controle deslizante `strength` de 0 a 100%.
+- **Assado em Alta Resolução**:
+  - `bakeHandout` e o arquivamento do editor geram e salvam o assado UV em alta definição (2048 px) com a composição sob luz negra quando o documento contém camadas UV (`hasUv: true`).
+- **Testes e Validação**:
+  - `tests/handouts.test.js`: validação de `page.uv` (válido, ausente, inválido em tipo, formato e limites).
+  - `tests/handout-render.test.js`: agrupamento de camadas sob UV priorizando `both` e depois `uv`.
+  - `tests/e2e/handout-render.test.js`: pixel do fundo escurece e ganha tom roxo sob UV (B > R > G), camada UV no meio da lista permanece clara/branca por cima do escurecimento.
+  - `tests/e2e/editor.test.js`: atalho U alterna luz UV, fundo do canvas escurece, novas camadas entram com `light: 'uv'`, badge UV roxo aparece na lista e salvar gera assado UV (`hasUv: true` na API).
+  - `tests/e2e/templates.test.js`: modelo "Diário de culto · com UV" oculta mensagem verde fluorescente em luz normal e a revela sob luz UV.
+
+### Validação
+- `npm test`: 110 testes unitários passando 100%.
+- `npm run test:e2e`: 13 suítes E2E passando 100%.
+- `npm run build`: bundle de produção gerado com sucesso.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 19.
+
+---
+
 ## Etapa 18 — Assar e entregar ao Tabletop
 
 ### Feito
@@ -179,8 +230,12 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
   - 109 testes unitários passando 100% (`npm test`).
   - 13 suítes E2E passando 100% (`npm run test:e2e`).
 
+### Revisão pós-implementação
+- Servidor: prévia e assados acompanham o documento para a lixeira (`<id>.assets/`), voltam na restauração e somem na exclusão definitiva ou expiração; `bake.json` serializado por documento; prévia PNG mantém o tipo; listagem com cache de resumos por tamanho e data.
+- Editor: um único assado gera a prévia (sem segundo render); caminhos C, A e B falham de forma independente; republicar (restaurar, religar compartilhamento) leva a prévia; religar mostra `n/total` e pula documentos já publicados na mesma revisão; modo pick reaproveita o assado do banco de troca; lista do modo navegador devolve `hasUv`.
+
 ### Pendências reais
-- Nenhuma pendência na Etapa 18.
+- Nenhuma pendência na Etapa 18, exceto: recorte (`clip`) entre camadas de luz diferentes sob UV e listagem do modo navegador que ainda lê todos os documentos (`getAll`).
 
 ---
 

@@ -49,9 +49,15 @@ export const PAGE_PRESETS = [
   ['square', 'Quadrado', 1200, 1200],
 ];
 
+export const DEFAULT_PAGE_UV = Object.freeze({
+  tint: '#2b1d52',
+  strength: 0.65,
+});
+
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const LAYER_ID_RE = /^[A-Za-z0-9_-]{1,64}$/;
 const HEX_COLOR_RE = /^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
+const HEX_RGB_RE = /^#[0-9a-fA-F]{6}$/;
 
 function randomId(len = 8) {
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -220,6 +226,7 @@ export function createHandout({
       width,
       height,
       background: '#00000000',
+      uv: { ...DEFAULT_PAGE_UV },
     },
     layers: [paper],
     fields: [],
@@ -409,6 +416,21 @@ export function validateHandout(value) {
   }
   if (typeof value.page.background !== 'string' || !HEX_COLOR_RE.test(value.page.background)) {
     fail('page.background', 'Cor inválida (use #rrggbb ou #rrggbbaa).');
+  }
+
+  if (value.page.uv !== undefined && value.page.uv !== null) {
+    if (!isPlainObject(value.page.uv)) fail('page.uv', 'Configuração de UV deve ser um objeto.');
+    if (typeof value.page.uv.tint !== 'string' || !HEX_RGB_RE.test(value.page.uv.tint)) {
+      fail('page.uv.tint', 'Cor de UV inválida (use #rrggbb).');
+    }
+    if (
+      typeof value.page.uv.strength !== 'number' ||
+      !Number.isFinite(value.page.uv.strength) ||
+      value.page.uv.strength < 0 ||
+      value.page.uv.strength > 1
+    ) {
+      fail('page.uv.strength', 'Força de escurecimento UV deve estar entre 0 e 1.');
+    }
   }
 
   if (!Array.isArray(value.layers)) fail('layers', 'Camadas deve ser um array.');

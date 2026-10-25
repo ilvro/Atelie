@@ -58,7 +58,7 @@ function getEffectThumbnail(typeKey, defaultParams, defaultBlend) {
   }
 }
 
-export function createLayersPanel(container, { state, onAction = () => {} } = {}) {
+export function createLayersPanel(container, { state, onAction = () => {}, getLight = () => 'normal' } = {}) {
   let isPlusMenuOpen = false;
   let isEffectsMenuOpen = false;
 
@@ -156,6 +156,7 @@ export function createLayersPanel(container, { state, onAction = () => {} } = {}
                   ${layer.kind === 'text' ? renderIcon('doc', 16) : layer.kind === 'image' ? renderIcon('image', 16) : layer.kind === 'shape' ? renderIcon('crop', 16) : layer.kind === 'effect' ? renderIcon('sparkles', 16) : renderIcon('sun', 16)}
                 </div>
                 <span class="layer-name" title="${esc(layer.name)}">${esc(layer.name)}</span>
+                ${layer.light === 'uv' ? '<span class="layer-uv-badge is-uv">UV</span>' : layer.light === 'normal' ? '<span class="layer-uv-badge is-normal">sem UV</span>' : ''}
                 <div class="layer-actions">
                   <button type="button" class="layer-btn-action" data-action="move-up" title="Mover para cima" aria-label="Mover para cima">↑</button>
                   <button type="button" class="layer-btn-action" data-action="move-down" title="Mover para baixo" aria-label="Mover para baixo">↓</button>
@@ -201,6 +202,7 @@ export function createLayersPanel(container, { state, onAction = () => {} } = {}
       if (entry) {
         const [, effName, initialBlend, defaultParams] = entry;
         const page = state.handout.page;
+        const defaultLight = getLight() === 'uv' ? 'uv' : 'both';
         const newLayer = effectLayer({
           name: effName,
           x: 0,
@@ -208,6 +210,7 @@ export function createLayersPanel(container, { state, onAction = () => {} } = {}
           width: page.width,
           height: page.height,
           blend: initialBlend,
+          light: defaultLight,
           effect: {
             type: typeKey,
             seed: 1,
@@ -242,6 +245,7 @@ export function createLayersPanel(container, { state, onAction = () => {} } = {}
 
       const cx = page.width / 2;
       const cy = page.height / 2;
+      const defaultLight = getLight() === 'uv' ? 'uv' : 'both';
 
       if (type === 'text') {
         newLayer = textLayer({
@@ -249,6 +253,7 @@ export function createLayersPanel(container, { state, onAction = () => {} } = {}
           y: cy,
           width: 600,
           height: 200,
+          light: defaultLight,
           text: { content: 'Escreva aqui' },
         });
       } else if (type === 'image') {
@@ -257,6 +262,7 @@ export function createLayersPanel(container, { state, onAction = () => {} } = {}
           y: cy,
           width: 600,
           height: 400,
+          light: defaultLight,
         });
       } else if (type === 'rect') {
         newLayer = shapeLayer({
@@ -265,6 +271,7 @@ export function createLayersPanel(container, { state, onAction = () => {} } = {}
           y: cy,
           width: 400,
           height: 300,
+          light: defaultLight,
           shape: { type: 'rect', fill: '#ffffff', stroke: null, strokeWidth: 0 },
         });
       } else if (type === 'ellipse') {
@@ -274,6 +281,7 @@ export function createLayersPanel(container, { state, onAction = () => {} } = {}
           y: cy,
           width: 300,
           height: 300,
+          light: defaultLight,
           shape: { type: 'ellipse', fill: '#ffffff', stroke: null, strokeWidth: 0 },
         });
       } else if (type === 'line') {
@@ -283,6 +291,7 @@ export function createLayersPanel(container, { state, onAction = () => {} } = {}
           y: cy,
           width: 400,
           height: 20,
+          light: defaultLight,
           shape: { type: 'line', stroke: '#1d1b24', strokeWidth: 3 },
         });
       } else if (type === 'adjust') {
@@ -292,6 +301,7 @@ export function createLayersPanel(container, { state, onAction = () => {} } = {}
           y: cy,
           width: page.width,
           height: page.height,
+          light: defaultLight,
         });
       }
 

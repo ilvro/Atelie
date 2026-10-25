@@ -316,6 +316,153 @@ test('handout rendering: multiply blend, clipping masks, adjustments, UV light, 
   assert.ok(normalPixel[0] >= 240 && normalPixel[1] >= 240 && normalPixel[2] >= 240, `under normal light UV layer is hidden (white): ${normalPixel}`);
   assert.ok(uvPixel[0] >= 100 && uvPixel[1] <= 30 && uvPixel[2] >= 100, `under UV light layer is visible (purple): ${uvPixel}`);
 
+  // 4b. UV Light darkening & middle UV layer on top of darkening
+  const res4b = await page.evaluate(async () => {
+    const doc = {
+      schema: 1,
+      id: '00000000-0000-0000-0000-00000000004b',
+      revision: 0,
+      name: 'UV Middle Layer & Darkening Test',
+      category: '',
+      tags: [],
+      page: {
+        width: 400,
+        height: 400,
+        background: '#ffffff',
+        uv: { tint: '#2b1d52', strength: 0.65 },
+      },
+      layers: [
+        {
+          id: 'gray-bg',
+          name: 'Fundo Cinza',
+          kind: 'shape',
+          visible: true,
+          locked: false,
+          opacity: 1,
+          blend: 'normal',
+          x: 0,
+          y: 0,
+          width: 400,
+          height: 400,
+          rotation: 0,
+          clip: false,
+          light: 'both',
+          shape: { type: 'rect', fill: '#808080', stroke: null, strokeWidth: 0, radius: 0, dash: [] },
+        },
+        {
+          id: 'uv-white-text',
+          name: 'Texto UV no Meio',
+          kind: 'text',
+          visible: true,
+          locked: false,
+          opacity: 1,
+          blend: 'normal',
+          x: 40,
+          y: 140,
+          width: 320,
+          height: 120,
+          rotation: 0,
+          clip: false,
+          light: 'uv',
+          text: {
+            content: 'SEGREDO',
+            size: 50,
+            color: '#ffffff',
+            align: 'center',
+            valign: 'middle',
+            lineHeight: 1.2,
+            letterSpacing: 0,
+            box: 'area',
+            fit: 'overflow',
+            ink: { style: 'clean', wear: 0, seed: 1 },
+          },
+        },
+        {
+          id: 'top-both-marker',
+          name: 'Marcador Both Acima',
+          kind: 'shape',
+          visible: true,
+          locked: false,
+          opacity: 1,
+          blend: 'normal',
+          x: 380,
+          y: 380,
+          width: 20,
+          height: 20,
+          rotation: 0,
+          clip: false,
+          light: 'both',
+          shape: { type: 'rect', fill: '#808080', stroke: null, strokeWidth: 0, radius: 0, dash: [] },
+        },
+      ],
+      fields: [],
+      source: { kind: 'blank' },
+      back: null,
+    };
+
+    const outNormal = await window.__atelie.renderHandout(doc, { scale: 1, light: 'normal', at: [[20, 20]] });
+    const bgNormal = outNormal.pixels[0];
+    const ctxNormal = outNormal.canvas.getContext('2d');
+
+    // Check that inside text area under normal light there is NO white pixel
+    const textDataNormal = ctxNormal.getImageData(50, 150, 200, 80).data;
+    let whitePixelsNormal = 0;
+    for (let i = 0; i < textDataNormal.length; i += 4) {
+      if (textDataNormal[i] > 200 && textDataNormal[i + 1] > 200 && textDataNormal[i + 2] > 200) {
+        whitePixelsNormal++;
+      }
+    }
+
+    const outUV = await window.__atelie.renderHandout(doc, { scale: 1, light: 'uv', at: [[20, 20]] });
+    const bgUV = outUV.pixels[0];
+    const ctxUV = outUV.canvas.getContext('2d');
+
+    // Check that inside text area under UV light there ARE bright white pixels (clear text)
+    const textDataUV = ctxUV.getImageData(50, 150, 200, 80).data;
+    let whitePixelsUV = 0;
+    let maxLightUV = 0;
+    for (let i = 0; i < textDataUV.length; i += 4) {
+      const avg = (textDataUV[i] + textDataUV[i + 1] + textDataUV[i + 2]) / 3;
+      if (avg > maxLightUV) maxLightUV = avg;
+      if (textDataUV[i] > 220 && textDataUV[i + 1] > 220 && textDataUV[i + 2] > 220) {
+        whitePixelsUV++;
+      }
+    }
+
+    return {
+      bgNormal,
+      bgUV,
+      whitePixelsNormal,
+      whitePixelsUV,
+      maxLightUV,
+    };
+  });
+
+  // 1. Under normal light: text is hidden
+  assert.equal(res4b.whitePixelsNormal, 0, 'under normal light white UV text is hidden');
+  assert.ok(
+    Math.abs(res4b.bgNormal[0] - 128) <= 4 &&
+    Math.abs(res4b.bgNormal[1] - 128) <= 4 &&
+    Math.abs(res4b.bgNormal[2] - 128) <= 4,
+    `normal background should be gray ~128: ${res4b.bgNormal}`
+  );
+
+  // 2. Under UV light: background darkens and becomes purplish (darker than 128, B > R > G)
+  assert.ok(
+    res4b.bgUV[0] < res4b.bgNormal[0] &&
+    res4b.bgUV[1] < res4b.bgNormal[1] &&
+    res4b.bgUV[2] < res4b.bgNormal[2],
+    `UV background must be darker than normal: normal=${res4b.bgNormal}, uv=${res4b.bgUV}`
+  );
+  assert.ok(
+    res4b.bgUV[2] > res4b.bgUV[0] && res4b.bgUV[0] > res4b.bgUV[1],
+    `UV background must be purplish (B > R > G): uv=${res4b.bgUV}`
+  );
+
+  // 3. Middle UV text is drawn on top of the darkening (appears clear / white > 220)
+  assert.ok(res4b.whitePixelsUV > 10, `UV text must appear clearly (white pixels count: ${res4b.whitePixelsUV})`);
+  assert.ok(res4b.maxLightUV >= 230, `UV text maximum brightness must be high (>230): ${res4b.maxLightUV}`);
+
   // 5. Missing image draws gray checkerboard
   const res5 = await page.evaluate(async () => {
     const doc = {
