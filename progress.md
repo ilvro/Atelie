@@ -40,6 +40,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 30 — Importador JIT de Bundles | concluída | 2026-10-25 | Importar pastas de bundles brutos (.psd + prévias + fontes) sob demanda no navegador sem terminal |
 | Refinamento de Tipografia e Camadas | concluída | 2026-10-25 | Geometria e alinhamento de textos, proporção de fontes mistas, recorte de caixas de texto, e painel de camadas com pastas, cores e snippets |
 | Refinamento de Expansões na Gaveta de Modelos | concluída | 2026-10-25 | Botão direto de instalação de expansão na gaveta Modelos, atalho em buscas vazias e mensagens claras sobre PSDs brutos |
+| Qualidade de Vida · Fase 0 — Inserção de Camadas | concluída | 2026-10-25 | Função pura insertionIndex, papéis acima de papéis existentes, assets acima da seleção ou no topo, addLayer estrito, rolagem e flash no painel |
 
 ---
 
@@ -172,6 +173,33 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ### Pendências reais
 - Nenhuma pendência na Etapa 30.
+
+---
+
+## Qualidade de Vida · Fase 0 — Camadas Entram Onde se Espera
+
+### Feito
+- **Regra e Função Pura de Inserção (`src/domain/handouts.js`)**:
+  - Implementada função pura `insertionIndex(handout, layer, { selectedId = null, role = 'auto' } = {})`.
+  - Itens de papel (`role: 'paper'`, `layer.kind === 'paper'`, `layer.role === 'paper'`, ou detectados por `isPaperLayer`) são posicionados logo acima da camada de papel mais alta já existente no documento (`highestPaperIndex + 1`), garantindo que trocar ou adicionar folhas nunca oculte textos, manchas ou carimbos existentes.
+  - Demais elementos (texturas, sangue, carimbos, textos, formas, ajustes e efeitos) são inseridos logo acima da camada selecionada (`selectedIndex + 1`), ou no **topo absoluto** (`handout.layers.length`) quando não houver seleção ativa ou o ID selecionado for nulo.
+- **Validação Estrita de Índice em `addLayer` (`src/domain/handouts.js`)**:
+  - `addLayer(handout, layer, index = handout.layers.length)` agora valida estritamente `typeof index === 'number' && Number.isInteger(index)`, lançando `TypeError` caso receba strings, `null`, `NaN` ou não-inteiros.
+  - Impede definitivamente regressões silenciosas de chamadas que passavam o ID da camada (string UUID) em vez de índice numérico, o que causava `splice(NaN)` e inseria elementos no fundo do documento (posição 0).
+- **Uniformização de Todos os Pontos de Criação de Camadas**:
+  - `src/editor/editor.js`: arrastar elementos da biblioteca para o palco, arrastar arquivos de imagem, colar do clipboard, criação de texto (`addTextAt`), criação de imagem (`addImageAt`), colar camadas/duplicar e adicionar formas via paleta de comandos.
+  - `src/editor/library-panel.js`: clique em itens da biblioteca (`applyItemToHandout`) e criação de camadas de texto por fontes (`applyFontToHandout`).
+  - `src/editor/layers-panel.js`: menu de inserção "+" e menu de efeitos procedurais.
+- **Retorno Visual e Foco no Painel de Camadas (`src/editor/layers-panel.js` e `src/ui/editor.css`)**:
+  - Ao inserir nova camada, a linha correspondente é automaticamente selecionada, pastas recolhidas são expandidas se necessário, a lista de camadas rola até a nova camada (`scrollIntoView({ block: 'nearest' })`) e a linha pisca com destaque visual sutil (`.layer-item.flash`) usando os tokens `--eco-mid` (220 ms) e `--eco-ease`.
+  - Otimização do listener de rolagem para evitar chamadas contínuas durante o arraste e manipulação de camadas no palco.
+- **Testes e Validação**:
+  - `tests/handouts.test.js`: testes unitários para `insertionIndex` com papéis em documentos vazios, normais e de múltiplos papéis; posicionamento de sangue com e sem camada selecionada; e validação de `addLayer` rejeitando strings, `null`, `NaN` e aceitando inteiros.
+  - `tests/e2e/library.test.js`: teste E2E completo validando o arraste de "Sangue · gotas múltiplas" para um documento com 10 camadas preexistentes sem seleção, confirmando que a nova camada entra em `layers.at(-1)` (posição 11), é selecionada, e que seus pixels vermelhos são renderizados com sucesso sobre o canvas.
+  - Suíte completa: **167 testes unitários passando**, **todos os testes E2E passando**.
+
+### Pendências reais
+- Nenhuma pendência na Fase 0. Próxima fase: Fase 1 (Sons da bancada sintetizados com Web Audio).
 
 ---
 

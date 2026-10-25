@@ -28,10 +28,16 @@ test('library drawer and fill mode e2e', { timeout: 90_000 }, async (t) => {
     create: { width: 64, height: 64, channels: 4, background: { r: 200, g: 180, b: 150, alpha: 1 } },
   }).webp().toBuffer();
 
+  const dummyBloodWebp = await sharp({
+    create: { width: 64, height: 64, channels: 4, background: { r: 180, g: 20, b: 20, alpha: 1 } },
+  }).webp().toBuffer();
+
   await writeFile(path.join(collectionDir, 'papeis/papel-teste.webp'), dummyWebp);
   await writeFile(path.join(collectionDir, 'previews/papel-teste.webp'), dummyWebp);
   await writeFile(path.join(collectionDir, 'texturas/mancha-teste.webp'), dummyWebp);
   await writeFile(path.join(collectionDir, 'previews/mancha-teste.webp'), dummyWebp);
+  await writeFile(path.join(collectionDir, 'texturas/sangue-teste.webp'), dummyBloodWebp);
+  await writeFile(path.join(collectionDir, 'previews/sangue-teste.webp'), dummyBloodWebp);
 
   const dummySvg = '<svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="80" fill="currentColor"/></svg>';
   await writeFile(path.join(collectionDir, 'elementos/carimbo-teste.svg'), dummySvg, 'utf8');
@@ -74,6 +80,16 @@ test('library drawer and fill mode e2e', { timeout: 90_000 }, async (t) => {
         preview: 'previews/carimbo-teste.webp',
         width: 300,
         height: 120,
+      },
+      {
+        id: 'casa-sangue-2',
+        kind: 'image',
+        name: 'Sangue · gotas múltiplas',
+        category: 'Sangue',
+        file: 'texturas/sangue-teste.webp',
+        preview: 'previews/sangue-teste.webp',
+        width: 400,
+        height: 400,
       },
       {
         id: 'casa-font-courier-teste',
@@ -142,10 +158,10 @@ test('library drawer and fill mode e2e', { timeout: 90_000 }, async (t) => {
   await page.click('.rail-btn[data-action="library"]');
   await page.waitForSelector('.library-drawer-inner', { state: 'visible' });
 
-  // List 4 elements (3 house image elements + 1 expansion element; font is under fonts tab)
+  // List 5 elements (4 house image elements + 1 expansion element; font is under fonts tab)
   const itemCards = page.locator('.library-item-card');
   const initialCount = await itemCards.count();
-  assert.equal(initialCount, 4, 'Should display 3 house elements and 1 expansion element');
+  assert.equal(initialCount, 5, 'Should display 4 house elements and 1 expansion element');
 
   // Verify expansion item has source stamp
   const expCard = page.locator('.library-item-card[data-id="teste-sangue-1"]');
@@ -158,13 +174,13 @@ test('library drawer and fill mode e2e', { timeout: 90_000 }, async (t) => {
   await casaChip.click();
   await page.waitForTimeout(50);
   const countAfterCasa = await page.locator('.library-item-card').count();
-  assert.equal(countAfterCasa, 3, 'Filtering by house collection should hide expansion item');
+  assert.equal(countAfterCasa, 4, 'Filtering by house collection should hide expansion item');
 
   // Click "Tudo" source chip -> expansion item appears again
   const allChip = page.locator('.library-source-chips button[data-source="all"]');
   await allChip.click();
   await page.waitForTimeout(50);
-  assert.equal(await page.locator('.library-item-card').count(), 4);
+  assert.equal(await page.locator('.library-item-card').count(), 5);
 
   // 2. Click on stain -> new layer with blend 'multiply'
   const stainCard = page.locator('.library-item-card[data-id="casa-mancha-teste"]');
@@ -185,17 +201,19 @@ test('library drawer and fill mode e2e', { timeout: 90_000 }, async (t) => {
 
   const bottomLayer = await page.evaluate(() => {
     const doc = window.__atelie.editor.state.handout;
-    const l0 = doc.layers[0];
+    const p = doc.layers.find(l => l.image?.src?.library === 'casa-papel-teste');
     return {
-      id: l0.image?.src?.library,
-      width: l0.width,
-      height: l0.height,
+      id: p?.image?.src?.library,
+      width: p?.width,
+      height: p?.height,
       pageW: doc.page.width,
       pageH: doc.page.height,
-      fit: l0.image?.fit,
+      fit: p?.image?.fit,
+      index: doc.layers.indexOf(p),
     };
   });
-  assert.equal(bottomLayer.id, 'casa-papel-teste', 'Paper must be inserted at the very bottom (layers[0])');
+  assert.equal(bottomLayer.id, 'casa-papel-teste', 'Paper must be present in layers');
+  assert.equal(bottomLayer.index, 1, 'Paper must be inserted directly above base paper (index 1)');
   assert.equal(bottomLayer.width, bottomLayer.pageW, 'Paper must cover page width');
   assert.equal(bottomLayer.height, bottomLayer.pageH, 'Paper must cover page height');
   assert.equal(bottomLayer.fit, 'cover');
@@ -264,7 +282,7 @@ test('library drawer and fill mode e2e', { timeout: 90_000 }, async (t) => {
   // Turn off favorite filter
   await favFilterChip.click();
   await page.waitForTimeout(50);
-  assert.equal(await page.locator('.library-item-card').count(), 4);
+  assert.equal(await page.locator('.library-item-card').count(), 5);
 
   // 5. Font applied to text layer updates text.font.library
   // First, add text layer
@@ -369,6 +387,131 @@ test('library drawer and fill mode e2e', { timeout: 90_000 }, async (t) => {
 
   const sampleVal = await fillInput.inputValue();
   assert.ok(sampleVal && sampleVal.length > 0 && sampleVal !== 'Arthur Pendelton', 'Sample button should put non-empty plausible text');
+
+  // 6. Fase 0: Arrastar "Sangue · gotas múltiplas" para um modelo com 10 camadas
+  // deixa a camada nova em layers.at(-1), selecionada e à vista no pixel.
+  const tenLayersDoc = {
+    schema: 1,
+    id: 'doc-10-layers',
+    revision: 1,
+    name: 'Modelo 10 Camadas',
+    category: '',
+    tags: [],
+    folder: null,
+    favorite: false,
+    page: { width: 1240, height: 1754, background: '#00000000', uv: { tint: '#00ffc8', strength: 0.85 } },
+    layers: [
+      {
+        id: 'l-base-paper',
+        name: 'Papel',
+        kind: 'shape',
+        visible: true,
+        locked: false,
+        opacity: 1,
+        blend: 'normal',
+        x: 0,
+        y: 0,
+        width: 1240,
+        height: 1754,
+        rotation: 0,
+        clip: false,
+        light: 'both',
+        shape: { type: 'rect', fill: '#ffffff', stroke: null, strokeWidth: 0, radius: 0, dash: [] },
+      },
+      ...Array.from({ length: 9 }, (_, i) => ({
+        id: `l-extra-${i + 1}`,
+        name: `Camada Extra ${i + 1}`,
+        kind: 'shape',
+        visible: true,
+        locked: false,
+        opacity: 1,
+        blend: 'normal',
+        x: 100 + i * 20,
+        y: 100 + i * 20,
+        width: 200,
+        height: 100,
+        rotation: 0,
+        clip: false,
+        light: 'both',
+        shape: { type: 'rect', fill: '#eeeeee', stroke: null, strokeWidth: 0, radius: 0, dash: [] },
+      })),
+    ],
+    fields: [],
+    source: { kind: 'template' },
+    back: null,
+  };
+
+  assert.equal(tenLayersDoc.layers.length, 10, 'Document must start with 10 layers');
+
+  await page.evaluate(async (doc) => {
+    await window.__atelie.editor.loadHandout(doc);
+    window.__atelie.editor.state.select(null);
+  }, tenLayersDoc);
+
+  await page.waitForTimeout(150);
+
+  // Drag and drop "Sangue · gotas múltiplas" without selection
+  await page.evaluate(dropTarget => {
+    const item = {
+      id: 'casa-sangue-2',
+      name: 'Sangue · gotas múltiplas',
+      category: 'Sangue',
+      width: 400,
+      height: 400,
+    };
+    const dt = new DataTransfer();
+    dt.setData('text/x-atelie-library', JSON.stringify(item));
+    dt.setData('application/json', JSON.stringify({ libraryId: item.id, item }));
+
+    const evt = new DragEvent('drop', {
+      bubbles: true,
+      cancelable: true,
+      dataTransfer: dt,
+      clientX: dropTarget.x + 200,
+      clientY: dropTarget.y + 200,
+    });
+    document.getElementById('desk-stage').dispatchEvent(evt);
+  }, { x: stageBox.x, y: stageBox.y });
+
+  await page.waitForTimeout(200);
+
+  // 1. Check layer insertion at top
+  const layerCheck = await page.evaluate(() => {
+    const doc = window.__atelie.editor.state.handout;
+    const lastLayer = doc.layers.at(-1);
+    const selectedId = window.__atelie.editor.state.selection;
+    return {
+      count: doc.layers.length,
+      lastLayerName: lastLayer?.name,
+      lastLayerLibrary: lastLayer?.image?.src?.library,
+      lastLayerId: lastLayer?.id,
+      selectedId,
+    };
+  });
+
+  assert.equal(layerCheck.count, 11, 'Layer count should increase from 10 to 11');
+  assert.equal(layerCheck.lastLayerName, 'Sangue · gotas múltiplas');
+  assert.equal(layerCheck.lastLayerLibrary, 'casa-sangue-2');
+  assert.equal(layerCheck.selectedId, layerCheck.lastLayerId, 'Newly inserted layer must be selected');
+
+  // 2. Check pixel visibility on canvas (blood has red pixels)
+  const pixelIsRed = await page.waitForFunction(() => {
+    const canvas = document.querySelector('#desk-stage canvas');
+    if (!canvas) return false;
+    const ctx = canvas.getContext('2d');
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < imgData.data.length; i += 4) {
+      const r = imgData.data[i];
+      const g = imgData.data[i + 1];
+      const b = imgData.data[i + 2];
+      const a = imgData.data[i + 3];
+      if (a > 50 && r > 100 && g < 80 && b < 80) {
+        return true;
+      }
+    }
+    return false;
+  }, { timeout: 6000 }).then(() => true).catch(() => false);
+  assert.ok(pixelIsRed, 'Blood layer must be rendered and visible at pixel level on canvas');
 
   assert.deepEqual(errors, []);
 });

@@ -9,6 +9,8 @@ import {
   adjustLayer,
   effectLayer,
   addLayer,
+  insertionIndex,
+  isPaperLayer,
   updateLayer,
   removeLayer,
   moveLayer,
@@ -98,6 +100,85 @@ test('mutation helpers do not mutate the input document and perform their operat
   const removed = removeLayer(moved, 'l-txt1');
   assert.equal(removed.layers.length, 2);
   assert.equal(layerAt(removed, 'l-txt1'), null);
+});
+
+test('insertionIndex and addLayer positioning rules and validation (Fase 0)', () => {
+  const baseDoc = createHandout(); // Has 1 layer: Papel (rect)
+  const txt1 = textLayer({ id: 'l-txt1', name: 'Texto 1' });
+  const stamp1 = imageLayer({ id: 'l-stamp1', name: 'Carimbo 1' });
+  let doc = addLayer(baseDoc, txt1);
+  doc = addLayer(doc, stamp1);
+  // Stack: [Papel (0), Texto 1 (1), Carimbo 1 (2)]
+
+  // 1. Insertion of paper: goes above highest existing paper
+  const newPaperExplicit = imageLayer({ id: 'l-paper-2', name: 'Ofício Antigo', role: 'paper' });
+  const idxPaper1 = insertionIndex(doc, newPaperExplicit, { role: 'paper' });
+  assert.equal(idxPaper1, 1, 'Paper with role: paper must insert directly above base paper at index 1');
+
+  const newPaperAuto = imageLayer({ id: 'l-paper-3', name: 'Papel amarelado', image: { src: { library: 'casa-papel-oficio' } } });
+  const idxPaper2 = insertionIndex(doc, newPaperAuto);
+  assert.equal(idxPaper2, 1, 'Paper detected by name/library must insert at index 1');
+
+  // Multi-paper document: [Papel (0), Papel 2 (1), Texto 1 (2), Carimbo 1 (3)]
+  const multiPaperDoc = addLayer(doc, newPaperExplicit, 1);
+  const idxPaper3 = insertionIndex(multiPaperDoc, newPaperAuto);
+  assert.equal(idxPaper3, 2, 'Paper added to doc with 2 existing papers must insert at index 2');
+
+  // No-paper document: [Texto 1 (0), Carimbo 1 (1)]
+  const noPaperDoc = { ...doc, layers: [txt1, stamp1] };
+  const idxPaperNoPaper = insertionIndex(noPaperDoc, newPaperExplicit, { role: 'paper' });
+  assert.equal(idxPaperNoPaper, 0, 'Paper added to doc with no existing papers must insert at index 0');
+
+  // 2. Insertion of non-paper (e.g. Sangue, carimbos, texto)
+  const bloodLayer = imageLayer({ id: 'l-blood', name: 'Sangue · gotas múltiplas' });
+
+  // With selection: right above selected layer
+  const idxSelectedTxt = insertionIndex(doc, bloodLayer, { selectedId: 'l-txt1' });
+  assert.equal(idxSelectedTxt, 2, 'Blood with selected text (index 1) must insert at index 2');
+
+  const idxSelectedPaper = insertionIndex(doc, bloodLayer, { selectedId: doc.layers[0].id });
+  assert.equal(idxSelectedPaper, 1, 'Blood with selected paper (index 0) must insert at index 1');
+
+  // Without selection: goes to the very top
+  const idxNoSelection = insertionIndex(doc, bloodLayer, { selectedId: null });
+  assert.equal(idxNoSelection, 3, 'Blood without selection must insert at top of stack (doc.layers.length)');
+
+  const idxOmitted = insertionIndex(doc, bloodLayer);
+  assert.equal(idxOmitted, 3, 'Blood with omitted options must insert at top of stack');
+
+  // Invalid / non-existent selection: falls back to top
+  const idxInvalidSel = insertionIndex(doc, bloodLayer, { selectedId: 'non-existent-uuid' });
+  assert.equal(idxInvalidSel, 3, 'Blood with non-existent selection must insert at top');
+
+  // 3. addLayer strict index validation
+  assert.throws(
+    () => addLayer(doc, bloodLayer, 'l-txt1'),
+    TypeError,
+    'addLayer must throw TypeError when receiving string as index'
+  );
+  assert.throws(
+    () => addLayer(doc, bloodLayer, null),
+    TypeError,
+    'addLayer must throw TypeError when receiving null as index'
+  );
+  assert.throws(
+    () => addLayer(doc, bloodLayer, NaN),
+    TypeError,
+    'addLayer must throw TypeError when receiving NaN as index'
+  );
+  assert.throws(
+    () => addLayer(doc, bloodLayer, 1.5),
+    TypeError,
+    'addLayer must throw TypeError when receiving non-integer number'
+  );
+  assert.doesNotThrow(
+    () => addLayer(doc, bloodLayer, 1),
+    'addLayer must accept integer numbers'
+  );
+  assert.doesNotThrow(
+    () => addLayer(doc, bloodLayer),
+    'addLayer must accept omitted index (defaults to layers.length)'
+  );
 });
 
 test('removeLayer of a layer marked as a field also removes that field', () => {

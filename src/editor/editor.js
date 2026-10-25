@@ -21,6 +21,7 @@ import {
   moveLayer,
   updateLayer,
   addLayer,
+  insertionIndex,
   textLayer,
   imageLayer,
   shapeLayer,
@@ -827,6 +828,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     get selectedLayerId() { return state?.selection; },
     edit: (doc, meta) => state?.edit(doc, meta),
     select: (id) => state?.select(id),
+    flash: (id) => layersPanel?.flash?.(id),
   };
   libraryPanel = createLibraryPanel(shell, { api, state: libraryStateProxy, fonts });
   shell.drawer.panel('library', libraryPanel.element);
@@ -1037,15 +1039,11 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       cloned.y += 20;
     }
 
-    let insertIdx = state.handout.layers.length;
-    if (state.selection) {
-      const idx = state.handout.layers.findIndex(l => l.id === state.selection);
-      if (idx >= 0) insertIdx = idx + 1;
-    }
-
+    const insertIdx = insertionIndex(state.handout, cloned, { selectedId: state.selection });
     const next = addLayer(state.handout, cloned, insertIdx);
     state.edit(next, { label: `Colar ${cloned.name}` });
     state.select(cloned.id);
+    layersPanel?.flash?.(cloned.id);
   }
 
   function addTextAt(pos) {
@@ -1058,9 +1056,11 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       height: 200,
       light: currentLight === 'uv' ? 'uv' : 'both',
     });
-    const next = addLayer(state.handout, newL);
+    const insertIdx = insertionIndex(state.handout, newL, { selectedId: state.selection });
+    const next = addLayer(state.handout, newL, insertIdx);
     state.edit(next, { label: 'Adicionar texto' });
     state.select(newL.id);
+    layersPanel?.flash?.(newL.id);
   }
 
   function addImageAt(pos) {
@@ -1073,9 +1073,11 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       height: 400,
       light: currentLight === 'uv' ? 'uv' : 'both',
     });
-    const next = addLayer(state.handout, newL);
+    const insertIdx = insertionIndex(state.handout, newL, { selectedId: state.selection });
+    const next = addLayer(state.handout, newL, insertIdx);
     state.edit(next, { label: 'Adicionar imagem' });
     state.select(newL.id);
+    layersPanel?.flash?.(newL.id);
   }
 
   function triggerEyedropper() {
@@ -1171,9 +1173,14 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
             },
           });
 
-          const next = addLayer(state.handout, newL, state.selection);
-          state.edit(next);
+          const isPaper = item.category === 'Papéis' || defaults.position === 'bottom' || (defaults.cover && defaults.blend === 'normal');
+          if (isPaper) newL.role = 'paper';
+          const role = isPaper ? 'paper' : 'auto';
+          const insertIdx = insertionIndex(state.handout, newL, { selectedId: state.selection, role });
+          const next = addLayer(state.handout, newL, insertIdx);
+          state.edit(next, { label: `Adicionar ${newL.name}` });
           state.select(newL.id);
+          layersPanel?.flash?.(newL.id);
           return;
         }
       } catch {}
@@ -1227,9 +1234,11 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
           image: { src: { upload: uploaded.id }, fit: 'contain' },
         });
 
-        const next = addLayer(state.handout, newL);
+        const insertIdx = insertionIndex(state.handout, newL, { selectedId: state.selection });
+        const next = addLayer(state.handout, newL, insertIdx);
         state.edit(next, { label: 'Adicionar imagem' });
         state.select(newL.id);
+        layersPanel?.flash?.(newL.id);
         cascade += 20;
       } catch (err) {
         shell.notify(`Erro ao enviar imagem: ${err.message}`, { tone: 'error' });
@@ -1273,9 +1282,11 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
               image: { src: { upload: uploaded.id }, fit: 'contain' },
             });
 
-            const next = addLayer(state.handout, newL);
+            const insertIdx = insertionIndex(state.handout, newL, { selectedId: state.selection });
+            const next = addLayer(state.handout, newL, insertIdx);
             state.edit(next, { label: 'Colar imagem' });
             state.select(newL.id);
+            layersPanel?.flash?.(newL.id);
             return;
           } catch (err) {
             shell.notify(`Erro ao colar imagem: ${err.message}`, { tone: 'error' });
@@ -1615,8 +1626,10 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
           light: currentLight === 'uv' ? 'uv' : 'both',
           shape: { type: 'rect', fill: '#ffffff', stroke: null, strokeWidth: 0 },
         });
-        state.edit(addLayer(state.handout, newL), { label: 'Adicionar Retângulo' });
+        const insertIdx = insertionIndex(state.handout, newL, { selectedId: state.selection });
+        state.edit(addLayer(state.handout, newL, insertIdx), { label: 'Adicionar Retângulo' });
         state.select(newL.id);
+        layersPanel?.flash?.(newL.id);
       },
     },
     {

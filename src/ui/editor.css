@@ -591,6 +591,25 @@
   border-left-color: var(--at-uv) !important;
 }
 
+@keyframes layerItemFlash {
+  0% {
+    background-color: rgba(138, 92, 246, 0.35);
+    box-shadow: inset 0 0 0 1px var(--at-uv, rgba(138, 92, 246, 0.6));
+  }
+  50% {
+    background-color: rgba(138, 92, 246, 0.22);
+    box-shadow: inset 0 0 0 1px var(--at-uv, rgba(138, 92, 246, 0.4));
+  }
+  100% {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+
+.layer-item.flash {
+  animation: layerItemFlash var(--eco-mid) var(--eco-ease);
+}
+
 .layer-item.locked {
   opacity: 0.65;
 }

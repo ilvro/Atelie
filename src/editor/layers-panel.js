@@ -7,6 +7,7 @@ import {
   effectLayer,
   canvasOperation,
   addLayer,
+  insertionIndex,
   moveLayer,
   duplicateLayer,
   removeLayer,
@@ -142,10 +143,26 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
   let viewMode = 'grouped'; // 'grouped' | 'flat'
   const collapsedFolders = new Set();
   let colorPickerLayerId = null;
+  let pendingFlashId = null;
+  let lastScrolledSelection = null;
+
+  function flash(layerId) {
+    if (!layerId) return;
+    const layer = state.handout?.layers?.find(l => l.id === layerId);
+    if (layer) {
+      const hierarchy = getLayerHierarchy(layer);
+      if (hierarchy.group && collapsedFolders.has(hierarchy.group)) {
+        collapsedFolders.delete(hierarchy.group);
+      }
+    }
+    pendingFlashId = layerId;
+    render();
+  }
 
   function renderLayerRow(layer, index, isGroupChild = false) {
     const selectedId = state.selection;
     const isSelected = layer.id === selectedId;
+    const isFlashing = pendingFlashId === layer.id;
     const isLocked = Boolean(layer.locked);
     const isVisible = Boolean(layer.visible);
     const layerColor = getLayerColor(layer);
@@ -154,7 +171,7 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
     const isColorMenuOpen = colorPickerLayerId === layer.id;
 
     return `
-      <div class="layer-item ${isSelected ? 'selected' : ''} ${isLocked ? 'locked' : ''} ${isGroupChild ? 'is-child' : ''}"
+      <div class="layer-item ${isSelected ? 'selected' : ''} ${isLocked ? 'locked' : ''} ${isGroupChild ? 'is-child' : ''} ${isFlashing ? 'flash' : ''}"
            data-id="${esc(layer.id)}"
            data-index="${index}"
            style="--layer-color: ${layerColor};"
@@ -365,6 +382,31 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
         </div>
       </div>
     `;
+
+    if (pendingFlashId) {
+      const flashId = pendingFlashId;
+      pendingFlashId = null;
+      lastScrolledSelection = flashId;
+      requestAnimationFrame(() => {
+        const row = container.querySelector(`.layer-item[data-id="${flashId}"]`);
+        if (row) {
+          row.scrollIntoView({ block: 'nearest' });
+          setTimeout(() => {
+            row.classList.remove('flash');
+          }, 250);
+        }
+      });
+    } else if (state?.selection && state.selection !== lastScrolledSelection) {
+      lastScrolledSelection = state.selection;
+      requestAnimationFrame(() => {
+        const row = container.querySelector(`.layer-item[data-id="${state.selection}"]`);
+        if (row) {
+          row.scrollIntoView({ block: 'nearest' });
+        }
+      });
+    } else if (!state?.selection) {
+      lastScrolledSelection = null;
+    }
   }
 
   // Event delegation
@@ -516,15 +558,11 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
         isPlusMenuOpen = false;
         isEffectsMenuOpen = false;
 
-        let insertIndex = state.handout.layers.length;
-        if (state.selection) {
-          const idx = state.handout.layers.findIndex(l => l.id === state.selection);
-          if (idx >= 0) insertIndex = idx + 1;
-        }
-
+        const insertIndex = insertionIndex(state.handout, newLayer, { selectedId: state.selection });
         const next = addLayer(state.handout, newLayer, insertIndex);
         state.edit(next, { label: `Adicionar ${newLayer.name}` });
         state.select(newLayer.id);
+        flash(newLayer.id);
       }
       return;
     }
@@ -602,15 +640,11 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
 
       if (newLayer) {
         isPlusMenuOpen = false;
-        let insertIndex = handout.layers.length;
-        if (selectedId) {
-          const idx = handout.layers.findIndex(l => l.id === selectedId);
-          if (idx >= 0) insertIndex = idx + 1;
-        }
-
+        const insertIndex = insertionIndex(handout, newLayer, { selectedId });
         const next = addLayer(handout, newLayer, insertIndex);
         state.edit(next, { label: `Adicionar ${newLayer.name}` });
         state.select(newLayer.id);
+        flash(newLayer.id);
       }
       return;
     }
@@ -748,6 +782,7 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
 
   return {
     render,
+    flash,
     destroy() {
       container.innerHTML = '';
     },

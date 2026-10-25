@@ -239,7 +239,66 @@ export function layerAt(handout, layerId) {
   return handout.layers.find(l => l.id === layerId) ?? null;
 }
 
+/**
+ * Checks if a layer represents a base paper layer.
+ */
+export function isPaperLayer(layer) {
+  if (!layer) return false;
+  if (layer.role === 'paper' || layer.kind === 'paper') return true;
+  const name = (layer.name || '').toLowerCase();
+  if (
+    name === 'papel' ||
+    name.startsWith('papel ') ||
+    name.startsWith('papel:') ||
+    name.startsWith('papel -') ||
+    name.startsWith('papel —') ||
+    name.includes('papel')
+  ) {
+    return true;
+  }
+  const lib = typeof layer.image?.src?.library === 'string' ? layer.image.src.library.toLowerCase() : '';
+  if (lib.includes('papel') || lib.includes('paper')) {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Where a new layer goes: papers at the bottom (above existing papers);
+ * anything else right above the selection, or on top when nothing is selected.
+ */
+export function insertionIndex(handout, layer, { selectedId = null, role = 'auto' } = {}) {
+  const isPaper = role === 'paper' || (role === 'auto' && isPaperLayer(layer));
+  const layers = handout?.layers || [];
+
+  if (isPaper) {
+    let highestPaper = -1;
+    for (let i = 0; i < layers.length; i++) {
+      if (isPaperLayer(layers[i])) {
+        highestPaper = i;
+      }
+    }
+    return highestPaper + 1;
+  }
+
+  if (selectedId) {
+    const selIdx = layers.findIndex(l => l.id === selectedId);
+    if (selIdx >= 0) {
+      return selIdx + 1;
+    }
+  }
+
+  return layers.length;
+}
+
 export function addLayer(handout, layer, index = handout.layers.length) {
+  if (typeof index !== 'number' || !Number.isInteger(index)) {
+    throw new TypeError(
+      `addLayer: index deve ser um número inteiro, recebido: ${
+        typeof index === 'string' ? `"${index}"` : String(index)
+      }`
+    );
+  }
   const cloned = structuredClone(handout);
   const targetIdx = Math.max(0, Math.min(cloned.layers.length, index));
   cloned.layers.splice(targetIdx, 0, structuredClone(layer));

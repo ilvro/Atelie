@@ -7,7 +7,7 @@ import {
   toggleStoredFavorite,
   isStoredFavorite,
 } from './library-search.js';
-import { imageLayer, textLayer, addLayer, updateLayer } from '../domain/handouts.js';
+import { imageLayer, textLayer, addLayer, updateLayer, insertionIndex } from '../domain/handouts.js';
 import { contextMenu } from '../ui/context-menu.js';
 
 const CANONICAL_CATEGORIES = [
@@ -162,21 +162,15 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
       },
     });
 
-    const isBottom = position === 'bottom' || defaults.position === 'bottom';
-    if (isBottom) {
-      // Put below everything
-      state.edit({
-        ...doc,
-        layers: [newLayer, ...doc.layers],
-      });
-      state.select(newLayer.id);
-    } else {
-      // Put above selected layer
-      const selectedId = state.selection ?? state.selectedLayerId;
-      const next = addLayer(doc, newLayer, selectedId);
-      state.edit(next);
-      state.select(newLayer.id);
-    }
+    const isPaper = item.category === 'Papéis' || defaults.position === 'bottom' || (defaults.cover && defaults.blend === 'normal');
+    if (isPaper) newLayer.role = 'paper';
+    const role = isPaper ? 'paper' : 'auto';
+    const selectedId = state.selection ?? state.selectedLayerId;
+    const insertIdx = insertionIndex(doc, newLayer, { selectedId, role });
+    const next = addLayer(doc, newLayer, insertIdx);
+    state.edit(next, { label: `Adicionar ${newLayer.name}` });
+    state.select(newLayer.id);
+    state.flash?.(newLayer.id);
   }
 
   function applyFontToHandout(item) {
@@ -226,8 +220,10 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
           },
         },
       });
-      state.edit(addLayer(state.handout, newL, state.selectedLayerId));
+      const insertIdx = insertionIndex(state.handout, newL, { selectedId });
+      state.edit(addLayer(state.handout, newL, insertIdx), { label: `Adicionar ${newL.name}` });
       state.select(newL.id);
+      state.flash?.(newL.id);
     }
   }
 
