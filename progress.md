@@ -25,7 +25,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 17 — Início e galeria | concluída | 2026-10-24 | Tela de abertura, 9 folhas em branco, continuar, 8 modelos em destaque, expansões, boas-vindas e gaveta Modelos |
 | 18 — Assar e entregar | concluída | 2026-10-25 | Assado em alta resolução (2048 px) e entrega ao Tabletop pelos 3 caminhos do contrato (A: mesa-handouts-v1, B: postMessage, C: HTTP e CORS) |
 | 19 — Luz UV | concluída | 2026-10-25 | Camadas secretas sob luz negra, escurecimento da página (tint e strength), mudança de clima da interface, atalho U, selos UV e assado UV |
-| 20 — Modo leitura | pendente | | Leitura imersiva, lupa, lanterna UV, verso |
+| 20 — Modo leitura | concluída | 2026-10-25 | Leitura imersiva em tela cheia, lupa 2,5×, lanterna UV com máscara radial, virar frente/verso e carrossel de documentos |
 | 21 — Exportar e imprimir | pendente | | Exportação em alta resolução e folha A4 |
 | 22 — Importar elementos | pendente | | Expansão: acervo Arquivos Confidenciais |
 | 23 — PSD leitura | pendente | | Expansão: análise e estrutura de PSDs |
@@ -135,6 +135,58 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ### Pendências reais
 - Nenhuma pendência na Etapa 17.
+
+---
+
+## Etapa 20 — Modo leitura
+
+### Feito
+- **Geometria e Carrossel (`src/reading/reading-geometry.js`)**:
+  - `fitPage(page, viewport, margin)`: cálculo determinístico do maior tamanho que cabe na tela mantendo a proporção exata da folha com margem configurável (padrão 6%), centralizado no palco.
+  - `neighbors(list, id)`: localização circular de documento anterior, atual e próximo para carrossel e transições.
+- **Motor do Modo Leitura (`src/reading/reading.js`)**:
+  - `createReading(shell, { api, images, fonts, editor })`: interface de ciclo de vida com métodos `open(handoutId)`, `close()`, `isOpen()`, `toggleLoupe()`, `toggleLantern()`, `flipSheet()`, `navigateCarousel(direction)`.
+  - Modo imersivo e tela cheia: entrada via `requestFullscreen` (com fallback elegante), ocultação da casca inteira (`body.is-reading`).
+  - Renderização da folha em resolução da tela × `devicePixelRatio` sobre a textura de bancada e iluminação da luminária escolhida nos Ajustes.
+  - Barra de ferramentas inferior flutuante: auto-ocultação após 2s de inatividade do mouse, reaparecimento imediato ao mover o cursor e permanência enquanto o ponteiro estiver sobre a barra.
+  - Três miniaturas de carrossel (anterior · atual · próximo) com micro-rotação tátil (`tiltOf`), seleção rápida e botões de seta anterior/próximo.
+- **Lupa (atalho L)**:
+  - Lente circular de 220 px que segue o ponteiro sobre a folha.
+  - Segundo render em escala 2,5× a partir de canvas ampliado fora de tela (`ensureLargeCanvas`).
+  - Aro escuro de lente física, contorno sutil de vidro e reflexo gradiente diagonal (`.reader-loupe-glare`).
+- **Lanterna UV (atalho U)**:
+  - Ativação condicional automática: só fica disponível quando o documento tem camadas sob luz ultravioleta (`hasUvLayers`).
+  - Escurecimento sutil da folha (`.reader-dark-overlay`) simulando o apagamento da luz ambiente da sala.
+  - Máscara radial suave (`globalCompositeOperation = 'destination-in'`) desenhada dinamicamente na posição do cursor, revelando o render UV do documento.
+  - Halo violeta pulsante com brilho suave `--at-uv-glow` (`.reader-uv-halo`).
+  - Ajuste dinâmico de diâmetro pela roda do mouse (`wheel`) entre 120 e 480 px (raio 60–240 px).
+- **Virar Folha (atalho F)**:
+  - Suporte completo a documentos de frente e verso (`handout.back?.handoutId`).
+  - Carregamento assíncrono do verso pelo ID vinculado e renderização da face traseira.
+  - Animação física de rotação 3D no eixo Y (`rotateY(180deg)`) com perspectiva de 1600 px e `backface-visibility: hidden`.
+  - Suporte a acessibilidade: transição instantânea quando `prefers-reduced-motion` estiver ativo.
+- **Navegação e Carrossel (atalhos ← e →)**:
+  - Navegação entre documentos da mesma pasta ou da lista de recentes quando o documento não tiver pasta.
+  - Animação de deslizamento lateral (`reader-slide-left` / `reader-slide-right`) e atualização fluida das miniaturas.
+  - Ao sair com **Esc**, o editor é restaurado mostrando o documento em que o jogador parou no modo leitura.
+- **Integração na Casca e no Editor**:
+  - Botão **Leitura** no trilho principal (`data-action="reader"` com atalho `P` e ícone `eye`).
+  - Atalho global **P** (ignora inputs, textareas e selects) para entrar no modo leitura direto do documento em edição.
+  - Opção **Ler** com tecla `P` no menu de contexto de documentos do navegador lateral.
+  - Exposição de `window.__atelie.reading` para diagnóstico e controle externo.
+- **Testes e Validação**:
+  - `tests/reading.test.js`: testes unitários de proporção, escala máxima, margem 6%, centralização e navegação circular.
+  - `tests/e2e/reading.test.js`: teste Playwright validando entrada pelo trilho e por atalho P, ocultação da casca, ativação da lupa e seguimento do cursor, ativação da lanterna UV com teste de discriminação de pixels dentro e fora do círculo, ampliação por scroll do mouse, rotação de folha dupla, navegação por carrossel e restauração do documento ao sair com Esc.
+  - Captura de referência `docs/referencias/atelie-leitura-uv.png` (1600 × 950) gerada com a lanterna UV revelando a frase secreta no "Diário de culto · com UV".
+
+### Validação
+- `npm test`: 113 testes unitários passando 100%.
+- `npm run test:e2e`: 14 suítes E2E passando 100%.
+- `npm run build`: bundle de produção gerado com sucesso.
+- `docs/referencias/atelie-leitura-uv.png`: gerada e conferida em 1600 × 950.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 20.
 
 ---
 

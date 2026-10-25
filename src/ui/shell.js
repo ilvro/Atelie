@@ -35,7 +35,7 @@ export function createShell(root, { onAction } = {}) {
               ${renderIcon('frame', 20)}
               <span>Modelos</span>
             </button>
-            <button type="button" class="rail-btn" data-action="reader" data-tip="Leitura" data-key="L" aria-label="Leitura">
+            <button type="button" class="rail-btn" data-action="reader" data-tip="Leitura" data-key="P" aria-label="Leitura">
               ${renderIcon('eye', 20)}
               <span>Leitura</span>
             </button>

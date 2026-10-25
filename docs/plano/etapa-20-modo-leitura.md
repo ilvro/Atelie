@@ -38,5 +38,5 @@ Toque (tablet): arrastar com um dedo move a lupa ou a lanterna; dois dedos dão 
 
 ## Pronto quando
 
-- [ ] Testes passam; `npm test` e os E2E passam.
-- [ ] Captura `docs/referencias/atelie-leitura-uv.png` com a lanterna UV revelando uma frase no "Diário de culto · com UV" (etapa 16).
+- [x] Testes passam; `npm test` e os E2E passam.
+- [x] Captura `docs/referencias/atelie-leitura-uv.png` com a lanterna UV revelando uma frase no "Diário de culto · com UV" (etapa 16).

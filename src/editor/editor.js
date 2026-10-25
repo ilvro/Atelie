@@ -32,7 +32,7 @@ import { bakeHandout, summaryOf, deliveryOf, previewOf, blobToDataUrl } from './
 import { openExchange, publish, channel, savedMessage, unpublishBySource, readPublished } from '../data/exchange.js';
 import { getSettings } from '../ui/settings.js';
 
-export function createEditor(shell, { api, images, fonts } = {}) {
+export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   const deskStage = document.getElementById('desk-stage');
   if (!deskStage) return null;
 
@@ -752,6 +752,10 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     handoff,
     images,
     fonts,
+    onOpenReader: async (id) => {
+      shell.drawer.close();
+      onOpenReader?.(id);
+    },
     onOpenDocument: async (id) => {
       confirmUnsavedChanges(async () => {
         try {
@@ -1314,6 +1318,8 @@ export function createEditor(shell, { api, images, fonts } = {}) {
 
   // --- Keyboard shortcuts ---
   window.addEventListener('keydown', event => {
+    if (document.body.classList.contains('is-reading')) return;
+
     const isEditingField =
       ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) ||
       document.activeElement?.isContentEditable;
@@ -1325,6 +1331,18 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     }
 
     if (isEditingField) return;
+
+    if (
+      event.key.toLowerCase() === 'p' &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey &&
+      !event.shiftKey
+    ) {
+      event.preventDefault();
+      onOpenReader?.(state?.handout?.id);
+      return;
+    }
 
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') {
       event.preventDefault();

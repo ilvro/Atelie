@@ -1,6 +1,7 @@
 import './ui/styles.css';
 import './ui/editor.css';
 import './ui/start.css';
+import './ui/reader.css';
 import { createShell } from './ui/shell.js';
 import { renderHandout } from './render/handout-render.js';
 import { createHandoutImages } from './data/handout-images.js';
@@ -8,6 +9,7 @@ import { createHandoutFonts } from './data/handout-fonts.js';
 import { api } from './data/api.js';
 import * as exchange from './data/exchange.js';
 import { createEditor } from './editor/editor.js';
+import { createReading } from './reading/reading.js';
 
 const appRoot = document.getElementById('app');
 if (appRoot) {
@@ -27,11 +29,26 @@ if (appRoot) {
     const fonts = createHandoutFonts();
     const isDiagnostics = window.location.search.includes('diagnostics');
 
-    const editor = createEditor(shell, { api, images, fonts });
+    let reading = null;
+    const editor = createEditor(shell, {
+      api,
+      images,
+      fonts,
+      onOpenReader: (id) => reading?.open(id),
+    });
+
+    reading = createReading(shell, { api, images, fonts, editor });
+
+    shell.onAction((action) => {
+      if (action === 'reader') {
+        reading?.open(editor?.state?.handout?.id);
+      }
+    });
 
     const atelieApi = {
       ...shell,
       api,
+      ...(reading ? { reading } : {}),
       ...(isDiagnostics && editor ? { editor, exchange } : {}),
       renderHandout: async (handout, { scale = 0.25, light = 'normal', at = [] } = {}) => {
         const canvas = document.createElement('canvas');

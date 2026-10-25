@@ -1,0 +1,324 @@
+/* --- Estilos do Modo Leitura (Etapa 20) --- */
+
+.at-reader {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: none;
+}
+
+/* Oculta a casca quando no modo leitura */
+body.is-reading .app-rail,
+body.is-reading .app-drawer,
+body.is-reading .app-inspector,
+body.is-reading .desk-footer,
+body.is-reading .desk-doc-bar,
+body.is-reading .desk-readonly-banner,
+body.is-reading .desk-draft-bar {
+  display: none !important;
+}
+
+.reader-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.reader-sheet-stage {
+  perspective: 1600px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reader-sheet {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform var(--eco-slow) var(--eco-ease);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.65), 0 4px 14px rgba(0, 0, 0, 0.4);
+  background: var(--at-paper);
+}
+
+.reader-sheet.is-flipped {
+  transform: rotateY(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reader-sheet {
+    transition: none !important;
+  }
+}
+
+.reader-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  background: var(--at-paper);
+  overflow: hidden;
+}
+
+.reader-face.is-front {
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+
+.reader-face.is-back {
+  transform: rotateY(180deg);
+}
+
+.reader-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Overlay escuro que simula apagar a luz da sala na lanterna UV */
+.reader-dark-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 8, 22, 0.52);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--eco-mid) var(--eco-ease);
+  z-index: 3;
+}
+
+.reader-dark-overlay.is-active {
+  opacity: 1;
+}
+
+/* Canvas da lanterna UV com recorte radial */
+.reader-canvas-lantern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* Halo da lanterna UV que acompanha o cursor */
+.reader-uv-halo {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 20;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 24px 6px var(--at-uv-glow), inset 0 0 16px 4px var(--at-uv-glow);
+  border: 1.5px solid color-mix(in srgb, var(--at-uv) 55%, transparent);
+}
+
+/* Lupa */
+.reader-loupe {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 40;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75), 0 2px 8px rgba(0, 0, 0, 0.5);
+  border: 4px solid #1c1822;
+  outline: 1.5px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+}
+
+.reader-loupe-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.reader-loupe-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 30%,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.06) 45%,
+    transparent 65%
+  );
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
+/* Barra inferior de ferramentas e carrossel */
+.reader-bar {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--eco-space-4);
+  padding: 6px 14px;
+  background: rgba(22, 20, 29, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--eco-border);
+  border-radius: var(--eco-radius-pill);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  z-index: 100;
+  transition: opacity var(--eco-mid) var(--eco-ease), transform var(--eco-mid) var(--eco-ease);
+}
+
+.reader-bar.is-hidden {
+  opacity: 0;
+  transform: translate(-50%, 16px);
+  pointer-events: none;
+}
+
+/* Carrossel de documentos vizinhos */
+.reader-carousel {
+  display: flex;
+  align-items: center;
+  gap: var(--eco-space-2);
+}
+
+.reader-nav-btn {
+  background: transparent;
+  border: none;
+  color: var(--at-text-2);
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: var(--eco-radius-s);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--eco-fast) var(--eco-ease), background var(--eco-fast) var(--eco-ease);
+}
+
+.reader-nav-btn:hover {
+  color: var(--at-text);
+  background: var(--at-desk-3);
+}
+
+.reader-thumbs-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.reader-thumb-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 74px;
+  height: 44px;
+  padding: 2px 4px;
+  background: var(--at-paper);
+  color: var(--at-ink);
+  border-radius: var(--eco-radius-s);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  transition: transform var(--eco-fast) var(--eco-ease), box-shadow var(--eco-fast) var(--eco-ease);
+  overflow: hidden;
+}
+
+.reader-thumb-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.45);
+}
+
+.reader-thumb-card.is-current {
+  border: 1.5px solid var(--at-uv);
+  box-shadow: 0 0 8px var(--at-uv-glow);
+  cursor: default;
+}
+
+.reader-thumb-card.is-current:hover {
+  transform: none;
+}
+
+.reader-thumb-title {
+  font-family: var(--at-font-type);
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Ferramentas */
+.reader-tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-left: 1px solid var(--eco-border);
+  padding-left: var(--eco-space-3);
+}
+
+.reader-tool-btn {
+  padding: 6px 10px;
+  font-size: var(--eco-fs-12);
+  gap: 6px;
+}
+
+.reader-tool-btn[aria-pressed="true"] {
+  background: var(--at-uv);
+  color: var(--at-uv-ink);
+  border-color: var(--at-uv);
+  box-shadow: 0 0 10px var(--at-uv-glow);
+}
+
+.reader-tool-btn.is-close:hover {
+  background: var(--at-wax);
+  color: #fff;
+  border-color: var(--at-wax);
+}
+
+/* Animações de transição de troca de documento */
+.reader-sheet.is-sliding-out-left {
+  animation: slideOutLeft var(--eco-mid) var(--eco-ease) forwards;
+}
+.reader-sheet.is-sliding-out-right {
+  animation: slideOutRight var(--eco-mid) var(--eco-ease) forwards;
+}
+.reader-sheet.is-sliding-in-right {
+  animation: slideInRight var(--eco-mid) var(--eco-ease) forwards;
+}
+.reader-sheet.is-sliding-in-left {
+  animation: slideInLeft var(--eco-mid) var(--eco-ease) forwards;
+}
+
+@keyframes slideOutLeft {
+  from { transform: translateX(0) rotate(0deg); opacity: 1; }
+  to { transform: translateX(-80px) rotate(-3deg); opacity: 0; }
+}
+@keyframes slideOutRight {
+  from { transform: translateX(0) rotate(0deg); opacity: 1; }
+  to { transform: translateX(80px) rotate(3deg); opacity: 0; }
+}
+@keyframes slideInRight {
+  from { transform: translateX(80px) rotate(3deg); opacity: 0; }
+  to { transform: translateX(0) rotate(0deg); opacity: 1; }
+}
+@keyframes slideInLeft {
+  from { transform: translateX(-80px) rotate(-3deg); opacity: 0; }
+  to { transform: translateX(0) rotate(0deg); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reader-sheet.is-sliding-out-left,
+  .reader-sheet.is-sliding-out-right,
+  .reader-sheet.is-sliding-in-right,
+  .reader-sheet.is-sliding-in-left {
+    animation: none !important;
+  }
+}
+
