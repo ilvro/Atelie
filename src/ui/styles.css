@@ -377,7 +377,7 @@ html, body {
 /* --- Menu de Contexto --- */
 .at-context-menu {
   position: fixed;
-  z-index: 250;
+  z-index: 1200;
   background: var(--at-desk-2);
   border: 1px solid var(--at-line-strong);
   border-radius: var(--eco-radius-s);

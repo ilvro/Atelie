@@ -141,6 +141,18 @@ export function createShell(root, { onAction } = {}) {
   let activeTab = 'properties';
   const drawerPanels = new Map();
   const inspectorPanels = new Map();
+  const actionListeners = new Set();
+
+  const notifyAction = (action, event) => {
+    onAction?.(action, event);
+    for (const listener of actionListeners) {
+      try {
+        listener(action, event);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
 
   const DRAWER_TITLES = {
     documents: 'DOCUMENTOS',
@@ -199,18 +211,18 @@ export function createShell(root, { onAction } = {}) {
 
     if (action === 'desk') {
       closeDrawer();
-      onAction?.('desk');
+      notifyAction('desk', e);
     } else if (['documents', 'library', 'templates'].includes(action)) {
       toggleDrawer(action);
-      onAction?.(action);
+      notifyAction(action, e);
     } else if (action === 'settings') {
       openSettingsModal();
-      onAction?.('settings');
+      notifyAction('settings', e);
     } else if (action === 'help') {
       notify('Atalhos: Ctrl+K abre a paleta de comandos. Use o menu lateral para navegar.', { tone: 'info' });
-      onAction?.('help');
+      notifyAction('help', e);
     } else {
-      onAction?.(action);
+      notifyAction(action, e);
     }
   });
 
@@ -231,7 +243,7 @@ export function createShell(root, { onAction } = {}) {
 
   root.querySelector('[data-action="new-document"]')?.addEventListener('click', () => {
     notify('Criando folha em branco...', { tone: 'ok' });
-    onAction?.('new-document');
+    notifyAction('new-document');
   });
 
   // Inspector tab switching
@@ -260,8 +272,14 @@ export function createShell(root, { onAction } = {}) {
 
   // Desk context menu
   desk.addEventListener('contextmenu', (e) => {
-    // Only trigger if clicking on the desk background or empty state
-    if (e.target.closest('.desk-empty-state') || e.target === desk) {
+    // Only trigger if clicking on the desk background, empty state, or start screen background
+    const isClickOnDeskBackground =
+      e.target === desk ||
+      e.target.closest('.desk-empty-state') ||
+      e.target.classList.contains('welcome-overlay') ||
+      (e.target.closest('.at-start-screen, .desk-start-wrapper') && !e.target.closest('.at-card, button, input, textarea, a, .welcome-note'));
+
+    if (isClickOnDeskBackground) {
       e.preventDefault();
       contextMenu.open({
         x: e.clientX,
@@ -378,6 +396,10 @@ export function createShell(root, { onAction } = {}) {
       }
     },
     notify,
+    onAction(listener) {
+      actionListeners.add(listener);
+      return () => actionListeners.delete(listener);
+    },
     contextMenu,
     palette,
     settings: {

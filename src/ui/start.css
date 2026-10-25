@@ -1,0 +1,705 @@
+/* --- Estilos da Tela de Início e Gaveta de Modelos (Etapa 17) --- */
+
+/* Container da tela de início sobre a bancada */
+.at-start-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 32px 36px 64px 36px;
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  z-index: 10;
+  color: var(--at-text);
+  box-sizing: border-box;
+}
+
+/* Seções da tela de início */
+.start-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.start-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.start-link-btn {
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  font-family: var(--at-font-type);
+  font-size: var(--eco-fs-12);
+  color: var(--at-text-2);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color var(--eco-fast) var(--eco-ease), transform var(--eco-fast) var(--eco-ease);
+}
+
+.start-link-btn:hover {
+  color: var(--at-uv-strong);
+  transform: translateX(2px);
+}
+
+.start-link-btn:focus-visible {
+  outline: 2px solid var(--at-uv);
+  outline-offset: 2px;
+}
+
+/* Fileiras de cartões com rolagem horizontal */
+.start-row {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 12px 6px 20px 6px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--at-line) transparent;
+}
+
+.start-row::-webkit-scrollbar {
+  height: 6px;
+}
+
+.start-row::-webkit-scrollbar-thumb {
+  background: var(--at-line);
+  border-radius: 3px;
+}
+
+/* --- Fileira COMEÇAR (Folhas em branco) --- */
+.start-presets-row {
+  align-items: flex-end;
+}
+
+.start-preset-card {
+  height: 120px;
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background-color: var(--at-paper);
+  color: var(--at-ink);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  transition: transform var(--eco-fast) var(--eco-ease), box-shadow var(--eco-fast) var(--eco-ease);
+  user-select: none;
+  border-radius: var(--eco-radius-xs, 2px);
+  box-sizing: border-box;
+}
+
+.start-preset-card:focus-visible {
+  outline: 2px solid var(--at-uv);
+  outline-offset: 4px;
+}
+
+.start-preset-card .preset-name {
+  font-family: var(--at-font-type);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.start-preset-card .preset-dims {
+  font-family: var(--at-font-type);
+  font-size: 9px;
+  color: var(--at-ink-faded);
+  letter-spacing: 0.04em;
+}
+
+/* --- Fileira CONTINUAR (Documentos recentes) --- */
+.start-recent-card {
+  width: 140px;
+  height: 190px;
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  background-color: var(--at-paper);
+  color: var(--at-ink);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  box-sizing: border-box;
+}
+
+.start-recent-card:focus-visible {
+  outline: 2px solid var(--at-uv);
+  outline-offset: 4px;
+}
+
+.start-recent-preview {
+  width: 100%;
+  height: 120px;
+  background: rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.start-recent-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.start-recent-preview .recent-fallback-icon {
+  opacity: 0.35;
+  color: var(--at-ink);
+}
+
+.start-recent-info {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+  gap: 2px;
+}
+
+.start-recent-title {
+  font-family: var(--at-font-title, serif);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--at-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.start-recent-date {
+  font-family: var(--at-font-type);
+  font-size: 10px;
+  color: var(--at-ink-faded);
+}
+
+/* --- Fileira MODELOS (Modelos em destaque) --- */
+.start-featured-card {
+  width: 154px;
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  background-color: var(--at-paper);
+  color: var(--at-ink);
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.48);
+  box-sizing: border-box;
+}
+
+.start-featured-card:focus-visible {
+  outline: 2px solid var(--at-uv);
+  outline-offset: 4px;
+}
+
+.start-featured-preview {
+  width: 100%;
+  height: 160px;
+  background: rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 2px;
+  position: relative;
+}
+
+.start-featured-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.start-featured-info {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+  gap: 3px;
+}
+
+.start-featured-title {
+  font-family: var(--eco-font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--at-ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.start-featured-cat {
+  font-family: var(--at-font-type);
+  font-size: 10px;
+  color: var(--at-ink-faded);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Fileira EXPANSÕES --- */
+.start-expansion-card {
+  width: 250px;
+  flex-shrink: 0;
+  padding: 16px;
+  background-color: var(--at-paper);
+  color: var(--at-ink);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-sizing: border-box;
+}
+
+.expansion-name {
+  font-family: var(--at-font-title, serif);
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--at-ink);
+}
+
+.expansion-desc {
+  font-size: 12px;
+  color: var(--at-ink-faded);
+  margin: 4px 0 0 0;
+  line-height: 1.3;
+}
+
+.expansion-meta {
+  font-family: var(--at-font-type);
+  font-size: 11px;
+  color: var(--at-ink);
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.expansion-actions {
+  margin-top: 6px;
+}
+
+/* --- Primeira Visita: Bilhetes de Boas-vindas --- */
+.welcome-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(12, 10, 9, 0.45);
+  backdrop-filter: blur(2px);
+  pointer-events: none;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: welcomeFadeIn var(--eco-mid) var(--eco-ease);
+}
+
+@keyframes welcomeFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.welcome-note {
+  pointer-events: auto;
+  width: 440px;
+  max-width: 90vw;
+  background-color: var(--at-paper);
+  color: var(--at-ink);
+  padding: 28px 24px 20px 24px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: welcomeSlideDown var(--eco-mid) var(--eco-ease);
+}
+
+@keyframes welcomeSlideDown {
+  from {
+    transform: translateY(-20px) rotate(-1deg);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.welcome-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.welcome-step-badge {
+  font-family: var(--at-font-type);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--at-ink-faded);
+  letter-spacing: 0.08em;
+}
+
+.welcome-title {
+  font-family: var(--at-font-title, serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--at-ink);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.welcome-desc {
+  font-family: var(--eco-font-ui);
+  font-size: 14px;
+  color: var(--at-ink);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.welcome-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.15);
+}
+
+.welcome-btn-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.welcome-skip-btn {
+  background: none;
+  border: none;
+  font-family: var(--at-font-type);
+  font-size: 12px;
+  color: var(--at-ink-faded);
+  cursor: pointer;
+  padding: 6px 10px;
+}
+
+.welcome-skip-btn:hover {
+  color: var(--at-ink);
+  text-decoration: underline;
+}
+
+/* --- Gaveta Modelos (src/editor/templates-drawer.js) --- */
+.templates-drawer-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.templates-search-box {
+  position: relative;
+  width: 100%;
+}
+
+.templates-search-input {
+  width: 100%;
+  height: 36px;
+  background: var(--at-desk-3);
+  border: 1px solid var(--at-line);
+  border-radius: var(--eco-radius-s);
+  color: var(--at-text);
+  font-family: var(--eco-font-ui);
+  font-size: var(--eco-fs-13);
+  padding: 0 12px 0 32px;
+  outline: none;
+  transition: border-color var(--eco-fast) var(--eco-ease);
+}
+
+.templates-search-input:focus {
+  border-color: var(--at-uv);
+}
+
+.templates-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--at-muted);
+  pointer-events: none;
+}
+
+/* Chips bar */
+.templates-chips-bar {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.templates-chips-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.templates-chip {
+  flex-shrink: 0;
+  background: var(--at-desk-3);
+  border: 1px solid var(--at-line);
+  color: var(--at-text-2);
+  font-family: var(--at-font-type);
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background var(--eco-fast) var(--eco-ease), color var(--eco-fast) var(--eco-ease), border-color var(--eco-fast) var(--eco-ease);
+}
+
+.templates-chip:hover {
+  color: var(--at-text);
+  border-color: var(--at-line-strong);
+}
+
+.templates-chip.active {
+  background: var(--at-uv);
+  border-color: var(--at-uv);
+  color: var(--at-uv-ink);
+  font-weight: 700;
+}
+
+/* Grade 2 colunas */
+.templates-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  overflow-y: auto;
+  padding-right: 4px;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: var(--at-line) transparent;
+}
+
+.template-card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  background-color: var(--at-paper);
+  color: var(--at-ink);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+}
+
+.template-card:focus-visible {
+  outline: 2px solid var(--at-uv);
+  outline-offset: 3px;
+}
+
+.template-card-preview {
+  width: 100%;
+  height: 140px;
+  background: rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 2px;
+  position: relative;
+}
+
+.template-card-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.template-card-info {
+  display: flex;
+  flex-direction: column;
+  margin-top: 6px;
+  gap: 2px;
+}
+
+.template-card-title {
+  font-family: var(--eco-font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--at-ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.template-card-cat {
+  font-family: var(--at-font-type);
+  font-size: 10px;
+  color: var(--at-ink-faded);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.template-badges-row {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.template-badge {
+  font-family: var(--at-font-type);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  background: rgba(0, 0, 0, 0.07);
+  color: var(--at-ink);
+  padding: 1px 5px;
+  border-radius: 2px;
+  display: inline-block;
+  line-height: 1.3;
+}
+
+.template-badge.is-verso {
+  background: color-mix(in srgb, var(--at-uv) 30%, transparent);
+  color: #3b2880;
+  font-weight: 700;
+}
+
+/* Detalhe do modelo na gaveta */
+.template-detail-view {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+  height: 100%;
+  padding-right: 4px;
+}
+
+.template-detail-back-btn {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--at-text-2);
+  font-family: var(--eco-font-ui);
+  font-size: var(--eco-fs-13);
+  cursor: pointer;
+  padding: 4px 6px;
+}
+
+.template-detail-back-btn:hover {
+  color: var(--at-text);
+}
+
+.template-detail-preview {
+  width: 100%;
+  height: 220px;
+  background: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--eco-radius-s);
+  border: 1px solid var(--at-line);
+}
+
+.template-detail-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.template-detail-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.template-detail-title {
+  font-family: var(--at-font-title, serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--at-text);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.template-detail-fields-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.template-detail-fields-section h4 {
+  font-family: var(--at-font-type);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--at-text-2);
+  margin: 0;
+}
+
+.template-fields-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.template-fields-list li {
+  font-family: var(--eco-font-ui);
+  font-size: 13px;
+  color: var(--at-text);
+  background: var(--at-desk-3);
+  padding: 6px 10px;
+  border-radius: var(--eco-radius-xs, 2px);
+  border-left: 2px solid var(--at-uv);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.template-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  color: var(--at-muted);
+  text-align: center;
+  font-size: 13px;
+}
+
+/* Redução de movimento */
+@media (prefers-reduced-motion: reduce) {
+  .at-card,
+  .start-preset-card,
+  .start-recent-card,
+  .start-featured-card,
+  .start-expansion-card,
+  .welcome-overlay,
+  .welcome-note,
+  .start-link-btn {
+    animation: none !important;
+    transition: none !important;
+  }
+}

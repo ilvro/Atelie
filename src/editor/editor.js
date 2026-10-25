@@ -5,6 +5,8 @@ import { createPropertiesPanel } from './properties-panel.js';
 import { createHistoryPanel } from './history-panel.js';
 import { createFillPanel } from './fill-panel.js';
 import { createLibraryPanel } from './library-panel.js';
+import { createTemplatesDrawer } from './templates-drawer.js';
+import { createStartScreen } from './start.js';
 import { defaultsFor } from './library-defaults.js';
 import { createNavigator, recordRecent, getRecentIds } from './navigator.js';
 import { saveDraft, loadDraft, removeDraft, draftDecision } from './draft.js';
@@ -105,12 +107,87 @@ export function createEditor(shell, { api, images, fonts } = {}) {
   stageContainer.style.right = '0';
   stageContainer.style.bottom = '0';
 
+  let templatesDrawer = null;
+  let startScreen = null;
+
+  // Start screen container
+  const startScreenContainer = document.createElement('div');
+  startScreenContainer.className = 'desk-start-wrapper';
+  startScreenContainer.style.position = 'absolute';
+  startScreenContainer.style.top = '0';
+  startScreenContainer.style.left = '0';
+  startScreenContainer.style.right = '0';
+  startScreenContainer.style.bottom = '0';
+  startScreenContainer.style.display = 'none';
+
+  function showStartScreen() {
+    state = null;
+    docBar.style.display = 'none';
+    readonlyBanner.style.display = 'none';
+    draftBar.style.display = 'none';
+    stageContainer.style.display = 'none';
+    stampOverlay.style.display = 'none';
+    startScreenContainer.style.display = 'block';
+    startScreen?.refresh();
+    shell.rail.setActive('desk');
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('handout');
+      url.searchParams.delete('template');
+      url.searchParams.delete('new');
+      window.history.replaceState(null, '', url.pathname + (url.searchParams.toString() ? '?' + url.searchParams.toString() : ''));
+    }
+  }
+
+  function hideStartScreen() {
+    startScreenContainer.style.display = 'none';
+    docBar.style.display = 'flex';
+    stageContainer.style.display = 'block';
+  }
+
+  startScreen = createStartScreen(startScreenContainer, {
+    api,
+    onCreatePreset: (presetId) => {
+      confirmUnsavedChanges(() => {
+        loadHandout(createHandout({ preset: presetId }));
+      });
+    },
+    onOpenHandout: async (docId) => {
+      confirmUnsavedChanges(async () => {
+        try {
+          const doc = await api.handouts.read(docId);
+          if (doc) await loadHandout(doc);
+        } catch (err) {
+          shell.notify(`Erro ao abrir documento: ${err.message}`, { tone: 'error' });
+        }
+      });
+    },
+    onOpenTemplate: async (templateId) => {
+      confirmUnsavedChanges(async () => {
+        try {
+          await instantiateTemplate(templateId);
+          shell.inspector.tab('fill');
+        } catch (err) {
+          shell.notify(`Erro ao carregar modelo: ${err.message}`, { tone: 'error' });
+        }
+      });
+    },
+    onOpenTemplatesDrawer: () => {
+      shell.drawer.open('templates');
+    },
+    onExploreExpansion: (sourceId) => {
+      templatesDrawer?.openSource(sourceId);
+      shell.drawer.open('templates');
+    },
+  });
+
   deskStage.innerHTML = '';
   deskStage.appendChild(docBar);
   deskStage.appendChild(readonlyBanner);
   deskStage.appendChild(draftBar);
   deskStage.appendChild(stageContainer);
   deskStage.appendChild(stampOverlay);
+  deskStage.appendChild(startScreenContainer);
 
   const nameInput = docBar.querySelector('.at-doc-name-input');
   const sizeStamp = docBar.querySelector('.desk-size-stamp');
@@ -442,6 +519,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     }
 
     state = createEditorState(handout);
+    hideStartScreen();
 
     if (stage) {
       stage.destroy();
@@ -595,6 +673,34 @@ export function createEditor(shell, { api, images, fonts } = {}) {
   };
   libraryPanel = createLibraryPanel(shell, { api, state: libraryStateProxy, fonts });
   shell.drawer.panel('library', libraryPanel.element);
+
+  // Templates Drawer panel
+  templatesDrawer = createTemplatesDrawer(shell, {
+    api,
+    onUseTemplate: async (templateItem) => {
+      confirmUnsavedChanges(async () => {
+        try {
+          await instantiateTemplate(templateItem);
+          shell.inspector.tab('fill');
+          shell.drawer.close();
+        } catch (err) {
+          shell.notify(`Erro ao usar modelo: ${err.message}`, { tone: 'error' });
+        }
+      });
+    },
+  });
+  shell.drawer.panel('templates', templatesDrawer.element);
+
+  // Rail action listener
+  shell.onAction?.((action, event) => {
+    if (action === 'desk') {
+      if (event?.ctrlKey || event?.metaKey || !state) {
+        confirmUnsavedChanges(() => {
+          showStartScreen();
+        });
+      }
+    }
+  });
 
   // Ctrl+K Palette Document Provider
   let paletteDocumentsCache = [];
@@ -1021,10 +1127,11 @@ export function createEditor(shell, { api, images, fonts } = {}) {
 
   // --- Context Menu on Desk / Stage ---
   deskStage.addEventListener('contextmenu', event => {
-    event.preventDefault();
-    event.stopPropagation();
     const pageWrap = deskStage.querySelector('.stage-page-wrap');
     if (!pageWrap || !state) return;
+
+    event.preventDefault();
+    event.stopPropagation();
 
     const pRect = pageWrap.getBoundingClientRect();
     const zoom = stage.getZoom();
@@ -1318,6 +1425,26 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       category: 'Visualização',
       run: () => stage?.zoom(1.0),
     },
+    {
+      id: 'app:start',
+      label: 'Ir para o início',
+      hint: 'Mesa',
+      category: 'Navegação',
+      run: () => {
+        confirmUnsavedChanges(() => {
+          showStartScreen();
+        });
+      },
+    },
+    {
+      id: 'app:templates',
+      label: 'Modelos de documentos',
+      hint: 'Gaveta',
+      category: 'Navegação',
+      run: () => {
+        shell.drawer.open('templates');
+      },
+    },
   ];
 
   PAGE_PRESETS.forEach(([id, name]) => {
@@ -1394,10 +1521,18 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       const templateId = urlParams.get('template');
       const handoutId = urlParams.get('handout');
       const newPreset = urlParams.get('new');
+      const isStart = urlParams.has('start');
+      const isDiagnostics = urlParams.has('diagnostics');
+
+      if (isStart) {
+        showStartScreen();
+        return;
+      }
 
       if (templateId) {
         try {
           initialDoc = await instantiateTemplate(templateId);
+          shell.inspector.tab('fill');
           return;
         } catch (err) {
           console.warn('[atelie] Erro ao carregar modelo da URL:', err);
@@ -1412,6 +1547,10 @@ export function createEditor(shell, { api, images, fonts } = {}) {
         }
       } else if (newPreset) {
         initialDoc = createHandout({ preset: newPreset });
+      } else if (!isDiagnostics) {
+        // Normal user opening Ateliê with no document requested -> Start Screen
+        showStartScreen();
+        return;
       } else {
         const lastId = localStorage.getItem('atelie-last');
         if (lastId) {
@@ -1425,6 +1564,10 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     }
 
     if (!initialDoc) {
+      if (typeof window !== 'undefined' && !window.location.search.includes('diagnostics')) {
+        showStartScreen();
+        return;
+      }
       initialDoc = createHandout({ preset: 'a4' });
     }
 
@@ -1451,5 +1594,13 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     copySelected,
     pasteCopiedLayer,
     triggerEyedropper,
+    showStartScreen,
+    hideStartScreen,
+    get templatesDrawer() {
+      return templatesDrawer;
+    },
+    get startScreen() {
+      return startScreen;
+    },
   };
 }

@@ -22,7 +22,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 14 — Coleção fontes | concluída | 2026-10-24 | Coleção da casa: 26 famílias de fontes livres, parser sfnt, seletor visual e eixos variáveis |
 | 15 — Biblioteca | concluída | 2026-10-24 | Gaveta Biblioteca com busca, filtros, drag & drop e modo Preencher com exemplos em português |
 | 16 — Coleção modelos | concluída | 2026-10-24 | Coleção da casa: 39 modelos próprios em 8 categorias, gerador de modelos, frente/verso, UV e folha de contato |
-| 17 — Início e galeria | pendente | | Tela de abertura e catálogo de modelos |
+| 17 — Início e galeria | concluída | 2026-10-24 | Tela de abertura, 9 folhas em branco, continuar, 8 modelos em destaque, expansões, boas-vindas e gaveta Modelos |
 | 18 — Assar e entregar | pendente | | Renderização final e integração de entrega |
 | 19 — Luz UV | pendente | | Camadas secretas visíveis sob luz negra |
 | 20 — Modo leitura | pendente | | Leitura imersiva, lupa, lanterna UV, verso |
@@ -98,6 +98,43 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 - `npm test`: 82 testes unitários passando 100%.
 - `npm run test:e2e`: 8 suítes E2E Playwright passando 100%.
 - `npm run colecao:texturas`: 101 arquivos WebP gerados com sucesso e manifesto `library.json` validado.
+
+---
+
+## Etapa 17 — Início e galeria de modelos
+
+### Feito
+- **Tela de início (`src/editor/start.js` e `src/ui/start.css`)**:
+  - Exibida na bancada quando não há documento aberto (e acionável via `Ctrl + clique` em Mesa no trilho, ou Ctrl+K "Ir para o início"). Substitui o estado vazio inicial.
+  - Seção `[fita] COMEÇAR`: 9 cartões `.at-card.start-preset-card` desenhados nas proporções reais dos `PAGE_PRESETS` (altura fixa de 120 px), com nomes e dimensões em Courier Prime e rotações orgânicas (`tiltOf`). Clicar cria o documento.
+  - Seção `[fita] CONTINUAR`: exibe até 6 documentos recentes sobre a mesa com suas prévias; clicar abre o documento.
+  - Seção `[fita] MODELOS` com atalho `[ver todos →]`: 8 modelos em destaque (um para cada uma das 8 categorias da coleção), espalhados sobre a bancada com leve rotação e sombra. Clicar abre a cópia do modelo já na aba Preencher do inspetor.
+  - Seção `[fita] EXPANSÕES`: renderizada condicionalmente caso fontes externas existam na biblioteca, com contagem de modelos e elementos e botão "Explorar".
+  - Navegação fluida por teclado: setas direcionais entre cartões dentro da fileira, Tab entre fileiras e seções, Enter/Espaço para acionar.
+- **Primeira Visita e Bilhetes de Boas-Vindas (`localStorage` `atelie-welcome`)**:
+  - 3 bilhetes sequenciais `.at-note` presos à bancada por fita crepe, com indicador de passo (1/3, 2/3, 3/3), botões "Pular", "Anterior" e "Próximo / Começar":
+    1. *Escolha um ponto de partida* ("Um modelo pronto ou uma folha em branco.")
+    2. *Preencha* ("Os campos do modelo ficam na aba Preencher, à direita. Para ir além, cada elemento da página é uma camada que você move, troca e recolore.")
+    3. *Leve para a mesa* ("Exporte em PNG, imprima, ou use no Tabletop, onde o documento vira uma carta que os jogadores pegam para ler.")
+  - Conclusão ou pulo grava `atelie-welcome: 'done'` no `localStorage`, evitando que os bilhetes reapareçam em visitas subsequentes.
+  - Suporte completo a `prefers-reduced-motion: reduce`.
+- **Gaveta Modelos (`src/editor/templates-drawer.js`)**:
+  - Acessível pelo trilho lateral, pelo atalho `[ver todos →]` do início ou por comando na paleta Ctrl+K ("Modelos de documentos").
+  - Campo de busca em tempo real com normalização de acentos e maiúsculas (busca em nome, categoria e campos).
+  - Barra de chips de origem (todas as origens, casa e expansões) e chips das 8 categorias com contagem dinâmica de modelos.
+  - Grade responsiva de 2 colunas com cartões de 160 px, exibindo prévia em WebP, título, categoria, selo com número de campos e selo "frente e verso".
+  - Visão de detalhe (Detail View) interna na gaveta: imagem ampliada em alta resolução, carimbo da categoria, lista de campos estruturados e botão de destaque "Usar este modelo".
+  - Verificação de alterações não arquivadas com diálogo de confirmação antes de instanciar a cópia na aba Preencher.
+- **Capturas de Referência (`scripts/capture-inicio.js`)**:
+  - `docs/referencias/atelie-inicio.png`: tela de início na primeira visita, com a bancada, fita crepe e bilhete de introdução.
+  - `docs/referencias/atelie-inicio-2.png`: bancada de abertura com a fileira CONTINUAR populada com documentos recentes.
+- **Testes e Validação**:
+  - `tests/e2e/start.test.js`: suíte E2E cobrindo primeira visita com os 3 bilhetes, 9 cartões de proporção, criação de Polaroide (880 × 1070), retorno ao início com fileira Continuar, abertura de modelo em destaque na aba Preencher, filtros e detalhe da gaveta de modelos e fileira de expansões com mock.
+  - 101 testes unitários passando 100%.
+  - 11 suítes de testes ponta a ponta (E2E) Playwright passando 100%.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 17.
 
 ---
 
