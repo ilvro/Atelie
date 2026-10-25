@@ -88,6 +88,7 @@ O acervo pago tem 78 pacotes de documentos, mais de 2 500 imagens soltas e PSDs 
 | 27 | `etapa-27-documentacao.md` | Ajuda no app, guia de uso, manutenção, licenças | 1–26 |
 | 28 | `etapa-28-integracao-tabletop.md` | **No Tabletop**: documentos do Ateliê na cena pelos três caminhos, editar, atualizar, UV na inspeção, tutorial | 18, 19, 26 |
 | 29 | `etapa-29-expansao-no-navegador.md` | **Opcional**: instalar uma expansão no próprio navegador, para usá-la no site publicado sem publicá-la | 22, 25, 26 |
+| 30 | `etapa-30-importador-jit-psd.md` | **Opcional**: importar bundles brutos (.psd + prévias) sob demanda no navegador sem terminal | 25, 29 |
 
 As etapas de expansão (22 a 25, e a opcional 29) podem ser feitas em qualquer momento depois das dependências, mas **o app tem de estar completo e bonito antes delas**: elas melhoram, não completam.
 
