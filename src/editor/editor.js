@@ -27,10 +27,18 @@ import {
 } from '../domain/handouts.js';
 import { moveBox, layerAtPoint } from './geometry.js';
 import { contextMenu } from '../ui/context-menu.js';
+import { handoffRequest, deliveredMessage } from './handoff.js';
+import { bakeHandout, summaryOf, deliveryOf } from './bake.js';
+import { openExchange, publish, channel, savedMessage, unpublishBySource } from '../data/exchange.js';
+import { getSettings } from '../ui/settings.js';
 
 export function createEditor(shell, { api, images, fonts } = {}) {
   const deskStage = document.getElementById('desk-stage');
   if (!deskStage) return null;
+
+  const handoff = typeof window !== 'undefined'
+    ? handoffRequest(window.location, window.opener)
+    : null;
 
   let state = null;
   let stage = null;
@@ -50,6 +58,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     <div class="desk-doc-title-area">
       <input type="text" class="at-doc-name-input" aria-label="Nome do documento" value="" />
       <span class="at-stamp is-default desk-size-stamp"></span>
+      ${handoff && (handoff.mode === 'edit' || handoff.mode === 'new') ? `<span class="at-stamp is-accent at-handoff-stamp" title="Ligado ao Tabletop">Ligado ao Tabletop</span>` : ''}
     </div>
     <div class="desk-doc-actions">
       <button type="button" class="at-icon-btn" data-action="undo" title="Desfazer (Ctrl+Z)" aria-label="Desfazer">
@@ -333,6 +342,12 @@ export function createEditor(shell, { api, images, fonts } = {}) {
   async function archiveDocument() {
     if (!state) return;
     const doc = state.handout;
+    const archiveBtn = docBar.querySelector('[data-action="archive"]');
+    const originalBtnText = archiveBtn ? archiveBtn.textContent : 'Arquivar';
+    if (archiveBtn) {
+      archiveBtn.textContent = 'Arquivando…';
+      archiveBtn.disabled = true;
+    }
 
     try {
       let saved;
@@ -351,6 +366,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       updateStageLayout();
 
       // Generate thumbnail preview (480px width)
+      let previewBlob = null;
       try {
         const previewCanvas = document.createElement('canvas');
         const aspect = doc.page.height / doc.page.width;
@@ -364,8 +380,50 @@ export function createEditor(shell, { api, images, fonts } = {}) {
         });
         const dataUrl = previewCanvas.toDataURL('image/webp', 0.82);
         await api.handouts.savePreview(saved, dataUrl);
+        if (previewCanvas.toBlob) {
+          previewBlob = await new Promise(r => previewCanvas.toBlob(r, 'image/webp', 0.82));
+        }
       } catch (err) {
         console.warn('[atelie] Erro ao gerar prévia:', err);
+      }
+
+      // High-resolution bake and delivery to Tabletop
+      try {
+        const bakes = await bakeHandout(saved, { images, fonts });
+        const source = (typeof document !== 'undefined' && document.baseURI)
+          ? new URL('.', document.baseURI).href
+          : 'http://127.0.0.1:3011/';
+
+        // Caminho C: Servidor
+        if (api.mode === 'server') {
+          await api.handouts.saveBake(saved.id, 'normal', saved.revision, bakes.normal);
+          if (bakes.uv) {
+            await api.handouts.saveBake(saved.id, 'uv', saved.revision, bakes.uv);
+          } else {
+            await api.handouts.removeBake(saved.id, 'uv', saved.revision).catch(() => {});
+          }
+        }
+
+        // Caminho A: Banco de troca (IndexedDB)
+        if (getSettings().shareWithTabletop !== false && typeof indexedDB !== 'undefined') {
+          const db = await openExchange();
+          const summary = summaryOf(saved, source);
+          await publish(db, summary, previewBlob, bakes);
+          try {
+            channel().postMessage(savedMessage(summary));
+          } catch (chErr) {
+            console.warn('[atelie] Erro ao avisar no BroadcastChannel:', chErr);
+          }
+        }
+
+        // Caminho B: Janela (postMessage)
+        if (handoff && window.opener && (handoff.mode === 'edit' || handoff.mode === 'new')) {
+          const delivery = deliveryOf(saved, { preview: previewBlob, bakes, source });
+          window.opener.postMessage(deliveredMessage(handoff.nonce, delivery), handoff.from);
+        }
+      } catch (bakeErr) {
+        console.warn('[atelie] Erro na entrega ao Tabletop:', bakeErr);
+        shell.notify(`Arquivado, mas a entrega ao Tabletop falhou: ${bakeErr.message}`, { tone: 'error' });
       }
 
       triggerArchiveAnimation();
@@ -383,6 +441,11 @@ export function createEditor(shell, { api, images, fonts } = {}) {
       refreshPaletteCache();
     } catch (err) {
       shell.notify(`Não foi possível arquivar: ${err.message}`, { tone: 'error' });
+    } finally {
+      if (archiveBtn) {
+        archiveBtn.textContent = originalBtnText;
+        archiveBtn.disabled = false;
+      }
     }
   }
 
@@ -640,6 +703,9 @@ export function createEditor(shell, { api, images, fonts } = {}) {
   navigatorInstance = createNavigator(navigatorWrap, {
     api,
     shell,
+    handoff,
+    images,
+    fonts,
     onOpenDocument: async (id) => {
       confirmUnsavedChanges(async () => {
         try {
@@ -1515,6 +1581,11 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     await updateRecentRail();
     await refreshPaletteCache();
 
+    if (handoff && handoff.mode === 'pick') {
+      shell.drawer.open('documents');
+      return;
+    }
+
     let initialDoc = null;
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
@@ -1572,6 +1643,44 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     }
 
     await loadHandout(initialDoc);
+  }
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener('atelie:share-tabletop-changed', async (e) => {
+      const enabled = e.detail?.enabled;
+      const source = (typeof document !== 'undefined' && document.baseURI)
+        ? new URL('.', document.baseURI).href
+        : 'http://127.0.0.1:3011/';
+      if (!enabled) {
+        try {
+          const db = await openExchange();
+          await unpublishBySource(db, source);
+          shell.notify('Compartilhamento com o Tabletop desativado.', { tone: 'info' });
+        } catch (err) {
+          console.warn('[atelie] Erro ao despublicar troca:', err);
+        }
+      } else {
+        try {
+          shell.notify('Sincronizando documentos com o Tabletop...', { tone: 'info' });
+          const db = await openExchange();
+          const list = await api.handouts.list();
+          for (const item of list) {
+            try {
+              const doc = await api.handouts.read(item.id);
+              const bakes = await bakeHandout(doc, { images, fonts });
+              const summary = summaryOf(doc, source);
+              await publish(db, summary, null, bakes);
+              try { channel().postMessage(savedMessage(summary)); } catch {}
+            } catch (err) {
+              console.warn('[atelie] Erro ao assar documento:', err);
+            }
+          }
+          shell.notify('Documentos sincronizados com o Tabletop.', { tone: 'info' });
+        } catch (err) {
+          console.warn('[atelie] Erro ao sincronizar troca:', err);
+        }
+      }
+    });
   }
 
   init();

@@ -22,6 +22,7 @@ export const DEFAULT_SETTINGS = {
   lampTemperature: 'quente',
   reduceMotion: false,
   unit: 'px',
+  shareWithTabletop: true,
 };
 
 export function getSettings() {
@@ -149,6 +150,13 @@ export function openSettingsModal() {
         </section>
 
         <section class="at-settings-section">
+          <label class="at-settings-check">
+            <input type="checkbox" id="setting-share-tabletop" ${current.shareWithTabletop !== false ? 'checked' : ''} />
+            <span>Compartilhar com o Tabletop neste navegador</span>
+          </label>
+        </section>
+
+        <section class="at-settings-section">
           <label class="at-settings-label">Unidades de medida</label>
           <div class="at-settings-choices" role="radiogroup" aria-label="Unidades de medida">
             <button type="button"
@@ -236,6 +244,16 @@ export function openSettingsModal() {
   const motionCheck = settingsModal.querySelector('#setting-reduce-motion');
   motionCheck?.addEventListener('change', () => {
     saveSettings({ reduceMotion: motionCheck.checked });
+  });
+
+  // Share with Tabletop
+  const shareCheck = settingsModal.querySelector('#setting-share-tabletop');
+  shareCheck?.addEventListener('change', () => {
+    const enabled = shareCheck.checked;
+    saveSettings({ shareWithTabletop: enabled });
+    if (typeof window !== 'undefined' && window.dispatchEvent) {
+      window.dispatchEvent(new CustomEvent('atelie:share-tabletop-changed', { detail: { enabled } }));
+    }
   });
 
   // Unit selection

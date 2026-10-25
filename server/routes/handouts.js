@@ -2,12 +2,13 @@ import path from 'node:path';
 import { mkdir, readdir, readFile, unlink, stat, rm } from 'node:fs/promises';
 import express from 'express';
 import { HttpError, assertId, assertRevision, checkRevision, atomicWrite, readJSON } from '../storage.js';
+import { readOnlyCors } from '../cors.js';
 import { validateHandout } from '../../src/domain/handouts.js';
 import { ValidationError } from '../../src/domain/errors.js';
 
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
 
-export async function register(app, { dataDir }) {
+export async function register(app, { dataDir, allowedOrigins = [] }) {
   const handoutsDir = path.join(dataDir, 'handouts');
   const versionsDir = path.join(handoutsDir, 'versions');
   const trashDir = path.join(handoutsDir, 'trash');
@@ -16,18 +17,22 @@ export async function register(app, { dataDir }) {
   await mkdir(versionsDir, { recursive: true });
   await mkdir(trashDir, { recursive: true });
 
-  // Middleware for JSON bodies
+  const cors = readOnlyCors(allowedOrigins);
+
+  // Middleware for JSON and image bodies
   const jsonParser = express.json({ limit: '10mb' });
   const rawPreviewParser = express.raw({ type: ['image/webp', 'image/png'], limit: '2mb' });
+  const rawBakeParser = express.raw({ type: ['image/png', 'application/octet-stream'], limit: '30mb' });
 
   // 1. List handouts
-  app.get('/api/atelie/handouts', async (_req, res, next) => {
+  app.options('/api/atelie/handouts', cors);
+  app.get('/api/atelie/handouts', cors, async (_req, res, next) => {
     try {
       const files = await readdir(handoutsDir);
       const items = [];
 
       for (const file of files) {
-        if (!file.endsWith('.json') || file.includes('.preview.')) continue;
+        if (!file.endsWith('.json') || file.includes('.preview.') || file.endsWith('.bake.json')) continue;
         const id = file.slice(0, -5);
         if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) continue;
 
@@ -46,6 +51,8 @@ export async function register(app, { dataDir }) {
             }
           }
 
+          const hasUv = Array.isArray(doc.layers) && doc.layers.some(l => l.visible && l.light === 'uv');
+
           items.push({
             id: doc.id,
             name: doc.name,
@@ -56,6 +63,7 @@ export async function register(app, { dataDir }) {
             revision: doc.revision,
             updatedAt: doc.updatedAt || new Date().toISOString(),
             preview: hasPreview,
+            hasUv,
           });
         } catch {
           // ignore broken file
@@ -364,7 +372,8 @@ export async function register(app, { dataDir }) {
     }
   });
 
-  app.get('/api/atelie/handouts/:id/preview', async (req, res, next) => {
+  app.options('/api/atelie/handouts/:id/preview', cors);
+  app.get('/api/atelie/handouts/:id/preview', cors, async (req, res, next) => {
     try {
       const id = assertId(req.params.id);
       const webpFile = path.join(handoutsDir, `${id}.preview.webp`);
@@ -388,6 +397,119 @@ export async function register(app, { dataDir }) {
       res.setHeader('Content-Type', mime);
       res.setHeader('Cache-Control', 'public, max-age=60');
       res.sendFile(target);
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  // 10. Bakes
+  app.put('/api/atelie/handouts/:id/bake', rawBakeParser, async (req, res, next) => {
+    try {
+      const id = assertId(req.params.id);
+      const light = req.query.light;
+      if (light !== 'normal' && light !== 'uv') {
+        throw new HttpError(422, 'INVALID_LIGHT', "Parâmetro 'light' deve ser 'normal' ou 'uv'.");
+      }
+
+      const rev = parseInt(req.query.revision, 10);
+      assertRevision(rev);
+
+      const file = path.join(handoutsDir, `${id}.json`);
+      const current = await readJSON(file, 'Documento não encontrado.');
+      checkRevision(current, rev);
+
+      const buf = req.body;
+      if (!Buffer.isBuffer(buf) || buf.length < 8) {
+        throw new HttpError(422, 'INVALID_IMAGE', 'Corpo deve ser uma imagem PNG.');
+      }
+      if (buf[0] !== 0x89 || buf[1] !== 0x50 || buf[2] !== 0x4e || buf[3] !== 0x47) {
+        throw new HttpError(422, 'INVALID_IMAGE', 'Formato deve ser PNG.');
+      }
+
+      const bakeFile = path.join(handoutsDir, `${id}.bake-${light}.png`);
+      await atomicWrite(bakeFile, buf);
+
+      const infoFile = path.join(handoutsDir, `${id}.bake.json`);
+      let bakeInfo = { normal: null, uv: null };
+      try {
+        bakeInfo = JSON.parse(await readFile(infoFile, 'utf8'));
+      } catch {}
+      bakeInfo[light] = rev;
+      await atomicWrite(infoFile, JSON.stringify(bakeInfo, null, 2));
+
+      res.status(204).end();
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.delete('/api/atelie/handouts/:id/bake', async (req, res, next) => {
+    try {
+      const id = assertId(req.params.id);
+      const light = req.query.light || 'uv';
+      if (light !== 'normal' && light !== 'uv') {
+        throw new HttpError(422, 'INVALID_LIGHT', "Parâmetro 'light' deve ser 'normal' ou 'uv'.");
+      }
+
+      if (req.query.revision) {
+        const rev = parseInt(req.query.revision, 10);
+        assertRevision(rev);
+        const file = path.join(handoutsDir, `${id}.json`);
+        const current = await readJSON(file, 'Documento não encontrado.');
+        checkRevision(current, rev);
+      }
+
+      const bakeFile = path.join(handoutsDir, `${id}.bake-${light}.png`);
+      await unlink(bakeFile).catch(err => {
+        if (err.code !== 'ENOENT') throw err;
+      });
+
+      const infoFile = path.join(handoutsDir, `${id}.bake.json`);
+      let bakeInfo = { normal: null, uv: null };
+      try {
+        bakeInfo = JSON.parse(await readFile(infoFile, 'utf8'));
+      } catch {}
+      bakeInfo[light] = null;
+      await atomicWrite(infoFile, JSON.stringify(bakeInfo, null, 2));
+
+      res.status(204).end();
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.options('/api/atelie/handouts/:id/bake', cors);
+  app.get('/api/atelie/handouts/:id/bake', cors, async (req, res, next) => {
+    try {
+      const id = assertId(req.params.id);
+      const light = req.query.light || 'normal';
+      if (light !== 'normal' && light !== 'uv') {
+        throw new HttpError(422, 'INVALID_LIGHT', "Parâmetro 'light' deve ser 'normal' ou 'uv'.");
+      }
+
+      const bakeFile = path.join(handoutsDir, `${id}.bake-${light}.png`);
+      try {
+        await stat(bakeFile);
+      } catch {
+        throw new HttpError(404, 'NOT_FOUND', 'Assado não encontrado.');
+      }
+
+      const infoFile = path.join(handoutsDir, `${id}.bake.json`);
+      let rev = null;
+      try {
+        const info = JSON.parse(await readFile(infoFile, 'utf8'));
+        rev = info[light];
+      } catch {}
+
+      if (!rev) {
+        const doc = await readJSON(path.join(handoutsDir, `${id}.json`)).catch(() => null);
+        rev = doc?.revision || 1;
+      }
+
+      res.setHeader('Content-Type', 'image/png');
+      res.setHeader('X-Atelie-Revision', String(rev));
+      res.setHeader('Cache-Control', 'no-cache');
+      res.sendFile(bakeFile);
     } catch (err) {
       next(err);
     }

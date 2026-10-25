@@ -9,6 +9,10 @@ import {
   removeFolder,
   folderPath,
 } from '../domain/folders.js';
+import { handoffRequest, deliveredMessage } from './handoff.js';
+import { bakeHandout, summaryOf, deliveryOf } from './bake.js';
+import { openExchange, publish, unpublish, channel, removedMessage, savedMessage } from '../data/exchange.js';
+import { getSettings } from '../ui/settings.js';
 
 export function formatRelativeTime(dateInput) {
   if (!dateInput) return '';
@@ -70,7 +74,11 @@ export function createNavigator(container, {
   onOpenDocument,
   onCreateDocument,
   getCurrentHandoutId,
+  handoff,
+  images,
+  fonts,
 } = {}) {
+  const activeHandoff = handoff !== undefined ? handoff : (typeof window !== 'undefined' ? handoffRequest(window.location, window.opener) : null);
   let searchQuery = '';
   let activeFilter = 'todos'; // 'todos' | 'favoritos' | 'recentes' | 'lixeira'
   let foldersData = { folders: [], revision: 1 };
@@ -262,7 +270,20 @@ export function createNavigator(container, {
 
   async function deleteDocument(docId) {
     try {
+      const doc = handouts.find(h => h.id === docId);
       await api.handouts.remove(docId);
+      if (typeof indexedDB !== 'undefined') {
+        try {
+          const db = await openExchange();
+          await unpublish(db, docId);
+          const source = (typeof document !== 'undefined' && document.baseURI)
+            ? new URL('.', document.baseURI).href
+            : 'http://127.0.0.1:3011/';
+          channel().postMessage(removedMessage(docId, source, doc?.revision || 0));
+        } catch (exErr) {
+          console.warn('[atelie] Erro ao despublicar troca:', exErr);
+        }
+      }
       shell?.notify?.('Documento movido para a lixeira.', { tone: 'info' });
       await loadData();
       render();
@@ -273,7 +294,24 @@ export function createNavigator(container, {
 
   async function restoreTrash(docId) {
     try {
-      await api.trash.restore(docId);
+      const restoredRes = await api.trash.restore(docId);
+      const restored = restoredRes?.handout || await api.handouts.read(docId);
+      if (typeof indexedDB !== 'undefined') {
+        try {
+          if (getSettings().shareWithTabletop !== false) {
+            const bakes = await bakeHandout(restored, { images, fonts });
+            const db = await openExchange();
+            const source = (typeof document !== 'undefined' && document.baseURI)
+              ? new URL('.', document.baseURI).href
+              : 'http://127.0.0.1:3011/';
+            const summary = summaryOf(restored, source);
+            await publish(db, summary, null, bakes);
+            channel().postMessage(savedMessage(summary));
+          }
+        } catch (exErr) {
+          console.warn('[atelie] Erro ao republicar troca:', exErr);
+        }
+      }
       shell?.notify?.('Documento restaurado.', { tone: 'info' });
       await loadData();
       render();
@@ -377,6 +415,11 @@ export function createNavigator(container, {
             ${folderName ? `<span class="nav-doc-folder-tag">${esc(folderName)}</span> · ` : ''}
             ${formatRelativeTime(h.updatedAt)}
           </span>
+          ${activeHandoff && activeHandoff.mode === 'pick' ? `
+            <div style="margin-top: 6px;">
+              <button type="button" class="at-btn is-primary nav-handoff-pick-btn" data-handoff-id="${esc(h.id)}" style="font-size: 11px; padding: 4px 8px; width: 100%;">Enviar ao Tabletop</button>
+            </div>
+          ` : ''}
         </div>
         <div class="nav-doc-actions">
           <button type="button" class="nav-doc-action-btn pin-btn ${isPinned ? 'is-pinned' : ''}" title="${isPinned ? 'Desafixar' : 'Fixar'}" data-action="pin">
@@ -449,6 +492,11 @@ export function createNavigator(container, {
 
     container.innerHTML = `
       <div class="docs-navigator">
+        ${activeHandoff && activeHandoff.mode === 'pick' ? `
+          <div class="at-handoff-banner" style="background: var(--at-accent, #704214); color: #fff; padding: 10px 14px; border-radius: 6px; margin: 12px 12px 0 12px; font-weight: 600; font-size: 13px;">
+            O Tabletop pediu um documento
+          </div>
+        ` : ''}
         <!-- Top Toolbar -->
         <div class="nav-toolbar">
           <div class="nav-search-box">
@@ -711,6 +759,55 @@ export function createNavigator(container, {
       const id = row.dataset.trashId;
       row.querySelector('.trash-restore-btn')?.addEventListener('click', () => restoreTrash(id));
       row.querySelector('.trash-purge-btn')?.addEventListener('click', () => purgeTrash(id));
+    });
+
+    // Handoff pick actions
+    container.querySelectorAll('.nav-handoff-pick-btn').forEach(btn => {
+      btn.addEventListener('click', async e => {
+        e.stopPropagation();
+        e.preventDefault();
+        const id = btn.getAttribute('data-handoff-id');
+        btn.disabled = true;
+        btn.textContent = 'Enviando…';
+        try {
+          const doc = await api.handouts.read(id);
+          const bakes = await bakeHandout(doc, { images, fonts });
+
+          let previewBlob = null;
+          try {
+            const aspect = doc.page.height / doc.page.width;
+            const previewCanvas = document.createElement('canvas');
+            previewCanvas.width = 480;
+            previewCanvas.height = Math.round(480 * aspect);
+            const { renderHandout } = await import('../render/handout-render.js');
+            await renderHandout(previewCanvas, doc, {
+              scale: 480 / doc.page.width,
+              loadImage: images?.load,
+              loadFont: fonts?.load,
+            });
+            if (previewCanvas.toBlob) {
+              previewBlob = await new Promise(r => previewCanvas.toBlob(r, 'image/webp', 0.82));
+            }
+          } catch (pErr) {
+            console.warn('[atelie] Erro na prévia do pick:', pErr);
+          }
+
+          const source = (typeof document !== 'undefined' && document.baseURI)
+            ? new URL('.', document.baseURI).href
+            : 'http://127.0.0.1:3011/';
+
+          const delivery = deliveryOf(doc, { preview: previewBlob, bakes, source });
+          window.opener.postMessage(deliveredMessage(activeHandoff.nonce, delivery), activeHandoff.from);
+          btn.textContent = 'Enviado';
+          setTimeout(() => {
+            window.close();
+          }, 1000);
+        } catch (err) {
+          btn.disabled = false;
+          btn.textContent = 'Enviar ao Tabletop';
+          shell?.notify?.(`Erro ao enviar ao Tabletop: ${err.message}`, { tone: 'error' });
+        }
+      });
     });
 
     // --- Drag and Drop ---

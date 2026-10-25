@@ -3,6 +3,7 @@ import path from 'node:path';
 import { mkdir } from 'node:fs/promises';
 import { projectDir, defaultDataDir, defaultExpansionsDir, collectionDir, defaultAllowedOrigins } from './paths.js';
 import { HttpError } from './storage.js';
+import { readOnlyCors } from './cors.js';
 import { register as registerLibrary } from './routes/library.js';
 import { register as registerHandouts } from './routes/handouts.js';
 import { register as registerUploads } from './routes/uploads.js';
@@ -25,12 +26,15 @@ export async function createApp({
   app.locals.collection = collection;
   app.locals.allowedOrigins = allowedOrigins;
 
-  app.get('/api/atelie/health', (_req, res) => {
+  const cors = readOnlyCors(allowedOrigins);
+
+  app.options('/api/atelie/health', cors);
+  app.get('/api/atelie/health', cors, (_req, res) => {
     res.json({ status: 'ok', app: 'atelie', contract: 1 });
   });
 
   await registerLibrary(app, { collection, expansionsDir });
-  await registerHandouts(app, { dataDir });
+  await registerHandouts(app, { dataDir, allowedOrigins });
   await registerUploads(app, { dataDir });
   await registerFolders(app, { dataDir });
 

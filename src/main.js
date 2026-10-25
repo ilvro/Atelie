@@ -6,6 +6,7 @@ import { renderHandout } from './render/handout-render.js';
 import { createHandoutImages } from './data/handout-images.js';
 import { createHandoutFonts } from './data/handout-fonts.js';
 import { api } from './data/api.js';
+import * as exchange from './data/exchange.js';
 import { createEditor } from './editor/editor.js';
 
 const appRoot = document.getElementById('app');
@@ -31,7 +32,7 @@ if (appRoot) {
     const atelieApi = {
       ...shell,
       api,
-      ...(isDiagnostics && editor ? { editor } : {}),
+      ...(isDiagnostics && editor ? { editor, exchange } : {}),
       renderHandout: async (handout, { scale = 0.25, light = 'normal', at = [] } = {}) => {
         const canvas = document.createElement('canvas');
         const res = await renderHandout(canvas, handout, {

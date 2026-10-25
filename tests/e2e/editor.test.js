@@ -296,7 +296,7 @@ test('editor manipulation e2e: drag, resize, rotate, snap, inline text, keyboard
   await page.mouse.move(startX, startY);
   await page.mouse.down();
   await page.keyboard.down('Control'); // avoid snap during this displacement
-  await page.mouse.move(startX + 100, startY, { steps: 5 });
+  await page.mouse.move(startX + 100, startY, { steps: 2 });
   await page.keyboard.up('Control');
   await page.mouse.up();
   await page.waitForTimeout(100);
@@ -322,6 +322,8 @@ test('editor manipulation e2e: drag, resize, rotate, snap, inline text, keyboard
   });
 
   const handleE = page.locator('.stage-handle[data-handle="e"]');
+  await handleE.waitFor({ state: 'visible' });
+  await page.waitForTimeout(50);
   const eBox = await handleE.boundingBox();
   await page.mouse.move(eBox.x + eBox.width / 2, eBox.y + eBox.height / 2);
   await page.mouse.down();
@@ -338,6 +340,8 @@ test('editor manipulation e2e: drag, resize, rotate, snap, inline text, keyboard
 
   // Handle 'se' with Shift
   const handleSE = page.locator('.stage-handle[data-handle="se"]');
+  await handleSE.waitFor({ state: 'visible' });
+  await page.waitForTimeout(50);
   const seBox = await handleSE.boundingBox();
   const aspectBefore = afterE.w / afterE.h;
 

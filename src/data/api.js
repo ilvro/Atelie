@@ -631,6 +631,46 @@ export function createApi({
       });
       return true;
     },
+
+    async saveBake(id, light, revision, blobOrBuffer) {
+      const url = new URL(`api/atelie/handouts/${encodeURIComponent(id)}/bake?light=${encodeURIComponent(light)}&revision=${revision}`, baseURI).href;
+      const res = await fetch(url, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'image/png' },
+        body: blobOrBuffer,
+      });
+      if (!res.ok) {
+        let errorBody = {};
+        try { errorBody = await res.json(); } catch {}
+        throw new ApiError(errorBody.error?.message || `Erro HTTP ${res.status}`, res.status, errorBody);
+      }
+      return true;
+    },
+
+    async removeBake(id, light, revision) {
+      const rev = revision ? `&revision=${revision}` : '';
+      const url = new URL(`api/atelie/handouts/${encodeURIComponent(id)}/bake?light=${encodeURIComponent(light)}${rev}`, baseURI).href;
+      const res = await fetch(url, { method: 'DELETE' });
+      if (!res.ok) {
+        let errorBody = {};
+        try { errorBody = await res.json(); } catch {}
+        throw new ApiError(errorBody.error?.message || `Erro HTTP ${res.status}`, res.status, errorBody);
+      }
+      return true;
+    },
+
+    async getBake(id, light = 'normal') {
+      const url = new URL(`api/atelie/handouts/${encodeURIComponent(id)}/bake?light=${encodeURIComponent(light)}`, baseURI).href;
+      const res = await fetch(url);
+      if (!res.ok) {
+        let errorBody = {};
+        try { errorBody = await res.json(); } catch {}
+        throw new ApiError(errorBody.error?.message || `Erro HTTP ${res.status}`, res.status, errorBody);
+      }
+      const revision = parseInt(res.headers.get('X-Atelie-Revision'), 10) || 1;
+      const blob = await res.blob();
+      return { blob, revision };
+    },
   };
 
   const serverTrash = {

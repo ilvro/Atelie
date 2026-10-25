@@ -23,7 +23,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 15 — Biblioteca | concluída | 2026-10-24 | Gaveta Biblioteca com busca, filtros, drag & drop e modo Preencher com exemplos em português |
 | 16 — Coleção modelos | concluída | 2026-10-24 | Coleção da casa: 39 modelos próprios em 8 categorias, gerador de modelos, frente/verso, UV e folha de contato |
 | 17 — Início e galeria | concluída | 2026-10-24 | Tela de abertura, 9 folhas em branco, continuar, 8 modelos em destaque, expansões, boas-vindas e gaveta Modelos |
-| 18 — Assar e entregar | pendente | | Renderização final e integração de entrega |
+| 18 — Assar e entregar | concluída | 2026-10-25 | Assado em alta resolução (2048 px) e entrega ao Tabletop pelos 3 caminhos do contrato (A: mesa-handouts-v1, B: postMessage, C: HTTP e CORS) |
 | 19 — Luz UV | pendente | | Camadas secretas visíveis sob luz negra |
 | 20 — Modo leitura | pendente | | Leitura imersiva, lupa, lanterna UV, verso |
 | 21 — Exportar e imprimir | pendente | | Exportação em alta resolução e folha A4 |
@@ -135,6 +135,52 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ### Pendências reais
 - Nenhuma pendência na Etapa 17.
+
+---
+
+## Etapa 18 — Assar e entregar ao Tabletop
+
+### Feito
+- **Motor de Assado em Alta Resolução (`src/editor/bake.js`)**:
+  - `bakeHandout(handout, { images, fonts })`: renderiza PNGs de alta definição escalados para 2048 px no lado maior (`scale = 2048 / Math.max(w, h)`). Gera o assado normal obrigatoriamente e o assado UV sob luz negra se houver camadas visíveis com `light: 'uv'`.
+  - `hasUvLayers(handout)`: verificação pura de camadas ativas sob luz ultravioleta.
+  - `summaryOf(handout, source)`: formatação do resumo estruturado conforme Seção 2 do contrato (`{ id, name, category, tags, revision, updatedAt, hasUv, source }`).
+  - `deliveryOf(handout, { preview, bakes, source })`: formatação do objeto completo de entrega `Delivery` com Blobs de prévia e assados.
+  - Integração no fluxo de arquivamento (`archiveDocument`): exibição de estado "Arquivando…", tratamento não fatal com notificação amigável de erro se a entrega falhar sem corromper o documento salvo.
+- **Caminho A — Navegador Compartilhado (`src/data/exchange.js`)**:
+  - Banco IndexedDB `mesa-handouts-v1` (sem escopo de caminho) com as stores `handouts` (`keyPath: 'id'`) e `bakes` (`keyPath: ['id', 'light']`).
+  - `publish(db, summary, preview, bakes)`: gravação atômica em transação única de resumo e assados, limpando assado UV anterior se não houver camadas UV.
+  - `unpublish(db, id)`: remoção de resumo e assados ao mover para a lixeira.
+  - `unpublishBySource(db, source)`: esvaziamento por origem quando o usuário desativa o compartilhamento.
+  - `BroadcastChannel('mesa:handout')`: canais em tempo real com mensagens padronizadas `handout-saved` e `handout-removed`.
+  - Controle nos Ajustes da Mesa (`src/ui/settings.js`): opção "Compartilhar com o Tabletop neste navegador" (ativa por padrão); ao desativar, esvazia o banco de troca desta origem; ao reativar, republica todos os documentos.
+- **Caminho B — Janela via `postMessage` (`src/editor/handoff.js`)**:
+  - `validFrom(origin)`: validação rigorosa de segurança permitindo apenas `https://...` ou `http://127.0.0.1` / `localhost` sem caminhos.
+  - `handoffRequest(location, opener)`: detecção e validação dos modos `pick`, `edit` e `new` via query params e presença de `window.opener`.
+  - `deliveredMessage(nonce, delivery)`: envelope com contrato versão 1.
+  - Modo `?pick=1`: abre gaveta Documentos com banner "O Tabletop pediu um documento", botão "Enviar ao Tabletop" em cada cartão, assa, envia via `postMessage(delivered)` e fecha a janela automaticamente em 1 s.
+  - Modos `?handout=` e `?new=`: exibe carimbo "Ligado ao Tabletop" na barra do documento e envia `delivered` a cada arquivamento.
+  - Garantia de que `Cross-Origin-Opener-Policy` não é definido em nenhum ponto.
+- **Caminho C — Servidor HTTP com CORS (`server/cors.js`, `server/routes/handouts.js`)**:
+  - `readOnlyCors(allowedOrigins)`: middleware para permitir leitura restrita (`GET`, `HEAD`) com cabeçalhos `Access-Control-Allow-Origin`, `Vary: Origin`, `Access-Control-Expose-Headers: X-Atelie-Revision` e `OPTIONS` com `204`. Bloqueio estrito de CORS em métodos de escrita (`PUT`/`DELETE`).
+  - Rotas de assado:
+    - `PUT /api/atelie/handouts/:id/bake?light=normal|uv&revision=<n>`: gravação do PNG no disco e atualização de `<id>.bake.json`, com detecção de conflito de revisão `409 Conflict`.
+    - `DELETE /api/atelie/handouts/:id/bake?light=uv&revision=<n>`: remoção de assados específicos sem CORS.
+    - `GET /api/atelie/handouts/:id/bake?light=normal|uv`: entrega do PNG com `X-Atelie-Revision` e `Cache-Control: no-cache`.
+  - `GET /api/atelie/handouts`: inclusão do campo booleano `hasUv` na listagem de documentos.
+- **Documentação e Contrato (`docs/plano/CONTRATO-TABLETOP.md`)**:
+  - Tabela de cobertura de testes no rodapé mapeando cada seção do contrato (2, 3, 4 e 5) às suas suítes de teste.
+- **Testes e Validação**:
+  - `tests/handoff.test.js`: testes unitários de `handoffRequest`, `validFrom`, `deliveredMessage`, `savedMessage` e `removedMessage`.
+  - `tests/bake.test.js`: testes unitários de `summaryOf`, `deliveryOf` e `hasUvLayers`.
+  - `tests/contract-http.test.js`: servidor real validando `health`, CORS, preflight `OPTIONS`, `PUT` sem CORS, ciclo `PUT` → `GET bake` com headers, conflito `409` e listagem com `hasUv`.
+  - `tests/e2e/exchange.test.js`: teste E2E do caminho A em servidor e no modo estático (`VITE_ATELIE_STORAGE=browser`), validando `mesa-handouts-v1`, `BroadcastChannel`, lixeira e chave de ajuste.
+  - `tests/e2e/handoff.test.js`: teste E2E do caminho B com popup falso do Tabletop em outra porta, testando modo pick com fechamento e modo edit com entrega contínua.
+  - 109 testes unitários passando 100% (`npm test`).
+  - 13 suítes E2E passando 100% (`npm run test:e2e`).
+
+### Pendências reais
+- Nenhuma pendência na Etapa 18.
 
 ---
 

@@ -129,3 +129,12 @@ A interface é a mesma nos três; só o "Atualizar a partir do Ateliê" automát
 
 - **Ateliê** (etapa 18): o caminho A grava resumo e assados na mesma transação e publica no canal (E2E numa página); o B responde `delivered` com `nonce` e Blobs para uma página "falsa do Tabletop" em outra origem; o C confere rotas e CORS. Funções puras testadas no Node: `summaryOf(handout)`, `deliveredMessage(...)`, `validFrom(origin)`.
 - **Tabletop** (etapa 28): a escolha do caminho (função pura com as três situações); A com um banco de troca preenchido pelo próprio teste na mesma origem; B com uma página "falsa do Ateliê" em outra porta; C com um servidor falso.
+
+### Cobertura de testes do contrato (Etapa 18)
+
+| Seção | O que define | Testes que cobrem |
+|---|---|---|
+| **2. O que circula (`Delivery` e `Summary`)** | Formato de entrega com Blobs e dimensões | `tests/bake.test.js` (`summaryOf`, `deliveryOf`), `tests/handoff.test.js` (`deliveredMessage`, `savedMessage`), `tests/e2e/handoff.test.js` (entrega com PNG válido) |
+| **3. Caminho A — navegador compartilhado** | Banco `mesa-handouts-v1`, stores `handouts` e `bakes`, `BroadcastChannel('mesa:handout')`, ajuste de compartilhamento | `tests/e2e/exchange.test.js` (gravação numa mesma transação, `handout-saved`, `handout-removed` na lixeira, esvaziamento nos Ajustes e modo navegador) |
+| **4. Caminho B — janela** | `handoffRequest`, `validFrom`, modos `?pick=1`, `?handout=`, `?new=`, `postMessage(delivered)` e targetOrigin | `tests/handoff.test.js` (regras e segurança de origem), `tests/e2e/handoff.test.js` (fluxo completo pick com fechamento e edit com envio no arquivar) |
+| **5. Caminho C — HTTP** | Rotas de leitura com CORS (`health`, lista, prévia, `bake`), `PUT`/`DELETE` de assado sem CORS, `409 Conflict`, cabeçalhos `X-Atelie-Revision` e `Cache-Control` | `tests/contract-http.test.js` (servidor real cobrindo health, CORS, preflight OPTIONS, ciclo PUT->GET bake, 409 e `hasUv`) |

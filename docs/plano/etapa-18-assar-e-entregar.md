@@ -80,8 +80,8 @@ E2E:
 
 ## Pronto quando
 
-- [ ] Testes passam; `npm test` e os E2E passam.
-- [ ] No fim do `CONTRATO-TABLETOP.md`, a lista "qual teste cobre qual seção" (2, 3, 4 e 5).
+- [x] Testes passam; `npm test` e os E2E passam.
+- [x] No fim do `CONTRATO-TABLETOP.md`, a lista "qual teste cobre qual seção" (2, 3, 4 e 5).
 
 ## Não faça
 
