@@ -35,10 +35,37 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 27 — Documentação | concluída | 2026-10-25 | Manuais, guia de uso, manutenção, atalhos, gaveta de ajuda e licenças |
 | Refinamento de UI & UX | concluída | 2026-10-25 | Correção miniatura trilho, alinhamento abas, controles CSS, texturas da bancada, pan por botão direito/meio, filtros rápidos de categoria na biblioteca |
 | Tutoriais Interativos | planejado | 2026-10-25 | Sistema de lições práticas guiadas estilo Tabletop (motor tutor, anel de foco, 4 trilhas práticas) |
-| 28 — Integração Tabletop | pendente | | Consumo e interação direta dentro do Tabletop |
+| 28 — Integração Tabletop | concluída | 2026-10-25 | Consumo e interação direta dentro do Tabletop (rotas A, B e C, UV, bakes, popover, paleta, atualização em tempo real) |
 | 29 — Expansão no navegador | concluída | 2026-10-25 | Instalação local de expansões via pasta (IndexedDB), manifesto, cota, persistência offline, cache de blobs e remoção |
+| 30 — Importador JIT de Bundles | planejado | 2026-10-25 | Importar pastas de bundles brutos (.psd + prévias + fontes) sob demanda no navegador sem terminal |
 | Refinamento de Tipografia e Camadas | concluída | 2026-10-25 | Geometria e alinhamento de textos, proporção de fontes mistas, recorte de caixas de texto, e painel de camadas com pastas, cores e snippets |
 | Refinamento de Expansões na Gaveta de Modelos | concluída | 2026-10-25 | Botão direto de instalação de expansão na gaveta Modelos, atalho em buscas vazias e mensagens claras sobre PSDs brutos |
+
+---
+
+## Etapa 28 — Integração no Tabletop
+
+### Feito
+- **Implementação completa da integração no Tabletop (`/home/ilvro/Documents/Projects/Tabletop`) conforme Contrato v1**:
+  - `src/data/atelie.js`: módulo cliente do contrato com determinação de URL padrão (`defaultAtelieUrl` para GitHub Pages irmão `../Atelie/` e dev local `http://127.0.0.1:3011/`), sanitização de URL com HTTPS ou localhost (`setAtelieUrl`), seleção pura das três rotas (`chooseRoute`), filtro rigoroso de mensagens de janela (`filterAtelieMessage`: origem do Ateliê, `app === 'atelie'`, `contract === 1`, `nonce` ativo) e link de ciclo de vida (`createAtelieLink`).
+  - `src/domain/inspectables.js`: suporte nativo a `design: { app: 'atelie', id, revision, source }` e `uvImageRef: { id, revision } | null` em lados de página inspecionáveis, validação estrita, inclusão em `pageImages` e `sideKey`, preservação de segredo de apresentação no projetor e novo papel em `PAPERS`: `['design', 'Documento do ateliê']`.
+  - `src/render/page-textures.js`: papel `paper === 'design'` desenha a imagem assada cobrindo a folha (`cover`), sem grão, manchas nem vincos procedurais. Suporte a assados sob luz UV no runtime de páginas.
+  - `src/ui/inspection-overlay.js` & `src/app/live/inspection.js`: botão **Luz UV** e atalho **U** na inspeção quando há `uvImageRef`, vinheta violeta radial sobre a cena desfocada e sincronização ao vivo do estado `uv: true/false` para a janela do projetor caso a pista tenha sido revelada.
+  - `src/app/application.js` & `src/ui/inspectable-panel.js`:
+    - "Do ateliê…": popover `#atelie-dialog` com prévias e busca nos caminhos A e C; abertura de popup `pick()` no caminho B.
+    - "Editar no Ateliê" e "Novo no Ateliê": passagem segura de `nonce` e origem.
+    - "Desvincular": remove o vínculo sem alterar o modelo da mesa.
+    - "Atualizar a partir do Ateliê" e aviso `#notice` com "Atualizar na cena (N objetos)": sincronização em tempo real via `BroadcastChannel('mesa:handout')` ou `postMessage`.
+    - Ação na paleta de comandos: "Pôr documento do Ateliê na mesa" coloca folha A4 ou recorte de jornal no centro da visão já inspecionável.
+    - Ajustes: seção **Ateliê de documentos** com campo de endereço, status de disponibilidade e caminho em uso.
+  - `src/tutorial/lessons.js` & `conditions.js`: lição **Uma carta do Ateliê** (`atelie-letter`) e condições `atelieAvailable` e `designUsed`.
+- **Testes e Validação**:
+  - `tests/atelie-link.test.js`: 5 testes unitários de rotas, sanitização, filtros e ciclo de vida passando (Node).
+  - `tests/inspectables.test.js`: testes unitários de metadados do contrato, segredo de apresentação e tipo de papel passando (Node).
+  - `tests/e2e/atelie-exchange.test.js` (**Caminho A — Navegador compartilhado / Pages**): banco `mesa-handouts-v1`, listagem/uso, leitura, projetor com UV ao vivo e atualização em tempo real por `BroadcastChannel` (Playwright E2E) passando.
+  - `tests/e2e/atelie-window.test.js` (**Caminho B — Janela / Qualquer origem**): janela popup com `?pick=1&from&nonce`, rejeição estrita de nonces incorretos, apps divergentes, contratos incompatíveis e origens forjadas, e entrega por `postMessage` (Playwright E2E) passando.
+  - `tests/e2e/atelie-http.test.js` (**Caminho C — Servidor local / HTTP**): servidor HTTP simulando `/api/atelie/health`, `/handouts`, `/preview` e `/bake?light=normal|uv` com `X-Atelie-Revision`, popover picker, bakes e atualização (Playwright E2E) passando.
+  - Suíte completa do Tabletop: **411 testes unitários passando**, `tests/e2e/inspection.test.js` e `tests/e2e/interact.test.js` passando sem regressões. Documentação atualizada em `docs/DOCUMENTOS_INTERATIVOS.md` e `docs/GITHUB_PAGES.md`.
 
 ---
 
