@@ -35,5 +35,5 @@ Cada seção com o título em `.at-tape`. Busca no topo filtra as seções.
 
 ## Pronto quando
 
-- [ ] Testes passam; `npm test` e os E2E passam.
-- [ ] A tabela "Andamento" de `00-LEIA-PRIMEIRO.md` está completa até a 27.
+- [x] Testes passam; `npm test` e os E2E passam.
+- [x] A tabela "Andamento" de `00-LEIA-PRIMEIRO.md` está completa até a 27.

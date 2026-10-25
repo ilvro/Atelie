@@ -1,7 +1,8 @@
 node_modules/
 dist/
+dist-pages/
 test-results/
-data/
+/data/
 data-private/
 .DS_Store
 *.log

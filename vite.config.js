@@ -5,8 +5,11 @@ if (!Number.isInteger(frontendPort) || frontendPort < 1 || frontendPort > 65535)
   throw new Error('ATELIE_UI_PORT deve estar entre 1 e 65535.');
 }
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   base: './',
+  define: {
+    'import.meta.env.VITE_ATELIE_STORAGE': JSON.stringify(mode === 'pages' ? 'browser' : (process.env.VITE_ATELIE_STORAGE || 'server')),
+  },
   server: {
     host: '127.0.0.1',
     port: frontendPort,
@@ -19,7 +22,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'dist',
+    outDir: mode === 'pages' ? 'dist-pages' : 'dist',
   },
-});
+}));
 

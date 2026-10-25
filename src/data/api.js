@@ -22,6 +22,7 @@ export function storageScope(baseURI = defaultBaseURI()) {
 }
 
 export function detectStorageMode({ env, hostname } = {}) {
+  if (typeof import.meta !== 'undefined' && import.meta?.env?.VITE_ATELIE_STORAGE === 'browser') return 'browser';
   const currentEnv = env || (typeof process !== 'undefined' ? process.env : {}) || {};
   if (currentEnv.VITE_ATELIE_STORAGE === 'browser') return 'browser';
 
@@ -170,6 +171,25 @@ export function createApi({
           }
           store.put(doc, doc.id);
           resolve(doc);
+        };
+      });
+    },
+
+    async importDoc(h) {
+      validateHandout(h);
+      await requestPersistOnce();
+      const doc = structuredClone(h);
+      return transact(['handouts'], 'readwrite', (tx, resolve, stop) => {
+        const store = tx.objectStore('handouts');
+        const check = store.get(doc.id);
+        check.onerror = () => stop(check.error);
+        check.onsuccess = () => {
+          const existing = check.result;
+          if (existing && typeof existing.revision === 'number' && existing.revision > doc.revision) {
+            return resolve({ imported: false, reason: 'lower_revision', doc: existing });
+          }
+          store.put(doc, doc.id);
+          resolve({ imported: true, doc });
         };
       });
     },
@@ -379,14 +399,33 @@ export function createApi({
     },
   };
 
+  const browserItemsMap = new Map();
+  let browserManifestPromise = null;
+
+  async function ensureBrowserManifest() {
+    if (browserManifestPromise) return browserManifestPromise;
+    browserManifestPromise = (async () => {
+      try {
+        const url = new URL('colecao/library.json', baseURI).href;
+        const res = await fetch(url);
+        if (res.ok) {
+          const data = await res.json();
+          for (const item of data.items || []) {
+            browserItemsMap.set(item.id, item);
+          }
+          return data;
+        }
+      } catch {
+        // ignore
+      }
+      return { items: [] };
+    })();
+    return browserManifestPromise;
+  }
+
   const browserLibrary = {
     async list() {
-      const url = new URL('colecao/library.json', baseURI).href;
-      const res = await fetch(url);
-      if (!res.ok) {
-        throw new ApiError('Não foi possível carregar a coleção da casa.', res.status);
-      }
-      const data = await res.json();
+      const data = await ensureBrowserManifest();
       const visible = (data.items || [])
         .filter(i => i.kind !== 'layer')
         .map(i => ({ ...i, source: 'casa' }));
@@ -397,8 +436,8 @@ export function createApi({
     },
 
     async item(id) {
-      const listData = await this.list();
-      const found = listData.items.find(i => i.id === id);
+      await ensureBrowserManifest();
+      const found = browserItemsMap.get(id);
       if (!found) {
         throw new ApiError('Item não encontrado na biblioteca.', 404);
       }
@@ -415,13 +454,33 @@ export function createApi({
     },
 
     fileURL(item) {
-      const file = typeof item === 'object' && item ? item.file : item;
+      if (typeof item === 'object' && item?.file) {
+        return new URL(`colecao/${item.file}`, baseURI).href;
+      }
+      const id = typeof item === 'object' && item ? item.id : item;
+      const found = browserItemsMap.get(id);
+      const file = found?.file || (typeof item === 'string' ? item : item?.file);
       return new URL(`colecao/${file}`, baseURI).href;
     },
 
+    async resolveFileURL(itemOrId) {
+      await ensureBrowserManifest();
+      return this.fileURL(itemOrId);
+    },
+
     previewURL(item) {
-      const preview = typeof item === 'object' && item ? item.preview : item;
-      return new URL(`colecao/${preview}`, baseURI).href;
+      if (typeof item === 'object' && item?.preview) {
+        return new URL(`colecao/${item.preview}`, baseURI).href;
+      }
+      const id = typeof item === 'object' && item ? item.id : item;
+      const found = browserItemsMap.get(id);
+      const prev = found?.preview || (typeof item === 'string' ? item : item?.preview);
+      return new URL(`colecao/${prev}`, baseURI).href;
+    },
+
+    async resolvePreviewURL(itemOrId) {
+      await ensureBrowserManifest();
+      return this.previewURL(itemOrId);
     },
   };
 
@@ -515,6 +574,32 @@ export function createApi({
             resolve(`data:${record.mime};base64,...`);
           }
         };
+      });
+    },
+
+    async get(id) {
+      return transact(['uploads'], 'readonly', (tx, resolve, stop) => {
+        const req = tx.objectStore('uploads').get(id);
+        req.onerror = () => stop(req.error);
+        req.onsuccess = () => {
+          const record = req.result;
+          if (!record) return stop(new ApiError('Upload não encontrado.', 404));
+          resolve(record);
+        };
+      });
+    },
+
+    async getBlob(id) {
+      const record = await browserUploads.get(id);
+      return record.blob;
+    },
+
+    async put(record) {
+      await requestPersistOnce();
+      return transact(['uploads'], 'readwrite', (tx, resolve, stop) => {
+        const req = tx.objectStore('uploads').put(record, record.id);
+        req.onerror = () => stop(req.error);
+        req.onsuccess = () => resolve(true);
       });
     },
   };
@@ -708,9 +793,17 @@ export function createApi({
       return new URL(`api/atelie/library/${encodeURIComponent(id)}/file`, baseURI).href;
     },
 
+    async resolveFileURL(item) {
+      return this.fileURL(item);
+    },
+
     previewURL(item) {
       const id = typeof item === 'object' && item ? item.id : item;
       return new URL(`api/atelie/library/${encodeURIComponent(id)}/preview`, baseURI).href;
+    },
+
+    async resolvePreviewURL(item) {
+      return this.previewURL(item);
     },
   };
 

@@ -2,6 +2,7 @@ import { PAGE_PRESETS } from '../domain/handouts.js';
 import { tape, tiltOf } from '../ui/primitives.js';
 import { renderIcon, escapeHTML as esc } from '../ui/icons.js';
 import { getRecentIds } from './navigator.js';
+import { showWelcomeNotes } from '../ui/welcome.js';
 
 const FEATURED_CATEGORIES = [
   'Cartas e bilhetes',
@@ -30,8 +31,6 @@ export function createStartScreen(container, {
   let libraryData = null;
   let recentDocs = [];
   let recentPreviews = new Map();
-  let welcomeStep = 1;
-  let welcomeOverlay = null;
 
   async function loadData() {
     // 1. Library data (templates and sources)
@@ -104,98 +103,8 @@ export function createStartScreen(container, {
     });
   }
 
-  function renderWelcomeNotes() {
-    if (typeof localStorage === 'undefined') return;
-    if (localStorage.getItem('atelie-welcome') === 'done') return;
-
-    if (welcomeOverlay) {
-      welcomeOverlay.remove();
-      welcomeOverlay = null;
-    }
-
-    welcomeOverlay = document.createElement('div');
-    welcomeOverlay.className = 'welcome-overlay';
-    welcomeOverlay.setAttribute('role', 'dialog');
-    welcomeOverlay.setAttribute('aria-modal', 'true');
-    welcomeOverlay.setAttribute('aria-label', 'Guia de introdução do Ateliê');
-
-    const steps = [
-      {
-        step: 1,
-        tape: 'PONTO DE PARTIDA',
-        title: 'Escolha um ponto de partida',
-        desc: 'Um modelo pronto ou uma folha em branco.',
-        primaryText: 'Próximo',
-      },
-      {
-        step: 2,
-        tape: 'PREENCHA',
-        title: 'Preencha',
-        desc: 'Os campos do modelo ficam na aba Preencher, à direita. Para ir além, cada elemento da página é uma camada que você move, troca e recolore.',
-        primaryText: 'Próximo',
-      },
-      {
-        step: 3,
-        tape: 'LEVE PARA A MESA',
-        title: 'Leve para a mesa',
-        desc: 'Exporte em PNG, imprima, ou use no Tabletop, onde o documento vira uma carta que os jogadores pegam para ler.',
-        primaryText: 'Começar',
-      },
-    ];
-
-    const cur = steps[welcomeStep - 1] || steps[0];
-
-    welcomeOverlay.innerHTML = `
-      <div class="at-note welcome-note">
-        <div class="welcome-header">
-          ${tape(cur.tape)}
-          <span class="welcome-step-badge">${cur.step} / 3</span>
-        </div>
-        <h3 class="welcome-title">${esc(cur.title)}</h3>
-        <p class="welcome-desc">${esc(cur.desc)}</p>
-        <div class="welcome-actions">
-          ${cur.step < 3 
-            ? '<button type="button" class="welcome-skip-btn" data-action="welcome-skip">Pular</button>'
-            : '<div></div>'
-          }
-          <div class="welcome-btn-group">
-            ${cur.step > 1
-              ? '<button type="button" class="at-btn welcome-prev-btn" data-action="welcome-prev">Anterior</button>'
-              : ''
-            }
-            <button type="button" class="at-btn is-primary welcome-next-btn" data-action="welcome-next">
-              ${esc(cur.primaryText)}
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-
-    welcomeOverlay.querySelector('[data-action="welcome-skip"]')?.addEventListener('click', () => {
-      localStorage.setItem('atelie-welcome', 'done');
-      welcomeOverlay?.remove();
-      welcomeOverlay = null;
-    });
-
-    welcomeOverlay.querySelector('[data-action="welcome-prev"]')?.addEventListener('click', () => {
-      if (welcomeStep > 1) {
-        welcomeStep--;
-        renderWelcomeNotes();
-      }
-    });
-
-    welcomeOverlay.querySelector('[data-action="welcome-next"]')?.addEventListener('click', () => {
-      if (welcomeStep < 3) {
-        welcomeStep++;
-        renderWelcomeNotes();
-      } else {
-        localStorage.setItem('atelie-welcome', 'done');
-        welcomeOverlay?.remove();
-        welcomeOverlay = null;
-      }
-    });
-
-    root.appendChild(welcomeOverlay);
+  function renderWelcomeNotes(force = false) {
+    showWelcomeNotes({ root, force });
   }
 
   function bindRowKeyboard(rowEl) {
@@ -420,5 +329,6 @@ export function createStartScreen(container, {
       return root;
     },
     refresh: loadData,
+    showWelcome: renderWelcomeNotes,
   };
 }

@@ -3,11 +3,23 @@
  */
 export function createHandoutImages({
   fetchBlob = url => fetch(url).then(r => (r.ok ? r.blob() : null)),
+  api = null,
 } = {}) {
   const cache = new Map();
 
-  function getUrl(src) {
+  async function getUrl(src) {
     if (!src || typeof src !== 'object') return '';
+    if (api) {
+      if (src.library) {
+        if (typeof api.library?.resolveFileURL === 'function') {
+          return await api.library.resolveFileURL(src.library);
+        }
+        return api.library.fileURL(src.library);
+      }
+      if (src.upload) {
+        return await api.uploads.fileURL(src.upload);
+      }
+    }
     const base = typeof document !== 'undefined' ? document.baseURI : 'http://127.0.0.1:3011/';
     if (src.library) {
       return new URL(`api/atelie/library/${encodeURIComponent(src.library)}/file`, base).href;
@@ -35,7 +47,7 @@ export function createHandoutImages({
 
     const promise = (async () => {
       try {
-        const u = getUrl(src);
+        const u = await getUrl(src);
         if (!u) return null;
         const blob = await fetchBlob(u);
         if (!blob) return null;

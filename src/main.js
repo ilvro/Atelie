@@ -3,6 +3,7 @@ import './ui/editor.css';
 import './ui/start.css';
 import './ui/reader.css';
 import './ui/export.css';
+import './ui/help.css';
 import { createShell } from './ui/shell.js';
 import { renderHandout } from './render/handout-render.js';
 import { createHandoutImages } from './data/handout-images.js';
@@ -26,8 +27,8 @@ if (appRoot) {
   }
 
   if (typeof window !== 'undefined') {
-    const images = createHandoutImages();
-    const fonts = createHandoutFonts();
+    const images = createHandoutImages({ api });
+    const fonts = createHandoutFonts({ api });
     const isDiagnostics = window.location.search.includes('diagnostics');
 
     let reading = null;

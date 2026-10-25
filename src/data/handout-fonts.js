@@ -3,12 +3,22 @@
  * Loads library fonts once each; resolves even when a font fails (the fallback draws instead).
  */
 export function createHandoutFonts({
-  url = id => {
-    const base = typeof document !== 'undefined' ? document.baseURI : 'http://127.0.0.1:3011/';
-    return new URL(`api/atelie/library/${encodeURIComponent(id)}/file`, base).href;
-  },
+  url = null,
+  api = null,
 } = {}) {
   const cache = new Map();
+
+  async function resolveUrl(id) {
+    if (url) return url(id);
+    if (api) {
+      if (typeof api.library?.resolveFileURL === 'function') {
+        return await api.library.resolveFileURL(id);
+      }
+      return api.library.fileURL(id);
+    }
+    const base = typeof document !== 'undefined' ? document.baseURI : 'http://127.0.0.1:3011/';
+    return new URL(`api/atelie/library/${encodeURIComponent(id)}/file`, base).href;
+  }
 
   async function load(font) {
     if (!font || !font.library) {
@@ -28,7 +38,7 @@ export function createHandoutFonts({
         if (typeof FontFace === 'undefined' || typeof document === 'undefined' || !document.fonts) {
           return true;
         }
-        const fileUrl = url(font.library);
+        const fileUrl = await resolveUrl(font.library);
         const fontFace = new FontFace(font.family, `url(${fileUrl})`, {
           weight: String(weight),
           style: italic,

@@ -31,8 +31,8 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 23 — PSD leitura | concluída | 2026-10-25 | Expansão: leitura da estrutura dos PSDs (sem pixels), relatórios, métricas e árvore normalizada |
 | 24 — PSD compositor | concluída | 2026-10-25 | Expansão: composição de PSD em Node |
 | 25 — PSD modelos | concluída | 2026-10-25 | Expansão: conversão de PSD para modelos editáveis com campos, fusão de fundo, WebP, UV e testes |
-| 26 — Publicar no Pages | pendente | | Build estático e workflow do GitHub Pages |
-| 27 — Documentação | pendente | | Manuais, guia de uso e licenças |
+| 26 — Publicar no Pages | concluída | 2026-10-25 | Build estático sem servidor, workflow GitHub Pages, backup/restauração e testes |
+| 27 — Documentação | concluída | 2026-10-25 | Manuais, guia de uso, manutenção, atalhos, gaveta de ajuda e licenças |
 | 28 — Integração Tabletop | pendente | | Consumo e interação direta dentro do Tabletop |
 | 29 — Expansão no navegador | pendente | | Expansão local no navegador (opcional) |
 
@@ -135,6 +135,88 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ### Pendências reais
 - Nenhuma pendência na Etapa 17.
+
+---
+
+## Etapa 27 — Documentação e ajuda
+
+### Feito
+- **Gaveta de Ajuda no Aplicativo (`src/ui/help.js` e `src/ui/help.css`)**:
+  - Abertura direta via botão **Ajuda** no trilho ou atalho de teclado **?** (fora de campos de edição).
+  - Títulos de seções com fita crepe visual `.at-tape`.
+  - Campo de busca no topo filtrando dinamicamente as seções por texto e palavras-chave.
+  - 6 seções completas:
+    1. *Como começar*: 3 passos para forjar documentos com botão **Mostrar de novo** que reabre os bilhetes sequenciais de boas-vindas.
+    2. *Atalhos*: tabela completa gerada dinamicamente a partir de `src/ui/shortcuts.js` e agrupada por categoria.
+    3. *Camadas e mesclagem*: resumo objetivo de cada tipo de camada e modos de mesclagem essenciais para papel (Multiply, Overlay, Soft Light, Screen, Clip).
+    4. *Luz UV*: guia de criação de camadas secretas sob luz negra, alternância na bancada (atalho U) e lanterna UV no modo leitura.
+    5. *Usar no Tabletop*: benefícios da integração, endereços de conexão (`../Atelie/` e `http://127.0.0.1:3011/`) e os 3 caminhos do contrato.
+    6. *Coleção e expansões*: distinção entre coleção pública da casa e expansões privadas, com menção ao guia de manutenção.
+- **Módulo Central de Atalhos (`src/ui/shortcuts.js`)**:
+  - Lista única e centralizada de todos os atalhos da aplicação (`SHORTCUTS`), com `id`, `key`, `label`, `description`, `category`, `handledIn` e `tokens` para validação por testes.
+  - Função auxiliar `getShortcutsByCategory()`.
+- **Módulo Modular de Boas-Vindas (`src/ui/welcome.js`)**:
+  - Extração dos 3 bilhetes sequenciais com suporte ao parâmetro `force: true` para reexibição sob demanda.
+- **Manual do Usuário (`docs/USO.md`)**:
+  - Guia exaustivo de 14 seções cobrindo todos os recursos do aplicativo: modelos, Preencher, camadas, mesclagens, recorte, estilos de tinta, uploads, biblioteca, efeitos procedurais, luz UV, navegador de documentos, rascunhos, histórico, modo leitura, exportação em alta resolução (2048 px e 300 ppp), impressão 1:1, integração Tabletop e backup.
+- **Manual de Manutenção e Expansões (`docs/MANUTENCAO.md`)**:
+  - Documentação técnica detalhando a estrutura da coleção da casa, teto de 60 MB, comandos de regeneração (`npm run colecao:texturas`, `colecao:modelos`), importador CLI de elementos e fontes, conversor CLI de modelos PSD, interpretação de relatórios (`report.json`), tratamento de modelos com tag `revisar` e aviso categórico de privacidade.
+- **Gerador e Registro de Licenças (`scripts/licenses.js` e `docs/LICENCAS.md`)**:
+  - Script CLI determinístico gerando `docs/LICENCAS.md` a partir de `public/colecao/library.json` e fontes de interface.
+  - Registro de licenças de tudo o que é distribuído: código sob MIT, fontes de interface (Hanken Grotesk, IM Fell English, Courier Prime) sob OFL-1.1, 26 famílias de fontes livres sob OFL-1.1 e Apache-2.0, e ativos da casa sob licença própria do Ateliê.
+- **Atualização do README (`README.md`)**:
+  - Links para os guias (`docs/USO.md`, `docs/MANUTENCAO.md`, `docs/LICENCAS.md`, `docs/GITHUB_PAGES.md`), captura da bancada (`docs/referencias/atelie-inicio.png`) e instruções rápidas.
+- **Testes Unitários e E2E**:
+  - `tests/shortcuts.test.js`: 4 testes unitários conferindo estrutura, presença de cada atalho em manipuladores de teclado nos arquivos indicados, sincronização com botões `data-key` do trilho e agrupamento por categoria.
+  - `tests/licenses.test.js`: 3 testes unitários conferindo idempotência de `docs/LICENCAS.md`, validade das licenças de todas as 26 famílias de fontes e preenchimento de `license` em 100% dos itens da coleção.
+  - `tests/e2e/help.test.js`: teste E2E Playwright validando abertura da gaveta por `?` e clique no trilho, filtro de busca por "uv", restauração de seções e reabertura dos bilhetes de boas-vindas pelo botão "Mostrar de novo".
+
+### Validação
+- `npm test`: 154 testes unitários passando 100%.
+- `npm run test:e2e`: 18 suítes E2E passando 100%.
+- `tests/shortcuts.test.js`: 4 testes passando 100%.
+- `tests/licenses.test.js`: 3 testes passando 100%.
+- `tests/e2e/help.test.js`: teste E2E da gaveta de ajuda passando 100%.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 27.
+
+---
+
+## Etapa 26 — Publicar no GitHub Pages
+
+### Feito
+- **Configuração de Build Estático (`vite.config.js` e `package.json`)**:
+  - Modo `pages`: define `import.meta.env.VITE_ATELIE_STORAGE` como `'browser'`, `outDir: 'dist-pages'`, `base: './'`.
+  - Scripts `build:pages` e `preview:pages` adicionados a `package.json`.
+  - `.gitignore` atualizado incluindo `dist-pages/`.
+  - Resolução dinâmica de URLs de coleção e uploads em modo navegador sem dependência de rotas `/api/`.
+- **Workflow do GitHub Actions (`.github/workflows/pages.yml`)**:
+  - Pipeline oficial `actions/upload-pages-artifact@v3` e `actions/deploy-pages@v5`.
+  - Disparado em push na branch principal (`main` ou `master`) ou manualmente via `workflow_dispatch`.
+  - Executa `npm ci`, `npm test` e `npm run build:pages`, publicando exclusivamente o diretório `dist-pages/`.
+- **Cópia de Segurança e Restauração (`src/data/backup.js` e `src/ui/settings.js`)**:
+  - `exportBackup(api)`: exportação completa de todos os documentos, pastas e uploads (com imagens codificadas em base64) para arquivo `.json`.
+  - `importBackup(api, backupData)`: mesclagem segura que preserva documentos locais existentes, ignorando itens do backup com revisão menor.
+  - Interface em **Ajustes**: exibição do espaço utilizado no navegador via `navigator.storage.estimate()`, botão **Exportar tudo** com download automático e botão **Importar** com feedback de itens importados/ignorados.
+  - Persistência garantida: chamada automática a `navigator.storage.persist()` ao arquivar documentos em modo navegador.
+- **Documentação de Publicação (`docs/GITHUB_PAGES.md`)**:
+  - Guia completo cobrindo configuração no GitHub (Settings → Pages → Source: GitHub Actions), onde ficam os dados (IndexedDB local), isolamento de origem/subcaminho, cópia de segurança, integração direta com Tabletop irmão (`../Atelie/` e `mesa-handouts-v1`) e privacidade estrita (nenhum dado de expansão privada entra no build público).
+- **Testes Unitários e E2E**:
+  - `tests/backup.test.js`: 2 testes validando ida e volta de exportação/importação com base64, preservação de documentos locais preexistentes e descarte de revisões menores.
+  - `tests/pages-build.test.js`: verificação de integridade do build em `dist-pages/` (ausência de dados privados, sem IDs `ac-`, tamanho total de 21 MB, bem abaixo do teto de 80 MB).
+  - `tests/e2e/pages.test.js`: teste ponta a ponta com Playwright e servidor estático Express simulando o subcaminho `/Atelie/` e a mesa irmã `/Tabletop/` na mesma origem (carregamento da coleção sem requisições `/api/`, persistência no IndexedDB ao recarregar a página, gravação em `mesa-handouts-v1` com assado gráfico e notificação em tempo real via `BroadcastChannel`).
+
+### Validação
+- `npm test`: 147 testes unitários passando 100%.
+- `npm run test:e2e`: 17 suítes E2E passando 100%.
+- `tests/backup.test.js`: 2 testes passando 100%.
+- `tests/pages-build.test.js`: teste de integridade do build passando 100%.
+- `tests/e2e/pages.test.js`: teste E2E do Pages passando 100%.
+- `dist-pages/`: compilado com sucesso (21 MB total, 0 arquivos privados).
+
+### Pendências reais
+- Publicação de fato no GitHub Pages na conta do usuário (quando o usuário realizar o push para o repositório remoto).
 
 ---
 

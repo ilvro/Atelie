@@ -35,5 +35,5 @@ Cópia adaptada do Tabletop: nome "Publicar Ateliê no GitHub Pages", `npm ci`, 
 
 ## Pronto quando
 
-- [ ] Testes passam; `npm test` e os E2E passam.
+- [x] Testes passam; `npm test` e os E2E passam.
 - [ ] Publicado de verdade na conta do usuário (quando ele pedir o push): o site abre em `https://<conta>.github.io/Atelie/`, a coleção aparece, um documento arquivado sobrevive a fechar o navegador, e o Tabletop publicado na mesma conta o enxerga em "Do ateliê…" (depois da etapa 28).

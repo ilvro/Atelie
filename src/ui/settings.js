@@ -1,4 +1,5 @@
 import { escapeHTML as esc, icon as renderIcon } from './icons.js';
+import { exportBackup, importBackup } from '../data/backup.js';
 
 const STORAGE_KEY = 'atelie-settings';
 
@@ -175,6 +176,23 @@ export function openSettingsModal() {
             </button>
           </div>
         </section>
+
+        <section class="at-settings-section">
+          <label class="at-settings-label">Armazenamento e cópia de segurança</label>
+          <p class="at-settings-desc" id="setting-storage-estimate" style="font-size:12px; color:var(--text-muted, #888); margin:4px 0 8px;">
+            Armazenamento local neste navegador.
+          </p>
+          <div class="at-settings-actions" style="display:flex; gap:8px;">
+            <button type="button" class="at-btn" id="setting-backup-export" data-action="backup-export">
+              Exportar tudo
+            </button>
+            <button type="button" class="at-btn" id="setting-backup-import" data-action="backup-import">
+              Importar
+            </button>
+            <input type="file" id="setting-backup-file-input" accept=".json,application/json" style="display:none;" />
+          </div>
+          <span class="at-settings-feedback" id="setting-backup-feedback" style="display:none; margin-top:6px; font-size:12px; color:var(--text-muted, #888);"></span>
+        </section>
       </div>
 
       <div class="at-settings-footer">
@@ -268,4 +286,84 @@ export function openSettingsModal() {
       saveSettings({ unit: btn.dataset.unit });
     });
   });
+
+  // Storage estimate
+  if (typeof navigator !== 'undefined' && navigator.storage && typeof navigator.storage.estimate === 'function') {
+    navigator.storage.estimate().then(estimate => {
+      const el = settingsModal?.querySelector('#setting-storage-estimate');
+      if (!el) return;
+      const usageMB = ((estimate.usage || 0) / (1024 * 1024)).toFixed(1);
+      const quotaMB = estimate.quota ? ((estimate.quota || 0) / (1024 * 1024)).toFixed(0) : null;
+      el.textContent = quotaMB
+        ? `Espaço usado: ${usageMB} MB de ${quotaMB} MB disponíveis neste navegador.`
+        : `Espaço usado: ${usageMB} MB neste navegador.`;
+    }).catch(() => {});
+  }
+
+  // Backup Export
+  const exportBtn = settingsModal.querySelector('#setting-backup-export');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', async () => {
+      exportBtn.disabled = true;
+      exportBtn.textContent = 'Exportando...';
+      try {
+        const api = window.__atelie?.api;
+        if (!api) throw new Error('API não disponível no momento.');
+        const data = await exportBackup(api);
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        const dateStr = new Date().toISOString().slice(0, 10);
+        a.href = url;
+        a.download = `atelie-backup-${dateStr}.json`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        alert(`Falha ao exportar cópia de segurança: ${err.message}`);
+      } finally {
+        exportBtn.disabled = false;
+        exportBtn.textContent = 'Exportar tudo';
+      }
+    });
+  }
+
+  // Backup Import
+  const importBtn = settingsModal.querySelector('#setting-backup-import');
+  const fileInput = settingsModal.querySelector('#setting-backup-file-input');
+  const feedbackEl = settingsModal.querySelector('#setting-backup-feedback');
+
+  if (importBtn && fileInput) {
+    importBtn.addEventListener('click', () => {
+      fileInput.value = '';
+      fileInput.click();
+    });
+
+    fileInput.addEventListener('change', async () => {
+      const file = fileInput.files?.[0];
+      if (!file) return;
+      importBtn.disabled = true;
+      importBtn.textContent = 'Importando...';
+      try {
+        const api = window.__atelie?.api;
+        if (!api) throw new Error('API não disponível no momento.');
+        const text = await file.text();
+        const res = await importBackup(api, text);
+        const msg = `Cópia importada! ${res.importedHandouts} documento(s) importado(s)${res.skippedHandouts ? `, ${res.skippedHandouts} ignorado(s) por já estarem mais atualizados` : ''}.`;
+        if (feedbackEl) {
+          feedbackEl.textContent = msg;
+          feedbackEl.style.display = 'block';
+        }
+        if (window.__atelie?.navigator?.refresh) {
+          window.__atelie.navigator.refresh();
+        }
+      } catch (err) {
+        alert(`Falha ao importar backup: ${err.message}`);
+      } finally {
+        importBtn.disabled = false;
+        importBtn.textContent = 'Importar';
+      }
+    });
+  }
 }

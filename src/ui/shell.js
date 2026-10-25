@@ -5,6 +5,7 @@ import { notify } from './notify.js';
 import { contextMenu } from './context-menu.js';
 import { palette } from './palette.js';
 import { openSettingsModal, applySettings, getSettings } from './settings.js';
+import { createHelpDrawer } from './help.js';
 
 export function createShell(root, { onAction } = {}) {
   // Apply saved settings immediately
@@ -159,6 +160,7 @@ export function createShell(root, { onAction } = {}) {
     library: 'BIBLIOTECA',
     templates: 'MODELOS',
     export: 'EXPORTAR',
+    help: 'AJUDA',
   };
 
   const openDrawer = (name) => {
@@ -204,6 +206,17 @@ export function createShell(root, { onAction } = {}) {
     }
   };
 
+  // Register default help panel
+  drawerPanels.set('help', () => createHelpDrawer({
+    shell: {
+      drawer: {
+        open: openDrawer,
+        close: closeDrawer,
+        toggle: toggleDrawer,
+      },
+    },
+  }));
+
   // Rail click actions
   root.querySelector('.app-rail')?.addEventListener('click', (e) => {
     const btn = e.target.closest('[data-action]');
@@ -213,15 +226,12 @@ export function createShell(root, { onAction } = {}) {
     if (action === 'desk') {
       closeDrawer();
       notifyAction('desk', e);
-    } else if (['documents', 'library', 'templates', 'export'].includes(action)) {
+    } else if (['documents', 'library', 'templates', 'export', 'help'].includes(action)) {
       toggleDrawer(action);
       notifyAction(action, e);
     } else if (action === 'settings') {
       openSettingsModal();
       notifyAction('settings', e);
-    } else if (action === 'help') {
-      notify('Atalhos: Ctrl+K abre a paleta de comandos. Use o menu lateral para navegar.', { tone: 'info' });
-      notifyAction('help', e);
     } else {
       notifyAction(action, e);
     }
@@ -230,10 +240,64 @@ export function createShell(root, { onAction } = {}) {
   // Drawer close button
   root.querySelector('[data-action="drawer-close"]')?.addEventListener('click', closeDrawer);
 
-  // Keyboard shortcut: Escape closes drawer
+  // Keyboard navigation and shortcuts
   window.addEventListener('keydown', (e) => {
+    if (e.defaultPrevented) return;
+    if (document.body.classList.contains('is-reading')) return;
+
     if (e.key === 'Escape' && activeDrawer) {
+      e.preventDefault();
       closeDrawer();
+      return;
+    }
+
+    const isEditing =
+      ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) ||
+      document.activeElement?.isContentEditable;
+    if (isEditing) return;
+
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+    if (e.key === '?') {
+      e.preventDefault();
+      toggleDrawer('help');
+      notifyAction('help', e);
+      return;
+    }
+
+    if (e.key === '1') {
+      e.preventDefault();
+      closeDrawer();
+      notifyAction('desk', e);
+      return;
+    }
+
+    if (e.key.toLowerCase() === 'd') {
+      e.preventDefault();
+      toggleDrawer('documents');
+      notifyAction('documents', e);
+      return;
+    }
+
+    if (e.key.toLowerCase() === 'b') {
+      e.preventDefault();
+      toggleDrawer('library');
+      notifyAction('library', e);
+      return;
+    }
+
+    if (e.key.toLowerCase() === 'm') {
+      e.preventDefault();
+      toggleDrawer('templates');
+      notifyAction('templates', e);
+      return;
+    }
+
+    if (e.key === ',') {
+      e.preventDefault();
+      openSettingsModal();
+      notifyAction('settings', e);
+      return;
     }
   });
 
@@ -343,7 +407,7 @@ export function createShell(root, { onAction } = {}) {
       subtitle: 'Guia de uso e comandos rápidos',
       icon: 'help',
       key: '?',
-      run: () => { notify('Ateliê de documentos — bancada de falsificação de RPG', { tone: 'info' }); onAction?.('help'); }
+      run: () => { openDrawer('help'); onAction?.('help'); }
     },
   ]);
 

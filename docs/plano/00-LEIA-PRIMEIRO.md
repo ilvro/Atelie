@@ -177,16 +177,16 @@ Medido com `ag-psd` 30.2.0 em três arquivos (um jornal, um relatório policial 
 | 14 | feita | 24/10/2026 | Coleção da casa: 26 famílias de fontes livres (39 arquivos TTF), parser sfnt, seletor com prévia e eixos variáveis |
 | 15 | feita | 24/10/2026 | Gaveta Biblioteca (chips, busca, categorias em fitas, drag & drop) e modo Preencher (campos, exemplos, troca de imagens) |
 | 16 | feita | 24/10/2026 | Coleção da casa: 39 modelos próprios em 8 categorias, gerador de modelos, frente/verso, UV e folha de contato |
-| 17 | pendente | | |
-| 18 | pendente | | |
-| 19 | pendente | | |
-| 20 | pendente | | |
-| 21 | pendente | | |
-| 22 | pendente | | |
-| 23 | pendente | | |
-| 24 | pendente | | |
-| 25 | pendente | | |
-| 26 | pendente | | |
-| 27 | pendente | | |
+| 17 | feita | 24/10/2026 | Tela de abertura, 9 folhas em branco, continuar, 8 modelos em destaque, expansões, boas-vindas e gaveta Modelos |
+| 18 | feita | 25/10/2026 | Assado em alta resolução (2048 px) e entrega ao Tabletop pelos 3 caminhos do contrato (A: mesa-handouts-v1, B: postMessage, C: HTTP e CORS) |
+| 19 | feita | 25/10/2026 | Camadas secretas sob luz negra, escurecimento da página (tint e strength), mudança de clima da interface, atalho U, selos UV e assado UV |
+| 20 | feita | 25/10/2026 | Leitura imersiva em tela cheia, lupa 2,5×, lanterna UV com máscara radial, virar frente/verso e carrossel de documentos |
+| 21 | feita | 25/10/2026 | Exportação de PNG em alta resolução (2048 px e 300 ppp), luz UV, gaveta Exportar, atalho E e layout de impressão 1:1 sem margens |
+| 22 | feita | 25/10/2026 | Importador CLI de imagens, símbolos e fontes para a expansão privada Arquivos Confidenciais |
+| 23 | feita | 25/10/2026 | Expansão: leitura da estrutura dos PSDs (sem pixels), relatórios, métricas e árvore normalizada |
+| 24 | feita | 25/10/2026 | Expansão: composição de PSD em Node |
+| 25 | feita | 25/10/2026 | Expansão: conversão de PSD para modelos editáveis com campos, fusão de fundo, WebP, UV e testes |
+| 26 | feita | 25/10/2026 | Build estático sem servidor, workflow GitHub Pages, backup/restauração e testes |
+| 27 | feita | 25/10/2026 | Gaveta de Ajuda (? e busca), catálogo de atalhos, guias de uso/manutenção e licenças |
 | 28 | pendente | | |
 | 29 | pendente (opcional) | | |
