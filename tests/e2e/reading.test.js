@@ -240,7 +240,7 @@ test('reading mode e2e: rail button & shortcut P entry, full screen hide shell, 
   await page.keyboard.press('Escape');
   await page.waitForTimeout(200);
   await page.click('[data-action="archive"]');
-  await page.waitForTimeout(400);
+  await page.waitForTimeout(800);
 
   // Enter reader
   await page.keyboard.press('p');

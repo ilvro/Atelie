@@ -127,8 +127,8 @@ Monte objetos **no formato do ag-psd à mão** (não precisa de PSD de verdade):
 
 ## Pronto quando
 
-- [ ] Testes passam; `npm test` passa.
-- [ ] Rodado de verdade em pelo menos 3 pacotes (`--bundle "Bundle 4"`, `"Bundle 2"`, `"Bundle 59"`) e no acervo inteiro se der tempo. Anote no `progress.md` o tempo, as cinco mesclagens e os cinco ajustes mais comuns e as fontes que faltam na biblioteca: são os dados que a etapa 24 usa para priorizar.
+- [x] Testes passam; `npm test` passa.
+- [x] Rodado de verdade em pelo menos 3 pacotes (`--bundle "Bundle 4"`, `"Bundle 2"`, `"Bundle 59"`) e no acervo inteiro se der tempo. Anote no `progress.md` o tempo, as cinco mesclagens e os cinco ajustes mais comuns e as fontes que faltam na biblioteca: são os dados que a etapa 24 usa para priorizar.
 
 ## Não faça
 

@@ -28,7 +28,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 20 — Modo leitura | concluída | 2026-10-25 | Leitura imersiva em tela cheia, lupa 2,5×, lanterna UV com máscara radial, virar frente/verso e carrossel de documentos |
 | 21 — Exportar e imprimir | concluída | 2026-10-25 | Exportação de PNG em alta resolução (2048 px e 300 ppp), luz UV, gaveta Exportar, atalho E e layout de impressão 1:1 sem margens |
 | 22 — Importar elementos | concluída | 2026-10-25 | Importador CLI de imagens, símbolos e fontes para a expansão privada Arquivos Confidenciais |
-| 23 — PSD leitura | pendente | | Expansão: análise e estrutura de PSDs |
+| 23 — PSD leitura | concluída | 2026-10-25 | Expansão: leitura da estrutura dos PSDs (sem pixels), relatórios, métricas e árvore normalizada |
 | 24 — PSD compositor | pendente | | Expansão: composição de PSD em Node |
 | 25 — PSD modelos | pendente | | Expansão: conversão de PSD para modelos |
 | 26 — Publicar no Pages | pendente | | Build estático e workflow do GitHub Pages |
@@ -135,6 +135,51 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ### Pendências reais
 - Nenhuma pendência na Etapa 17.
+
+---
+
+## Etapa 23 — Ler a estrutura dos PSDs (relatório)
+
+### Feito
+- **Stub Mínimo de Canvas para Node (`scripts/library/lib/psd-canvas.js`)**:
+  - `useImageDataCanvas()`: implementa um canvas em memória sem dependências nativas para satisfazer os requisitos internos de leitura de pixels do `ag-psd` quando for necessário na etapa 24.
+- **Transformações Geométricas e Afins Puras (`scripts/library/lib/psd-geometry.js`)**:
+  - `cornersToAffine(corners, width, height)`: cálculo da matriz afim de transformação de quadriláteros `[x0,y0, x1,y1, x2,y2, x3,y3]` com verificação de paralelogramo (tolerância 0,5 px); cantos não paralelos retornam `{ perspective: true }`.
+  - `applyAffine(matrix, x, y)`: aplicação de afim a um ponto 2D no espaço do documento.
+  - `composeAffine(m1, m2)`: multiplicação de transformações para objetos inteligentes aninhados.
+  - `textBoxInDocument(text, outer)`: posicionamento, dimensões, rotação (via `atan2(b, a)`) e escala (`sqrt(a² + b²)`) de camadas de texto no espaço do documento (suporte a tipos `box` e `point`).
+- **Árvore Normalizada e Analisadores (`scripts/library/lib/psd-tree.js`)**:
+  - `PSD_BLENDS`: mapeamento de 20 modos de mesclagem do Photoshop para os identificadores do Ateliê, tratando modos sem equivalente ou desconhecidos como `unsupported:<nome>`.
+  - `normalizeTree(psd, { linked })`: converte a estrutura do `ag-psd` em nós puros (`kind`: `'group'`, `'pixel'`, `'text'`, `'smart'`, `'adjust'`), calculando opacidade efetiva (`opacity * fillOpacity`), caminhos hierárquicos com `/` (`path`), efeitos de camada e recursão em objetos inteligentes vinculados.
+  - `textNodes(tree)`: extração recursiva de todos os textos (inclusive dentro de objetos inteligentes) com a caixa já transformada no espaço do documento, incluindo tamanho escalado e propriedades tipográficas completas.
+  - `variantGroups(tree)`: detecção automática de variantes em grupos irmãos de primeiro nível onde exatamente um está visível.
+  - `looksLikeUv(nodeOrName)`: identificação de camadas UV através de palavras isoladas `\buv\b` ou `luz negra`, sem falsos positivos (ex.: rejeita `Uva`).
+- **CLI e Gerador de Relatório (`scripts/library/psd-report.js`)**:
+  - Script CLI com suporte a `--source`, `--expansion`, `--bundle` (inclusive listas separadas por vírgula), `--file` e `--limit`.
+  - Leitura rápida de estruturas com `readPsd` ignorando pixels (`skipLayerImageData: true`), lendo PSBs vinculados iniciados com magic bytes `8BPS`.
+  - Cálculo de pontuação de complexidade (0–100): começa em 100, −5 por mesclagem sem equivalente, −3 por tipo de ajuste não suportado, −10 por smart object em perspectiva, −2 por efeito de camada (máx. −20), −15 se não contiver texto.
+  - Geração de relatórios por arquivo em `<expansão>/reports/psd/<slug>.json`, consolidado em `<expansão>/reports/psd-summary.json` e tabela legível em Markdown em `<expansão>/reports/psd-summary.md`.
+- **Testes Unitários (`tests/handouts-psd-tree.test.js`)**:
+  - 7 testes unitários sintetizando objetos ag-psd à mão: grupo pass through com pixel multiply e clipping; mesclagem vivid light não suportada; caixa de texto com matriz e cor padrão preta; objeto inteligente escalado 2x contendo texto; detecção de perspectiva; grupos de variantes; e reconhecimento de camadas UV.
+- **Medição Real no HD (3 pacotes: `Bundle 4`, `Bundle 2`, `Bundle 59`)**:
+  - **Tempo de execução**: 4,5 segundos para 22 arquivos PSD/PSB analisados (2,92 GB totais).
+  - **Erros**: 0 erros.
+  - **Total de camadas de texto**: 158 camadas de texto encontradas e mapeadas.
+  - **Cinco modos de mesclagem mais comuns**: `normal` (345), `multiply` (137), `pass-through` (39), `screen` (31), `overlay` (26). Também ocorrem: `hard-light` (17), `soft-light` (16), `linear-burn` (16), `color-dodge` (3), `unsupported:linear light` (3), `unsupported:vivid light` (2).
+  - **Cinco camadas de ajuste mais comuns**: `curves` (40), `levels` (29), `black & white` (25), `hue/saturation` (14), `color balance` (10).
+  - **Efeitos de camada mais comuns**: `dropShadow` (27), `innerGlow` (26), `outerGlow` (26), `solidFill` (26), `innerShadow` (25), `stroke` (25).
+  - **Fontes ausentes mais frequentes na biblioteca**: `Calibri` (5 arquivos, 24 camadas), `Moinho` (5 arquivos, 6 camadas), `OldNewspaperTypes` (5 arquivos, 15 camadas), `TimesNewRomanPSMT` (4 arquivos, 26 camadas), `UnderwoodChampion` (3 arquivos, 4 camadas), `EasySpeech` (2 arquivos, 7 camadas), `F25Executive` (2 arquivos, 26 camadas), `KingthingsTrypewriter2` (2 arquivos, 9 camadas).
+  - **Detecção de Luz UV**: identificada com sucesso em 100% dos documentos policiais do Bundle 59 (`Efeito de UV`, `Fibras e Manchas em UV`, `Textos em UV (Sobrepor)`) e no `5- Jornal com UV.psd` do Bundle 4.
+  - **Mapeamento do Acervo Completo**: 614 arquivos PSD/PSB totalizando 93,45 GB.
+
+### Validação
+- `npm test`: 126 testes unitários passando 100%.
+- `tests/handouts-psd-tree.test.js`: 7 testes passando 100%.
+- `npm run library:psd-report -- --bundle "Bundle 4, Bundle 2, Bundle 59"` executado com sucesso em 4,5s.
+- `git status`: limpo, nenhum arquivo privado em git.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 23.
 
 ---
 
