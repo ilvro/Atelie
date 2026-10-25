@@ -1,5 +1,7 @@
 import { renderIcon, escapeHTML as esc } from '../ui/icons.js';
 import { tape, tiltOf } from '../ui/primitives.js';
+import { pickAndInstallExpansion, openExpansionInstallDialog } from '../ui/expansion-dialog.js';
+import { readFolderFromFileList } from '../data/expansion-installer.js';
 
 const TEMPLATE_CATEGORIES = [
   'Cartas e bilhetes',
@@ -192,15 +194,26 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
           `;
         }).join('')
       : `
-        <div class="template-empty-state" style="grid-column: 1 / -1;">
-          <p>Nenhum modelo encontrado.</p>
+        <div class="template-empty-state" style="grid-column: 1 / -1; padding: 24px 12px; text-align: center;">
+          <p style="margin-bottom: 8px;">Nenhum modelo encontrado.</p>
+          <button type="button" class="at-btn is-sm is-primary" data-action="install-expansion">
+            ${renderIcon('upload', 13)}
+            <span>Instalar expansão deste computador…</span>
+          </button>
         </div>
       `;
 
     container.innerHTML = `
-      <div class="templates-search-box">
-        <span class="templates-search-icon">${renderIcon('search', 14)}</span>
-        <input type="search" class="templates-search-input" placeholder="Buscar modelos..." value="${esc(searchQuery)}" aria-label="Buscar modelos" />
+      <div class="templates-top-bar">
+        <div class="templates-search-box">
+          <span class="templates-search-icon">${renderIcon('search', 14)}</span>
+          <input type="search" class="templates-search-input" placeholder="Buscar modelos..." value="${esc(searchQuery)}" aria-label="Buscar modelos" />
+        </div>
+        <button type="button" class="at-btn is-sm templates-install-btn" data-action="install-expansion" title="Instalar pacote de expansão com novos modelos">
+          ${renderIcon('upload', 13)}
+          <span>Instalar expansão</span>
+        </button>
+        <input type="file" class="templates-expansion-folder-input" webkitdirectory directory multiple style="display:none;" />
       </div>
 
       ${sources.length > 1 ? `<div class="templates-chips-bar source-chips">${sourceChips}</div>` : ''}
@@ -211,6 +224,41 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
         ${gridItems}
       </div>
     `;
+
+    // Bind expansion installer
+    const expFolderInput = container.querySelector('.templates-expansion-folder-input');
+    const onExpansionInstalled = async () => {
+      await loadData();
+      if (window.__atelie?.refreshLibrary) window.__atelie.refreshLibrary();
+      shell?.notify?.('Expansão instalada com sucesso!', { tone: 'positive' });
+    };
+
+    container.querySelectorAll('[data-action="install-expansion"]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        pickAndInstallExpansion({
+          api,
+          inputElement: expFolderInput,
+          onComplete: onExpansionInstalled,
+        });
+      });
+    });
+
+    expFolderInput?.addEventListener('change', async () => {
+      const files = expFolderInput.files;
+      if (!files || files.length === 0) return;
+      try {
+        const { expansionJson, libraryJson, filesMap } = await readFolderFromFileList(files);
+        await openExpansionInstallDialog({
+          expansionJson,
+          libraryJson,
+          filesMap,
+          api,
+          onComplete: onExpansionInstalled,
+        });
+      } catch (err) {
+        alert(`Erro ao ler pasta selecionada: ${err.message}`);
+      }
+    });
 
     // Bind search
     const searchInput = container.querySelector('.templates-search-input');

@@ -411,6 +411,40 @@
   box-sizing: border-box;
 }
 
+.templates-top-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.templates-top-bar .templates-search-box {
+  flex: 1;
+}
+
+.templates-install-btn {
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 10px;
+  font-size: var(--eco-fs-12);
+  background: var(--at-desk-2);
+  border: 1px solid var(--at-line);
+  color: var(--at-text-2);
+  border-radius: var(--eco-radius-s);
+  cursor: pointer;
+  transition: background var(--eco-fast) var(--eco-ease), color var(--eco-fast) var(--eco-ease), border-color var(--eco-fast) var(--eco-ease);
+}
+
+.templates-install-btn:hover {
+  background: var(--at-desk-3);
+  color: var(--at-text);
+  border-color: var(--at-line-strong);
+}
+
 .templates-search-box {
   position: relative;
   width: 100%;

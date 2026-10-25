@@ -105,8 +105,12 @@ export async function readFolderFromDirectoryHandle(dirHandle, { onProgress, sig
 
   await scanDir(dirHandle);
 
-  if (!expansionJson) throw new Error('Arquivo expansion.json não encontrado na raiz da pasta.');
-  if (!libraryJson) throw new Error('Arquivo library.json não encontrado na raiz da pasta.');
+  if (!expansionJson) {
+    throw new Error('Arquivo expansion.json não encontrado na raiz da pasta. Se esta for uma pasta com arquivos .psd brutos do Photoshop, é necessário pré-processá-los com o importador de expansão (scripts/library/import-psd.js) para gerar os modelos.');
+  }
+  if (!libraryJson) {
+    throw new Error('Arquivo library.json não encontrado na raiz da pasta. Se esta for uma pasta com arquivos .psd brutos do Photoshop, é necessário pré-processá-los com o importador de expansão (scripts/library/import-psd.js) para gerar os modelos.');
+  }
 
   return { expansionJson, libraryJson, filesMap };
 }
@@ -151,8 +155,12 @@ export async function readFolderFromFileList(fileList, { onProgress, signal } = 
     }
   }
 
-  if (!expansionJson) throw new Error('Arquivo expansion.json não encontrado na pasta selecionada.');
-  if (!libraryJson) throw new Error('Arquivo library.json não encontrado na pasta selecionada.');
+  if (!expansionJson) {
+    throw new Error('Arquivo expansion.json não encontrado na pasta selecionada. Se esta for uma pasta com arquivos .psd brutos do Photoshop, é necessário pré-processá-los com o importador de expansão (scripts/library/import-psd.js) para gerar os modelos.');
+  }
+  if (!libraryJson) {
+    throw new Error('Arquivo library.json não encontrado na pasta selecionada. Se esta for uma pasta com arquivos .psd brutos do Photoshop, é necessário pré-processá-los com o importador de expansão (scripts/library/import-psd.js) para gerar os modelos.');
+  }
 
   return { expansionJson, libraryJson, filesMap };
 }
