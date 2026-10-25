@@ -447,7 +447,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     shell.inspector.panel('layers', layersWrap);
 
     const propertiesWrap = document.createElement('div');
-    propertiesPanel = createPropertiesPanel(propertiesWrap, { state, api });
+    propertiesPanel = createPropertiesPanel(propertiesWrap, { state, api, fonts });
     shell.inspector.panel('properties', propertiesWrap);
 
     const historyWrap = document.createElement('div');

@@ -51,7 +51,7 @@ test('colecao-manifest: validação estrutural e integridade do acervo', async (
   }
 
   // 5. Todo arquivo na pasta (exceto library.json, README.md, licenças) deve estar no manifesto
-  const ignoredFiles = new Set(['library.json', 'README.md', 'LICENSE', 'LICENSE.txt', 'LICENCA.md']);
+  const ignoredFiles = new Set(['library.json', 'README.md', 'LICENSE', 'LICENSE.txt', 'LICENCA.md', 'LICENCAS.md', 'OFL.txt']);
 
   async function checkDir(dir, relPath = '') {
     const entries = await fs.readdir(dir, { withFileTypes: true });

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-25T00:44:50.576Z",
+  "generatedAt": "2026-10-25T01:01:09.457Z",
   "items": [
     {
       "id": "casa-papel-oficio-branco-novo",
@@ -4243,6 +4243,585 @@
       "width": 80,
       "height": 80,
       "license": "própria"
+    },
+    {
+      "id": "casa-font-vt323-regular",
+      "kind": "font",
+      "name": "VT323 Regular",
+      "category": "Tela de computador",
+      "family": "VT323",
+      "postscript": "VT323-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/vt323/VT323-Regular.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-unifrakturmaguntia",
+      "kind": "font",
+      "name": "UnifrakturMaguntia",
+      "category": "Gótica",
+      "family": "UnifrakturMaguntia",
+      "postscript": "UnifrakturMaguntia",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/unifrakturmaguntia/UnifrakturMaguntia-Book.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-stardosstencil-bold",
+      "kind": "font",
+      "name": "Stardos Stencil Bold",
+      "category": "Estêncil e militar",
+      "family": "Stardos Stencil",
+      "postscript": "StardosStencil-Bold",
+      "weight": 700,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/stardosstencil/StardosStencil-Bold.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-stardosstencil-regular",
+      "kind": "font",
+      "name": "Stardos Stencil Regular",
+      "category": "Estêncil e militar",
+      "family": "Stardos Stencil",
+      "postscript": "StardosStencil-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/stardosstencil/StardosStencil-Regular.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-sharetechmono-regular",
+      "kind": "font",
+      "name": "Share Tech Mono",
+      "category": "Tela de computador",
+      "family": "Share Tech Mono",
+      "postscript": "ShareTechMono-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/sharetechmono/ShareTechMono-Regular.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-reeniebeanie",
+      "kind": "font",
+      "name": "Reenie Beanie",
+      "category": "Letra à mão",
+      "family": "Reenie Beanie",
+      "postscript": "ReenieBeanie",
+      "weight": 500,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/reeniebeanie/ReenieBeanie.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-playfairdisplay-italic",
+      "kind": "font",
+      "name": "Playfair Display Italic",
+      "category": "Impressão antiga",
+      "family": "Playfair Display",
+      "postscript": "PlayfairDisplay-Italic",
+      "weight": 400,
+      "style": "italic",
+      "variable": {
+        "axes": [
+          {
+            "tag": "wght",
+            "min": 400,
+            "default": 400,
+            "max": 900
+          }
+        ]
+      },
+      "file": "fontes/ofl/playfairdisplay/PlayfairDisplay-Italic[wght].ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-playfairdisplay-regular",
+      "kind": "font",
+      "name": "Playfair Display Regular",
+      "category": "Impressão antiga",
+      "family": "Playfair Display",
+      "postscript": "PlayfairDisplay-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": {
+        "axes": [
+          {
+            "tag": "wght",
+            "min": 400,
+            "default": 400,
+            "max": 900
+          }
+        ]
+      },
+      "file": "fontes/ofl/playfairdisplay/PlayfairDisplay[wght].ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-pirataone-regular",
+      "kind": "font",
+      "name": "Pirata One",
+      "category": "Gótica",
+      "family": "Pirata One",
+      "postscript": "PirataOne-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/pirataone/PirataOne-Regular.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-oswald-regular",
+      "kind": "font",
+      "name": "Oswald Regular",
+      "category": "Jornal e cartaz",
+      "family": "Oswald",
+      "postscript": "Oswald-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": {
+        "axes": [
+          {
+            "tag": "wght",
+            "min": 200,
+            "default": 400,
+            "max": 700
+          }
+        ]
+      },
+      "file": "fontes/ofl/oswald/Oswald[wght].ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-oldstandardtt-bold",
+      "kind": "font",
+      "name": "Old Standard TT Bold",
+      "category": "Impressão antiga",
+      "family": "Old Standard TT",
+      "postscript": "OldStandardTT-Bold",
+      "weight": 700,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/oldstandardtt/OldStandard-Bold.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-oldstandardtt-italic",
+      "kind": "font",
+      "name": "Old Standard TT Italic",
+      "category": "Impressão antiga",
+      "family": "Old Standard TT",
+      "postscript": "OldStandardTT-Italic",
+      "weight": 400,
+      "style": "italic",
+      "variable": null,
+      "file": "fontes/ofl/oldstandardtt/OldStandard-Italic.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-oldstandardtt-regular",
+      "kind": "font",
+      "name": "Old Standard TT Regular",
+      "category": "Impressão antiga",
+      "family": "Old Standard TT",
+      "postscript": "OldStandardTT-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/oldstandardtt/OldStandard-Regular.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-nothingyoucoulddo",
+      "kind": "font",
+      "name": "Nothing You Could Do",
+      "category": "Letra à mão",
+      "family": "Nothing You Could Do",
+      "postscript": "NothingYouCouldDo",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/nothingyoucoulddo/NothingYouCouldDo.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-librebaskerville-italic",
+      "kind": "font",
+      "name": "Libre Baskerville Italic",
+      "category": "Impressão antiga",
+      "family": "Libre Baskerville",
+      "postscript": "LibreBaskerville-Italic",
+      "weight": 400,
+      "style": "italic",
+      "variable": {
+        "axes": [
+          {
+            "tag": "wght",
+            "min": 400,
+            "default": 400,
+            "max": 700
+          }
+        ]
+      },
+      "file": "fontes/ofl/librebaskerville/LibreBaskerville-Italic[wght].ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-librebaskerville-regular",
+      "kind": "font",
+      "name": "Libre Baskerville Regular",
+      "category": "Impressão antiga",
+      "family": "Libre Baskerville",
+      "postscript": "LibreBaskerville-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": {
+        "axes": [
+          {
+            "tag": "wght",
+            "min": 400,
+            "default": 400,
+            "max": 700
+          }
+        ]
+      },
+      "file": "fontes/ofl/librebaskerville/LibreBaskerville[wght].ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-kalam-bold",
+      "kind": "font",
+      "name": "Kalam Bold",
+      "category": "Letra à mão",
+      "family": "Kalam",
+      "postscript": "Kalam-Bold",
+      "weight": 700,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/kalam/Kalam-Bold.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-kalam-light",
+      "kind": "font",
+      "name": "Kalam Light",
+      "category": "Letra à mão",
+      "family": "Kalam",
+      "postscript": "Kalam-Light",
+      "weight": 300,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/kalam/Kalam-Light.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-kalam-regular",
+      "kind": "font",
+      "name": "Kalam",
+      "category": "Letra à mão",
+      "family": "Kalam",
+      "postscript": "Kalam-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/kalam/Kalam-Regular.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-im-fell-english-italic",
+      "kind": "font",
+      "name": "IM FELL English Italic",
+      "category": "Impressão antiga",
+      "family": "IM Fell English",
+      "postscript": "IM_FELL_English_Italic",
+      "weight": 400,
+      "style": "italic",
+      "variable": null,
+      "file": "fontes/ofl/imfellenglish/IMFeENit28P.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-im-fell-english-roman",
+      "kind": "font",
+      "name": "IM FELL English Roman",
+      "category": "Impressão antiga",
+      "family": "IM Fell English",
+      "postscript": "IM_FELL_English_Roman",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/imfellenglish/IMFeENrm28P.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-im-fell-dw-pica-italic",
+      "kind": "font",
+      "name": "IM FELL DW Pica Italic",
+      "category": "Impressão antiga",
+      "family": "IM Fell DW Pica",
+      "postscript": "IM_FELL_DW_Pica_Italic",
+      "weight": 400,
+      "style": "italic",
+      "variable": null,
+      "file": "fontes/ofl/imfelldwpica/IMFePIit28P.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-im-fell-dw-pica-roman",
+      "kind": "font",
+      "name": "IM FELL DW Pica Roman",
+      "category": "Impressão antiga",
+      "family": "IM Fell DW Pica",
+      "postscript": "IM_FELL_DW_Pica_Roman",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/imfelldwpica/IMFePIrm28P.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-dawningofanewday",
+      "kind": "font",
+      "name": "Dawning of a New Day",
+      "category": "Letra à mão",
+      "family": "Dawning of a New Day",
+      "postscript": "DawningofaNewDay",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/dawningofanewday/DawningofaNewDay.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-cutivemono-regular",
+      "kind": "font",
+      "name": "Cutive Mono Regular",
+      "category": "Máquina de escrever",
+      "family": "Cutive Mono",
+      "postscript": "CutiveMono-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/cutivemono/CutiveMono-Regular.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-courierprime-bold",
+      "kind": "font",
+      "name": "Courier Prime Bold",
+      "category": "Máquina de escrever",
+      "family": "Courier Prime",
+      "postscript": "CourierPrime-Bold",
+      "weight": 700,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/courierprime/CourierPrime-Bold.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-courierprime-bolditalic",
+      "kind": "font",
+      "name": "Courier Prime Bold Italic",
+      "category": "Máquina de escrever",
+      "family": "Courier Prime",
+      "postscript": "CourierPrime-BoldItalic",
+      "weight": 700,
+      "style": "italic",
+      "variable": null,
+      "file": "fontes/ofl/courierprime/CourierPrime-BoldItalic.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-courierprime-italic",
+      "kind": "font",
+      "name": "Courier Prime Italic",
+      "category": "Máquina de escrever",
+      "family": "Courier Prime",
+      "postscript": "CourierPrime-Italic",
+      "weight": 400,
+      "style": "italic",
+      "variable": null,
+      "file": "fontes/ofl/courierprime/CourierPrime-Italic.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-courierprime-regular",
+      "kind": "font",
+      "name": "Courier Prime Regular",
+      "category": "Máquina de escrever",
+      "family": "Courier Prime",
+      "postscript": "CourierPrime-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/courierprime/CourierPrime-Regular.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-cormorantgaramond-lightitalic",
+      "kind": "font",
+      "name": "Cormorant Garamond Light Italic",
+      "category": "Impressão antiga",
+      "family": "Cormorant Garamond",
+      "postscript": "CormorantGaramond-LightItalic",
+      "weight": 300,
+      "style": "italic",
+      "variable": {
+        "axes": [
+          {
+            "tag": "wght",
+            "min": 300,
+            "default": 300,
+            "max": 700
+          }
+        ]
+      },
+      "file": "fontes/ofl/cormorantgaramond/CormorantGaramond-Italic[wght].ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-cormorantgaramond-light",
+      "kind": "font",
+      "name": "Cormorant Garamond Light",
+      "category": "Impressão antiga",
+      "family": "Cormorant Garamond",
+      "postscript": "CormorantGaramond-Light",
+      "weight": 300,
+      "style": "normal",
+      "variable": {
+        "axes": [
+          {
+            "tag": "wght",
+            "min": 300,
+            "default": 300,
+            "max": 700
+          }
+        ]
+      },
+      "file": "fontes/ofl/cormorantgaramond/CormorantGaramond[wght].ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-caveat-regular",
+      "kind": "font",
+      "name": "Caveat Regular",
+      "category": "Letra à mão",
+      "family": "Caveat",
+      "postscript": "Caveat-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": {
+        "axes": [
+          {
+            "tag": "wght",
+            "min": 400,
+            "default": 400,
+            "max": 700
+          }
+        ]
+      },
+      "file": "fontes/ofl/caveat/Caveat[wght].ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-blackopsone-regular",
+      "kind": "font",
+      "name": "Black Ops One Regular",
+      "category": "Estêncil e militar",
+      "family": "Black Ops One",
+      "postscript": "BlackOpsOne-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/blackopsone/BlackOpsOne-Regular.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-bebasneue-regular",
+      "kind": "font",
+      "name": "Bebas Neue Regular",
+      "category": "Jornal e cartaz",
+      "family": "Bebas Neue",
+      "postscript": "BebasNeue-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/bebasneue/BebasNeue-Regular.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-anton-regular",
+      "kind": "font",
+      "name": "Anton Regular",
+      "category": "Jornal e cartaz",
+      "family": "Anton",
+      "postscript": "Anton-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/ofl/anton/Anton-Regular.ttf",
+      "license": "OFL-1.1"
+    },
+    {
+      "id": "casa-font-specialelite-regular",
+      "kind": "font",
+      "name": "Special Elite Regular",
+      "category": "Máquina de escrever",
+      "family": "Special Elite",
+      "postscript": "SpecialElite-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/apache/specialelite/SpecialElite-Regular.ttf",
+      "license": "Apache-2.0"
+    },
+    {
+      "id": "casa-font-rocksalt-regular",
+      "kind": "font",
+      "name": "Rock Salt Regular",
+      "category": "Letra à mão",
+      "family": "Rock Salt",
+      "postscript": "RockSalt-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/apache/rocksalt/RockSalt-Regular.ttf",
+      "license": "Apache-2.0"
+    },
+    {
+      "id": "casa-font-permanentmarker-regular",
+      "kind": "font",
+      "name": "Permanent Marker Regular",
+      "category": "Marcador",
+      "family": "Permanent Marker",
+      "postscript": "PermanentMarker-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/apache/permanentmarker/PermanentMarker-Regular.ttf",
+      "license": "Apache-2.0"
+    },
+    {
+      "id": "casa-font-homemadeapple-regular",
+      "kind": "font",
+      "name": "Homemade Apple Regular",
+      "category": "Letra à mão",
+      "family": "Homemade Apple",
+      "postscript": "HomemadeApple-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variable": null,
+      "file": "fontes/apache/homemadeapple/HomemadeApple-Regular.ttf",
+      "license": "Apache-2.0"
     }
   ]
 }

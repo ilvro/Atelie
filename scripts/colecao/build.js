@@ -5,6 +5,7 @@ import sharp from 'sharp';
 
 import { loadRecipes, generatePaper } from './papers.js';
 import { OVERLAYS, generateOverlay } from './overlays.js';
+import { readFontNames } from '../lib/font-names.js';
 
 // Vector element modules
 import * as stamps from './vectors/stamps.js';
@@ -25,8 +26,10 @@ const colecaoDir = path.join(projectRoot, 'public/colecao');
 const papeisDir = path.join(colecaoDir, 'papeis');
 const texturasDir = path.join(colecaoDir, 'texturas');
 const elementosDir = path.join(colecaoDir, 'elementos');
+const fontesDir = path.join(colecaoDir, 'fontes');
 const previewsDir = path.join(colecaoDir, 'previews');
 const manifestPath = path.join(colecaoDir, 'library.json');
+const fontsJsonPath = path.join(projectRoot, 'scripts/fonts/fonts.json');
 
 const VECTOR_MODULES = [
   stamps,
@@ -42,6 +45,10 @@ const VECTOR_MODULES = [
   marks,
 ];
 
+function slugify(name) {
+  return String(name).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
 function getDimensions(item) {
   if (item.width && item.height) return { width: item.width, height: item.height };
   const vbMatch = item.svg.match(/viewBox="[0-9.-]+\s+[0-9.-]+\s+([0-9.]+)\s+([0-9.]+)"/);
@@ -56,7 +63,8 @@ async function main() {
   const onlyElements = args.includes('--elements');
   const onlyPapers = args.includes('--papers');
   const onlyOverlays = args.includes('--overlays');
-  const doAll = !onlyElements && !onlyPapers && !onlyOverlays;
+  const onlyFonts = args.includes('--fonts');
+  const doAll = !onlyElements && !onlyPapers && !onlyOverlays && !onlyFonts;
 
   console.log('[colecao] Iniciando construção da coleção da casa...');
   const startTime = Date.now();
@@ -68,6 +76,7 @@ async function main() {
 
   const generatedItems = [];
   const generatedCategories = new Set();
+  const generatedKinds = new Set();
 
   // 1. Generate Papers (16 papers x 3 ages = 48 papers)
   if (doAll || onlyPapers) {
@@ -161,10 +170,8 @@ async function main() {
       const previewPath = path.join(previewsDir, previewFileName);
       const dims = getDimensions(it);
 
-      // Save SVG file
       await fs.writeFile(svgPath, it.svg.trim(), 'utf8');
 
-      // Rasterize 320px WebP preview with sharp
       await sharp(Buffer.from(it.svg))
         .resize({ width: 320, height: 320, fit: 'inside' })
         .webp({ quality: 80 })
@@ -186,16 +193,83 @@ async function main() {
     console.log(`[colecao] Concluídos ${allVectors.length} elementos vetoriais.`);
   }
 
-  // 4. Update library.json manifest preserving items not regenerated in this run
+  // 4. Process Fonts (26 font families)
+  if (doAll || onlyFonts) {
+    generatedKinds.add('font');
+    console.log('[colecao] Indexando fontes livres da coleção da casa...');
+
+    let fontMetaMap = new Map();
+    try {
+      const fontsConfig = JSON.parse(await fs.readFile(fontsJsonPath, 'utf8'));
+      for (const f of fontsConfig) {
+        if (f.use === 'colecao') {
+          fontMetaMap.set(f.path, {
+            family: f.family,
+            category: f.category || 'Fontes',
+            license: f.license === 'OFL.txt' ? 'OFL-1.1' : 'Apache-2.0',
+          });
+        }
+      }
+    } catch (err) {
+      console.warn('[colecao] fonts.json não encontrado ou inválido:', err.message);
+    }
+
+    let fontFilesCount = 0;
+    try {
+      const entries = await fs.readdir(fontesDir, { recursive: true, withFileTypes: true });
+      for (const ent of entries) {
+        if (ent.isFile() && ent.name.endsWith('.ttf')) {
+          const fullPath = path.join(ent.parentPath || ent.path, ent.name);
+          const relPath = path.relative(colecaoDir, fullPath).replace(/\\/g, '/');
+          const relDir = path.dirname(relPath).replace(/^fontes\//, '');
+          const meta = fontMetaMap.get(relDir) || { family: '', category: 'Fontes', license: 'OFL-1.1' };
+
+          const buf = await fs.readFile(fullPath);
+          const fontInfo = readFontNames(buf);
+          if (!fontInfo) {
+            console.warn(`[colecao] Aviso: Não foi possível ler tabelas sfnt de ${relPath}`);
+            continue;
+          }
+
+          const psSlug = slugify(fontInfo.postscript || path.basename(ent.name, '.ttf'));
+          const id = `casa-font-${psSlug}`;
+          const family = meta.family || fontInfo.family;
+
+          generatedItems.push({
+            id,
+            kind: 'font',
+            name: fontInfo.fullName,
+            category: meta.category,
+            family,
+            postscript: fontInfo.postscript,
+            weight: fontInfo.weight,
+            style: fontInfo.italic ? 'italic' : 'normal',
+            variable: fontInfo.variable ? fontInfo.variable : null,
+            file: relPath,
+            license: meta.license,
+          });
+
+          fontFilesCount++;
+        }
+      }
+      console.log(`[colecao] Concluídas ${fontFilesCount} fontes.`);
+    } catch (err) {
+      console.warn('[colecao] Diretório de fontes não encontrado:', err.message);
+    }
+  }
+
+  // 5. Update library.json manifest preserving items not regenerated in this run
   let existingManifest = { schema: 1, generatedAt: null, items: [] };
   try {
     const raw = await fs.readFile(manifestPath, 'utf8');
     existingManifest = JSON.parse(raw);
   } catch {}
 
-  const preservedItems = (existingManifest.items || []).filter(
-    item => !generatedCategories.has(item.category)
-  );
+  const preservedItems = (existingManifest.items || []).filter(item => {
+    if (generatedKinds.has(item.kind)) return false;
+    if (generatedCategories.has(item.category)) return false;
+    return true;
+  });
 
   const finalItems = [...preservedItems, ...generatedItems];
 

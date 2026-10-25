@@ -449,6 +449,81 @@ test('editor manipulation e2e: drag, resize, rotate, snap, inline text, keyboard
   });
   assert.equal(xAfterShift, xBeforeShift + 10, 'Shift+ArrowRight should move layer by 10 px');
 
+  // 14. Font selector displays "Special Elite" in its own font and choosing handwritten changes canvas
+  await page.click('.inspector-tab[data-tab="properties"]');
+  const fontTrigger = page.locator('.font-select-trigger');
+  await fontTrigger.waitFor({ state: 'visible' });
+  await fontTrigger.click();
+
+  const fontPopover = page.locator('.font-select-popover');
+  await fontPopover.waitFor({ state: 'visible' });
+
+  // Verify Special Elite item exists and rendered text width differs from Hanken Grotesk fallback
+  const specialEliteBtn = page.locator('.font-item-btn[data-family="Special Elite"]');
+  await specialEliteBtn.scrollIntoViewIfNeeded();
+
+  // Wait for font to load in browser
+  await page.evaluate(async () => {
+    await document.fonts.load('16px "Special Elite"');
+  });
+
+  const fontWidthComparison = await page.evaluate(() => {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.font = '16px "Special Elite"';
+    const specialEliteWidth = ctx.measureText('Special Elite').width;
+    ctx.font = '16px "Hanken Grotesk"';
+    const hankenWidth = ctx.measureText('Special Elite').width;
+    return { specialEliteWidth, hankenWidth };
+  });
+  assert.notEqual(
+    fontWidthComparison.specialEliteWidth,
+    fontWidthComparison.hankenWidth,
+    'Special Elite text width should differ from Hanken Grotesk fallback'
+  );
+
+  // Snapshot canvas before choosing handwritten font
+  const canvasPixelsBefore = await page.evaluate(() => {
+    const canvas = document.querySelector('.stage-canvas');
+    const ctx = canvas.getContext('2d');
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    let dark = 0;
+    for (let i = 0; i < imgData.length; i += 4) {
+      if (imgData[i] < 100 && imgData[i + 1] < 100 && imgData[i + 2] < 100 && imgData[i + 3] > 200) {
+        dark++;
+      }
+    }
+    return dark;
+  });
+
+  // Click handwritten font "Caveat"
+  const caveatBtn = page.locator('.font-item-btn[data-family="Caveat"]');
+  await caveatBtn.scrollIntoViewIfNeeded();
+  await caveatBtn.click();
+
+  // Wait for font load and canvas render
+  await page.waitForTimeout(300);
+
+  const selectedFamily = await page.evaluate(() => {
+    const l = window.__atelie.editor.state.handout.layers.find(x => x.kind === 'text');
+    return l.text?.font?.family;
+  });
+  assert.equal(selectedFamily, 'Caveat', 'Text layer font family should update to Caveat');
+
+  const canvasPixelsAfter = await page.evaluate(() => {
+    const canvas = document.querySelector('.stage-canvas');
+    const ctx = canvas.getContext('2d');
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    let dark = 0;
+    for (let i = 0; i < imgData.length; i += 4) {
+      if (imgData[i] < 100 && imgData[i + 1] < 100 && imgData[i + 2] < 100 && imgData[i + 3] > 200) {
+        dark++;
+      }
+    }
+    return dark;
+  });
+  assert.notEqual(canvasPixelsAfter, canvasPixelsBefore, 'Canvas should update when changing to handwritten font');
+
   assert.deepEqual(errors, []);
 });
 

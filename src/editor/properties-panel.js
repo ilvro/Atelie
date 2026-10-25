@@ -10,6 +10,7 @@ import {
 import { BLEND_MODES, updateLayer } from '../domain/handouts.js';
 import { boxCorners } from './geometry.js';
 import { EFFECTS } from '../render/handout-effects.js';
+import { mountFontSelector, getCachedFont } from './font-selector.js';
 
 export function getDocumentColors(handout) {
   const colors = new Set();
@@ -68,7 +69,7 @@ export function alignLayer(layer, alignType, page) {
   };
 }
 
-export function createPropertiesPanel(container, { state, api } = {}) {
+export function createPropertiesPanel(container, { state, api, fonts } = {}) {
   let isImageModalOpen = false;
 
   function getSelectedLayer() {
@@ -360,15 +361,8 @@ export function createPropertiesPanel(container, { state, api } = {}) {
     // Type specific fields
     if (layer.kind === 'text') {
       const txt = layer.text;
-      const fontFamilies = [
-        ['IM Fell English', 'IM Fell English'],
-        ['Courier Prime', 'Courier Prime'],
-        ['Georgia', 'Georgia'],
-        ['Times New Roman', 'Times New Roman'],
-        ['Courier New', 'Courier New'],
-        ['Arial', 'Arial'],
-        ['Special Elite', 'Special Elite'],
-      ];
+      const curFontMeta = getCachedFont(txt.font?.library) || getCachedFont(txt.font?.family);
+      const wghtAxis = curFontMeta?.variable?.axes?.find(a => a.tag === 'wght');
 
       html += `
         <fieldset class="prop-group" ${stateAttr}>
@@ -380,13 +374,14 @@ export function createPropertiesPanel(container, { state, api } = {}) {
 
           <label class="field">
             <span class="field-label">Família da fonte</span>
-            <select data-field="h:text.font.family" ${stateAttr}>
-              ${fontFamilies.map(([f, label]) => `<option value="${esc(f)}" ${txt.font?.family === f ? 'selected' : ''}>${esc(label)}</option>`).join('')}
-            </select>
+            <div class="font-selector-mount"></div>
           </label>
 
           <div class="field-row">
-            ${choiceField('h:text.font.weight', 'Peso', String(txt.font?.weight || 400), [['400', 'Normal'], ['700', 'Negrito']], { disabled: isLocked })}
+            ${wghtAxis
+              ? numberField('h:text.font.weight', 'Peso · contínuo', txt.font?.weight ?? wghtAxis.default, { min: wghtAxis.min, max: wghtAxis.max, step: 1, disabled: isLocked })
+              : choiceField('h:text.font.weight', 'Peso', String(txt.font?.weight || 400), [['400', 'Normal'], ['700', 'Negrito']], { disabled: isLocked })
+            }
             ${checkField('h:text.font.italic', 'Itálico', Boolean(txt.font?.italic))}
           </div>
 
@@ -584,6 +579,40 @@ export function createPropertiesPanel(container, { state, api } = {}) {
         applyFieldChange(el.dataset.field, el.type === 'checkbox' ? el.checked : el.value);
       }
     });
+
+    const fontMount = container.querySelector('.font-selector-mount');
+    if (fontMount && layer.kind === 'text') {
+      mountFontSelector(fontMount, {
+        currentFont: layer.text?.font,
+        onSelect: (selectedFont) => {
+          const curLayer = getSelectedLayer();
+          if (!curLayer || curLayer.locked) return;
+
+          const nextFont = {
+            ...curLayer.text.font,
+            family: selectedFont.family,
+            library: selectedFont.id,
+          };
+
+          const wAxis = selectedFont.variable?.axes?.find(a => a.tag === 'wght');
+          if (wAxis) {
+            const curW = Number(nextFont.weight || 400);
+            nextFont.weight = Math.max(wAxis.min, Math.min(wAxis.max, curW));
+          }
+
+          const updated = updateLayer(state.handout, curLayer.id, {
+            text: {
+              ...curLayer.text,
+              font: nextFont,
+            },
+          });
+          state.edit(updated, { desc: `Mudar fonte para ${selectedFont.family}` });
+        },
+        api,
+        fonts,
+        disabled: isLocked,
+      });
+    }
 
     const pickerBtn = container.querySelector('[data-action="open-image-picker"]');
     if (pickerBtn) {

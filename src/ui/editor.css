@@ -1590,3 +1590,148 @@
 }
 
 
+
+/* --- Seletor próprio de fontes --- */
+.font-select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.font-select-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: var(--at-desk-1);
+  border: 1px solid var(--at-line);
+  border-radius: var(--eco-radius-s);
+  color: var(--at-text);
+  font-size: var(--eco-fs-13);
+  cursor: pointer;
+  box-sizing: border-box;
+  text-align: left;
+  transition: border-color var(--eco-fast) var(--eco-ease);
+}
+
+.font-select-trigger:hover:not(:disabled) {
+  border-color: var(--at-line-strong);
+}
+
+.font-select-trigger:focus-visible {
+  outline: 2px solid var(--at-uv);
+  outline-offset: 1px;
+}
+
+.font-select-trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.font-select-current {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--eco-fs-14);
+}
+
+.font-select-arrow {
+  color: var(--at-muted);
+  font-size: var(--eco-fs-11);
+  margin-left: 6px;
+}
+
+.font-select-popover {
+  position: fixed;
+  z-index: 300;
+  background: var(--at-desk-2);
+  border: 1px solid var(--at-line-strong);
+  border-radius: var(--eco-radius-s);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.font-search-wrap {
+  padding: 8px;
+  border-bottom: 1px solid var(--at-line);
+  background: var(--at-desk-2);
+}
+
+.font-search-input {
+  width: 100%;
+  padding: 6px 10px;
+  background: var(--at-desk-1);
+  border: 1px solid var(--at-line);
+  border-radius: var(--eco-radius-s);
+  color: var(--at-text);
+  font-family: var(--eco-font-ui);
+  font-size: var(--eco-fs-12);
+  box-sizing: border-box;
+  outline: none;
+}
+
+.font-search-input:focus {
+  border-color: var(--at-uv);
+}
+
+.font-list-scroll {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+
+.font-group {
+  margin-bottom: 6px;
+}
+
+.font-group-title {
+  padding: 6px 10px 2px 10px;
+  font-family: var(--eco-font-ui);
+  font-size: var(--eco-fs-11);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--at-muted);
+  font-weight: bold;
+}
+
+.font-item-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background: transparent;
+  border: none;
+  color: var(--at-text);
+  cursor: pointer;
+  text-align: left;
+  box-sizing: border-box;
+  transition: background var(--eco-fast) var(--eco-ease);
+}
+
+.font-item-btn:hover,
+.font-item-btn:focus-visible {
+  background: var(--at-desk-3);
+  outline: none;
+}
+
+.font-item-name {
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.font-tag-var {
+  font-family: var(--at-font-type);
+  font-size: var(--eco-fs-11);
+  background: var(--at-desk-3);
+  color: var(--at-muted);
+  padding: 1px 4px;
+  border-radius: 2px;
+  margin-left: 6px;
+}

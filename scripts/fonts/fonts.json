@@ -12,6 +12,213 @@
     "files": ["CourierPrime-Regular.ttf", "CourierPrime-Bold.ttf"],
     "license": "OFL.txt",
     "use": "ui"
+  },
+  {
+    "family": "Courier Prime",
+    "category": "Máquina de escrever",
+    "path": "ofl/courierprime",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Special Elite",
+    "category": "Máquina de escrever",
+    "path": "apache/specialelite",
+    "files": "*",
+    "license": "LICENSE.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Cutive Mono",
+    "category": "Máquina de escrever",
+    "path": "ofl/cutivemono",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Caveat",
+    "category": "Letra à mão",
+    "path": "ofl/caveat",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Kalam",
+    "category": "Letra à mão",
+    "path": "ofl/kalam",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Homemade Apple",
+    "category": "Letra à mão",
+    "path": "apache/homemadeapple",
+    "files": "*",
+    "license": "LICENSE.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Reenie Beanie",
+    "category": "Letra à mão",
+    "path": "ofl/reeniebeanie",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Nothing You Could Do",
+    "category": "Letra à mão",
+    "path": "ofl/nothingyoucoulddo",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Dawning of a New Day",
+    "category": "Letra à mão",
+    "path": "ofl/dawningofanewday",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Rock Salt",
+    "category": "Letra à mão",
+    "path": "apache/rocksalt",
+    "files": "*",
+    "license": "LICENSE.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Permanent Marker",
+    "category": "Marcador",
+    "path": "apache/permanentmarker",
+    "files": "*",
+    "license": "LICENSE.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "IM Fell English",
+    "category": "Impressão antiga",
+    "path": "ofl/imfellenglish",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "IM Fell DW Pica",
+    "category": "Impressão antiga",
+    "path": "ofl/imfelldwpica",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Old Standard TT",
+    "category": "Impressão antiga",
+    "path": "ofl/oldstandardtt",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Libre Baskerville",
+    "category": "Impressão antiga",
+    "path": "ofl/librebaskerville",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Cormorant Garamond",
+    "category": "Impressão antiga",
+    "path": "ofl/cormorantgaramond",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Playfair Display",
+    "category": "Impressão antiga",
+    "path": "ofl/playfairdisplay",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Bebas Neue",
+    "category": "Jornal e cartaz",
+    "path": "ofl/bebasneue",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Oswald",
+    "category": "Jornal e cartaz",
+    "path": "ofl/oswald",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Anton",
+    "category": "Jornal e cartaz",
+    "path": "ofl/anton",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "UnifrakturMaguntia",
+    "category": "Gótica",
+    "path": "ofl/unifrakturmaguntia",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Pirata One",
+    "category": "Gótica",
+    "path": "ofl/pirataone",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Stardos Stencil",
+    "category": "Estêncil e militar",
+    "path": "ofl/stardosstencil",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Black Ops One",
+    "category": "Estêncil e militar",
+    "path": "ofl/blackopsone",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "VT323",
+    "category": "Tela de computador",
+    "path": "ofl/vt323",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Share Tech Mono",
+    "category": "Tela de computador",
+    "path": "ofl/sharetechmono",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
   }
 ]
-

@@ -19,7 +19,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 11 — Efeitos procedurais | concluída | 2026-10-24 | 9 efeitos procedurais em código, determinismo por semente PRNG, cortes e propriedades |
 | 12 — Coleção papéis e texturas | concluída | 2026-10-24 | 48 papéis em 3 idades e 53 texturas de sobreposição em WebP (7,78 MB total) |
 | 13 — Coleção elementos | concluída | 2026-10-24 | Coleção da casa: 140 elementos vetoriais em SVG (carimbos, selos, prendedores, fitas, molduras, etc.) |
-| 14 — Coleção fontes | pendente | | Coleção da casa: 26 famílias de fontes |
+| 14 — Coleção fontes | concluída | 2026-10-24 | Coleção da casa: 26 famílias de fontes livres, parser sfnt, seletor visual e eixos variáveis |
 | 15 — Biblioteca | pendente | | Gaveta Biblioteca e modo de preenchimento |
 | 16 — Coleção modelos | pendente | | Coleção da casa: 36 modelos prontos |
 | 17 — Início e galeria | pendente | | Tela de abertura e catálogo de modelos |
@@ -98,6 +98,52 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 - `npm test`: 82 testes unitários passando 100%.
 - `npm run test:e2e`: 8 suítes E2E Playwright passando 100%.
 - `npm run colecao:texturas`: 101 arquivos WebP gerados com sucesso e manifesto `library.json` validado.
+
+---
+
+## Etapa 14 — Coleção da casa · fontes livres
+
+### Feito
+- **Curadoria e Download das Fontes Livres (`scripts/fonts/fetch.js`, `scripts/fonts/fonts.json`)**:
+  - Download das 26 famílias de fontes de licença livre (OFL e Apache 2.0) a partir do commit `e7db6ca603fd4862010383ff17ffd6cc4ffac1c0` do repositório `google/fonts`, totalizando 39 arquivos TTF em `public/colecao/fontes/`.
+  - Cache de listagem de diretórios via `fonts.lock.json` para evitar atingir o rate limit de 60 req/h da API do GitHub.
+  - Download automático de licenças (`OFL.txt` ou `LICENSE.txt`) armazenadas diretamente ao lado dos arquivos de fontes.
+  - Geração de `public/colecao/fontes/LICENCAS.md` documentando detalhadamente família, categoria, identificador SPDX da licença (`OFL-1.1` ou `Apache-2.0`) e URL de origem no GitHub.
+- **Parser de Tabelas sfnt TrueType/OpenType (`scripts/lib/font-names.js`)**:
+  - Implementação pura de `readFontNames(buffer)` sem dependências externas:
+    - Suporte a assinaturas sfnt: `0x00010000` (TrueType), `true` e `OTTO` (OpenType). Buffers truncados ou coleções `ttcf` retornam `null`.
+    - Leitura da tabela `name`: extração de família (preferindo nameID 16 sobre 1), subfamília (17 sobre 2), nome PostScript (nameID 6) e nome completo (nameID 4), priorizando registros platformID 3 (Windows Unicode UTF-16BE) e platformID 1 (Mac Roman).
+    - Leitura da tabela `OS/2`: extração de peso (`usWeightClass`, padrão 400) e estilo itálico (bit 0 de `fsSelection`).
+    - Leitura da tabela `fvar`: detecção de eixos de variação (`wght`, `wdth`, `slnt`, etc.) com valores de mínimo, padrão e máximo.
+- **Indexação no Manifesto da Coleção (`scripts/colecao/build.js` e `package.json`)**:
+  - Adicionado comando `npm run colecao:fontes` (`node scripts/colecao/build.js --fonts`).
+  - Varredura de `public/colecao/fontes/` indexando 39 estilos/arquivos de fontes no manifesto `public/colecao/library.json`, totalizando agora 280 itens no acervo (48 papéis, 53 sobreposições, 140 elementos vetoriais e 39 fontes).
+  - Cada entrada recebe id `casa-font-<slug do postscript>`, nome completo, família canônica, categoria oficial, peso, estilo, eixos de variação e licença SPDX.
+- **Seletor de Fontes no Editor (`src/editor/font-selector.js`, `src/editor/properties-panel.js`, `src/ui/editor.css`)**:
+  - Seletor próprio montado na barra de propriedades de texto com `<select>` nativo oculto para compatibilidade e acessibilidade.
+  - Menu popover organizado nas 8 categorias oficiais do Ateliê: *Máquina de escrever*, *Letra à mão*, *Marcador*, *Impressão antiga*, *Jornal e cartaz*, *Gótica*, *Estêncil e militar* e *Tela de computador*.
+  - Histórico persistente das 5 fontes mais recentemente usadas no topo via `localStorage`.
+  - Campo de busca instantânea filtrando por nome da família e categoria.
+  - Renderização de cada nome de família escrito na sua própria tipografia com lazy loading via `IntersectionObserver` acoplado ao `document.fonts.load`.
+  - Indicador visual `var` para fontes variáveis e controle deslizante contínuo de peso (`range` slider) no painel de propriedades quando uma fonte variável estiver ativa.
+- **Amostrário Tipográfico de Referência (`scripts/colecao/font-specimen.js`, `docs/referencias/colecao-fontes.png`)**:
+  - Script automatizado com Playwright gerando folha de espécime em alta fidelidade com as 26 famílias agrupadas por categoria, renderizando frases imersivas de documentos de RPG (366 KB).
+- **Métricas de Armazenamento**:
+  - 39 arquivos TTF em `public/colecao/fontes/`: **8,4 MB**.
+  - Tamanho total da pasta `public/colecao/`: **19 MB** (muito abaixo do teto de 60 MB estipulado para a coleção da casa).
+- **Testes Unitários e E2E**:
+  - `tests/font-names.test.js`: validação de fonte mínima sintética construída em buffer no teste com tabelas `name`, `OS/2` e `fvar`, teste de buffers arbitrários retornando `null`, e validação de 100% das 39 fontes reais da coleção (3 testes).
+  - `tests/colecao-fonts.test.js`: validação das 26 famílias no manifesto, conferência da existência física do arquivo e do arquivo de licença ao lado, conformidade dos identificadores de licença e conferência do `LICENCAS.md` (2 testes).
+  - `tests/colecao-manifest.test.js`: ajustado para ignorar `LICENCAS.md` e `OFL.txt` na pasta de fontes (1 teste).
+  - `tests/e2e/editor.test.js`: ampliado com passo 14 verificando que o item "Special Elite" tem largura renderizada diferente do fallback sem serifa, e que selecionar a fonte manuscrita "Caveat" altera a família do layer e atualiza os pixels do canvas.
+
+### Validação
+- `npm test`: 90 testes unitários passando 100%.
+- `npm run test:e2e`: 8 suítes E2E Playwright passando 100%.
+- `npm run colecao:fontes:specimen`: espécime `docs/referencias/colecao-fontes.png` gerado e conferido.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 14. A coleção de fontes da casa e o seletor visual estão 100% integrados e prontos.
 
 ---
 

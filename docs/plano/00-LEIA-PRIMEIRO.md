@@ -174,7 +174,7 @@ Medido com `ag-psd` 30.2.0 em três arquivos (um jornal, um relatório policial 
 | 11 | feita | 24/10/2026 | Efeitos procedurais: 9 tipos, PRNG determinístico, máscaras de corte, miniaturas e propriedades |
 | 12 | feita | 24/10/2026 | Coleção da casa: 16 papéis em 3 idades (48 arquivos) e 53 texturas de sobreposição em WebP |
 | 13 | feita | 24/10/2026 | Coleção da casa: 140 elementos vetoriais em SVG (carimbos, selos, prendedores, fitas, molduras, etc.) |
-| 14 | pendente | | |
+| 14 | feita | 24/10/2026 | Coleção da casa: 26 famílias de fontes livres (39 arquivos TTF), parser sfnt, seletor com prévia e eixos variáveis |
 | 15 | pendente | | |
 | 16 | pendente | | |
 | 17 | pendente | | |
