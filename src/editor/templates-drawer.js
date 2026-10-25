@@ -227,7 +227,18 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
           return `
             <div class="at-card template-card" role="button" tabindex="0" data-id="${esc(tpl.id)}" aria-label="${esc(tpl.name)}" style="transform: rotate(${tilt}deg);">
               <div class="template-card-preview">
-                <img src="${esc(previewUrl)}" alt="${esc(tpl.name)}" loading="lazy" />
+                ${previewUrl ? `
+                  <img src="${esc(previewUrl)}" data-preview-id="${esc(tpl.id)}" alt="${esc(tpl.name)}" loading="lazy" onerror="this.onerror=null; this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';" />
+                  <div class="template-card-preview-placeholder" style="display: none;">
+                    ${renderIcon('doc', 28)}
+                    <span>${esc(tpl.name)}</span>
+                  </div>
+                ` : `
+                  <div class="template-card-preview-placeholder">
+                    ${renderIcon('doc', 28)}
+                    <span>${esc(tpl.name)}</span>
+                  </div>
+                `}
               </div>
               <div class="template-card-info">
                 <span class="template-card-title">${esc(tpl.name)}</span>
@@ -263,14 +274,16 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
           <span class="templates-search-icon">${renderIcon('search', 14)}</span>
           <input type="search" class="templates-search-input" placeholder="Buscar modelos..." value="${esc(searchQuery)}" aria-label="Buscar modelos" />
         </div>
-        <button type="button" class="at-btn is-sm templates-install-btn" data-action="load-bundle" title="Carregar pasta com arquivos .PSD brutos (JIT)">
-          ${renderIcon('folder', 13)}
-          <span>Carregar bundle (JIT)</span>
-        </button>
-        <button type="button" class="at-btn is-sm templates-install-btn" data-action="install-expansion" title="Instalar pacote de expansão com novos modelos">
-          ${renderIcon('upload', 13)}
-          <span>Instalar expansão</span>
-        </button>
+        <div class="templates-actions-row">
+          <button type="button" class="at-btn is-sm templates-install-btn" data-action="load-bundle" title="Carregar pasta com arquivos .PSD brutos (JIT)">
+            ${renderIcon('folder', 13)}
+            <span>Carregar bundle (JIT)</span>
+          </button>
+          <button type="button" class="at-btn is-sm templates-install-btn" data-action="install-expansion" title="Instalar pacote de expansão com novos modelos">
+            ${renderIcon('upload', 13)}
+            <span>Instalar expansão</span>
+          </button>
+        </div>
         <input type="file" class="templates-bundle-folder-input" webkitdirectory directory multiple style="display:none;" />
         <input type="file" class="templates-expansion-folder-input" webkitdirectory directory multiple style="display:none;" />
       </div>
@@ -283,6 +296,35 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
         ${gridItems}
       </div>
     `;
+
+    // Horizontal wheel scrolling on chips bars
+    container.querySelectorAll('.templates-chips-bar').forEach(bar => {
+      bar.addEventListener('wheel', (e) => {
+        if (e.deltaY !== 0) {
+          e.preventDefault();
+          bar.scrollLeft += e.deltaY;
+        }
+      }, { passive: false });
+    });
+
+    // Auto-scroll active chip into view
+    container.querySelectorAll('.templates-chip.active').forEach(chip => {
+      chip.scrollIntoView({ behavior: 'auto', inline: 'nearest', block: 'nearest' });
+    });
+
+    // Asynchronously resolve preview URLs for browser items if needed
+    container.querySelectorAll('img[data-preview-id]').forEach(async (img) => {
+      const tplId = img.dataset.previewId;
+      const tpl = rawTemplates.find(t => t.id === tplId);
+      if (tpl && tpl.source && tpl.source !== 'casa' && api?.library?.resolvePreviewURL) {
+        try {
+          const resolved = await api.library.resolvePreviewURL(tpl);
+          if (resolved && img.src !== resolved && !img.src.includes('api/atelie/library/')) {
+            img.src = resolved;
+          }
+        } catch {}
+      }
+    });
 
     // Bind expansion installer
     const expFolderInput = container.querySelector('.templates-expansion-folder-input');
@@ -310,7 +352,28 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
         shell?.notify?.('Escaneando pasta de arquivos…', { tone: 'neutral' });
         const scanned = await scanBundleFiles(fileListOrEntries);
         if (scanned.bundles.length === 0) {
-          shell?.notify?.('Nenhum arquivo PSD encontrado nesta pasta.', { tone: 'error' });
+          // Check if user selected an expansion package folder instead of raw PSD files
+          let hasExpansionJson = false;
+          let hasLibraryJson = false;
+          if (fileListOrEntries instanceof Map) {
+            for (const path of fileListOrEntries.keys()) {
+              const p = path.toLowerCase();
+              if (p.endsWith('expansion.json')) hasExpansionJson = true;
+              if (p.endsWith('library.json')) hasLibraryJson = true;
+            }
+          } else if (fileListOrEntries.length) {
+            for (let i = 0; i < fileListOrEntries.length; i++) {
+              const name = (fileListOrEntries[i].webkitRelativePath || fileListOrEntries[i].name).toLowerCase();
+              if (name.endsWith('expansion.json')) hasExpansionJson = true;
+              if (name.endsWith('library.json')) hasLibraryJson = true;
+            }
+          }
+
+          if (hasExpansionJson || hasLibraryJson) {
+            shell?.notify?.('Esta pasta é um pacote de expansão, não arquivos PSD brutos. Use o botão "Instalar expansão".', { tone: 'warn' });
+          } else {
+            shell?.notify?.('Nenhum arquivo PSD encontrado nesta pasta. Verifique se há arquivos .psd ou .psb.', { tone: 'error' });
+          }
           return;
         }
 
@@ -319,6 +382,11 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
             await api.expansions.registerJitBundle(bundle);
           }
         }
+
+        // Reset filters so the newly loaded templates are immediately visible
+        activeSource = 'all';
+        activeCategory = 'all';
+        searchQuery = '';
 
         await loadData();
         if (window.__atelie?.refreshLibrary) window.__atelie.refreshLibrary();
@@ -345,7 +413,7 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
                 }
               }
             }
-            await scanHandle(dirHandle);
+            await scanHandle(dirHandle, dirHandle.name);
             const map = new Map(fileEntries.map(e => [e.path, e.file]));
             await handleBundleFiles(map);
             return;

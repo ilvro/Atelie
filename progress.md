@@ -65,6 +65,12 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
   - Destaque editorial no campo de título do documento (`.at-doc-name-input`) ao passar o mouse sem comprometer a leitura do texto.
 - **Conversor JIT de Bundles e Tipografia Dominante (`src/editor/client-psd-converter.js`)**:
   - Seleção refinada de `dominantStyle` e `dominantParagraphStyle` baseada na contagem real de caracteres por trecho para conversão instantânea de PSDs diretamente no cliente, mantendo a proporção visual exata dos blocos de texto sem quebras ou sobreposições indesejadas.
+- **Correção da Gaveta de Modelos, Prévias de Expansões e Rolagem (`src/data/api.js`, `src/editor/templates-drawer.js`, `src/ui/start.css` e `src/data/expansion-installer.js`)**:
+  - Resolução das rotas de prévia de expansões no servidor (`serverLibrary.previewURL` e `fileURL`): identificação correta de itens do backend (`serverItemIds` e `serverSources`), servindo em `/api/atelie/library/:itemId/preview` sem redirecionar indevidamente para `/colecao/` (o que causava 404 nas 32 prévias de modelos dos Arquivos Confidenciais).
+  - Resolução assíncrona de prévias para itens do IndexedDB com fallback para placeholder editorial (ícone e nome) prevenindo imagens quebradas.
+  - Reorganização da barra de topo da gaveta de Modelos com linha própria para busca e botões de ação divididos proporcionalmente, eliminando cortes em telas de 360px.
+  - Rolagem horizontal fluida nas barras de chips (origens e categorias) com suporte a scroll wheel do mouse, barra de rolagem fina visível e foco automático no chip ativo.
+  - Preservação do nome do diretório raiz no scanner JIT e detecção amigável caso uma pasta de expansão (`expansion.json`) seja selecionada no botão de bundles brutos.
 
 ### Validação
 - `npm test`: 168 testes unitários passando 100%.

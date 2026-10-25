@@ -994,13 +994,23 @@ export function createApi({
     },
   };
 
+  const serverItemIds = new Set();
+  const serverSources = new Set(['casa']);
+
   const serverLibrary = {
     async list() {
       const serverRes = await fetchJson('api/atelie/library');
       const sources = [...(serverRes.sources || [{ id: 'casa', name: 'Coleção do Ateliê' }])];
+      serverSources.clear();
+      for (const s of sources) serverSources.add(s.id);
+
       const allItems = [...(serverRes.items || [])];
       const itemMap = new Map();
-      for (const item of allItems) itemMap.set(item.id, item);
+      serverItemIds.clear();
+      for (const item of allItems) {
+        itemMap.set(item.id, item);
+        serverItemIds.add(item.id);
+      }
 
       try {
         const installed = await browserExpansions.list();
@@ -1036,30 +1046,36 @@ export function createApi({
     },
 
     fileURL(item) {
-      if (typeof item === 'object' && item?.source && item.source !== 'casa') {
+      const id = typeof item === 'object' && item ? item.id : item;
+      const isFromServer = serverItemIds.has(id) || !item?.source || serverSources.has(item.source);
+      if (!isFromServer && typeof item === 'object' && item?.source && item.source !== 'casa') {
         return browserLibrary.fileURL(item);
       }
-      const id = typeof item === 'object' && item ? item.id : item;
       return new URL(`api/atelie/library/${encodeURIComponent(id)}/file`, baseURI).href;
     },
 
     async resolveFileURL(item) {
-      if (typeof item === 'object' && item?.source && item.source !== 'casa') {
+      const id = typeof item === 'object' && item ? item.id : item;
+      const isFromServer = serverItemIds.has(id) || !item?.source || serverSources.has(item.source);
+      if (!isFromServer && typeof item === 'object' && item?.source && item.source !== 'casa') {
         return await browserLibrary.resolveFileURL(item);
       }
       return this.fileURL(item);
     },
 
     previewURL(item) {
-      if (typeof item === 'object' && item?.source && item.source !== 'casa') {
+      const id = typeof item === 'object' && item ? item.id : item;
+      const isFromServer = serverItemIds.has(id) || !item?.source || serverSources.has(item.source);
+      if (!isFromServer && typeof item === 'object' && item?.source && item.source !== 'casa') {
         return browserLibrary.previewURL(item);
       }
-      const id = typeof item === 'object' && item ? item.id : item;
       return new URL(`api/atelie/library/${encodeURIComponent(id)}/preview`, baseURI).href;
     },
 
     async resolvePreviewURL(item) {
-      if (typeof item === 'object' && item?.source && item.source !== 'casa') {
+      const id = typeof item === 'object' && item ? item.id : item;
+      const isFromServer = serverItemIds.has(id) || !item?.source || serverSources.has(item.source);
+      if (!isFromServer && typeof item === 'object' && item?.source && item.source !== 'casa') {
         return await browserLibrary.resolvePreviewURL(item);
       }
       return this.previewURL(item);
