@@ -352,3 +352,4 @@ export async function getExpansionItems(db) {
     req.onerror = () => reject(req.error);
   });
 }
+

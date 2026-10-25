@@ -188,3 +188,4 @@ export async function pickAndInstallExpansion({ api, inputElement, onComplete })
     inputElement.click();
   }
 }
+
