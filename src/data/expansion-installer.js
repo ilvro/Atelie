@@ -105,6 +105,33 @@ export async function readFolderFromDirectoryHandle(dirHandle, { onProgress, sig
 
   await scanDir(dirHandle);
 
+  if (!expansionJson || !libraryJson) {
+    // Look for a subfolder containing expansion.json and library.json
+    for (const [entryPath, file] of filesMap.entries()) {
+      if (entryPath.endsWith('/expansion.json')) {
+        const prefix = entryPath.slice(0, -'/expansion.json'.length);
+        const libFile = filesMap.get(`${prefix}/library.json`);
+        if (libFile) {
+          try {
+            expansionJson = JSON.parse(await file.text());
+            libraryJson = JSON.parse(await libFile.text());
+          } catch {}
+          if (expansionJson && libraryJson) {
+            // Rebase filesMap stripping the prefix
+            const rebasedMap = new Map();
+            const prefixSlash = `${prefix}/`;
+            for (const [p, f] of filesMap.entries()) {
+              if (p.startsWith(prefixSlash)) {
+                rebasedMap.set(p.slice(prefixSlash.length), f);
+              }
+            }
+            return { expansionJson, libraryJson, filesMap: rebasedMap };
+          }
+        }
+      }
+    }
+  }
+
   if (!expansionJson) {
     throw new Error('Arquivo expansion.json não encontrado na raiz da pasta. Se esta for uma pasta com arquivos .psd brutos do Photoshop, é necessário pré-processá-los com o importador de expansão (scripts/library/import-psd.js) para gerar os modelos.');
   }
@@ -134,13 +161,13 @@ export async function readFolderFromFileList(fileList, { onProgress, signal } = 
       ? file.webkitRelativePath.split('/').slice(1).join('/') || file.name
       : file.name;
 
-    if (relPath === 'expansion.json' || file.name === 'expansion.json') {
+    if (relPath === 'expansion.json') {
       try {
         expansionJson = JSON.parse(await file.text());
       } catch (err) {
         throw new Error(`Erro ao ler expansion.json: ${err.message}`);
       }
-    } else if (relPath === 'library.json' || file.name === 'library.json') {
+    } else if (relPath === 'library.json') {
       try {
         libraryJson = JSON.parse(await file.text());
       } catch (err) {
@@ -152,6 +179,34 @@ export async function readFolderFromFileList(fileList, { onProgress, signal } = 
     // Also index by filename for resilient lookup if needed
     if (relPath !== file.name) {
       filesMap.set(file.name, file);
+    }
+  }
+
+  if (!expansionJson || !libraryJson) {
+    // Look for a subfolder containing expansion.json and library.json
+    for (const [relPath, file] of filesMap.entries()) {
+      if (relPath.endsWith('/expansion.json')) {
+        const prefix = relPath.slice(0, -'/expansion.json'.length);
+        const libFile = filesMap.get(`${prefix}/library.json`);
+        if (libFile) {
+          try {
+            expansionJson = JSON.parse(await file.text());
+            libraryJson = JSON.parse(await libFile.text());
+          } catch {}
+          if (expansionJson && libraryJson) {
+            const rebasedMap = new Map();
+            const prefixSlash = `${prefix}/`;
+            for (const [p, f] of filesMap.entries()) {
+              if (p.startsWith(prefixSlash)) {
+                const subPath = p.slice(prefixSlash.length);
+                rebasedMap.set(subPath, f);
+                rebasedMap.set(f.name, f);
+              }
+            }
+            return { expansionJson, libraryJson, filesMap: rebasedMap };
+          }
+        }
+      }
     }
   }
 

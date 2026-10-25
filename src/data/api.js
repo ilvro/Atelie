@@ -974,28 +974,72 @@ export function createApi({
 
   const serverLibrary = {
     async list() {
-      return await fetchJson('api/atelie/library');
+      const serverRes = await fetchJson('api/atelie/library');
+      const sources = [...(serverRes.sources || [{ id: 'casa', name: 'Coleção do Ateliê' }])];
+      const allItems = [...(serverRes.items || [])];
+      const itemMap = new Map();
+      for (const item of allItems) itemMap.set(item.id, item);
+
+      try {
+        const installed = await browserExpansions.list();
+        for (const exp of installed) {
+          if (!sources.some(s => s.id === exp.id)) {
+            sources.push({
+              id: exp.id,
+              name: exp.name,
+              description: exp.description || '',
+              license: exp.license || '',
+              installed: true,
+            });
+          }
+        }
+        const expItems = await browserExpansions.getItems();
+        for (const item of expItems) {
+          if (!itemMap.has(item.id)) {
+            allItems.push(item);
+            itemMap.set(item.id, item);
+          }
+        }
+      } catch {}
+
+      return { sources, items: allItems };
     },
 
     async item(id) {
-      return await fetchJson(`api/atelie/library/${encodeURIComponent(id)}`);
+      try {
+        return await fetchJson(`api/atelie/library/${encodeURIComponent(id)}`);
+      } catch (err) {
+        return await browserLibrary.item(id);
+      }
     },
 
     fileURL(item) {
+      if (typeof item === 'object' && item?.source && item.source !== 'casa') {
+        return browserLibrary.fileURL(item);
+      }
       const id = typeof item === 'object' && item ? item.id : item;
       return new URL(`api/atelie/library/${encodeURIComponent(id)}/file`, baseURI).href;
     },
 
     async resolveFileURL(item) {
+      if (typeof item === 'object' && item?.source && item.source !== 'casa') {
+        return await browserLibrary.resolveFileURL(item);
+      }
       return this.fileURL(item);
     },
 
     previewURL(item) {
+      if (typeof item === 'object' && item?.source && item.source !== 'casa') {
+        return browserLibrary.previewURL(item);
+      }
       const id = typeof item === 'object' && item ? item.id : item;
       return new URL(`api/atelie/library/${encodeURIComponent(id)}/preview`, baseURI).href;
     },
 
     async resolvePreviewURL(item) {
+      if (typeof item === 'object' && item?.source && item.source !== 'casa') {
+        return await browserLibrary.resolvePreviewURL(item);
+      }
       return this.previewURL(item);
     },
   };

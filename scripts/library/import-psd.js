@@ -229,12 +229,10 @@ export async function importPsdTemplates({
 
   // Filter by bundle
   if (bundle) {
-    const bundleList = bundle.split(',').map(b => b.trim()).filter(Boolean);
+    const bundleList = bundle.split(',').map(b => b.trim().toLowerCase()).filter(Boolean);
     candidates = candidates.filter(c => {
-      return bundleList.some(b => {
-        const escaped = b.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        return new RegExp(`\\b${escaped}\\b`, 'i').test(c.relativePath);
-      });
+      const rel = c.relativePath.toLowerCase();
+      return bundleList.some(b => rel.includes(b));
     });
   }
 

@@ -158,10 +158,25 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
     ].join('');
 
     // Category chips
+    const sourceTemplates = activeSource === 'all'
+      ? rawTemplates
+      : rawTemplates.filter(t => (t.source || 'casa') === activeSource);
+
+    const extraCategories = Array.from(
+      new Set(sourceTemplates.map(t => t.category).filter(Boolean))
+    ).filter(c => !TEMPLATE_CATEGORIES.includes(c))
+     .sort((a, b) => a.localeCompare(b, 'pt-BR'));
+
+    const allCategories = [...TEMPLATE_CATEGORIES, ...extraCategories];
+    const displayCategories = allCategories.filter(cat => {
+      const count = sourceTemplates.filter(t => t.category === cat).length;
+      return count > 0 || cat === activeCategory;
+    });
+
     const categoryChips = [
       `<button type="button" class="templates-chip ${activeCategory === 'all' ? 'active' : ''}" data-category="all">Todas as categorias</button>`,
-      ...TEMPLATE_CATEGORIES.map(cat => {
-        const count = rawTemplates.filter(t => t.category === cat).length;
+      ...displayCategories.map(cat => {
+        const count = sourceTemplates.filter(t => t.category === cat).length;
         const isActive = activeCategory === cat;
         return `
           <button type="button" class="templates-chip ${isActive ? 'active' : ''}" data-category="${esc(cat)}">

@@ -145,6 +145,7 @@ export function openSettingsModal() {
                  min="0"
                  max="100"
                  value="${current.lampIntensity}"
+                 style="--range-progress: ${current.lampIntensity}%;"
                  class="at-settings-slider" />
         </section>
 
@@ -272,8 +273,13 @@ export function openSettingsModal() {
   // Intensity slider
   const slider = settingsModal.querySelector('#setting-lamp-intensity');
   const valLabel = settingsModal.querySelector('#setting-lamp-value');
+  const updateSliderProgress = () => {
+    if (slider) slider.style.setProperty('--range-progress', `${slider.value}%`);
+  };
+  updateSliderProgress();
   slider?.addEventListener('input', () => {
     valLabel.textContent = `${slider.value}%`;
+    updateSliderProgress();
     saveSettings({ lampIntensity: Number(slider.value) });
   });
 

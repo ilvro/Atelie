@@ -10,6 +10,7 @@ import {
   listInstalledExpansions,
   getExpansionFile,
   getExpansionItems,
+  readFolderFromFileList,
 } from '../src/data/expansion-installer.js';
 
 test('validateExpansionManifests: aceita manifesto válido e normaliza campos', () => {
@@ -232,4 +233,33 @@ test('IndexedDB: instalação, listagem de itens, recuperação de arquivos e re
   assert.equal(itemsAfter.length, 0);
   const fileAfter = await getExpansionFile(db, 'ac-teste', 'elements/alpha.png');
   assert.equal(fileAfter, null);
+});
+
+test('readFolderFromFileList: detecta expansion.json em subpasta e rebaixa caminhos', async () => {
+  const fakeFiles = [
+    {
+      name: 'expansion.json',
+      webkitRelativePath: 'pacote-completo/expansoes/minha-expansao/expansion.json',
+      text: async () => JSON.stringify({ id: 'minha-expansao', name: 'Minha Expansão' }),
+      size: 100,
+    },
+    {
+      name: 'library.json',
+      webkitRelativePath: 'pacote-completo/expansoes/minha-expansao/library.json',
+      text: async () => JSON.stringify({ items: [{ id: 'item-1', name: 'Item 1' }] }),
+      size: 100,
+    },
+    {
+      name: 'item1.png',
+      webkitRelativePath: 'pacote-completo/expansoes/minha-expansao/elements/item1.png',
+      text: async () => '',
+      size: 500,
+    },
+  ];
+
+  const result = await readFolderFromFileList(fakeFiles);
+  assert.equal(result.expansionJson.id, 'minha-expansao');
+  assert.equal(result.libraryJson.items.length, 1);
+  assert.ok(result.filesMap.has('elements/item1.png'), 'caminho deve ser relativo à raiz da expansão');
+  assert.ok(result.filesMap.has('item1.png'));
 });
