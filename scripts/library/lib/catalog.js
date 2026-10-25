@@ -185,3 +185,81 @@ export function fontId(postscriptName, prefix = 'ac-') {
   const pfx = prefix ? (prefix.endsWith('-') ? prefix : `${prefix}-`) : '';
   return `${pfx}font-${psSlug}`;
 }
+
+/**
+ * Cleans a bundle or folder name into a human category for templates (Etapa 25).
+ * E.g. 'Bundle 59 - Rework Documentos Policiais com Luz UV' -> 'Documentos Policiais com Luz UV'.
+ * @param {string} folderOrBundleName
+ * @returns {string}
+ */
+export function cleanTemplateCategory(folderOrBundleName) {
+  if (!folderOrBundleName) return 'Documentos';
+  let s = String(folderOrBundleName).trim();
+  s = s.replace(/^(?:mini)?bundle\s*\d*\s*[-_:]*\s*/i, '');
+  s = s.replace(/\[[^\]]*\]/g, '');
+  s = s.replace(/\(parte\s*\d+\)/i, '');
+  s = s.replace(/\brework\b/i, '');
+  s = s.replace(/\s+/g, ' ').trim();
+  return s || 'Documentos';
+}
+
+/**
+ * Cleans a template file name, removing leading index numbers and extension (Etapa 25).
+ * E.g. '2- Relatório Policial.psd' -> 'Relatório Policial'.
+ * @param {string} fileName
+ * @returns {string}
+ */
+export function cleanTemplateName(fileName) {
+  let s = path.basename(fileName).replace(/\.[^.]+$/, '');
+  s = s.replace(/^\d+\s*[-_.)]\s*/, '').trim();
+  return s || 'Documento';
+}
+
+/**
+ * Stable template ID (Etapa 25):
+ * 'ac-tpl-' + slug(categoria) + '-' + slug(nome) + '-' + 6 hex do sha1 do caminho.
+ * @param {string} category
+ * @param {string} name
+ * @param {string} relativePath
+ * @param {string} prefix
+ * @returns {string}
+ */
+export function templateId(category, name, relativePath, prefix = 'ac-') {
+  const catSlug = slug(category) || 'doc';
+  const nameSlug = slug(name) || 'template';
+  const normalized = relativePath.replace(/\\/g, '/');
+  const hash = createHash('sha1').update(normalized, 'utf8').digest('hex').slice(0, 6);
+  const pfx = prefix ? (prefix.endsWith('-') ? prefix : `${prefix}-`) : '';
+  return `${pfx}tpl-${catSlug}-${nameSlug}-${hash}`;
+}
+
+/**
+ * Computes template tags (Etapa 25).
+ * @param {string} category
+ * @param {string} name
+ * @param {{ hasUv?: boolean, hasVariants?: boolean }} options
+ * @returns {string[]}
+ */
+export function templateTags(category, name, { hasUv = false, hasVariants = false } = {}) {
+  const combined = `${category} ${name}`;
+  const words = combined
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter(Boolean);
+
+  const tags = new Set();
+  for (const w of words) {
+    if (/\d/.test(w)) continue;
+    if (w.length <= 2) continue;
+    tags.add(w);
+    if (tags.size >= 12) break;
+  }
+
+  if (hasUv) tags.add('uv');
+  if (hasVariants) tags.add('variações');
+
+  return Array.from(tags);
+}
+

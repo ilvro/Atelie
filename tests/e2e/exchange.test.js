@@ -269,11 +269,17 @@ test('exchange e2e (Caminho A): archive, BroadcastChannel, IndexedDB mesa-handou
   });
 
   await pageBrowser.click('[data-action="archive"]');
-  await pageBrowser.waitForTimeout(600);
+  await pageBrowser.waitForFunction(() => !window.__atelie?.editor?.state?.dirty);
+  await pageBrowser.waitForTimeout(500);
 
   const exchangeDataBrowser = await pageBrowser.evaluate(async (id) => {
     const db = await new Promise((resolve, reject) => {
       const req = indexedDB.open('mesa-handouts-v1', 1);
+      req.onupgradeneeded = () => {
+        const d = req.result;
+        if (!d.objectStoreNames.contains('handouts')) d.createObjectStore('handouts', { keyPath: 'id' });
+        if (!d.objectStoreNames.contains('bakes')) d.createObjectStore('bakes', { keyPath: ['id', 'light'] });
+      };
       req.onsuccess = () => resolve(req.result);
       req.onerror = () => reject(req.error);
     });

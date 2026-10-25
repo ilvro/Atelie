@@ -30,7 +30,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 22 — Importar elementos | concluída | 2026-10-25 | Importador CLI de imagens, símbolos e fontes para a expansão privada Arquivos Confidenciais |
 | 23 — PSD leitura | concluída | 2026-10-25 | Expansão: leitura da estrutura dos PSDs (sem pixels), relatórios, métricas e árvore normalizada |
 | 24 — PSD compositor | concluída | 2026-10-25 | Expansão: composição de PSD em Node |
-| 25 — PSD modelos | pendente | | Expansão: conversão de PSD para modelos |
+| 25 — PSD modelos | concluída | 2026-10-25 | Expansão: conversão de PSD para modelos editáveis com campos, fusão de fundo, WebP, UV e testes |
 | 26 — Publicar no Pages | pendente | | Build estático e workflow do GitHub Pages |
 | 27 — Documentação | pendente | | Manuais, guia de uso e licenças |
 | 28 — Integração Tabletop | pendente | | Consumo e interação direta dentro do Tabletop |
@@ -135,6 +135,70 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ### Pendências reais
 - Nenhuma pendência na Etapa 17.
+
+---
+
+## Etapa 25 — Converter PSDs em modelos do ateliê
+
+### Feito
+- **Casamento de Fontes (`scripts/library/lib/font-match.js`)**:
+  - `matchFont(postscript, fonts)`: cascata de três níveis:
+    1. Nome PostScript exato (sem diferenciar maiúsculas/minúsculas).
+    2. Slug normalizado de `postscript` comparado com o slug de `family + subfamily` ou `fullName`.
+    3. Família limpa (sem espaços ou hífens) como prefixo de `postscript`, aplicando heurística de peso (700 para `Bold`, 300 para `Light`, 900 para `Black`) e itálico (`Italic`/`Oblique`).
+- **Conversor de Árvore PSD para Modelo (`scripts/library/lib/psd-to-handout.js`)**:
+  - `psdToHandout(tree, pixels, options)`: conversor puro gerando `{ handout, rasters, report }`.
+  - Escala uniforme respeitando dimensão máxima (2048 px ou A4 a 1240 px).
+  - Grupos `pass-through`: filhos entram na lista plana herdando opacidade e máscara com prefixo no nome (`"Grupo · Camada"`).
+  - Grupos isolados: compostos isoladamente em camada `image`.
+  - Grupos de variação (`variantGroups`): camadas ocultas vêm com `visible: false` e prefixo `"Variação · "`.
+  - Grupos de UV (`looksLikeUv`): camadas recebem `light: 'uv'`.
+  - Objetos inteligentes afins: compostos sem texto como imagem transformada para a posição dos cantos, e camadas de texto internas extraídas como camadas de texto independentes no espaço transformado do documento com o modo e opacidade do smart object.
+  - Camadas de ajuste mapeadas para `adjust`: `hue/saturation`, `black & white`, `brightness/contrast`, `invert`, `curves` e `levels` (amostrado em 9 pontos).
+  - Tipografia: texto extraído com caixa em coordenadas de documento, alinhamento, tamanho escalado, cor, estilo de tinta (`clean`, `typewriter`, `handwriting`) e vinculação a campos de "Preencher".
+  - Detecção de vagas de imagem via regex (`/foto|imagem|retrato|brasão|brasao|coloque|insira|sua imagem|placeholder/i`) convertidas em campos de imagem.
+  - Fusão de camadas de fundo: sequências vizinhas de camadas `image` `normal` consecutivas no fundo são compostas num único raster "Fundo" para reduzir o número de camadas para 5–30.
+  - Sanitização de nomes de camada (máx. 80 chars) e rótulos de campos (máx. 120 chars) com fallback de modos de mesclagem não suportados para `normal`.
+  - Validação de integridade estrita por `validateHandout` antes da gravação do modelo.
+- **CLI de Importação de Modelos (`scripts/library/import-psd.js`)**:
+  - Suporte completo a `--source`, `--dest`, `--bundle`, `--file`, `--limit`, `--force`, `--verbose`.
+  - Indexação incremental em `state/psd-index.json` por tamanho e data de modificação.
+  - Gravação de rasters em WebP recortado (`quality: 88`) em `templates/<tplId>/<nn>.webp` e prévias (`previews/<tplId>.webp`, lado maior 480 px).
+  - Atualização do manifesto `library.json` com itens `kind: 'template'` e `kind: 'layer'`.
+  - Validação comparativa sem texto: `compareWithoutText(a, b, textMask)` mascarando caixas de texto com critério automático `mae ≤ 8, bad ≤ 5%` (modelos com desvios superiores gravados com tag `revisar`).
+  - Geração de relatórios por modelo em `reports/templates/<id>.json` e relatório consolidado legível em `reports/templates-summary.md`.
+- **Testes Unitários (`tests/handouts-psd-to-handout.test.js`)**:
+  - 8 testes cobrindo todas as regras:
+    1. Grupo `pass-through` "Com Rasgo" com pixel `soft-light`.
+    2. Variantes irmãs com ocultas em `visible: false`.
+    3. Camadas UV com `light: 'uv'`.
+    4. Smart object afim com texto e pixel: separação em raster e camada de texto transformada com campo.
+    5. Ajustes `hue/saturation` e `levels` com amostragem de 9 pontos.
+    6. Fusão de 3 imagens `normal` consecutivas em "Fundo".
+    7. `matchFont` para 'Lora-Bold' (700) e fallback null.
+    8. Validação completa com `validateHandout`.
+- **Teste E2E Playwright (`tests/e2e/handout-templates.test.js`)**:
+  - Geração de PSD sintético pequeno com `writePsd` do `ag-psd` (fundo, sombra multiply, texto com campo).
+  - Importação com `importPsdTemplates` para expansão temporária.
+  - Abertura no navegador com `?diagnostics&template=<id>`.
+  - Verificação de abertura automática da aba "Preencher".
+  - Edição do campo de texto pelo formulário e confirmação de atualização do estado e dos pixels do Canvas no palco.
+- **Execução Real**:
+  - `4- Recorte de Jornal.psd`: `mae = 0.26`, `bad = 0.00%` [ACCEPTED].
+  - `1- Quadro Azul.psd`: `mae = 0.68`, `bad = 0.70%` [ACCEPTED].
+  - `2- Relatório Policial.psd` (Bundle 59 UV): 30 camadas, 9 camadas UV com `light: 'uv'`, 12 campos editáveis, `mae = 13.96`, `bad = 30.92%` [REVISAR].
+  - Pacote inteiro `Bundle 4 - Jornais (PARTE 1)` (9 PSDs): 9 modelos gerados, 5 aceitos automaticamente, 4 marcados para revisar, 0 erros fatais.
+
+### Validação
+- `npm test`: 144 testes unitários passando 100%.
+- `npm run test:e2e`: 16 suítes E2E Playwright passando 100%.
+- `tests/handouts-psd-to-handout.test.js`: 8 testes passando 100%.
+- `tests/e2e/handout-templates.test.js`: teste passando 100%.
+- `import-psd.js` executado com sucesso nos três arquivos de referência e no pacote Bundle 4 completo.
+- `git status`: limpo, nenhum arquivo privado em git.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 25.
 
 ---
 

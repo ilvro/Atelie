@@ -116,9 +116,9 @@ Relatório por modelo em `reports/templates/<id>.json` (`mae`, `bad`, `missingFo
 
 ## Pronto quando
 
-- [ ] Testes passam; `npm test` passa.
-- [ ] Rodado nos três arquivos de referência da etapa 24 e em pelo menos um pacote inteiro (`--bundle "Bundle 4"`): os modelos abrem no ateliê, o texto troca, as variações ligam e desligam; números no `progress.md`.
-- [ ] Rodado em `Bundle 59` (UV): as camadas UV ficam com `light: 'uv'`.
+- [x] Testes passam; `npm test` passa.
+- [x] Rodado nos três arquivos de referência da etapa 24 e em pelo menos um pacote inteiro (`--bundle "Bundle 4"`): os modelos abrem no ateliê, o texto troca, as variações ligam e desligam; números no `progress.md`.
+- [x] Rodado em `Bundle 59` (UV): as camadas UV ficam com `light: 'uv'`.
 
 ## Não faça
 
