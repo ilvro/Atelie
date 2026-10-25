@@ -1,0 +1,157 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-cartao-postal-frente",
+  "revision": 0,
+  "name": "Cartão-postal · frente",
+  "category": "Cartas e bilhetes",
+  "tags": [
+    "cartas e bilhetes"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1400,
+    "height": 900,
+    "background": "#f2ece1"
+  },
+  "layers": [
+    {
+      "id": "l-1-cartao-postal-frente",
+      "name": "Cartão base",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1400,
+      "height": 900,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#eee7d8",
+        "stroke": "#d4cbba",
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-2-cartao-postal-frente",
+      "name": "Moldura interna",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 40,
+      "y": 40,
+      "width": 1320,
+      "height": 820,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#faf7f0",
+        "stroke": "#c8beab",
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-foto",
+      "name": "Imagem do postal",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 60,
+      "y": 60,
+      "width": 1280,
+      "height": 680,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": null,
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-saudacao",
+      "name": "Saudação",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 760,
+      "width": 1200,
+      "height": 70,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Lembranças de Paranapiacaba — 1928",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 42,
+        "color": "#3e3831",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-foto",
+      "label": "Imagem"
+    },
+    {
+      "layerId": "l-saudacao",
+      "label": "Saudação"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

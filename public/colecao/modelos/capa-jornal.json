@@ -1,0 +1,457 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-capa-jornal",
+  "revision": 0,
+  "name": "Capa de jornal",
+  "category": "Jornal",
+  "tags": [
+    "jornal"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#ede7d5"
+  },
+  "layers": [
+    {
+      "id": "l-1-capa-jornal",
+      "name": "Papel jornal",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-papel-jornal-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-capa-jornal",
+      "name": "Linha topo",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 60,
+      "width": 1080,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#1a1a1a",
+        "strokeWidth": 3,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-nome-jornal",
+      "name": "Nome do jornal",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 70,
+      "width": 1080,
+      "height": 95,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "A Gazeta Metropolitana",
+        "font": {
+          "family": "UnifrakturMaguntia",
+          "library": "casa-font-unifrakturmaguntia",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 64,
+        "color": "#161616",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-data",
+      "name": "Data e edição",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 175,
+      "width": 1080,
+      "height": 30,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "ANO XXXVIII — Nº 14.205 | SÃO PAULO, QUARTA-FEIRA, 12 DE MAIO DE 1937 | PREÇO: 300 RÉIS",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 17,
+        "color": "#333333",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-3-capa-jornal",
+      "name": "Linha cabeçalho",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 215,
+      "width": 1080,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#1a1a1a",
+        "strokeWidth": 4,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-manchete",
+      "name": "Manchete grande",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 235,
+      "width": 1080,
+      "height": 120,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "GOVERNO DECRETA ESTADO DE ALERTA APÓS INCÊNDIO NO PORTO",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 48,
+        "color": "#111111",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-foto",
+      "name": "Foto principal",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 375,
+      "width": 500,
+      "height": 420,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": null,
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0.8,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0.2,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-texto",
+      "name": "Texto da manchete",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 610,
+      "y": 375,
+      "width": 550,
+      "height": 420,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Chamas de proporções gigantescas consumiram na madrugada três armazéns da alfândega no cais do porto.\n\nEquipes de bombeiros trabalharam por mais de nove horas ininterruptas para conter as labaredas que ameaçavam depósitos de combustível vizinhos.\n\nO prejuízo estimado ultrapassa centenas de contos de réis, e indícios de sabotagem não estão descartados pelas autoridades de segurança pública.",
+        "font": {
+          "family": "Libre Baskerville",
+          "library": "casa-font-librebaskerville-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 20,
+        "color": "#222222",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.5,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-capa-jornal",
+      "name": "Linha divisória horizontal",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 820,
+      "width": 1080,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#222222",
+        "strokeWidth": 1.5,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-5-capa-jornal",
+      "name": "Coluna inferior 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 850,
+      "width": 330,
+      "height": 780,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "NOVA LEI REGULA CÂMBIO E CRÉDITO NO PAÍS\n\nO Ministério da Fazenda baixou portaria restringindo operações em moeda estrangeira sem aval bancário prévio. Medida visa estabilizar o comércio exterior e conter a especulação cambial no mercado livre de capitais.\n\nRepresentantes da indústria manifestaram apoio cauteloso às diretrizes adotadas.",
+        "font": {
+          "family": "Libre Baskerville",
+          "library": "casa-font-librebaskerville-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 19,
+        "color": "#222222",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-6-capa-jornal",
+      "name": "Coluna inferior 2",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 455,
+      "y": 850,
+      "width": 330,
+      "height": 780,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "DESCOBERTA RUÍNA ARQUEOLÓGICA NO INTERIOR\n\nExpedição científica da universidade localizou vestígios de assentamento pré-colombiano nas margens do Rio Grande.\n\nFragmentos cerâmicos ornamentados com figuras geométricas revelam técnicas construtivas até então desconhecidas pelos especialistas do museu histórico.",
+        "font": {
+          "family": "Libre Baskerville",
+          "library": "casa-font-librebaskerville-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 19,
+        "color": "#222222",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-7-capa-jornal",
+      "name": "Coluna inferior 3",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 830,
+      "y": 850,
+      "width": 330,
+      "height": 780,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "CLIMA PROMETE QUEDA BRUSCA DE TEMPERATURA\n\nMassa de ar polar vinda do sul do continente deve atingir o planalto paulista a partir do fim da tarde.\n\nPrevisão indica possibilidade de geadas nas áreas rurais e ventos fortes na faixa litorânea. Defesa civil orienta atenção redobrada aos produtores.",
+        "font": {
+          "family": "Libre Baskerville",
+          "library": "casa-font-librebaskerville-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 19,
+        "color": "#222222",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-nome-jornal",
+      "label": "Nome do jornal"
+    },
+    {
+      "layerId": "l-data",
+      "label": "Data"
+    },
+    {
+      "layerId": "l-manchete",
+      "label": "Manchete"
+    },
+    {
+      "layerId": "l-texto",
+      "label": "Texto"
+    },
+    {
+      "layerId": "l-foto",
+      "label": "Foto"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

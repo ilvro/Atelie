@@ -1,0 +1,346 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-classificados",
+  "revision": 0,
+  "name": "Classificados",
+  "category": "Jornal",
+  "tags": [
+    "jornal"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#eae4d3"
+  },
+  "layers": [
+    {
+      "id": "l-1-classificados",
+      "name": "Papel jornal",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-papel-jornal-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-classificados",
+      "name": "Cabeçalho classificados",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 80,
+      "width": 1080,
+      "height": 50,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "CLASSIFICADOS — IMÓVEIS, VENDA & OCASIÕES",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#1a1a1a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-3-classificados",
+      "name": "Linha topo",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 140,
+      "width": 1080,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#1a1a1a",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-4-classificados",
+      "name": "Coluna esquerda de anúncios",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 160,
+      "width": 510,
+      "height": 750,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "ALUGA-SE SOBRADO — Centro, 4 quartos, cocheira, água encanada. Tratar na Rua Direita 14.\n\nVENDE-SE PIANO — Marca alemã Ronisch, perfeito estado de conservação. Rua XV de Novembro 42.\n\nAUTOMÓVEL FORD 1928 — Pouco rodado, pneus novos, documentação em dia. Ver no Largo do Arouche 9.\n\nPRECISA-SE DE COPEIRA — Com referências idôneas de famílias conhecidas. Paga-se bem. Caixa Postal 102.\n\nTERRENO NO BRÁS — Excelente ponto comercial, próximo à estação férrea. Facilitam-se pagamentos.",
+        "font": {
+          "family": "Libre Baskerville",
+          "library": "casa-font-librebaskerville-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 21,
+        "color": "#333333",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.5,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-5-classificados",
+      "name": "Coluna direita de anúncios",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 650,
+      "y": 160,
+      "width": 510,
+      "height": 750,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "COMPRA-SE OURO E JOIAS — Pagamento imediato à vista. Avaliação discreta. Rua da Quitanda 33.\n\nPERDEU-SE CÃO FOX TERRIER — Branco com manchas pretas na orelha. Gratifica-se quem levar à Rua Barão de Itapetininga 18.\n\nAULAS DE FRANCÊS — Professor diplomado por Paris. Turmas reduzidas e particulares. Tel.: 4-2901.\n\nLEILÃO JUDICIAL — Móveis, louças finas e quadros a óleo. Prédio da Associação Comercial quinta-feira às 14h.\n\nALUGA-SE SALA COMERCIAL — Edifício Martinelli, 12º andar, vista panorâmica, portaria 24 horas.",
+        "font": {
+          "family": "Libre Baskerville",
+          "library": "casa-font-librebaskerville-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 21,
+        "color": "#333333",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.5,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-6-classificados",
+      "name": "Linha meio",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 950,
+      "width": 1080,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#1a1a1a",
+        "strokeWidth": 1.5,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-anuncio-destaque",
+      "name": "Anúncio em destaque",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 1020,
+      "width": 1000,
+      "height": 260,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "COMPRA-SE COM URGÊNCIA — Colecionador particular adquire manuscritos e tomos em latim anteriores ao século XVII sobre história oculta e genealogia europeia. Sigilo absoluto garantido. Paga-se qualquer valor em moeda corrente ou ouro. Enviar carta com descrição para Caixa Postal 447 — Agência Central.",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#111111",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.5,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-7-classificados",
+      "name": "Círculo vermelho à mão",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.9,
+      "blend": "multiply",
+      "x": 90,
+      "y": 990,
+      "width": 1060,
+      "height": 320,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-marca-circulo-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": {
+          "color": "#b81414",
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "l-8-classificados",
+      "name": "Anúncios inferiores",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 1370,
+      "width": 1080,
+      "height": 320,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "MÁQUINA DE ESCREVER REMINGTON — Ótimo estado mecânico, fita nova. Rua Líbero Badaró 77.\n\nEMPRÉSTIMOS RÁPIDOS SOB CAUÇÃO — Cartório de notas e títulos. Agência Central das 9h às 17h.\n\nCASAS PARA OPERÁRIOS NA MOOCA — Prestação suave, água e luz ligadas. Tratar no local com mestre de obras.",
+        "font": {
+          "family": "Libre Baskerville",
+          "library": "casa-font-librebaskerville-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 21,
+        "color": "#333333",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.5,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-anuncio-destaque",
+      "label": "Anúncio em destaque"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

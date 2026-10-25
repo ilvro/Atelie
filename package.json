@@ -14,6 +14,8 @@
     "colecao:elementos": "node scripts/colecao/build.js --elements",
     "colecao:fontes": "node scripts/colecao/build.js --fonts",
     "colecao:fontes:specimen": "node scripts/colecao/font-specimen.js",
+    "colecao:modelos": "node scripts/colecao/templates.js",
+    "colecao:modelo": "node scripts/colecao/model.js",
     "library:elements": "node scripts/library/import-elements.js",
     "library:psd-report": "node --max-old-space-size=8192 scripts/library/psd-report.js",
     "library:psd-import": "node --max-old-space-size=8192 scripts/library/import-psd.js"

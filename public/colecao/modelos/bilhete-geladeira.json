@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-bilhete-geladeira",
+  "revision": 0,
+  "name": "Bilhete de geladeira",
+  "category": "Cartas e bilhetes",
+  "tags": [
+    "cartas e bilhetes"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 700,
+    "height": 700,
+    "background": "#e0d8c3"
+  },
+  "layers": [
+    {
+      "id": "l-1-bilhete-geladeira",
+      "name": "Bloco amarelo",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 40,
+      "y": 40,
+      "width": 620,
+      "height": 620,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#fff59d",
+        "stroke": "#e4d87c",
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-2-bilhete-geladeira",
+      "name": "Fita crepe no topo",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.9,
+      "blend": "multiply",
+      "x": 240,
+      "y": 15,
+      "width": 220,
+      "height": 65,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-fita-crepe-media"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-texto",
+      "name": "Texto do bilhete",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 130,
+      "width": 540,
+      "height": 500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Fui até a oficina resolver o problema do freio.\n\nAlmoço tá no forno (não esquece de desligar!).\n\nVolto antes das 17h.\nTe amo!",
+        "font": {
+          "family": "Permanent Marker",
+          "library": "casa-font-permanentmarker-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 36,
+        "color": "#212121",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-texto",
+      "label": "Texto"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

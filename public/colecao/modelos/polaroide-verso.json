@@ -1,0 +1,143 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-polaroide-verso",
+  "revision": 0,
+  "name": "Polaroide com legenda · verso",
+  "category": "Cotidiano",
+  "tags": [
+    "cotidiano"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 880,
+    "height": 1070,
+    "background": "#3b3834"
+  },
+  "layers": [
+    {
+      "id": "l-1-polaroide-verso",
+      "name": "Papel verso fotográfico",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 880,
+      "height": 1070,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-papel-fotografico-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-polaroide-verso",
+      "name": "Fita crepe diagonal",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.85,
+      "blend": "multiply",
+      "x": 300,
+      "y": 60,
+      "width": 280,
+      "height": 90,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-fita-crepe-diagonal"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-dedicatoria",
+      "name": "Dedicatória",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 350,
+      "width": 680,
+      "height": 450,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Para que você nunca se esqueça dos dias ensolarados antes de tudo mudar.\n\nCom todo o meu amor,\nMarina\n15/01/1974",
+        "font": {
+          "family": "Homemade Apple",
+          "library": "casa-font-homemadeapple-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#161938",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.6,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-dedicatoria",
+      "label": "Dedicatória"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

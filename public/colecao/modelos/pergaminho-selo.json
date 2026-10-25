@@ -1,0 +1,209 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-pergaminho-selo",
+  "revision": 0,
+  "name": "Pergaminho com selo",
+  "category": "Ocultismo",
+  "tags": [
+    "ocultismo"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1100,
+    "height": 1500,
+    "background": "#dec599"
+  },
+  "layers": [
+    {
+      "id": "l-1-pergaminho-selo",
+      "name": "Papel pergaminho",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-pergaminho-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-pergaminho-selo",
+      "name": "Lacre de cera vermelho com brasão",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 460,
+      "y": 1160,
+      "width": 180,
+      "height": 180,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-lacre-vermelho-brasao"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-titulo",
+      "name": "Título solene",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 140,
+      "width": 900,
+      "height": 70,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "PACTUM SECRETUM",
+        "font": {
+          "family": "Pirata One",
+          "library": "casa-font-pirataone-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 52,
+        "color": "#241710",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 4,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-3-pergaminho-selo",
+      "name": "Linha decorativa",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 250,
+      "y": 230,
+      "width": 600,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#4a3222",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-texto",
+      "name": "Texto do pacto",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 300,
+      "width": 860,
+      "height": 750,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Pelo presente instrumento solene, os abaixo assinados comprometem-se por honra e sangue a guardar segredo perpétuo a respeito dos acontecimentos transcorridos na Abadia de São Gabriel no solstício de inverno.\n\nNenhum relato, diário ou desenho poderá ser transmitido a olhos profanos. A quebra deste juramento acarretará a maldição perpétua sobre a estirpe do transgressor, que será banido da ordem e considerado indigno perante os irmãos.",
+        "font": {
+          "family": "Cormorant Garamond",
+          "library": "casa-font-cormorantgaramond-light",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 28,
+        "color": "#2b1b11",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.6,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-titulo",
+      "label": "Título"
+    },
+    {
+      "layerId": "l-texto",
+      "label": "Texto"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

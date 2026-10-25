@@ -21,7 +21,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 13 — Coleção elementos | concluída | 2026-10-24 | Coleção da casa: 140 elementos vetoriais em SVG (carimbos, selos, prendedores, fitas, molduras, etc.) |
 | 14 — Coleção fontes | concluída | 2026-10-24 | Coleção da casa: 26 famílias de fontes livres, parser sfnt, seletor visual e eixos variáveis |
 | 15 — Biblioteca | concluída | 2026-10-24 | Gaveta Biblioteca com busca, filtros, drag & drop e modo Preencher com exemplos em português |
-| 16 — Coleção modelos | pendente | | Coleção da casa: 36 modelos prontos |
+| 16 — Coleção modelos | concluída | 2026-10-24 | Coleção da casa: 39 modelos próprios em 8 categorias, gerador de modelos, frente/verso, UV e folha de contato |
 | 17 — Início e galeria | pendente | | Tela de abertura e catálogo de modelos |
 | 18 — Assar e entregar | pendente | | Renderização final e integração de entrega |
 | 19 — Luz UV | pendente | | Camadas secretas visíveis sob luz negra |
@@ -98,6 +98,46 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 - `npm test`: 82 testes unitários passando 100%.
 - `npm run test:e2e`: 8 suítes E2E Playwright passando 100%.
 - `npm run colecao:texturas`: 101 arquivos WebP gerados com sucesso e manifesto `library.json` validado.
+
+---
+
+## Etapa 16 — Coleção da casa · modelos próprios
+
+### Feito
+- **39 Modelos Próprios em 8 Categorias (`public/colecao/modelos/`)**:
+  - Implementação completa dos 39 modelos da casa cobrindo as 8 categorias do plano, usando exclusivamente ativos da coleção (`casa-...`) e fontes livres (`casa-font-...`):
+    1. *Cartas e bilhetes (9)*: Carta envelhecida, Carta datilografada · anos 50, Bilhete de caderno rasgado, Bilhete de geladeira, Cartão-postal (frente e verso), Telegrama · anos 20, Carta com envelope (frente e verso).
+    2. *Jornal (4)*: Recorte de jornal · anos 20, Capa de jornal, Obituário, Classificados.
+    3. *Polícia e investigação (6)*: Relatório policial, Boletim de ocorrência, Ficha criminal, Mandado judicial, Laudo pericial, Cartão de evidência.
+    4. *Médico (4)*: Prontuário médico, Receita médica, Certidão de óbito, Internação · sanatório.
+    5. *Ocultismo (4)*: Página de grimório, Círculo ritual, Diário de culto · com UV, Pergaminho com selo.
+    6. *Fantasia (3)*: Édito real, Mapa rasgado, Cartaz de procurado.
+    7. *Cotidiano (6)*: Recibo de venda, Passagem de trem, Cartão de visita, Ingresso de teatro, Polaroide com legenda (frente e verso).
+    8. *Tecnologia (3)*: Conversa de celular, E-mail impresso, Tela de terminal.
+  - Textos de exemplo plausíveis e em português sem *lorem ipsum*, ordem lógica de camadas, camadas nomeadas em português, e variações ocultas (`Variação · ...`).
+- **Suporte a Frente e Verso e Camada de UV**:
+  - Modelos de dois lados vinculados via `backTemplate` cruzado no manifesto e instanciação bidirecional automática de documentos no editor.
+  - Suporte a camada invisível em luz normal e revelada sob luz negra (`light: 'uv'`) no Diário de culto.
+- **Ferramentas CLI e Build de Modelos**:
+  - `scripts/colecao/model.js` (`npm run colecao:modelo -- --handout <id> --slug <slug> --category "<categoria>" [--back <verso>]`): validação contra regras da casa, gravação em `public/colecao/modelos/<slug>.json`, registro no manifesto `library.json` com `license: 'CC0-1.0'` e geração de prévia WebP a 480 px.
+  - `scripts/colecao/templates.js` (`npm run colecao:modelos`): gerador automatizado dos 39 modelos, renderização de prévias via Playwright e `window.__atelie.renderHandout`, e geração da folha de contato.
+- **Instanciação no Editor (`src/editor/editor.js`)**:
+  - Métodos `instantiateTemplate` e `openTemplate` e tratamento de parâmetro URL `?template=<id>`.
+  - Auto-criação do verso vinculado no armazenamento quando há `backTemplate`, com UUIDs válidos e abertura direta na aba "Preencher".
+- **Folha de Contato e Integridade do Acervo**:
+  - `docs/referencias/colecao-modelos.png` (1344 × 2310 px): painel de contato com as 39 prévias organizadas em grade com identificador e categoria.
+  - Tamanho da pasta `public/colecao/`: ~20 MB (amplamente abaixo do limite de 60 MB).
+- **Testes Implementados**:
+  - `tests/colecao-templates.test.js`: validação de presença, `validateHandout`, uso exclusivo de itens `casa-`, presença de campos e consistência de `backTemplate` para todos os modelos.
+  - `tests/e2e/templates.test.js`: teste E2E Playwright cobrindo instanciação por URL de modelo padrão, modelo frente/verso e modelo com UV, verificação de abertura da aba Preencher, edição de campo com atualização imediata do canvas e ligação bidirecional no armazenamento.
+
+### Validação
+- `npm test`: 101 testes unitários passando 100%.
+- `npm run test:e2e`: 10 suítes E2E Playwright passando 100%.
+- `docs/referencias/colecao-modelos.png` gerada e validada.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 16.
 
 ---
 

@@ -1,0 +1,141 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-tela-terminal",
+  "revision": 0,
+  "name": "Tela de terminal",
+  "category": "Tecnologia",
+  "tags": [
+    "tecnologia"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1600,
+    "height": 1000,
+    "background": "#080c08"
+  },
+  "layers": [
+    {
+      "id": "l-1-tela-terminal",
+      "name": "Fundo monitor",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1600,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#080c08",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-2-tela-terminal",
+      "name": "Borda CRT",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 30,
+      "y": 30,
+      "width": 1540,
+      "height": 940,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#153515",
+        "strokeWidth": 6,
+        "radius": 24,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-3-tela-terminal",
+      "name": "Efeito grão de tela",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1600,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "grain",
+        "seed": 42,
+        "amount": 0.35,
+        "params": {}
+      }
+    },
+    {
+      "id": "l-texto",
+      "name": "Texto do terminal",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 80,
+      "width": 1440,
+      "height": 840,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "SYSTEM BOOT SEQUENCE — VAX/VMS V4.7 (NODE ABN-01)\nCOPYRIGHT (C) 1986 DIGITAL EQUIPMENT CORPORATION\n\n%SYS-I-LOAD, LOADING KERNEL MODULES... [OK]\n%NET-I-UP, DECNET INTERFACE ONLINE AT IP 10.14.88.2\n\nLOGIN: SEC_ADMIN\nPASSWORD: **********\nACCESS GRANTED — CLEARANCE LEVEL: OMEGA\n\nDATABASE QUERY: SELECT * FROM PROJECT_CHRONOS WHERE STATUS=\"ACTIVE\"\n-------------------------------------------------------------------------\nSUBJECT ID: CHR-8812\nSTATUS: CONTAINMENT BREACH DETECTED AT 02:41:09\nLAST KNOWN COORDINATES: SECTOR 4-G (SUB-LEVEL 3)\nSECURITY PROTOCOL 9 ENGAGED. BLAST DOORS SEALED.\n-------------------------------------------------------------------------\nWARNING: UNAUTHORIZED TERMINAL ACCESS DETECTED.\nCOMMENCING SYSTEM PURGE IN 60 SECONDS...\n\n_ ",
+        "font": {
+          "family": "VT323",
+          "library": "casa-font-vt323-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#33ff33",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.35,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-texto",
+      "label": "Texto"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

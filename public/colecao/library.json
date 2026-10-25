@@ -4822,6 +4822,561 @@
       "variable": null,
       "file": "fontes/apache/homemadeapple/HomemadeApple-Regular.ttf",
       "license": "Apache-2.0"
+    },
+    {
+      "id": "casa-tpl-carta-envelhecida",
+      "kind": "template",
+      "name": "Carta envelhecida",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/carta-envelhecida.json",
+      "preview": "previews/casa-tpl-carta-envelhecida.webp",
+      "fields": [
+        "Local e data",
+        "Destinatário",
+        "Corpo",
+        "Assinatura"
+      ]
+    },
+    {
+      "id": "casa-tpl-carta-datilografada-anos-50",
+      "kind": "template",
+      "name": "Carta datilografada · anos 50",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/carta-datilografada-anos-50.json",
+      "preview": "previews/casa-tpl-carta-datilografada-anos-50.webp",
+      "fields": [
+        "Remetente",
+        "Data",
+        "Destinatário",
+        "Corpo",
+        "Assinatura"
+      ]
+    },
+    {
+      "id": "casa-tpl-bilhete-caderno-rasgado",
+      "kind": "template",
+      "name": "Bilhete de caderno rasgado",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/bilhete-caderno-rasgado.json",
+      "preview": "previews/casa-tpl-bilhete-caderno-rasgado.webp",
+      "fields": [
+        "Texto"
+      ]
+    },
+    {
+      "id": "casa-tpl-bilhete-geladeira",
+      "kind": "template",
+      "name": "Bilhete de geladeira",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/bilhete-geladeira.json",
+      "preview": "previews/casa-tpl-bilhete-geladeira.webp",
+      "fields": [
+        "Texto"
+      ]
+    },
+    {
+      "id": "casa-tpl-cartao-postal-frente",
+      "kind": "template",
+      "name": "Cartão-postal · frente",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/cartao-postal-frente.json",
+      "preview": "previews/casa-tpl-cartao-postal-frente.webp",
+      "fields": [
+        "Imagem",
+        "Saudação"
+      ],
+      "backTemplate": "casa-tpl-cartao-postal-verso"
+    },
+    {
+      "id": "casa-tpl-cartao-postal-verso",
+      "kind": "template",
+      "name": "Cartão-postal · verso",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/cartao-postal-verso.json",
+      "preview": "previews/casa-tpl-cartao-postal-verso.webp",
+      "fields": [
+        "Mensagem",
+        "Destinatário",
+        "Endereço"
+      ],
+      "backTemplate": "casa-tpl-cartao-postal-frente"
+    },
+    {
+      "id": "casa-tpl-telegrama-anos-20",
+      "kind": "template",
+      "name": "Telegrama · anos 20",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/telegrama-anos-20.json",
+      "preview": "previews/casa-tpl-telegrama-anos-20.webp",
+      "fields": [
+        "Origem",
+        "Data",
+        "Destinatário",
+        "Mensagem"
+      ]
+    },
+    {
+      "id": "casa-tpl-carta-envelope-frente",
+      "kind": "template",
+      "name": "Carta com envelope · carta",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/carta-envelope-frente.json",
+      "preview": "previews/casa-tpl-carta-envelope-frente.webp",
+      "fields": [
+        "Destinatário",
+        "Corpo",
+        "Assinatura"
+      ],
+      "backTemplate": "casa-tpl-carta-envelope-verso"
+    },
+    {
+      "id": "casa-tpl-carta-envelope-verso",
+      "kind": "template",
+      "name": "Carta com envelope · envelope",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/carta-envelope-verso.json",
+      "preview": "previews/casa-tpl-carta-envelope-verso.webp",
+      "fields": [
+        "Destinatário",
+        "Endereço"
+      ],
+      "backTemplate": "casa-tpl-carta-envelope-frente"
+    },
+    {
+      "id": "casa-tpl-recorte-jornal-anos-20",
+      "kind": "template",
+      "name": "Recorte de jornal · anos 20",
+      "category": "Jornal",
+      "license": "CC0-1.0",
+      "file": "modelos/recorte-jornal-anos-20.json",
+      "preview": "previews/casa-tpl-recorte-jornal-anos-20.webp",
+      "fields": [
+        "Manchete",
+        "Linha fina",
+        "Texto",
+        "Foto",
+        "Legenda"
+      ]
+    },
+    {
+      "id": "casa-tpl-capa-jornal",
+      "kind": "template",
+      "name": "Capa de jornal",
+      "category": "Jornal",
+      "license": "CC0-1.0",
+      "file": "modelos/capa-jornal.json",
+      "preview": "previews/casa-tpl-capa-jornal.webp",
+      "fields": [
+        "Nome do jornal",
+        "Data",
+        "Manchete",
+        "Texto",
+        "Foto"
+      ]
+    },
+    {
+      "id": "casa-tpl-obituario",
+      "kind": "template",
+      "name": "Obituário",
+      "category": "Jornal",
+      "license": "CC0-1.0",
+      "file": "modelos/obituario.json",
+      "preview": "previews/casa-tpl-obituario.webp",
+      "fields": [
+        "Nome",
+        "Datas",
+        "Texto"
+      ]
+    },
+    {
+      "id": "casa-tpl-classificados",
+      "kind": "template",
+      "name": "Classificados",
+      "category": "Jornal",
+      "license": "CC0-1.0",
+      "file": "modelos/classificados.json",
+      "preview": "previews/casa-tpl-classificados.webp",
+      "fields": [
+        "Anúncio em destaque"
+      ]
+    },
+    {
+      "id": "casa-tpl-relatorio-policial",
+      "kind": "template",
+      "name": "Relatório policial",
+      "category": "Polícia e investigação",
+      "license": "CC0-1.0",
+      "file": "modelos/relatorio-policial.json",
+      "preview": "previews/casa-tpl-relatorio-policial.webp",
+      "fields": [
+        "Número",
+        "Data",
+        "Agente",
+        "Ocorrência",
+        "Relato"
+      ]
+    },
+    {
+      "id": "casa-tpl-boletim-ocorrencia",
+      "kind": "template",
+      "name": "Boletim de ocorrência",
+      "category": "Polícia e investigação",
+      "license": "CC0-1.0",
+      "file": "modelos/boletim-ocorrencia.json",
+      "preview": "previews/casa-tpl-boletim-ocorrencia.webp",
+      "fields": [
+        "Partes",
+        "Local",
+        "Data",
+        "Fato"
+      ]
+    },
+    {
+      "id": "casa-tpl-ficha-criminal",
+      "kind": "template",
+      "name": "Ficha criminal",
+      "category": "Polícia e investigação",
+      "license": "CC0-1.0",
+      "file": "modelos/ficha-criminal.json",
+      "preview": "previews/casa-tpl-ficha-criminal.webp",
+      "fields": [
+        "Foto",
+        "Nome",
+        "Apelido",
+        "Crimes",
+        "Observações"
+      ]
+    },
+    {
+      "id": "casa-tpl-mandado",
+      "kind": "template",
+      "name": "Mandado judicial",
+      "category": "Polícia e investigação",
+      "license": "CC0-1.0",
+      "file": "modelos/mandado.json",
+      "preview": "previews/casa-tpl-mandado.webp",
+      "fields": [
+        "Nome",
+        "Motivo",
+        "Data",
+        "Juiz"
+      ]
+    },
+    {
+      "id": "casa-tpl-laudo-pericial",
+      "kind": "template",
+      "name": "Laudo pericial",
+      "category": "Polícia e investigação",
+      "license": "CC0-1.0",
+      "file": "modelos/laudo-pericial.json",
+      "preview": "previews/casa-tpl-laudo-pericial.webp",
+      "fields": [
+        "Número",
+        "Vítima",
+        "Conclusão"
+      ]
+    },
+    {
+      "id": "casa-tpl-cartao-evidencia",
+      "kind": "template",
+      "name": "Cartão de evidência",
+      "category": "Polícia e investigação",
+      "license": "CC0-1.0",
+      "file": "modelos/cartao-evidencia.json",
+      "preview": "previews/casa-tpl-cartao-evidencia.webp",
+      "fields": [
+        "Número",
+        "Item",
+        "Local",
+        "Responsável"
+      ]
+    },
+    {
+      "id": "casa-tpl-prontuario",
+      "kind": "template",
+      "name": "Prontuário médico",
+      "category": "Médico",
+      "license": "CC0-1.0",
+      "file": "modelos/prontuario.json",
+      "preview": "previews/casa-tpl-prontuario.webp",
+      "fields": [
+        "Paciente",
+        "Data",
+        "Anotações"
+      ]
+    },
+    {
+      "id": "casa-tpl-receita-medica",
+      "kind": "template",
+      "name": "Receita médica",
+      "category": "Médico",
+      "license": "CC0-1.0",
+      "file": "modelos/receita-medica.json",
+      "preview": "previews/casa-tpl-receita-medica.webp",
+      "fields": [
+        "Médico",
+        "Paciente",
+        "Prescrição"
+      ]
+    },
+    {
+      "id": "casa-tpl-certidao-obito",
+      "kind": "template",
+      "name": "Certidão de óbito",
+      "category": "Médico",
+      "license": "CC0-1.0",
+      "file": "modelos/certidao-obito.json",
+      "preview": "previews/casa-tpl-certidao-obito.webp",
+      "fields": [
+        "Nome",
+        "Data",
+        "Causa",
+        "Médico"
+      ]
+    },
+    {
+      "id": "casa-tpl-internacao-sanatorio",
+      "kind": "template",
+      "name": "Internação · sanatório",
+      "category": "Médico",
+      "license": "CC0-1.0",
+      "file": "modelos/internacao-sanatorio.json",
+      "preview": "previews/casa-tpl-internacao-sanatorio.webp",
+      "fields": [
+        "Paciente",
+        "Foto",
+        "Diagnóstico",
+        "Observações"
+      ]
+    },
+    {
+      "id": "casa-tpl-pagina-grimorio",
+      "kind": "template",
+      "name": "Página de grimório",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/pagina-grimorio.json",
+      "preview": "previews/casa-tpl-pagina-grimorio.webp",
+      "fields": [
+        "Título",
+        "Texto",
+        "Nota na margem"
+      ]
+    },
+    {
+      "id": "casa-tpl-circulo-ritual",
+      "kind": "template",
+      "name": "Círculo ritual",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/circulo-ritual.json",
+      "preview": "previews/casa-tpl-circulo-ritual.webp",
+      "fields": [
+        "Instruções"
+      ]
+    },
+    {
+      "id": "casa-tpl-diario-culto-uv",
+      "kind": "template",
+      "name": "Diário de culto · com UV",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/diario-culto-uv.json",
+      "preview": "previews/casa-tpl-diario-culto-uv.webp",
+      "fields": [
+        "Data",
+        "Texto",
+        "Mensagem oculta"
+      ]
+    },
+    {
+      "id": "casa-tpl-pergaminho-selo",
+      "kind": "template",
+      "name": "Pergaminho com selo",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/pergaminho-selo.json",
+      "preview": "previews/casa-tpl-pergaminho-selo.webp",
+      "fields": [
+        "Título",
+        "Texto"
+      ]
+    },
+    {
+      "id": "casa-tpl-edito-real",
+      "kind": "template",
+      "name": "Édito real",
+      "category": "Fantasia",
+      "license": "CC0-1.0",
+      "file": "modelos/edito-real.json",
+      "preview": "previews/casa-tpl-edito-real.webp",
+      "fields": [
+        "Título",
+        "Texto",
+        "Assinatura"
+      ]
+    },
+    {
+      "id": "casa-tpl-mapa-rasgado",
+      "kind": "template",
+      "name": "Mapa rasgado",
+      "category": "Fantasia",
+      "license": "CC0-1.0",
+      "file": "modelos/mapa-rasgado.json",
+      "preview": "previews/casa-tpl-mapa-rasgado.webp",
+      "fields": [
+        "Mapa",
+        "Legenda"
+      ]
+    },
+    {
+      "id": "casa-tpl-cartaz-procurado",
+      "kind": "template",
+      "name": "Cartaz de procurado",
+      "category": "Fantasia",
+      "license": "CC0-1.0",
+      "file": "modelos/cartaz-procurado.json",
+      "preview": "previews/casa-tpl-cartaz-procurado.webp",
+      "fields": [
+        "Foto",
+        "Nome",
+        "Crime",
+        "Recompensa"
+      ]
+    },
+    {
+      "id": "casa-tpl-recibo",
+      "kind": "template",
+      "name": "Recibo de venda",
+      "category": "Cotidiano",
+      "license": "CC0-1.0",
+      "file": "modelos/recibo.json",
+      "preview": "previews/casa-tpl-recibo.webp",
+      "fields": [
+        "Estabelecimento",
+        "Itens",
+        "Total",
+        "Data"
+      ]
+    },
+    {
+      "id": "casa-tpl-passagem-trem",
+      "kind": "template",
+      "name": "Passagem de trem",
+      "category": "Cotidiano",
+      "license": "CC0-1.0",
+      "file": "modelos/passagem-trem.json",
+      "preview": "previews/casa-tpl-passagem-trem.webp",
+      "fields": [
+        "Origem",
+        "Destino",
+        "Data",
+        "Assento"
+      ]
+    },
+    {
+      "id": "casa-tpl-cartao-visita",
+      "kind": "template",
+      "name": "Cartão de visita",
+      "category": "Cotidiano",
+      "license": "CC0-1.0",
+      "file": "modelos/cartao-visita.json",
+      "preview": "previews/casa-tpl-cartao-visita.webp",
+      "fields": [
+        "Nome",
+        "Ofício",
+        "Endereço"
+      ]
+    },
+    {
+      "id": "casa-tpl-ingresso-teatro",
+      "kind": "template",
+      "name": "Ingresso de teatro",
+      "category": "Cotidiano",
+      "license": "CC0-1.0",
+      "file": "modelos/ingresso-teatro.json",
+      "preview": "previews/casa-tpl-ingresso-teatro.webp",
+      "fields": [
+        "Espetáculo",
+        "Data",
+        "Poltrona"
+      ]
+    },
+    {
+      "id": "casa-tpl-polaroide-frente",
+      "kind": "template",
+      "name": "Polaroide com legenda · frente",
+      "category": "Cotidiano",
+      "license": "CC0-1.0",
+      "file": "modelos/polaroide-frente.json",
+      "preview": "previews/casa-tpl-polaroide-frente.webp",
+      "fields": [
+        "Foto",
+        "Legenda"
+      ],
+      "backTemplate": "casa-tpl-polaroide-verso"
+    },
+    {
+      "id": "casa-tpl-polaroide-verso",
+      "kind": "template",
+      "name": "Polaroide com legenda · verso",
+      "category": "Cotidiano",
+      "license": "CC0-1.0",
+      "file": "modelos/polaroide-verso.json",
+      "preview": "previews/casa-tpl-polaroide-verso.webp",
+      "fields": [
+        "Dedicatória"
+      ],
+      "backTemplate": "casa-tpl-polaroide-frente"
+    },
+    {
+      "id": "casa-tpl-conversa-celular",
+      "kind": "template",
+      "name": "Conversa de celular",
+      "category": "Tecnologia",
+      "license": "CC0-1.0",
+      "file": "modelos/conversa-celular.json",
+      "preview": "previews/casa-tpl-conversa-celular.webp",
+      "fields": [
+        "Contato",
+        "Mensagens"
+      ]
+    },
+    {
+      "id": "casa-tpl-email-impresso",
+      "kind": "template",
+      "name": "E-mail impresso",
+      "category": "Tecnologia",
+      "license": "CC0-1.0",
+      "file": "modelos/email-impresso.json",
+      "preview": "previews/casa-tpl-email-impresso.webp",
+      "fields": [
+        "De",
+        "Para",
+        "Assunto",
+        "Corpo"
+      ]
+    },
+    {
+      "id": "casa-tpl-tela-terminal",
+      "kind": "template",
+      "name": "Tela de terminal",
+      "category": "Tecnologia",
+      "license": "CC0-1.0",
+      "file": "modelos/tela-terminal.json",
+      "preview": "previews/casa-tpl-tela-terminal.webp",
+      "fields": [
+        "Texto"
+      ]
     }
   ]
 }

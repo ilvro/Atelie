@@ -176,7 +176,7 @@ Medido com `ag-psd` 30.2.0 em três arquivos (um jornal, um relatório policial 
 | 13 | feita | 24/10/2026 | Coleção da casa: 140 elementos vetoriais em SVG (carimbos, selos, prendedores, fitas, molduras, etc.) |
 | 14 | feita | 24/10/2026 | Coleção da casa: 26 famílias de fontes livres (39 arquivos TTF), parser sfnt, seletor com prévia e eixos variáveis |
 | 15 | feita | 24/10/2026 | Gaveta Biblioteca (chips, busca, categorias em fitas, drag & drop) e modo Preencher (campos, exemplos, troca de imagens) |
-| 16 | pendente | | |
+| 16 | feita | 24/10/2026 | Coleção da casa: 39 modelos próprios em 8 categorias, gerador de modelos, frente/verso, UV e folha de contato |
 | 17 | pendente | | |
 | 18 | pendente | | |
 | 19 | pendente | | |

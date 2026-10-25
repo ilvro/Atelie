@@ -1336,6 +1336,54 @@ export function createEditor(shell, { api, images, fonts } = {}) {
   shell.palette.register(paletteCommands);
 
   // Initial load
+  async function instantiateTemplate(templateIdOrItem) {
+    let tplItem = null;
+    let tplId = typeof templateIdOrItem === 'string' ? templateIdOrItem : templateIdOrItem?.id;
+    if (typeof templateIdOrItem === 'object' && templateIdOrItem?.handout) {
+      tplItem = templateIdOrItem;
+    } else {
+      tplItem = await api.library.item(tplId);
+    }
+
+    if (!tplItem || !tplItem.handout) {
+      throw new Error(`Modelo não encontrado: ${tplId}`);
+    }
+
+    const doc = structuredClone(tplItem.handout);
+    doc.id = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : ('00000000-0000-4000-8000-' + Math.random().toString(16).slice(2, 14).padStart(12, '0'));
+    doc.revision = 0;
+    doc.source = { kind: 'template', templateId: tplItem.id };
+    doc.createdAt = new Date().toISOString();
+    doc.updatedAt = new Date().toISOString();
+
+    // Check if template has backTemplate (frente e verso)
+    if (tplItem.backTemplate) {
+      try {
+        const backTplItem = await api.library.item(tplItem.backTemplate);
+        if (backTplItem && backTplItem.handout) {
+          const backDoc = structuredClone(backTplItem.handout);
+          backDoc.id = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : ('00000000-0000-4000-8000-' + Math.random().toString(16).slice(2, 14).padStart(12, '0'));
+          backDoc.revision = 0;
+          backDoc.source = { kind: 'template', templateId: backTplItem.id };
+          backDoc.createdAt = new Date().toISOString();
+          backDoc.updatedAt = new Date().toISOString();
+
+          // Link both documents in both directions
+          doc.back = { handoutId: backDoc.id };
+          backDoc.back = { handoutId: doc.id };
+
+          // Save the back document to storage so it exists and can be flipped to
+          await api.handouts.create(backDoc);
+        }
+      } catch (err) {
+        console.warn('[atelie] Erro ao criar verso do modelo:', err);
+      }
+    }
+
+    await loadHandout(doc);
+    return doc;
+  }
+
   async function init() {
     await updateRecentRail();
     await refreshPaletteCache();
@@ -1343,8 +1391,18 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     let initialDoc = null;
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
+      const templateId = urlParams.get('template');
       const handoutId = urlParams.get('handout');
       const newPreset = urlParams.get('new');
+
+      if (templateId) {
+        try {
+          initialDoc = await instantiateTemplate(templateId);
+          return;
+        } catch (err) {
+          console.warn('[atelie] Erro ao carregar modelo da URL:', err);
+        }
+      }
 
       if (handoutId) {
         try {
@@ -1384,6 +1442,8 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     },
     open: loadHandout,
     loadHandout,
+    openTemplate: instantiateTemplate,
+    instantiateTemplate,
     createHandout,
     createDocument: options => loadHandout(createHandout(options)),
     archive: archiveDocument,

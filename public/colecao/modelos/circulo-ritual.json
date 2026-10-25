@@ -1,0 +1,262 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-circulo-ritual",
+  "revision": 0,
+  "name": "Círculo ritual",
+  "category": "Ocultismo",
+  "tags": [
+    "ocultismo"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#dec599"
+  },
+  "layers": [
+    {
+      "id": "l-1-circulo-ritual",
+      "name": "Papel pergaminho",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-pergaminho-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-circulo-ritual",
+      "name": "Sigilo concêntrico principal",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.9,
+      "blend": "multiply",
+      "x": 270,
+      "y": 150,
+      "width": 700,
+      "height": 700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-simbolo-sigilo-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": {
+          "color": "#3a2012",
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "l-3-circulo-ritual",
+      "name": "Sigilo orbital oeste",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 120,
+      "y": 400,
+      "width": 180,
+      "height": 180,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-simbolo-sigilo-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": {
+          "color": "#3a2012",
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-circulo-ritual",
+      "name": "Sigilo orbital leste",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 940,
+      "y": 400,
+      "width": 180,
+      "height": 180,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-simbolo-sigilo-5"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": {
+          "color": "#3a2012",
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "l-5-circulo-ritual",
+      "name": "Título cerimonial",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 910,
+      "width": 1000,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "RITUAL DE CONJURAÇÃO DO VÉU NEGRO",
+        "font": {
+          "family": "Pirata One",
+          "library": "casa-font-pirataone-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 42,
+        "color": "#2b1b11",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 2,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-instrucoes",
+      "name": "Instruções cerimoniais",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 160,
+      "y": 1000,
+      "width": 920,
+      "height": 500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "1. Acenda quatro velas negras nos pontos cardeais antes da meia-noite.\n2. Derrame três gotas de vinho tinto sobre o símbolo central entoando o cântico.\n3. Não cruze as linhas sob nenhuma hipótese antes do primeiro cantar do galo.\n4. Para dissipar a presença, extinga as velas em sentido anti-horário com os dedos úmidos.",
+        "font": {
+          "family": "IM Fell DW Pica",
+          "library": "casa-font-im-fell-dw-pica-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 25,
+        "color": "#251b14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.6,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-instrucoes",
+      "label": "Instruções"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

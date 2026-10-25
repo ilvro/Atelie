@@ -1,0 +1,263 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-cartao-visita",
+  "revision": 0,
+  "name": "Cartão de visita",
+  "category": "Cotidiano",
+  "tags": [
+    "cotidiano"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 850,
+    "height": 500,
+    "background": "#f7f4ee"
+  },
+  "layers": [
+    {
+      "id": "l-1-cartao-visita",
+      "name": "Papel cartolina novo",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 850,
+      "height": 500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-cartolina-novo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-cartao-visita",
+      "name": "Moldura externa",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 30,
+      "y": 30,
+      "width": 790,
+      "height": 440,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#5c5446",
+        "strokeWidth": 1.5,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-3-cartao-visita",
+      "name": "Moldura interna",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 38,
+      "y": 38,
+      "width": 774,
+      "height": 424,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#8a7e6b",
+        "strokeWidth": 0.8,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-nome",
+      "name": "Nome",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 60,
+      "y": 120,
+      "width": 730,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Dr. Arthur de Menezes Canto",
+        "font": {
+          "family": "Cormorant Garamond",
+          "library": "casa-font-cormorantgaramond-light",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 36,
+        "color": "#1f1b15",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 1,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-cartao-visita",
+      "name": "Linha separadora",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 325,
+      "y": 190,
+      "width": 200,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#8a7e6b",
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-oficio",
+      "name": "Ofício",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 60,
+      "y": 215,
+      "width": 730,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "ADVOGADO & CONSULTOR JURÍDICO\nEspecialista em Sucessões e Direito Marítimo",
+        "font": {
+          "family": "Cormorant Garamond",
+          "library": "casa-font-cormorantgaramond-lightitalic",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 21,
+        "color": "#3d362a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-endereco",
+      "name": "Endereço",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 60,
+      "y": 330,
+      "width": 730,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Edifício Triângulo, 5º andar — Salas 51/52\nLargo de São Bento — São Paulo | Tel.: 2-1988",
+        "font": {
+          "family": "Cormorant Garamond",
+          "library": "casa-font-cormorantgaramond-light",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 20,
+        "color": "#4a4133",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-nome",
+      "label": "Nome"
+    },
+    {
+      "layerId": "l-oficio",
+      "label": "Ofício"
+    },
+    {
+      "layerId": "l-endereco",
+      "label": "Endereço"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

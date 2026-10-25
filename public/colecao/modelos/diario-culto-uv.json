@@ -1,0 +1,227 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-diario-culto-uv",
+  "revision": 0,
+  "name": "Diário de culto · com UV",
+  "category": "Ocultismo",
+  "tags": [
+    "ocultismo"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f1ede0"
+  },
+  "layers": [
+    {
+      "id": "l-1-diario-culto-uv",
+      "name": "Papel caderno antigo",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-caderno-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-diario-culto-uv",
+      "name": "Marcas de fuligem",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.6,
+      "blend": "multiply",
+      "x": 750,
+      "y": 1100,
+      "width": 400,
+      "height": 400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-data",
+      "name": "Data da entrada",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 140,
+      "width": 960,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "14 de Novembro — Entrada XVII",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 40,
+        "color": "#222336",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-texto",
+      "name": "Texto do diário",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 230,
+      "width": 960,
+      "height": 700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "As reuniões na cripta sob o convento estão cada vez mais concorridas. Ontem compareceram mais de vinte irmãos, todos encapuzados e em silêncio absoluto.\n\nO padre Bento liderou as preces em latim arcaico enquanto o cálice de bronze passava de mão em mão. Todos bebemos. O gosto era amargo e ferroso, como água colhida de poço profundo.\n\nDepois que as tochas foram apagadas, ouvimos os sussurros novamente vindos do fundo da nave. Não eram vozes humanas. Sei que não posso mais voltar atrás.",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 35,
+        "color": "#1f2038",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.55,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-mensagem-oculta",
+      "name": "Mensagem oculta sob luz UV",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 1000,
+      "width": 960,
+      "height": 200,
+      "rotation": 0,
+      "clip": false,
+      "light": "uv",
+      "text": {
+        "content": "O QUE DORME NAS PROFUNDEZAS DESPERTARÁ QUANDO A ESTRELA NEGRA ASCENDER AO ZÊNITE",
+        "font": {
+          "family": "Pirata One",
+          "library": "casa-font-pirataone-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 44,
+        "color": "#22ff88",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-data",
+      "label": "Data"
+    },
+    {
+      "layerId": "l-texto",
+      "label": "Texto"
+    },
+    {
+      "layerId": "l-mensagem-oculta",
+      "label": "Mensagem oculta"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

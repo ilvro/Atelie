@@ -1,0 +1,369 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-recorte-jornal-anos-20",
+  "revision": 0,
+  "name": "Recorte de jornal · anos 20",
+  "category": "Jornal",
+  "tags": [
+    "jornal"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 900,
+    "height": 1200,
+    "background": "#eae3d2"
+  },
+  "layers": [
+    {
+      "id": "l-1-recorte-jornal-anos-20",
+      "name": "Papel jornal antigo",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-papel-jornal-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-recorte-jornal-anos-20",
+      "name": "Rasgo lateral",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 740,
+      "y": 0,
+      "width": 160,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-rasgos-4"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-manchete",
+      "name": "Manchete",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 50,
+      "y": 60,
+      "width": 700,
+      "height": 110,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "MISTERIOSO DESAPARECIMENTO NO VALE DO TIETÊ",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 36,
+        "color": "#1b1b1b",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-linha-fina",
+      "name": "Linha fina",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 50,
+      "y": 180,
+      "width": 700,
+      "height": 70,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Moradores relatam luzes estranhas sobre a colina na madrugada de terça-feira; autoridades policiais abrem inquérito sigiloso.",
+        "font": {
+          "family": "Libre Baskerville",
+          "library": "casa-font-librebaskerville-italic",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 19,
+        "color": "#333333",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-3-recorte-jornal-anos-20",
+      "name": "Linha divisória",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 50,
+      "y": 260,
+      "width": 700,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#222222",
+        "strokeWidth": 1.5,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-foto",
+      "name": "Foto ilustrativa",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 50,
+      "y": 280,
+      "width": 320,
+      "height": 250,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": null,
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0.6,
+          "brightness": -0.05,
+          "contrast": 0.2,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-legenda",
+      "name": "Legenda",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 50,
+      "y": 540,
+      "width": 320,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "O casarão abandonado onde foram ouvidos os ruídos.",
+        "font": {
+          "family": "Libre Baskerville",
+          "library": "casa-font-librebaskerville-regular",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 14,
+        "color": "#444444",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-recorte-jornal-anos-20",
+      "name": "Coluna 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 390,
+      "y": 280,
+      "width": 360,
+      "height": 300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Segundo relatos colhidos no povoado próximo, por volta das três horas da madrugada ouviu-se um estrondo surdo seguido por clarões de tom azulado.\n\nO fazendeiro Joaquim Duarte afirmou que seus cães entraram em pânico momentos antes do fenômeno ocorrer.\n\nAo amanhecer, a porteira principal encontrava-se arrancada e pegadas de tamanho descomunal seguiam em direção à mata virgem.",
+        "font": {
+          "family": "Libre Baskerville",
+          "library": "casa-font-librebaskerville-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#222222",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-texto",
+      "name": "Texto da notícia",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 50,
+      "y": 600,
+      "width": 700,
+      "height": 500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "A delegacia local deslocou três agentes armados para a propriedade ainda nas primeiras horas do dia. O delegado responsável preferiu não emitir comunicado oficial até que a perícia técnica conclua os levantamentos de praxe.\n\nFontes anônimas ligadas ao hospital da comarca afirmam que um viajante foi atendido em estado de choque profundo, murmurando palavras incompreensíveis sobre vultos que dançavam nas sombras.\n\nA população continua apreensiva e novos detalhes serão divulgados na edição vespertina de amanhã.",
+        "font": {
+          "family": "Libre Baskerville",
+          "library": "casa-font-librebaskerville-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#222222",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-manchete",
+      "label": "Manchete"
+    },
+    {
+      "layerId": "l-linha-fina",
+      "label": "Linha fina"
+    },
+    {
+      "layerId": "l-texto",
+      "label": "Texto"
+    },
+    {
+      "layerId": "l-foto",
+      "label": "Foto"
+    },
+    {
+      "layerId": "l-legenda",
+      "label": "Legenda"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

@@ -1,0 +1,432 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-cartao-evidencia",
+  "revision": 0,
+  "name": "Cartão de evidência",
+  "category": "Polícia e investigação",
+  "tags": [
+    "polícia e investigação"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1100,
+    "height": 700,
+    "background": "#e8deb8"
+  },
+  "layers": [
+    {
+      "id": "l-1-cartao-evidencia",
+      "name": "Papel cartolina",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-cartolina-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-cartao-evidencia",
+      "name": "Ilhós",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 50,
+      "y": 330,
+      "width": 40,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": "#4a443b",
+        "stroke": "#8a7d6a",
+        "strokeWidth": 4,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-3-cartao-evidencia",
+      "name": "Fita barbante",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.75,
+      "blend": "multiply",
+      "x": 10,
+      "y": 300,
+      "width": 120,
+      "height": 40,
+      "rotation": 45,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-fita-crepe-curta"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-cartao-evidencia",
+      "name": "Título etiqueta",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 50,
+      "width": 880,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "POLÍCIA TÉCNICO-CIENTÍFICA — ETIQUETA DE CUSTÓDIA",
+        "font": {
+          "family": "Special Elite",
+          "library": "casa-font-specialelite-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 25,
+        "color": "#1a1815",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-5-cartao-evidencia",
+      "name": "Linha topo",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 100,
+      "width": 880,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#333333",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-numero",
+      "name": "Número",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 120,
+      "width": 500,
+      "height": 45,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "EVIDÊNCIA Nº: EV-1941-088",
+        "font": {
+          "family": "Special Elite",
+          "library": "casa-font-specialelite-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 28,
+        "color": "#1a1815",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-6-cartao-evidencia",
+      "name": "Carimbo EVIDÊNCIA",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.85,
+      "blend": "multiply",
+      "x": 680,
+      "y": 105,
+      "width": 340,
+      "height": 110,
+      "rotation": -5,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-carimbo-evidencia"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": {
+          "color": "#9c1c1c",
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "l-item",
+      "name": "Item",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 210,
+      "width": 880,
+      "height": 120,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "DESCRIÇÃO DO ITEM:\nAdaga cerimonial de empunhadura entalhada em osso, com lâmina oxidada e resíduos orgânicos incrustados.",
+        "font": {
+          "family": "Special Elite",
+          "library": "casa-font-specialelite-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 23,
+        "color": "#1f1c18",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.4,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-local",
+      "name": "Local",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 360,
+      "width": 880,
+      "height": 90,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "LOCAL DA COLETA:\nPorão sob o altar da capela desativada — Vale das Pedras",
+        "font": {
+          "family": "Special Elite",
+          "library": "casa-font-specialelite-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 23,
+        "color": "#1f1c18",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.4,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-responsavel",
+      "name": "Responsável",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 480,
+      "width": 880,
+      "height": 90,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "COLETADO POR:\nPerito Criminal D. Brandão (Matrícula 7.102)",
+        "font": {
+          "family": "Special Elite",
+          "library": "casa-font-specialelite-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 23,
+        "color": "#1f1c18",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.4,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-7-cartao-evidencia",
+      "name": "Data da coleta",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 590,
+      "width": 400,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "DATA: 14/11/1941 — 03:15h",
+        "font": {
+          "family": "Special Elite",
+          "library": "casa-font-specialelite-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 23,
+        "color": "#1f1c18",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-numero",
+      "label": "Número"
+    },
+    {
+      "layerId": "l-item",
+      "label": "Item"
+    },
+    {
+      "layerId": "l-local",
+      "label": "Local"
+    },
+    {
+      "layerId": "l-responsavel",
+      "label": "Responsável"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

@@ -351,7 +351,7 @@ export function validateHandout(value) {
   if (!isPlainObject(value)) fail('', 'Documento deve ser um objeto JSON.');
 
   if (value.schema !== 1) fail('schema', 'Schema deve ser 1.');
-  if (typeof value.id !== 'string' || !UUID_RE.test(value.id)) fail('id', 'ID inválido (esperado UUID).');
+  if (typeof value.id !== 'string' || (!UUID_RE.test(value.id) && !value.id.startsWith('casa-tpl-'))) fail('id', 'ID inválido (esperado UUID).');
   if (!Number.isInteger(value.revision) || value.revision < 0) fail('revision', 'Revisão deve ser um inteiro positivo ou zero.');
 
   if (typeof value.name !== 'string' || value.name.trim().length === 0 || value.name.length > HANDOUT_LIMITS.name) {
@@ -630,7 +630,7 @@ export function validateHandout(value) {
 
   // Back validation
   if (value.back !== null) {
-    if (!isPlainObject(value.back) || typeof value.back.handoutId !== 'string' || !UUID_RE.test(value.back.handoutId)) {
+    if (!isPlainObject(value.back) || typeof value.back.handoutId !== 'string' || (!UUID_RE.test(value.back.handoutId) && !value.back.handoutId.startsWith('casa-tpl-'))) {
       fail('back', 'Verso deve ser null ou { handoutId: uuid }.');
     }
   }

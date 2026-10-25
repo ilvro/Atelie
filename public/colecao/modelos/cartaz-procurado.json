@@ -1,0 +1,403 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-cartaz-procurado",
+  "revision": 0,
+  "name": "Cartaz de procurado",
+  "category": "Fantasia",
+  "tags": [
+    "fantasia"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1000,
+    "height": 1400,
+    "background": "#cfbe9a"
+  },
+  "layers": [
+    {
+      "id": "l-1-cartaz-procurado",
+      "name": "Papel kraft usado",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1000,
+      "height": 1400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-kraft-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-cartaz-procurado",
+      "name": "Prendedor no topo",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 470,
+      "y": 25,
+      "width": 60,
+      "height": 80,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-prendedor-clipe-prata-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-3-cartaz-procurado",
+      "name": "Título cartaz",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 50,
+      "y": 110,
+      "width": 900,
+      "height": 100,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "PROCURADO",
+        "font": {
+          "family": "Anton",
+          "library": "casa-font-anton-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 86,
+        "color": "#1a1410",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 6,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-cartaz-procurado",
+      "name": "Subtítulo",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 50,
+      "y": 220,
+      "width": 900,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "VIVO OU MORTO",
+        "font": {
+          "family": "Bebas Neue",
+          "library": "casa-font-bebasneue-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 46,
+        "color": "#7a1818",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 4,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-5-cartaz-procurado",
+      "name": "Moldura da foto",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 280,
+      "y": 300,
+      "width": 440,
+      "height": 440,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#d4c7a9",
+        "stroke": "#221913",
+        "strokeWidth": 4,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-foto",
+      "name": "Foto do procurado",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 280,
+      "y": 300,
+      "width": 440,
+      "height": 440,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": null,
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0.8,
+          "brightness": 0,
+          "contrast": 0.3,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-nome",
+      "name": "Nome do procurado",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 50,
+      "y": 770,
+      "width": 900,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "VALENTIN \"OLHO DE VIDRO\" MORAES",
+        "font": {
+          "family": "Anton",
+          "library": "casa-font-anton-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#1a1410",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-crime",
+      "name": "Descrição do crime",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 850,
+      "width": 800,
+      "height": 180,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Acusado de assalto armado à diligência pagadora da mineradora, homicídio qualificado de dois patrulheiros e quebra de custódia na cadeia da comarca. Indivíduo perigoso, anda armado de pistola dupla.",
+        "font": {
+          "family": "Libre Baskerville",
+          "library": "casa-font-librebaskerville-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 21,
+        "color": "#251b14",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-recompensa",
+      "name": "Valor da recompensa",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 50,
+      "y": 1060,
+      "width": 900,
+      "height": 70,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "RECOMPENSA: 5.000$000 RÉIS",
+        "font": {
+          "family": "Bebas Neue",
+          "library": "casa-font-bebasneue-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 52,
+        "color": "#8c1616",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 3,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-6-cartaz-procurado",
+      "name": "Nota da autoridade",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 1150,
+      "width": 800,
+      "height": 50,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Pagas imediatamente pela intendência geral após comprovação da captura.",
+        "font": {
+          "family": "Libre Baskerville",
+          "library": "casa-font-librebaskerville-regular",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 18,
+        "color": "#443224",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-foto",
+      "label": "Foto"
+    },
+    {
+      "layerId": "l-nome",
+      "label": "Nome"
+    },
+    {
+      "layerId": "l-crime",
+      "label": "Crime"
+    },
+    {
+      "layerId": "l-recompensa",
+      "label": "Recompensa"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}
