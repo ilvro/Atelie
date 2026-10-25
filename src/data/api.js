@@ -665,6 +665,7 @@ export function createApi({
         if (item.source && item.source !== 'casa') {
           const cached = objectUrlCache.get(`${item.source}:${item.preview}`);
           if (cached) return cached.url;
+          return '';
         }
         return new URL(`colecao/${item.preview}`, baseURI).href;
       }
@@ -673,8 +674,10 @@ export function createApi({
       if (found && found.source && found.source !== 'casa' && found.preview) {
         const cached = objectUrlCache.get(`${found.source}:${found.preview}`);
         if (cached) return cached.url;
+        return '';
       }
       const prev = found?.preview || (typeof item === 'string' ? item : item?.preview);
+      if (!prev) return '';
       return new URL(`colecao/${prev}`, baseURI).href;
     },
 
@@ -1047,7 +1050,7 @@ export function createApi({
 
     fileURL(item) {
       const id = typeof item === 'object' && item ? item.id : item;
-      const isFromServer = serverItemIds.has(id) || !item?.source || serverSources.has(item.source);
+      const isFromServer = serverItemIds.has(id);
       if (!isFromServer && typeof item === 'object' && item?.source && item.source !== 'casa') {
         return browserLibrary.fileURL(item);
       }
@@ -1056,7 +1059,7 @@ export function createApi({
 
     async resolveFileURL(item) {
       const id = typeof item === 'object' && item ? item.id : item;
-      const isFromServer = serverItemIds.has(id) || !item?.source || serverSources.has(item.source);
+      const isFromServer = serverItemIds.has(id);
       if (!isFromServer && typeof item === 'object' && item?.source && item.source !== 'casa') {
         return await browserLibrary.resolveFileURL(item);
       }
@@ -1065,7 +1068,7 @@ export function createApi({
 
     previewURL(item) {
       const id = typeof item === 'object' && item ? item.id : item;
-      const isFromServer = serverItemIds.has(id) || !item?.source || serverSources.has(item.source);
+      const isFromServer = serverItemIds.has(id);
       if (!isFromServer && typeof item === 'object' && item?.source && item.source !== 'casa') {
         return browserLibrary.previewURL(item);
       }
@@ -1074,7 +1077,7 @@ export function createApi({
 
     async resolvePreviewURL(item) {
       const id = typeof item === 'object' && item ? item.id : item;
-      const isFromServer = serverItemIds.has(id) || !item?.source || serverSources.has(item.source);
+      const isFromServer = serverItemIds.has(id);
       if (!isFromServer && typeof item === 'object' && item?.source && item.source !== 'casa') {
         return await browserLibrary.resolvePreviewURL(item);
       }

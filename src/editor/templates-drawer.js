@@ -24,6 +24,24 @@ function normalize(str) {
     .trim();
 }
 
+function matchSource(tpl, sourceId) {
+  if (sourceId === 'all') return true;
+  const itemSource = tpl.source || 'casa';
+  if (sourceId === 'arquivos-confidenciais') {
+    return (
+      itemSource === 'arquivos-confidenciais' ||
+      itemSource.startsWith('ac-') ||
+      tpl.tags?.includes('arquivos-confidenciais') ||
+      tpl.tags?.includes('bundle') ||
+      tpl.tags?.includes('jit')
+    );
+  }
+  if (sourceId === 'casa') {
+    return itemSource === 'casa' || !tpl.source;
+  }
+  return itemSource === sourceId;
+}
+
 export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
   const container = document.createElement('div');
   container.className = 'templates-drawer-view';
@@ -56,10 +74,7 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
 
     return rawTemplates.filter(tpl => {
       // 1. Source filter
-      if (activeSource !== 'all') {
-        const itemSource = tpl.source || 'casa';
-        if (itemSource !== activeSource) return false;
-      }
+      if (!matchSource(tpl, activeSource)) return false;
 
       // 2. Category filter
       if (activeCategory !== 'all') {
@@ -96,7 +111,11 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
         </button>
 
         <div class="template-detail-preview">
-          <img src="${esc(previewUrl)}" alt="${esc(tpl.name)}" />
+          <img src="${esc(previewUrl)}" alt="${esc(tpl.name)}" style="${previewUrl ? '' : 'display:none;'}" />
+          <div class="template-card-preview-placeholder" style="${previewUrl ? 'display:none;' : 'width:100%; min-height:220px;'}">
+            ${renderIcon('doc', 40)}
+            <span>${esc(tpl.name)}</span>
+          </div>
         </div>
 
         <div class="template-detail-header">
@@ -126,6 +145,23 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
         </div>
       </div>
     `;
+
+    // Resolve preview asynchronously if needed
+    if ((!previewUrl || !previewUrl.startsWith('blob:')) && tpl.source !== 'casa' && api?.library?.resolvePreviewURL) {
+      api.library.resolvePreviewURL(tpl).then(resolved => {
+        if (resolved) {
+          const img = container.querySelector('.template-detail-preview img');
+          const placeholder = container.querySelector('.template-detail-preview .template-card-preview-placeholder');
+          if (img) {
+            img.src = resolved;
+            img.style.display = '';
+          }
+          if (placeholder) {
+            placeholder.style.display = 'none';
+          }
+        }
+      }).catch(() => {});
+    }
 
     // Events in detail view
     container.querySelector('[data-action="back-to-grid"]')?.addEventListener('click', () => {
@@ -192,7 +228,7 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
     // Category chips
     const sourceTemplates = activeSource === 'all'
       ? rawTemplates
-      : rawTemplates.filter(t => (t.source || 'casa') === activeSource);
+      : rawTemplates.filter(t => matchSource(t, activeSource));
 
     const extraCategories = Array.from(
       new Set(sourceTemplates.map(t => t.category).filter(Boolean))
@@ -227,18 +263,11 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
           return `
             <div class="at-card template-card" role="button" tabindex="0" data-id="${esc(tpl.id)}" aria-label="${esc(tpl.name)}" style="transform: rotate(${tilt}deg);">
               <div class="template-card-preview">
-                ${previewUrl ? `
-                  <img src="${esc(previewUrl)}" data-preview-id="${esc(tpl.id)}" alt="${esc(tpl.name)}" loading="lazy" onerror="this.onerror=null; this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';" />
-                  <div class="template-card-preview-placeholder" style="display: none;">
-                    ${renderIcon('doc', 28)}
-                    <span>${esc(tpl.name)}</span>
-                  </div>
-                ` : `
-                  <div class="template-card-preview-placeholder">
-                    ${renderIcon('doc', 28)}
-                    <span>${esc(tpl.name)}</span>
-                  </div>
-                `}
+                <img src="${esc(previewUrl)}" data-preview-id="${esc(tpl.id)}" alt="${esc(tpl.name)}" loading="lazy" style="${previewUrl ? '' : 'display: none;'}" onerror="this.onerror=null; this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';" />
+                <div class="template-card-preview-placeholder" style="${previewUrl ? 'display: none;' : ''}">
+                  ${renderIcon('doc', 28)}
+                  <span>${esc(tpl.name)}</span>
+                </div>
               </div>
               <div class="template-card-info">
                 <span class="template-card-title">${esc(tpl.name)}</span>
@@ -313,14 +342,22 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
     });
 
     // Asynchronously resolve preview URLs for browser items if needed
-    container.querySelectorAll('img[data-preview-id]').forEach(async (img) => {
-      const tplId = img.dataset.previewId;
+    container.querySelectorAll('.template-card').forEach(async (card) => {
+      const tplId = card.dataset.id;
       const tpl = rawTemplates.find(t => t.id === tplId);
       if (tpl && tpl.source && tpl.source !== 'casa' && api?.library?.resolvePreviewURL) {
         try {
           const resolved = await api.library.resolvePreviewURL(tpl);
-          if (resolved && img.src !== resolved && !img.src.includes('api/atelie/library/')) {
-            img.src = resolved;
+          if (resolved) {
+            const img = card.querySelector('img[data-preview-id]');
+            const placeholder = card.querySelector('.template-card-preview-placeholder');
+            if (img && img.src !== resolved) {
+              img.src = resolved;
+              img.style.display = '';
+            }
+            if (placeholder) {
+              placeholder.style.display = 'none';
+            }
           }
         } catch {}
       }
@@ -383,8 +420,10 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
           }
         }
 
-        // Reset filters so the newly loaded templates are immediately visible
-        activeSource = 'all';
+        // Keep filter on arquivos-confidenciais so the newly loaded templates are immediately visible
+        if (activeSource === 'casa') {
+          activeSource = 'arquivos-confidenciais';
+        }
         activeCategory = 'all';
         searchQuery = '';
 
@@ -567,6 +606,11 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
             await api.expansions.registerJitBundle(bundle);
           }
         }
+        if (activeSource === 'casa') {
+          activeSource = 'arquivos-confidenciais';
+        }
+        activeCategory = 'all';
+        searchQuery = '';
         await loadData();
         if (window.__atelie?.refreshLibrary) window.__atelie.refreshLibrary();
         shell?.notify?.(`${scanned.totalPsdCount} modelo(s) adicionados sob demanda (JIT)!`, { tone: 'positive' });

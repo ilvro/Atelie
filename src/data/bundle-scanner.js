@@ -23,10 +23,11 @@ export function slug(str) {
 export function cleanTemplateCategory(folderOrBundleName) {
   if (!folderOrBundleName) return 'Documentos';
   let s = String(folderOrBundleName).trim();
-  s = s.replace(/^(?:mini)?bundle\s*\d*\s*[-_:]*\s*/i, '');
+  s = s.replace(/\b(?:mini)?bundle\s*\d*\b/gi, '');
   s = s.replace(/\[[^\]]*\]/g, '');
-  s = s.replace(/\(parte\s*\d+\)/i, '');
-  s = s.replace(/\brework\b/i, '');
+  s = s.replace(/\(parte\s*\d+\)/gi, '');
+  s = s.replace(/\brework\b/gi, '');
+  s = s.replace(/^[-_:\s]+|[-_:\s]+$/g, '');
   s = s.replace(/\s+/g, ' ').trim();
   return s || 'Documentos';
 }
@@ -35,18 +36,32 @@ export function cleanTemplateCategory(folderOrBundleName) {
  * Cleans a template file name, removing numeric index and extension.
  * E.g. '1- Bilhete Envelhecido.psd' -> 'Bilhete Envelhecido'
  */
-export function cleanTemplateName(fileName) {
+export function cleanTemplateName(fileName, category = '') {
   const base = String(fileName || '').replace(/^.*[/\\]/, '').replace(/\.[^.]+$/, '');
-  const clean = base.replace(/^\d+(?:\.\d+)?\s*[-_.)]\s*/, '').trim();
+  let clean = base
+    .replace(/^mockup\s*\d*\s*[-_.)]?\s*/i, '')
+    .replace(/^\d+(?:\.\d+)?\s*[-_.)]\s*/, '')
+    .trim();
+  clean = clean.replace(/^\((.*)\)$/, '$1').trim();
+  clean = clean.replace(/^[-\s_]+|[-\s_]+$/g, '');
+
+  if (!clean) {
+    clean = base;
+  }
+  if (/^\d+$/.test(clean) && category && category !== 'Documentos') {
+    const prefix = category.replace(/^Modelos de\s+/i, '').replace(/s$/i, '');
+    clean = `${prefix} ${clean}`;
+  }
   return clean || base || 'Documento';
 }
 
 /**
- * Extracts leading numeric index from file name if present.
- * E.g. '1- Bilhete.psd' -> '1', '10- Post It.psd' -> '10', '1.1- Alt.psd' -> '1.1'
+ * Extracts leading numeric index or prefix from file name if present.
+ * E.g. '1- Bilhete.psd' -> '1', '10- Post It.psd' -> '10', 'Mockup 1.psd' -> '1'
  */
 function extractIndexPrefix(name) {
-  const m = String(name || '').replace(/^.*[/\\]/, '').match(/^(\d+(?:\.\d+)?)\s*[-_.)]/);
+  const base = String(name || '').replace(/^.*[/\\]/, '').replace(/\.[^.]+$/, '');
+  const m = base.match(/^(?:mockup\s*)?(\d+(?:\.\d+)?)\b/i) || base.match(/^(\d+(?:\.\d+)?)\s*[-_.)]/);
   return m ? m[1] : null;
 }
 
@@ -72,10 +87,44 @@ function isFontFileName(name) {
 }
 
 /**
+ * Determines the logical bundle root directory and raw name for a given PSD path.
+ * Handles arbitrarily nested directories (e.g. miniBundle68/miniBundle68/...)
+ * and multi-bundle root selections (e.g. Documentos/Bundle 18/...).
+ */
+export function getBundleInfo(psdPath) {
+  const parts = psdPath.replace(/\\/g, '/').split('/').filter(Boolean);
+  const dirParts = parts.slice(0, -1);
+  if (dirParts.length === 0) {
+    return { bundleDirPath: '.', rawBundleName: 'Bundle Local' };
+  }
+
+  // Look for directory segment matching bundle/minibundle
+  const bundleIdx = dirParts.findIndex(p => /(?:mini)?bundle\s*\d+/i.test(p));
+  if (bundleIdx !== -1) {
+    return {
+      bundleDirPath: dirParts.slice(0, bundleIdx + 1).join('/'),
+      rawBundleName: dirParts[bundleIdx],
+    };
+  }
+
+  // Strip technical subfolders (e.g. PSDs, Arquivos, Modelos)
+  const technical = /^(?:psds?|arquivos?|files?|modelos?|templates?|artes?)$/i;
+  let endIdx = dirParts.length - 1;
+  while (endIdx > 0 && technical.test(dirParts[endIdx])) {
+    endIdx--;
+  }
+
+  return {
+    bundleDirPath: dirParts.slice(0, endIdx + 1).join('/'),
+    rawBundleName: dirParts[endIdx] || 'Bundle Local',
+  };
+}
+
+/**
  * Scans a collection of files (FileList, array of File objects, or Map).
  * Groups files into bundles and pairs each PSD with its preview image and fonts.
  */
-export async function scanBundleFiles(fileListOrEntries, { signal } = {}) {
+export async function scanBundleFiles(fileListOrEntries, { signal, sourceId, sourceName } = {}) {
   const fileEntries = [];
 
   // Normalize entries
@@ -96,106 +145,96 @@ export async function scanBundleFiles(fileListOrEntries, { signal } = {}) {
     }
   }
 
-  // Group files by directory
-  // A bundle folder is typically a directory that contains .psd files directly
-  const dirFilesMap = new Map();
-
-  for (const { path, file } of fileEntries) {
+  // Filter out invalid/temporary/metadata files
+  const validFiles = [];
+  for (const entry of fileEntries) {
     if (signal?.aborted) throw new Error('Operação cancelada.');
-    const normalizedPath = path.replace(/\\/g, '/');
+    const normalizedPath = String(entry.path || '').replace(/\\/g, '/');
     const parts = normalizedPath.split('/').filter(Boolean);
+    if (parts.length === 0) continue;
     const fileName = parts[parts.length - 1];
-    const dirPath = parts.slice(0, -1).join('/') || '.';
 
-    if (!dirFilesMap.has(dirPath)) {
-      dirFilesMap.set(dirPath, []);
+    if (parts.some(p => p === '__MACOSX')) continue;
+    if (fileName.startsWith('.') || fileName.startsWith('._') || fileName.startsWith('~$') || fileName.toLowerCase() === 'thumbs.db') continue;
+
+    const dirPath = parts.slice(0, -1).join('/') || '.';
+    validFiles.push({
+      path: normalizedPath,
+      parts,
+      fileName,
+      dirPath,
+      file: entry.file,
+    });
+  }
+
+  const psdEntries = validFiles.filter(f => isPsdFileName(f.fileName));
+  const imageEntries = validFiles.filter(f => isImageFileName(f.fileName));
+  const fontEntries = validFiles.filter(f => isFontFileName(f.fileName));
+
+  // Group PSDs by their logical bundle folder
+  const bundleMap = new Map();
+
+  for (const psd of psdEntries) {
+    const { bundleDirPath, rawBundleName } = getBundleInfo(psd.path);
+    if (!bundleMap.has(bundleDirPath)) {
+      bundleMap.set(bundleDirPath, {
+        bundleDirPath,
+        rawBundleName,
+        psds: [],
+      });
     }
-    dirFilesMap.get(dirPath).push({ path: normalizedPath, fileName, file, parts });
+    bundleMap.get(bundleDirPath).psds.push(psd);
   }
 
   const bundles = [];
   let totalPsdCount = 0;
   let totalPreviewCount = 0;
 
-  // Find all directories that contain PSDs
-  for (const [dirPath, files] of dirFilesMap.entries()) {
+  for (const [bundleDirPath, bundleGroup] of bundleMap.entries()) {
     if (signal?.aborted) throw new Error('Operação cancelada.');
-    const psdFiles = files.filter(f => isPsdFileName(f.fileName));
-    if (psdFiles.length === 0) continue;
-
-    // Determine bundle name and category from dirPath or parts
-    const dirParts = dirPath === '.' ? ['Bundle Local'] : dirPath.split('/');
-    const rawBundleName = dirParts[dirParts.length - 1] || 'Bundle Local';
+    const { rawBundleName, psds } = bundleGroup;
     const category = cleanTemplateCategory(rawBundleName);
-    const bundleId = `ac-bundle-${slug(category)}-${slug(rawBundleName).slice(0, 12)}`;
+    const bundleId = `ac-bundle-${slug(category)}-${slug(rawBundleName).slice(0, 14)}`;
 
-    // Look for preview images in Prévias/ (or Previas/ or preview/) relative to this directory
-    const previewCandidates = [];
-    // 1. In child Prévias subfolder
-    const prevDirKey = dirPath === '.' ? 'Prévias' : `${dirPath}/Prévias`;
-    const prevDirKeyAlt = dirPath === '.' ? 'Previas' : `${dirPath}/Previas`;
-    const prevDirKeyEn = dirPath === '.' ? 'previews' : `${dirPath}/previews`;
+    // Preview candidates for this bundle
+    const prefix = bundleDirPath === '.' ? '' : `${bundleDirPath.toLowerCase()}/`;
+    const previewCandidates = imageEntries.filter(img => {
+      const p = img.path.toLowerCase();
+      if (bundleDirPath === '.') return true;
+      return p === bundleDirPath.toLowerCase() || p.startsWith(prefix);
+    });
 
-    for (const [otherDir, otherFiles] of dirFilesMap.entries()) {
-      const normOther = otherDir.toLowerCase();
-      if (
-        normOther === prevDirKey.toLowerCase() ||
-        normOther === prevDirKeyAlt.toLowerCase() ||
-        normOther === prevDirKeyEn.toLowerCase() ||
-        normOther.endsWith('/prévias') ||
-        normOther.endsWith('/previas') ||
-        normOther.endsWith('/previews')
-      ) {
-        for (const f of otherFiles) {
-          if (isImageFileName(f.fileName)) previewCandidates.push(f);
-        }
-      }
-    }
+    // Font files for this bundle
+    const bundleFontFiles = fontEntries
+      .filter(f => {
+        const p = f.path.toLowerCase();
+        if (bundleDirPath === '.') return true;
+        return p === bundleDirPath.toLowerCase() || p.startsWith(prefix);
+      })
+      .map(f => f.file);
 
-    // 2. Also check images in the same folder as PSDs
-    for (const f of files) {
-      if (isImageFileName(f.fileName)) previewCandidates.push(f);
-    }
+    psds.sort((a, b) => a.fileName.localeCompare(b.fileName, 'pt-BR', { numeric: true }));
+    previewCandidates.sort((a, b) => a.fileName.localeCompare(b.fileName, 'pt-BR', { numeric: true }));
 
-    // Look for font files in Fontes/ (or Fonts/)
-    const fontFiles = [];
-    const fontDirKey = dirPath === '.' ? 'Fontes' : `${dirPath}/Fontes`;
-    const fontDirKeyEn = dirPath === '.' ? 'Fonts' : `${dirPath}/Fonts`;
-
-    for (const [otherDir, otherFiles] of dirFilesMap.entries()) {
-      const normOther = otherDir.toLowerCase();
-      if (
-        normOther === fontDirKey.toLowerCase() ||
-        normOther === fontDirKeyEn.toLowerCase() ||
-        normOther.endsWith('/fontes') ||
-        normOther.endsWith('/fonts')
-      ) {
-        for (const f of otherFiles) {
-          if (isFontFileName(f.fileName)) fontFiles.push(f.file);
-        }
-      }
-    }
-
-    // Map each PSD to its best matching preview
     const templates = [];
 
-    for (const psd of psdFiles) {
+    for (let i = 0; i < psds.length; i++) {
+      const psd = psds[i];
       totalPsdCount++;
       const psdBaseName = psd.fileName.replace(/\.[^.]+$/, '');
       const psdIndex = extractIndexPrefix(psd.fileName);
-      const cleanName = cleanTemplateName(psd.fileName);
+      const cleanName = cleanTemplateName(psd.fileName, category);
       const tplId = `ac-jit-${slug(category)}-${slug(cleanName)}-${slug(psdBaseName).slice(0, 8)}`;
 
-      // Find best preview image
       let matchedPreview = null;
 
-      // Match 1: Exact base name
+      // 1. Exact base name
       matchedPreview = previewCandidates.find(p => {
         const pBase = p.fileName.replace(/\.[^.]+$/, '');
         return pBase.toLowerCase() === psdBaseName.toLowerCase();
       });
 
-      // Match 2: Index prefix match (e.g. '1- Bilhete.psd' <-> '1- Bilhete.png' or '1- foto.png')
+      // 2. Index prefix match
       if (!matchedPreview && psdIndex) {
         matchedPreview = previewCandidates.find(p => {
           const pIndex = extractIndexPrefix(p.fileName);
@@ -203,46 +242,60 @@ export async function scanBundleFiles(fileListOrEntries, { signal } = {}) {
         });
       }
 
-      // Match 3: Clean name match
+      // 3. Clean name match
       if (!matchedPreview) {
         matchedPreview = previewCandidates.find(p => {
-          const pClean = cleanTemplateName(p.fileName);
+          const pClean = cleanTemplateName(p.fileName, category);
           return pClean.toLowerCase() === cleanName.toLowerCase();
         });
       }
 
+      // 4. Single-item fallback
+      if (!matchedPreview && psds.length === 1 && previewCandidates.length === 1) {
+        matchedPreview = previewCandidates[0];
+      }
+
+      // 5. Sorted order fallback
+      if (!matchedPreview && psds.length === previewCandidates.length) {
+        matchedPreview = previewCandidates[i];
+      }
+
       if (matchedPreview) totalPreviewCount++;
+
+      const effSourceId = sourceId || 'arquivos-confidenciais';
+      const effSourceName = sourceName || 'Arquivos Confidenciais';
 
       templates.push({
         id: tplId,
         name: cleanName,
         category,
         kind: 'template',
-        source: bundleId,
-        sourceName: rawBundleName,
+        source: effSourceId,
+        sourceName: effSourceName,
+        bundle: bundleId,
+        bundleName: rawBundleName,
         status: 'pending', // JIT flag
         fileName: psd.fileName,
         psdPath: psd.path,
         psdFile: psd.file,
         previewPath: matchedPreview ? matchedPreview.path : null,
         previewFile: matchedPreview ? matchedPreview.file : null,
-        fontFiles,
+        fontFiles: bundleFontFiles,
         fields: [],
-        tags: ['jit', 'bundle'],
+        tags: ['jit', 'bundle', 'arquivos-confidenciais'],
       });
     }
-
-    // Sort templates by index or name
-    templates.sort((a, b) => a.fileName.localeCompare(b.fileName, 'pt-BR', { numeric: true }));
 
     bundles.push({
       id: bundleId,
       name: rawBundleName,
       category,
-      dirPath,
+      dirPath: bundleDirPath,
       templates,
-      fontFiles,
+      fontFiles: bundleFontFiles,
       itemCount: templates.length,
+      expansionId: sourceId || 'arquivos-confidenciais',
+      expansionName: sourceName || 'Arquivos Confidenciais',
     });
   }
 
@@ -257,23 +310,32 @@ export async function scanBundleFiles(fileListOrEntries, { signal } = {}) {
  * Registers a scanned JIT bundle into IndexedDB atelie-expansions-v1.
  */
 export async function registerJitBundle(db, bundle, { onProgress, signal } = {}) {
-  const { id, name, category, templates, fontFiles } = bundle;
+  const { id: bundleId, name: bundleName, templates, fontFiles } = bundle;
+  const expansionId = bundle.expansionId || 'arquivos-confidenciais';
+  const expansionName = bundle.expansionName || 'Arquivos Confidenciais';
 
-  // 1. Register expansion metadata
+  // 1. Register or update expansion metadata
+  const txExp = db.transaction(['expansions'], 'readwrite');
+  const expStore = txExp.objectStore('expansions');
+  const existingExp = await new Promise((res) => {
+    const req = expStore.get(expansionId);
+    req.onsuccess = () => res(req.result || null);
+    req.onerror = () => res(null);
+  });
+
   const expRecord = {
-    id,
-    name,
-    category,
-    description: `Bundle JIT com ${templates.length} modelo(s) sob demanda`,
-    license: 'Uso pessoal',
+    id: expansionId,
+    name: existingExp?.name || expansionName,
+    category: existingExp?.category || 'Acervo',
+    description: existingExp?.description || 'Acervo Arquivos Confidenciais (JIT)',
+    license: existingExp?.license || 'Uso pessoal',
     jit: true,
-    createdAt: new Date().toISOString(),
-    itemCount: templates.length,
+    createdAt: existingExp?.createdAt || new Date().toISOString(),
+    itemCount: (existingExp?.itemCount || 0) + templates.length,
   };
 
-  const txExp = db.transaction(['expansions'], 'readwrite');
   await new Promise((res, rej) => {
-    const req = txExp.objectStore('expansions').put(expRecord);
+    const req = expStore.put(expRecord);
     req.onsuccess = () => res();
     req.onerror = () => rej(req.error);
   });
@@ -291,13 +353,15 @@ export async function registerJitBundle(db, bundle, { onProgress, signal } = {})
       name: tpl.name,
       category: tpl.category,
       kind: 'template',
-      source: id,
-      sourceName: name,
+      source: expansionId,
+      sourceName: expansionName,
+      bundle: bundleId,
+      bundleName,
       status: 'pending',
       file: tpl.psdPath,
       preview: tpl.previewPath || (tpl.previewFile ? `previews/${tpl.id}.png` : null),
       fields: [],
-      tags: ['jit', 'bundle'],
+      tags: ['jit', 'bundle', 'arquivos-confidenciais'],
     };
 
     const txItem = db.transaction(['items', 'files'], 'readwrite');
@@ -309,12 +373,12 @@ export async function registerJitBundle(db, bundle, { onProgress, signal } = {})
     // Save preview file in 'files' store if present
     if (tpl.previewFile) {
       const previewKey = itemRecord.preview;
-      filesStore.put(tpl.previewFile, [id, previewKey]);
+      filesStore.put(tpl.previewFile, [expansionId, previewKey]);
     }
 
     // Save raw PSD file in 'files' store for JIT conversion
     if (tpl.psdFile) {
-      filesStore.put(tpl.psdFile, [id, tpl.psdPath]);
+      filesStore.put(tpl.psdFile, [expansionId, tpl.psdPath]);
     }
 
     await new Promise((res, rej) => {
@@ -332,7 +396,7 @@ export async function registerJitBundle(db, bundle, { onProgress, signal } = {})
     const filesStore = txFonts.objectStore('files');
     for (const font of fontFiles) {
       const fontKey = `fonts/${font.name}`;
-      filesStore.put(font, [id, fontKey]);
+      filesStore.put(font, [expansionId, fontKey]);
     }
     await new Promise((res, rej) => {
       txFonts.oncomplete = () => res();

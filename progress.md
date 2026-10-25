@@ -71,10 +71,18 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
   - Reorganização da barra de topo da gaveta de Modelos com linha própria para busca e botões de ação divididos proporcionalmente, eliminando cortes em telas de 360px.
   - Rolagem horizontal fluida nas barras de chips (origens e categorias) com suporte a scroll wheel do mouse, barra de rolagem fina visível e foco automático no chip ativo.
   - Preservação do nome do diretório raiz no scanner JIT e detecção amigável caso uma pasta de expansão (`expansion.json`) seja selecionada no botão de bundles brutos.
+- **Importador Hierárquico de Bundles JIT e Unificação com Arquivos Confidenciais (`src/data/bundle-scanner.js`, `src/data/api.js`, `src/editor/templates-drawer.js`, `tests/bundle-scanner.test.js`)**:
+  - Varredura recursiva de pastas com aninhamento arbitrário (ex: `miniBundle68/miniBundle68/` decorrente de descompactação ou seleção de pasta raiz contendo múltiplos bundles).
+  - Emparelhamento flexível e resiliente de prévias e fontes: suporte a imagens soltas no diretório do bundle ou em subpastas (`Prévias`, `Previas`, `Prévia`, `Previa`, `previews`, `preview`, `fotos`, `mockups`), pastas de fontes no singular (`Fonte`) ou plural (`Fontes`, `Fonts`) e filtragem estrita de metadados temporários do macOS (`__MACOSX`, `._*`, `Thumbs.db`).
+  - Associação automática de bundles importados via JIT à expansão e chip de origem "Arquivos Confidenciais", preservando `bundleId` e `bundleName` nos metadados sem poluir a barra de topo com chips soltos.
+  - Filtro "Arquivos Confidenciais" aprimorado (`matchSource`) para abranger itens do servidor e modelos sob demanda (JIT) do IndexedDB.
+  - Carregamento de bundle preserva o filtro ativo em "Arquivos Confidenciais" em vez de resetar para "Todas as origens", permitindo que os novos modelos apareçam imediatamente na tela.
+  - Resolução assíncrona garantida de imagens de prévia sem disparar requisições 404 para `/colecao/`, exibindo a arte imediatamente e ocultando placeholders assim que carregada do IndexedDB.
 
 ### Validação
-- `npm test`: 168 testes unitários passando 100%.
+- `npm test`: 169 testes unitários passando 100%.
 - `npm run build` e `npm run build:pages`: ambos os builds concluídos sem erros.
+- `node --test tests/e2e/bundle-import.test.js tests/e2e/templates.test.js`: testes E2E de bundles e templates passando 100%.
 - Testes E2E do editor, ferramentas, troca e navegação validados com Playwright.
 
 ### Pendências reais

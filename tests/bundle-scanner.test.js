@@ -132,6 +132,56 @@ test('scanBundleFiles: lida com múltiplos bundles na mesma pasta pai', async ()
   assert.equal(result.bundles[1].category, 'Documentos Medievais');
 });
 
+test('scanBundleFiles: escaneia pastas arbitrariamente aninhadas (miniBundle68/miniBundle68) com prévias e fontes', async () => {
+  const mockFiles = [
+    {
+      name: '1.psd',
+      webkitRelativePath: 'miniBundle68/miniBundle68/1.psd',
+      size: 50000,
+    },
+    {
+      name: '2.psd',
+      webkitRelativePath: 'miniBundle68/miniBundle68/2.psd',
+      size: 60000,
+    },
+    {
+      name: '1.png',
+      webkitRelativePath: 'miniBundle68/1.png', // na raiz/pai do bundle
+      size: 4000,
+    },
+    {
+      name: '2.png',
+      webkitRelativePath: 'miniBundle68/miniBundle68/Prévias/2.png', // em subpasta
+      size: 5000,
+    },
+    {
+      name: 'traveling_typewriter.zip',
+      webkitRelativePath: 'miniBundle68/Fonte/traveling_typewriter.zip', // pasta Fonte singular
+      size: 15000,
+    },
+    {
+      name: '._1.psd', // lixo macOS
+      webkitRelativePath: 'miniBundle68/__MACOSX/._1.psd',
+      size: 100,
+    },
+  ];
+
+  const result = await scanBundleFiles(mockFiles);
+  assert.equal(result.bundles.length, 1);
+  assert.equal(result.totalPsdCount, 2);
+  assert.equal(result.totalPreviewCount, 2);
+
+  const bundle = result.bundles[0];
+  assert.equal(bundle.name, 'miniBundle68');
+  assert.equal(bundle.templates.length, 2);
+  assert.ok(bundle.templates[0].previewFile);
+  assert.equal(bundle.templates[0].previewFile.name, '1.png');
+  assert.ok(bundle.templates[1].previewFile);
+  assert.equal(bundle.templates[1].previewFile.name, '2.png');
+  assert.equal(bundle.fontFiles.length, 1);
+  assert.equal(bundle.templates[0].source, 'arquivos-confidenciais');
+});
+
 test('convertPsdJit: converte PSD sob demanda extraindo camadas de texto e campos editáveis', async () => {
   const { writePsdBuffer } = await import('ag-psd');
   const psdBuf = writePsdBuffer({
