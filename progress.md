@@ -37,7 +37,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | Tutoriais Interativos | planejado | 2026-10-25 | Sistema de lições práticas guiadas estilo Tabletop (motor tutor, anel de foco, 4 trilhas práticas) |
 | 28 — Integração Tabletop | concluída | 2026-10-25 | Consumo e interação direta dentro do Tabletop (rotas A, B e C, UV, bakes, popover, paleta, atualização em tempo real) |
 | 29 — Expansão no navegador | concluída | 2026-10-25 | Instalação local de expansões via pasta (IndexedDB), manifesto, cota, persistência offline, cache de blobs e remoção |
-| 30 — Importador JIT de Bundles | planejado | 2026-10-25 | Importar pastas de bundles brutos (.psd + prévias + fontes) sob demanda no navegador sem terminal |
+| 30 — Importador JIT de Bundles | concluída | 2026-10-25 | Importar pastas de bundles brutos (.psd + prévias + fontes) sob demanda no navegador sem terminal |
 | Refinamento de Tipografia e Camadas | concluída | 2026-10-25 | Geometria e alinhamento de textos, proporção de fontes mistas, recorte de caixas de texto, e painel de camadas com pastas, cores e snippets |
 | Refinamento de Expansões na Gaveta de Modelos | concluída | 2026-10-25 | Botão direto de instalação de expansão na gaveta Modelos, atalho em buscas vazias e mensagens claras sobre PSDs brutos |
 
@@ -135,6 +135,43 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ### Pendências reais
 - Nenhuma pendência na Etapa 29.
+
+---
+
+## Etapa 30 — Importador de Bundles Sob Demanda (JIT) no Navegador
+
+### Feito
+- **Scanner Raso de Bundles com Zero RAM (`src/data/bundle-scanner.js`)**:
+  - `cleanTemplateCategory` e `cleanTemplateName`: normalização e extração determinística de nomes de bundles e categorias limpas.
+  - `scanBundleFiles(files)`: escaneamento raso de estruturas de diretórios (Chromium `showDirectoryPicker()` ou `<input type="file" webkitdirectory>`).
+  - Reconhecimento automático da trinca de arquivos de pacotes de acervos brutos:
+    - Arquivos `.psd`/`.psb` (documentos Photoshop originais);
+    - Subpasta `Prévias/` (ou `Previas/`, `previews/`): imagens prontas `.png`/`.jpg` associadas aos PSDs correspondentes por nome base, índice ou nome limpo;
+    - Subpasta `Fontes/` (ou `Fonts/`): arquivos de fonte `.ttf`, `.otf` ou pacotes `.zip` contendo tipografia.
+  - `registerJitBundle(db, bundle)`: registro imediato do bundle no IndexedDB `atelie-expansions-v1` com `jit: true`, marcando os modelos pendentes (`status: 'pending'`), armazenando prévias visuais em Blobs e mantendo os arquivos `.psd` prontos para conversão sob demanda.
+- **Motor Client-Side de Conversão JIT (`src/editor/client-psd-converter.js`)**:
+  - Carregamento estritamente preguiçoso (*lazy-load*) do `ag-psd` via `await import('ag-psd')` (evitando qualquer peso no carregamento inicial da aplicação).
+  - Conversão focada de arquivo único: decodifica apenas o `.psd` selecionado pelo usuário.
+  - Composição de fundo limpa em `<canvas>` nativo, desenhando apenas as camadas não textuais visíveis com seus respectivos modos de mesclagem (`multiply`, `screen`, `soft-light`, etc.) e exportando para WebP Blob sem texto duplicado por baixo.
+  - Extração de tipografia e caixas de texto com projeção geométrica e delimitadores em escala 1:1.
+  - Descompactação de fontes em `.zip` no navegador via `fflate.unzipSync` e registro dinâmico via `new FontFace(...)` e `document.fonts.add()`.
+  - Persistência automática do modelo convertido (`status: 'ready'`), do fundo WebP e do documento JSON no IndexedDB local.
+  - Desalocação forçada de memória de canvas (`width = 0; height = 0`).
+- **Diálogo Artesanal de Conversão JIT (`src/ui/conversion-dialog.js` e `src/ui/styles.css`)**:
+  - Modal com z-index 450, barra de progresso animada (0–100%), indicador de etapa em tempo real (*Lendo PSD...*, *Analisando camadas...*, *Carregando tipografia...*, *Compondo fundo...*) e botão de cancelamento via `AbortController`.
+- **Integração na Gaveta de Modelos (`src/editor/templates-drawer.js`)**:
+  - Botão **Carregar bundle (JIT)** na barra superior da gaveta.
+  - Suporte completo a **Arrastar e Soltar (Drag & Drop)** de pastas diretamente na gaveta de modelos (distinguindo automaticamente se a pasta solta é uma expansão pronta com `expansion.json` ou uma pasta de bundle com `.psd` brutos).
+  - Badge visual `JIT` nos cards de modelos pendentes.
+  - Visualização de detalhes com botão adaptativo **Preparar e usar este modelo**, acionando o diálogo de conversão JIT e abrindo o documento editável instantaneamente ao concluir.
+- **Testes e Validação**:
+  - `tests/bundle-scanner.test.js`: 6 testes unitários cobrindo normalização de nomes, emparelhamento de PSDs com prévias e fontes, suporte a múltiplos bundles e conversão JIT de árvore de camadas.
+  - `tests/e2e/bundle-import.test.js`: teste E2E completo no build estático do GitHub Pages servido via Express, executando escaneamento raso de pasta de bundle mock, listagem com badge JIT, acionamento da conversão client-side e verificação de texto editável carregado no editor.
+  - `tests/theme.test.js`: conformidade estrita mantida com 0 cores `#hex` soltas em `styles.css`.
+  - Suíte completa: **166 testes unitários passando**, **4 testes E2E passando**.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 30.
 
 ---
 

@@ -720,12 +720,12 @@ html, body {
   -webkit-appearance: none;
   background: linear-gradient(
     to right,
-    var(--at-uv, #9354dc) 0%,
-    var(--at-uv, #9354dc) var(--range-progress, 0%),
-    var(--at-desk-3, #24201c) var(--range-progress, 0%),
-    var(--at-desk-3, #24201c) 100%
+    var(--at-uv) 0%,
+    var(--at-uv) var(--range-progress, 0%),
+    var(--at-desk-3) var(--range-progress, 0%),
+    var(--at-desk-3) 100%
   );
-  border: 1px solid var(--at-line, #3a332c);
+  border: 1px solid var(--at-line);
   border-radius: 3px;
   outline: none;
   cursor: pointer;
@@ -744,8 +744,8 @@ html, body {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #ffffff;
-  border: 2px solid var(--at-uv, #9354dc);
+  background: var(--at-paper);
+  border: 2px solid var(--at-uv);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
   cursor: pointer;
   margin-top: -4px;
@@ -758,28 +758,28 @@ html, body {
 
 .at-settings-slider::-webkit-slider-thumb:active {
   transform: scale(0.95);
-  background: #f0edff;
+  background: var(--at-paper-2);
 }
 
 .at-settings-slider::-moz-range-track {
   height: 6px;
   border-radius: 3px;
-  background: var(--at-desk-3, #24201c);
-  border: 1px solid var(--at-line, #3a332c);
+  background: var(--at-desk-3);
+  border: 1px solid var(--at-line);
 }
 
 .at-settings-slider::-moz-range-progress {
   height: 6px;
   border-radius: 3px;
-  background: var(--at-uv, #9354dc);
+  background: var(--at-uv);
 }
 
 .at-settings-slider::-moz-range-thumb {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #ffffff;
-  border: 2px solid var(--at-uv, #9354dc);
+  background: var(--at-paper);
+  border: 2px solid var(--at-uv);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
   cursor: pointer;
 }
@@ -828,7 +828,7 @@ html, body {
   font-family: var(--eco-font-ui);
   font-size: 16px;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--at-text);
 }
 
 .at-expansion-desc {
@@ -884,7 +884,7 @@ html, body {
 .at-expansion-notice .notice-text strong {
   display: block;
   font-size: 12px;
-  color: #ffffff;
+  color: var(--at-text);
   margin-bottom: 2px;
 }
 
@@ -922,4 +922,25 @@ html, body {
   font-size: 11px;
   color: var(--at-muted);
   text-align: center;
+}
+
+/* ── IMPORTADOR JIT DE BUNDLES (ETAPA 30) ──────────────────────────────────── */
+.templates-drawer-view.is-dragover {
+  outline: 2px dashed var(--at-uv);
+  outline-offset: -4px;
+  background: rgba(160, 138, 255, 0.05);
+}
+
+.template-badge.is-jit {
+  background: rgba(160, 138, 255, 0.2);
+  color: var(--at-uv);
+  font-weight: 700;
+}
+
+.at-conversion-modal {
+  z-index: 450;
+}
+
+.at-conversion-card {
+  max-width: 480px;
 }

@@ -9,6 +9,7 @@ import {
   getExpansionFile,
   getExpansionItems,
 } from './expansion-installer.js';
+import { registerJitBundle } from './bundle-scanner.js';
 
 export { ApiError };
 
@@ -497,6 +498,21 @@ export function createApi({
         db.close();
       }
     },
+
+    async openDB() {
+      return await getExpansionsDB();
+    },
+
+    async registerJitBundle(bundle, options) {
+      const db = await getExpansionsDB();
+      try {
+        const res = await registerJitBundle(db, bundle, options);
+        browserManifestPromise = null;
+        return res;
+      } finally {
+        db.close();
+      }
+    },
   };
 
   const objectUrlCache = new Map();
@@ -582,6 +598,12 @@ export function createApi({
         throw new ApiError('Item não encontrado na biblioteca.', 404);
       }
       if (found.kind === 'template' && found.file) {
+        if (found.status === 'pending') {
+          return found;
+        }
+        if (found.handout) {
+          return { ...found };
+        }
         if (found.source && found.source !== 'casa') {
           const blob = await browserExpansions.getFile(found.source, found.file);
           if (!blob) throw new ApiError('Arquivo do modelo de expansão não encontrado.', 404);
