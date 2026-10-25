@@ -17,7 +17,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 9 — Ferramentas do editor | concluída | 2026-10-24 | Guias, réguas, histórico navegável, mini-barra, conta-gotas, colar imagens, alinhar |
 | 10 — Documentos e rascunho | concluída | 2026-10-24 | Navegador com pastas, fixados, favoritos, recentes; rascunho automático; versões; lixeira; abas |
 | 11 — Efeitos procedurais | concluída | 2026-10-24 | 9 efeitos procedurais em código, determinismo por semente PRNG, cortes e propriedades |
-| 12 — Coleção papéis e texturas | pendente | | Coleção da casa: papéis e sobreposições |
+| 12 — Coleção papéis e texturas | concluída | 2026-10-24 | 48 papéis em 3 idades e 53 texturas de sobreposição em WebP (7,78 MB total) |
 | 13 — Coleção elementos | pendente | | Coleção da casa: vetores, carimbos, fitas |
 | 14 — Coleção fontes | pendente | | Coleção da casa: 26 famílias de fontes |
 | 15 — Biblioteca | pendente | | Gaveta Biblioteca e modo de preenchimento |
@@ -35,6 +35,74 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 27 — Documentação | pendente | | Manuais, guia de uso e licenças |
 | 28 — Integração Tabletop | pendente | | Consumo e interação direta dentro do Tabletop |
 | 29 — Expansão no navegador | pendente | | Expansão local no navegador (opcional) |
+
+---
+
+## Etapa 12 — Coleção da casa · papéis e texturas
+
+### Feito
+- **Módulo de Ruído Puro (`src/domain/noise.js` e `scripts/colecao/noise.js`)**:
+  - Implementação pura e determinística em JavaScript:
+    - `mulberry32(seed)`: gerador pseudoaleatório uniforme de 32 bits no intervalo [0, 1).
+    - `valueNoise2D(seed)`: ruído 2D suave com interpolação smoothstep cúbica entre nós de grade.
+    - `fbm(noise, x, y, { octaves, lacunarity, gain })`: ruído fractal browniano normalizado.
+    - `worley2D(seed)`: ruído celular de Voronoi medindo distância mínima ao ponto de vizinhança mais próximo.
+    - `domainWarp(noise, x, y, amount)`: distorção de coordenadas 2D usando o próprio campo de ruído.
+- **Raster e Utilitários de Síntese (`scripts/colecao/raster.js`)**:
+  - Classe `Raster` baseada em `Float32Array` RGBA normalizado (0..1), com suporte a amostragem, preenchimento, mesclagens (`normal`, `multiply`, `screen`, `overlay`, `soft-light`), traçado de linhas orgânicas com tremor (`jitter`), anéis com deformação angular (`drawRing`), círculos suaves e exportação nativa via `sharp` para WebP e prévias redimensionadas.
+- **Receitas e Gerador de Papéis (`scripts/colecao/papers.json` e `scripts/colecao/papers.js`)**:
+  - 16 receitas de papel com proporção exata e resolução de até 2400 px:
+    1. *Ofício branco*: base clara `#f4f1ea`, grão fino, manchado sutil.
+    2. *Ofício creme*: base quente `#efe6d2`, manchado suave.
+    3. *Papel jornal*: base `#e3dccb`, fibras escuras, grão forte, alto amarelamento.
+    4. *Kraft*: base parda `#b8916a`, fibras escuras longas e densas, manchado expressivo.
+    5. *Pergaminho*: base couro `#e6d3a8`, nuvens largas, borda deckle e foxing natural.
+    6. *Carta pautada*: base `#f3eee2`, pautas cinza-azuladas finas.
+    7. *Caderno*: base `#f7f4ea`, pauta azul, margem vermelha e furos de espiral.
+    8. *Quadriculado*: base `#f6f3ea`, grade azul de 5 mm.
+    9. *Milimetrado*: base `#f3f1e6`, grade verde de alta precisão com linhas mestras.
+    10. *Almaço*: base `#f2ecdc`, pauta e margem dupla vermelha.
+    11. *Telegrama*: base amarela `#efe4bf` em proporção deitada 1,4 : 1 (2400 × 1714 px).
+    12. *Cartolina*: base cinza-azulada espessa `#c9cfd3` com fibras médias.
+    13. *Papel de seda*: base translúcida `#f2efe8` com alfa 0.85 e borda serrilhada.
+    14. *Papel fotográfico (verso)*: base `#f6f5f0` com marca d'água diagonal "PAPEL FOTOGRÁFICO".
+    15. *Papel de máquina (onionskin)*: base semitransparente `#f1eee4` ultrafina.
+    16. *Papel carbono*: base azul-escuro profundo `#1f2a5a` com reflexo irregular.
+  - Pipeline de 7 camadas por papel: Base → Manchado (FBM em grade otimizada) → Fibras → Grão → Pauta/Grade → Envelhecimento (amarelamento `#d8b77a`, manchas de oxidação/foxing, vinheta escura nas bordas e desbotamento de linhas) → Borda (reta, serrilhada ou deckle recortada no alfa).
+  - 3 idades (`novo`, `usado`, `antigo`) para cada papel, totalizando 48 arquivos WebP (`quality: 80`).
+- **Gerador de Texturas de Sobreposição (`scripts/colecao/overlays.js`)**:
+  - 53 texturas de acabamento e desgaste em PNG/WebP com canal alfa:
+    - *Manchas de café (8)*: anéis de fundo de xícara, anel duplo, respingos, xícara incompleta, poça densa, escorrido e anéis múltiplos.
+    - *Água e umidade (6)*: marcas d'água secas com halo periférico, cantos molhados, escorridos verticais e infiltração de borda.
+    - *Sangue (12)*: gotas com cauda direcional, leque de spray, arrastos estriados de dedo, poças oxidadas, marcas palmares e coágulos.
+    - *Sujeira e poeira (6)*: poeira fina, mancha de graxa, marcas de fuligem, atrito de mesa e fuligem difusa.
+    - *Queimado (5)*: bordas perimetrais queimadas, furos de cigarro, canto chamuscado e labaredas laterais.
+    - *Amassados (4)*: mapas de relevo para `soft-light` em cinza neutro 50% com vincos claros e escuros (suave, médio, pesado e bolso).
+    - *Dobras (4)*: dobra simples, em três partes (carta), em cruz e mapa desdobrado.
+    - *Digitais (4)*: impressões datiloscópicas em tinta preta, gasta e sangue.
+    - *Rasgos (4)*: máscaras de corte inferior, superior, canto arrancado e lateral irregular.
+- **Pipeline de Build e Manifesto (`scripts/colecao/build.js` e `package.json`)**:
+  - Script `npm run colecao:texturas` gerando os 101 ativos e suas respectivas miniaturas de 320 px em `public/colecao/previews/`.
+  - Atualização do manifesto `public/colecao/library.json` com schema 1, `generatedAt`, categorias oficiais em português e `license: 'própria'`.
+  - Tamanho total da pasta `public/colecao/`: **7,78 MB**, amplamente inferior ao teto de 60 MB.
+- **Folhas de Contato e Documento Exemplo (`scripts/colecao/contact-sheet.js`)**:
+  - `docs/referencias/colecao-papeis.png`: grade completa dos 48 papéis em suas 3 idades com identificação de tipo.
+  - `docs/referencias/colecao-texturas.png`: grade completa das 53 sobreposições compostas sobre fundo de pergaminho para conferência do canal alfa.
+  - `docs/referencias/colecao-exemplo.png`: documento de teste investigativo A4 feito exclusivamente com os papéis e texturas gerados (ofício creme antigo, texto datilografado, mancha de café, digital, dobras e poeira).
+- **Testes Unitários**:
+  - `tests/noise.test.js`: determinismo, conformidade de faixa [0, 1] e suavidade do FBM (5 testes).
+  - `tests/colecao-papers.test.js`: integridade das 16 receitas, determinismo de hash e validação de amarelamento/escurecimento de bordas por idade (3 testes).
+  - `tests/colecao-manifest.test.js`: validação de 100% dos arquivos no manifesto, ausência de arquivos órfãos, licença própria e conformidade do prefixo `casa-` (1 teste).
+
+### Validação
+- `npm test`: 82 testes unitários passando 100%.
+- `npm run test:e2e`: 8 suítes E2E Playwright passando 100%.
+- `npm run colecao:texturas`: 101 arquivos WebP gerados com sucesso e manifesto `library.json` validado.
+- Folhas de contato `docs/referencias/colecao-papeis.png` e `docs/referencias/colecao-texturas.png` inspecionadas e validadas.
+- Documento de referência `docs/referencias/colecao-exemplo.png` validado com visual orgânico realista.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 12. A coleção da casa de papéis e sobreposições está 100% pronta, versionável no git e com tamanho otimizado (7,78 MB).
 
 ---
 

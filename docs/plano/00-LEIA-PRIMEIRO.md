@@ -172,7 +172,7 @@ Medido com `ag-psd` 30.2.0 em três arquivos (um jornal, um relatório policial 
 | 9 | feita | 24/10/2026 | Réguas, guias, histórico navegável, mini-barra, conta-gotas, arrastar/colar imagens, copiar camadas, alinhamento e menu de contexto |
 | 10 | feita | 24/10/2026 | Navegador com pastas, fixados, favoritos, recentes; rascunho automático; versões; lixeira; abas |
 | 11 | feita | 24/10/2026 | Efeitos procedurais: 9 tipos, PRNG determinístico, máscaras de corte, miniaturas e propriedades |
-| 12 | pendente | | |
+| 12 | feita | 24/10/2026 | Coleção da casa: 16 papéis em 3 idades (48 arquivos) e 53 texturas de sobreposição em WebP |
 | 13 | pendente | | |
 | 14 | pendente | | |
 | 15 | pendente | | |
