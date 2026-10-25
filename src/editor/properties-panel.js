@@ -7,7 +7,7 @@ import {
   bindControls,
   normalizeHex,
 } from '../ui/controls.js';
-import { BLEND_MODES, updateLayer } from '../domain/handouts.js';
+import { BLEND_MODES, updateLayer, setField } from '../domain/handouts.js';
 import { boxCorners } from './geometry.js';
 import { EFFECTS } from '../render/handout-effects.js';
 import { mountFontSelector, getCachedFont } from './font-selector.js';
@@ -102,6 +102,19 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
   function applyFieldChange(field, rawValue, isInputEvent = false) {
     const layer = getSelectedLayer();
     if (!layer || layer.locked) return;
+
+    if (field === 'field:isField') {
+      const isChecked = Boolean(rawValue);
+      const nextHandout = setField(state.handout, layer.id, isChecked ? (layer.name || 'Campo') : null);
+      state.edit(nextHandout, { label: isChecked ? 'Marcar como campo' : 'Desmarcar campo' });
+      render();
+      return;
+    }
+    if (field === 'field:label') {
+      const nextHandout = setField(state.handout, layer.id, String(rawValue || ''));
+      state.edit(nextHandout, { label: 'Renomear campo do preencher', coalesce: `${layer.id}-field-label` });
+      return;
+    }
 
     if (!field.startsWith('h:')) return;
     const path = field.slice(2);
@@ -359,6 +372,22 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
     `;
 
     // Type specific fields
+    const currentField = (state.handout?.fields || []).find(f => f.layerId === layer.id);
+    const isField = Boolean(currentField);
+    const fieldLabel = currentField ? currentField.label : layer.name;
+    const fieldMarkup = `
+      <fieldset class="prop-group" ${stateAttr}>
+        <legend class="prop-legend">Preenchimento</legend>
+        ${checkField('field:isField', 'Campo do Preencher', isField)}
+        ${isField ? `
+          <label class="field" style="margin-top: 8px;">
+            <span class="field-label">Rótulo</span>
+            <input type="text" class="at-input" data-field="field:label" value="${esc(fieldLabel)}" ${stateAttr} />
+          </label>
+        ` : ''}
+      </fieldset>
+    `;
+
     if (layer.kind === 'text') {
       const txt = layer.text;
       const curFontMeta = getCachedFont(txt.font?.library) || getCachedFont(txt.font?.family);
@@ -423,6 +452,8 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
           ${numberField('h:text.ink.wear', 'Desgaste · %', Math.round((txt.ink?.wear || 0) * 100), { min: 0, max: 100, step: 1, disabled: isLocked })}
           ${numberField('h:text.ink.seed', 'Semente', txt.ink?.seed || 1, { min: 1, max: 99999, step: 1, disabled: isLocked })}
         </fieldset>
+
+        ${fieldMarkup}
       `;
     } else if (layer.kind === 'image') {
       const img = layer.image;
@@ -456,6 +487,8 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
           ${renderColorSwatchesHTML('h:image.tint.color')}
           ${numberField('h:image.tint.amount', 'Intensidade · %', Math.round((img.tint?.amount || 0) * 100), { min: 0, max: 100, step: 1, disabled: isLocked })}
         </fieldset>
+
+        ${fieldMarkup}
       `;
     } else if (layer.kind === 'shape') {
       const shp = layer.shape;

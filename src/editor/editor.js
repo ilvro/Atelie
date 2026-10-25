@@ -3,6 +3,9 @@ import { createStage } from './stage.js';
 import { createLayersPanel } from './layers-panel.js';
 import { createPropertiesPanel } from './properties-panel.js';
 import { createHistoryPanel } from './history-panel.js';
+import { createFillPanel } from './fill-panel.js';
+import { createLibraryPanel } from './library-panel.js';
+import { defaultsFor } from './library-defaults.js';
 import { createNavigator, recordRecent, getRecentIds } from './navigator.js';
 import { saveDraft, loadDraft, removeDraft, draftDecision } from './draft.js';
 import { folderPath } from '../domain/folders.js';
@@ -32,6 +35,8 @@ export function createEditor(shell, { api, images, fonts } = {}) {
   let layersPanel = null;
   let propertiesPanel = null;
   let historyPanel = null;
+  let fillPanel = null;
+  let libraryPanel = null;
 
   // Local clipboard memory for copy/paste between tabs and documents
   let copiedLayerMemory = null;
@@ -211,6 +216,14 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     sizeStamp.textContent = `${doc.page.width} × ${doc.page.height}`;
     undoBtn.disabled = !state.canUndo;
     redoBtn.disabled = !state.canRedo;
+  }
+
+  function updateFillTabVisibility(handout) {
+    const hasFields = Boolean(handout?.fields && handout.fields.length > 0);
+    const fillTabBtn = document.querySelector('.inspector-tab[data-tab="fill"]');
+    if (fillTabBtn) {
+      fillTabBtn.style.display = hasFields ? 'inline-flex' : 'none';
+    }
   }
 
   function triggerArchiveAnimation() {
@@ -454,8 +467,18 @@ export function createEditor(shell, { api, images, fonts } = {}) {
     historyPanel = createHistoryPanel(historyWrap, { state, api, images, fonts, shell });
     shell.inspector.panel('history', historyWrap);
 
+    const fillWrap = document.createElement('div');
+    fillPanel = createFillPanel(shell, { state, api, images });
+    shell.inspector.panel('fill', fillPanel.element);
+
+    updateFillTabVisibility(state.handout);
+    if (state.handout.fields && state.handout.fields.length > 0) {
+      shell.inspector.tab('fill');
+    }
+
     state.subscribe(change => {
       updateDocBar();
+      updateFillTabVisibility(state.handout);
       if (
         change.type === 'edit' ||
         change.type === 'undo' ||
@@ -466,6 +489,7 @@ export function createEditor(shell, { api, images, fonts } = {}) {
         layersPanel.render();
         propertiesPanel.render();
         historyPanel.render();
+        fillPanel.render();
 
         if (change.type === 'edit' && !isReadOnly) {
           hasDraft = true;
@@ -560,6 +584,17 @@ export function createEditor(shell, { api, images, fonts } = {}) {
   });
 
   shell.drawer.panel('documents', navigatorWrap);
+
+  // Library Drawer panel
+  const libraryStateProxy = {
+    get handout() { return state?.handout; },
+    get selection() { return state?.selection; },
+    get selectedLayerId() { return state?.selection; },
+    edit: (doc, meta) => state?.edit(doc, meta),
+    select: (id) => state?.select(id),
+  };
+  libraryPanel = createLibraryPanel(shell, { api, state: libraryStateProxy, fonts });
+  shell.drawer.panel('library', libraryPanel.element);
 
   // Ctrl+K Palette Document Provider
   let paletteDocumentsCache = [];
@@ -800,7 +835,66 @@ export function createEditor(shell, { api, images, fonts } = {}) {
   deskStage.addEventListener('drop', async event => {
     event.preventDefault();
     const dt = event.dataTransfer;
-    if (!dt || !dt.files || !dt.files.length) return;
+    if (!dt) return;
+
+    // Check if drop is an item from the library drawer
+    const libDataRaw = dt.getData('text/x-atelie-library') || dt.getData('application/json');
+    if (libDataRaw) {
+      try {
+        const parsed = JSON.parse(libDataRaw);
+        const item = parsed.item || parsed;
+        if (item && item.id) {
+          const pageWrap = deskStage.querySelector('.stage-page-wrap');
+          if (!pageWrap || !state) return;
+          const pRect = pageWrap.getBoundingClientRect();
+          const zoom = stage.getZoom();
+          let dropX = (event.clientX - pRect.left) / zoom;
+          let dropY = (event.clientY - pRect.top) / zoom;
+          if (
+            (!event.clientX && !event.clientY) ||
+            dropX < 0 ||
+            dropX > state.handout.page.width ||
+            dropY < 0 ||
+            dropY > state.handout.page.height
+          ) {
+            dropX = state.handout.page.width / 2;
+            dropY = state.handout.page.height / 2;
+          }
+
+          const defaults = defaultsFor(item);
+          const pageWidth = state.handout.page.width;
+          const maxW = pageWidth * 0.5;
+          const itemW = item.width || maxW;
+          const itemH = item.height || maxW;
+          const w = Math.min(itemW, maxW);
+          const h = Math.round(w * (itemH / itemW));
+          const posX = Math.round(dropX - w / 2);
+          const posY = Math.round(dropY - h / 2);
+
+          const newL = imageLayer({
+            name: item.name || 'Elemento',
+            x: posX,
+            y: posY,
+            width: Math.round(w),
+            height: Math.round(h),
+            blend: defaults.blend,
+            opacity: defaults.opacity ?? 1,
+            image: {
+              src: { library: item.id },
+              fit: defaults.cover ? 'cover' : 'contain',
+              tint: defaults.tint || null,
+            },
+          });
+
+          const next = addLayer(state.handout, newL, state.selection);
+          state.edit(next);
+          state.select(newL.id);
+          return;
+        }
+      } catch {}
+    }
+
+    if (!dt.files || !dt.files.length) return;
 
     const files = Array.from(dt.files).filter(f => f.type.startsWith('image/'));
     if (!files.length) return;

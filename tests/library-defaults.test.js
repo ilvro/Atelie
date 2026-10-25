@@ -1,0 +1,92 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { defaultsFor } from '../src/editor/library-defaults.js';
+
+test('library defaults: Papéis cobrem a página no fundo com blend normal', () => {
+  const d1 = defaultsFor({ category: 'Papéis', name: 'Ofício creme' });
+  assert.equal(d1.blend, 'normal');
+  assert.equal(d1.cover, true);
+  assert.equal(d1.position, 'bottom');
+
+  const d2 = defaultsFor({ category: 'Papel Kraft Antigo', name: 'Kraft' });
+  assert.equal(d2.blend, 'normal');
+  assert.equal(d2.cover, true);
+  assert.equal(d2.position, 'bottom');
+});
+
+test('library defaults: Manchas, Sangue, Água, Sujeira, Queimado, Digitais usam multiply', () => {
+  const categories = ['Manchas', 'Sangue', 'Água', 'Sujeira', 'Queimado', 'Digitais'];
+  for (const cat of categories) {
+    const d = defaultsFor({ category: cat, name: 'Item teste' });
+    assert.equal(d.blend, 'multiply', `Categoria ${cat} deve ter blend multiply`);
+    assert.equal(d.cover, false);
+    assert.equal(d.position, 'top');
+  }
+
+  // Expansion categories matched by keyword
+  const keywords = ['mancha de vinho', 'sujeira pesada', 'copo de café', 'papel queimado', 'respingo de sangue', 'poeira fina'];
+  for (const kw of keywords) {
+    const d = defaultsFor({ category: kw, name: 'Item expansao' });
+    assert.equal(d.blend, 'multiply', `Palavra-chave ${kw} deve ter blend multiply`);
+  }
+});
+
+test('library defaults: Amassados e Dobras usam soft-light cobrindo a página', () => {
+  const categories = ['Amassados', 'Dobras'];
+  for (const cat of categories) {
+    const d = defaultsFor({ category: cat, name: 'Textura teste' });
+    assert.equal(d.blend, 'soft-light', `Categoria ${cat} deve ter blend soft-light`);
+    assert.equal(d.cover, true);
+  }
+
+  // Expansion keywords
+  const keywords = ['amassado leve', 'dobrada em 4', 'textura linho'];
+  for (const kw of keywords) {
+    const d = defaultsFor({ category: kw, name: 'Textura' });
+    assert.equal(d.blend, 'soft-light');
+    assert.equal(d.cover, true);
+  }
+});
+
+test('library defaults: Carimbos, Selos, Marcas, Símbolos usam multiply, opacidade 0.9 e tint', () => {
+  // General stamp defaults to dark blue #1f2f6b
+  const stampNormal = defaultsFor({ category: 'Carimbos', name: 'ARQUIVADO' });
+  assert.equal(stampNormal.blend, 'multiply');
+  assert.equal(stampNormal.opacity, 0.9);
+  assert.equal(stampNormal.tint.color, '#1f2f6b');
+
+  // Stamped with NEGADO, URGENTE, CANCELADO gets red #a3202a
+  const stampNegado = defaultsFor({ category: 'Carimbos', name: 'NEGADO', id: 'casa-carimbo-negado' });
+  assert.equal(stampNegado.tint.color, '#a3202a');
+
+  const stampUrgente = defaultsFor({ category: 'Carimbos', name: 'URGENTE', id: 'casa-carimbo-urgente' });
+  assert.equal(stampUrgente.tint.color, '#a3202a');
+
+  const stampCancelado = defaultsFor({ category: 'Carimbos', name: 'CANCELADO', id: 'casa-carimbo-cancelado' });
+  assert.equal(stampCancelado.tint.color, '#a3202a');
+
+  // Other monochrome vectors (Marcas, Símbolos) default to black #000000
+  const simbolo = defaultsFor({ category: 'Símbolos', name: 'Olho Místico' });
+  assert.equal(simbolo.blend, 'multiply');
+  assert.equal(simbolo.opacity, 0.9);
+  assert.equal(simbolo.tint.color, '#000000');
+
+  // Custom ink color override
+  const customInk = defaultsFor({ category: 'Carimbos', name: 'RECEBIDO' }, { defaultInkColor: '#2b580c' });
+  assert.equal(customInk.tint.color, '#2b580c');
+});
+
+test('library defaults: Rasgos usam normal com clip desligado e nota explicativa', () => {
+  const d = defaultsFor({ category: 'Rasgos', name: 'Rasgo Lateral' });
+  assert.equal(d.blend, 'normal');
+  assert.equal(d.clip, false);
+  assert.ok(typeof d.note === 'string' && d.note.length > 0);
+});
+
+test('library defaults: Outros itens usam normal e posição padrão', () => {
+  const d = defaultsFor({ category: 'Prendedores', name: 'Clipe de Papel' });
+  assert.equal(d.blend, 'normal');
+  assert.equal(d.cover, false);
+  assert.equal(d.position, 'top');
+});
+

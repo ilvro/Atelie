@@ -175,7 +175,7 @@ Medido com `ag-psd` 30.2.0 em três arquivos (um jornal, um relatório policial 
 | 12 | feita | 24/10/2026 | Coleção da casa: 16 papéis em 3 idades (48 arquivos) e 53 texturas de sobreposição em WebP |
 | 13 | feita | 24/10/2026 | Coleção da casa: 140 elementos vetoriais em SVG (carimbos, selos, prendedores, fitas, molduras, etc.) |
 | 14 | feita | 24/10/2026 | Coleção da casa: 26 famílias de fontes livres (39 arquivos TTF), parser sfnt, seletor com prévia e eixos variáveis |
-| 15 | pendente | | |
+| 15 | feita | 24/10/2026 | Gaveta Biblioteca (chips, busca, categorias em fitas, drag & drop) e modo Preencher (campos, exemplos, troca de imagens) |
 | 16 | pendente | | |
 | 17 | pendente | | |
 | 18 | pendente | | |

@@ -20,7 +20,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 12 — Coleção papéis e texturas | concluída | 2026-10-24 | 48 papéis em 3 idades e 53 texturas de sobreposição em WebP (7,78 MB total) |
 | 13 — Coleção elementos | concluída | 2026-10-24 | Coleção da casa: 140 elementos vetoriais em SVG (carimbos, selos, prendedores, fitas, molduras, etc.) |
 | 14 — Coleção fontes | concluída | 2026-10-24 | Coleção da casa: 26 famílias de fontes livres, parser sfnt, seletor visual e eixos variáveis |
-| 15 — Biblioteca | pendente | | Gaveta Biblioteca e modo de preenchimento |
+| 15 — Biblioteca | concluída | 2026-10-24 | Gaveta Biblioteca com busca, filtros, drag & drop e modo Preencher com exemplos em português |
 | 16 — Coleção modelos | pendente | | Coleção da casa: 36 modelos prontos |
 | 17 — Início e galeria | pendente | | Tela de abertura e catálogo de modelos |
 | 18 — Assar e entregar | pendente | | Renderização final e integração de entrega |
@@ -98,6 +98,62 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 - `npm test`: 82 testes unitários passando 100%.
 - `npm run test:e2e`: 8 suítes E2E Playwright passando 100%.
 - `npm run colecao:texturas`: 101 arquivos WebP gerados com sucesso e manifesto `library.json` validado.
+
+---
+
+## Etapa 15 — Biblioteca no editor e modo "Preencher"
+
+### Feito
+- **Módulo de Padrões Iniciais de Biblioteca (`src/editor/library-defaults.js`)**:
+  - Função pura `defaultsFor(item)` implementando a tabela canônica de mesclagens e posicionamento:
+    - *Papéis*: blend `normal`, `cover: true`, posição `bottom` (inserido no fundo cobrindo toda a folha).
+    - *Manchas, Água, Sujeira, Queimado, Digitais, Sangue* (ou palavras-chave equivalentes em expansões como `mancha`, `sujeira`, `café`, `queimad`, `sangue`, `poeira`): blend `multiply`.
+    - *Amassados, Dobras* (ou palavras-chave `amassad`, `dobrad`, `textura`): blend `soft-light`, `cover: true`.
+    - *Carimbos, Selos, Marcas, Ornamentos, Símbolos*: blend `multiply`, opacidade `0.9` e `tint` automático com a cor de tinta (azul-escuro `#1f2f6b` para carimbos em geral; vermelho `#a3202a` para NEGADO/URGENTE/CANCELADO; preto `#000000` para marcas e símbolos).
+    - *Rasgos*: blend `normal`, `clip: false` com nota explicativa de uso em corte de papel.
+    - *Outros*: blend `normal`, sem cobertura forçada.
+- **Módulo de Busca e Filtros da Biblioteca (`src/editor/library-search.js`)**:
+  - Função pura `filterLibraryItems(items, options)`:
+    - Busca insensível a acentos e maiúsculas (`normalizeText` e `matchesWords`) casando nome, categoria e tags.
+    - Filtro por tipo: `elements` (oculta fontes) vs `fonts` (apenas fontes).
+    - Filtro por origem: `all` (todas as fontes), `casa` (Coleção do Ateliê) ou ID da expansão instalada.
+    - Gerenciamento e filtro de favoritos via `localStorage` (`atelie-favorites`).
+- **Gerador de Amostras de Texto Plausíveis em Português (`src/editor/sample-text.js`)**:
+  - Função `getSampleText(fieldLabel, currentContent)` gerando nomes de investigadores/vítimas, datas (1890 a 2020), locais e endereços, títulos de relatórios e parágrafos de correspondências/laudos periciais.
+- **Painel e Gaveta Biblioteca no Editor (`src/editor/library-panel.js`, `src/ui/editor.css`)**:
+  - Busca instantânea e chips de tipo (**Elementos · Fontes**).
+  - Chips de origem condicionais (**Tudo · Coleção do Ateliê · [Expansões]**), exibidos apenas quando houver expansões instaladas.
+  - Categorias exibidas como fitas recolhíveis (`.at-tape`) com contadores na ordem canônica do plano.
+  - Grade de 3 colunas de `.at-card` com rotação física sutil (`tiltOf`), prévias lazy loading e identificadores em Courier Prime.
+  - Hover preview flutuante (240 px) após 400 ms.
+  - Inserção de itens por clique normal (centralizado em proporção nativa), Shift+clique (cobrindo a página, no fundo se for papel), menu de contexto ("Pôr na página", "Cobrir a página", "Favoritar") e arrastar e soltar (HTML5 Drag & Drop) no palco, posicionando o elemento exatamente nas coordenadas do cursor.
+  - Aba Fontes com amostrário *"Querida Lia, não procure por mim."* e aplicação direta na camada de texto selecionada.
+  - Mensagem discreta no rodapé sobre instalação de expansões no modo servidor.
+- **Modo Preencher e Painel Inspetor (`src/editor/fill-panel.js`, `src/editor/properties-panel.js`)**:
+  - Aba **Preencher** no inspetor lateral (`.inspector-tab[data-tab="fill"]`), exibida e acionada automaticamente ao abrir modelos ou documentos com campos.
+  - Cada campo listado em cartão com rótulo em `.at-tape`, botão de destaque pulsante no palco, `<input>` para texto curto, `<textarea>` para texto longo e botão **Preencher com exemplo**.
+  - Suporte a campos de imagem com miniatura e modal **Trocar imagem** (alternando entre imagens enviadas e coleção da casa, ou envio de novo arquivo).
+  - Checkbox **Campo do Preencher** e input **Rótulo** disponíveis nas Propriedades de camadas de texto e imagem via `setField`.
+- **Captura de Tela de Referência (`scripts/capture-biblioteca.js`, `docs/referencias/atelie-biblioteca.png`)**:
+  - Captura em 1600 × 950 px mostrando a gaveta Biblioteca aberta sobre a bancada enquanto um documento policial de Arkham de 1926 é montado (321 KB).
+- **Testes Unitários e E2E**:
+  - `tests/library-defaults.test.js`: 6 testes validando todas as regras de mesclagem, opacidade, tint e cobertura.
+  - `tests/library-search.test.js`: 4 testes validando busca sem acento, ordem de palavras, tags, tipos, origens e favoritos.
+  - `tests/e2e/library.test.js`: teste E2E ponta a ponta com Playwright criando ambiente com coleção e expansão temporárias e validando:
+    1. Listagem de itens da casa e expansão com selo de origem, e filtro por origem.
+    2. Clique em mancha (multiply), Shift+clique em papel (fundo cobrindo página) e clique em carimbo (tint azul-escuro).
+    3. Drag & drop do elemento da expansão para o palco na posição exata do cursor.
+    4. Favoritar e filtrar por favoritos.
+    5. Aplicação de fonte em camada de texto atualizando `text.font.library`.
+    6. Abertura de modelo com campos abrindo aba Preencher automaticamente, edição de campo alterando o canvas e botão Preencher com exemplo gerando texto plausível.
+
+### Validação
+- `npm test`: 100 testes unitários passando 100%.
+- `npm run test:e2e`: 9 suítes E2E Playwright passando 100%.
+- `node scripts/capture-biblioteca.js`: captura `docs/referencias/atelie-biblioteca.png` gerada e validada.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 15.
 
 ---
 
