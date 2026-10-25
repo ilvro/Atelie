@@ -143,6 +143,7 @@ export function normalizeTree(psd, { linked = () => null, _idCounter = { current
       bounds,
       mask,
       effects,
+      color: layer.layerColor || null,
     };
 
     if (kind === 'group') {
@@ -150,13 +151,47 @@ export function normalizeTree(psd, { linked = () => null, _idCounter = { current
       node.children = (layer.children || []).map(child => transformLayer(child, childPath));
     } else if (kind === 'text') {
       const t = layer.text;
-      const style = t.style || t.styleRuns?.[0]?.style || {};
-      const postscript = style.font?.name || t.styleRuns?.[0]?.style?.font?.name || null;
-      const size = style.fontSize ?? t.styleRuns?.[0]?.style?.fontSize ?? 12;
-      const color = parseColor(style.fillColor || t.styleRuns?.[0]?.style?.fillColor);
-      const leading = style.leading !== undefined ? style.leading : null;
-      const tracking = style.tracking ?? 0;
-      const justification = t.paragraphStyle?.justification ?? 'left';
+
+      // Select dominant style run by text length when multiple runs exist
+      let dominantStyle = t.style || {};
+      if (Array.isArray(t.styleRuns) && t.styleRuns.length > 0) {
+        let maxLen = -1;
+        let bestStyle = null;
+        for (const run of t.styleRuns) {
+          const len = run.length ?? 0;
+          if (len > maxLen && run.style) {
+            maxLen = len;
+            bestStyle = run.style;
+          }
+        }
+        if (bestStyle) {
+          dominantStyle = { ...bestStyle, ...dominantStyle };
+        }
+      }
+
+      // Select dominant paragraph style by text length
+      let dominantPara = t.paragraphStyle || {};
+      if (Array.isArray(t.paragraphStyleRuns) && t.paragraphStyleRuns.length > 0) {
+        let maxLen = -1;
+        let bestPara = null;
+        for (const run of t.paragraphStyleRuns) {
+          const len = run.length ?? 0;
+          if (len > maxLen && run.style) {
+            maxLen = len;
+            bestPara = run.style;
+          }
+        }
+        if (bestPara) {
+          dominantPara = { ...bestPara, ...dominantPara };
+        }
+      }
+
+      const postscript = dominantStyle.font?.name || t.styleRuns?.[0]?.style?.font?.name || null;
+      const size = dominantStyle.fontSize ?? 12;
+      const color = parseColor(dominantStyle.fillColor || t.style?.fillColor);
+      const leading = dominantStyle.leading !== undefined ? dominantStyle.leading : null;
+      const tracking = dominantStyle.tracking ?? 0;
+      const justification = dominantPara.justification ?? 'left';
       const shape = t.shapeType || t.shape || 'point';
       const box = t.boxBounds || t.box || [0, 0, 0, 0];
       const matrix = t.transform || t.matrix || [1, 0, 0, 1, 0, 0];

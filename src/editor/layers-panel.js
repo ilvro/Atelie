@@ -16,6 +16,83 @@ import { EFFECTS, drawEffect, drawCutMask } from '../render/handout-effects.js';
 
 const thumbnailCache = new Map();
 
+export const LAYER_COLOR_MAP = {
+  red: '#ef4444',
+  orange: '#f97316',
+  yellow: '#eab308',
+  green: '#10b981',
+  blue: '#3b82f6',
+  purple: '#a855f7',
+  gray: '#6b7280',
+};
+
+export const LAYER_COLOR_NAMES = {
+  none: 'Sem etiqueta',
+  red: 'Vermelho',
+  orange: 'Laranja',
+  yellow: 'Amarelo',
+  green: 'Verde',
+  blue: 'Azul',
+  purple: 'Roxo',
+  gray: 'Cinza',
+};
+
+function getLayerColor(layer) {
+  if (layer.color && LAYER_COLOR_MAP[layer.color]) {
+    return LAYER_COLOR_MAP[layer.color];
+  }
+  switch (layer.kind) {
+    case 'text':
+      return '#3b82f6';
+    case 'image':
+      return '#10b981';
+    case 'shape':
+      return '#eab308';
+    case 'adjust':
+      return '#a855f7';
+    case 'effect':
+      return '#f97316';
+    default:
+      return '#71717a';
+  }
+}
+
+function getLayerHierarchy(layer) {
+  let rawGroup = layer.group || '';
+  let rawName = layer.name || 'Camada';
+
+  if (!rawGroup && rawName.includes(' · ')) {
+    const parts = rawName.split(' · ').map(s => s.trim());
+    rawGroup = parts[0];
+  }
+
+  // Top-level folder name (e.g. 'Textos', 'Imagens', 'Fundo', 'Desgaste')
+  const mainGroup = rawGroup ? rawGroup.split(' · ')[0].trim() : null;
+
+  // Strip mainGroup prefix from rawName if present
+  let cleanName = rawName;
+  if (mainGroup && cleanName.startsWith(mainGroup + ' · ')) {
+    cleanName = cleanName.slice(mainGroup.length + 3).trim();
+  }
+
+  const parts = cleanName.split(' · ').map(s => s.trim());
+  const leafName = parts[parts.length - 1] || cleanName;
+  const subgroup = parts.length > 1 ? parts.slice(0, -1).join(' · ') : null;
+
+  return {
+    group: mainGroup,
+    subgroup,
+    leafName,
+  };
+}
+
+function getTextSnippet(layer) {
+  if (layer.kind !== 'text' || !layer.text?.content) return '';
+  const clean = String(layer.text.content).replace(/\s+/g, ' ').trim();
+  if (!clean) return '';
+  return clean.length > 30 ? clean.slice(0, 30) + '…' : clean;
+}
+
 function getEffectThumbnail(typeKey, defaultParams, defaultBlend) {
   if (thumbnailCache.has(typeKey)) return thumbnailCache.get(typeKey);
   if (typeof document === 'undefined') return '';
@@ -61,14 +138,151 @@ function getEffectThumbnail(typeKey, defaultParams, defaultBlend) {
 export function createLayersPanel(container, { state, onAction = () => {}, getLight = () => 'normal' } = {}) {
   let isPlusMenuOpen = false;
   let isEffectsMenuOpen = false;
+  let activeFilter = 'all'; // 'all' | 'text' | 'image' | 'effect'
+  let viewMode = 'grouped'; // 'grouped' | 'flat'
+  const collapsedFolders = new Set();
+  let colorPickerLayerId = null;
+
+  function renderLayerRow(layer, index, isGroupChild = false) {
+    const selectedId = state.selection;
+    const isSelected = layer.id === selectedId;
+    const isLocked = Boolean(layer.locked);
+    const isVisible = Boolean(layer.visible);
+    const layerColor = getLayerColor(layer);
+    const hierarchy = getLayerHierarchy(layer);
+    const snippet = getTextSnippet(layer);
+    const isColorMenuOpen = colorPickerLayerId === layer.id;
+
+    return `
+      <div class="layer-item ${isSelected ? 'selected' : ''} ${isLocked ? 'locked' : ''} ${isGroupChild ? 'is-child' : ''}"
+           data-id="${esc(layer.id)}"
+           data-index="${index}"
+           style="--layer-color: ${layerColor};"
+           draggable="true"
+           role="option"
+           aria-selected="${isSelected}">
+        <button type="button" class="layer-btn-icon ${isVisible ? 'active' : 'muted'}" data-action="toggle-visible" title="${isVisible ? 'Ocultar camada' : 'Exibir camada'}" aria-label="Visibilidade">
+          ${renderIcon(isVisible ? 'eye' : 'eye-off', 14)}
+        </button>
+        <button type="button" class="layer-btn-icon ${isLocked ? 'active' : 'muted'}" data-action="toggle-lock" title="${isLocked ? 'Destravar camada' : 'Travar camada'}" aria-label="Bloqueio">
+          ${renderIcon(isLocked ? 'lock' : 'unlock', 14)}
+        </button>
+
+        <button type="button" class="layer-color-dot" data-action="toggle-color-picker" title="Etiqueta de cor (${esc(layer.color || 'padrão')})" style="background-color: ${layerColor};"></button>
+
+        <div class="layer-thumb" aria-hidden="true" style="color: ${layerColor}; border-color: ${layerColor}44; background: ${layerColor}14;">
+          ${layer.kind === 'text' ? renderIcon('doc', 15) : layer.kind === 'image' ? renderIcon('image', 15) : layer.kind === 'shape' ? renderIcon('crop', 15) : layer.kind === 'effect' ? renderIcon('sparkles', 15) : renderIcon('sun', 15)}
+        </div>
+
+        <div class="layer-title-col">
+          <div class="layer-main-row">
+            <span class="layer-name" title="${esc(layer.name)}">${esc(hierarchy.leafName)}</span>
+            ${hierarchy.subgroup ? `<span class="layer-subgroup-pill">${esc(hierarchy.subgroup)}</span>` : ''}
+          </div>
+          ${snippet ? `<span class="layer-snippet" title="${esc(layer.text.content)}">“${esc(snippet)}”</span>` : ''}
+        </div>
+
+        ${layer.light === 'uv' ? '<span class="layer-uv-badge is-uv">UV</span>' : layer.light === 'normal' ? '<span class="layer-uv-badge is-normal">sem UV</span>' : ''}
+
+        <div class="layer-actions">
+          <button type="button" class="layer-btn-action" data-action="move-up" title="Mover para cima" aria-label="Mover para cima">↑</button>
+          <button type="button" class="layer-btn-action" data-action="move-down" title="Mover para baixo" aria-label="Mover para baixo">↓</button>
+          <button type="button" class="layer-btn-action" data-action="duplicate" title="Duplicar camada" aria-label="Duplicar">⧉</button>
+          <button type="button" class="layer-btn-action is-danger" data-action="remove" title="Excluir camada" aria-label="Excluir">🗑</button>
+        </div>
+
+        ${isColorMenuOpen ? `
+          <div class="layer-color-popup" role="menu" aria-label="Escolher cor da camada">
+            <button type="button" class="layer-color-swatch is-none" data-set-color="none" title="Sem etiqueta"></button>
+            ${Object.keys(LAYER_COLOR_MAP).map(cKey => `
+              <button type="button" class="layer-color-swatch ${layer.color === cKey ? 'active' : ''}" data-set-color="${cKey}" style="background-color: ${LAYER_COLOR_MAP[cKey]};" title="${LAYER_COLOR_NAMES[cKey]}"></button>
+            `).join('')}
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }
 
   function render() {
     const handout = state.handout;
-    const selectedId = state.selection;
     const layers = handout.layers || [];
 
-    // Layers are shown from top of stack to bottom of stack (Photoshop order)
-    const reversed = layers.map((layer, index) => ({ layer, index })).reverse();
+    // Filter counts
+    const textCount = layers.filter(l => l.kind === 'text').length;
+    const imgCount = layers.filter(l => l.kind === 'image').length;
+    const effCount = layers.filter(l => l.kind === 'effect' || l.kind === 'adjust' || l.kind === 'shape').length;
+
+    // Filter layers if active
+    const indexedLayers = layers.map((layer, index) => ({ layer, index }));
+    const filtered = indexedLayers.filter(({ layer }) => {
+      if (activeFilter === 'text') return layer.kind === 'text';
+      if (activeFilter === 'image') return layer.kind === 'image';
+      if (activeFilter === 'effect') return layer.kind === 'effect' || layer.kind === 'adjust' || layer.kind === 'shape';
+      return true;
+    });
+
+    // Reversed from top of stack to bottom of stack (Photoshop order)
+    const reversed = [...filtered].reverse();
+
+    // Grouping
+    let listContent = '';
+
+    if (viewMode === 'flat' || activeFilter !== 'all') {
+      listContent = reversed.map(({ layer, index }) => renderLayerRow(layer, index, false)).join('');
+    } else {
+      // Group contiguous items or organize by group
+      const sections = [];
+      const groupMap = new Map();
+
+      for (const item of reversed) {
+        const { group } = getLayerHierarchy(item.layer);
+        if (!group) {
+          sections.push({ type: 'item', item });
+        } else {
+          let g = groupMap.get(group);
+          if (!g) {
+            g = { type: 'group', name: group, items: [] };
+            groupMap.set(group, g);
+            sections.push(g);
+          }
+          g.items.push(item);
+        }
+      }
+
+      listContent = sections.map(sec => {
+        if (sec.type === 'item') {
+          return renderLayerRow(sec.item.layer, sec.item.index, false);
+        }
+
+        const isCollapsed = collapsedFolders.has(sec.name);
+        const allVisible = sec.items.every(it => it.layer.visible);
+        const allLocked = sec.items.every(it => it.layer.locked);
+
+        return `
+          <div class="layer-folder-card">
+            <div class="layer-folder-header ${isCollapsed ? 'collapsed' : ''}" data-folder="${esc(sec.name)}">
+              <button type="button" class="layer-folder-caret" data-action="toggle-folder" data-folder="${esc(sec.name)}" aria-label="Expandir ou recolher pasta">
+                ${isCollapsed ? '▸' : '▾'}
+              </button>
+              <div class="layer-folder-icon" aria-hidden="true">${renderIcon('folder', 14)}</div>
+              <span class="layer-folder-title">${esc(sec.name)}</span>
+              <span class="layer-folder-badge">${sec.items.length}</span>
+              <div class="layer-folder-actions">
+                <button type="button" class="layer-btn-icon ${allVisible ? 'active' : 'muted'}" data-action="toggle-folder-visible" data-folder="${esc(sec.name)}" title="Alternar visibilidade do grupo" aria-label="Visibilidade do grupo">
+                  ${renderIcon(allVisible ? 'eye' : 'eye-off', 13)}
+                </button>
+                <button type="button" class="layer-btn-icon ${allLocked ? 'active' : 'muted'}" data-action="toggle-folder-lock" data-folder="${esc(sec.name)}" title="Alternar trava do grupo" aria-label="Bloqueio do grupo">
+                  ${renderIcon(allLocked ? 'lock' : 'unlock', 13)}
+                </button>
+              </div>
+            </div>
+            <div class="layer-folder-children ${isCollapsed ? 'collapsed' : ''}">
+              ${sec.items.map(it => renderLayerRow(it.layer, it.index, true)).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
 
     container.innerHTML = `
       <div class="layers-panel">
@@ -133,39 +347,21 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
           </div>
         </div>
 
-        <div class="layers-list" role="listbox" aria-label="Lista de camadas">
-          ${reversed.map(({ layer, index }) => {
-            const isSelected = layer.id === selectedId;
-            const isLocked = Boolean(layer.locked);
-            const isVisible = Boolean(layer.visible);
+        <div class="layers-filter-row">
+          <div class="layers-filter-chips">
+            <button type="button" class="layers-chip ${activeFilter === 'all' ? 'active' : ''}" data-filter="all">Todas (${layers.length})</button>
+            <button type="button" class="layers-chip ${activeFilter === 'text' ? 'active' : ''}" data-filter="text">Texto (${textCount})</button>
+            <button type="button" class="layers-chip ${activeFilter === 'image' ? 'active' : ''}" data-filter="image">Imagem (${imgCount})</button>
+            <button type="button" class="layers-chip ${activeFilter === 'effect' ? 'active' : ''}" data-filter="effect">Efeitos (${effCount})</button>
+          </div>
+          <button type="button" class="layers-view-btn ${viewMode === 'grouped' ? 'active' : ''}" data-action="toggle-view-mode" title="${viewMode === 'grouped' ? 'Ver lista plana' : 'Ver agrupado em pastas'}">
+            ${renderIcon('folder', 13)}
+            <span>${viewMode === 'grouped' ? 'Pastas' : 'Plano'}</span>
+          </button>
+        </div>
 
-            return `
-              <div class="layer-item ${isSelected ? 'selected' : ''} ${isLocked ? 'locked' : ''}"
-                   data-id="${esc(layer.id)}"
-                   data-index="${index}"
-                   draggable="true"
-                   role="option"
-                   aria-selected="${isSelected}">
-                <button type="button" class="layer-btn-icon ${isVisible ? 'active' : 'muted'}" data-action="toggle-visible" title="${isVisible ? 'Ocultar camada' : 'Exibir camada'}" aria-label="Visibilidade">
-                  ${renderIcon(isVisible ? 'eye' : 'eye-off', 14)}
-                </button>
-                <button type="button" class="layer-btn-icon ${isLocked ? 'active' : 'muted'}" data-action="toggle-lock" title="${isLocked ? 'Destravar camada' : 'Travar camada'}" aria-label="Bloqueio">
-                  ${renderIcon(isLocked ? 'lock' : 'unlock', 14)}
-                </button>
-                <div class="layer-thumb" aria-hidden="true">
-                  ${layer.kind === 'text' ? renderIcon('doc', 16) : layer.kind === 'image' ? renderIcon('image', 16) : layer.kind === 'shape' ? renderIcon('crop', 16) : layer.kind === 'effect' ? renderIcon('sparkles', 16) : renderIcon('sun', 16)}
-                </div>
-                <span class="layer-name" title="${esc(layer.name)}">${esc(layer.name)}</span>
-                ${layer.light === 'uv' ? '<span class="layer-uv-badge is-uv">UV</span>' : layer.light === 'normal' ? '<span class="layer-uv-badge is-normal">sem UV</span>' : ''}
-                <div class="layer-actions">
-                  <button type="button" class="layer-btn-action" data-action="move-up" title="Mover para cima" aria-label="Mover para cima">↑</button>
-                  <button type="button" class="layer-btn-action" data-action="move-down" title="Mover para baixo" aria-label="Mover para baixo">↓</button>
-                  <button type="button" class="layer-btn-action" data-action="duplicate" title="Duplicar camada" aria-label="Duplicar">⧉</button>
-                  <button type="button" class="layer-btn-action is-danger" data-action="remove" title="Excluir camada" aria-label="Excluir">🗑</button>
-                </div>
-              </div>
-            `;
-          }).join('')}
+        <div class="layers-list" role="listbox" aria-label="Lista de camadas">
+          ${listContent || '<div class="layers-empty-msg">Nenhuma camada correspondente.</div>'}
         </div>
       </div>
     `;
@@ -173,6 +369,105 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
 
   // Event delegation
   container.addEventListener('click', event => {
+    // 1. Color Swatch Click
+    const colorBtn = event.target.closest('[data-set-color]');
+    if (colorBtn) {
+      event.stopPropagation();
+      const colorVal = colorBtn.dataset.setColor;
+      const row = colorBtn.closest('.layer-item');
+      if (row) {
+        const id = row.dataset.id;
+        const next = updateLayer(state.handout, id, { color: colorVal === 'none' ? null : colorVal });
+        state.edit(next, { label: 'Alterar cor da camada' });
+      }
+      colorPickerLayerId = null;
+      render();
+      return;
+    }
+
+    // 2. Toggle Color Picker Menu
+    const colorToggle = event.target.closest('[data-action="toggle-color-picker"]');
+    if (colorToggle) {
+      event.stopPropagation();
+      const row = colorToggle.closest('.layer-item');
+      if (row) {
+        const id = row.dataset.id;
+        colorPickerLayerId = colorPickerLayerId === id ? null : id;
+        render();
+      }
+      return;
+    }
+
+    // Close color picker if clicked outside
+    if (colorPickerLayerId && !event.target.closest('.layer-color-popup')) {
+      colorPickerLayerId = null;
+      render();
+    }
+
+    // 3. Filter Chips
+    const filterBtn = event.target.closest('[data-filter]');
+    if (filterBtn) {
+      activeFilter = filterBtn.dataset.filter;
+      render();
+      return;
+    }
+
+    // 4. Toggle View Mode (Pastas vs Plano)
+    const viewBtn = event.target.closest('[data-action="toggle-view-mode"]');
+    if (viewBtn) {
+      viewMode = viewMode === 'grouped' ? 'flat' : 'grouped';
+      render();
+      return;
+    }
+
+    // 5. Folder Toggle Collapse
+    const folderToggle = event.target.closest('[data-action="toggle-folder"]') || event.target.closest('.layer-folder-header');
+    if (folderToggle && !event.target.closest('.layer-folder-actions')) {
+      const folderName = folderToggle.dataset.folder;
+      if (folderName) {
+        if (collapsedFolders.has(folderName)) {
+          collapsedFolders.delete(folderName);
+        } else {
+          collapsedFolders.add(folderName);
+        }
+        render();
+        return;
+      }
+    }
+
+    // 6. Folder Bulk Visibility
+    const folderVisible = event.target.closest('[data-action="toggle-folder-visible"]');
+    if (folderVisible) {
+      event.stopPropagation();
+      const folderName = folderVisible.dataset.folder;
+      const handout = state.handout;
+      const matching = handout.layers.filter(l => getLayerHierarchy(l).group === folderName);
+      const allVis = matching.every(l => l.visible);
+      let curHandout = handout;
+      for (const l of matching) {
+        curHandout = updateLayer(curHandout, l.id, { visible: !allVis });
+      }
+      state.edit(curHandout, { label: allVis ? `Ocultar ${folderName}` : `Exibir ${folderName}` });
+      return;
+    }
+
+    // 7. Folder Bulk Lock
+    const folderLock = event.target.closest('[data-action="toggle-folder-lock"]');
+    if (folderLock) {
+      event.stopPropagation();
+      const folderName = folderLock.dataset.folder;
+      const handout = state.handout;
+      const matching = handout.layers.filter(l => getLayerHierarchy(l).group === folderName);
+      const allLck = matching.every(l => l.locked);
+      let curHandout = handout;
+      for (const l of matching) {
+        curHandout = updateLayer(curHandout, l.id, { locked: !allLck });
+      }
+      state.edit(curHandout, { label: allLck ? `Destravar ${folderName}` : `Travar ${folderName}` });
+      return;
+    }
+
+    // 8. Add Menu Toggles
     const addToggle = event.target.closest('[data-action="toggle-add-menu"]');
     if (addToggle) {
       isPlusMenuOpen = !isPlusMenuOpen;
@@ -307,7 +602,6 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
 
       if (newLayer) {
         isPlusMenuOpen = false;
-        // Place above selected layer, or at top
         let insertIndex = handout.layers.length;
         if (selectedId) {
           const idx = handout.layers.findIndex(l => l.id === selectedId);
@@ -459,4 +753,3 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
     },
   };
 }
-

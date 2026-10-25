@@ -89,7 +89,8 @@ function breakContentLines(content, { measureWidth, width, box, px }) {
     return [];
   }
 
-  const rawParagraphs = String(content).replace(/\r\n?/g, '\n').split('\n');
+  const cleanContent = String(content).replace(/\t/g, '    ');
+  const rawParagraphs = cleanContent.replace(/\r\n?/g, '\n').split('\n');
   const lines = [];
 
   if (box === 'point') {
@@ -284,11 +285,15 @@ export function layoutText(content, {
       lineX = width - naturalWidth;
     }
 
-    let wx = lineX;
+    let searchIdx = 0;
     const wordsWithX = lineWords.map(w => {
-      const item = { text: w.text, x: wx, width: w.width };
-      wx += w.width + spaceWidth;
-      return item;
+      let wordOffset = 0;
+      const foundIdx = lineText.indexOf(w.text, searchIdx);
+      if (foundIdx >= 0) {
+        wordOffset = measureWidth(lineText.slice(0, foundIdx), curSize);
+        searchIdx = foundIdx + w.text.length;
+      }
+      return { text: w.text, x: lineX + wordOffset, width: w.width };
     });
 
     return {

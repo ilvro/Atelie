@@ -103,15 +103,28 @@ export function textBoxInDocument(text, outer = null) {
     r = box[2];
     b = box[3];
   } else {
-    // 'point' text: estimated width based on longest line
+    // 'point' text: estimated width based on longest line with tab expansion
     const content = text.content || text.text || '';
-    const lines = content.split(/\r\n|\r|\n/);
+    const cleanContent = content.replace(/\t/g, '    ');
+    const lines = cleanContent.split(/\r\n|\r|\n/);
     const maxLineLen = Math.max(...lines.map(line => line.length), 1);
     const estimatedWidth = maxLineLen * size * 0.55;
-    l = 0;
-    t = -size;
-    r = estimatedWidth;
-    b = size * 0.3;
+
+    const justification = String(text.justification || text.align || 'left').toLowerCase();
+    if (justification.includes('center')) {
+      l = -estimatedWidth / 2;
+      r = estimatedWidth / 2;
+    } else if (justification.includes('right')) {
+      l = -estimatedWidth;
+      r = 0;
+    } else {
+      l = 0;
+      r = estimatedWidth;
+    }
+
+    const lineHeight = text.lineHeight || 1.25;
+    t = -size * 0.8;
+    b = t + Math.max(1, lines.length) * size * lineHeight;
   }
 
   const localWidth = Math.max(0, r - l);

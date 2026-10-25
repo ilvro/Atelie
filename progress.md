@@ -37,6 +37,33 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | Tutoriais Interativos | planejado | 2026-10-25 | Sistema de lições práticas guiadas estilo Tabletop (motor tutor, anel de foco, 4 trilhas práticas) |
 | 28 — Integração Tabletop | pendente | | Consumo e interação direta dentro do Tabletop |
 | 29 — Expansão no navegador | concluída | 2026-10-25 | Instalação local de expansões via pasta (IndexedDB), manifesto, cota, persistência offline, cache de blobs e remoção |
+| Refinamento de Tipografia e Camadas | concluída | 2026-10-25 | Geometria e alinhamento de textos, proporção de fontes mistas, recorte de caixas de texto, e painel de camadas com pastas, cores e snippets |
+
+---
+
+## Refinamento — Leitura de Textos nos Modelos e Organização do Painel de Camadas
+
+### Feito
+- **Correção da Geometria e Posicionamento de Textos (`scripts/library/lib/psd-geometry.js`)**:
+  - `textBoxInDocument`: correção da ancoragem de textos pontuais (`point`) alinhados ao centro (`justify: 'center'`) e à direita (`justify: 'right'`). O centro agora é projetado como `[-estimatedWidth/2, estimatedWidth/2]`, corrigindo o título ("Folha de s.paulo") que antes era deslocado para fora da página à direita.
+  - Alinhamento da linha de base (`baseline`) com a renderização do Canvas do Ateliê (`-size * 0.8`).
+- **Resolução de Font Size Dominante em Textos com Estilos Mistos (`scripts/library/lib/psd-tree.js`)**:
+  - Quando um bloco de texto possui múltiplos `styleRuns` (ex: manchete em 54 pt e corpo com 1100 caracteres em 38 pt), o conversor agora seleciona o estilo do trecho com maior contagem de caracteres (`dominantStyle`), evitando que todo o corpo do artigo fosse renderizado com o tamanho gigante da manchete e transbordasse sobre fotos e matérias adjacentes.
+  - Seleção idêntica de alinhamento dominante em `paragraphStyleRuns`.
+- **Expansão de Caracteres de Tabulação (`\t`) e Delimitação de Caixas de Texto (`src/domain/handout-text-layout.js` e `src/render/handout-text.js`)**:
+  - Expansão determinística de caracteres `\t` para 4 espaços no motor de layout e cálculo preciso de offsets de palavras através de fatiamento do texto medido (`lineText.slice(0, foundIdx)`), preservando o espaçamento exato entre "Desde 1921" e "Um Jornal a Serviço do Brasil" sem sobrepor as estrelas decorativas.
+  - Recorte estrito em caixas de texto com `box: 'area'` (`ctx.rect(startX, startY, w, h); ctx.clip()`), impedindo qualquer transbordamento visual sobre camadas adjacentes.
+  - Atribuição de `fit: 'shrink'` para caixas de texto na conversão de PSDs, ajustando os blocos de coluna com perfeição.
+- **Painel de Camadas Redesenhado com Pastas e Cores (`src/editor/layers-panel.js` e `src/ui/editor.css`)**:
+  - **Estrutura Hierárquica em Pastas**: agrupamento automático por pasta principal (ex: 📁 **TEXTOS**, 📁 **IMAGENS**, 📁 **FUNDO**, 📁 **DESGASTE**) com contagem de camadas, botão de recolher/expandir (estado preservado), e botões em lote para alternar visibilidade ou trava de todo o grupo com um único clique.
+  - **Identificação Visual por Cores**: etiquetas de cor personalizáveis (vermelho, laranja, amarelo, verde, azul, roxo, cinza) ou padrão por tipo de camada (Azul para Texto, Verde para Imagem, Âmbar para Formas, Roxo para Ajustes e Laranja para Efeitos). Indicador vertical lateral e ícones coloridos com fundo translúcido sutil. Seletor de cores rápido acessível no painel.
+  - **Nomes Limpos e Snippet de Conteúdo**: remoção de prefixos repetitivos (`Textos · Tags · `) no nome da camada, exibindo o nome direto da camada com badge de subgrupo e uma prévia em itálico do texto real (ex: *“Folha de s.paulo”*, *“Lorem Ipsum Dolor...”*), tornando imediata a localização de qualquer camada no documento.
+  - **Barra de Filtros e Alternância de Modo**: chips no topo para filtrar camadas (`Todas`, `Texto`, `Imagem`, `Efeitos`) e botão para alternar entre visão agrupada em Pastas e lista plana.
+
+### Validação
+- `npm test`: 159 testes unitários passando 100%.
+- `tests/e2e/editor.test.js` e `tests/handouts-psd-tree.test.js`: testes executados e aprovados.
+- Captura visual em navegador real validada (`verified-newspaper.png`).
 
 ---
 

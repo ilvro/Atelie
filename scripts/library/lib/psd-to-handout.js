@@ -327,6 +327,8 @@ export async function psdToHandout(
 
           flattenedLayers.push({
             name: effectiveName,
+            group: parentPrefix || null,
+            color: node.color || null,
             kind: 'image',
             blend: node.blend || 'normal',
             opacity: effectiveOpacity,
@@ -395,6 +397,8 @@ export async function psdToHandout(
 
         flattenedLayers.push({
           name: effectiveName,
+          group: parentPrefix || null,
+          color: node.color || null,
           kind: 'text',
           blend: parentBlend || node.blend || 'normal',
           opacity: effectiveOpacity,
@@ -416,7 +420,7 @@ export async function psdToHandout(
             lineHeight,
             letterSpacing,
             box: boxShape,
-            fit: 'overflow',
+            fit: boxShape === 'area' ? 'shrink' : 'overflow',
             ink: {
               style: inkStyle,
               wear: 0,
@@ -461,6 +465,8 @@ export async function psdToHandout(
 
           flattenedLayers.push({
             name: effectiveName,
+            group: parentPrefix || null,
+            color: node.color || null,
             kind: 'image',
             blend: node.blend || 'normal',
             opacity: effectiveOpacity,
@@ -579,6 +585,8 @@ export async function psdToHandout(
         if (mappedAdjust) {
           flattenedLayers.push({
             name: effectiveName,
+            group: parentPrefix || null,
+            color: node.color || null,
             kind: 'adjust',
             blend: node.blend || 'normal',
             opacity: effectiveOpacity,
@@ -617,6 +625,8 @@ export async function psdToHandout(
 
         flattenedLayers.push({
           name: effectiveName,
+          group: parentPrefix || null,
+          color: node.color || null,
           kind: 'image',
           blend: node.blend || 'normal',
           opacity: effectiveOpacity,
@@ -780,6 +790,10 @@ export async function psdToHandout(
         },
       });
 
+      if (raw.group) layerObj.group = raw.group;
+      if (raw.color) layerObj.color = raw.color;
+      if (raw.group) layerObj.group = raw.group;
+      if (raw.color) layerObj.color = raw.color;
       finalLayers.push(layerObj);
 
       finalRasters.push({
@@ -813,6 +827,10 @@ export async function psdToHandout(
         text: raw.text,
       });
 
+      if (raw.group) layerObj.group = raw.group;
+      if (raw.color) layerObj.color = raw.color;
+      if (raw.group) layerObj.group = raw.group;
+      if (raw.color) layerObj.color = raw.color;
       finalLayers.push(layerObj);
 
       if (raw.isField && raw.fieldLabel) {
@@ -837,6 +855,8 @@ export async function psdToHandout(
         adjust: raw.adjust,
       });
 
+      if (raw.group) layerObj.group = raw.group;
+      if (raw.color) layerObj.color = raw.color;
       finalLayers.push(layerObj);
     }
   }

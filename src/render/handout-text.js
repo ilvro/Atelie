@@ -88,6 +88,11 @@ export function drawTextLayer(ctx, layer, scale = 1) {
   }
 
   drawCtx.save();
+  if (txt.box === 'area') {
+    drawCtx.beginPath();
+    drawCtx.rect(startX, startY, w, h);
+    drawCtx.clip();
+  }
   drawCtx.font = getFontString(txt.font, canvasFontSize, ink.style);
   drawCtx.fillStyle = txt.color || '#1d1b24';
   drawCtx.textBaseline = 'alphabetic';
