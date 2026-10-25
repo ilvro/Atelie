@@ -27,7 +27,11 @@ export function numberField(field, label, value, { min, max, step = .1, disabled
   const limits = `${min === undefined ? '' : `min="${min}"`} ${max === undefined ? '' : `max="${max}"`}`;
   const input = `<span class="value-box"><input type="number" data-field="${field}" value="${shown}" step="${step}" ${limits} ${state}/>${parts.unit ? `<i>${parts.unit}</i>` : ''}</span>`;
   if (!isRange(field, min, max, step)) return `<label class="field measure-field">${labelMarkup(parts)}${input}</label>`;
-  return `<label class="field range-field">${labelMarkup(parts)}${input}<input type="range" data-range="${field}" value="${shown}" step="${step}" ${limits} ${state} tabindex="-1" aria-hidden="true"/></label>`;
+  const minVal = min ?? 0;
+  const maxVal = max ?? 100;
+  const numVal = Number(value ?? minVal);
+  const pct = maxVal > minVal ? Math.max(0, Math.min(100, ((numVal - minVal) / (maxVal - minVal)) * 100)) : 0;
+  return `<label class="field range-field">${labelMarkup(parts)}${input}<input type="range" data-range="${field}" value="${shown}" step="${step}" ${limits} ${state} style="--range-progress:${pct.toFixed(1)}%" tabindex="-1" aria-hidden="true"/></label>`;
 }
 /** A text box beside a colour picker: the code can be typed or pasted (#a1b2c3, a1b2c3 or #abc), whatever picker the system offers. */
 export const hexBox = (field, value) => `<input type="text" class="hex-box" data-hex="${field}" value="${esc(String(value).toLowerCase())}" maxlength="7" spellcheck="false" autocomplete="off" aria-label="Código hexadecimal da cor"/>`;
@@ -59,11 +63,32 @@ export function choiceField(field, label, value, options, { swatch, columns, dis
 export function bindControls(root, commit) {
   const numberOf = range => range.closest('.range-field')?.querySelector(`[data-field="${range.dataset.range}"]`);
   const pickerOf = box => box.parentElement?.querySelector(`input[type="color"][data-field="${box.dataset.hex}"]`);
+  const syncProgress = range => {
+    if (!range) return;
+    const min = Number(range.min || 0);
+    const max = Number(range.max || 100);
+    const val = Number(range.value || 0);
+    const pct = max > min ? Math.max(0, Math.min(100, ((val - min) / (max - min)) * 100)) : 0;
+    range.style.setProperty('--range-progress', `${pct.toFixed(1)}%`);
+  };
+
+  root.querySelectorAll?.('input[type="range"][data-range]').forEach(syncProgress);
+
   root.addEventListener('input', event => {
     const target = event.target;
     if (target.type === 'color' && target.dataset?.field) { const box = target.parentElement?.querySelector(`[data-hex="${target.dataset.field}"]`); if (box) box.value = target.value; }
-    else if (target.dataset?.range) { const number = numberOf(target); if (number) number.value = target.value; }
-    else if (target.type === 'number' && target.closest?.('.range-field')) { const range = target.closest('.range-field').querySelector('[data-range]'); if (range) range.value = target.value; }
+    else if (target.dataset?.range) { 
+      const number = numberOf(target); 
+      if (number) number.value = target.value; 
+      syncProgress(target);
+    }
+    else if (target.type === 'number' && target.closest?.('.range-field')) { 
+      const range = target.closest('.range-field').querySelector('[data-range]'); 
+      if (range) {
+        range.value = target.value; 
+        syncProgress(range);
+      }
+    }
   });
   // A drag ends in a single change, so it is a single undo step.
   root.addEventListener('change', event => {
@@ -78,7 +103,11 @@ export function bindControls(root, commit) {
     }
     if (!event.target.dataset?.range) return;
     const number = numberOf(event.target);
-    if (number) { number.value = event.target.value; commit(number); }
+    if (number) { 
+      number.value = event.target.value; 
+      syncProgress(event.target);
+      commit(number); 
+    }
   });
   root.addEventListener('click', event => {
     const choice = event.target.closest?.('[data-choice]'), select = choice?.closest('.choice-field')?.querySelector('select');

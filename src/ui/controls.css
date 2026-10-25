@@ -125,9 +125,10 @@
 .field select:focus,
 .field textarea:focus,
 .value-box input:focus {
-  border-color: var(--at-uv, #a08aff);
-  box-shadow: 0 0 0 2px var(--at-uv-glow, rgba(160, 138, 255, 0.25));
+  border-color: var(--at-uv, #9354dc);
   background: #282420;
+  outline: none;
+  box-shadow: none;
 }
 
 .field input:disabled,
@@ -189,8 +190,9 @@
 }
 
 .color-field input[type="color"]:focus {
-  border-color: var(--at-uv, #a08aff);
-  box-shadow: 0 0 0 2px var(--at-uv-glow);
+  border-color: var(--at-uv, #9354dc);
+  outline: none;
+  box-shadow: none;
 }
 
 .color-field input[type="color"]::-webkit-color-swatch-wrapper {
@@ -247,13 +249,24 @@
   height: 6px;
   appearance: none;
   -webkit-appearance: none;
-  background: var(--at-desk-3, #24201c);
+  background: linear-gradient(
+    to right,
+    var(--at-uv, #9354dc) 0%,
+    var(--at-uv, #9354dc) var(--range-progress, 0%),
+    var(--at-desk-3, #24201c) var(--range-progress, 0%),
+    var(--at-desk-3, #24201c) 100%
+  );
   border: 1px solid var(--at-line, #3a332c);
   border-radius: 3px;
   outline: none;
-  accent-color: var(--at-uv, #a08aff);
   cursor: pointer;
-  margin: 2px 0 6px;
+  margin: 3px 0 6px;
+}
+
+.range-field input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  background: transparent;
 }
 
 .range-field input[type="range"]::-webkit-slider-thumb {
@@ -262,18 +275,47 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: var(--at-uv, #a08aff);
-  box-shadow: 0 0 6px var(--at-uv-glow, rgba(160, 138, 255, 0.4));
+  background: #ffffff;
+  border: 2px solid var(--at-uv, #9354dc);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
   cursor: pointer;
-  border: 1.5px solid #ffffff;
+  margin-top: -4px;
   transition: transform var(--eco-fast) var(--eco-ease);
 }
 
 .range-field input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.25);
+  transform: scale(1.15);
 }
 
-/* ── SELETORES EM SEGMENTOS / CHIPS / BOTÕES ──────────────────────────────────── */
+.range-field input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(0.95);
+  background: #f0edff;
+}
+
+.range-field input[type="range"]::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--at-desk-3, #24201c);
+  border: 1px solid var(--at-line, #3a332c);
+}
+
+.range-field input[type="range"]::-moz-range-progress {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--at-uv, #9354dc);
+}
+
+.range-field input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid var(--at-uv, #9354dc);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+/* ── SELETORES EM SEGMENTOS / CHIPS / BOTÕES (ESTILO FICHA TESTE - ORDEM II) ── */
 .choice-field select.choice-native {
   display: none;
 }
@@ -282,31 +324,34 @@
 .choice-field .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 5px;
   margin-top: 2px;
 }
 
 .choice-field .segments button,
 .choice-field .chips button {
-  padding: 6px 12px;
+  padding: 5px 11px;
   border-radius: 4px;
   border: 1px solid var(--at-line, #3a332c);
-  background: var(--at-desk-3, #24201c);
+  background: #1c1d29;
   color: var(--at-text-2, #b9b0a2);
   font-family: var(--eco-font-ui, "Hanken Grotesk", sans-serif);
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 700;
+  letter-spacing: 0.04em;
   cursor: pointer;
-  transition: all var(--eco-fast) var(--eco-ease);
+  transition: background var(--eco-fast) var(--eco-ease), border-color var(--eco-fast) var(--eco-ease), color var(--eco-fast) var(--eco-ease);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 5px;
+  box-shadow: none;
 }
 
 .choice-field .segments button:hover,
 .choice-field .chips button:hover {
-  background: var(--at-line-strong, #574c40);
+  background: #27293a;
+  border-color: #484b64;
   color: #ffffff;
 }
 
@@ -314,10 +359,10 @@
 .choice-field .chips button.active,
 .choice-field .segments button[aria-checked="true"],
 .choice-field .chips button[aria-checked="true"] {
-  background: color-mix(in srgb, var(--at-uv, #a08aff) 22%, var(--at-desk-3, #24201c));
-  border-color: var(--at-uv, #a08aff);
+  background: color-mix(in srgb, var(--at-uv, #9354dc) 26%, #181926);
+  border-color: var(--at-uv, #9354dc);
   color: #ffffff;
-  box-shadow: 0 0 8px var(--at-uv-glow, rgba(160, 138, 255, 0.3));
+  box-shadow: none;
 }
 
 /* ── CHECKBOX TÁTIL ──────────────────────────────────────────────────────────── */

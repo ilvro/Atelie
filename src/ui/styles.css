@@ -339,7 +339,6 @@ html, body {
   right: 0;
   height: 2px;
   background: var(--at-uv);
-  box-shadow: 0 0 8px var(--at-uv-glow);
 }
 
 .inspector-content {
