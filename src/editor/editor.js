@@ -632,6 +632,30 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     state = createEditorState(handout);
     hideStartScreen();
 
+    // Warn if document references an uninstalled expansion
+    if (api?.library && shell?.notify) {
+      api.library.list().then(libData => {
+        if (!libData) return;
+        const availableItemIds = new Set((libData.items || []).map(i => i.id));
+        for (const page of handout.pages || []) {
+          for (const layer of page.layers || []) {
+            const libId = layer.image?.src?.library;
+            if (libId && !availableItemIds.has(libId)) {
+              let expName = 'externa';
+              if (libId.startsWith('ac-')) {
+                expName = 'Arquivos Confidenciais';
+              } else {
+                const prefix = libId.split('-')[0];
+                expName = prefix ? `"${prefix}"` : 'desconhecida';
+              }
+              shell.notify(`Este documento usa a expansão ${expName}, que não está instalada neste navegador.`, { tone: 'warning' });
+              return;
+            }
+          }
+        }
+      }).catch(() => {});
+    }
+
     if (stage) {
       stage.destroy();
     }

@@ -36,7 +36,50 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | Refinamento de UI & UX | concluída | 2026-10-25 | Correção miniatura trilho, alinhamento abas, controles CSS, texturas da bancada, pan por botão direito/meio, filtros rápidos de categoria na biblioteca |
 | Tutoriais Interativos | planejado | 2026-10-25 | Sistema de lições práticas guiadas estilo Tabletop (motor tutor, anel de foco, 4 trilhas práticas) |
 | 28 — Integração Tabletop | pendente | | Consumo e interação direta dentro do Tabletop |
-| 29 — Expansão no navegador | pendente | | Expansão local no navegador (opcional) |
+| 29 — Expansão no navegador | concluída | 2026-10-25 | Instalação local de expansões via pasta (IndexedDB), manifesto, cota, persistência offline, cache de blobs e remoção |
+
+---
+
+## Etapa 29 — Expansão no próprio navegador
+
+### Feito
+- **Instalador de Expansão no Navegador (`src/data/expansion-installer.js`)**:
+  - `validateExpansionManifests(files)`: validação estrutural obrigatória de integridade de `expansion.json` e `library.json`, normalização de metadados, identificador de escopo (`id`) e lista de itens.
+  - `calculateExpansionSize(files)`: soma precisa de bytes de todos os arquivos binários e JSON da pasta selecionada.
+  - `checkStorageSpace(sizeBytes)`: verificação de cota com `navigator.storage.estimate()` e solicitação de persistência com `navigator.storage.persist()`. Exige pelo menos 1,5× o tamanho total livre no disco antes de iniciar.
+  - Leitores de diretório com fallback multiplataforma:
+    - `readFolderFromDirectoryHandle`: leitura recursiva via File System Access API (`showDirectoryPicker()`) para navegadores baseados em Chromium (Chrome, Edge).
+    - `readFolderFromFileList`: leitura em lote via elemento `<input type="file" webkitdirectory>` para Firefox, Safari e navegadores legados.
+  - Banco IndexedDB `atelie-expansions-v1`:
+    - Store `expansions`: armazena `expansion.json` normalizado e metadados de instalação.
+    - Store `items`: armazena os registros do `library.json` com `source` mapeado para o ID da expansão.
+    - Store `files`: armazena os arquivos binários em formato `Blob` indexados pela chave composta `[expansionId, caminhoRelativo]`.
+  - Operações CRUD do instalador: `installExpansion`, `removeExpansion`, `listInstalledExpansions`, `getExpansionFile` e `getExpansionItems`.
+- **Diálogo de Instalação e Confirmação (`src/ui/expansion-dialog.js` e `src/ui/styles.css`)**:
+  - Modal com `z-index: 400` exibindo metadados da expansão: título, descrição, licença, total de itens, tamanho formatado em MB e aviso de privacidade: *"Os arquivos ficam só neste navegador. Não compartilhe nem publique esta expansão."*.
+  - Barra de progresso de gravação em tempo real (0 a 100%) calculada item a item durante a cópia para o IndexedDB, com botão de cancelamento.
+- **Gerenciamento de Expansões nas Configurações (`src/ui/settings.js`)**:
+  - Seção dedicada **Expansões neste navegador** dentro do modal de Ajustes.
+  - Listagem dinâmica das expansões instaladas mostrando nome, quantidade de itens e consumo em disco.
+  - Botões para "Atualizar" (reinstalação por cima da versão existente) e "Remover" (limpeza completa das stores do IndexedDB daquela expansão).
+  - Botão de ação primária "Instalar expansão deste computador…".
+- **Integração com a Biblioteca e Resolução de Recursos em Tempo de Execução (`src/data/api.js`)**:
+  - No modo navegador (e build estático do GitHub Pages), `api.library.list()` mescla dinamicamente as fontes e itens da coleção da casa com os itens das expansões instaladas no IndexedDB.
+  - Suporte completo a modelos de expansão em `api.library.item(id)`.
+  - Sistema de resolução de URLs (`resolveFileURL` e `resolvePreviewURL`): geração sob demanda de `URL.createObjectURL(blob)` com gerenciamento inteligente em `objectUrlCache` e auto-revogação após 2 minutos de inatividade para evitar vazamento de memória.
+- **Aviso de Dependência de Expansão Ausente no Editor (`src/editor/editor.js`)**:
+  - Ao carregar qualquer documento (`loadHandout`), verificação das camadas para checar referências a origens/expansões; caso utilize uma expansão não instalada no navegador atual, dispara notificação amigável na tela informando que o documento depende de uma expansão externa.
+- **Testes Unitários e E2E**:
+  - `tests/expansion-install.test.js`: 5 testes unitários cobrindo validação de manifestos, cálculo exato de tamanho em bytes, decisão e recusa por limite de cota (< 1,5×) e fluxo completo no IndexedDB (instalação, busca de itens, leitura de arquivos binários e desinstalação).
+  - `tests/e2e/expansion-browser.test.js`: teste E2E completo no build estático do Pages, instalando uma expansão via `webkitdirectory`, confirmando a presença de itens e crachá de origem na gaveta de biblioteca, inserção em documento, persistência após recarregamento de página (F5) e remoção limpa com limpeza de acervo.
+
+### Validação
+- `npm test`: 159 testes unitários passando 100%.
+- `tests/e2e/expansion-browser.test.js`: teste E2E executado e aprovado com sucesso.
+- `npm run build:pages` e `npm run build`: ambos os builds concluídos sem erros.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 29.
 
 ---
 

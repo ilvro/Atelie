@@ -738,3 +738,123 @@ html, body {
   display: flex;
   justify-content: flex-end;
 }
+
+/* ── DIÁLOGO E INSTALADOR DE EXPANSÕES (ETAPA 29) ────────────────────────────── */
+.at-expansion-modal {
+  z-index: 400;
+}
+
+.at-expansion-dialog-card {
+  max-width: 520px;
+}
+
+.at-expansion-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--at-desk-3);
+  border: 1px solid var(--at-line);
+  border-radius: var(--eco-radius-s);
+  padding: 14px;
+}
+
+.at-expansion-name {
+  margin: 0;
+  font-family: var(--eco-font-ui);
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.at-expansion-desc {
+  margin: 0;
+  font-size: 12px;
+  color: var(--at-text-2);
+  line-height: 1.45;
+}
+
+.at-expansion-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--at-line);
+}
+
+.at-expansion-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.at-expansion-meta-item .meta-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--at-muted);
+}
+
+.at-expansion-meta-item .meta-val {
+  font-size: 12px;
+  color: var(--at-text);
+  font-weight: 600;
+}
+
+.at-expansion-notice {
+  display: flex;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: var(--eco-radius-s);
+  background: rgba(147, 60, 232, 0.08);
+  border: 1px solid rgba(147, 60, 232, 0.3);
+  align-items: flex-start;
+}
+
+.at-expansion-notice .notice-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.at-expansion-notice .notice-text strong {
+  display: block;
+  font-size: 12px;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.at-expansion-notice .notice-text p {
+  margin: 0;
+  font-size: 11.5px;
+  color: var(--at-text-2);
+  line-height: 1.4;
+}
+
+.at-expansion-progress-area {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.at-expansion-progress-bar-wrap {
+  width: 100%;
+  height: 8px;
+  background: var(--at-desk-3);
+  border-radius: 4px;
+  border: 1px solid var(--at-line);
+  overflow: hidden;
+}
+
+.at-expansion-progress-bar {
+  height: 100%;
+  background: var(--at-uv);
+  border-radius: 3px;
+  transition: width 0.15s ease;
+}
+
+.at-expansion-progress-label {
+  font-size: 11px;
+  color: var(--at-muted);
+  text-align: center;
+}

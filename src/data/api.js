@@ -1,6 +1,14 @@
 import { ApiError } from './errors.js';
 import { validateHandout } from '../domain/handouts.js';
 import { validateFolders } from '../domain/folders.js';
+import {
+  openExpansionsDB,
+  installExpansion,
+  removeExpansion,
+  listInstalledExpansions,
+  getExpansionFile,
+  getExpansionItems,
+} from './expansion-installer.js';
 
 export { ApiError };
 
@@ -423,25 +431,164 @@ export function createApi({
     return browserManifestPromise;
   }
 
+  const expansionsDbName = `atelie-expansions-v1:${storageScope(baseURI)}`;
+
+  async function getExpansionsDB() {
+    return await openExpansionsDB(expansionsDbName, databaseFactory);
+  }
+
+  const browserExpansions = {
+    async list() {
+      try {
+        const db = await getExpansionsDB();
+        try {
+          return await listInstalledExpansions(db);
+        } finally {
+          db.close();
+        }
+      } catch {
+        return [];
+      }
+    },
+
+    async getItems() {
+      try {
+        const db = await getExpansionsDB();
+        try {
+          return await getExpansionItems(db);
+        } finally {
+          db.close();
+        }
+      } catch {
+        return [];
+      }
+    },
+
+    async getFile(expansionId, path) {
+      try {
+        const db = await getExpansionsDB();
+        try {
+          return await getExpansionFile(db, expansionId, path);
+        } finally {
+          db.close();
+        }
+      } catch {
+        return null;
+      }
+    },
+
+    async install(expansionJson, libraryJson, filesMap, options) {
+      const db = await getExpansionsDB();
+      try {
+        const res = await installExpansion(db, expansionJson, libraryJson, filesMap, options);
+        browserManifestPromise = null;
+        return res;
+      } finally {
+        db.close();
+      }
+    },
+
+    async remove(expansionId) {
+      const db = await getExpansionsDB();
+      try {
+        await removeExpansion(db, expansionId);
+        browserManifestPromise = null;
+      } finally {
+        db.close();
+      }
+    },
+  };
+
+  const objectUrlCache = new Map();
+  function getCachedBlobUrl(key, blob) {
+    if (!blob) return '';
+    const existing = objectUrlCache.get(key);
+    if (existing) {
+      clearTimeout(existing.timer);
+      existing.timer = setTimeout(() => {
+        try { URL.revokeObjectURL(existing.url); } catch {}
+        objectUrlCache.delete(key);
+      }, 120_000);
+      return existing.url;
+    }
+    const url = URL.createObjectURL(blob);
+    const timer = setTimeout(() => {
+      try { URL.revokeObjectURL(url); } catch {}
+      objectUrlCache.delete(key);
+    }, 120_000);
+    objectUrlCache.set(key, { url, timer });
+    return url;
+  }
+
   const browserLibrary = {
     async list() {
       const data = await ensureBrowserManifest();
-      const visible = (data.items || [])
+      const houseItems = (data.items || [])
         .filter(i => i.kind !== 'layer')
         .map(i => ({ ...i, source: 'casa' }));
+
+      const sources = [{ id: 'casa', name: 'Coleção do Ateliê' }];
+      const allItems = [...houseItems];
+      const itemMap = new Map();
+      for (const item of houseItems) {
+        itemMap.set(item.id, item);
+      }
+
+      try {
+        const installed = await browserExpansions.list();
+        for (const exp of installed) {
+          sources.push({
+            id: exp.id,
+            name: exp.name,
+            description: exp.description || '',
+            license: exp.license || '',
+            installed: true,
+          });
+        }
+        const expItems = await browserExpansions.getItems();
+        for (const item of expItems) {
+          if (!itemMap.has(item.id)) {
+            allItems.push(item);
+            itemMap.set(item.id, item);
+            browserItemsMap.set(item.id, item);
+
+            // Pre-cache preview blob if available
+            if (item.preview && item.source) {
+              browserExpansions.getFile(item.source, item.preview).then(blob => {
+                if (blob) getCachedBlobUrl(`${item.source}:${item.preview}`, blob);
+              }).catch(() => {});
+            }
+          }
+        }
+      } catch {}
+
       return {
-        sources: [{ id: 'casa', name: 'Coleção do Ateliê' }],
-        items: visible,
+        sources,
+        items: allItems,
       };
     },
 
     async item(id) {
       await ensureBrowserManifest();
-      const found = browserItemsMap.get(id);
+      let found = browserItemsMap.get(id);
+      if (!found) {
+        try {
+          const expItems = await browserExpansions.getItems();
+          for (const item of expItems) browserItemsMap.set(item.id, item);
+          found = browserItemsMap.get(id);
+        } catch {}
+      }
       if (!found) {
         throw new ApiError('Item não encontrado na biblioteca.', 404);
       }
       if (found.kind === 'template' && found.file) {
+        if (found.source && found.source !== 'casa') {
+          const blob = await browserExpansions.getFile(found.source, found.file);
+          if (!blob) throw new ApiError('Arquivo do modelo de expansão não encontrado.', 404);
+          const text = await blob.text();
+          const handout = JSON.parse(text);
+          return { ...found, handout };
+        }
         const tplUrl = new URL(`colecao/${found.file}`, baseURI).href;
         const res = await fetch(tplUrl);
         if (!res.ok) {
@@ -455,31 +602,77 @@ export function createApi({
 
     fileURL(item) {
       if (typeof item === 'object' && item?.file) {
+        if (item.source && item.source !== 'casa') {
+          const cached = objectUrlCache.get(`${item.source}:${item.file}`);
+          if (cached) return cached.url;
+        }
         return new URL(`colecao/${item.file}`, baseURI).href;
       }
       const id = typeof item === 'object' && item ? item.id : item;
       const found = browserItemsMap.get(id);
+      if (found && found.source && found.source !== 'casa' && found.file) {
+        const cached = objectUrlCache.get(`${found.source}:${found.file}`);
+        if (cached) return cached.url;
+      }
       const file = found?.file || (typeof item === 'string' ? item : item?.file);
       return new URL(`colecao/${file}`, baseURI).href;
     },
 
     async resolveFileURL(itemOrId) {
       await ensureBrowserManifest();
+      const id = typeof itemOrId === 'object' && itemOrId ? itemOrId.id : itemOrId;
+      let found = typeof itemOrId === 'object' && itemOrId ? itemOrId : browserItemsMap.get(id);
+      if (!found) {
+        try {
+          const expItems = await browserExpansions.getItems();
+          for (const item of expItems) browserItemsMap.set(item.id, item);
+          found = browserItemsMap.get(id);
+        } catch {}
+      }
+      if (found && found.source && found.source !== 'casa' && found.file) {
+        const blob = await browserExpansions.getFile(found.source, found.file);
+        if (blob) {
+          return getCachedBlobUrl(`${found.source}:${found.file}`, blob);
+        }
+      }
       return this.fileURL(itemOrId);
     },
 
     previewURL(item) {
       if (typeof item === 'object' && item?.preview) {
+        if (item.source && item.source !== 'casa') {
+          const cached = objectUrlCache.get(`${item.source}:${item.preview}`);
+          if (cached) return cached.url;
+        }
         return new URL(`colecao/${item.preview}`, baseURI).href;
       }
       const id = typeof item === 'object' && item ? item.id : item;
       const found = browserItemsMap.get(id);
+      if (found && found.source && found.source !== 'casa' && found.preview) {
+        const cached = objectUrlCache.get(`${found.source}:${found.preview}`);
+        if (cached) return cached.url;
+      }
       const prev = found?.preview || (typeof item === 'string' ? item : item?.preview);
       return new URL(`colecao/${prev}`, baseURI).href;
     },
 
     async resolvePreviewURL(itemOrId) {
       await ensureBrowserManifest();
+      const id = typeof itemOrId === 'object' && itemOrId ? itemOrId.id : itemOrId;
+      let found = typeof itemOrId === 'object' && itemOrId ? itemOrId : browserItemsMap.get(id);
+      if (!found) {
+        try {
+          const expItems = await browserExpansions.getItems();
+          for (const item of expItems) browserItemsMap.set(item.id, item);
+          found = browserItemsMap.get(id);
+        } catch {}
+      }
+      if (found && found.source && found.source !== 'casa' && found.preview) {
+        const blob = await browserExpansions.getFile(found.source, found.preview);
+        if (blob) {
+          return getCachedBlobUrl(`${found.source}:${found.preview}`, blob);
+        }
+      }
       return this.previewURL(itemOrId);
     },
   };
@@ -862,6 +1055,7 @@ export function createApi({
     trash: mode === 'browser' ? browserTrash : serverTrash,
     library: mode === 'browser' ? browserLibrary : serverLibrary,
     uploads: mode === 'browser' ? browserUploads : serverUploads,
+    expansions: browserExpansions,
     estimate: async () => {
       if (typeof navigator !== 'undefined' && navigator.storage && typeof navigator.storage.estimate === 'function') {
         return await navigator.storage.estimate();

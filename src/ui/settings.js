@@ -1,5 +1,10 @@
 import { escapeHTML as esc, icon as renderIcon } from './icons.js';
 import { exportBackup, importBackup } from '../data/backup.js';
+import {
+  openExpansionInstallDialog,
+  pickAndInstallExpansion,
+} from './expansion-dialog.js';
+import { readFolderFromFileList } from '../data/expansion-installer.js';
 
 const STORAGE_KEY = 'atelie-settings';
 
@@ -193,6 +198,20 @@ export function openSettingsModal() {
           </div>
           <span class="at-settings-feedback" id="setting-backup-feedback" style="display:none; margin-top:6px; font-size:12px; color:var(--text-muted, #888);"></span>
         </section>
+
+        <section class="at-settings-section" id="setting-expansions-section">
+          <label class="at-settings-label">Expansões neste navegador</label>
+          <p class="at-settings-desc" style="font-size:12px; color:var(--text-muted, #888); margin:4px 0 8px;">
+            Adicione pacotes de modelos e elementos salvos no seu computador. Os arquivos ficam armazenados exclusivamente no banco de dados local deste navegador.
+          </p>
+          <div id="setting-expansions-list" class="at-expansions-list" style="display:flex; flex-direction:column; gap:8px; margin-bottom:8px;"></div>
+          <div class="at-settings-actions" style="display:flex; gap:8px;">
+            <button type="button" class="at-btn" id="setting-install-expansion-btn" data-action="install-expansion">
+              Instalar expansão deste computador…
+            </button>
+            <input type="file" id="setting-expansion-folder-input" webkitdirectory directory multiple style="display:none;" />
+          </div>
+        </section>
       </div>
 
       <div class="at-settings-footer">
@@ -363,6 +382,109 @@ export function openSettingsModal() {
       } finally {
         importBtn.disabled = false;
         importBtn.textContent = 'Importar';
+      }
+    });
+  }
+
+  // Browser Expansions Wiring
+  const expansionsListEl = settingsModal.querySelector('#setting-expansions-list');
+  const installExpBtn = settingsModal.querySelector('#setting-install-expansion-btn');
+  const expFolderInput = settingsModal.querySelector('#setting-expansion-folder-input');
+
+  const refreshExpansionsList = async () => {
+    if (!expansionsListEl) return;
+    const api = window.__atelie?.api;
+    if (!api?.expansions) {
+      expansionsListEl.innerHTML = `<span style="font-size:12px; color:var(--text-muted, #888); font-style:italic;">Expansões locais não disponíveis neste modo.</span>`;
+      return;
+    }
+
+    try {
+      const list = await api.expansions.list();
+      if (!list || list.length === 0) {
+        expansionsListEl.innerHTML = `<span style="font-size:12px; color:var(--text-muted, #888); font-style:italic;">Nenhuma expansão instalada neste navegador.</span>`;
+        return;
+      }
+
+      expansionsListEl.innerHTML = list.map(exp => `
+        <div class="at-expansion-card-item" data-exp-id="${esc(exp.id)}" style="display:flex; align-items:center; justify-content:space-between; background:var(--at-desk-3, #24201c); border:1px solid var(--at-line, #3a332c); border-radius:6px; padding:8px 12px;">
+          <div class="at-expansion-card-info" style="display:flex; flex-direction:column; gap:2px;">
+            <strong style="font-size:12.5px; color:#fff;">${esc(exp.name || exp.id)}</strong>
+            <span style="font-size:11px; color:var(--at-muted, #888);">
+              ${exp.itemCount || 0} itens · ~${((exp.totalBytes || 0) / (1024 * 1024)).toFixed(1)} MB
+              ${exp.license ? ` · ${esc(exp.license)}` : ''}
+            </span>
+          </div>
+          <div class="at-expansion-card-actions" style="display:flex; gap:6px;">
+            <button type="button" class="at-btn at-btn-sm" data-action="update-expansion" data-exp-id="${esc(exp.id)}" style="padding:4px 8px; font-size:11px;">
+              Atualizar
+            </button>
+            <button type="button" class="at-btn at-btn-sm" data-action="remove-expansion" data-exp-id="${esc(exp.id)}" style="padding:4px 8px; font-size:11px; color:#ff6e75;">
+              Remover
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      // Wire update and remove buttons
+      expansionsListEl.querySelectorAll('[data-action="remove-expansion"]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const expId = btn.dataset.expId;
+          if (!confirm(`Deseja realmente remover esta expansão e todos os seus arquivos do navegador?`)) return;
+          btn.disabled = true;
+          try {
+            await api.expansions.remove(expId);
+            await refreshExpansionsList();
+            if (window.__atelie?.refreshLibrary) window.__atelie.refreshLibrary();
+          } catch (err) {
+            alert(`Falha ao remover expansão: ${err.message}`);
+          }
+        });
+      });
+
+      expansionsListEl.querySelectorAll('[data-action="update-expansion"]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          installExpBtn?.click();
+        });
+      });
+    } catch (err) {
+      expansionsListEl.innerHTML = `<span style="font-size:12px; color:#ff6e75;">Erro ao carregar expansões: ${esc(err.message)}</span>`;
+    }
+  };
+
+  refreshExpansionsList();
+
+  if (installExpBtn && expFolderInput) {
+    installExpBtn.addEventListener('click', () => {
+      const api = window.__atelie?.api;
+      pickAndInstallExpansion({
+        api,
+        inputElement: expFolderInput,
+        onComplete: async () => {
+          await refreshExpansionsList();
+          if (window.__atelie?.refreshLibrary) window.__atelie.refreshLibrary();
+        },
+      });
+    });
+
+    expFolderInput.addEventListener('change', async () => {
+      const files = expFolderInput.files;
+      if (!files || files.length === 0) return;
+      try {
+        const { expansionJson, libraryJson, filesMap } = await readFolderFromFileList(files);
+        const api = window.__atelie?.api;
+        await openExpansionInstallDialog({
+          expansionJson,
+          libraryJson,
+          filesMap,
+          api,
+          onComplete: async () => {
+            await refreshExpansionsList();
+            if (window.__atelie?.refreshLibrary) window.__atelie.refreshLibrary();
+          },
+        });
+      } catch (err) {
+        alert(`Erro ao ler pasta selecionada: ${err.message}`);
       }
     });
   }
