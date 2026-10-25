@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, rm } from 'node:fs/promises';
+import { mkdtemp, rm, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import { once } from 'node:events';
@@ -620,6 +620,39 @@ test('editor manipulation e2e: drag, resize, rotate, snap, inline text, keyboard
   const bakeUvRes = await fetch(`${baseUrl}/api/atelie/handouts/${currentDocId}/bake?type=uv`);
   assert.equal(bakeUvRes.status, 200, 'GET /api/atelie/handouts/:id/bake?type=uv must return 200');
   assert.equal(bakeUvRes.headers.get('content-type'), 'image/png');
+
+  // ---------------------------------------------------------------------------
+  // 17. Export drawer & PNG screen download (Etapa 21)
+  // ---------------------------------------------------------------------------
+  // Open Export Drawer via rail button
+  await page.click('.rail-btn[data-action="export"]');
+  await page.waitForSelector('#app-drawer.open', { state: 'visible' });
+  await page.waitForSelector('[data-action="export-screen"]', { state: 'visible' });
+
+  // Trigger PNG Screen download and verify filename and IHDR dimensions
+  const downloadPromise = page.waitForEvent('download');
+  await page.click('[data-action="export-screen"]');
+  const download = await downloadPromise;
+
+  const downloadedName = download.suggestedFilename();
+  assert.ok(downloadedName.endsWith('.png'), `Filename should end with .png: ${downloadedName}`);
+
+  const downloadPath = await download.path();
+  assert.ok(downloadPath, 'Downloaded file must exist on disk');
+
+  const pngBytes = await readFile(downloadPath);
+  // PNG Magic bytes
+  assert.equal(pngBytes.readUInt32BE(0), 0x89504E47, 'Valid PNG header');
+  assert.equal(pngBytes.readUInt32BE(4), 0x0D0A1A0A, 'Valid PNG header');
+  // IHDR chunk
+  assert.equal(pngBytes.toString('ascii', 12, 16), 'IHDR', 'IHDR chunk exists');
+  const ihdrWidth = pngBytes.readUInt32BE(16);
+  const ihdrHeight = pngBytes.readUInt32BE(20);
+  assert.equal(Math.max(ihdrWidth, ihdrHeight), 2048, `Larger side must be 2048 px, got ${ihdrWidth}x${ihdrHeight}`);
+
+  // Close drawer with Escape
+  await page.keyboard.press('Escape');
+  await page.waitForTimeout(200);
 
   assert.deepEqual(errors, []);
 });

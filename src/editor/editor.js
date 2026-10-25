@@ -31,6 +31,8 @@ import { handoffRequest, deliveredMessage } from './handoff.js';
 import { bakeHandout, summaryOf, deliveryOf, previewOf, blobToDataUrl } from './bake.js';
 import { openExchange, publish, channel, savedMessage, unpublishBySource, readPublished } from '../data/exchange.js';
 import { getSettings } from '../ui/settings.js';
+import { createExportDrawer } from './export-drawer.js';
+import { downloadHandoutPng, printHandout, exportScale, printLayout } from './export.js';
 
 export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   const deskStage = document.getElementById('desk-stage');
@@ -756,6 +758,21 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       shell.drawer.close();
       onOpenReader?.(id);
     },
+    onOpenExport: async (id) => {
+      if (state?.handout?.id !== id) {
+        confirmUnsavedChanges(async () => {
+          try {
+            const doc = await api.handouts.read(id);
+            await loadHandout(doc);
+            shell.drawer.open('export');
+          } catch (err) {
+            shell.notify(`Erro ao abrir documento: ${err.message}`, { tone: 'error' });
+          }
+        });
+      } else {
+        shell.drawer.open('export');
+      }
+    },
     onOpenDocument: async (id) => {
       confirmUnsavedChanges(async () => {
         try {
@@ -806,6 +823,25 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     },
   });
   shell.drawer.panel('templates', templatesDrawer.element);
+
+  // Export Drawer panel
+  const exportWrap = document.createElement('div');
+  exportWrap.className = 'export-drawer-container';
+  exportWrap.style.height = '100%';
+
+  const exportDrawer = createExportDrawer(exportWrap, {
+    shell,
+    getHandout: () => state?.handout,
+    images,
+    fonts,
+    api,
+    isUvLight: () => currentLight === 'uv',
+  });
+
+  shell.drawer.panel('export', () => {
+    exportDrawer.render();
+    return exportWrap;
+  });
 
   // Rail action listener
   shell.onAction?.((action, event) => {
@@ -1344,6 +1380,18 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       return;
     }
 
+    if (
+      event.key.toLowerCase() === 'e' &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey &&
+      !event.shiftKey
+    ) {
+      event.preventDefault();
+      shell.drawer.toggle('export');
+      return;
+    }
+
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') {
       event.preventDefault();
       if (event.shiftKey) {
@@ -1806,6 +1854,11 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     get templatesDrawer() {
       return templatesDrawer;
     },
+    get exportDrawer() {
+      return exportDrawer;
+    },
+    exportDocument: (options) => downloadHandoutPng(state?.handout, { images, fonts, ...options }),
+    printDocument: (options) => printHandout(state?.handout, { images, fonts, ...options }),
     get startScreen() {
       return startScreen;
     },

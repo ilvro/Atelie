@@ -78,6 +78,7 @@ export function createNavigator(container, {
   images,
   fonts,
   onOpenReader,
+  onOpenExport,
 } = {}) {
   const activeHandoff = handoff !== undefined ? handoff : (typeof window !== 'undefined' ? handoffRequest(window.location, window.opener) : null);
   let searchQuery = '';
@@ -357,6 +358,7 @@ export function createNavigator(container, {
     const items = [
       { label: 'Abrir', icon: 'doc', run: () => onOpenDocument?.(h.id) },
       { label: 'Ler', icon: 'eye', key: 'P', run: () => onOpenReader?.(h.id) },
+      { label: 'Exportar…', icon: 'download', key: 'E', run: () => onOpenExport?.(h.id) },
       { label: 'Abrir em nova aba', icon: 'eye', run: () => window.open(`?handout=${encodeURIComponent(h.id)}`, '_blank') },
       'separator',
       { label: 'Duplicar', icon: 'copy', run: () => duplicateDocument(h.id) },

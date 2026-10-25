@@ -26,7 +26,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 18 — Assar e entregar | concluída | 2026-10-25 | Assado em alta resolução (2048 px) e entrega ao Tabletop pelos 3 caminhos do contrato (A: mesa-handouts-v1, B: postMessage, C: HTTP e CORS) |
 | 19 — Luz UV | concluída | 2026-10-25 | Camadas secretas sob luz negra, escurecimento da página (tint e strength), mudança de clima da interface, atalho U, selos UV e assado UV |
 | 20 — Modo leitura | concluída | 2026-10-25 | Leitura imersiva em tela cheia, lupa 2,5×, lanterna UV com máscara radial, virar frente/verso e carrossel de documentos |
-| 21 — Exportar e imprimir | pendente | | Exportação em alta resolução e folha A4 |
+| 21 — Exportar e imprimir | concluída | 2026-10-25 | Exportação de PNG em alta resolução (2048 px e 300 ppp), luz UV, gaveta Exportar, atalho E e layout de impressão 1:1 sem margens |
 | 22 — Importar elementos | pendente | | Expansão: acervo Arquivos Confidenciais |
 | 23 — PSD leitura | pendente | | Expansão: análise e estrutura de PSDs |
 | 24 — PSD compositor | pendente | | Expansão: composição de PSD em Node |
@@ -135,6 +135,46 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ### Pendências reais
 - Nenhuma pendência na Etapa 17.
+
+---
+
+## Etapa 21 — Exportar e imprimir
+
+### Feito
+- **Motor de Exportação e Impressão (`src/editor/export.js`)**:
+  - `fitsCanvas(width, height)`: validação determinística de limites de canvas 2D no navegador (dimensões <= 16.384 px e área <= 268.435.456 px).
+  - `exportScale(handout, target)`:
+    - `'screen'`: escala calculada para que o lado maior do documento atinja exatamente 2048 px (`2048 / Math.max(w, h)`).
+    - `'print'`: escala de 300 ppp sobre a resolução base de 150 ppp (`300 / 150 = 2`), com redução proporcional automática caso exceda os limites do canvas.
+  - `printLayout(handout)`:
+    - Conversão exata de pixels (150 DPI) para milímetros: `px / 150 * 25.4`.
+    - Orientação automática (`portrait` | `landscape`) conforme a proporção.
+    - Reconhecimento de tamanho A4 padrão (210 × 297 mm, tolerância de 1,5 mm): folhas A4 não recebem marcas de corte (`cropMarks: false`); documentos em outros formatos (recorte, polaroid, telegrama) recebem `cropMarks: true`.
+  - `generatePrintHtml(handout, dataUrl)`: geração de página HTML autocontida com CSS `@page { size: A4 ${orientation}; margin: 0; }`, centralização e linhas de corte pontilhadas finas (`1px dashed #999`) para formatos menores.
+  - Funções assíncronas `downloadHandoutPng` e `printHandout` para orquestração da renderização e acionamento nativo de download e janela de impressão.
+- **Gaveta de Exportação (`src/editor/export-drawer.js`, `src/ui/export.css`)**:
+  - Resumo do documento aberto com miniatura, resolução em pixels e dimensões em milímetros.
+  - Caixa de seleção condicional para **Luz Ultravioleta (UV)**, exibida apenas em documentos com camadas secretas (`hasUvLayers`).
+  - Card **PNG · Tela**: atalho para baixar imagem de 2048 px para Discord, Foundry e celular.
+  - Card **PNG · Impressão**: atalho para baixar imagem em 300 ppp reais (escala 2×).
+  - Card **Imprimir folha**: abertura da caixa de diálogo de impressão em tamanho real A4.
+- **Integração na Casca e no Editor**:
+  - Botão **Exportar** no trilho principal (`data-action="export"`, ícone `download`, atalho `E`).
+  - Atalho global de teclado **E** no editor para abrir/fechar a gaveta de exportação.
+  - Opção **Exportar… (E)** no menu de contexto de documentos do navegador lateral.
+  - Ícone `printer` adicionado ao acervo de ícones vetoriais em `src/ui/icons.js`.
+- **Testes e Validação**:
+  - `tests/export.test.js`: testes unitários de cálculo de escala (`exportScale` para tela e impressão), layout físico em milímetros (recorte 1200 × 700 para 203,2 × 118,5 mm com marcas de corte), limites de canvas (`fitsCanvas(20000, 100) = false`) e HTML de impressão.
+  - `tests/e2e/editor.test.js`: teste E2E ampliado validando a abertura da gaveta Exportar e download do PNG de tela com validação binária de IHDR (lado maior = 2048 px).
+  - `tests/e2e/export.test.js`: suíte E2E cobrindo atalho E, download em 300 ppp (2480 × 3508 px), opção de luz UV gerando arquivo com tag `-uv.png`, menu de contexto e acionamento de impressão com HTML 1:1.
+
+### Validação
+- `npm test`: 114 testes unitários passando 100%.
+- `npm run test:e2e`: 15 suítes E2E passando 100%.
+- `npm run build`: bundle de produção gerado com sucesso.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 21 (frente e verso lado a lado documentado como pendência para etapas posteriores).
 
 ---
 

@@ -158,6 +158,7 @@ export function createShell(root, { onAction } = {}) {
     documents: 'DOCUMENTOS',
     library: 'BIBLIOTECA',
     templates: 'MODELOS',
+    export: 'EXPORTAR',
   };
 
   const openDrawer = (name) => {
@@ -212,7 +213,7 @@ export function createShell(root, { onAction } = {}) {
     if (action === 'desk') {
       closeDrawer();
       notifyAction('desk', e);
-    } else if (['documents', 'library', 'templates'].includes(action)) {
+    } else if (['documents', 'library', 'templates', 'export'].includes(action)) {
       toggleDrawer(action);
       notifyAction(action, e);
     } else if (action === 'settings') {

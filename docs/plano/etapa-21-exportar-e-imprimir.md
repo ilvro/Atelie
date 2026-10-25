@@ -39,5 +39,5 @@ Funções puras em `src/editor/export.js`, testadas: `exportScale(handout, targe
 
 ## Pronto quando
 
-- [ ] Testes passam; `npm test` passa.
-- [ ] Um documento A4 impresso pelo navegador (salvar como PDF) sai do tamanho da folha, sem margens brancas extras.
+- [x] Testes passam; `npm test` passa.
+- [x] Um documento A4 impresso pelo navegador (salvar como PDF) sai do tamanho da folha, sem margens brancas extras.

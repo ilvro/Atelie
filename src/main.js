@@ -2,6 +2,7 @@ import './ui/styles.css';
 import './ui/editor.css';
 import './ui/start.css';
 import './ui/reader.css';
+import './ui/export.css';
 import { createShell } from './ui/shell.js';
 import { renderHandout } from './render/handout-render.js';
 import { createHandoutImages } from './data/handout-images.js';
