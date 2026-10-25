@@ -9,6 +9,7 @@ import {
 } from '../ui/controls.js';
 import { BLEND_MODES, updateLayer } from '../domain/handouts.js';
 import { boxCorners } from './geometry.js';
+import { EFFECTS } from '../render/handout-effects.js';
 
 export function getDocumentColors(handout) {
   const colors = new Set();
@@ -108,7 +109,29 @@ export function createPropertiesPanel(container, { state, api } = {}) {
     let parsed = rawValue;
 
     // Type conversions
-    if (path === 'opacity') {
+    if (path === 'effect.type') {
+      const entry = EFFECTS.find(([k]) => k === rawValue);
+      if (entry) {
+        const [, , defaultBlend, defaultParams] = entry;
+        const next = updateLayer(state.handout, layer.id, {
+          blend: defaultBlend,
+          effect: {
+            ...layer.effect,
+            type: rawValue,
+            params: { ...defaultParams },
+          },
+        });
+        state.edit(next, { label: `Mudar efeito para ${entry[1]}` });
+        render();
+        return;
+      }
+    } else if (path === 'effect.params.smear') {
+      parsed = Boolean(rawValue);
+    } else if (path.endsWith('.depth')) {
+      parsed = (Number(rawValue) || 0) / 100;
+    } else if (['effect.seed', 'effect.params.creases', 'effect.params.horizontal', 'effect.params.vertical', 'effect.params.count', 'effect.params.drops', 'effect.params.size'].includes(path)) {
+      parsed = Number(rawValue) || 0;
+    } else if (path === 'opacity') {
       parsed = Math.max(0, Math.min(100, Number(rawValue) || 0)) / 100;
     } else if (path.endsWith('.wear') || path.endsWith('.amount') || path.startsWith('image.filter.') || path.startsWith('adjust.')) {
       if (path === 'image.filter.blur' || path === 'image.filter.hue') {
@@ -470,6 +493,86 @@ export function createPropertiesPanel(container, { state, api } = {}) {
           ${numberField('h:adjust.invert', 'Inversão · %', Math.round((adj.invert || 0) * 100), { min: 0, max: 100, step: 1, disabled: isLocked })}
         </fieldset>
       `;
+    } else if (layer.kind === 'effect') {
+      const eff = layer.effect || {};
+      const params = eff.params || {};
+
+      function renderEffectParamsHTML(type, p, locked, attr) {
+        switch (type) {
+          case 'crumple':
+            return numberField('h:effect.params.creases', 'Vincos', p.creases ?? 18, { min: 1, max: 60, step: 1, disabled: locked });
+          case 'fold':
+            return `
+              <div class="field-row">
+                ${numberField('h:effect.params.horizontal', 'Dobras horizontais', p.horizontal ?? 2, { min: 0, max: 10, step: 1, disabled: locked })}
+                ${numberField('h:effect.params.vertical', 'Dobras verticais', p.vertical ?? 1, { min: 0, max: 10, step: 1, disabled: locked })}
+              </div>
+            `;
+          case 'stain':
+            return `
+              ${numberField('h:effect.params.count', 'Quantidade', p.count ?? 5, { min: 1, max: 20, step: 1, disabled: locked })}
+              ${colorField('h:effect.params.color', 'Cor do café', p.color || '#7a4a1e')}
+              ${renderColorSwatchesHTML('h:effect.params.color')}
+            `;
+          case 'burn':
+            return numberField('h:effect.params.depth', 'Profundidade · %', Math.round((p.depth ?? 0.08) * 100), { min: 1, max: 35, step: 1, disabled: locked });
+          case 'tear':
+            return `
+              ${choiceField('h:effect.params.side', 'Lado rasgado', p.side || 'bottom', [
+                ['bottom', 'Inferior'],
+                ['top', 'Superior'],
+                ['left', 'Esquerdo'],
+                ['right', 'Direito'],
+              ], { disabled: locked })}
+              ${numberField('h:effect.params.depth', 'Profundidade · %', Math.round((p.depth ?? 0.04) * 100), { min: 1, max: 30, step: 1, disabled: locked })}
+            `;
+          case 'damp':
+            return `
+              ${colorField('h:effect.params.color', 'Cor da umidade', p.color || '#8a7a5a')}
+              ${renderColorSwatchesHTML('h:effect.params.color')}
+            `;
+          case 'fade':
+            return `
+              ${colorField('h:effect.params.color', 'Cor do desbotamento', p.color || '#efe6cf')}
+              ${renderColorSwatchesHTML('h:effect.params.color')}
+            `;
+          case 'blood':
+            return `
+              ${numberField('h:effect.params.drops', 'Gotas', p.drops ?? 12, { min: 1, max: 50, step: 1, disabled: locked })}
+              ${checkField('h:effect.params.smear', 'Arrasto de sangue', p.smear !== false)}
+              ${colorField('h:effect.params.color', 'Cor do sangue', p.color || '#6e0b0b')}
+              ${renderColorSwatchesHTML('h:effect.params.color')}
+            `;
+          case 'grain':
+            return numberField('h:effect.params.size', 'Tamanho do grão · px', p.size ?? 1.5, { min: 0.5, max: 10, step: 0.5, disabled: locked });
+          default:
+            return '<p class="empty-hint">Nenhum parâmetro extra.</p>';
+        }
+      }
+
+      html += `
+        <fieldset class="prop-group" ${stateAttr}>
+          <legend class="prop-legend">Efeito</legend>
+          <label class="field">
+            <span class="field-label">Tipo de efeito</span>
+            <select data-field="h:effect.type" ${stateAttr}>
+              ${EFFECTS.map(([id, name]) => `<option value="${esc(id)}" ${eff.type === id ? 'selected' : ''}>${esc(name)}</option>`).join('')}
+            </select>
+          </label>
+
+          ${numberField('h:effect.amount', 'Intensidade · %', Math.round((eff.amount ?? 0.5) * 100), { min: 0, max: 100, step: 1, disabled: isLocked })}
+
+          <div class="seed-control-group">
+            ${numberField('h:effect.seed', 'Variação', eff.seed ?? 1, { min: 1, max: 999999, step: 1, disabled: isLocked })}
+            <button type="button" class="at-btn seed-reroll-btn" data-action="reroll-seed" title="Próxima variação" ${stateAttr}>↻ outra</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="prop-group" ${stateAttr}>
+          <legend class="prop-legend">Parâmetros</legend>
+          ${renderEffectParamsHTML(eff.type, params, isLocked, stateAttr)}
+        </fieldset>
+      `;
     }
 
     html += `</div>`;
@@ -508,6 +611,20 @@ export function createPropertiesPanel(container, { state, api } = {}) {
         render();
       });
     });
+
+    const rerollBtn = container.querySelector('[data-action="reroll-seed"]');
+    if (rerollBtn) {
+      rerollBtn.addEventListener('click', () => {
+        const curLayer = getSelectedLayer();
+        if (!curLayer || curLayer.locked || curLayer.kind !== 'effect') return;
+        const curSeed = Number(curLayer.effect?.seed || 1);
+        const next = updateLayer(state.handout, curLayer.id, {
+          effect: { ...curLayer.effect, seed: curSeed + 1 },
+        });
+        state.edit(next, { label: 'Outra variação' });
+        render();
+      });
+    }
   }
 
   // Handle direct inputs (e.g. typing in textarea or name input)

@@ -16,7 +16,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 8 — Manipulação | concluída | 2026-10-24 | Mover, redimensionar, girar, encaixe, atalhos e edição inline de texto |
 | 9 — Ferramentas do editor | concluída | 2026-10-24 | Guias, réguas, histórico navegável, mini-barra, conta-gotas, colar imagens, alinhar |
 | 10 — Documentos e rascunho | concluída | 2026-10-24 | Navegador com pastas, fixados, favoritos, recentes; rascunho automático; versões; lixeira; abas |
-| 11 — Efeitos procedurais | pendente | | Desgaste, manchas, dobras, queimado, sangue |
+| 11 — Efeitos procedurais | concluída | 2026-10-24 | 9 efeitos procedurais em código, determinismo por semente PRNG, cortes e propriedades |
 | 12 — Coleção papéis e texturas | pendente | | Coleção da casa: papéis e sobreposições |
 | 13 — Coleção elementos | pendente | | Coleção da casa: vetores, carimbos, fitas |
 | 14 — Coleção fontes | pendente | | Coleção da casa: 26 famílias de fontes |
@@ -35,6 +35,51 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 27 — Documentação | pendente | | Manuais, guia de uso e licenças |
 | 28 — Integração Tabletop | pendente | | Consumo e interação direta dentro do Tabletop |
 | 29 — Expansão no navegador | pendente | | Expansão local no navegador (opcional) |
+
+---
+
+## Etapa 11 — Efeitos procedurais
+
+### Feito
+- **Mecanismo e geradores procedurais (`src/render/handout-effects.js`)**:
+  - Tabela `EFFECTS` com os 9 acabamentos de papel, nomes em português, mesclagens iniciais recomendadas e parâmetros padrão:
+    1. `crumple` ("Amassado", `soft-light`, `{ creases: 18 }`): vincos poligonais com iluminação e sombreamento paralelos sobre cinza 50% neutro.
+    2. `fold` ("Dobras", `multiply`, `{ horizontal: 2, vertical: 1 }`): vincos retos com gradiente escuro/claro estreito sobre branco neutro.
+    3. `stain` ("Manchas de café", `multiply`, `{ count: 5, color: '#7a4a1e' }`): anéis de secagem radial escuros na borda, manchas irregulares e respingos satélites.
+    4. `burn` ("Bordas queimadas", `normal`, `{ depth: 0.08 }`): borda perimetral queimada e chamuscada com gradiente preto/marrom queimado.
+    5. `tear` ("Borda rasgada", `normal`, `{ side: 'bottom', depth: 0.04 }`): corte serrilhado com linha de fibra clara do papel ao longo do rasgo.
+    6. `damp` ("Umidade", `multiply`, `{ color: '#8a7a5a' }`): marcas de água secas com bordas perimetrais nítidas e lavagem interna suave.
+    7. `fade` ("Desbotado", `screen`, `{ color: '#efe6cf' }`): desbotamento radial iluminado clareando a tinta sobre fundo preto neutro.
+    8. `blood` ("Sangue", `multiply`, `{ drops: 12, smear: true, color: '#6e0b0b' }`): gotas carmesim com cauda direcional, respingos finos e arrasto estriado opcional.
+    9. `grain` ("Grão", `overlay`, `{ size: 1.5 }`): ruído monocromático pontilhado sobre base 50% cinza neutra.
+  - Gerador pseudoaleatório determinístico Mulberry32 `createRng(seed)`: nunca usa `Math.random()`, garantindo reprodução idêntica de pixels para a mesma semente.
+  - Função `drawEffect(ctx, width, height, { type, seed, amount, params }, scale)` pura e escalável.
+  - Função `drawCutMask(ctx, width, height, { type, seed, amount, params }, scale)` para `burn` e `tear` (branco = manter papel, transparente = recortado; `amount: 0` mantém tudo).
+- **Integração no Renderizador (`src/render/handout-render.js`)**:
+  - `isCutEffect(layer)` e `applyCutEffect(targetCtx, layer, pw, ph, scale)`: aplica máscara com `destination-in` no canvas composto até o momento antes de renderizar a camada de efeito, preservando toda a área externa à caixa do efeito e recortando de forma idêntica e escalada o papel e os conteúdos sob o efeito.
+  - Suporte completo no `drawLayer` para camadas `kind === 'effect'`.
+- **Interface do Ateliê (`src/editor/layers-panel.js` e `src/editor/properties-panel.js`)**:
+  - Menu "+" → botão **Efeito** com submenu/lista exibindo o nome, modo de mesclagem e miniaturas geradas em 64 px de cada um dos 9 efeitos.
+  - Ao escolher um efeito, a nova camada é criada cobrindo toda a página (`x: 0, y: 0, width: page.width, height: page.height`), com a mesclagem inicial recomendada da tabela, posicionada logo acima da camada selecionada.
+  - Inspetor de Propriedades com controle de **Intensidade** (`amount`, slider 0–100%), **Variação** (`seed` com botão "↻ outra" que incrementa a semente em +1) e controles específicos de cada tipo (número, cor, checkbox ou seleção de lado).
+- **Testes Unitários e E2E**:
+  - `tests/handout-effects.test.js`: validação da tabela `EFFECTS`, dos 9 tipos e schema contra `validateHandout`.
+  - `tests/e2e/handout-render.test.js`:
+    1. Renderização determinística dos 9 efeitos com `seed: 7` amostrados em 20 pontos idênticos.
+    2. Variação de semente em `blood`: `seed: 7` vs `seed: 8` produz pixels diferentes.
+    3. Efeito em `multiply` com `amount: 0` é completamente neutro (diferença $\le 2$ em todos os canais).
+    4. Linha de dobra em `fold` é estritamente mais escura que a 100 px de distância.
+- **Imagem de referência**:
+  - Gerada em `docs/referencias/efeitos.png` com folha A4 contendo texto à máquina e a combinação dos efeitos "Amassado", "Dobras", "Manchas de café" e "Bordas queimadas".
+
+### Validação
+- `npm test`: 73 testes unitários passando 100%.
+- `npm run test:e2e`: 8 suítes E2E Playwright passando 100%.
+- `npm run build`: bundle de produção Vite gerado com sucesso.
+- Imagem de referência `docs/referencias/efeitos.png` gerada e validada.
+
+### Pendências reais
+- Nenhuma pendência na Etapa 11. O sistema de efeitos procedurais está 100% completo, determinístico e integrado ao editor.
 
 ---
 

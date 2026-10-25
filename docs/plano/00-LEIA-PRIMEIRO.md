@@ -170,8 +170,8 @@ Medido com `ag-psd` 30.2.0 em três arquivos (um jornal, um relatório policial 
 | 7 | feita | 24/10/2026 | Editor integrado: estado, palco, inspetor de camadas e propriedades, histórico e arquivamento |
 | 8 | feita | 24/10/2026 | Manipulação no palco: mover, redimensionar, girar, guias de encaixe, atalhos e edição inline de texto |
 | 9 | feita | 24/10/2026 | Réguas, guias, histórico navegável, mini-barra, conta-gotas, arrastar/colar imagens, copiar camadas, alinhamento e menu de contexto |
-| 10 | pendente | | |
-| 11 | pendente | | |
+| 10 | feita | 24/10/2026 | Navegador com pastas, fixados, favoritos, recentes; rascunho automático; versões; lixeira; abas |
+| 11 | feita | 24/10/2026 | Efeitos procedurais: 9 tipos, PRNG determinístico, máscaras de corte, miniaturas e propriedades |
 | 12 | pendente | | |
 | 13 | pendente | | |
 | 14 | pendente | | |

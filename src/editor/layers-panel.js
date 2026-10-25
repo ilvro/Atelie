@@ -4,15 +4,63 @@ import {
   imageLayer,
   shapeLayer,
   adjustLayer,
+  effectLayer,
+  canvasOperation,
   addLayer,
   moveLayer,
   duplicateLayer,
   removeLayer,
   updateLayer,
 } from '../domain/handouts.js';
+import { EFFECTS, drawEffect, drawCutMask } from '../render/handout-effects.js';
+
+const thumbnailCache = new Map();
+
+function getEffectThumbnail(typeKey, defaultParams, defaultBlend) {
+  if (thumbnailCache.has(typeKey)) return thumbnailCache.get(typeKey);
+  if (typeof document === 'undefined') return '';
+  try {
+    const canvas = document.createElement('canvas');
+    canvas.width = 64;
+    canvas.height = 64;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#f2ede0';
+    ctx.fillRect(0, 0, 64, 64);
+
+    if (typeKey === 'burn' || typeKey === 'tear') {
+      const cutCanvas = document.createElement('canvas');
+      cutCanvas.width = 64;
+      cutCanvas.height = 64;
+      const cutCtx = cutCanvas.getContext('2d');
+      drawCutMask(cutCtx, 64, 64, { type: typeKey, seed: 1, amount: 0.75, params: defaultParams }, 0.25);
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-in';
+      ctx.drawImage(cutCanvas, 0, 0);
+      ctx.restore();
+    }
+
+    const effCanvas = document.createElement('canvas');
+    effCanvas.width = 64;
+    effCanvas.height = 64;
+    const effCtx = effCanvas.getContext('2d');
+    drawEffect(effCtx, 64, 64, { type: typeKey, seed: 1, amount: 0.75, params: defaultParams }, 0.25);
+
+    ctx.save();
+    ctx.globalCompositeOperation = canvasOperation(defaultBlend);
+    ctx.drawImage(effCanvas, 0, 0);
+    ctx.restore();
+
+    const url = canvas.toDataURL();
+    thumbnailCache.set(typeKey, url);
+    return url;
+  } catch {
+    return '';
+  }
+}
 
 export function createLayersPanel(container, { state, onAction = () => {} } = {}) {
   let isPlusMenuOpen = false;
+  let isEffectsMenuOpen = false;
 
   function render() {
     const handout = state.handout;
@@ -31,30 +79,56 @@ export function createLayersPanel(container, { state, onAction = () => {} } = {}
               <span>Adicionar Camada</span>
             </button>
             <div class="layers-add-menu ${isPlusMenuOpen ? 'open' : ''}" role="menu">
-              <button type="button" class="layers-menu-item" data-add="text" role="menuitem">
-                ${renderIcon('doc', 14)}
-                <span>Texto</span>
-              </button>
-              <button type="button" class="layers-menu-item" data-add="image" role="menuitem">
-                ${renderIcon('image', 14)}
-                <span>Imagem</span>
-              </button>
-              <button type="button" class="layers-menu-item" data-add="rect" role="menuitem">
-                ${renderIcon('crop', 14)}
-                <span>Retângulo</span>
-              </button>
-              <button type="button" class="layers-menu-item" data-add="ellipse" role="menuitem">
-                ${renderIcon('brush', 14)}
-                <span>Elipse</span>
-              </button>
-              <button type="button" class="layers-menu-item" data-add="line" role="menuitem">
-                ${renderIcon('ruler', 14)}
-                <span>Linha</span>
-              </button>
-              <button type="button" class="layers-menu-item" data-add="adjust" role="menuitem">
-                ${renderIcon('sun', 14)}
-                <span>Ajuste de cor</span>
-              </button>
+              ${isEffectsMenuOpen ? `
+                <div class="effects-submenu-header">
+                  <button type="button" class="at-btn is-sm effects-back-btn" data-action="back-effects-menu">‹ Voltar</button>
+                  <span class="effects-submenu-title">Efeitos</span>
+                </div>
+                <div class="effects-submenu-list">
+                  ${EFFECTS.map(([typeKey, effName, defaultBlend, defaultParams]) => {
+                    const thumb = getEffectThumbnail(typeKey, defaultParams, defaultBlend);
+                    return `
+                      <button type="button" class="effect-menu-item" data-add-effect="${typeKey}" role="menuitem">
+                        <img class="effect-thumb-64" src="${thumb}" width="64" height="64" alt="${esc(effName)}" />
+                        <div class="effect-menu-item-text">
+                          <span class="effect-menu-name">${esc(effName)}</span>
+                          <span class="effect-menu-blend">${esc(defaultBlend)}</span>
+                        </div>
+                      </button>
+                    `;
+                  }).join('')}
+                </div>
+              ` : `
+                <button type="button" class="layers-menu-item" data-add="text" role="menuitem">
+                  ${renderIcon('doc', 14)}
+                  <span>Texto</span>
+                </button>
+                <button type="button" class="layers-menu-item" data-add="image" role="menuitem">
+                  ${renderIcon('image', 14)}
+                  <span>Imagem</span>
+                </button>
+                <button type="button" class="layers-menu-item" data-add="rect" role="menuitem">
+                  ${renderIcon('crop', 14)}
+                  <span>Retângulo</span>
+                </button>
+                <button type="button" class="layers-menu-item" data-add="ellipse" role="menuitem">
+                  ${renderIcon('brush', 14)}
+                  <span>Elipse</span>
+                </button>
+                <button type="button" class="layers-menu-item" data-add="line" role="menuitem">
+                  ${renderIcon('ruler', 14)}
+                  <span>Linha</span>
+                </button>
+                <button type="button" class="layers-menu-item" data-add="adjust" role="menuitem">
+                  ${renderIcon('sun', 14)}
+                  <span>Ajuste de cor</span>
+                </button>
+                <button type="button" class="layers-menu-item layers-menu-effect-btn" data-action="open-effects-menu" role="menuitem">
+                  ${renderIcon('sparkles', 14)}
+                  <span>Efeito</span>
+                  <span class="menu-arrow" style="margin-left:auto;">›</span>
+                </button>
+              `}
             </div>
           </div>
         </div>
@@ -79,7 +153,7 @@ export function createLayersPanel(container, { state, onAction = () => {} } = {}
                   ${renderIcon(isLocked ? 'lock' : 'unlock', 14)}
                 </button>
                 <div class="layer-thumb" aria-hidden="true">
-                  ${layer.kind === 'text' ? renderIcon('doc', 16) : layer.kind === 'image' ? renderIcon('image', 16) : layer.kind === 'shape' ? renderIcon('crop', 16) : renderIcon('sun', 16)}
+                  ${layer.kind === 'text' ? renderIcon('doc', 16) : layer.kind === 'image' ? renderIcon('image', 16) : layer.kind === 'shape' ? renderIcon('crop', 16) : layer.kind === 'effect' ? renderIcon('sparkles', 16) : renderIcon('sun', 16)}
                 </div>
                 <span class="layer-name" title="${esc(layer.name)}">${esc(layer.name)}</span>
                 <div class="layer-actions">
@@ -101,7 +175,59 @@ export function createLayersPanel(container, { state, onAction = () => {} } = {}
     const addToggle = event.target.closest('[data-action="toggle-add-menu"]');
     if (addToggle) {
       isPlusMenuOpen = !isPlusMenuOpen;
+      if (!isPlusMenuOpen) isEffectsMenuOpen = false;
       render();
+      return;
+    }
+
+    const openEffects = event.target.closest('[data-action="open-effects-menu"]');
+    if (openEffects) {
+      isEffectsMenuOpen = true;
+      render();
+      return;
+    }
+
+    const backEffects = event.target.closest('[data-action="back-effects-menu"]');
+    if (backEffects) {
+      isEffectsMenuOpen = false;
+      render();
+      return;
+    }
+
+    const addEffectItem = event.target.closest('[data-add-effect]');
+    if (addEffectItem) {
+      const typeKey = addEffectItem.dataset.addEffect;
+      const entry = EFFECTS.find(([k]) => k === typeKey);
+      if (entry) {
+        const [, effName, initialBlend, defaultParams] = entry;
+        const page = state.handout.page;
+        const newLayer = effectLayer({
+          name: effName,
+          x: 0,
+          y: 0,
+          width: page.width,
+          height: page.height,
+          blend: initialBlend,
+          effect: {
+            type: typeKey,
+            seed: 1,
+            amount: 0.5,
+            params: { ...defaultParams },
+          },
+        });
+        isPlusMenuOpen = false;
+        isEffectsMenuOpen = false;
+
+        let insertIndex = state.handout.layers.length;
+        if (state.selection) {
+          const idx = state.handout.layers.findIndex(l => l.id === state.selection);
+          if (idx >= 0) insertIndex = idx + 1;
+        }
+
+        const next = addLayer(state.handout, newLayer, insertIndex);
+        state.edit(next, { label: `Adicionar ${newLayer.name}` });
+        state.select(newLayer.id);
+      }
       return;
     }
 
@@ -189,6 +315,7 @@ export function createLayersPanel(container, { state, onAction = () => {} } = {}
     if (!row) {
       if (isPlusMenuOpen && !event.target.closest('.layers-add-dropdown')) {
         isPlusMenuOpen = false;
+        isEffectsMenuOpen = false;
         render();
       }
       return;

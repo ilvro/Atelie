@@ -574,6 +574,238 @@ test('handout rendering: multiply blend, clipping masks, adjustments, UV light, 
   const diffPct = Math.abs(resSymmetry.leftDark - resSymmetry.rightDark) / maxDark;
   assert.ok(diffPct < 0.15, `difference between left and right dark pixels (${diffPct * 100}%) should be < 15%`);
 
+  // 9. Procedural effects: determinism (each effect with seed: 7 rendered twice produces exact same pixels in 20 points)
+  const effectTypes = ['crumple', 'fold', 'stain', 'burn', 'tear', 'damp', 'fade', 'blood', 'grain'];
+  const testSamplePoints = [];
+  for (let i = 0; i < 20; i++) {
+    testSamplePoints.push([50 + (i * 17) % 300, 50 + (i * 23) % 300]);
+  }
+
+  for (const effType of effectTypes) {
+    const resDet = await page.evaluate(async ({ effType, points }) => {
+      const makeDoc = () => ({
+        schema: 1,
+        id: '00000000-0000-0000-0000-000000000009',
+        revision: 0,
+        name: `Effect Determinism ${effType}`,
+        category: '',
+        tags: [],
+        page: { width: 400, height: 400, background: '#f5efe0' },
+        layers: [
+          {
+            id: 'eff-1',
+            name: effType,
+            kind: 'effect',
+            visible: true,
+            locked: false,
+            opacity: 1,
+            blend: effType === 'fade' ? 'screen' : effType === 'crumple' ? 'soft-light' : effType === 'grain' ? 'overlay' : effType === 'burn' || effType === 'tear' ? 'normal' : 'multiply',
+            x: 0,
+            y: 0,
+            width: 400,
+            height: 400,
+            rotation: 0,
+            clip: false,
+            light: 'both',
+            effect: {
+              type: effType,
+              seed: 7,
+              amount: 0.7,
+              params: {},
+            },
+          },
+        ],
+        fields: [],
+        source: { kind: 'blank' },
+        back: null,
+      });
+
+      const r1 = await window.__atelie.renderHandout(makeDoc(), { scale: 1, at: points });
+      const r2 = await window.__atelie.renderHandout(makeDoc(), { scale: 1, at: points });
+      return { p1: r1.pixels, p2: r2.pixels };
+    }, { effType, points: testSamplePoints });
+
+    assert.deepEqual(resDet.p1, resDet.p2, `effect ${effType} with seed 7 should render identical pixels on both runs`);
+  }
+
+  // 10. Procedural effects: seed: 7 and seed: 8 of blood -> different pixels
+  const resBloodDiff = await page.evaluate(async ({ points }) => {
+    const makeBloodDoc = (seed) => ({
+      schema: 1,
+      id: '00000000-0000-0000-0000-000000000010',
+      revision: 0,
+      name: 'Blood Seed Test',
+      category: '',
+      tags: [],
+      page: { width: 400, height: 400, background: '#ffffff' },
+      layers: [
+        {
+          id: 'blood-1',
+          name: 'Blood',
+          kind: 'effect',
+          visible: true,
+          locked: false,
+          opacity: 1,
+          blend: 'multiply',
+          x: 0,
+          y: 0,
+          width: 400,
+          height: 400,
+          rotation: 0,
+          clip: false,
+          light: 'both',
+          effect: {
+            type: 'blood',
+            seed,
+            amount: 0.8,
+            params: { drops: 25, smear: true },
+          },
+        },
+      ],
+      fields: [],
+      source: { kind: 'blank' },
+      back: null,
+    });
+
+    const r7 = await window.__atelie.renderHandout(makeBloodDoc(7), { scale: 1, at: points });
+    const r8 = await window.__atelie.renderHandout(makeBloodDoc(8), { scale: 1, at: points });
+    return { p7: r7.pixels, p8: r8.pixels };
+  }, { points: testSamplePoints });
+
+  assert.notDeepEqual(resBloodDiff.p7, resBloodDiff.p8, 'blood effect with seed 7 vs seed 8 must produce different pixels');
+
+  // 11. Procedural effects: amount: 0 in multiply does not change the page (all points equal to page without effect, ± 2)
+  const resAmtZero = await page.evaluate(async ({ points }) => {
+    const baseDoc = {
+      schema: 1,
+      id: '00000000-0000-0000-0000-000000000011',
+      revision: 0,
+      name: 'Amount Zero Test Base',
+      category: '',
+      tags: [],
+      page: { width: 400, height: 400, background: '#e8dec8' },
+      layers: [
+        {
+          id: 'paper-bg',
+          name: 'Paper',
+          kind: 'shape',
+          visible: true,
+          locked: false,
+          opacity: 1,
+          blend: 'normal',
+          x: 0,
+          y: 0,
+          width: 400,
+          height: 400,
+          rotation: 0,
+          clip: false,
+          light: 'both',
+          shape: { type: 'rect', fill: '#e8dec8', stroke: null, strokeWidth: 0, radius: 0, dash: [] },
+        },
+      ],
+      fields: [],
+      source: { kind: 'blank' },
+      back: null,
+    };
+
+    const effectDoc = {
+      ...baseDoc,
+      layers: [
+        ...baseDoc.layers,
+        {
+          id: 'stain-zero',
+          name: 'Stain Zero',
+          kind: 'effect',
+          visible: true,
+          locked: false,
+          opacity: 1,
+          blend: 'multiply',
+          x: 0,
+          y: 0,
+          width: 400,
+          height: 400,
+          rotation: 0,
+          clip: false,
+          light: 'both',
+          effect: {
+            type: 'stain',
+            seed: 42,
+            amount: 0,
+            params: { count: 8 },
+          },
+        },
+      ],
+    };
+
+    const rBase = await window.__atelie.renderHandout(baseDoc, { scale: 1, at: points });
+    const rEff = await window.__atelie.renderHandout(effectDoc, { scale: 1, at: points });
+    return { basePixels: rBase.pixels, effPixels: rEff.pixels };
+  }, { points: testSamplePoints });
+
+  for (let i = 0; i < testSamplePoints.length; i++) {
+    const pBase = resAmtZero.basePixels[i];
+    const pEff = resAmtZero.effPixels[i];
+    for (let c = 0; c < 4; c++) {
+      const diff = Math.abs(pBase[c] - pEff[c]);
+      assert.ok(diff <= 2, `point ${i} channel ${c} differs by ${diff} (> 2): base=${pBase}, eff=${pEff}`);
+    }
+  }
+
+  // 12. Procedural effects: fold with 1 horizontal fold -> pixel on fold line is darker than at 100 px away
+  const resFoldDark = await page.evaluate(async () => {
+    const doc = {
+      schema: 1,
+      id: '00000000-0000-0000-0000-000000000012',
+      revision: 0,
+      name: 'Fold Darkness Test',
+      category: '',
+      tags: [],
+      page: { width: 400, height: 400, background: '#ffffff' },
+      layers: [
+        {
+          id: 'fold-layer',
+          name: 'Fold',
+          kind: 'effect',
+          visible: true,
+          locked: false,
+          opacity: 1,
+          blend: 'multiply',
+          x: 0,
+          y: 0,
+          width: 400,
+          height: 400,
+          rotation: 0,
+          clip: false,
+          light: 'both',
+          effect: {
+            type: 'fold',
+            seed: 1,
+            amount: 0.8,
+            params: { horizontal: 1, vertical: 0 },
+          },
+        },
+      ],
+      fields: [],
+      source: { kind: 'blank' },
+      back: null,
+    };
+
+    const res = await window.__atelie.renderHandout(doc, {
+      scale: 1,
+      at: [
+        [200, 200], // fold line
+        [200, 100], // 100px away
+      ],
+    });
+
+    return res.pixels;
+  });
+
+  const [onFold, offFold] = resFoldDark;
+  const brightnessFold = (onFold[0] + onFold[1] + onFold[2]) / 3;
+  const brightnessOff = (offFold[0] + offFold[1] + offFold[2]) / 3;
+  assert.ok(brightnessFold < brightnessOff, `pixel on fold (${brightnessFold}) must be darker than 100px away (${brightnessOff})`);
+
   assert.deepEqual(errors, []);
 });
 

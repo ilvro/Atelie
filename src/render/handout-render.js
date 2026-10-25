@@ -1,6 +1,7 @@
 import { canvasOperation } from '../domain/handouts.js';
 import { cssFilter, applyAdjustPixels } from '../domain/handout-pixels.js';
 import { drawTextLayer } from './handout-text.js';
+import { drawEffect, drawCutMask } from './handout-effects.js';
 
 export const visibleIn = (layer, light) => layer.visible && (layer.light === 'both' || layer.light === light);
 
@@ -159,12 +160,43 @@ function drawCheckerboard(ctx, w, h, scale) {
   ctx.restore();
 }
 
-function drawLayer(ctx, layer, scale, loadedImages, missing, warnings) {
-  if (layer.kind === 'effect') {
-    warnings.push(`effect pendente: ${layer.effect?.type || 'desconhecido'}`);
-    return;
-  }
+export function isCutEffect(layer) {
+  return layer?.kind === 'effect' && (layer.effect?.type === 'burn' || layer.effect?.type === 'tear');
+}
 
+export function applyCutEffect(targetCtx, layer, pw, ph, scale) {
+  if (!isCutEffect(layer)) return;
+  const amt = Number(layer.effect?.amount ?? 0.5);
+  if (amt <= 0) return;
+
+  const w = Math.max(1, Math.round(layer.width * scale));
+  const h = Math.max(1, Math.round(layer.height * scale));
+  const { translate, rotation, flip } = layerMatrix(layer, scale);
+
+  const boxCanvas = createPageCanvas(w, h);
+  const boxCtx = boxCanvas.getContext('2d');
+  drawCutMask(boxCtx, w, h, layer.effect, scale);
+
+  const maskCanvas = createPageCanvas(pw, ph);
+  const maskCtx = maskCanvas.getContext('2d');
+  maskCtx.fillStyle = '#ffffff';
+  maskCtx.fillRect(0, 0, pw, ph);
+
+  maskCtx.save();
+  maskCtx.translate(translate[0], translate[1]);
+  maskCtx.rotate(rotation);
+  maskCtx.scale(flip[0], flip[1]);
+  maskCtx.clearRect(-w / 2, -h / 2, w, h);
+  maskCtx.drawImage(boxCanvas, -w / 2, -h / 2);
+  maskCtx.restore();
+
+  targetCtx.save();
+  targetCtx.globalCompositeOperation = 'destination-in';
+  targetCtx.drawImage(maskCanvas, 0, 0);
+  targetCtx.restore();
+}
+
+function drawLayer(ctx, layer, scale, loadedImages, missing, warnings) {
   if (layer.kind === 'adjust') {
     // Adjust layers are handled at the canvas/group composition level
     return;
@@ -179,7 +211,14 @@ function drawLayer(ctx, layer, scale, loadedImages, missing, warnings) {
   ctx.rotate(rotation);
   ctx.scale(flip[0], flip[1]);
 
-  if (layer.kind === 'shape') {
+  if (layer.kind === 'effect') {
+    const bw = Math.max(1, Math.round(w));
+    const bh = Math.max(1, Math.round(h));
+    const effCanvas = createPageCanvas(bw, bh);
+    const effCtx = effCanvas.getContext('2d');
+    drawEffect(effCtx, bw, bh, layer.effect, scale);
+    ctx.drawImage(effCanvas, -bw / 2, -bh / 2, bw, bh);
+  } else if (layer.kind === 'shape') {
     ctx.save();
     if (layer.shape.dash && layer.shape.dash.length > 0) {
       ctx.setLineDash(layer.shape.dash.map(d => d * scale));
@@ -368,6 +407,9 @@ export async function renderHandout(
 
     // Simple layer without clipping
     if (clipped.length === 0) {
+      if (isCutEffect(base)) {
+        applyCutEffect(ctx, base, pw, ph, scale);
+      }
       ctx.save();
       ctx.globalAlpha = base.opacity;
       ctx.globalCompositeOperation = canvasOperation(base.blend);
@@ -384,6 +426,9 @@ export async function renderHandout(
     baseCtx.clearRect(0, 0, pw, ph);
 
     // 1. Draw base layer into groupCanvas and baseCanvas
+    if (isCutEffect(base)) {
+      applyCutEffect(ctx, base, pw, ph, scale);
+    }
     drawLayer(groupCtx, base, scale, loadedImages, missing, warnings);
     baseCtx.drawImage(groupCanvas, 0, 0);
 
@@ -410,6 +455,9 @@ export async function renderHandout(
         groupCtx.drawImage(adjCanvas, 0, 0);
         groupCtx.restore();
       } else {
+        if (isCutEffect(clippedLayer)) {
+          applyCutEffect(groupCtx, clippedLayer, pw, ph, scale);
+        }
         drawLayer(tempCtx, clippedLayer, scale, loadedImages, missing, warnings);
 
         // Clip by base alpha
