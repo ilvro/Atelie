@@ -597,6 +597,86 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
     { passive: false }
   );
 
+  // Pan with Middle Mouse Button, Right Mouse Button, or Space + Drag
+  let isPanning = false;
+  let panStartX = 0;
+  let panStartY = 0;
+  let panStartScrollLeft = 0;
+  let panStartScrollTop = 0;
+  let hasMovedDuringPan = false;
+  let isSpacePressed = false;
+
+  window.addEventListener('keydown', event => {
+    if (
+      event.code === 'Space' &&
+      !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) &&
+      !document.activeElement?.isContentEditable
+    ) {
+      isSpacePressed = true;
+      if (!isPanning && viewport) {
+        viewport.style.cursor = 'grab';
+      }
+    }
+  });
+
+  window.addEventListener('keyup', event => {
+    if (event.code === 'Space') {
+      isSpacePressed = false;
+      if (!isPanning && viewport) {
+        viewport.style.cursor = '';
+      }
+    }
+  });
+
+  viewport.addEventListener('mousedown', event => {
+    // Middle button (1), Right button (2), or Left button with Space (0)
+    const isMiddle = event.button === 1;
+    const isRight = event.button === 2;
+    const isLeftWithSpace = event.button === 0 && isSpacePressed;
+
+    if (isMiddle || isRight || isLeftWithSpace) {
+      isPanning = true;
+      hasMovedDuringPan = false;
+      panStartX = event.clientX;
+      panStartY = event.clientY;
+      panStartScrollLeft = viewport.scrollLeft;
+      panStartScrollTop = viewport.scrollTop;
+      viewport.style.cursor = 'grabbing';
+      document.body.style.userSelect = 'none';
+      event.preventDefault();
+    }
+  });
+
+  window.addEventListener('mousemove', event => {
+    if (!isPanning) return;
+    const dx = event.clientX - panStartX;
+    const dy = event.clientY - panStartY;
+    if (Math.abs(dx) > 2 || Math.abs(dy) > 2) {
+      hasMovedDuringPan = true;
+    }
+    viewport.scrollLeft = panStartScrollLeft - dx;
+    viewport.scrollTop = panStartScrollTop - dy;
+  });
+
+  window.addEventListener('mouseup', event => {
+    if (!isPanning) return;
+    isPanning = false;
+    viewport.style.cursor = isSpacePressed ? 'grab' : '';
+    document.body.style.userSelect = '';
+  });
+
+  viewport.addEventListener(
+    'contextmenu',
+    event => {
+      if (hasMovedDuringPan) {
+        event.preventDefault();
+        event.stopPropagation();
+        hasMovedDuringPan = false;
+      }
+    },
+    true
+  );
+
   // Click on stage for layer hit testing
   pageWrap.addEventListener('click', event => {
     if (!currentHandout || activeGesture || isEyedropperActive) return;

@@ -1,5 +1,6 @@
 import './ui/styles.css';
 import './ui/editor.css';
+import './ui/controls.css';
 import './ui/start.css';
 import './ui/reader.css';
 import './ui/export.css';

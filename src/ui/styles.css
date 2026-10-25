@@ -145,8 +145,20 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  position: relative;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
   transition: transform var(--eco-fast) var(--eco-ease);
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.rail-recent-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
 }
 
 .rail-recent-item:hover {
@@ -285,11 +297,17 @@ html, body {
 .inspector-tabs {
   height: 48px;
   display: flex;
+  align-items: stretch;
+  background: var(--at-desk-2);
   border-bottom: 1px solid var(--at-line);
 }
 
 .inspector-tab {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
   border: none;
   background: transparent;
   color: var(--at-muted);
@@ -298,15 +316,19 @@ html, body {
   font-weight: 600;
   cursor: pointer;
   position: relative;
-  transition: color var(--eco-fast) var(--eco-ease);
+  transition: color var(--eco-fast) var(--eco-ease), background var(--eco-fast) var(--eco-ease);
+  padding: 0 var(--eco-space-2);
+  box-sizing: border-box;
 }
 
 .inspector-tab:hover {
   color: var(--at-text);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .inspector-tab.active {
   color: var(--at-uv);
+  background: rgba(160, 138, 255, 0.05);
 }
 
 .inspector-tab.active::after {
@@ -317,6 +339,7 @@ html, body {
   right: 0;
   height: 2px;
   background: var(--at-uv);
+  box-shadow: 0 0 8px var(--at-uv-glow);
 }
 
 .inspector-content {

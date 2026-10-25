@@ -33,8 +33,38 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 25 — PSD modelos | concluída | 2026-10-25 | Expansão: conversão de PSD para modelos editáveis com campos, fusão de fundo, WebP, UV e testes |
 | 26 — Publicar no Pages | concluída | 2026-10-25 | Build estático sem servidor, workflow GitHub Pages, backup/restauração e testes |
 | 27 — Documentação | concluída | 2026-10-25 | Manuais, guia de uso, manutenção, atalhos, gaveta de ajuda e licenças |
+| Refinamento de UI & UX | concluída | 2026-10-25 | Correção miniatura trilho, alinhamento abas, controles CSS, texturas da bancada, pan por botão direito/meio, filtros rápidos de categoria na biblioteca |
+| Tutoriais Interativos | planejado | 2026-10-25 | Sistema de lições práticas guiadas estilo Tabletop (motor tutor, anel de foco, 4 trilhas práticas) |
 | 28 — Integração Tabletop | pendente | | Consumo e interação direta dentro do Tabletop |
 | 29 — Expansão no navegador | pendente | | Expansão local no navegador (opcional) |
+
+---
+
+## Refinamento de UI, UX e Plano de Tutoriais Interativos
+
+### Feito
+- **Correção da Miniatura no Trilho (`src/ui/styles.css`)**:
+  - Correção de overflow na prévia de documento recente (`.rail-recent-item`), adicionando `overflow: hidden`, `padding: 0` e estilizando a imagem interna (`width: 100%; height: 100%; object-fit: cover`) para impedir que miniaturas estourem em um quadrado branco gigante sobre a barra lateral.
+- **Alinhamento e Estrutura das Abas do Inspetor (`src/editor/editor.js` e `src/ui/styles.css`)**:
+  - Ajuste de `display: flex` e `align-items: stretch` nas abas do inspetor, eliminando o desalinhamento vertical da aba "Preencher".
+- **Estilização Completa dos Controles de Propriedades (`src/ui/controls.css` e `src/main.js`)**:
+  - Criação da folha de estilos `src/ui/controls.css` definindo tipografia compacta, rótulos `.field-label` estilizados, caixas de valor `.value-box`, campos hexadecimais `.hex-box`, seletores de cor com amostras táteis, campos de seleção em pílulas (`.choice-field`) e sliders (`.range-field`) com trilho sutil e polegar circular destacado no tom ultravioleta da mesa (`--at-uv`), em total conformidade visual com `Ficha teste - Ordem II`.
+- **Texturas Procedurais para Superfície da Bancada (`src/ui/primitives.css`)**:
+  - Implementação de regras CSS para o atributo `[data-desk-material]` nos 5 materiais configuráveis: `madeira` (veios escuros de tábua com ranhuras táteis), `feltro` (baeta verde profunda de mesa de jogos), `couro` (couro envelhecido castanho/bordô com textura de grão), `concreto` (ardósia áspera industrial) e `preto` (obsidiana minimalista de alto contraste).
+- **Navegação no Palco por Botão Direito e Meio do Mouse (`src/editor/stage.js`)**:
+  - Adição de movimentação livre da bancada (panning/arraste de tela) ao pressionar e arrastar com o botão do meio (scroll) ou botão direito do mouse, com supressão inteligente do menu de contexto após o arraste para não abrir menus acidentais, além do atalho `Espaço + Botão Esquerdo`.
+- **Filtros Rápidos por Categoria na Biblioteca (`src/editor/library-panel.js` e `src/ui/controls.css`)**:
+  - Barra de chips/pílulas horizontais roláveis no topo da gaveta de Biblioteca para filtrar diretamente as categorias (`Todas`, `Papéis`, `Manchas`, `Sangue`, `Água`, `Sujeira`, `Rasgos`, `Carimbos`, etc.) sem necessidade de recolher sanfonas manualmente, além de botão para expandir ou recolher tudo.
+- **Plano Arquitetural de Tutoriais Interativos (`plano-tutoriais-interativos.md`)**:
+  - Especificação completa do motor de lições práticas no estilo do Tabletop (`src/tutorial/tutor.js`, `conditions.js`, `lessons.js`, `tutorial-drawer.js`), anel de destaque pulsante (`.tutorial-ring`), cartões com dicas de artesanato de documentos e 4 trilhas práticas (Fundamentos da Carta de Época, Dossiê Investigativo, A Arte da Luz UV e Entrega ao Tabletop).
+
+### Validação
+- `npm test`: 154 testes unitários passando 100%.
+- `npm run test:e2e`: 18 suítes E2E passando 100%.
+- `npm run build`: bundle de produção compilado com sucesso (1.95s, sem erros de tipagem ou imports).
+
+### Pendências reais
+- Aprovação do plano de tutoriais interativos pelo usuário para execução da Fase 1 (Motor e UI).
 
 ---
 

@@ -337,7 +337,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     const hasFields = Boolean(handout?.fields && handout.fields.length > 0);
     const fillTabBtn = document.querySelector('.inspector-tab[data-tab="fill"]');
     if (fillTabBtn) {
-      fillTabBtn.style.display = hasFields ? 'inline-flex' : 'none';
+      fillTabBtn.style.display = hasFields ? 'flex' : 'none';
     }
   }
 

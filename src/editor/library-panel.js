@@ -53,6 +53,7 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
   let sources = [{ id: 'casa', name: 'Coleção do Ateliê' }];
   let activeType = 'elements'; // 'elements' | 'fonts'
   let activeSource = 'all'; // 'all' | 'casa' | expansion id
+  let activeCategory = 'all'; // 'all' | specific category name
   let searchQuery = '';
   let favoritesOnly = false;
   let collapsedCategories = new Set();
@@ -264,6 +265,20 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
             </div>
           </div>
 
+          ${activeType === 'elements' ? `
+            <div class="library-category-filter-bar">
+              <div class="library-category-pills">
+                <button type="button" class="at-chip ${activeCategory === 'all' ? 'is-active' : ''}" data-cat-filter="all">Todas</button>
+                ${sortCategories(Array.from(new Set(rawItems.filter(i => i.kind === 'element').map(i => i.category).filter(Boolean)))).map(c => `
+                  <button type="button" class="at-chip ${activeCategory === c ? 'is-active' : ''}" data-cat-filter="${esc(c)}">${esc(c)}</button>
+                `).join('')}
+              </div>
+              <button type="button" class="library-toggle-all-btn" data-action="toggle-all-cats" title="Alternar recolher e expandir tudo">
+                ${collapsedCategories.size > 0 ? 'Expandir' : 'Recolher'}
+              </button>
+            </div>
+          ` : ''}
+
           ${hasMultipleSources ? `
             <div class="library-source-chips">
               <button type="button" class="at-chip ${activeSource === 'all' ? 'is-active' : ''}" data-source="all">Tudo</button>
@@ -294,7 +309,10 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
         byCategory.get(cat).push(item);
       }
 
-      const sortedCategories = sortCategories(Array.from(byCategory.keys()));
+      const allSorted = sortCategories(Array.from(byCategory.keys()));
+      const sortedCategories = activeCategory === 'all'
+        ? allSorted
+        : allSorted.filter(c => c === activeCategory);
       let renderedCount = 0;
 
       for (const cat of sortedCategories) {
@@ -447,6 +465,26 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
     // Favorites filter
     container.querySelector('[data-action="toggle-fav-filter"]')?.addEventListener('click', () => {
       favoritesOnly = !favoritesOnly;
+      render();
+    });
+
+    // Category pills filter
+    container.querySelectorAll('[data-cat-filter]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeCategory = btn.dataset.catFilter;
+        itemsLimit = 60;
+        render();
+      });
+    });
+
+    // Toggle all categories collapse/expand
+    container.querySelector('[data-action="toggle-all-cats"]')?.addEventListener('click', () => {
+      const allCats = sortCategories(Array.from(new Set(rawItems.filter(i => i.kind === 'element').map(i => i.category).filter(Boolean))));
+      if (collapsedCategories.size === 0) {
+        for (const cat of allCats) collapsedCategories.add(cat);
+      } else {
+        collapsedCategories.clear();
+      }
       render();
     });
 

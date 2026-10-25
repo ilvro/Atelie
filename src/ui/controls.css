@@ -1,0 +1,447 @@
+/* Controles e Inspetor do Ateliê (Alinhado à Ficha teste e PLANO-INTERFACE.md) */
+
+/* ── PAINEL DE PROPRIEDADES E GRUPOS ─────────────────────────────────────────── */
+.properties-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.properties-panel.is-locked {
+  opacity: 0.85;
+}
+
+.panel-section,
+.prop-group {
+  background: var(--at-desk-2, #1b1715);
+  border: 1px solid var(--at-line, #3a332c);
+  border-radius: var(--eco-radius-s, 6px);
+  padding: 12px 14px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.panel-section-title,
+.prop-legend {
+  font-family: var(--eco-font-ui, "Hanken Grotesk", sans-serif);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--at-text-2, #b9b0a2);
+  margin-bottom: 4px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--at-line, #3a332c);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.locked-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(201, 70, 64, 0.15);
+  border: 1px solid var(--at-wax, #c94640);
+  border-radius: var(--eco-radius-s, 6px);
+  color: #ff9b97;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ── CAMPOS, RÓTULOS E INPUTS NATIVOS ─────────────────────────────────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: relative;
+}
+
+.field-row,
+.control-row {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.field-row > .field {
+  flex: 1;
+  min-width: 0;
+}
+
+.field-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-family: var(--eco-font-ui, "Hanken Grotesk", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--at-muted, #8d8578);
+  margin-bottom: 2px;
+}
+
+.field-label small {
+  font-family: var(--eco-font-ui, "Hanken Grotesk", sans-serif);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--at-text-2, #b9b0a2);
+  margin-left: 6px;
+  opacity: 0.8;
+}
+
+/* Caixas de texto, números e seletores */
+.field input[type="text"],
+.field input[type="number"],
+.field select,
+.field textarea,
+.value-box input {
+  width: 100%;
+  background: var(--at-desk-3, #24201c);
+  border: 1px solid var(--at-line, #3a332c);
+  border-radius: 4px;
+  color: var(--at-text, #ece5d8);
+  font-family: var(--eco-font-ui, "Hanken Grotesk", sans-serif);
+  font-size: 13px;
+  padding: 6px 10px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color var(--eco-fast) var(--eco-ease),
+              box-shadow var(--eco-fast) var(--eco-ease),
+              background var(--eco-fast) var(--eco-ease);
+}
+
+.field input[type="text"]:focus,
+.field input[type="number"]:focus,
+.field select:focus,
+.field textarea:focus,
+.value-box input:focus {
+  border-color: var(--at-uv, #a08aff);
+  box-shadow: 0 0 0 2px var(--at-uv-glow, rgba(160, 138, 255, 0.25));
+  background: #282420;
+}
+
+.field input:disabled,
+.field select:disabled,
+.value-box input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Caixa com sufixo de unidade */
+.value-box {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.value-box i {
+  position: absolute;
+  right: 10px;
+  font-style: normal;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--at-muted, #8d8578);
+  pointer-events: none;
+}
+
+.value-box input[type="number"] {
+  padding-right: 28px;
+}
+
+/* ── CAMPO DE COR E HEXADECIMAL ──────────────────────────────────────────────── */
+.color-field .color-pair {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.color-field input[type="color"] {
+  width: 42px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--at-line, #3a332c);
+  border-radius: 4px;
+  background: var(--at-desk-3, #24201c);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  overflow: hidden;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  transition: border-color var(--eco-fast);
+}
+
+.color-field input[type="color"]:hover {
+  border-color: var(--at-text-2);
+}
+
+.color-field input[type="color"]:focus {
+  border-color: var(--at-uv, #a08aff);
+  box-shadow: 0 0 0 2px var(--at-uv-glow);
+}
+
+.color-field input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.color-field input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 3px;
+}
+
+.color-field .hex-box {
+  flex: 1;
+  font-family: var(--at-font-mono, "Courier Prime", monospace);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--at-text, #ece5d8);
+}
+
+/* ── CAMPO DE INTERVALO / SLIDER COM NÚMERO ───────────────────────────────────── */
+.range-field {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 6px 8px;
+  width: 100%;
+}
+
+.range-field .field-label {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+}
+
+.range-field .value-box {
+  grid-column: 2;
+  grid-row: 1;
+  width: 76px;
+}
+
+.range-field .value-box input {
+  text-align: right;
+  padding: 4px 22px 4px 6px;
+  font-size: 12px;
+}
+
+.range-field input[type="range"] {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  width: 100%;
+  height: 6px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--at-desk-3, #24201c);
+  border: 1px solid var(--at-line, #3a332c);
+  border-radius: 3px;
+  outline: none;
+  accent-color: var(--at-uv, #a08aff);
+  cursor: pointer;
+  margin: 2px 0 6px;
+}
+
+.range-field input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--at-uv, #a08aff);
+  box-shadow: 0 0 6px var(--at-uv-glow, rgba(160, 138, 255, 0.4));
+  cursor: pointer;
+  border: 1.5px solid #ffffff;
+  transition: transform var(--eco-fast) var(--eco-ease);
+}
+
+.range-field input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+}
+
+/* ── SELETORES EM SEGMENTOS / CHIPS / BOTÕES ──────────────────────────────────── */
+.choice-field select.choice-native {
+  display: none;
+}
+
+.choice-field .segments,
+.choice-field .chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.choice-field .segments button,
+.choice-field .chips button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--at-line, #3a332c);
+  background: var(--at-desk-3, #24201c);
+  color: var(--at-text-2, #b9b0a2);
+  font-family: var(--eco-font-ui, "Hanken Grotesk", sans-serif);
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--eco-fast) var(--eco-ease);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.choice-field .segments button:hover,
+.choice-field .chips button:hover {
+  background: var(--at-line-strong, #574c40);
+  color: #ffffff;
+}
+
+.choice-field .segments button.active,
+.choice-field .chips button.active,
+.choice-field .segments button[aria-checked="true"],
+.choice-field .chips button[aria-checked="true"] {
+  background: color-mix(in srgb, var(--at-uv, #a08aff) 22%, var(--at-desk-3, #24201c));
+  border-color: var(--at-uv, #a08aff);
+  color: #ffffff;
+  box-shadow: 0 0 8px var(--at-uv-glow, rgba(160, 138, 255, 0.3));
+}
+
+/* ── CHECKBOX TÁTIL ──────────────────────────────────────────────────────────── */
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--at-text, #ece5d8);
+  user-select: none;
+}
+
+.check input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--at-uv, #a08aff);
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+/* ── PALETA DE CORES NO DOCUMENTO E RECENTES ─────────────────────────────────── */
+.color-swatches-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--at-line, #3a332c);
+}
+
+.color-swatches-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.color-swatches-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--at-muted, #8d8578);
+  width: 90px;
+  flex-shrink: 0;
+}
+
+.color-swatches-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.color-swatch-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  border: 1px solid var(--at-line, #3a332c);
+  cursor: pointer;
+  transition: transform var(--eco-fast) var(--eco-ease), border-color var(--eco-fast);
+  box-sizing: border-box;
+}
+
+.color-swatch-btn:hover {
+  transform: scale(1.25);
+  border-color: #ffffff;
+  z-index: 2;
+}
+
+/* ── BARRA DE FILTRO DE CATEGORIAS DA BIBLIOTECA ────────────────────────────── */
+.library-category-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 6px;
+  padding-bottom: 4px;
+}
+
+.library-category-pills {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow-x: auto;
+  white-space: nowrap;
+  flex: 1;
+  padding: 2px 0;
+  scrollbar-width: thin;
+}
+
+.library-category-pills::-webkit-scrollbar {
+  height: 3px;
+}
+
+.library-category-pills::-webkit-scrollbar-thumb {
+  background: var(--at-line, #3a332c);
+  border-radius: 2px;
+}
+
+.library-category-pills .at-chip {
+  padding: 3px 8px;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.library-toggle-all-btn {
+  background: var(--at-desk-3, #24201c);
+  border: 1px solid var(--at-line, #3a332c);
+  border-radius: 4px;
+  color: var(--at-muted, #8d8578);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 7px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all var(--eco-fast);
+}
+
+.library-toggle-all-btn:hover {
+  background: var(--at-line-strong, #574c40);
+  color: #ffffff;
+}
+
