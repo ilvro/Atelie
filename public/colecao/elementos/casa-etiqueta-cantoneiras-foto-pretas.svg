@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <!-- Top-Left -->
+  <g transform="translate(10, 10)">
+    <polygon points="2,2 52,2 2,52" fill="rgba(0,0,0,0.2)"/>
+    <polygon points="0,0 50,0 0,50" fill="#222326" stroke="#101112" stroke-width="1"/>
+    <polygon points="4,4 40,4 4,40" fill="none" stroke="#44464c" stroke-width="0.8"/>
+    <line x1="12" y1="42" x2="42" y2="12" stroke="#000" stroke-width="2"/>
+  </g>
+  <!-- Top-Right -->
+  <g transform="translate(390, 10) scale(-1, 1)">
+    <polygon points="2,2 52,2 2,52" fill="rgba(0,0,0,0.2)"/>
+    <polygon points="0,0 50,0 0,50" fill="#222326" stroke="#101112" stroke-width="1"/>
+    <polygon points="4,4 40,4 4,40" fill="none" stroke="#44464c" stroke-width="0.8"/>
+    <line x1="12" y1="42" x2="42" y2="12" stroke="#000" stroke-width="2"/>
+  </g>
+  <!-- Bottom-Left -->
+  <g transform="translate(10, 290) scale(1, -1)">
+    <polygon points="2,2 52,2 2,52" fill="rgba(0,0,0,0.2)"/>
+    <polygon points="0,0 50,0 0,50" fill="#222326" stroke="#101112" stroke-width="1"/>
+    <polygon points="4,4 40,4 4,40" fill="none" stroke="#44464c" stroke-width="0.8"/>
+    <line x1="12" y1="42" x2="42" y2="12" stroke="#000" stroke-width="2"/>
+  </g>
+  <!-- Bottom-Right -->
+  <g transform="translate(390, 290) scale(-1, -1)">
+    <polygon points="2,2 52,2 2,52" fill="rgba(0,0,0,0.2)"/>
+    <polygon points="0,0 50,0 0,50" fill="#222326" stroke="#101112" stroke-width="1"/>
+    <polygon points="4,4 40,4 4,40" fill="none" stroke="#44464c" stroke-width="0.8"/>
+    <line x1="12" y1="42" x2="42" y2="12" stroke="#000" stroke-width="2"/>
+  </g>
+</svg>

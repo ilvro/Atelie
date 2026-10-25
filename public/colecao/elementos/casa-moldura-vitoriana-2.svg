@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <rect x="25" y="25" width="750" height="550" fill="none" stroke="#000" stroke-width="3"/>
+  <rect x="35" y="35" width="730" height="530" fill="none" stroke="#000" stroke-width="1" stroke-dasharray="6 4"/>
+  <rect x="45" y="45" width="710" height="510" fill="none" stroke="#000" stroke-width="2"/>
+  <!-- Corner rosettes -->
+  <circle cx="35" cy="35" r="8" fill="none" stroke="#000" stroke-width="2"/>
+  <circle cx="765" cy="35" r="8" fill="none" stroke="#000" stroke-width="2"/>
+  <circle cx="35" cy="565" r="8" fill="none" stroke="#000" stroke-width="2"/>
+  <circle cx="765" cy="565" r="8" fill="none" stroke="#000" stroke-width="2"/>
+</svg>

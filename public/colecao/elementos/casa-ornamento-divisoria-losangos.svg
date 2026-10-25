@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 40" width="400" height="40">
+  <line x1="20" y1="20" x2="160" y2="20" stroke="#000000" stroke-width="1.2"/>
+  <line x1="240" y1="20" x2="380" y2="20" stroke="#000000" stroke-width="1.2"/>
+  <polygon points="175,15 180,20 175,25 170,20" fill="#000000"/>
+  <polygon points="200,12 208,20 200,28 192,20" fill="#000000"/>
+  <polygon points="225,15 230,20 225,25 220,20" fill="#000000"/>
+</svg>

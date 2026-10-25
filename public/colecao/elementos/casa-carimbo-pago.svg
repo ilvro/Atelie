@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 177 88" width="177" height="88">
+  <defs>
+    <filter id="st-flt-1013">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="1013" result="noise"/>
+      <feComponentTransfer in="noise" result="thresh">
+        <feFuncA type="linear" slope="1.4" intercept="-0.15"/>
+      </feComponentTransfer>
+      <feComposite in="SourceGraphic" in2="thresh" operator="in"/>
+    </filter>
+  </defs>
+  <g filter="url(#st-flt-1013)" stroke="#000000" fill="none">
+    <!-- Outer stamp border -->
+    <rect x="4" y="4" width="169" height="80" rx="2" stroke-width="4.5" stroke-linecap="square"/>
+    <!-- Text path -->
+    <path d="M 0.00 38.40 L 0.00 9.60 L 14.40 9.60 L 19.20 16.80 L 14.40 24.00 L 0.00 24.00 M 33.60 38.40 L 33.60 19.20 L 43.20 9.60 L 52.80 19.20 L 52.80 38.40 M 33.60 26.40 L 52.80 26.40 M 86.40 14.40 L 81.60 9.60 L 72.00 9.60 L 67.20 14.40 L 67.20 33.60 L 72.00 38.40 L 81.60 38.40 L 86.40 33.60 L 86.40 24.00 L 76.80 24.00 M 105.60 9.60 L 115.20 9.60 L 120.00 14.40 L 120.00 33.60 L 115.20 38.40 L 105.60 38.40 L 100.80 33.60 L 100.80 14.40 Z" transform="translate(28, 20)" stroke-width="4.2" stroke-linecap="square" stroke-linejoin="miter"/>
+  </g>
+</svg>

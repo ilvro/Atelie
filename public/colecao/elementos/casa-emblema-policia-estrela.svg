@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320">
+  <g stroke="#000000" fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Star body -->
+    <polygon points="160.0,40.0 192.5,103.7 263.9,100.0 225.0,160.0 263.9,220.0 192.5,216.3 160.0,280.0 127.5,216.3 56.1,220.0 95.0,160.0 56.1,100.0 127.5,103.7" stroke-width="4"/>
+    <polygon points="160.0,40.0 192.5,103.7 263.9,100.0 225.0,160.0 263.9,220.0 192.5,216.3 160.0,280.0 127.5,216.3 56.1,220.0 95.0,160.0 56.1,100.0 127.5,103.7" stroke-width="1.2" transform="translate(160, 160) scale(0.9) translate(-160, -160)"/>
+    <!-- Ball tips on the 6 star points -->
+    <circle cx="160.0" cy="40.0" r="7" fill="#000000"/>
+    <circle cx="263.9" cy="100.0" r="7" fill="#000000"/>
+    <circle cx="263.9" cy="220.0" r="7" fill="#000000"/>
+    <circle cx="160.0" cy="280.0" r="7" fill="#000000"/>
+    <circle cx="56.1" cy="220.0" r="7" fill="#000000"/>
+    <circle cx="56.1" cy="100.0" r="7" fill="#000000"/>
+    <!-- Center circular badge disc -->
+    <circle cx="160" cy="160" r="48" stroke-width="3"/>
+    <circle cx="160" cy="160" r="42" stroke-width="1.2" stroke-dasharray="3 3"/>
+    <!-- Center scale of justice / balance -->
+    <line x1="160" y1="130" x2="160" y2="185" stroke-width="2.5"/>
+    <line x1="140" y1="142" x2="180" y2="142" stroke-width="2"/>
+    <path d="M 134 165 C 134 172 146 172 146 165 Z" fill="#000000"/>
+    <line x1="140" y1="142" x2="134" y2="165" stroke-width="1.2"/>
+    <line x1="140" y1="142" x2="146" y2="165" stroke-width="1.2"/>
+    <path d="M 174 165 C 174 172 186 172 186 165 Z" fill="#000000"/>
+    <line x1="180" y1="142" x2="174" y2="165" stroke-width="1.2"/>
+    <line x1="180" y1="142" x2="186" y2="165" stroke-width="1.2"/>
+  </g>
+</svg>

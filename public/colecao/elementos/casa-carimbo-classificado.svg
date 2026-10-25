@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 446 88" width="446" height="88">
+  <defs>
+    <filter id="st-flt-1012">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="1012" result="noise"/>
+      <feComponentTransfer in="noise" result="thresh">
+        <feFuncA type="linear" slope="1.4" intercept="-0.15"/>
+      </feComponentTransfer>
+      <feComposite in="SourceGraphic" in2="thresh" operator="in"/>
+    </filter>
+  </defs>
+  <g filter="url(#st-flt-1012)" stroke="#000000" fill="none">
+    <!-- Outer stamp border -->
+    <rect x="4" y="4" width="438" height="80" rx="2" stroke-width="4.5" stroke-linecap="square"/>
+    <!-- Text path -->
+    <path d="M 19.20 14.40 L 14.40 9.60 L 4.80 9.60 L 0.00 14.40 L 0.00 33.60 L 4.80 38.40 L 14.40 38.40 L 19.20 33.60 M 33.60 9.60 L 33.60 38.40 L 52.80 38.40 M 67.20 38.40 L 67.20 19.20 L 76.80 9.60 L 86.40 19.20 L 86.40 38.40 M 67.20 26.40 L 86.40 26.40 M 120.00 14.40 L 115.20 9.60 L 105.60 9.60 L 100.80 14.40 L 100.80 21.60 L 105.60 24.00 L 115.20 24.00 L 120.00 26.40 L 120.00 33.60 L 115.20 38.40 L 105.60 38.40 L 100.80 33.60 M 153.60 14.40 L 148.80 9.60 L 139.20 9.60 L 134.40 14.40 L 134.40 21.60 L 139.20 24.00 L 148.80 24.00 L 153.60 26.40 L 153.60 33.60 L 148.80 38.40 L 139.20 38.40 L 134.40 33.60 M 170.40 9.60 L 184.80 9.60 M 177.60 9.60 L 177.60 38.40 M 170.40 38.40 L 184.80 38.40 M 220.80 9.60 L 201.60 9.60 L 201.60 38.40 M 201.60 24.00 L 216.00 24.00 M 237.60 9.60 L 252.00 9.60 M 244.80 9.60 L 244.80 38.40 M 237.60 38.40 L 252.00 38.40 M 288.00 14.40 L 283.20 9.60 L 273.60 9.60 L 268.80 14.40 L 268.80 33.60 L 273.60 38.40 L 283.20 38.40 L 288.00 33.60 M 302.40 38.40 L 302.40 19.20 L 312.00 9.60 L 321.60 19.20 L 321.60 38.40 M 302.40 26.40 L 321.60 26.40 M 336.00 38.40 L 336.00 9.60 L 348.00 9.60 L 355.20 16.80 L 355.20 31.20 L 348.00 38.40 L 336.00 38.40 M 374.40 9.60 L 384.00 9.60 L 388.80 14.40 L 388.80 33.60 L 384.00 38.40 L 374.40 38.40 L 369.60 33.60 L 369.60 14.40 Z" transform="translate(28, 20)" stroke-width="4.2" stroke-linecap="square" stroke-linejoin="miter"/>
+  </g>
+</svg>

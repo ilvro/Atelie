@@ -18,7 +18,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | 10 — Documentos e rascunho | concluída | 2026-10-24 | Navegador com pastas, fixados, favoritos, recentes; rascunho automático; versões; lixeira; abas |
 | 11 — Efeitos procedurais | concluída | 2026-10-24 | 9 efeitos procedurais em código, determinismo por semente PRNG, cortes e propriedades |
 | 12 — Coleção papéis e texturas | concluída | 2026-10-24 | 48 papéis em 3 idades e 53 texturas de sobreposição em WebP (7,78 MB total) |
-| 13 — Coleção elementos | pendente | | Coleção da casa: vetores, carimbos, fitas |
+| 13 — Coleção elementos | concluída | 2026-10-24 | Coleção da casa: 140 elementos vetoriais em SVG (carimbos, selos, prendedores, fitas, molduras, etc.) |
 | 14 — Coleção fontes | pendente | | Coleção da casa: 26 famílias de fontes |
 | 15 — Biblioteca | pendente | | Gaveta Biblioteca e modo de preenchimento |
 | 16 — Coleção modelos | pendente | | Coleção da casa: 36 modelos prontos |
@@ -98,6 +98,56 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 - `npm test`: 82 testes unitários passando 100%.
 - `npm run test:e2e`: 8 suítes E2E Playwright passando 100%.
 - `npm run colecao:texturas`: 101 arquivos WebP gerados com sucesso e manifesto `library.json` validado.
+
+---
+
+## Etapa 13 — Coleção da casa · elementos vetoriais
+
+### Feito
+- **Motor de Letras em Traço Puro (`scripts/colecao/vectors/letters.js`)**:
+  - Desenho de caracteres e numerais diretamente em vetores `<path>` sobre grade de 5 × 7 pontos, sem dependência de fontes externas e sem tags `<text>` no SVG:
+    - Alfabeto completo A–Z, numerais 0–9, pontuações (`/`, `-`, `.`, `,`, `:`, `!`, `?`) e acentuações da língua portuguesa (Ç, Ã, Õ, Á, É, Í, Ó, Ú, Â, Ê, Ô).
+    - Função `wordPath(text, { scale, letterSpacing, glyphWidth })` gerando contornos com largura estritamente proporcional ao número de letras.
+- **140 Elementos Vetoriais em 11 Famílias (`scripts/colecao/vectors/*.js`)**:
+  - *Carimbos retangulares (18)*: `CONFIDENCIAL`, `ULTRA SECRETO`, `SECRETO`, `ARQUIVADO`, `URGENTE`, `RECEBIDO`, `APROVADO`, `NEGADO`, `CÓPIA`, `ORIGINAL`, `CLASSIFICADO`, `PAGO`, `VERIFICADO`, `ARQUIVO MORTO`, `NÃO DIVULGAR`, `EVIDÊNCIA`, `CANCELADO`, `DEVOLVER AO REMETENTE`. Filtro procedimental `feTurbulence` + `feComponentTransfer` embutido simulando desgaste de tinta com semente exclusiva.
+  - *Carimbos em branco (6)*: retângulo duplo, cantos chanfrados, círculo duplo, oval, triângulo de advertência e moldura de data (dia/mês/ano) para sobreposição de texto em modo Carimbo.
+  - *Selos circulares (8)*: Selo do Arquivo, Departamento de Investigação, Cartório Notarial, Carimbo de Postagem com ondas e 4 molduras circulares em branco com estrela, brasão clássico, monograma com louros e coroa.
+  - *Prendedores (10)*: clipe prateado (3 rotações: vertical, 15° e -20°), clipe dourado, clipe de pressão preto (*binder clip*), grampo simples, dois grampos, alfinete com cabeça vermelha esférica, tacha de quadro metálica e prendedor de madeira retrô com mola de aço.
+  - *Fitas adesivas (11)*: 6 fitas crepe com extremidades rasgadas organicamente por ruído determinístico (curta, média, longa, diagonal, rasgada irregular e ponta reta), 3 fitas transparentes amareladas com ranhuras serrilhadas de dispensador, bolhas e brilho especular, e 2 fitas isolantes pretas com brilho vinílico.
+  - *Etiquetas e cantoneiras (8)*: etiqueta de pasta de arquivo pautada, etiqueta de arquivo manila com ilhós de latão e barbante de juta, etiqueta pericial de evidência criminal com cabeçalho preto e campos preenchíveis, cantoneiras individuais para fotografias (preta, dourada ornada e papel kraft) e 2 conjuntos quádruplos de cantoneiras para montagem de fotos de época.
+  - *Lacres de cera (8)*: 4 cores autênticas (vermelho carmim, verde floresta, preto ônix e ouro antigo), com borda fundida irregular de cera derretida, em versões lisa com depressão polida e com relevo heráldico de flor-de-lis.
+  - *Molduras (13)*: 3 vitorianas com arabescos e florais, 2 art déco geométricas/leque, 2 medievais/iluminura, 2 certificados/diploma com guilhoché e meandro grego, 2 de fio duplo simples (retangular e chanfrada), 1 moldura de foto instantânea polaroide com margem inferior ampla para anotações e 1 moldura de foto antiga com borda serrilhada tipo cartão-postal.
+  - *Brasões e emblemas genéricos (6)*: escudo com águia imperial, escudo com leão rampante, escudo com chaves de arquivo, distintivo policial genérico com estrela de 6 pontas esferadas, bastão de esculápio médico com serpente e brasão acadêmico universitário com livro aberto e tocha.
+  - *Símbolos ocultos (18)*: 12 sigilos esotéricos originais combinando anéis concêntricos, círculos, lâminas e geometrias rituais, além de pentáculo ritual, olho da providência no triângulo solar, espiral de Arquimedes, mão de quiromancia com olho na palma, chave antiga com palhetão vazado e ampulheta de destino.
+  - *Marcas à mão (20)*: 3 círculos manuais de destaque, 3 sublinhados (simples, duplo e ondulado enfático), 4 setas desenhadas à mão (curvas, em U e rápida), X de cancelamento, ponto de interrogação, ponto de exclamação, 3 riscos de censura/tachado sobre palavras, interrogação/exclamação de margem, 2 colchetes de margem (reto e chave) e estrela de destaque.
+- **Aprimoramentos no Renderizador e Decodificação de Imagens**:
+  - `src/data/handout-images.js`: adicionado suporte resiliente para decodificação de imagens SVG através de `HTMLImageElement` como fallback, permitindo renderização imediata de SVGs no elemento canvas sem as restrições nativas do `createImageBitmap(blob)` em navegadores Chromium/WebKit.
+  - `src/render/handout-render.js`: corrigida a aplicação do efeito `tint` em camadas de imagem para isolar o `source-atop` em um canvas temporário da própria imagem, garantindo que a cor de tingimento incida estritamente sobre os traços opacos da ilustração/carimbo, preservando a transparência das áreas vazadas sobre o papel de fundo.
+- **Geração de Ativos e Manifesto (`scripts/colecao/build.js` e `package.json`)**:
+  - Adicionado comando `npm run colecao:elementos` (`node scripts/colecao/build.js --elements`).
+  - Geração automática de todos os 140 arquivos em `public/colecao/elementos/<id>.svg` e suas prévias em WebP de 320 px em `public/colecao/previews/<id>.webp`.
+  - Atualização do manifesto `public/colecao/library.json` para 241 itens no total (48 papéis, 53 texturas e 140 elementos vetoriais).
+- **Métricas de Armazenamento**:
+  - 140 arquivos SVG em `public/colecao/elementos/`: **153.0 KB** (média de ~1,09 KB por arquivo).
+  - Prévias WebP dos elementos: **~380 KB**.
+  - Tamanho total da pasta `public/colecao/`: **8,46 MB** (muito abaixo do teto de 60 MB estipulado para a coleção da casa).
+- **Folha de Contato (`docs/referencias/colecao-elementos.png`)**:
+  - Gerada folha de contato em alta resolução (1760 × 2996 px, 947 KB) contendo todos os 140 elementos vetoriais dispostos sobre o papel "Ofício creme · usado", com os itens monocromáticos recoloridos em tinta azul-escura (`#1b3566`) para validação estética de traços e pesos.
+- **Revisão Visual pós-geração**:
+  - Revisados os traços dos carimbos: a textura de desgaste (`feTurbulence`) produz bordas envelhecidas autênticas sem perder a legibilidade das inscrições.
+  - Os clipes metálicos e tachas possuem iluminação coerente com chanfro e sombras suaves projetadas.
+  - As fitas crepe e isolantes apresentam cortes e fibras naturais nas extremidades.
+- **Testes Unitários e E2E**:
+  - `tests/colecao-letters.test.js`: conformidade do alfabeto completo e teste de largura proporcional com `wordPath` (2 testes).
+  - `tests/colecao-vectors.test.js`: validação estrutural dos 140 itens, prefixo `casa-`, atributos SVG obrigatórios (`xmlns`, `viewBox`, `width`, `height`), ausência total de tags `<text>`, ausência de URLs externas e ausência de scripts/eventos (1 teste cobrindo todos os módulos).
+  - `tests/colecao-manifest.test.js`: integridade do manifesto de 241 itens, licenças e ausência de arquivos órfãos (1 teste).
+  - `tests/e2e/handout-render.test.js`: acrescentado caso de teste com carimbo SVG da coleção sob efeito `tint` vermelho, validando a renderização dos traços vermelhos e a preservação do fundo branco circundante.
+
+### Validação
+- `npm test`: 85 testes unitários passando 100%.
+- `npm run test:e2e`: 8 suítes E2E Playwright passando 100%.
+- `npm run colecao:elementos`: 140 elementos vetoriais e prévias WebP gerados com sucesso.
+- `node scripts/colecao/contact-sheet.js`: folha de contato `docs/referencias/colecao-elementos.png` gerada e validada.
 - Folhas de contato `docs/referencias/colecao-papeis.png` e `docs/referencias/colecao-texturas.png` inspecionadas e validadas.
 - Documento de referência `docs/referencias/colecao-exemplo.png` validado com visual orgânico realista.
 

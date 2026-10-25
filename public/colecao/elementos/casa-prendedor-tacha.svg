@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" width="70" height="70">
+  <!-- Shadow -->
+  <circle cx="38" cy="40" r="26" fill="rgba(0,0,0,0.3)"/>
+  <!-- Brass head -->
+  <circle cx="35" cy="35" r="26" fill="#bfa044" stroke="#876d23" stroke-width="1.5"/>
+  <circle cx="32" cy="31" r="18" fill="#dfc058" opacity="0.8"/>
+  <circle cx="30" cy="28" r="7" fill="#fff5b0" opacity="0.9"/>
+</svg>

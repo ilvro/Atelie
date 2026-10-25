@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 60" width="400" height="60">
+  <g stroke="#000000" stroke-width="2.2" fill="none" stroke-linecap="round">
+    <!-- Center knot -->
+    <circle cx="200" cy="30" r="5" fill="#000000"/>
+    <!-- Left spiral -->
+    <path d="M 190 30 C 150 20 130 46 90 46 C 50 46 30 20 50 16 C 65 14 70 28 58 32 C 48 35 40 28 42 22"/>
+    <!-- Right spiral -->
+    <path d="M 210 30 C 250 20 270 46 310 46 C 350 46 370 20 350 16 C 335 14 330 28 342 32 C 352 35 360 28 358 22"/>
+  </g>
+</svg>

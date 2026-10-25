@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 60" width="400" height="60">
+  <!-- Central rosette -->
+  <circle cx="200" cy="30" r="4" fill="#000000"/>
+  <!-- Leaves -->
+  <path d="M 185 30 Q 160 16 140 28 Q 165 38 185 30 Z" fill="#000000"/>
+  <path d="M 215 30 Q 240 16 260 28 Q 235 38 215 30 Z" fill="#000000"/>
+  <path d="M 130 28 Q 105 14 85 28 Q 110 38 130 28 Z" fill="#000000"/>
+  <path d="M 270 28 Q 295 14 315 28 Q 290 38 270 28 Z" fill="#000000"/>
+  <!-- Stem -->
+  <path d="M 40 30 C 80 20 140 36 200 30 C 260 36 320 20 360 30" fill="none" stroke="#000000" stroke-width="2"/>
+</svg>

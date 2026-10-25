@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-25T00:13:43.496Z",
+  "generatedAt": "2026-10-25T00:44:50.576Z",
   "items": [
     {
       "id": "casa-papel-oficio-branco-novo",
@@ -1712,6 +1712,2536 @@
       "preview": "previews/casa-rasgos-4.webp",
       "width": 2048,
       "height": 2048,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-confidencial",
+      "kind": "element",
+      "name": "Carimbo · Confidencial",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "confidencial"
+      ],
+      "file": "elementos/casa-carimbo-confidencial.svg",
+      "preview": "previews/casa-carimbo-confidencial.webp",
+      "width": 446,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-ultra-secreto",
+      "kind": "element",
+      "name": "Carimbo · Ultra Secreto",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "ultra secreto"
+      ],
+      "file": "elementos/casa-carimbo-ultra-secreto.svg",
+      "preview": "previews/casa-carimbo-ultra-secreto.webp",
+      "width": 473,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-secreto",
+      "kind": "element",
+      "name": "Carimbo · Secreto",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "secreto"
+      ],
+      "file": "elementos/casa-carimbo-secreto.svg",
+      "preview": "previews/casa-carimbo-secreto.webp",
+      "width": 278,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-arquivado",
+      "kind": "element",
+      "name": "Carimbo · Arquivado",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "arquivado"
+      ],
+      "file": "elementos/casa-carimbo-arquivado.svg",
+      "preview": "previews/casa-carimbo-arquivado.webp",
+      "width": 345,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-urgente",
+      "kind": "element",
+      "name": "Carimbo · Urgente",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "urgente"
+      ],
+      "file": "elementos/casa-carimbo-urgente.svg",
+      "preview": "previews/casa-carimbo-urgente.webp",
+      "width": 278,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-recebido",
+      "kind": "element",
+      "name": "Carimbo · Recebido",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "recebido"
+      ],
+      "file": "elementos/casa-carimbo-recebido.svg",
+      "preview": "previews/casa-carimbo-recebido.webp",
+      "width": 311,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-aprovado",
+      "kind": "element",
+      "name": "Carimbo · Aprovado",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "aprovado"
+      ],
+      "file": "elementos/casa-carimbo-aprovado.svg",
+      "preview": "previews/casa-carimbo-aprovado.webp",
+      "width": 311,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-negado",
+      "kind": "element",
+      "name": "Carimbo · Negado",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "negado"
+      ],
+      "file": "elementos/casa-carimbo-negado.svg",
+      "preview": "previews/casa-carimbo-negado.webp",
+      "width": 244,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-copia",
+      "kind": "element",
+      "name": "Carimbo · Cópia",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "copia"
+      ],
+      "file": "elementos/casa-carimbo-copia.svg",
+      "preview": "previews/casa-carimbo-copia.webp",
+      "width": 211,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-original",
+      "kind": "element",
+      "name": "Carimbo · Original",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "original"
+      ],
+      "file": "elementos/casa-carimbo-original.svg",
+      "preview": "previews/casa-carimbo-original.webp",
+      "width": 311,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-classificado",
+      "kind": "element",
+      "name": "Carimbo · Classificado",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "classificado"
+      ],
+      "file": "elementos/casa-carimbo-classificado.svg",
+      "preview": "previews/casa-carimbo-classificado.webp",
+      "width": 446,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-pago",
+      "kind": "element",
+      "name": "Carimbo · Pago",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "pago"
+      ],
+      "file": "elementos/casa-carimbo-pago.svg",
+      "preview": "previews/casa-carimbo-pago.webp",
+      "width": 177,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-verificado",
+      "kind": "element",
+      "name": "Carimbo · Verificado",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "verificado"
+      ],
+      "file": "elementos/casa-carimbo-verificado.svg",
+      "preview": "previews/casa-carimbo-verificado.webp",
+      "width": 379,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-arquivo-morto",
+      "kind": "element",
+      "name": "Carimbo · Arquivo Morto",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "arquivo morto"
+      ],
+      "file": "elementos/casa-carimbo-arquivo-morto.svg",
+      "preview": "previews/casa-carimbo-arquivo-morto.webp",
+      "width": 473,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-nao-divulgar",
+      "kind": "element",
+      "name": "Carimbo · Não Divulgar",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "nao divulgar"
+      ],
+      "file": "elementos/casa-carimbo-nao-divulgar.svg",
+      "preview": "previews/casa-carimbo-nao-divulgar.webp",
+      "width": 440,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-evidencia",
+      "kind": "element",
+      "name": "Carimbo · Evidência",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "evidencia"
+      ],
+      "file": "elementos/casa-carimbo-evidencia.svg",
+      "preview": "previews/casa-carimbo-evidencia.webp",
+      "width": 345,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-cancelado",
+      "kind": "element",
+      "name": "Carimbo · Cancelado",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "cancelado"
+      ],
+      "file": "elementos/casa-carimbo-cancelado.svg",
+      "preview": "previews/casa-carimbo-cancelado.webp",
+      "width": 345,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-devolver-remetente",
+      "kind": "element",
+      "name": "Carimbo · Devolver ao Remetente",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "tinta",
+        "devolver remetente"
+      ],
+      "file": "elementos/casa-carimbo-devolver-remetente.svg",
+      "preview": "previews/casa-carimbo-devolver-remetente.webp",
+      "width": 736,
+      "height": 88,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-retangulo-duplo",
+      "kind": "element",
+      "name": "Carimbo em branco · retângulo duplo",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "moldura",
+        "duplo",
+        "retângulo"
+      ],
+      "file": "elementos/casa-carimbo-retangulo-duplo.svg",
+      "preview": "previews/casa-carimbo-retangulo-duplo.webp",
+      "width": 360,
+      "height": 120,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-cantos-cortados",
+      "kind": "element",
+      "name": "Carimbo em branco · cantos cortados",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "moldura",
+        "chanfrado",
+        "cantos"
+      ],
+      "file": "elementos/casa-carimbo-cantos-cortados.svg",
+      "preview": "previews/casa-carimbo-cantos-cortados.webp",
+      "width": 340,
+      "height": 110,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-circulo-duplo",
+      "kind": "element",
+      "name": "Carimbo em branco · círculo duplo",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "moldura",
+        "círculo",
+        "duplo"
+      ],
+      "file": "elementos/casa-carimbo-circulo-duplo.svg",
+      "preview": "previews/casa-carimbo-circulo-duplo.webp",
+      "width": 220,
+      "height": 220,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-oval",
+      "kind": "element",
+      "name": "Carimbo em branco · oval",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "moldura",
+        "oval",
+        "elipse"
+      ],
+      "file": "elementos/casa-carimbo-oval.svg",
+      "preview": "previews/casa-carimbo-oval.webp",
+      "width": 320,
+      "height": 180,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-triangulo",
+      "kind": "element",
+      "name": "Carimbo em branco · triângulo",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "moldura",
+        "triângulo",
+        "aviso"
+      ],
+      "file": "elementos/casa-carimbo-triangulo.svg",
+      "preview": "previews/casa-carimbo-triangulo.webp",
+      "width": 240,
+      "height": 220,
+      "license": "própria"
+    },
+    {
+      "id": "casa-carimbo-data",
+      "kind": "element",
+      "name": "Carimbo em branco · data",
+      "category": "Carimbos",
+      "tags": [
+        "carimbo",
+        "moldura",
+        "data",
+        "dia",
+        "mês",
+        "ano"
+      ],
+      "file": "elementos/casa-carimbo-data.svg",
+      "preview": "previews/casa-carimbo-data.webp",
+      "width": 360,
+      "height": 140,
+      "license": "própria"
+    },
+    {
+      "id": "casa-selo-arquivo",
+      "kind": "element",
+      "name": "Selo · Selo do Arquivo",
+      "category": "Selos",
+      "tags": [
+        "selo",
+        "circular",
+        "arquivo",
+        "oficial"
+      ],
+      "file": "elementos/casa-selo-arquivo.svg",
+      "preview": "previews/casa-selo-arquivo.webp",
+      "width": 250,
+      "height": 250,
+      "license": "própria"
+    },
+    {
+      "id": "casa-selo-investigacao",
+      "kind": "element",
+      "name": "Selo · Departamento de Investigação",
+      "category": "Selos",
+      "tags": [
+        "selo",
+        "circular",
+        "investigação",
+        "polícia"
+      ],
+      "file": "elementos/casa-selo-investigacao.svg",
+      "preview": "previews/casa-selo-investigacao.webp",
+      "width": 250,
+      "height": 250,
+      "license": "própria"
+    },
+    {
+      "id": "casa-selo-cartorio",
+      "kind": "element",
+      "name": "Selo · Cartório",
+      "category": "Selos",
+      "tags": [
+        "selo",
+        "circular",
+        "cartório",
+        "notarial",
+        "fé pública"
+      ],
+      "file": "elementos/casa-selo-cartorio.svg",
+      "preview": "previews/casa-selo-cartorio.webp",
+      "width": 250,
+      "height": 250,
+      "license": "própria"
+    },
+    {
+      "id": "casa-selo-postagem",
+      "kind": "element",
+      "name": "Selo · Postagem",
+      "category": "Selos",
+      "tags": [
+        "selo",
+        "circular",
+        "correio",
+        "postagem",
+        "carimbo postal"
+      ],
+      "file": "elementos/casa-selo-postagem.svg",
+      "preview": "previews/casa-selo-postagem.webp",
+      "width": 320,
+      "height": 250,
+      "license": "própria"
+    },
+    {
+      "id": "casa-selo-estrela",
+      "kind": "element",
+      "name": "Selo em branco · estrela",
+      "category": "Selos",
+      "tags": [
+        "selo",
+        "circular",
+        "estrela",
+        "em branco"
+      ],
+      "file": "elementos/casa-selo-estrela.svg",
+      "preview": "previews/casa-selo-estrela.webp",
+      "width": 250,
+      "height": 250,
+      "license": "própria"
+    },
+    {
+      "id": "casa-selo-brasao",
+      "kind": "element",
+      "name": "Selo em branco · brasão",
+      "category": "Selos",
+      "tags": [
+        "selo",
+        "circular",
+        "brasão",
+        "escudo",
+        "em branco"
+      ],
+      "file": "elementos/casa-selo-brasao.svg",
+      "preview": "previews/casa-selo-brasao.webp",
+      "width": 250,
+      "height": 250,
+      "license": "própria"
+    },
+    {
+      "id": "casa-selo-monograma",
+      "kind": "element",
+      "name": "Selo em branco · monograma",
+      "category": "Selos",
+      "tags": [
+        "selo",
+        "circular",
+        "monograma",
+        "louros",
+        "em branco"
+      ],
+      "file": "elementos/casa-selo-monograma.svg",
+      "preview": "previews/casa-selo-monograma.webp",
+      "width": 250,
+      "height": 250,
+      "license": "própria"
+    },
+    {
+      "id": "casa-selo-coroa",
+      "kind": "element",
+      "name": "Selo em branco · coroa",
+      "category": "Selos",
+      "tags": [
+        "selo",
+        "circular",
+        "coroa",
+        "nobreza",
+        "em branco"
+      ],
+      "file": "elementos/casa-selo-coroa.svg",
+      "preview": "previews/casa-selo-coroa.webp",
+      "width": 250,
+      "height": 250,
+      "license": "própria"
+    },
+    {
+      "id": "casa-prendedor-clipe-prata-1",
+      "kind": "element",
+      "name": "Prendedor · clipe prateado (vertical)",
+      "category": "Prendedores",
+      "tags": [
+        "clipe",
+        "metal",
+        "prata",
+        "papel"
+      ],
+      "file": "elementos/casa-prendedor-clipe-prata-1.svg",
+      "preview": "previews/casa-prendedor-clipe-prata-1.webp",
+      "width": 60,
+      "height": 180,
+      "license": "própria"
+    },
+    {
+      "id": "casa-prendedor-clipe-prata-2",
+      "kind": "element",
+      "name": "Prendedor · clipe prateado (inclinado)",
+      "category": "Prendedores",
+      "tags": [
+        "clipe",
+        "metal",
+        "prata",
+        "inclinado"
+      ],
+      "file": "elementos/casa-prendedor-clipe-prata-2.svg",
+      "preview": "previews/casa-prendedor-clipe-prata-2.webp",
+      "width": 100,
+      "height": 180,
+      "license": "própria"
+    },
+    {
+      "id": "casa-prendedor-clipe-prata-3",
+      "kind": "element",
+      "name": "Prendedor · clipe prateado (diagonal)",
+      "category": "Prendedores",
+      "tags": [
+        "clipe",
+        "metal",
+        "prata",
+        "diagonal"
+      ],
+      "file": "elementos/casa-prendedor-clipe-prata-3.svg",
+      "preview": "previews/casa-prendedor-clipe-prata-3.webp",
+      "width": 110,
+      "height": 180,
+      "license": "própria"
+    },
+    {
+      "id": "casa-prendedor-clipe-ouro",
+      "kind": "element",
+      "name": "Prendedor · clipe dourado",
+      "category": "Prendedores",
+      "tags": [
+        "clipe",
+        "metal",
+        "dourado",
+        "ouro"
+      ],
+      "file": "elementos/casa-prendedor-clipe-ouro.svg",
+      "preview": "previews/casa-prendedor-clipe-ouro.webp",
+      "width": 60,
+      "height": 180,
+      "license": "própria"
+    },
+    {
+      "id": "casa-prendedor-clipe-pressao",
+      "kind": "element",
+      "name": "Prendedor · clipe de pressão",
+      "category": "Prendedores",
+      "tags": [
+        "clipe",
+        "pressão",
+        "binder",
+        "preto",
+        "metal"
+      ],
+      "file": "elementos/casa-prendedor-clipe-pressao.svg",
+      "preview": "previews/casa-prendedor-clipe-pressao.webp",
+      "width": 140,
+      "height": 160,
+      "license": "própria"
+    },
+    {
+      "id": "casa-prendedor-grampo",
+      "kind": "element",
+      "name": "Prendedor · grampo simples",
+      "category": "Prendedores",
+      "tags": [
+        "grampo",
+        "metal",
+        "grampeador"
+      ],
+      "file": "elementos/casa-prendedor-grampo.svg",
+      "preview": "previews/casa-prendedor-grampo.webp",
+      "width": 90,
+      "height": 40,
+      "license": "própria"
+    },
+    {
+      "id": "casa-prendedor-dois-grampos",
+      "kind": "element",
+      "name": "Prendedor · dois grampos",
+      "category": "Prendedores",
+      "tags": [
+        "grampos",
+        "duplo",
+        "metal",
+        "grampeador"
+      ],
+      "file": "elementos/casa-prendedor-dois-grampos.svg",
+      "preview": "previews/casa-prendedor-dois-grampos.webp",
+      "width": 100,
+      "height": 80,
+      "license": "própria"
+    },
+    {
+      "id": "casa-prendedor-alfinete-vermelho",
+      "kind": "element",
+      "name": "Prendedor · alfinete vermelho",
+      "category": "Prendedores",
+      "tags": [
+        "alfinete",
+        "vermelho",
+        "mural",
+        "mapa"
+      ],
+      "file": "elementos/casa-prendedor-alfinete-vermelho.svg",
+      "preview": "previews/casa-prendedor-alfinete-vermelho.webp",
+      "width": 80,
+      "height": 120,
+      "license": "própria"
+    },
+    {
+      "id": "casa-prendedor-tacha",
+      "kind": "element",
+      "name": "Prendedor · tacha de quadro",
+      "category": "Prendedores",
+      "tags": [
+        "tacha",
+        "percevejo",
+        "latão",
+        "metal",
+        "quadro"
+      ],
+      "file": "elementos/casa-prendedor-tacha.svg",
+      "preview": "previews/casa-prendedor-tacha.webp",
+      "width": 70,
+      "height": 70,
+      "license": "própria"
+    },
+    {
+      "id": "casa-prendedor-madeira",
+      "kind": "element",
+      "name": "Prendedor · prendedor de madeira",
+      "category": "Prendedores",
+      "tags": [
+        "prendedor",
+        "madeira",
+        "retrô",
+        "varal"
+      ],
+      "file": "elementos/casa-prendedor-madeira.svg",
+      "preview": "previews/casa-prendedor-madeira.webp",
+      "width": 60,
+      "height": 180,
+      "license": "própria"
+    },
+    {
+      "id": "casa-fita-crepe-curta",
+      "kind": "element",
+      "name": "Fita crepe · curta",
+      "category": "Fitas",
+      "tags": [
+        "fita",
+        "crepe",
+        "adesiva",
+        "curta"
+      ],
+      "file": "elementos/casa-fita-crepe-curta.svg",
+      "preview": "previews/casa-fita-crepe-curta.webp",
+      "width": 140,
+      "height": 60,
+      "license": "própria"
+    },
+    {
+      "id": "casa-fita-crepe-media",
+      "kind": "element",
+      "name": "Fita crepe · média",
+      "category": "Fitas",
+      "tags": [
+        "fita",
+        "crepe",
+        "adesiva",
+        "média"
+      ],
+      "file": "elementos/casa-fita-crepe-media.svg",
+      "preview": "previews/casa-fita-crepe-media.webp",
+      "width": 220,
+      "height": 60,
+      "license": "própria"
+    },
+    {
+      "id": "casa-fita-crepe-longa",
+      "kind": "element",
+      "name": "Fita crepe · longa",
+      "category": "Fitas",
+      "tags": [
+        "fita",
+        "crepe",
+        "adesiva",
+        "longa"
+      ],
+      "file": "elementos/casa-fita-crepe-longa.svg",
+      "preview": "previews/casa-fita-crepe-longa.webp",
+      "width": 320,
+      "height": 64,
+      "license": "própria"
+    },
+    {
+      "id": "casa-fita-crepe-diagonal",
+      "kind": "element",
+      "name": "Fita crepe · diagonal",
+      "category": "Fitas",
+      "tags": [
+        "fita",
+        "crepe",
+        "adesiva",
+        "diagonal",
+        "canto"
+      ],
+      "file": "elementos/casa-fita-crepe-diagonal.svg",
+      "preview": "previews/casa-fita-crepe-diagonal.webp",
+      "width": 180,
+      "height": 110,
+      "license": "própria"
+    },
+    {
+      "id": "casa-fita-crepe-rasgada",
+      "kind": "element",
+      "name": "Fita crepe · rasgada irregular",
+      "category": "Fitas",
+      "tags": [
+        "fita",
+        "crepe",
+        "adesiva",
+        "rasgada",
+        "irregular"
+      ],
+      "file": "elementos/casa-fita-crepe-rasgada.svg",
+      "preview": "previews/casa-fita-crepe-rasgada.webp",
+      "width": 170,
+      "height": 64,
+      "license": "própria"
+    },
+    {
+      "id": "casa-fita-crepe-ponta-reta",
+      "kind": "element",
+      "name": "Fita crepe · ponta reta",
+      "category": "Fitas",
+      "tags": [
+        "fita",
+        "crepe",
+        "adesiva",
+        "corte reto"
+      ],
+      "file": "elementos/casa-fita-crepe-ponta-reta.svg",
+      "preview": "previews/casa-fita-crepe-ponta-reta.webp",
+      "width": 190,
+      "height": 60,
+      "license": "própria"
+    },
+    {
+      "id": "casa-fita-transparente-curta",
+      "kind": "element",
+      "name": "Fita transparente · curta",
+      "category": "Fitas",
+      "tags": [
+        "fita",
+        "transparente",
+        "durex",
+        "adesiva",
+        "amarelada",
+        "curta"
+      ],
+      "file": "elementos/casa-fita-transparente-curta.svg",
+      "preview": "previews/casa-fita-transparente-curta.webp",
+      "width": 140,
+      "height": 54,
+      "license": "própria"
+    },
+    {
+      "id": "casa-fita-transparente-media",
+      "kind": "element",
+      "name": "Fita transparente · média",
+      "category": "Fitas",
+      "tags": [
+        "fita",
+        "transparente",
+        "durex",
+        "adesiva",
+        "amarelada",
+        "média"
+      ],
+      "file": "elementos/casa-fita-transparente-media.svg",
+      "preview": "previews/casa-fita-transparente-media.webp",
+      "width": 220,
+      "height": 56,
+      "license": "própria"
+    },
+    {
+      "id": "casa-fita-transparente-diagonal",
+      "kind": "element",
+      "name": "Fita transparente · diagonal",
+      "category": "Fitas",
+      "tags": [
+        "fita",
+        "transparente",
+        "durex",
+        "adesiva",
+        "diagonal",
+        "canto"
+      ],
+      "file": "elementos/casa-fita-transparente-diagonal.svg",
+      "preview": "previews/casa-fita-transparente-diagonal.webp",
+      "width": 170,
+      "height": 100,
+      "license": "própria"
+    },
+    {
+      "id": "casa-fita-isolante-media",
+      "kind": "element",
+      "name": "Fita isolante preta · média",
+      "category": "Fitas",
+      "tags": [
+        "fita",
+        "isolante",
+        "preta",
+        "adesiva",
+        "vinil"
+      ],
+      "file": "elementos/casa-fita-isolante-media.svg",
+      "preview": "previews/casa-fita-isolante-media.webp",
+      "width": 220,
+      "height": 60,
+      "license": "própria"
+    },
+    {
+      "id": "casa-fita-isolante-diagonal",
+      "kind": "element",
+      "name": "Fita isolante preta · diagonal",
+      "category": "Fitas",
+      "tags": [
+        "fita",
+        "isolante",
+        "preta",
+        "adesiva",
+        "vinil",
+        "diagonal"
+      ],
+      "file": "elementos/casa-fita-isolante-diagonal.svg",
+      "preview": "previews/casa-fita-isolante-diagonal.webp",
+      "width": 180,
+      "height": 110,
+      "license": "própria"
+    },
+    {
+      "id": "casa-etiqueta-pasta",
+      "kind": "element",
+      "name": "Etiqueta · pasta de arquivo",
+      "category": "Etiquetas",
+      "tags": [
+        "etiqueta",
+        "pasta",
+        "arquivo",
+        "ofício",
+        "adesiva"
+      ],
+      "file": "elementos/casa-etiqueta-pasta.svg",
+      "preview": "previews/casa-etiqueta-pasta.webp",
+      "width": 280,
+      "height": 120,
+      "license": "própria"
+    },
+    {
+      "id": "casa-etiqueta-arquivo-ilhos",
+      "kind": "element",
+      "name": "Etiqueta · arquivo com ilhós",
+      "category": "Etiquetas",
+      "tags": [
+        "etiqueta",
+        "tag",
+        "ilhós",
+        "barbante",
+        "arquivo",
+        "manila"
+      ],
+      "file": "elementos/casa-etiqueta-arquivo-ilhos.svg",
+      "preview": "previews/casa-etiqueta-arquivo-ilhos.webp",
+      "width": 340,
+      "height": 160,
+      "license": "própria"
+    },
+    {
+      "id": "casa-etiqueta-evidencia",
+      "kind": "element",
+      "name": "Etiqueta · evidência pericial",
+      "category": "Etiquetas",
+      "tags": [
+        "etiqueta",
+        "evidência",
+        "polícia",
+        "perícia",
+        "crime",
+        "investigação"
+      ],
+      "file": "elementos/casa-etiqueta-evidencia.svg",
+      "preview": "previews/casa-etiqueta-evidencia.webp",
+      "width": 320,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-etiqueta-cantoneira-preta",
+      "kind": "element",
+      "name": "Cantoneira de foto · preta (individual)",
+      "category": "Etiquetas",
+      "tags": [
+        "cantoneira",
+        "foto",
+        "álbum",
+        "preta",
+        "canto"
+      ],
+      "file": "elementos/casa-etiqueta-cantoneira-preta.svg",
+      "preview": "previews/casa-etiqueta-cantoneira-preta.webp",
+      "width": 80,
+      "height": 80,
+      "license": "própria"
+    },
+    {
+      "id": "casa-etiqueta-cantoneira-dourada",
+      "kind": "element",
+      "name": "Cantoneira de foto · dourada (individual)",
+      "category": "Etiquetas",
+      "tags": [
+        "cantoneira",
+        "foto",
+        "álbum",
+        "dourada",
+        "ornada",
+        "canto"
+      ],
+      "file": "elementos/casa-etiqueta-cantoneira-dourada.svg",
+      "preview": "previews/casa-etiqueta-cantoneira-dourada.webp",
+      "width": 80,
+      "height": 80,
+      "license": "própria"
+    },
+    {
+      "id": "casa-etiqueta-cantoneira-kraft",
+      "kind": "element",
+      "name": "Cantoneira de foto · kraft (individual)",
+      "category": "Etiquetas",
+      "tags": [
+        "cantoneira",
+        "foto",
+        "álbum",
+        "kraft",
+        "papel",
+        "canto"
+      ],
+      "file": "elementos/casa-etiqueta-cantoneira-kraft.svg",
+      "preview": "previews/casa-etiqueta-cantoneira-kraft.webp",
+      "width": 80,
+      "height": 80,
+      "license": "própria"
+    },
+    {
+      "id": "casa-etiqueta-cantoneiras-foto-pretas",
+      "kind": "element",
+      "name": "Cantoneiras de foto (conjunto 4) · pretas",
+      "category": "Etiquetas",
+      "tags": [
+        "cantoneiras",
+        "conjunto",
+        "foto",
+        "álbum",
+        "preto",
+        "moldura"
+      ],
+      "file": "elementos/casa-etiqueta-cantoneiras-foto-pretas.svg",
+      "preview": "previews/casa-etiqueta-cantoneiras-foto-pretas.webp",
+      "width": 400,
+      "height": 300,
+      "license": "própria"
+    },
+    {
+      "id": "casa-etiqueta-cantoneiras-foto-douradas",
+      "kind": "element",
+      "name": "Cantoneiras de foto (conjunto 4) · douradas",
+      "category": "Etiquetas",
+      "tags": [
+        "cantoneiras",
+        "conjunto",
+        "foto",
+        "álbum",
+        "dourado",
+        "moldura"
+      ],
+      "file": "elementos/casa-etiqueta-cantoneiras-foto-douradas.svg",
+      "preview": "previews/casa-etiqueta-cantoneiras-foto-douradas.webp",
+      "width": 400,
+      "height": 300,
+      "license": "própria"
+    },
+    {
+      "id": "casa-lacre-vermelho-liso",
+      "kind": "element",
+      "name": "Lacre de cera · vermelho (liso)",
+      "category": "Lacres",
+      "tags": [
+        "lacre",
+        "cera",
+        "vermelho",
+        "liso",
+        "carta",
+        "envelope"
+      ],
+      "file": "elementos/casa-lacre-vermelho-liso.svg",
+      "preview": "previews/casa-lacre-vermelho-liso.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-lacre-vermelho-brasao",
+      "kind": "element",
+      "name": "Lacre de cera · vermelho (com brasão)",
+      "category": "Lacres",
+      "tags": [
+        "lacre",
+        "cera",
+        "vermelho",
+        "brasão",
+        "flor-de-lis",
+        "carta",
+        "oficial"
+      ],
+      "file": "elementos/casa-lacre-vermelho-brasao.svg",
+      "preview": "previews/casa-lacre-vermelho-brasao.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-lacre-verde-liso",
+      "kind": "element",
+      "name": "Lacre de cera · verde (liso)",
+      "category": "Lacres",
+      "tags": [
+        "lacre",
+        "cera",
+        "verde",
+        "liso",
+        "carta",
+        "envelope"
+      ],
+      "file": "elementos/casa-lacre-verde-liso.svg",
+      "preview": "previews/casa-lacre-verde-liso.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-lacre-verde-brasao",
+      "kind": "element",
+      "name": "Lacre de cera · verde (com brasão)",
+      "category": "Lacres",
+      "tags": [
+        "lacre",
+        "cera",
+        "verde",
+        "brasão",
+        "flor-de-lis",
+        "carta",
+        "oficial"
+      ],
+      "file": "elementos/casa-lacre-verde-brasao.svg",
+      "preview": "previews/casa-lacre-verde-brasao.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-lacre-preto-liso",
+      "kind": "element",
+      "name": "Lacre de cera · preto (liso)",
+      "category": "Lacres",
+      "tags": [
+        "lacre",
+        "cera",
+        "preto",
+        "liso",
+        "carta",
+        "envelope"
+      ],
+      "file": "elementos/casa-lacre-preto-liso.svg",
+      "preview": "previews/casa-lacre-preto-liso.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-lacre-preto-brasao",
+      "kind": "element",
+      "name": "Lacre de cera · preto (com brasão)",
+      "category": "Lacres",
+      "tags": [
+        "lacre",
+        "cera",
+        "preto",
+        "brasão",
+        "flor-de-lis",
+        "carta",
+        "oficial"
+      ],
+      "file": "elementos/casa-lacre-preto-brasao.svg",
+      "preview": "previews/casa-lacre-preto-brasao.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-lacre-dourado-liso",
+      "kind": "element",
+      "name": "Lacre de cera · dourado (liso)",
+      "category": "Lacres",
+      "tags": [
+        "lacre",
+        "cera",
+        "dourado",
+        "liso",
+        "carta",
+        "envelope"
+      ],
+      "file": "elementos/casa-lacre-dourado-liso.svg",
+      "preview": "previews/casa-lacre-dourado-liso.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-lacre-dourado-brasao",
+      "kind": "element",
+      "name": "Lacre de cera · dourado (com brasão)",
+      "category": "Lacres",
+      "tags": [
+        "lacre",
+        "cera",
+        "dourado",
+        "brasão",
+        "flor-de-lis",
+        "carta",
+        "oficial"
+      ],
+      "file": "elementos/casa-lacre-dourado-brasao.svg",
+      "preview": "previews/casa-lacre-dourado-brasao.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-moldura-vitoriana-1",
+      "kind": "element",
+      "name": "Moldura · vitoriana arabesco",
+      "category": "Molduras",
+      "tags": [
+        "moldura",
+        "vitoriana",
+        "arabesco",
+        "ornada",
+        "elegante",
+        "filigrana"
+      ],
+      "file": "elementos/casa-moldura-vitoriana-1.svg",
+      "preview": "previews/casa-moldura-vitoriana-1.webp",
+      "width": 800,
+      "height": 600,
+      "license": "própria"
+    },
+    {
+      "id": "casa-moldura-vitoriana-2",
+      "kind": "element",
+      "name": "Moldura · vitoriana rendada",
+      "category": "Molduras",
+      "tags": [
+        "moldura",
+        "vitoriana",
+        "rendada",
+        "antiga",
+        "rococó"
+      ],
+      "file": "elementos/casa-moldura-vitoriana-2.svg",
+      "preview": "previews/casa-moldura-vitoriana-2.webp",
+      "width": 800,
+      "height": 600,
+      "license": "própria"
+    },
+    {
+      "id": "casa-moldura-vitoriana-3",
+      "kind": "element",
+      "name": "Moldura · vitoriana floral",
+      "category": "Molduras",
+      "tags": [
+        "moldura",
+        "vitoriana",
+        "floral",
+        "louros",
+        "clássica"
+      ],
+      "file": "elementos/casa-moldura-vitoriana-3.svg",
+      "preview": "previews/casa-moldura-vitoriana-3.webp",
+      "width": 800,
+      "height": 600,
+      "license": "própria"
+    },
+    {
+      "id": "casa-moldura-art-deco-1",
+      "kind": "element",
+      "name": "Moldura · art déco geométrica",
+      "category": "Molduras",
+      "tags": [
+        "moldura",
+        "art déco",
+        "anos 20",
+        "geométrica",
+        "degraus"
+      ],
+      "file": "elementos/casa-moldura-art-deco-1.svg",
+      "preview": "previews/casa-moldura-art-deco-1.webp",
+      "width": 800,
+      "height": 600,
+      "license": "própria"
+    },
+    {
+      "id": "casa-moldura-art-deco-2",
+      "kind": "element",
+      "name": "Moldura · art déco leque",
+      "category": "Molduras",
+      "tags": [
+        "moldura",
+        "art déco",
+        "leque",
+        "anos 30",
+        "raios"
+      ],
+      "file": "elementos/casa-moldura-art-deco-2.svg",
+      "preview": "previews/casa-moldura-art-deco-2.webp",
+      "width": 800,
+      "height": 600,
+      "license": "própria"
+    },
+    {
+      "id": "casa-moldura-medieval-1",
+      "kind": "element",
+      "name": "Moldura · medieval iluminura",
+      "category": "Molduras",
+      "tags": [
+        "moldura",
+        "medieval",
+        "iluminura",
+        "celta",
+        "entrelaçado"
+      ],
+      "file": "elementos/casa-moldura-medieval-1.svg",
+      "preview": "previews/casa-moldura-medieval-1.webp",
+      "width": 800,
+      "height": 600,
+      "license": "própria"
+    },
+    {
+      "id": "casa-moldura-medieval-2",
+      "kind": "element",
+      "name": "Moldura · medieval arco gótico",
+      "category": "Molduras",
+      "tags": [
+        "moldura",
+        "medieval",
+        "gótica",
+        "arcos",
+        "manuscrito"
+      ],
+      "file": "elementos/casa-moldura-medieval-2.svg",
+      "preview": "previews/casa-moldura-medieval-2.webp",
+      "width": 800,
+      "height": 600,
+      "license": "própria"
+    },
+    {
+      "id": "casa-moldura-diploma-1",
+      "kind": "element",
+      "name": "Moldura · diploma certificado",
+      "category": "Molduras",
+      "tags": [
+        "moldura",
+        "diploma",
+        "certificado",
+        "oficial",
+        "guilhoché"
+      ],
+      "file": "elementos/casa-moldura-diploma-1.svg",
+      "preview": "previews/casa-moldura-diploma-1.webp",
+      "width": 800,
+      "height": 600,
+      "license": "própria"
+    },
+    {
+      "id": "casa-moldura-diploma-2",
+      "kind": "element",
+      "name": "Moldura · diploma meandro",
+      "category": "Molduras",
+      "tags": [
+        "moldura",
+        "diploma",
+        "meandro",
+        "grega",
+        "certificado"
+      ],
+      "file": "elementos/casa-moldura-diploma-2.svg",
+      "preview": "previews/casa-moldura-diploma-2.webp",
+      "width": 800,
+      "height": 600,
+      "license": "própria"
+    },
+    {
+      "id": "casa-moldura-fio-duplo-retangular",
+      "kind": "element",
+      "name": "Moldura · fio duplo simples",
+      "category": "Molduras",
+      "tags": [
+        "moldura",
+        "simples",
+        "fio duplo",
+        "retangular",
+        "clássica"
+      ],
+      "file": "elementos/casa-moldura-fio-duplo-retangular.svg",
+      "preview": "previews/casa-moldura-fio-duplo-retangular.webp",
+      "width": 800,
+      "height": 600,
+      "license": "própria"
+    },
+    {
+      "id": "casa-moldura-fio-duplo-cantos-cortados",
+      "kind": "element",
+      "name": "Moldura · fio duplo cantos cortados",
+      "category": "Molduras",
+      "tags": [
+        "moldura",
+        "fio duplo",
+        "chanfrada",
+        "cantos cortados"
+      ],
+      "file": "elementos/casa-moldura-fio-duplo-cantos-cortados.svg",
+      "preview": "previews/casa-moldura-fio-duplo-cantos-cortados.webp",
+      "width": 800,
+      "height": 600,
+      "license": "própria"
+    },
+    {
+      "id": "casa-moldura-polaroide",
+      "kind": "element",
+      "name": "Moldura · foto instantânea polaroide",
+      "category": "Molduras",
+      "tags": [
+        "moldura",
+        "polaroide",
+        "foto",
+        "instantânea",
+        "borda branca"
+      ],
+      "file": "elementos/casa-moldura-polaroide.svg",
+      "preview": "previews/casa-moldura-polaroide.webp",
+      "width": 500,
+      "height": 600,
+      "license": "própria"
+    },
+    {
+      "id": "casa-moldura-foto-antiga-serrilhada",
+      "kind": "element",
+      "name": "Moldura · foto antiga borda serrilhada",
+      "category": "Molduras",
+      "tags": [
+        "moldura",
+        "foto",
+        "antiga",
+        "serrilhada",
+        "postal",
+        "vintage"
+      ],
+      "file": "elementos/casa-moldura-foto-antiga-serrilhada.svg",
+      "preview": "previews/casa-moldura-foto-antiga-serrilhada.webp",
+      "width": 600,
+      "height": 460,
+      "license": "própria"
+    },
+    {
+      "id": "casa-ornamento-fio-jornal-simples",
+      "kind": "element",
+      "name": "Fio de jornal · simples",
+      "category": "Ornamentos",
+      "tags": [
+        "ornamento",
+        "fio",
+        "jornal",
+        "divisória",
+        "linha",
+        "regra"
+      ],
+      "file": "elementos/casa-ornamento-fio-jornal-simples.svg",
+      "preview": "previews/casa-ornamento-fio-jornal-simples.webp",
+      "width": 600,
+      "height": 20,
+      "license": "própria"
+    },
+    {
+      "id": "casa-ornamento-fio-jornal-duplo",
+      "kind": "element",
+      "name": "Fio de jornal · duplo",
+      "category": "Ornamentos",
+      "tags": [
+        "ornamento",
+        "fio",
+        "jornal",
+        "divisória",
+        "duplo",
+        "coluna"
+      ],
+      "file": "elementos/casa-ornamento-fio-jornal-duplo.svg",
+      "preview": "previews/casa-ornamento-fio-jornal-duplo.webp",
+      "width": 600,
+      "height": 24,
+      "license": "própria"
+    },
+    {
+      "id": "casa-ornamento-fio-jornal-grosso-fino",
+      "kind": "element",
+      "name": "Fio de jornal · grosso e fino",
+      "category": "Ornamentos",
+      "tags": [
+        "ornamento",
+        "fio",
+        "jornal",
+        "divisória",
+        "oxford",
+        "seção"
+      ],
+      "file": "elementos/casa-ornamento-fio-jornal-grosso-fino.svg",
+      "preview": "previews/casa-ornamento-fio-jornal-grosso-fino.webp",
+      "width": 600,
+      "height": 26,
+      "license": "própria"
+    },
+    {
+      "id": "casa-ornamento-arabesco-simetrico",
+      "kind": "element",
+      "name": "Arabesco · simétrico clássico",
+      "category": "Ornamentos",
+      "tags": [
+        "ornamento",
+        "arabesco",
+        "simétrico",
+        "vinheta",
+        "divisória"
+      ],
+      "file": "elementos/casa-ornamento-arabesco-simetrico.svg",
+      "preview": "previews/casa-ornamento-arabesco-simetrico.webp",
+      "width": 400,
+      "height": 60,
+      "license": "própria"
+    },
+    {
+      "id": "casa-ornamento-arabesco-espiral",
+      "kind": "element",
+      "name": "Arabesco · espirais duplas",
+      "category": "Ornamentos",
+      "tags": [
+        "ornamento",
+        "arabesco",
+        "espiral",
+        "vinheta"
+      ],
+      "file": "elementos/casa-ornamento-arabesco-espiral.svg",
+      "preview": "previews/casa-ornamento-arabesco-espiral.webp",
+      "width": 400,
+      "height": 60,
+      "license": "própria"
+    },
+    {
+      "id": "casa-ornamento-arabesco-floral",
+      "kind": "element",
+      "name": "Arabesco · folhagem floral",
+      "category": "Ornamentos",
+      "tags": [
+        "ornamento",
+        "arabesco",
+        "floral",
+        "folhas",
+        "botânico"
+      ],
+      "file": "elementos/casa-ornamento-arabesco-floral.svg",
+      "preview": "previews/casa-ornamento-arabesco-floral.webp",
+      "width": 400,
+      "height": 60,
+      "license": "própria"
+    },
+    {
+      "id": "casa-ornamento-arabesco-rococo",
+      "kind": "element",
+      "name": "Arabesco · rococó curva em S",
+      "category": "Ornamentos",
+      "tags": [
+        "ornamento",
+        "arabesco",
+        "rococó",
+        "curva",
+        "elegante"
+      ],
+      "file": "elementos/casa-ornamento-arabesco-rococo.svg",
+      "preview": "previews/casa-ornamento-arabesco-rococo.webp",
+      "width": 360,
+      "height": 70,
+      "license": "própria"
+    },
+    {
+      "id": "casa-ornamento-canto-filigrana",
+      "kind": "element",
+      "name": "Canto ornamental · filigrana",
+      "category": "Ornamentos",
+      "tags": [
+        "ornamento",
+        "canto",
+        "cantoneira",
+        "filigrana",
+        "borda"
+      ],
+      "file": "elementos/casa-ornamento-canto-filigrana.svg",
+      "preview": "previews/casa-ornamento-canto-filigrana.webp",
+      "width": 120,
+      "height": 120,
+      "license": "própria"
+    },
+    {
+      "id": "casa-ornamento-canto-floral",
+      "kind": "element",
+      "name": "Canto ornamental · floral",
+      "category": "Ornamentos",
+      "tags": [
+        "ornamento",
+        "canto",
+        "floral",
+        "louro",
+        "botânico"
+      ],
+      "file": "elementos/casa-ornamento-canto-floral.svg",
+      "preview": "previews/casa-ornamento-canto-floral.webp",
+      "width": 120,
+      "height": 120,
+      "license": "própria"
+    },
+    {
+      "id": "casa-ornamento-canto-gotico",
+      "kind": "element",
+      "name": "Canto ornamental · gótico",
+      "category": "Ornamentos",
+      "tags": [
+        "ornamento",
+        "canto",
+        "gótico",
+        "medieval",
+        "trevo"
+      ],
+      "file": "elementos/casa-ornamento-canto-gotico.svg",
+      "preview": "previews/casa-ornamento-canto-gotico.webp",
+      "width": 120,
+      "height": 120,
+      "license": "própria"
+    },
+    {
+      "id": "casa-ornamento-canto-geometrico",
+      "kind": "element",
+      "name": "Canto ornamental · geométrico deco",
+      "category": "Ornamentos",
+      "tags": [
+        "ornamento",
+        "canto",
+        "geométrico",
+        "art déco",
+        "degraus"
+      ],
+      "file": "elementos/casa-ornamento-canto-geometrico.svg",
+      "preview": "previews/casa-ornamento-canto-geometrico.webp",
+      "width": 120,
+      "height": 120,
+      "license": "própria"
+    },
+    {
+      "id": "casa-ornamento-divisoria-estrelas",
+      "kind": "element",
+      "name": "Divisória · três estrelas",
+      "category": "Ornamentos",
+      "tags": [
+        "ornamento",
+        "divisória",
+        "estrelas",
+        "asteriscos",
+        "parágrafo",
+        "quebra"
+      ],
+      "file": "elementos/casa-ornamento-divisoria-estrelas.svg",
+      "preview": "previews/casa-ornamento-divisoria-estrelas.webp",
+      "width": 400,
+      "height": 40,
+      "license": "própria"
+    },
+    {
+      "id": "casa-ornamento-divisoria-losangos",
+      "kind": "element",
+      "name": "Divisória · losangos",
+      "category": "Ornamentos",
+      "tags": [
+        "ornamento",
+        "divisória",
+        "losangos",
+        "diamantes",
+        "seção"
+      ],
+      "file": "elementos/casa-ornamento-divisoria-losangos.svg",
+      "preview": "previews/casa-ornamento-divisoria-losangos.webp",
+      "width": 400,
+      "height": 40,
+      "license": "própria"
+    },
+    {
+      "id": "casa-ornamento-divisoria-florete",
+      "kind": "element",
+      "name": "Divisória · florete tipográfico",
+      "category": "Ornamentos",
+      "tags": [
+        "ornamento",
+        "divisória",
+        "florete",
+        "hedera",
+        "vinheta",
+        "tipografia"
+      ],
+      "file": "elementos/casa-ornamento-divisoria-florete.svg",
+      "preview": "previews/casa-ornamento-divisoria-florete.webp",
+      "width": 400,
+      "height": 40,
+      "license": "própria"
+    },
+    {
+      "id": "casa-emblema-escudo-aguia",
+      "kind": "element",
+      "name": "Emblema · escudo com águia",
+      "category": "Emblemas",
+      "tags": [
+        "emblema",
+        "brasão",
+        "escudo",
+        "águia",
+        "heráldica",
+        "imperial"
+      ],
+      "file": "elementos/casa-emblema-escudo-aguia.svg",
+      "preview": "previews/casa-emblema-escudo-aguia.webp",
+      "width": 300,
+      "height": 360,
+      "license": "própria"
+    },
+    {
+      "id": "casa-emblema-escudo-leao",
+      "kind": "element",
+      "name": "Emblema · escudo com leão",
+      "category": "Emblemas",
+      "tags": [
+        "emblema",
+        "brasão",
+        "escudo",
+        "leão",
+        "heráldica",
+        "nobreza"
+      ],
+      "file": "elementos/casa-emblema-escudo-leao.svg",
+      "preview": "previews/casa-emblema-escudo-leao.webp",
+      "width": 300,
+      "height": 360,
+      "license": "própria"
+    },
+    {
+      "id": "casa-emblema-escudo-chave",
+      "kind": "element",
+      "name": "Emblema · escudo com chaves",
+      "category": "Emblemas",
+      "tags": [
+        "emblema",
+        "brasão",
+        "escudo",
+        "chaves",
+        "segredo",
+        "arquivo",
+        "cofre"
+      ],
+      "file": "elementos/casa-emblema-escudo-chave.svg",
+      "preview": "previews/casa-emblema-escudo-chave.webp",
+      "width": 300,
+      "height": 360,
+      "license": "própria"
+    },
+    {
+      "id": "casa-emblema-policia-estrela",
+      "kind": "element",
+      "name": "Emblema · distintivo de polícia",
+      "category": "Emblemas",
+      "tags": [
+        "emblema",
+        "distintivo",
+        "polícia",
+        "estrela",
+        "xerife",
+        "investigador"
+      ],
+      "file": "elementos/casa-emblema-policia-estrela.svg",
+      "preview": "previews/casa-emblema-policia-estrela.webp",
+      "width": 320,
+      "height": 320,
+      "license": "própria"
+    },
+    {
+      "id": "casa-emblema-medico-bastao",
+      "kind": "element",
+      "name": "Emblema · bastão de esculápio médico",
+      "category": "Emblemas",
+      "tags": [
+        "emblema",
+        "médico",
+        "saúde",
+        "esculápio",
+        "serpente",
+        "bastão",
+        "hospital"
+      ],
+      "file": "elementos/casa-emblema-medico-bastao.svg",
+      "preview": "previews/casa-emblema-medico-bastao.webp",
+      "width": 300,
+      "height": 360,
+      "license": "própria"
+    },
+    {
+      "id": "casa-emblema-universidade-livro-tocha",
+      "kind": "element",
+      "name": "Emblema · universidade livro e tocha",
+      "category": "Emblemas",
+      "tags": [
+        "emblema",
+        "universidade",
+        "acadêmico",
+        "livro",
+        "tocha",
+        "saber",
+        "ciência"
+      ],
+      "file": "elementos/casa-emblema-universidade-livro-tocha.svg",
+      "preview": "previews/casa-emblema-universidade-livro-tocha.webp",
+      "width": 300,
+      "height": 360,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-sigilo-1",
+      "kind": "element",
+      "name": "Sigilo · círculo e trindade de lâminas",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "sigilo",
+        "oculto",
+        "magia",
+        "hermético",
+        "ritual"
+      ],
+      "file": "elementos/casa-simbolo-sigilo-1.svg",
+      "preview": "previews/casa-simbolo-sigilo-1.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-sigilo-2",
+      "kind": "element",
+      "name": "Sigilo · portal de arcos cruzados",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "sigilo",
+        "oculto",
+        "magia",
+        "hermético",
+        "ritual"
+      ],
+      "file": "elementos/casa-simbolo-sigilo-2.svg",
+      "preview": "previews/casa-simbolo-sigilo-2.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-sigilo-3",
+      "kind": "element",
+      "name": "Sigilo · constelação orbital",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "sigilo",
+        "oculto",
+        "magia",
+        "hermético",
+        "ritual"
+      ],
+      "file": "elementos/casa-simbolo-sigilo-3.svg",
+      "preview": "previews/casa-simbolo-sigilo-3.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-sigilo-4",
+      "kind": "element",
+      "name": "Sigilo · âncora abissal",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "sigilo",
+        "oculto",
+        "magia",
+        "hermético",
+        "ritual"
+      ],
+      "file": "elementos/casa-simbolo-sigilo-4.svg",
+      "preview": "previews/casa-simbolo-sigilo-4.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-sigilo-5",
+      "kind": "element",
+      "name": "Sigilo · olho das sete esferas",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "sigilo",
+        "oculto",
+        "magia",
+        "hermético",
+        "ritual"
+      ],
+      "file": "elementos/casa-simbolo-sigilo-5.svg",
+      "preview": "previews/casa-simbolo-sigilo-5.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-sigilo-6",
+      "kind": "element",
+      "name": "Sigilo · bússola dos ventos velados",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "sigilo",
+        "oculto",
+        "magia",
+        "hermético",
+        "ritual"
+      ],
+      "file": "elementos/casa-simbolo-sigilo-6.svg",
+      "preview": "previews/casa-simbolo-sigilo-6.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-sigilo-7",
+      "kind": "element",
+      "name": "Sigilo · labirinto concêntrico",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "sigilo",
+        "oculto",
+        "magia",
+        "hermético",
+        "ritual"
+      ],
+      "file": "elementos/casa-simbolo-sigilo-7.svg",
+      "preview": "previews/casa-simbolo-sigilo-7.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-sigilo-8",
+      "kind": "element",
+      "name": "Sigilo · chifre da lua tríplice",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "sigilo",
+        "oculto",
+        "magia",
+        "hermético",
+        "ritual"
+      ],
+      "file": "elementos/casa-simbolo-sigilo-8.svg",
+      "preview": "previews/casa-simbolo-sigilo-8.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-sigilo-9",
+      "kind": "element",
+      "name": "Sigilo · cetro hermético",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "sigilo",
+        "oculto",
+        "magia",
+        "hermético",
+        "ritual"
+      ],
+      "file": "elementos/casa-simbolo-sigilo-9.svg",
+      "preview": "previews/casa-simbolo-sigilo-9.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-sigilo-10",
+      "kind": "element",
+      "name": "Sigilo · hexagrama de contenção",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "sigilo",
+        "oculto",
+        "magia",
+        "hermético",
+        "ritual"
+      ],
+      "file": "elementos/casa-simbolo-sigilo-10.svg",
+      "preview": "previews/casa-simbolo-sigilo-10.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-sigilo-11",
+      "kind": "element",
+      "name": "Sigilo · nó espiral do abismo",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "sigilo",
+        "oculto",
+        "magia",
+        "hermético",
+        "ritual"
+      ],
+      "file": "elementos/casa-simbolo-sigilo-11.svg",
+      "preview": "previews/casa-simbolo-sigilo-11.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-sigilo-12",
+      "kind": "element",
+      "name": "Sigilo · chave do trono oculto",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "sigilo",
+        "oculto",
+        "magia",
+        "hermético",
+        "ritual"
+      ],
+      "file": "elementos/casa-simbolo-sigilo-12.svg",
+      "preview": "previews/casa-simbolo-sigilo-12.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-pentaculo",
+      "kind": "element",
+      "name": "Símbolo · pentáculo ritual",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "pentáculo",
+        "pentagrama",
+        "estrela",
+        "ritual",
+        "proteção"
+      ],
+      "file": "elementos/casa-simbolo-pentaculo.svg",
+      "preview": "previews/casa-simbolo-pentaculo.webp",
+      "width": 220,
+      "height": 220,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-olho-triangulo",
+      "kind": "element",
+      "name": "Símbolo · olho da providência",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "olho",
+        "triângulo",
+        "providência",
+        "maçonaria",
+        "iluminati"
+      ],
+      "file": "elementos/casa-simbolo-olho-triangulo.svg",
+      "preview": "previews/casa-simbolo-olho-triangulo.webp",
+      "width": 240,
+      "height": 220,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-espiral",
+      "kind": "element",
+      "name": "Símbolo · espiral cósmica",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "espiral",
+        "vórtice",
+        "infinito",
+        "celta",
+        "abismo"
+      ],
+      "file": "elementos/casa-simbolo-espiral.svg",
+      "preview": "previews/casa-simbolo-espiral.webp",
+      "width": 200,
+      "height": 200,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-maos",
+      "kind": "element",
+      "name": "Símbolo · mão mística quiromancia",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "mão",
+        "quiromancia",
+        "hamsá",
+        "olho",
+        "palma"
+      ],
+      "file": "elementos/casa-simbolo-maos.svg",
+      "preview": "previews/casa-simbolo-maos.webp",
+      "width": 220,
+      "height": 300,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-chave-antiga",
+      "kind": "element",
+      "name": "Símbolo · chave antiga esotérica",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "chave",
+        "antiga",
+        "segredo",
+        "portal",
+        "mistério"
+      ],
+      "file": "elementos/casa-simbolo-chave-antiga.svg",
+      "preview": "previews/casa-simbolo-chave-antiga.webp",
+      "width": 140,
+      "height": 320,
+      "license": "própria"
+    },
+    {
+      "id": "casa-simbolo-ampulheta",
+      "kind": "element",
+      "name": "Símbolo · ampulheta do tempo",
+      "category": "Símbolos",
+      "tags": [
+        "símbolo",
+        "ampulheta",
+        "tempo",
+        "areia",
+        "mortalidade",
+        "destino"
+      ],
+      "file": "elementos/casa-simbolo-ampulheta.svg",
+      "preview": "previews/casa-simbolo-ampulheta.webp",
+      "width": 200,
+      "height": 280,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-circulo-1",
+      "kind": "element",
+      "name": "Marca à mão · círculo simples",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "círculo",
+        "destaque",
+        "caneta",
+        "lápis"
+      ],
+      "file": "elementos/casa-marca-circulo-1.svg",
+      "preview": "previews/casa-marca-circulo-1.webp",
+      "width": 180,
+      "height": 100,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-circulo-2",
+      "kind": "element",
+      "name": "Marca à mão · círculo duplo",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "círculo",
+        "duplo",
+        "destaque",
+        "ênfase"
+      ],
+      "file": "elementos/casa-marca-circulo-2.svg",
+      "preview": "previews/casa-marca-circulo-2.webp",
+      "width": 190,
+      "height": 110,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-circulo-3",
+      "kind": "element",
+      "name": "Marca à mão · elipse sobreposta",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "círculo",
+        "elipse",
+        "rápido"
+      ],
+      "file": "elementos/casa-marca-circulo-3.svg",
+      "preview": "previews/casa-marca-circulo-3.webp",
+      "width": 210,
+      "height": 95,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-sublinhado-simples",
+      "kind": "element",
+      "name": "Marca à mão · sublinhado simples",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "sublinhado",
+        "linha",
+        "destaque"
+      ],
+      "file": "elementos/casa-marca-sublinhado-simples.svg",
+      "preview": "previews/casa-marca-sublinhado-simples.webp",
+      "width": 260,
+      "height": 30,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-sublinhado-duplo",
+      "kind": "element",
+      "name": "Marca à mão · sublinhado duplo",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "sublinhado",
+        "duplo",
+        "ênfase"
+      ],
+      "file": "elementos/casa-marca-sublinhado-duplo.svg",
+      "preview": "previews/casa-marca-sublinhado-duplo.webp",
+      "width": 260,
+      "height": 40,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-sublinhado-enfatico",
+      "kind": "element",
+      "name": "Marca à mão · sublinhado ondulado enfático",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "sublinhado",
+        "ondulado",
+        "zigue-zague",
+        "urgente"
+      ],
+      "file": "elementos/casa-marca-sublinhado-enfatico.svg",
+      "preview": "previews/casa-marca-sublinhado-enfatico.webp",
+      "width": 260,
+      "height": 36,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-seta-curva-direita",
+      "kind": "element",
+      "name": "Marca à mão · seta curva direita",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "seta",
+        "curva",
+        "direita",
+        "apontamento"
+      ],
+      "file": "elementos/casa-marca-seta-curva-direita.svg",
+      "preview": "previews/casa-marca-seta-curva-direita.webp",
+      "width": 140,
+      "height": 90,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-seta-curva-esquerda",
+      "kind": "element",
+      "name": "Marca à mão · seta curva esquerda",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "seta",
+        "curva",
+        "esquerda",
+        "retorno"
+      ],
+      "file": "elementos/casa-marca-seta-curva-esquerda.svg",
+      "preview": "previews/casa-marca-seta-curva-esquerda.webp",
+      "width": 140,
+      "height": 90,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-seta-em-u",
+      "kind": "element",
+      "name": "Marca à mão · seta em U retorno",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "seta",
+        "laço",
+        "retorno",
+        "loop"
+      ],
+      "file": "elementos/casa-marca-seta-em-u.svg",
+      "preview": "previews/casa-marca-seta-em-u.webp",
+      "width": 100,
+      "height": 120,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-seta-diagonal",
+      "kind": "element",
+      "name": "Marca à mão · seta diagonal rápida",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "seta",
+        "diagonal",
+        "rápida"
+      ],
+      "file": "elementos/casa-marca-seta-diagonal.svg",
+      "preview": "previews/casa-marca-seta-diagonal.webp",
+      "width": 110,
+      "height": 80,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-x-rapido",
+      "kind": "element",
+      "name": "Marca à mão · X de cancelamento",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "x",
+        "cancelado",
+        "erro",
+        "marcação"
+      ],
+      "file": "elementos/casa-marca-x-rapido.svg",
+      "preview": "previews/casa-marca-x-rapido.webp",
+      "width": 70,
+      "height": 70,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-interrogacao",
+      "kind": "element",
+      "name": "Marca à mão · ponto de interrogação",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "interrogação",
+        "dúvida",
+        "pergunta"
+      ],
+      "file": "elementos/casa-marca-interrogacao.svg",
+      "preview": "previews/casa-marca-interrogacao.webp",
+      "width": 60,
+      "height": 100,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-exclamacao",
+      "kind": "element",
+      "name": "Marca à mão · ponto de exclamação",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "exclamação",
+        "alerta",
+        "atenção",
+        "perigo"
+      ],
+      "file": "elementos/casa-marca-exclamacao.svg",
+      "preview": "previews/casa-marca-exclamacao.webp",
+      "width": 45,
+      "height": 100,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-tachado-simples",
+      "kind": "element",
+      "name": "Marca à mão · risco tachado simples",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "tachado",
+        "risco",
+        "censura",
+        "rasura"
+      ],
+      "file": "elementos/casa-marca-tachado-simples.svg",
+      "preview": "previews/casa-marca-tachado-simples.webp",
+      "width": 240,
+      "height": 24,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-tachado-duplo",
+      "kind": "element",
+      "name": "Marca à mão · risco tachado duplo",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "tachado",
+        "duplo",
+        "rasura"
+      ],
+      "file": "elementos/casa-marca-tachado-duplo.svg",
+      "preview": "previews/casa-marca-tachado-duplo.webp",
+      "width": 240,
+      "height": 28,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-tachado-rabisco",
+      "kind": "element",
+      "name": "Marca à mão · rabisco censura denso",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "censura",
+        "tarja",
+        "rabisco",
+        "segredo"
+      ],
+      "file": "elementos/casa-marca-tachado-rabisco.svg",
+      "preview": "previews/casa-marca-tachado-rabisco.webp",
+      "width": 240,
+      "height": 36,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-interrogacao-exclamacao",
+      "kind": "element",
+      "name": "Marca à mão · exclamação e dúvida na margem",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "margem",
+        "dúvida",
+        "espanto",
+        "anotação"
+      ],
+      "file": "elementos/casa-marca-interrogacao-exclamacao.svg",
+      "preview": "previews/casa-marca-interrogacao-exclamacao.webp",
+      "width": 80,
+      "height": 100,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-colchete-margem-reto",
+      "kind": "element",
+      "name": "Marca à mão · colchete reto de margem",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "colchete",
+        "margem",
+        "destaque",
+        "trecho"
+      ],
+      "file": "elementos/casa-marca-colchete-margem-reto.svg",
+      "preview": "previews/casa-marca-colchete-margem-reto.webp",
+      "width": 45,
+      "height": 180,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-colchete-margem-chaves",
+      "kind": "element",
+      "name": "Marca à mão · chave de margem",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "chave",
+        "margem",
+        "agrupamento"
+      ],
+      "file": "elementos/casa-marca-colchete-margem-chaves.svg",
+      "preview": "previews/casa-marca-colchete-margem-chaves.webp",
+      "width": 50,
+      "height": 180,
+      "license": "própria"
+    },
+    {
+      "id": "casa-marca-estrela",
+      "kind": "element",
+      "name": "Marca à mão · estrela de destaque",
+      "category": "Marcas",
+      "tags": [
+        "marca",
+        "feita à mão",
+        "estrela",
+        "importante",
+        "destaque"
+      ],
+      "file": "elementos/casa-marca-estrela.svg",
+      "preview": "previews/casa-marca-estrela.webp",
+      "width": 80,
+      "height": 80,
       "license": "própria"
     }
   ]

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <path d="M 15 105 L 15 15 L 105 15" fill="none" stroke="#000000" stroke-width="4"/>
+  <path d="M 24 95 L 24 24 L 95 24" fill="none" stroke="#000000" stroke-width="1.5"/>
+  <!-- Trefoil / gothic arch -->
+  <path d="M 24 70 C 24 45 45 24 70 24" fill="none" stroke="#000000" stroke-width="2.5"/>
+  <circle cx="48" cy="48" r="7" fill="#000000"/>
+</svg>

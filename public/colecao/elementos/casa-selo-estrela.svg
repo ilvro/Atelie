@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250" width="250" height="250">
+  <defs>
+    <filter id="sl-flt-2006">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="2006" result="noise"/>
+      <feComponentTransfer in="noise" result="thresh">
+        <feFuncA type="linear" slope="1.4" intercept="-0.15"/>
+      </feComponentTransfer>
+      <feComposite in="SourceGraphic" in2="thresh" operator="in"/>
+    </filter>
+  </defs>
+  <g filter="url(#sl-flt-2006)" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    
+    <circle cx="125" cy="125" r="115" stroke-width="4.5"/>
+    <circle cx="125" cy="125" r="105" stroke-width="1.8"/>
+    <circle cx="125" cy="125" r="70" stroke-width="2.5" stroke-dasharray="6 4"/>
+    <polygon points="125,97 134,116 153,116 138,129 143,148 125,137 107,148 112,129 97,116 116,116" stroke-width="2.5" fill="none"/>
+  </g>
+</svg>

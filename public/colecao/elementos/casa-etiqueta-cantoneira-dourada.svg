@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <polygon points="12,12 72,12 12,72" fill="rgba(0,0,0,0.22)"/>
+  <!-- Antique Gold triangle -->
+  <polygon points="10,10 70,10 10,70" fill="#c4a54c" stroke="#8c7028" stroke-width="1.2"/>
+  <polygon points="15,15 58,15 15,58" fill="none" stroke="#fad875" stroke-width="1"/>
+  <!-- Ornate filigree scroll in corner -->
+  <path d="M 16 16 Q 28 28 16 38 M 16 16 Q 28 28 38 16" fill="none" stroke="#705417" stroke-width="1.2"/>
+  <!-- Insertion slit -->
+  <line x1="20" y1="60" x2="60" y2="20" stroke="#523d0e" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

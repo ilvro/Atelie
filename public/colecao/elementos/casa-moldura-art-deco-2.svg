@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <rect x="25" y="25" width="750" height="550" fill="none" stroke="#000" stroke-width="3"/>
+  <rect x="36" y="36" width="728" height="528" fill="none" stroke="#000" stroke-width="1.2"/>
+  <g>
+    <!-- Fan rays from corner -->
+    <path d="M 25 25 L 85 40 M 25 25 L 75 55 M 25 25 L 60 70 M 25 25 L 40 85" stroke="#000" stroke-width="1.5" fill="none"/>
+    <path d="M 85 40 Q 60 60 40 85" stroke="#000" stroke-width="2.5" fill="none"/>
+    <circle cx="25" cy="25" r="5" fill="#000"/></g>
+  <g transform="translate(800, 0) scale(-1, 1)">
+    <!-- Fan rays from corner -->
+    <path d="M 25 25 L 85 40 M 25 25 L 75 55 M 25 25 L 60 70 M 25 25 L 40 85" stroke="#000" stroke-width="1.5" fill="none"/>
+    <path d="M 85 40 Q 60 60 40 85" stroke="#000" stroke-width="2.5" fill="none"/>
+    <circle cx="25" cy="25" r="5" fill="#000"/></g>
+  <g transform="translate(0, 600) scale(1, -1)">
+    <!-- Fan rays from corner -->
+    <path d="M 25 25 L 85 40 M 25 25 L 75 55 M 25 25 L 60 70 M 25 25 L 40 85" stroke="#000" stroke-width="1.5" fill="none"/>
+    <path d="M 85 40 Q 60 60 40 85" stroke="#000" stroke-width="2.5" fill="none"/>
+    <circle cx="25" cy="25" r="5" fill="#000"/></g>
+  <g transform="translate(800, 600) scale(-1, -1)">
+    <!-- Fan rays from corner -->
+    <path d="M 25 25 L 85 40 M 25 25 L 75 55 M 25 25 L 60 70 M 25 25 L 40 85" stroke="#000" stroke-width="1.5" fill="none"/>
+    <path d="M 85 40 Q 60 60 40 85" stroke="#000" stroke-width="2.5" fill="none"/>
+    <circle cx="25" cy="25" r="5" fill="#000"/></g>
+</svg>

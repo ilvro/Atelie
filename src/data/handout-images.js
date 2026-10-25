@@ -40,7 +40,26 @@ export function createHandoutImages({
         const blob = await fetchBlob(u);
         if (!blob) return null;
         if (typeof createImageBitmap === 'function') {
-          return await createImageBitmap(blob);
+          try {
+            return await createImageBitmap(blob);
+          } catch {
+            // SVGs cannot be decoded directly from Blob by createImageBitmap in Chromium.
+            // Fall back to HTMLImageElement decoding.
+            if (typeof Image !== 'undefined' && typeof URL !== 'undefined' && typeof URL.createObjectURL === 'function') {
+              const url = URL.createObjectURL(blob);
+              try {
+                const img = new Image();
+                await new Promise((resolve, reject) => {
+                  img.onload = () => resolve();
+                  img.onerror = () => reject(new Error('Image decode error'));
+                  img.src = url;
+                });
+                return await createImageBitmap(img);
+              } finally {
+                URL.revokeObjectURL(url);
+              }
+            }
+          }
         }
         return null;
       } catch (err) {

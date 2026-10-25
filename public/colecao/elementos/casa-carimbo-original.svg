@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 311 88" width="311" height="88">
+  <defs>
+    <filter id="st-flt-1011">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="1011" result="noise"/>
+      <feComponentTransfer in="noise" result="thresh">
+        <feFuncA type="linear" slope="1.4" intercept="-0.15"/>
+      </feComponentTransfer>
+      <feComposite in="SourceGraphic" in2="thresh" operator="in"/>
+    </filter>
+  </defs>
+  <g filter="url(#st-flt-1011)" stroke="#000000" fill="none">
+    <!-- Outer stamp border -->
+    <rect x="4" y="4" width="303" height="80" rx="2" stroke-width="4.5" stroke-linecap="square"/>
+    <!-- Text path -->
+    <path d="M 4.80 9.60 L 14.40 9.60 L 19.20 14.40 L 19.20 33.60 L 14.40 38.40 L 4.80 38.40 L 0.00 33.60 L 0.00 14.40 Z M 33.60 38.40 L 33.60 9.60 L 48.00 9.60 L 52.80 16.80 L 48.00 24.00 L 33.60 24.00 M 43.20 24.00 L 52.80 38.40 M 69.60 9.60 L 84.00 9.60 M 76.80 9.60 L 76.80 38.40 M 69.60 38.40 L 84.00 38.40 M 120.00 14.40 L 115.20 9.60 L 105.60 9.60 L 100.80 14.40 L 100.80 33.60 L 105.60 38.40 L 115.20 38.40 L 120.00 33.60 L 120.00 24.00 L 110.40 24.00 M 136.80 9.60 L 151.20 9.60 M 144.00 9.60 L 144.00 38.40 M 136.80 38.40 L 151.20 38.40 M 168.00 38.40 L 168.00 9.60 L 187.20 38.40 L 187.20 9.60 M 201.60 38.40 L 201.60 19.20 L 211.20 9.60 L 220.80 19.20 L 220.80 38.40 M 201.60 26.40 L 220.80 26.40 M 235.20 9.60 L 235.20 38.40 L 254.40 38.40" transform="translate(28, 20)" stroke-width="4.2" stroke-linecap="square" stroke-linejoin="miter"/>
+  </g>
+</svg>

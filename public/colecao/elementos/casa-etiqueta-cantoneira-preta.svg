@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <!-- Shadow -->
+  <polygon points="12,12 72,12 12,72" fill="rgba(0,0,0,0.22)"/>
+  <!-- Black triangular corner mount -->
+  <polygon points="10,10 70,10 10,70" fill="#222326" stroke="#101112" stroke-width="1.2"/>
+  <!-- Embossed inner triangle contour -->
+  <polygon points="15,15 58,15 15,58" fill="none" stroke="#44464c" stroke-width="1"/>
+  <!-- Photo insertion slot slit -->
+  <line x1="20" y1="60" x2="60" y2="20" stroke="#000000" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

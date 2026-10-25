@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 600" width="500" height="600">
+  <!-- Drop shadow -->
+  <rect x="18" y="18" width="464" height="564" rx="2" fill="rgba(0,0,0,0.22)"/>
+  <!-- Polaroid white/cream card body -->
+  <rect x="15" y="15" width="464" height="564" rx="2" fill="#faf9f5" stroke="#dedcd2" stroke-width="1"/>
+  <!-- Photo aperture / window inner cutout with subtle inner shadow -->
+  <rect x="42" y="42" width="410" height="410" fill="#1b1c20"/>
+  <rect x="42" y="42" width="410" height="410" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="2"/>
+  <!-- Bottom chin area: Y=452 to 579 is the classic blank writing area -->
+</svg>

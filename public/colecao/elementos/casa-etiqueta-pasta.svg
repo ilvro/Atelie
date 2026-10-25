@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 120" width="280" height="120">
+  <!-- Drop shadow -->
+  <rect x="12" y="12" width="256" height="96" rx="4" fill="rgba(0,0,0,0.18)"/>
+  <!-- Aged paper label base -->
+  <rect x="10" y="10" width="256" height="96" rx="4" fill="#faf4e6" stroke="#d6ccb2" stroke-width="1.2"/>
+  <!-- Top decorative red bar -->
+  <rect x="10" y="10" width="256" height="12" rx="4" fill="#ab2e2e"/>
+  <!-- Fine double border line -->
+  <rect x="18" y="28" width="240" height="70" fill="none" stroke="#2b4c7e" stroke-width="0.8"/>
+  <!-- Ruled notebook lines for writing -->
+  <line x1="28" y1="52" x2="248" y2="52" stroke="#4a6fa5" stroke-width="0.8" stroke-dasharray="2 1"/>
+  <line x1="28" y1="74" x2="248" y2="74" stroke="#4a6fa5" stroke-width="0.8" stroke-dasharray="2 1"/>
+</svg>

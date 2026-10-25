@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 280" width="200" height="280">
+  <g stroke="#000000" fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Top & Bottom wooden caps -->
+    <rect x="40" y="25" width="120" height="16" rx="3" fill="#000000"/>
+    <rect x="40" y="239" width="120" height="16" rx="3" fill="#000000"/>
+    <!-- Outer glass bulbs -->
+    <path d="M 55 41 C 55 95 90 135 95 140 C 90 145 55 185 55 239 L 145 239 C 145 185 110 145 105 140 C 110 135 145 95 145 41 Z" stroke-width="3.5"/>
+    <!-- Sand in top bulb draining -->
+    <path d="M 65 75 C 75 115 95 138 98 140 C 101 138 121 115 131 75 Z" fill="#000000"/>
+    <!-- Falling sand trickle -->
+    <line x1="100" y1="140" x2="100" y2="200" stroke-width="2" stroke-dasharray="2 3"/>
+    <!-- Accumulated sand in bottom bulb -->
+    <path d="M 62 235 C 70 215 90 200 100 200 C 110 200 130 215 138 235 Z" fill="#000000"/>
+    <!-- Side pillars -->
+    <line x1="45" y1="41" x2="45" y2="239" stroke-width="3"/>
+    <line x1="155" y1="41" x2="155" y2="239" stroke-width="3"/>
+  </g>
+</svg>

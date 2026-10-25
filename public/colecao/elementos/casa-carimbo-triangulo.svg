@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 220" width="240" height="220">
+  <defs>
+    <filter id="st-flt-1024">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="1024" result="noise"/>
+      <feComponentTransfer in="noise" result="thresh">
+        <feFuncA type="linear" slope="1.4" intercept="-0.15"/>
+      </feComponentTransfer>
+      <feComposite in="SourceGraphic" in2="thresh" operator="in"/>
+    </filter>
+  </defs>
+  <g filter="url(#st-flt-1024)" stroke="#000000" fill="none" stroke-linecap="square">
+    
+    <polygon points="120,8 230,210 10,210" stroke-width="5"/>
+    <polygon points="120,24 212,198 28,198" stroke-width="1.8"/>
+  </g>
+</svg>

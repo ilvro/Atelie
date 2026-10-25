@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 180" width="60" height="180">
+  <!-- Wooden body -->
+  <path d="M 16 10 L 44 10 L 40 75 L 42 165 L 34 172 L 26 172 L 18 165 L 20 75 Z" fill="#bfa27a" stroke="#8c704b" stroke-width="1.5"/>
+  <!-- Center metal coil spring -->
+  <rect x="15" y="72" width="30" height="14" rx="3" fill="#4d535e" stroke="#222" stroke-width="1"/>
+  <circle cx="30" cy="79" r="4" fill="#a4afbf"/>
+</svg>

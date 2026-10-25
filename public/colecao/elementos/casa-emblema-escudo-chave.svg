@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 360" width="300" height="360">
+  <g stroke="#000000" fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M 50 40 L 250 40 L 250 180 C 250 260 180 310 150 330 C 120 310 50 260 50 180 Z" stroke-width="4.5"/>
+    <path d="M 64 54 L 236 54 L 236 178 C 236 248 174 294 150 312 C 126 294 64 248 64 178 Z" stroke-width="1.8"/>
+    <!-- Crossed antique keys -->
+    <!-- Key 1: top-left to bottom-right -->
+    <line x1="95" y1="105" x2="205" y2="215" stroke-width="4"/>
+    <circle cx="85" cy="95" r="14" stroke-width="3.5"/>
+    <circle cx="85" cy="95" r="6" stroke-width="2"/>
+    <!-- Bits of Key 1 -->
+    <path d="M 205 215 L 217 203 M 197 223 L 209 211 M 197 223 L 189 231" stroke-width="3.5"/>
+    <!-- Key 2: top-right to bottom-left -->
+    <line x1="205" y1="105" x2="95" y2="215" stroke-width="4"/>
+    <circle cx="215" cy="95" r="14" stroke-width="3.5"/>
+    <circle cx="215" cy="95" r="6" stroke-width="2"/>
+    <!-- Bits of Key 2 -->
+    <path d="M 95 215 L 83 203 M 103 223 L 91 211 M 103 223 L 111 231" stroke-width="3.5"/>
+    <!-- Star above keys -->
+    <polygon points="150,80 154,90 165,90 156,97 160,108 150,101 140,108 144,97 135,90 146,90" fill="#000000"/>
+  </g>
+</svg>

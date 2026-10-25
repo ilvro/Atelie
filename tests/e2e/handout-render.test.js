@@ -806,6 +806,71 @@ test('handout rendering: multiply blend, clipping masks, adjustments, UV light, 
   const brightnessOff = (offFold[0] + offFold[1] + offFold[2]) / 3;
   assert.ok(brightnessFold < brightnessOff, `pixel on fold (${brightnessFold}) must be darker than 100px away (${brightnessOff})`);
 
+  // 13. Coleção da casa: camada com um carimbo SVG da coleção e tint vermelho -> pixels vermelhos dentro da caixa
+  const resStampTint = await page.evaluate(async () => {
+    const doc = {
+      schema: 1,
+      id: '00000000-0000-0000-0000-000000000013',
+      revision: 0,
+      name: 'Stamp Tint Test',
+      category: '',
+      tags: [],
+      page: { width: 400, height: 400, background: '#ffffff' },
+      layers: [
+        {
+          id: 'stamp-confidencial',
+          name: 'Carimbo Confidencial',
+          kind: 'image',
+          visible: true,
+          locked: false,
+          opacity: 1,
+          blend: 'normal',
+          x: 50,
+          y: 150,
+          width: 300,
+          height: 100,
+          rotation: 0,
+          clip: false,
+          light: 'both',
+          image: {
+            src: { library: 'casa-carimbo-confidencial' },
+            fit: 'contain',
+            crop: null,
+            flipX: false,
+            flipY: false,
+            filter: { brightness: 1, contrast: 1, saturation: 1, blur: 0 },
+            tint: { color: '#ff0000', amount: 1 },
+          },
+        },
+      ],
+      fields: [],
+      source: { kind: 'blank' },
+      back: null,
+    };
+
+    const r = await window.__atelie.renderHandout(doc, { scale: 1 });
+    const ctx = r.canvas.getContext('2d');
+    const imgData = ctx.getImageData(50, 150, 300, 100);
+    let redCount = 0;
+    for (let i = 0; i < imgData.data.length; i += 4) {
+      const red = imgData.data[i];
+      const green = imgData.data[i + 1];
+      const blue = imgData.data[i + 2];
+      if (red > 200 && green < 60 && blue < 60) {
+        redCount++;
+      }
+    }
+    return {
+      missing: r.missing,
+      redCount,
+      outsidePixel: Array.from(ctx.getImageData(10, 10, 1, 1).data),
+    };
+  });
+
+  assert.deepEqual(resStampTint.missing, [], 'carimbo da coleção não deve constar como ausente');
+  assert.ok(resStampTint.redCount > 50, `deve haver pixels vermelhos dentro da caixa do carimbo: ${resStampTint.redCount}`);
+  assert.deepEqual(resStampTint.outsidePixel, [255, 255, 255, 255], 'fora da caixa do carimbo deve ser branco');
+
   assert.deepEqual(errors, []);
 });
 

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" width="220" height="220">
+  <defs>
+    <filter id="st-flt-1022">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="1022" result="noise"/>
+      <feComponentTransfer in="noise" result="thresh">
+        <feFuncA type="linear" slope="1.4" intercept="-0.15"/>
+      </feComponentTransfer>
+      <feComposite in="SourceGraphic" in2="thresh" operator="in"/>
+    </filter>
+  </defs>
+  <g filter="url(#st-flt-1022)" stroke="#000000" fill="none" stroke-linecap="square">
+    
+    <circle cx="110" cy="110" r="102" stroke-width="4.5"/>
+    <circle cx="110" cy="110" r="92" stroke-width="1.8"/>
+    <circle cx="110" cy="110" r="64" stroke-width="1.2" stroke-dasharray="4 4"/>
+  </g>
+</svg>

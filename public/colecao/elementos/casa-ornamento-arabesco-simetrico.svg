@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 60" width="400" height="60">
+  <g stroke="#000000" stroke-width="2" fill="none" stroke-linecap="round">
+    <!-- Center diamond -->
+    <polygon points="200,22 208,30 200,38 192,30" fill="#000000"/>
+    <!-- Left scroll -->
+    <path d="M 190 30 C 150 30 140 12 110 12 C 80 12 70 34 50 34 C 30 34 20 24 20 18 C 20 12 28 12 28 18 C 28 26 10 32 6 32"/>
+    <path d="M 170 30 C 140 45 120 48 95 44 C 70 40 60 25 45 25"/>
+    <!-- Right scroll -->
+    <path d="M 210 30 C 250 30 260 12 290 12 C 320 12 330 34 350 34 C 370 34 380 24 380 18 C 380 12 372 12 372 18 C 372 26 390 32 394 32"/>
+    <path d="M 230 30 C 260 45 280 48 305 44 C 330 40 340 25 355 25"/>
+  </g>
+</svg>

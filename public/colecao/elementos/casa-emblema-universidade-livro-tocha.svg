@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 360" width="300" height="360">
+  <g stroke="#000000" fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Crest shield -->
+    <path d="M 50 50 L 250 50 L 250 190 C 250 265 180 315 150 330 C 120 315 50 265 50 190 Z" stroke-width="4.5"/>
+    <path d="M 64 64 L 236 64 L 236 186 C 236 250 176 298 150 312 C 124 298 64 250 64 186 Z" stroke-width="1.8"/>
+    <!-- Flaming torch in upper crest -->
+    <line x1="150" y1="120" x2="150" y2="175" stroke-width="4.5"/>
+    <polygon points="144,120 156,120 153,132 147,132" fill="#000000"/>
+    <!-- Torch flames -->
+    <path d="M 150 115 C 140 105 142 90 150 78 C 158 90 160 105 150 115 Z" fill="#000000"/>
+    <path d="M 148 95 C 135 88 138 78 145 70 C 148 80 154 88 148 95 Z" fill="#000000"/>
+    <!-- Open Book below torch -->
+    <!-- Left page -->
+    <path d="M 150 240 C 130 234 105 236 90 244 L 90 196 C 105 188 130 186 150 192 Z" stroke-width="2.5"/>
+    <!-- Right page -->
+    <path d="M 150 240 C 170 234 195 236 210 244 L 210 196 C 195 188 170 186 150 192 Z" stroke-width="2.5"/>
+    <!-- Book lines representing text -->
+    <line x1="100" y1="205" x2="140" y2="201" stroke-width="1.2"/>
+    <line x1="100" y1="215" x2="140" y2="211" stroke-width="1.2"/>
+    <line x1="100" y1="225" x2="140" y2="221" stroke-width="1.2"/>
+    <line x1="160" y1="201" x2="200" y2="205" stroke-width="1.2"/>
+    <line x1="160" y1="211" x2="200" y2="215" stroke-width="1.2"/>
+    <line x1="160" y1="221" x2="200" y2="225" stroke-width="1.2"/>
+  </g>
+</svg>

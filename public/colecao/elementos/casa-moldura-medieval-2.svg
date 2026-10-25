@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <rect x="25" y="25" width="750" height="550" fill="none" stroke="#000" stroke-width="3"/>
+  <rect x="35" y="35" width="730" height="530" fill="none" stroke="#000" stroke-width="1.2"/>
+  <g>
+    <path d="M 25 70 C 25 45 45 25 70 25" stroke="#000" stroke-width="3" fill="none"/>
+    <path d="M 35 60 C 35 45 45 35 60 35" stroke="#000" stroke-width="1.5" fill="none"/>
+    <circle cx="48" cy="48" r="4" fill="#000"/></g>
+  <g transform="translate(800, 0) scale(-1, 1)">
+    <path d="M 25 70 C 25 45 45 25 70 25" stroke="#000" stroke-width="3" fill="none"/>
+    <path d="M 35 60 C 35 45 45 35 60 35" stroke="#000" stroke-width="1.5" fill="none"/>
+    <circle cx="48" cy="48" r="4" fill="#000"/></g>
+  <g transform="translate(0, 600) scale(1, -1)">
+    <path d="M 25 70 C 25 45 45 25 70 25" stroke="#000" stroke-width="3" fill="none"/>
+    <path d="M 35 60 C 35 45 45 35 60 35" stroke="#000" stroke-width="1.5" fill="none"/>
+    <circle cx="48" cy="48" r="4" fill="#000"/></g>
+  <g transform="translate(800, 600) scale(-1, -1)">
+    <path d="M 25 70 C 25 45 45 25 70 25" stroke="#000" stroke-width="3" fill="none"/>
+    <path d="M 35 60 C 35 45 45 35 60 35" stroke="#000" stroke-width="1.5" fill="none"/>
+    <circle cx="48" cy="48" r="4" fill="#000"/></g>
+</svg>

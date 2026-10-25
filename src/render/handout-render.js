@@ -269,20 +269,33 @@ function drawLayer(ctx, layer, scale, loadedImages, missing, warnings) {
 
     if (img) {
       const filterStr = cssFilter(layer.image.filter, scale);
-      ctx.save();
-      if (filterStr && 'filter' in ctx) {
-        ctx.filter = filterStr;
-      }
       const rect = fitRect(img.width, img.height, { width: w, height: h }, layer.image.fit, layer.image.crop);
-      ctx.drawImage(img, rect.sx, rect.sy, rect.sw, rect.sh, rect.dx, rect.dy, rect.dw, rect.dh);
-      ctx.restore();
 
       if (layer.image.tint && layer.image.tint.amount > 0) {
+        const dw = Math.max(1, Math.round(rect.dw));
+        const dh = Math.max(1, Math.round(rect.dh));
+        const imgCanvas = createPageCanvas(dw, dh);
+        const imgCtx = imgCanvas.getContext('2d');
+
+        if (filterStr && 'filter' in imgCtx) {
+          imgCtx.filter = filterStr;
+        }
+        imgCtx.drawImage(img, rect.sx, rect.sy, rect.sw, rect.sh, 0, 0, dw, dh);
+
+        imgCtx.save();
+        imgCtx.globalCompositeOperation = 'source-atop';
+        imgCtx.globalAlpha = layer.image.tint.amount;
+        imgCtx.fillStyle = layer.image.tint.color;
+        imgCtx.fillRect(0, 0, dw, dh);
+        imgCtx.restore();
+
+        ctx.drawImage(imgCanvas, rect.dx, rect.dy, rect.dw, rect.dh);
+      } else {
         ctx.save();
-        ctx.globalCompositeOperation = 'source-atop';
-        ctx.globalAlpha = layer.image.tint.amount;
-        ctx.fillStyle = layer.image.tint.color;
-        ctx.fillRect(-w / 2, -h / 2, w, h);
+        if (filterStr && 'filter' in ctx) {
+          ctx.filter = filterStr;
+        }
+        ctx.drawImage(img, rect.sx, rect.sy, rect.sw, rect.sh, rect.dx, rect.dy, rect.dw, rect.dh);
         ctx.restore();
       }
     } else {

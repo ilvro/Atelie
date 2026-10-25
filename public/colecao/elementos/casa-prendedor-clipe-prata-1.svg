@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 180" width="60" height="180">
+  <!-- Soft drop shadow -->
+  <path d="M 18 165 L 18 40 C 18 20 44 20 44 40 L 44 140 C 44 154 26 154 26 140 L 26 65 C 26 56 36 56 36 65 L 36 125" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="6" stroke-linecap="round" transform="translate(3, 4)"/>
+  <!-- Silver paperclip body -->
+  <path d="M 18 165 L 18 40 C 18 20 44 20 44 40 L 44 140 C 44 154 26 154 26 140 L 26 65 C 26 56 36 56 36 65 L 36 125" fill="none" stroke="#7e8590" stroke-width="5.5" stroke-linecap="round"/>
+  <!-- Chrome highlight -->
+  <path d="M 18 165 L 18 40 C 18 20 44 20 44 40 L 44 140 C 44 154 26 154 26 140 L 26 65 C 26 56 36 56 36 65 L 36 125" fill="none" stroke="#e6edf8" stroke-width="2" stroke-linecap="round" transform="translate(-0.8, -0.8)"/>
+</svg>
