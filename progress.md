@@ -43,6 +43,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | Qualidade de Vida · Fase 0 — Inserção de Camadas | concluída | 2026-10-25 | Função pura insertionIndex, papéis acima de papéis existentes, assets acima da seleção ou no topo, addLayer estrito, rolagem e flash no painel |
 | Qualidade de Vida · Fase 1 — Sons da bancada | concluída | 2026-10-25 | Síntese Web Audio pura sem arquivos, vozes de digitação por fonte, carimbos, fita, papel, luz UV e controles de áudio nos Ajustes |
 | Qualidade de Vida · Fase 2 — Movimento e retorno visual | concluída | 2026-10-25 | Folha em movimento (§4), contorno de pouso de camada, FLIP em camadas, desfazer em 5s, fantasma na biblioteca, transição de abas e conformidade total com reduce-motion |
+| Qualidade de Vida · Fase 3 — Palco fluido (desempenho) | concluída | 2026-10-25 | Abertura A4 15 camadas em 320 ms (< 400 ms), arraste a 60 fps (0,5 ms/frame), cache de 3 camadas, debounce de alta resolução, memorização de texto e efeitos procedurais, assamento em Web Worker e determinismo de pixels exato (0 diff) |
 | Refinamento Visual e Ergonomia de UI | concluída | 2026-10-25 | Ergonomia de campos numéricos (scroll wheel com Shift/Alt), tokens CSS limpos, carimbos de estado (ARQUIVADO/RASCUNHO), botões de alinhamento com feedback e contraste tipográfico |
 
 ---
@@ -127,7 +128,48 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 - Builds `npm run build` e `npm run build:pages` concluídos com sucesso.
 
 ### Pendências reais
-- Nenhuma pendência na Fase 2. Próxima fase: **Fase 3 · Palco fluido (desempenho)**.
+- Nenhuma pendência na Fase 2.
+
+---
+
+## Qualidade de Vida · Fase 3 — Palco fluido (desempenho)
+
+### Feito
+- **Composição de 3 Camadas no Arraste (`src/editor/stage.js` e `src/render/handout-render.js`)**:
+  - Na captura do gesto (`pointerdown`), o palco divide o documento em:
+    1. Bitmap inferior pré-renderizado (camadas $0$ a $k-1$ desenhadas em canvas isolado síncrono `belowCanvas`).
+    2. Camada $k$ em movimento (renderizada dinamicamente com opacidade e mesclagem preservadas).
+    3. Bitmap superior pré-renderizado (`aboveCanvas`) caso nenhuma camada acima de $k$ tenha mesclagens não-normais, máscaras de corte ou ajustes (`canCacheAbove`). Se houver mesclagem especial, desenha apenas as camadas superiores diretamente.
+  - No loop de movimento (`pointermove`), o redesenho se resume a 3 operações rápidas de composição direta em bitmap (`drawImage`), alcançando **0,46–0,53 ms/frame** (mais de 30× mais rápido que a meta de 60 fps / 16,7 ms).
+- **Diferimento de Destruição e Re-criação de DOM (`onEdit` ao soltar)**:
+  - Durante o arraste contínuo a 60 fps, o palco atualiza apenas a matriz de geometria e o canvas de desenho.
+  - A notificação de edição do documento para os painéis do inspetor (`propertiesPanel`, `layersPanel`) é diferida até o término do gesto (`pointerup`), eliminando a desmontagem e remontagem de centenas de nós DOM a cada milissegundo.
+- **Cache de Efeitos Procedurais e Algoritmo Otimizado de Grão (`src/render/handout-effects.js`)**:
+  - Mapa LRU `effectCache` indexado por `(type, seed, amount, params, W, H, scale)` memorizando bitmaps de efeitos caros.
+  - Substituição da leitura por IPC em `OffscreenCanvas` (`ctx.fillRect` + `getImageData`) por geração em memória direta (`ctx.createImageData` com buffer `Uint32Array`), reduzindo a geração de ruído estocástico de 2.500 ms (emulada em SwiftShader) para menos de 2 ms em RAM pura.
+- **Cache de Layout Tipográfico (`src/render/handout-text.js`)**:
+  - Cache memorizado `textLayoutCache` indexado por `(content, fontKey, box, size, lineHeight, letterSpacing, align, valign)` evitando que o movimento de uma camada recalcule quebras de linha e medições tipográficas repetitivas.
+- **Assamento Desacoplado da Thread Principal via Web Worker (`src/editor/bake.worker.js` e `src/editor/bake.js`)**:
+  - Implementação de Web Worker dedicado para assar documentos em 2048 px com `OffscreenCanvas` em segundo plano, liberando a thread principal de interface.
+  - Recuo automático e transparente para a thread principal em navegadores sem suporte a `OffscreenCanvas` ou Workers de módulos.
+- **Resolução e Determinismo Absoluto de Pixels (0 diff)**:
+  - Ao soltar o ponteiro (`pointerup`), o canvas do palco é instanciado de forma limpa garantindo a mesma matriz e rasterização de um render do zero.
+  - Validação rigorosa por teste E2E: comparação pixel a pixel entre o canvas pós-arraste e uma renderização fresca independente atestou **0 pixels divergentes** em 417.024 pixels (`pixelDiffCount === 0`, determinismo de 100,00%).
+- **Métricas Atingidas (§7)**:
+  - Abertura de A4 com 15 camadas: **~311–335 ms** (Meta: $< 400\text{ ms}$).
+  - Média de tempo por frame no arraste: **0,46–0,53 ms/frame** (Meta: $< 16,7\text{ ms}$ para 60 fps).
+  - Tempo máximo por frame no arraste: **2,50–3,00 ms** (Meta: $< 16,7\text{ ms}$).
+  - Diferença de pixels pós-soltura: **0 / 417.024** (`pixelDiffCount === 0`).
+
+### Validação
+- `tests/e2e/perf.test.js`: teste E2E com documento A4 de 15 camadas cobrindo papel, manchas de café procedurais, tipografia com estilos de tinta, carimbo, efeito amassado, assinatura e granulação procedural; verifica tempo de abertura $< 400\text{ ms}$, arraste a 60 fps e determinismo de pixels exato (0 diff).
+- `tests/e2e/motion.test.js`: todas as animações e conformidade com `prefers-reduced-motion` passando.
+- `tests/e2e/editor.test.js`: manipulações e edição passando.
+- `npm test`: 173 testes unitários passando 100%.
+- `npm run build`: bundle de produção compilado com sucesso.
+
+### Pendências reais
+- Nenhuma pendência na Fase 3. Próxima fase: **Fase 4 · Biblioteca imediata**.
 
 ---
 

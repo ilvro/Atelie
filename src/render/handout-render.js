@@ -1,7 +1,7 @@
 import { canvasOperation, DEFAULT_PAGE_UV } from '../domain/handouts.js';
 import { cssFilter, applyAdjustPixels } from '../domain/handout-pixels.js';
 import { drawTextLayer } from './handout-text.js';
-import { drawEffect, drawCutMask } from './handout-effects.js';
+import { drawEffect, drawCutMask, getEffectCanvas } from './handout-effects.js';
 
 export const visibleIn = (layer, light) => layer.visible && (layer.light === 'both' || layer.light === light);
 
@@ -205,7 +205,7 @@ export function applyCutEffect(targetCtx, layer, pw, ph, scale) {
   targetCtx.restore();
 }
 
-function drawLayer(ctx, layer, scale, loadedImages, missing, warnings) {
+export function drawLayer(ctx, layer, scale, loadedImages = new Map(), missing = [], warnings = []) {
   if (layer.kind === 'adjust') {
     // Adjust layers are handled at the canvas/group composition level
     return;
@@ -223,10 +223,14 @@ function drawLayer(ctx, layer, scale, loadedImages, missing, warnings) {
   if (layer.kind === 'effect') {
     const bw = Math.max(1, Math.round(w));
     const bh = Math.max(1, Math.round(h));
-    const effCanvas = createPageCanvas(bw, bh);
-    const effCtx = effCanvas.getContext('2d');
-    drawEffect(effCtx, bw, bh, layer.effect, scale);
-    ctx.drawImage(effCanvas, -bw / 2, -bh / 2, bw, bh);
+    const effCanvas = getEffectCanvas(bw, bh, layer.effect, scale);
+    if (effCanvas) {
+      ctx.drawImage(effCanvas, -bw / 2, -bh / 2, bw, bh);
+    } else {
+      const temp = createPageCanvas(bw, bh);
+      drawEffect(temp.getContext('2d'), bw, bh, layer.effect, scale);
+      ctx.drawImage(temp, -bw / 2, -bh / 2, bw, bh);
+    }
   } else if (layer.kind === 'shape') {
     ctx.save();
     if (layer.shape.dash && layer.shape.dash.length > 0) {
@@ -345,16 +349,13 @@ function applyAdjustment(sourceCanvas, targetCtx, adjust, scale, opacity = 1) {
 }
 
 /**
- * Draws a handout on canvas, resized to page × scale.
+ * Synchronous layer rendering onto canvas, assuming images/fonts are already loaded.
  */
-export async function renderHandout(
+export function renderHandoutSync(
   canvas,
   handout,
-  { scale = 1, light = 'normal', loadImage, loadFont = async () => {} } = {}
+  { scale = 1, light = 'normal', loadedImages = new Map(), missing = [], warnings = [] } = {}
 ) {
-  const missing = [];
-  const warnings = [];
-
   const pw = Math.round(handout.page.width * scale);
   const ph = Math.round(handout.page.height * scale);
 
@@ -369,32 +370,6 @@ export async function renderHandout(
     ctx.fillStyle = handout.page.background;
     ctx.fillRect(0, 0, pw, ph);
   }
-
-  // Preload visible images and fonts in parallel
-  const loadedImages = new Map();
-  const imagePromises = [];
-  const fontPromises = [];
-
-  for (const layer of handout.layers) {
-    if (!visibleIn(layer, light)) continue;
-    if (layer.kind === 'image' && layer.image?.src && loadImage) {
-      const src = layer.image.src;
-      const key = src.library ? `library:${src.library}` : src.upload ? `upload:${src.upload}` : null;
-      if (key && !loadedImages.has(key)) {
-        loadedImages.set(key, null);
-        imagePromises.push(
-          Promise.resolve(loadImage(src)).then(img => {
-            if (img) loadedImages.set(key, img);
-          })
-        );
-      }
-    }
-    if (layer.kind === 'text' && layer.text?.font && loadFont) {
-      fontPromises.push(Promise.resolve(loadFont(layer.text.font)));
-    }
-  }
-
-  await Promise.all([...imagePromises, ...fontPromises]);
 
   let groupCanvas = null;
   let baseCanvas = null;
@@ -539,5 +514,45 @@ export async function renderHandout(
     missing,
     warnings,
   };
+}
+
+/**
+ * Draws a handout on canvas, resized to page × scale. Preloads images and fonts in parallel.
+ */
+export async function renderHandout(
+  canvas,
+  handout,
+  { scale = 1, light = 'normal', loadImage, loadFont = async () => {} } = {}
+) {
+  const missing = [];
+  const warnings = [];
+
+  // Preload visible images and fonts in parallel
+  const loadedImages = new Map();
+  const imagePromises = [];
+  const fontPromises = [];
+
+  for (const layer of handout.layers) {
+    if (!visibleIn(layer, light)) continue;
+    if (layer.kind === 'image' && layer.image?.src && loadImage) {
+      const src = layer.image.src;
+      const key = src.library ? `library:${src.library}` : src.upload ? `upload:${src.upload}` : null;
+      if (key && !loadedImages.has(key)) {
+        loadedImages.set(key, null);
+        imagePromises.push(
+          Promise.resolve(loadImage(src)).then(img => {
+            if (img) loadedImages.set(key, img);
+          })
+        );
+      }
+    }
+    if (layer.kind === 'text' && layer.text?.font && loadFont) {
+      fontPromises.push(Promise.resolve(loadFont(layer.text.font)));
+    }
+  }
+
+  await Promise.all([...imagePromises, ...fontPromises]);
+
+  return renderHandoutSync(canvas, handout, { scale, light, loadedImages, missing, warnings });
 }
 

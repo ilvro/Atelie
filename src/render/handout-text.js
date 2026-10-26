@@ -27,8 +27,17 @@ function createOffscreenCanvas(width, height) {
   return null;
 }
 
+const textLayoutCache = new Map();
+const MAX_TEXT_LAYOUT_CACHE = 256;
+
+export function clearTextLayoutCache() {
+  textLayoutCache.clear();
+}
+
 /**
  * Renders a text layer with typography layout, alignments, letter-spacing and ink styles.
+ * Memorizes computed text line-wrapping layouts by (content, font, box, etc.) so moving
+ * a layer avoids recomputing line wraps.
  */
 export function drawTextLayer(ctx, layer, scale = 1) {
   const txt = layer.text;
@@ -43,24 +52,36 @@ export function drawTextLayer(ctx, layer, scale = 1) {
     ...(txt.ink || {}),
   };
 
-  const measure = (t, px) => {
-    ctx.font = getFontString(txt.font, px, ink.style);
-    return ctx.measureText(t).width;
-  };
+  const fontKey = `${txt.font?.family || 'IM Fell English'}:${txt.font?.weight || 400}:${txt.font?.italic ? 'i' : 'n'}:${ink.style}`;
+  const layoutKey = `${txt.content}::${fontKey}::${Math.round(layer.width)}::${Math.round(layer.height)}::${txt.size || 16}::${txt.lineHeight ?? 1.25}::${txt.letterSpacing ?? 0}::${txt.align || 'left'}::${txt.valign || 'top'}::${txt.box || 'area'}::${txt.fit || 'overflow'}`;
 
-  const layout = layoutText(txt.content, {
-    measure,
-    width: layer.width,
-    height: layer.height,
-    size: txt.size || 16,
-    lineHeight: txt.lineHeight ?? 1.25,
-    letterSpacing: txt.letterSpacing ?? 0,
-    align: txt.align || 'left',
-    valign: txt.valign || 'top',
-    box: txt.box || 'area',
-    fit: txt.fit || 'overflow',
-    minSize: (txt.size || 16) * 0.4,
-  });
+  let layout = textLayoutCache.get(layoutKey);
+  if (!layout) {
+    const measure = (t, px) => {
+      ctx.font = getFontString(txt.font, px, ink.style);
+      return ctx.measureText(t).width;
+    };
+
+    layout = layoutText(txt.content, {
+      measure,
+      width: layer.width,
+      height: layer.height,
+      size: txt.size || 16,
+      lineHeight: txt.lineHeight ?? 1.25,
+      letterSpacing: txt.letterSpacing ?? 0,
+      align: txt.align || 'left',
+      valign: txt.valign || 'top',
+      box: txt.box || 'area',
+      fit: txt.fit || 'overflow',
+      minSize: (txt.size || 16) * 0.4,
+    });
+
+    if (textLayoutCache.size >= MAX_TEXT_LAYOUT_CACHE) {
+      const firstKey = textLayoutCache.keys().next().value;
+      textLayoutCache.delete(firstKey);
+    }
+    textLayoutCache.set(layoutKey, layout);
+  }
 
   if (!layout.lines.length) {
     return;

@@ -6,7 +6,10 @@ import { escapeHTML as esc } from './icons.js';
  * that write into it, so field handling and undo stay in one place.
  */
 const UNITS = { m: 'm', cm: 'cm', mm: 'mm', '%': '%', s: 's', graus: '°' };
-const format = value => Number(value).toFixed(3).replace(/\.?0+$/, '') || '0';
+const format = value => {
+  if (value === undefined || value === null || Number.isNaN(Number(value))) return '0';
+  return Number(value).toFixed(3).replace(/\.?0+$/, '') || '0';
+};
 /** "Brilho · 0 escuro / 2 claro" → name, optional unit suffix and a hint line. */
 export function splitLabel(label) {
   const [name, ...rest] = String(label).split(' · ');

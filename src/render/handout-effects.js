@@ -48,16 +48,29 @@ export function hexToRgb(hex) {
   return [0, 0, 0];
 }
 
-/**
- * Draws an effect into a canvas of the given size (px of the render).
- * (0, 0) is top-left of the canvas.
- */
-export function drawEffect(ctx, width, height, { type, seed = 1, amount = 0.5, params = {} } = {}, scale = 1) {
-  const W = Math.max(1, Math.round(width));
-  const H = Math.max(1, Math.round(height));
-  const amt = Math.max(0, Math.min(1, Number(amount ?? 0.5)));
-  const rand = createRng(seed);
+function createCachedCanvas(width, height) {
+  if (typeof OffscreenCanvas !== 'undefined') {
+    return new OffscreenCanvas(width, height);
+  }
+  if (typeof document !== 'undefined' && typeof document.createElement === 'function') {
+    const c = document.createElement('canvas');
+    c.width = width;
+    c.height = height;
+    return c;
+  }
+  return null;
+}
 
+const effectCache = new Map();
+const cutMaskCache = new Map();
+const MAX_CACHE_ENTRIES = 64;
+
+export function clearEffectCache() {
+  effectCache.clear();
+  cutMaskCache.clear();
+}
+
+function renderEffectDirect(ctx, W, H, type, amt, params, rand, scale) {
   switch (type) {
     case 'crumple':
       drawCrumple(ctx, W, H, amt, params, rand, scale);
@@ -87,20 +100,58 @@ export function drawEffect(ctx, width, height, { type, seed = 1, amount = 0.5, p
       drawGrain(ctx, W, H, amt, params, rand, scale);
       break;
     default:
-      // Unknown effect: no-op
       break;
   }
 }
 
 /**
- * For the effects that cut the paper (burn, tear): the shape that remains.
- * white (#ffffff) = keep, transparent (alpha 0) = gone.
+ * Returns a cached procedural effect canvas or generates and caches one.
  */
-export function drawCutMask(ctx, width, height, { type, seed = 1, amount = 0.5, params = {} } = {}, scale = 1) {
+export function getEffectCanvas(width, height, { type, seed = 1, amount = 0.5, params = {} } = {}, scale = 1) {
   const W = Math.max(1, Math.round(width));
   const H = Math.max(1, Math.round(height));
   const amt = Math.max(0, Math.min(1, Number(amount ?? 0.5)));
 
+  const cacheKey = `${type}::${seed}::${amt.toFixed(3)}::${JSON.stringify(params)}::${W}::${H}::${(scale || 1).toFixed(2)}`;
+  const cached = effectCache.get(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  const off = createCachedCanvas(W, H);
+  if (off) {
+    const offCtx = off.getContext('2d');
+    const rand = createRng(seed);
+    renderEffectDirect(offCtx, W, H, type, amt, params, rand, scale);
+    if (effectCache.size >= MAX_CACHE_ENTRIES) {
+      const firstKey = effectCache.keys().next().value;
+      effectCache.delete(firstKey);
+    }
+    effectCache.set(cacheKey, off);
+    return off;
+  }
+  return null;
+}
+
+/**
+ * Draws an effect into a canvas of the given size (px of the render).
+ * (0, 0) is top-left of the canvas. Caches rendered procedural bitmaps by (type, seed, amount, params, W, H, scale).
+ */
+export function drawEffect(ctx, width, height, effect = {}, scale = 1) {
+  const cached = getEffectCanvas(width, height, effect, scale);
+  if (cached) {
+    ctx.drawImage(cached, 0, 0);
+    return;
+  }
+
+  const W = Math.max(1, Math.round(width));
+  const H = Math.max(1, Math.round(height));
+  const amt = Math.max(0, Math.min(1, Number(effect.amount ?? 0.5)));
+  const rand = createRng(effect.seed ?? 1);
+  renderEffectDirect(ctx, W, H, effect.type, amt, effect.params || {}, rand, scale);
+}
+
+function renderCutMaskDirect(ctx, W, H, type, amt, params, rand, scale) {
   // Base: everything kept
   ctx.save();
   ctx.fillStyle = '#ffffff';
@@ -110,8 +161,6 @@ export function drawCutMask(ctx, width, height, { type, seed = 1, amount = 0.5, 
     ctx.restore();
     return;
   }
-
-  const rand = createRng(seed);
 
   if (type === 'burn') {
     const depth = Math.max(0.005, Math.min(0.4, Number(params.depth ?? 0.08)));
@@ -198,6 +247,40 @@ export function drawCutMask(ctx, width, height, { type, seed = 1, amount = 0.5, 
   }
 
   ctx.restore();
+}
+
+/**
+ * For the effects that cut the paper (burn, tear): the shape that remains.
+ * white (#ffffff) = keep, transparent (alpha 0) = gone. Caches cut masks by (type, seed, amount, params, W, H, scale).
+ */
+export function drawCutMask(ctx, width, height, { type, seed = 1, amount = 0.5, params = {} } = {}, scale = 1) {
+  const W = Math.max(1, Math.round(width));
+  const H = Math.max(1, Math.round(height));
+  const amt = Math.max(0, Math.min(1, Number(amount ?? 0.5)));
+
+  const cacheKey = `${type}::${seed}::${amt.toFixed(3)}::${JSON.stringify(params)}::${W}::${H}::${(scale || 1).toFixed(2)}`;
+  const cached = cutMaskCache.get(cacheKey);
+  if (cached) {
+    ctx.drawImage(cached, 0, 0);
+    return;
+  }
+
+  const off = createCachedCanvas(W, H);
+  if (off) {
+    const offCtx = off.getContext('2d');
+    const rand = createRng(seed);
+    renderCutMaskDirect(offCtx, W, H, type, amt, params, rand, scale);
+    if (cutMaskCache.size >= MAX_CACHE_ENTRIES) {
+      const firstKey = cutMaskCache.keys().next().value;
+      cutMaskCache.delete(firstKey);
+    }
+    cutMaskCache.set(cacheKey, off);
+    ctx.drawImage(off, 0, 0);
+    return;
+  }
+
+  const rand = createRng(seed);
+  renderCutMaskDirect(ctx, W, H, type, amt, params, rand, scale);
 }
 
 // --- Individual Effect Renderers ---
@@ -611,40 +694,47 @@ function drawBlood(ctx, W, H, amt, params, rand, scale) {
 }
 
 function drawGrain(ctx, W, H, amt, params, rand, scale) {
-  // Overlay base is 50% gray (#808080 = neutral)
-  ctx.fillStyle = '#808080';
-  ctx.fillRect(0, 0, W, H);
-
-  if (amt <= 0) return;
+  if (amt <= 0) {
+    ctx.fillStyle = '#808080';
+    ctx.fillRect(0, 0, W, H);
+    return;
+  }
 
   const bs = Math.max(1, Math.round((params.size ?? 1.5) * scale));
 
-  // If using standard canvas with getImageData
+  // If using standard canvas with createImageData
   try {
-    const imgData = ctx.getImageData(0, 0, W, H);
-    const data = imgData.data;
-    const stride = W * 4;
+    const imgData = ctx.createImageData(W, H);
+    const u32 = new Uint32Array(imgData.data.buffer);
+    const factor = 255 * amt * 0.75;
 
-    for (let y = 0; y < H; y += bs) {
-      for (let x = 0; x < W; x += bs) {
-        const noise = (rand() - 0.5) * 255 * amt * 0.75;
-        const val = Math.max(0, Math.min(255, Math.round(128 + noise)));
+    if (bs === 1) {
+      const total = W * H;
+      for (let i = 0; i < total; i++) {
+        const noise = (rand() - 0.5) * factor;
+        const val = Math.max(0, Math.min(255, (128 + noise) | 0));
+        u32[i] = 0xFF000000 | (val << 16) | (val << 8) | val;
+      }
+    } else {
+      for (let y = 0; y < H; y += bs) {
+        for (let x = 0; x < W; x += bs) {
+          const noise = (rand() - 0.5) * factor;
+          const val = Math.max(0, Math.min(255, (128 + noise) | 0));
+          const color = 0xFF000000 | (val << 16) | (val << 8) | val;
 
-        // Fill bs x bs block
-        for (let dy = 0; dy < bs && y + dy < H; dy++) {
-          const rowStart = (y + dy) * stride;
-          for (let dx = 0; dx < bs && x + dx < W; dx++) {
-            const idx = rowStart + (x + dx) * 4;
-            data[idx] = val;
-            data[idx + 1] = val;
-            data[idx + 2] = val;
-            data[idx + 3] = 255;
+          for (let dy = 0; dy < bs && y + dy < H; dy++) {
+            const rowStart = (y + dy) * W;
+            for (let dx = 0; dx < bs && x + dx < W; dx++) {
+              u32[rowStart + x + dx] = color;
+            }
           }
         }
       }
     }
     ctx.putImageData(imgData, 0, 0);
   } catch {
+    ctx.fillStyle = '#808080';
+    ctx.fillRect(0, 0, W, H);
     // Fallback using fillRect
     for (let y = 0; y < H; y += bs) {
       for (let x = 0; x < W; x += bs) {

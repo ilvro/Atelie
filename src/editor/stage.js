@@ -1,4 +1,4 @@
-import { renderHandout } from '../render/handout-render.js';
+import { renderHandout, renderHandoutSync, drawLayer } from '../render/handout-render.js';
 import { renderIcon } from '../ui/icons.js';
 import {
   HANDLES,
@@ -10,7 +10,7 @@ import {
   snapBox,
   layerAtPoint,
 } from './geometry.js';
-import { updateLayer } from '../domain/handouts.js';
+import { updateLayer, canvasOperation } from '../domain/handouts.js';
 import { createRulers } from './rulers.js';
 import { createSelectionBar } from './selection-bar.js';
 import { play, isSoundEnabled } from '../ui/sound.js';
@@ -100,7 +100,7 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
 
   const viewport = container.querySelector('.stage-viewport');
   const pageWrap = container.querySelector('.stage-page-wrap');
-  const canvas = container.querySelector('.stage-canvas');
+  let canvas = container.querySelector('.stage-canvas');
   const outline = container.querySelector('.stage-selection-outline');
   const guidesOverlay = container.querySelector('.stage-guides-overlay');
   const inlineTextEditor = container.querySelector('.stage-inline-text-editor');
@@ -189,10 +189,35 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
     selectionBar.update();
   }
 
-  async function performRender(handout, options) {
+  function updateSelectionOutlineForBox(box) {
+    if (!box) return;
+    outline.style.display = 'block';
+    outline.style.width = `${Math.round(box.width * currentZoom)}px`;
+    outline.style.height = `${Math.round(box.height * currentZoom)}px`;
+    outline.style.left = `${Math.round(box.x * currentZoom)}px`;
+    outline.style.top = `${Math.round(box.y * currentZoom)}px`;
+    const rot = box.rotation || 0;
+    outline.style.setProperty('--outline-transform', `rotate(${rot}deg)`);
+    outline.style.transform = `rotate(${rot}deg)`;
+  }
+
+  // --- 3-Layer Drag Cache & Gesture Variables ---
+  let dragCache = null;
+  let isFastDrag = false;
+  let highResDebounceTimer = null;
+
+  async function performRender(handout, options = {}) {
     if (!handout) return;
     const dpr = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1;
-    const scale = currentZoom * dpr;
+    const isHalf = Boolean(options.halfRes);
+    const scale = currentZoom * dpr * (isHalf ? 0.5 : 1);
+
+    if (!isHalf && canvas && canvas.parentNode) {
+      const freshCanvas = document.createElement('canvas');
+      freshCanvas.className = 'stage-canvas';
+      canvas.replaceWith(freshCanvas);
+      canvas = freshCanvas;
+    }
 
     canvas.style.width = `${Math.round(handout.page.width * currentZoom)}px`;
     canvas.style.height = `${Math.round(handout.page.height * currentZoom)}px`;
@@ -223,6 +248,12 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
     currentHandout = handout;
     if (options.light) currentLight = options.light;
     updateSelectionOutline();
+
+    // Skip full document redraw during fast 3-layer drag unless forced
+    if (isFastDrag && !options.forceFull) {
+      return;
+    }
+
     nextRequest = { handout, options };
 
     if (isRendering) return;
@@ -238,7 +269,7 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
     });
   }
 
-  function setZoom(factor) {
+  function setZoom(factor, options = {}) {
     if (factor === 'fit') {
       if (!currentHandout) return;
       const vw = Math.max(100, viewport.clientWidth - 80);
@@ -250,8 +281,8 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
       currentZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, factor));
     }
     updateZoomLabel();
-    if (currentHandout) {
-      scheduleRender(currentHandout);
+    if (currentHandout && !options.skipRender) {
+      scheduleRender(currentHandout, options);
     }
   }
 
@@ -396,6 +427,63 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
         }
       }
 
+      // Initialize 3-layer bitmap cache for fluid 60fps drag (§7 and Fase 3)
+      const movingLayerId = layer.id;
+      const kIdx = currentHandout.layers.findIndex(l => l.id === movingLayerId);
+      const layersAbove = currentHandout.layers.slice(kIdx + 1);
+      // Layers above k can be statically cached if none have non-normal blend modes or clipping/cuts
+      const canCacheAbove = !layersAbove.some(l => 
+        l.visible && (
+          (l.blend && l.blend !== 'normal') ||
+          l.kind === 'adjust' ||
+          (l.kind === 'effect' && (l.effect?.type === 'burn' || l.effect?.type === 'tear'))
+        )
+      );
+
+      const dpr = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1;
+      const scale = currentZoom * dpr;
+      const pw = Math.round(currentHandout.page.width * scale);
+      const ph = Math.round(currentHandout.page.height * scale);
+
+      function createBufferCanvas(w, h) {
+        if (typeof OffscreenCanvas !== 'undefined') return new OffscreenCanvas(w, h);
+        if (typeof document !== 'undefined' && document.createElement) {
+          const c = document.createElement('canvas');
+          c.width = w;
+          c.height = h;
+          return c;
+        }
+        return null;
+      }
+
+      const belowCanvas = createBufferCanvas(pw, ph);
+      const aboveCanvas = canCacheAbove && layersAbove.length > 0 ? createBufferCanvas(pw, ph) : null;
+
+      if (belowCanvas) {
+        renderHandoutSync(belowCanvas, { ...currentHandout, layers: currentHandout.layers.slice(0, kIdx) }, {
+          scale,
+          light: currentLight,
+          loadedImages: new Map(),
+        });
+      }
+      if (aboveCanvas) {
+        renderHandoutSync(aboveCanvas, { ...currentHandout, page: { ...currentHandout.page, background: null }, layers: layersAbove }, {
+          scale,
+          light: currentLight,
+          loadedImages: new Map(),
+        });
+      }
+
+      dragCache = {
+        belowCanvas,
+        aboveCanvas,
+        movingLayerId,
+        canCacheAbove,
+        scale,
+        kIdx,
+      };
+      isFastDrag = true;
+
       activeGesture = {
         type: 'move',
         gestureId,
@@ -426,8 +514,53 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
         renderGuides([]);
       }
 
-      const next = updateLayer(currentHandout, activeGesture.layerId, finalBox);
-      onEdit(next, { label: 'Mover camada', coalesce: activeGesture.gestureId });
+      // Fast 3-layer composition onto canvas (below, layer k, above)
+      if (dragCache && dragCache.belowCanvas) {
+        const ctx = canvas.getContext('2d');
+        const dpr = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1;
+        const scale = dragCache.scale || (currentZoom * dpr);
+        const pw = Math.round(currentHandout.page.width * scale);
+        const ph = Math.round(currentHandout.page.height * scale);
+
+        ctx.clearRect(0, 0, pw, ph);
+        // 1. Below k
+        ctx.drawImage(dragCache.belowCanvas, 0, 0);
+
+        // 2. Layer k moving
+        const movingLayer = { ...activeGesture.startBox, ...finalBox };
+        ctx.save();
+        ctx.globalAlpha = movingLayer.opacity ?? 1;
+        ctx.globalCompositeOperation = canvasOperation(movingLayer.blend);
+        drawLayer(ctx, movingLayer, scale, new Map(), [], []);
+        ctx.restore();
+
+        // 3. Above k
+        if (dragCache.aboveCanvas) {
+          ctx.drawImage(dragCache.aboveCanvas, 0, 0);
+        } else if (dragCache.canCacheAbove === false) {
+          const layersAbove = currentHandout.layers.slice(dragCache.kIdx + 1);
+          for (const l of layersAbove) {
+            if (!l.visible) continue;
+            ctx.save();
+            ctx.globalAlpha = l.opacity ?? 1;
+            ctx.globalCompositeOperation = canvasOperation(l.blend);
+            drawLayer(ctx, l, scale, new Map(), [], []);
+            ctx.restore();
+          }
+        }
+
+        updateSelectionOutlineForBox(finalBox);
+      }
+
+      currentHandout = updateLayer(currentHandout, activeGesture.layerId, finalBox);
+
+      // Debounce high-res refresh 150ms after movement settles
+      clearTimeout(highResDebounceTimer);
+      highResDebounceTimer = setTimeout(() => {
+        if (activeGesture && currentHandout) {
+          scheduleRender(currentHandout, { forceFull: true });
+        }
+      }, 150);
     } else if (activeGesture.type === 'resize') {
       const pageRect = pageWrap.getBoundingClientRect();
       const pointerPage = [
@@ -442,8 +575,13 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
         fromCenter,
       });
 
-      const next = updateLayer(currentHandout, activeGesture.layerId, resized);
-      onEdit(next, { label: 'Redimensionar camada', coalesce: activeGesture.gestureId });
+      currentHandout = updateLayer(currentHandout, activeGesture.layerId, resized);
+      scheduleRender(currentHandout, { halfRes: true });
+
+      clearTimeout(highResDebounceTimer);
+      highResDebounceTimer = setTimeout(() => {
+        scheduleRender(currentHandout, { fullRes: true, forceFull: true });
+      }, 150);
     } else if (activeGesture.type === 'rotate') {
       const pageRect = pageWrap.getBoundingClientRect();
       const pointerPage = [
@@ -453,13 +591,19 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
       const snap = event.shiftKey;
 
       const newRot = rotateBox(activeGesture.startBox, pointerPage, { snap });
-      const next = updateLayer(currentHandout, activeGesture.layerId, { rotation: newRot });
-      onEdit(next, { label: 'Girar camada', coalesce: activeGesture.gestureId });
+      currentHandout = updateLayer(currentHandout, activeGesture.layerId, { rotation: newRot });
+      scheduleRender(currentHandout, { halfRes: true });
+
+      clearTimeout(highResDebounceTimer);
+      highResDebounceTimer = setTimeout(() => {
+        scheduleRender(currentHandout, { fullRes: true, forceFull: true });
+      }, 150);
     }
   });
 
   function endGesture() {
     if (!activeGesture) return;
+    clearTimeout(highResDebounceTimer);
     renderGuides([]);
     outline.classList.remove('is-dragging');
     try {
@@ -471,8 +615,17 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
     } catch {
       // Ignore
     }
+    const finished = activeGesture;
     activeGesture = null;
+    dragCache = null;
+    isFastDrag = false;
     selectionBar.update();
+    if (currentHandout) {
+      onEdit(currentHandout, {
+        label: finished.type === 'move' ? 'Mover camada' : finished.type === 'resize' ? 'Redimensionar camada' : 'Girar camada',
+        coalesce: finished.gestureId,
+      });
+    }
   }
 
   window.addEventListener('pointerup', endGesture);
@@ -590,14 +743,22 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
     }
   });
 
-  // Ctrl + Wheel to zoom
+  // Ctrl + Wheel to zoom (half-resolution during wheel, restored to full-resolution after 150ms of quiet)
+  let wheelZoomTimer = null;
   viewport.addEventListener(
     'wheel',
     event => {
       if (!event.ctrlKey) return;
       event.preventDefault();
       const factor = event.deltaY < 0 ? 1.15 : 0.85;
-      setZoom(currentZoom * factor);
+      currentZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, currentZoom * factor));
+      updateZoomLabel();
+      scheduleRender(currentHandout, { halfRes: true });
+
+      clearTimeout(wheelZoomTimer);
+      wheelZoomTimer = setTimeout(() => {
+        scheduleRender(currentHandout, { fullRes: true, forceFull: true });
+      }, 150);
     },
     { passive: false }
   );
@@ -720,9 +881,14 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
     show(handout, options = {}) {
       scheduleRender(handout, options);
     },
-    zoom(factor) {
+    async renderNow(handout, options = {}) {
+      currentHandout = handout || currentHandout;
+      if (options.light) currentLight = options.light;
+      await performRender(currentHandout, options);
+    },
+    zoom(factor, options = {}) {
       if (factor === undefined) return currentZoom;
-      setZoom(factor);
+      setZoom(factor, options);
       return currentZoom;
     },
     getZoom() {
@@ -753,18 +919,34 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
       }, { once: true });
     },
     animateSwitch(onMidpoint) {
-      pageWrap.classList.remove('is-entering-open', 'is-exiting-left', 'is-entering-right');
-      void pageWrap.offsetWidth;
-      pageWrap.classList.add('is-exiting-left');
-      pageWrap.addEventListener('animationend', () => {
-        pageWrap.classList.remove('is-exiting-left');
-        onMidpoint?.();
+      return new Promise(resolve => {
+        if (typeof window === 'undefined' || typeof pageWrap?.addEventListener !== 'function') {
+          onMidpoint?.();
+          resolve();
+          return;
+        }
+        pageWrap.classList.remove('is-entering-open', 'is-exiting-left', 'is-entering-right');
         void pageWrap.offsetWidth;
-        pageWrap.classList.add('is-entering-right');
-        pageWrap.addEventListener('animationend', () => {
-          pageWrap.classList.remove('is-entering-right');
-        }, { once: true });
-      }, { once: true });
+        pageWrap.classList.add('is-exiting-left');
+        let midpointCalled = false;
+        const doMidpoint = () => {
+          if (midpointCalled) return;
+          midpointCalled = true;
+          pageWrap.classList.remove('is-exiting-left');
+          onMidpoint?.();
+          resolve();
+          void pageWrap.offsetWidth;
+          pageWrap.classList.add('is-entering-right');
+          const onEnterEnd = () => {
+            pageWrap.classList.remove('is-entering-right');
+            pageWrap.removeEventListener('animationend', onEnterEnd);
+          };
+          pageWrap.addEventListener('animationend', onEnterEnd, { once: true });
+          setTimeout(onEnterEnd, 250);
+        };
+        pageWrap.addEventListener('animationend', doMidpoint, { once: true });
+        setTimeout(doMidpoint, 200);
+      });
     },
     startInlineTextEdit(layerId) {
       startInlineTextEdit(layerId);

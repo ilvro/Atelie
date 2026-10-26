@@ -21,7 +21,17 @@ export function createHandoutFonts({
   }
 
   async function load(font) {
-    if (!font || !font.library) {
+    if (!font) return true;
+    if (!font.library) {
+      if (typeof document !== 'undefined' && document.fonts?.load && font.family) {
+        const italic = font.italic ? 'italic ' : '';
+        const weight = font.weight || 400;
+        try {
+          await document.fonts.load(`${italic}${weight} 16px "${font.family}"`);
+        } catch {
+          // Fallback font will be used
+        }
+      }
       return true;
     }
 

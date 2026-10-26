@@ -40,7 +40,7 @@ test('motion e2e: visual transitions, landing, FLIP, undo, slider bubble, and re
   await page.evaluate(() => {
     window.__atelie.notify('Aviso com rotação', { tone: 'info' });
   });
-  await page.locator('.notify-item').waitFor({ state: 'visible' });
+  await page.locator('.notify-item.visible').filter({ hasText: 'Aviso com rotação' }).waitFor({ state: 'visible' });
   const toastVisible = await page.evaluate(() => {
     const item = document.querySelector('.notify-item.visible');
     return Boolean(item);

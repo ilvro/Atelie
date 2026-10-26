@@ -736,13 +736,13 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     });
 
     if (isSwitching) {
-      stage.animateSwitch(() => {
-        stage.show(state.handout, { light: currentLight });
-        stage.zoom('fit');
+      await stage.animateSwitch(async () => {
+        stage.zoom('fit', { skipRender: true });
+        await stage.renderNow(state.handout, { light: currentLight });
       });
     } else {
-      stage.show(state.handout, { light: currentLight });
-      stage.zoom('fit');
+      stage.zoom('fit', { skipRender: true });
+      await stage.renderNow(state.handout, { light: currentLight });
       stage.animateOpen();
     }
     updateDocBar();

@@ -109,10 +109,69 @@ export function blobToDataUrl(blob) {
   });
 }
 
+let bakeWorkerInstance = null;
+let bakeWorkerFailed = false;
+
+function getBakeWorker() {
+  if (bakeWorkerFailed) return null;
+  if (bakeWorkerInstance) return bakeWorkerInstance;
+  if (typeof window === 'undefined' || typeof Worker === 'undefined' || typeof OffscreenCanvas === 'undefined') {
+    return null;
+  }
+  try {
+    bakeWorkerInstance = new Worker(new URL('./bake.worker.js', import.meta.url), { type: 'module' });
+    return bakeWorkerInstance;
+  } catch (err) {
+    console.warn('[atelie] Web Worker para assar não pôde ser iniciado, usando thread principal:', err);
+    bakeWorkerFailed = true;
+    return null;
+  }
+}
+
+async function bakeWithWorker(handout, width, height, scale, hasUv) {
+  const worker = getBakeWorker();
+  if (!worker) return null;
+
+  return new Promise((resolve, reject) => {
+    const id = 'bake-' + Math.random().toString(36).slice(2, 10);
+    const timeout = setTimeout(() => {
+      cleanup();
+      reject(new Error('Bake worker timeout'));
+    }, 10000);
+
+    const onMessage = (e) => {
+      if (e.data?.id === id) {
+        cleanup();
+        if (e.data.success) {
+          resolve(e.data.result);
+        } else {
+          reject(new Error(e.data.error || 'Bake worker failed'));
+        }
+      }
+    };
+
+    const onError = (err) => {
+      cleanup();
+      reject(err);
+    };
+
+    function cleanup() {
+      clearTimeout(timeout);
+      worker.removeEventListener('message', onMessage);
+      worker.removeEventListener('error', onError);
+    }
+
+    worker.addEventListener('message', onMessage);
+    worker.addEventListener('error', onError);
+    worker.postMessage({ id, handout, width, height, scale, hasUv });
+  });
+}
+
 /**
  * Bakes high-resolution PNGs of a handout:
  * Normal light always, UV light only when hasUvLayers is true.
  * Long side scaled to 2048 px.
+ * Uses OffscreenCanvas Web Worker when available with fallback to main thread.
  *
  * @param {object} handout
  * @param {{ images?: object, fonts?: object }} options
@@ -123,6 +182,17 @@ export async function bakeHandout(handout, { images, fonts } = {}) {
   const scale = 2048 / maxSide;
   const width = Math.round(handout.page.width * scale);
   const height = Math.round(handout.page.height * scale);
+  const hasUv = hasUvLayers(handout);
+
+  // Try background worker first when browser supports it
+  if (typeof window !== 'undefined' && typeof Worker !== 'undefined' && typeof OffscreenCanvas !== 'undefined') {
+    try {
+      const workerRes = await bakeWithWorker(handout, width, height, scale, hasUv);
+      if (workerRes) return workerRes;
+    } catch (err) {
+      console.warn('[atelie] Assar com Web Worker falhou, recuando para thread principal:', err.message);
+    }
+  }
 
   const { renderHandout } = await import('../render/handout-render.js');
 
@@ -145,7 +215,7 @@ export async function bakeHandout(handout, { images, fonts } = {}) {
 
   // UV bake
   let uvBlob = null;
-  if (hasUvLayers(handout)) {
+  if (hasUv) {
     const uvCanvas = createOffscreenOrElementCanvas(width, height);
     await renderHandout(uvCanvas, handout, {
       scale,
