@@ -78,6 +78,11 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
   - Filtro "Arquivos Confidenciais" aprimorado (`matchSource`) para abranger itens do servidor e modelos sob demanda (JIT) do IndexedDB.
   - Carregamento de bundle preserva o filtro ativo em "Arquivos Confidenciais" em vez de resetar para "Todas as origens", permitindo que os novos modelos apareçam imediatamente na tela.
   - Resolução assíncrona garantida de imagens de prévia sem disparar requisições 404 para `/colecao/`, exibindo a arte imediatamente e ocultando placeholders assim que carregada do IndexedDB.
+  - Orientação amigável caso uma pasta de imagens isoladas (como `Prévia - Bundle 3`) seja selecionada sem PSDs, indicando a seleção da pasta pai do bundle.
+- **Indexação Completa do Acervo Arquivos Confidenciais (`scripts/library/index-all-bundles.js`, `server/routes/library.js`)**:
+  - Indexação de todos os 77 bundles do acervo do usuário (558 documentos PSD) com 542 prévias WebP otimizadas geradas na biblioteca privada.
+  - O catálogo completo de modelos (incluindo todos os 10 modelos de `Bundle 3 - Cadernos, Diários e Livros/Prévia - Bundle 3/`, Blueprints, Jornais, etc.) agora é exibido instantaneamente no Ateliê local via `/api/atelie/library`, com prévias reais e conversão sob demanda (JIT) ao clicar.
+  - Suporte de streaming de arquivos `.psd` e `.psb` no servidor Express via MIME types oficiais.
 
 ### Validação
 - `npm test`: 169 testes unitários passando 100%.

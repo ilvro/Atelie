@@ -12,6 +12,8 @@ const MIME_TYPES = {
   '.otf': 'font/otf',
   '.woff2': 'font/woff2',
   '.json': 'application/json',
+  '.psd': 'image/vnd.adobe.photoshop',
+  '.psb': 'image/vnd.adobe.photoshop',
 };
 
 export async function register(app, { collection, expansionsDir }) {

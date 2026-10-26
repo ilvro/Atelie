@@ -20,7 +20,8 @@
     "colecao:modelo": "node scripts/colecao/model.js",
     "library:elements": "node scripts/library/import-elements.js",
     "library:psd-report": "node --max-old-space-size=8192 scripts/library/psd-report.js",
-    "library:psd-import": "node --max-old-space-size=8192 scripts/library/import-psd.js"
+    "library:psd-import": "node --max-old-space-size=8192 scripts/library/import-psd.js",
+    "library:index-bundles": "node scripts/library/index-all-bundles.js"
   },
   "dependencies": {
     "express": "4.22.1"

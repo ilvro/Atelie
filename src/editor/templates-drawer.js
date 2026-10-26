@@ -180,6 +180,19 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
         if (!psdFile && db && api?.expansions?.getFile) {
           psdFile = await api.expansions.getFile(tpl.source, tpl.file || tpl.psdPath);
         }
+        if (!psdFile && api?.library?.fileURL) {
+          try {
+            shell?.notify?.('Carregando arquivo do modelo...', { tone: 'neutral' });
+            const url = api.library.fileURL(tpl);
+            const res = await fetch(url);
+            if (res.ok) {
+              const blob = await res.blob();
+              psdFile = new File([blob], tpl.fileName || `${tpl.name}.psd`, { type: 'image/vnd.adobe.photoshop' });
+            }
+          } catch (err) {
+            console.warn('[atelie] Erro ao buscar PSD do servidor:', err);
+          }
+        }
 
         openConversionDialog({
           templateItem: tpl,
@@ -392,22 +405,27 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
           // Check if user selected an expansion package folder instead of raw PSD files
           let hasExpansionJson = false;
           let hasLibraryJson = false;
+          let imageCount = 0;
           if (fileListOrEntries instanceof Map) {
             for (const path of fileListOrEntries.keys()) {
               const p = path.toLowerCase();
               if (p.endsWith('expansion.json')) hasExpansionJson = true;
               if (p.endsWith('library.json')) hasLibraryJson = true;
+              if (/\.(png|jpe?g|webp)$/i.test(p)) imageCount++;
             }
           } else if (fileListOrEntries.length) {
             for (let i = 0; i < fileListOrEntries.length; i++) {
               const name = (fileListOrEntries[i].webkitRelativePath || fileListOrEntries[i].name).toLowerCase();
               if (name.endsWith('expansion.json')) hasExpansionJson = true;
               if (name.endsWith('library.json')) hasLibraryJson = true;
+              if (/\.(png|jpe?g|webp)$/i.test(name)) imageCount++;
             }
           }
 
           if (hasExpansionJson || hasLibraryJson) {
             shell?.notify?.('Esta pasta é um pacote de expansão, não arquivos PSD brutos. Use o botão "Instalar expansão".', { tone: 'warn' });
+          } else if (imageCount > 0) {
+            shell?.notify?.(`Esta pasta contém apenas imagens (${imageCount} foto(s)). Selecione a pasta completa do bundle (a pasta pai, ex: "Bundle 3") que contém os arquivos .psd.`, { tone: 'warn' });
           } else {
             shell?.notify?.('Nenhum arquivo PSD encontrado nesta pasta. Verifique se há arquivos .psd ou .psb.', { tone: 'error' });
           }
