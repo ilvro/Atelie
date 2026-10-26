@@ -78,6 +78,9 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       <button type="button" class="at-btn is-primary" data-action="archive">
         Arquivar
       </button>
+      <button type="button" class="at-icon-btn desk-inspector-toggle-btn" data-action="toggle-inspector" title="Inspetor" aria-label="Alternar Inspetor" aria-expanded="false">
+        ${renderIcon('panel-right', 16)}
+      </button>
     </div>
   `;
 
@@ -210,6 +213,13 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   const archiveBtn = docBar.querySelector('[data-action="archive"]');
   const uvBtn = docBar.querySelector('[data-action="toggle-uv"]');
   const uvStamp = docBar.querySelector('.desk-uv-stamp');
+  const inspectorToggleBtn = docBar.querySelector('[data-action="toggle-inspector"]');
+
+  if (inspectorToggleBtn) {
+    inspectorToggleBtn.addEventListener('click', () => {
+      shell.inspector.toggle();
+    });
+  }
 
   let currentLight = 'normal';
 

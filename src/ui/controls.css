@@ -514,3 +514,28 @@
   transform: translate(-50%, 0);
 }
 
+/* ── CONTAINER QUERIES & RESPONSIVIDADE NO INSPETOR (§5 e Fase 4) ────────── */
+@container inspector (max-width: 290px) {
+  .field-row,
+  .control-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .align-buttons-row {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .panel-section,
+  .prop-group {
+    padding: 10px 10px;
+  }
+}
+
+/* Telas estreitas (< 720px): exibe apenas propriedades simples (texto, fonte, cor, posição) */
+@media (max-width: 719px) {
+  .prop-advanced {
+    display: none !important;
+  }
+}
+
+

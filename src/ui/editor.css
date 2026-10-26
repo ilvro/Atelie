@@ -2697,3 +2697,45 @@ html[data-light="uv"] .desk-doc-bar {
   background: color-mix(in srgb, var(--at-desk-3) 80%, transparent);
 }
 
+/* ── TOQUE E TELAS ESTREITAS (§5 e Fase 4) ────────────────────────────────── */
+@media (pointer: coarse) {
+  .stage-handle {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+  }
+  .stage-rotate-handle {
+    width: 24px;
+    height: 24px;
+  }
+  .at-icon-btn,
+  .inspector-tab,
+  .rail-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 719px) {
+  .desk-doc-bar {
+    padding: 0 8px;
+  }
+  .desk-doc-title-area {
+    gap: 6px;
+    max-width: 45%;
+  }
+  .desk-size-stamp {
+    display: none;
+  }
+  .at-handoff-stamp {
+    display: none;
+  }
+  .desk-doc-actions {
+    gap: 4px;
+  }
+  .desk-doc-actions [data-action="toggle-uv"] {
+    display: none;
+  }
+}
+
+

@@ -292,6 +292,40 @@ html, body {
   display: flex;
   flex-direction: column;
   z-index: 10;
+  container-type: inline-size;
+  container-name: inspector;
+}
+
+/* Backdrop overlay do inspetor como gaveta em telas estreitas */
+.app-inspector-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 55;
+  opacity: 0;
+  transition: opacity var(--eco-fast) var(--eco-ease);
+}
+
+.inspector-close-btn {
+  display: none;
+  border: none;
+  background: transparent;
+  color: var(--at-muted);
+  padding: 0 12px;
+  height: 100%;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.inspector-close-btn:hover {
+  color: var(--at-text);
+}
+
+.desk-inspector-toggle-btn {
+  display: none;
 }
 
 .inspector-tabs {
@@ -959,3 +993,73 @@ html, body {
 .at-conversion-card {
   max-width: 480px;
 }
+
+/* ── RESPONSIVIDADE E TELAS ESTREITAS (§5 e Fase 4) ───────────────────────── */
+@media (max-width: 1099px) {
+  .app-inspector {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: min(340px, 90vw);
+    min-width: unset;
+    z-index: 60;
+    transform: translateX(100%);
+    transition: transform var(--eco-mid) var(--eco-ease);
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.65);
+  }
+
+  .app-inspector.open {
+    transform: translateX(0);
+  }
+
+  .app-inspector-backdrop.visible {
+    display: block;
+    opacity: 1;
+  }
+
+  .inspector-close-btn {
+    display: flex;
+  }
+
+  .desk-inspector-toggle-btn {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 1100px) {
+  .desk-inspector-toggle-btn {
+    display: none !important;
+  }
+}
+
+@media (max-width: 719px) {
+  :root {
+    --rail-w: 52px;
+    --drawer-w: min(320px, calc(100vw - 52px));
+  }
+
+  .rail-btn {
+    height: 44px;
+    padding: 0;
+  }
+
+  .rail-btn span {
+    display: none;
+  }
+
+  .rail-brand {
+    padding: var(--eco-space-1) 0;
+  }
+
+  .rail-recent-item {
+    width: 36px;
+    height: 48px;
+  }
+
+  .inspector-tab[data-tab="layers"],
+  .inspector-tab[data-tab="history"] {
+    display: none;
+  }
+}
+

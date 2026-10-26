@@ -107,6 +107,7 @@ export function createShell(root, { onAction } = {}) {
       </main>
 
       <!-- Inspetor lateral -->
+      <div class="app-inspector-backdrop" id="app-inspector-backdrop" aria-hidden="true"></div>
       <aside class="app-inspector" id="app-inspector">
         <header class="inspector-tabs" role="tablist">
           <button type="button" class="inspector-tab active" role="tab" aria-selected="true" data-tab="properties">
@@ -120,6 +121,9 @@ export function createShell(root, { onAction } = {}) {
           </button>
           <button type="button" class="inspector-tab" role="tab" aria-selected="false" data-tab="history">
             Histórico
+          </button>
+          <button type="button" class="at-icon-btn inspector-close-btn" data-action="inspector-close" aria-label="Fechar inspetor">
+            ${renderIcon('close', 16)}
           </button>
         </header>
         <div class="inspector-content" id="inspector-content">
@@ -136,6 +140,8 @@ export function createShell(root, { onAction } = {}) {
   const drawerContent = root.querySelector('#drawer-content');
   const desk = root.querySelector('#at-desk');
   const railRecents = root.querySelector('#rail-recents');
+  const inspector = root.querySelector('#app-inspector');
+  const inspectorBackdrop = root.querySelector('#app-inspector-backdrop');
   const inspectorContent = root.querySelector('#inspector-content');
 
   let activeDrawer = null;
@@ -143,6 +149,31 @@ export function createShell(root, { onAction } = {}) {
   const drawerPanels = new Map();
   const inspectorPanels = new Map();
   const actionListeners = new Set();
+
+  const openInspector = () => {
+    inspector?.classList.add('open');
+    inspectorBackdrop?.classList.add('visible');
+    inspector?.setAttribute('aria-hidden', 'false');
+    root.querySelector('.desk-inspector-toggle-btn')?.setAttribute('aria-expanded', 'true');
+  };
+
+  const closeInspector = () => {
+    inspector?.classList.remove('open');
+    inspectorBackdrop?.classList.remove('visible');
+    inspector?.setAttribute('aria-hidden', 'true');
+    root.querySelector('.desk-inspector-toggle-btn')?.setAttribute('aria-expanded', 'false');
+  };
+
+  const toggleInspector = () => {
+    if (inspector?.classList.contains('open')) {
+      closeInspector();
+    } else {
+      openInspector();
+    }
+  };
+
+  inspectorBackdrop?.addEventListener('click', closeInspector);
+  root.querySelector('[data-action="inspector-close"]')?.addEventListener('click', closeInspector);
 
   const notifyAction = (action, event) => {
     onAction?.(action, event);
@@ -245,10 +276,17 @@ export function createShell(root, { onAction } = {}) {
     if (e.defaultPrevented) return;
     if (document.body.classList.contains('is-reading')) return;
 
-    if (e.key === 'Escape' && activeDrawer) {
-      e.preventDefault();
-      closeDrawer();
-      return;
+    if (e.key === 'Escape') {
+      if (inspector?.classList.contains('open')) {
+        e.preventDefault();
+        closeInspector();
+        return;
+      }
+      if (activeDrawer) {
+        e.preventDefault();
+        closeDrawer();
+        return;
+      }
     }
 
     const isEditing =
@@ -418,6 +456,10 @@ export function createShell(root, { onAction } = {}) {
   return {
     desk,
     inspector: {
+      open: openInspector,
+      close: closeInspector,
+      toggle: toggleInspector,
+      isOpen: () => inspector?.classList.contains('open') || false,
       tab(name, elementOrRenderer) {
         if (elementOrRenderer !== undefined) {
           inspectorPanels.set(name, elementOrRenderer);

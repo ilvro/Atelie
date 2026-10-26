@@ -322,3 +322,25 @@ body.is-reading .desk-draft-bar {
   }
 }
 
+/* ── TELAS ESTREITAS E MOBILE (< 720px) ─────────────────────────────────── */
+@media (max-width: 719px) {
+  .reader-bar {
+    bottom: 12px;
+    padding: 4px 8px;
+    gap: 6px;
+    max-width: calc(100vw - 16px);
+  }
+  .reader-tool-btn span {
+    display: none;
+  }
+  .reader-carousel {
+    max-width: 130px;
+    overflow: hidden;
+  }
+  .reader-loupe {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+

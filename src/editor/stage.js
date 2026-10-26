@@ -843,6 +843,115 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
     true
   );
 
+  // Multi-touch gestures (Pinch-to-zoom & two-finger pan) and Long Press (§5 e Fase 4)
+  const activeTouchPointers = new Map();
+  let pinchInitialDistance = 0;
+  let pinchInitialZoom = 1;
+  let pinchInitialMidpoint = [0, 0];
+  let pinchStartScrollLeft = 0;
+  let pinchStartScrollTop = 0;
+  let isPinching = false;
+  let longPressTimer = null;
+  let longPressOrigin = null;
+
+  viewport.addEventListener('pointerdown', event => {
+    if (event.pointerType === 'touch') {
+      activeTouchPointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+      // Start long-press detection if single touch
+      if (activeTouchPointers.size === 1) {
+        longPressOrigin = { x: event.clientX, y: event.clientY, target: event.target };
+        clearTimeout(longPressTimer);
+        longPressTimer = setTimeout(() => {
+          if (longPressOrigin && activeTouchPointers.size === 1) {
+            if (activeGesture) {
+              endGesture();
+            }
+            const contextEv = new MouseEvent('contextmenu', {
+              bubbles: true,
+              cancelable: true,
+              view: window,
+              clientX: longPressOrigin.x,
+              clientY: longPressOrigin.y,
+              button: 2,
+            });
+            longPressOrigin.target.dispatchEvent(contextEv);
+            longPressOrigin = null;
+          }
+        }, 500);
+      } else {
+        clearTimeout(longPressTimer);
+        longPressOrigin = null;
+      }
+
+      // If two fingers are down, begin pinch-zoom and pan
+      if (activeTouchPointers.size === 2) {
+        clearTimeout(longPressTimer);
+        longPressOrigin = null;
+        if (activeGesture) {
+          endGesture();
+        }
+        isPinching = true;
+        const [p1, p2] = Array.from(activeTouchPointers.values());
+        pinchInitialDistance = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+        pinchInitialZoom = currentZoom;
+        pinchInitialMidpoint = [(p1.x + p2.x) / 2, (p1.y + p2.y) / 2];
+        pinchStartScrollLeft = viewport.scrollLeft;
+        pinchStartScrollTop = viewport.scrollTop;
+      }
+    }
+  });
+
+  window.addEventListener('pointermove', event => {
+    if (event.pointerType === 'touch' && activeTouchPointers.has(event.pointerId)) {
+      activeTouchPointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+      // Cancel long press if moved more than 8px
+      if (longPressOrigin) {
+        const dist = Math.hypot(event.clientX - longPressOrigin.x, event.clientY - longPressOrigin.y);
+        if (dist > 8) {
+          clearTimeout(longPressTimer);
+          longPressOrigin = null;
+        }
+      }
+
+      // Handle 2-finger pinch & pan
+      if (isPinching && activeTouchPointers.size === 2) {
+        const [p1, p2] = Array.from(activeTouchPointers.values());
+        const currentDistance = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+        if (pinchInitialDistance > 10) {
+          const ratio = currentDistance / pinchInitialDistance;
+          const targetZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, pinchInitialZoom * ratio));
+          currentZoom = targetZoom;
+          updateZoomLabel();
+          updateSelectionOutline();
+          scheduleRender(currentHandout, { halfRes: true });
+
+          const currentMidpoint = [(p1.x + p2.x) / 2, (p1.y + p2.y) / 2];
+          const dx = currentMidpoint[0] - pinchInitialMidpoint[0];
+          const dy = currentMidpoint[1] - pinchInitialMidpoint[1];
+          viewport.scrollLeft = pinchStartScrollLeft - dx;
+          viewport.scrollTop = pinchStartScrollTop - dy;
+        }
+      }
+    }
+  });
+
+  const handleTouchEnd = event => {
+    if (event.pointerType === 'touch') {
+      activeTouchPointers.delete(event.pointerId);
+      clearTimeout(longPressTimer);
+      longPressOrigin = null;
+      if (isPinching && activeTouchPointers.size < 2) {
+        isPinching = false;
+        scheduleRender(currentHandout, { fullRes: true, forceFull: true });
+      }
+    }
+  };
+
+  window.addEventListener('pointerup', handleTouchEnd);
+  window.addEventListener('pointercancel', handleTouchEnd);
+
   // Click on stage for layer hit testing
   pageWrap.addEventListener('click', event => {
     if (!currentHandout || activeGesture || isEyedropperActive) return;

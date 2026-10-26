@@ -355,7 +355,7 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
             ${renderColorSwatchesHTML('page:background')}
           </fieldset>
 
-          <fieldset class="prop-group">
+          <fieldset class="prop-group prop-advanced">
             <legend class="prop-legend">Luz UV na Folha</legend>
             ${colorField('page:uv.tint', 'Tonalidade UV', uv.tint || '#2b1d52')}
             ${renderColorSwatchesHTML('page:uv.tint')}
@@ -430,25 +430,27 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
           ${numberField('h:rotation', 'Rotação · graus', layer.rotation, { min: -360, max: 360, step: 1, disabled: isLocked })}
           ${numberField('h:opacity', 'Opacidade · %', Math.round(layer.opacity * 100), { min: 0, max: 100, step: 1, disabled: isLocked })}
 
-          <label class="field">
-            <span class="field-label">Mesclagem</span>
-            <select data-field="h:blend" ${stateAttr}>
-              ${blendOptions.map(([id, name]) => `<option value="${esc(id)}" ${layer.blend === id ? 'selected' : ''}>${esc(name)}</option>`).join('')}
-            </select>
-          </label>
+          <div class="prop-advanced">
+            <label class="field">
+              <span class="field-label">Mesclagem</span>
+              <select data-field="h:blend" ${stateAttr}>
+                ${blendOptions.map(([id, name]) => `<option value="${esc(id)}" ${layer.blend === id ? 'selected' : ''}>${esc(name)}</option>`).join('')}
+              </select>
+            </label>
 
-          ${checkField('h:clip', 'Recortar na camada de baixo', layer.clip)}
-          ${choiceField('h:light', 'Iluminação', layer.light, [['both', 'Sempre'], ['normal', 'Comum'], ['uv', 'Luz UV']], { disabled: isLocked })}
+            ${checkField('h:clip', 'Recortar na camada de baixo', layer.clip)}
+            ${choiceField('h:light', 'Iluminação', layer.light, [['both', 'Sempre'], ['normal', 'Comum'], ['uv', 'Luz UV']], { disabled: isLocked })}
 
-          <div class="field align-actions-field">
-            <span class="field-label">Alinhar à página</span>
-            <div class="align-buttons-row">
-              <button type="button" class="at-icon-btn align-btn" data-align="left" title="Alinhar à esquerda" ${stateAttr}>⇤</button>
-              <button type="button" class="at-icon-btn align-btn" data-align="center-h" title="Centro horizontal" ${stateAttr}>⇥⇤</button>
-              <button type="button" class="at-icon-btn align-btn" data-align="right" title="Alinhar à direita" ${stateAttr}>⇥</button>
-              <button type="button" class="at-icon-btn align-btn" data-align="top" title="Alinhar ao topo" ${stateAttr}>⤒</button>
-              <button type="button" class="at-icon-btn align-btn" data-align="center-v" title="Centro vertical" ${stateAttr}>↕</button>
-              <button type="button" class="at-icon-btn align-btn" data-align="bottom" title="Alinhar à base" ${stateAttr}>⤓</button>
+            <div class="field align-actions-field">
+              <span class="field-label">Alinhar à página</span>
+              <div class="align-buttons-row">
+                <button type="button" class="at-icon-btn align-btn" data-align="left" title="Alinhar à esquerda" ${stateAttr}>⇤</button>
+                <button type="button" class="at-icon-btn align-btn" data-align="center-h" title="Centro horizontal" ${stateAttr}>⇥⇤</button>
+                <button type="button" class="at-icon-btn align-btn" data-align="right" title="Alinhar à direita" ${stateAttr}>⇥</button>
+                <button type="button" class="at-icon-btn align-btn" data-align="top" title="Alinhar ao topo" ${stateAttr}>⤒</button>
+                <button type="button" class="at-icon-btn align-btn" data-align="center-v" title="Centro vertical" ${stateAttr}>↕</button>
+                <button type="button" class="at-icon-btn align-btn" data-align="bottom" title="Alinhar à base" ${stateAttr}>⤓</button>
+              </div>
             </div>
           </div>
         </fieldset>
@@ -508,22 +510,24 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
             ['justify', 'Justificado', '☰'],
           ], { disabled: isLocked })}
 
-          ${choiceField('h:text.valign', 'Vertical', txt.valign, [
-            ['top', 'Topo'],
-            ['middle', 'Meio'],
-            ['bottom', 'Base'],
-          ], { disabled: isLocked })}
+          <div class="prop-advanced">
+            ${choiceField('h:text.valign', 'Vertical', txt.valign, [
+              ['top', 'Topo'],
+              ['middle', 'Meio'],
+              ['bottom', 'Base'],
+            ], { disabled: isLocked })}
 
-          <div class="field-row">
-            ${numberField('h:text.lineHeight', 'Altura linha', txt.lineHeight, { min: 0.8, max: 3, step: 0.05, disabled: isLocked })}
-            ${numberField('h:text.letterSpacing', 'Espaço · ‰', txt.letterSpacing, { min: -100, max: 500, step: 10, disabled: isLocked })}
+            <div class="field-row">
+              ${numberField('h:text.lineHeight', 'Altura linha', txt.lineHeight, { min: 0.8, max: 3, step: 0.05, disabled: isLocked })}
+              ${numberField('h:text.letterSpacing', 'Espaço · ‰', txt.letterSpacing, { min: -100, max: 500, step: 10, disabled: isLocked })}
+            </div>
+
+            ${choiceField('h:text.box', 'Modo da caixa', txt.box, [['area', 'Caixa'], ['point', 'Ponto']], { disabled: isLocked })}
+            ${checkField('h:text.fit', 'Encolher para caber', txt.fit === 'shrink')}
           </div>
-
-          ${choiceField('h:text.box', 'Modo da caixa', txt.box, [['area', 'Caixa'], ['point', 'Ponto']], { disabled: isLocked })}
-          ${checkField('h:text.fit', 'Encolher para caber', txt.fit === 'shrink')}
         </fieldset>
 
-        <fieldset class="prop-group" ${stateAttr}>
+        <fieldset class="prop-group prop-advanced" ${stateAttr}>
           <legend class="prop-legend">Tinta e Desgaste</legend>
           ${choiceField('h:text.ink.style', 'Estilo', txt.ink?.style || 'clean', [
             ['clean', 'Limpa'],
@@ -552,23 +556,25 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
 
           ${choiceField('h:image.fit', 'Enquadramento', img.fit, [['stretch', 'Esticar'], ['cover', 'Cobrir'], ['contain', 'Conter']], { disabled: isLocked })}
 
-          <div class="field-row">
-            ${checkField('h:image.flipX', 'Espelhar H', Boolean(img.flipX))}
-            ${checkField('h:image.flipY', 'Espelhar V', Boolean(img.flipY))}
+          <div class="prop-advanced">
+            <div class="field-row">
+              ${checkField('h:image.flipX', 'Espelhar H', Boolean(img.flipX))}
+              ${checkField('h:image.flipY', 'Espelhar V', Boolean(img.flipY))}
+            </div>
+
+            <legend class="prop-legend" style="margin-top: 12px;">Filtros</legend>
+            ${numberField('h:image.filter.grayscale', 'Escala de cinza · %', Math.round((img.filter?.grayscale || 0) * 100), { min: 0, max: 100, step: 1, disabled: isLocked })}
+            ${numberField('h:image.filter.sepia', 'Sépia · %', Math.round((img.filter?.sepia || 0) * 100), { min: 0, max: 100, step: 1, disabled: isLocked })}
+            ${numberField('h:image.filter.contrast', 'Contraste · %', Math.round((img.filter?.contrast || 0) * 100), { min: -100, max: 100, step: 1, disabled: isLocked })}
+            ${numberField('h:image.filter.brightness', 'Brilho · %', Math.round((img.filter?.brightness || 0) * 100), { min: -100, max: 100, step: 1, disabled: isLocked })}
+            ${numberField('h:image.filter.saturation', 'Saturação · %', Math.round((img.filter?.saturation || 0) * 100), { min: -100, max: 100, step: 1, disabled: isLocked })}
+            ${numberField('h:image.filter.blur', 'Desfoque · px', img.filter?.blur || 0, { min: 0, max: 50, step: 1, disabled: isLocked })}
+
+            <legend class="prop-legend" style="margin-top: 12px;">Tingimento</legend>
+            ${colorField('h:image.tint.color', 'Cor do tingimento', img.tint?.color || '#ffeedd')}
+            ${renderColorSwatchesHTML('h:image.tint.color')}
+            ${numberField('h:image.tint.amount', 'Intensidade · %', Math.round((img.tint?.amount || 0) * 100), { min: 0, max: 100, step: 1, disabled: isLocked })}
           </div>
-
-          <legend class="prop-legend" style="margin-top: 12px;">Filtros</legend>
-          ${numberField('h:image.filter.grayscale', 'Escala de cinza · %', Math.round((img.filter?.grayscale || 0) * 100), { min: 0, max: 100, step: 1, disabled: isLocked })}
-          ${numberField('h:image.filter.sepia', 'Sépia · %', Math.round((img.filter?.sepia || 0) * 100), { min: 0, max: 100, step: 1, disabled: isLocked })}
-          ${numberField('h:image.filter.contrast', 'Contraste · %', Math.round((img.filter?.contrast || 0) * 100), { min: -100, max: 100, step: 1, disabled: isLocked })}
-          ${numberField('h:image.filter.brightness', 'Brilho · %', Math.round((img.filter?.brightness || 0) * 100), { min: -100, max: 100, step: 1, disabled: isLocked })}
-          ${numberField('h:image.filter.saturation', 'Saturação · %', Math.round((img.filter?.saturation || 0) * 100), { min: -100, max: 100, step: 1, disabled: isLocked })}
-          ${numberField('h:image.filter.blur', 'Desfoque · px', img.filter?.blur || 0, { min: 0, max: 50, step: 1, disabled: isLocked })}
-
-          <legend class="prop-legend" style="margin-top: 12px;">Tingimento</legend>
-          ${colorField('h:image.tint.color', 'Cor do tingimento', img.tint?.color || '#ffeedd')}
-          ${renderColorSwatchesHTML('h:image.tint.color')}
-          ${numberField('h:image.tint.amount', 'Intensidade · %', Math.round((img.tint?.amount || 0) * 100), { min: 0, max: 100, step: 1, disabled: isLocked })}
         </fieldset>
 
         ${fieldMarkup}
@@ -586,14 +592,16 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
 
           ${colorField('h:shape.stroke', 'Contorno', shp.stroke || '#000000')}
           ${renderColorSwatchesHTML('h:shape.stroke')}
-          ${numberField('h:shape.strokeWidth', 'Espessura · px', shp.strokeWidth || 0, { min: 0, max: 50, step: 1, disabled: isLocked })}
-          ${numberField('h:shape.radius', 'Arredondamento · px', shp.radius || 0, { min: 0, max: 200, step: 1, disabled: isLocked })}
+          <div class="prop-advanced">
+            ${numberField('h:shape.strokeWidth', 'Espessura · px', shp.strokeWidth || 0, { min: 0, max: 50, step: 1, disabled: isLocked })}
+            ${numberField('h:shape.radius', 'Arredondamento · px', shp.radius || 0, { min: 0, max: 200, step: 1, disabled: isLocked })}
+          </div>
         </fieldset>
       `;
     } else if (layer.kind === 'adjust') {
       const adj = layer.adjust;
       html += `
-        <fieldset class="prop-group" ${stateAttr}>
+        <fieldset class="prop-group prop-advanced" ${stateAttr}>
           <legend class="prop-legend">Ajuste de Cor</legend>
           ${numberField('h:adjust.grayscale', 'Escala de cinza · %', Math.round((adj.grayscale || 0) * 100), { min: 0, max: 100, step: 1, disabled: isLocked })}
           ${numberField('h:adjust.sepia', 'Sépia · %', Math.round((adj.sepia || 0) * 100), { min: 0, max: 100, step: 1, disabled: isLocked })}
@@ -662,7 +670,7 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
       }
 
       html += `
-        <fieldset class="prop-group" ${stateAttr}>
+        <fieldset class="prop-group prop-advanced" ${stateAttr}>
           <legend class="prop-legend">Efeito</legend>
           <label class="field">
             <span class="field-label">Tipo de efeito</span>
@@ -679,7 +687,7 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
           </div>
         </fieldset>
 
-        <fieldset class="prop-group" ${stateAttr}>
+        <fieldset class="prop-group prop-advanced" ${stateAttr}>
           <legend class="prop-legend">Parâmetros</legend>
           ${renderEffectParamsHTML(eff.type, params, isLocked, stateAttr)}
         </fieldset>
