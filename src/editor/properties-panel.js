@@ -11,6 +11,7 @@ import { BLEND_MODES, updateLayer, setField } from '../domain/handouts.js';
 import { boxCorners } from './geometry.js';
 import { EFFECTS } from '../render/handout-effects.js';
 import { mountFontSelector, getCachedFont } from './font-selector.js';
+import { play } from '../ui/sound.js';
 
 export function getDocumentColors(handout) {
   const colors = new Set();
@@ -770,6 +771,16 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
       });
     }
   }
+
+  // Handle typing sounds in textareas
+  container.addEventListener('keydown', event => {
+    if (event.target.tagName === 'TEXTAREA' && event.target.dataset?.field === 'h:text.content') {
+      if (!event.ctrlKey && !event.metaKey && !event.altKey && !['Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 'Tab'].includes(event.key)) {
+        const layer = currentHandout?.layers?.find(l => l.id === selectedId);
+        play('type', { font: layer?.text?.font, key: event.key });
+      }
+    }
+  });
 
   // Handle direct inputs (e.g. typing in textarea or name input, dragging slider or color picker)
   container.addEventListener('input', event => {

@@ -13,6 +13,7 @@ import {
 import { updateLayer } from '../domain/handouts.js';
 import { createRulers } from './rulers.js';
 import { createSelectionBar } from './selection-bar.js';
+import { play, isSoundEnabled } from '../ui/sound.js';
 
 const MIN_ZOOM = 0.1;
 const MAX_ZOOM = 4.0;
@@ -312,6 +313,9 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
       event.stopPropagation();
       finishInlineTextEdit();
       viewport.focus();
+    } else if (isSoundEnabled() && !event.ctrlKey && !event.metaKey && !event.altKey && !['Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 'Tab'].includes(event.key)) {
+      const layer = currentHandout?.layers?.find(l => l.id === editingLayerId);
+      play('type', { font: layer?.text?.font, key: event.key });
     }
   });
 

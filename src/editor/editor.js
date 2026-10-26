@@ -33,6 +33,7 @@ import { bakeHandout, summaryOf, deliveryOf, previewOf, blobToDataUrl } from './
 import { openExchange, publish, channel, savedMessage, unpublishBySource, readPublished } from '../data/exchange.js';
 import { getSettings } from '../ui/settings.js';
 import { createExportDrawer } from './export-drawer.js';
+import { play } from '../ui/sound.js';
 import { downloadHandoutPng, printHandout, exportScale, printLayout } from './export.js';
 
 export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
@@ -215,6 +216,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   function toggleUvLight() {
     currentLight = currentLight === 'uv' ? 'normal' : 'uv';
     const isUv = currentLight === 'uv';
+    play('uv-toggle', { on: isUv });
     if (uvBtn) uvBtn.setAttribute('aria-pressed', isUv ? 'true' : 'false');
     if (isUv) {
       document.documentElement.dataset.light = 'uv';
@@ -343,6 +345,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   }
 
   function triggerArchiveAnimation() {
+    play('archive');
     stampOverlay.classList.remove('active');
     void stampOverlay.offsetWidth;
     stampOverlay.classList.add('active');
@@ -624,6 +627,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     if (!skipDraftCheck) {
       handout = await checkDraftRecovery(inputHandout);
     }
+    play('paper-slide');
 
     currentLight = 'normal';
     if (uvBtn) uvBtn.setAttribute('aria-pressed', 'false');
@@ -977,6 +981,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   function removeSelected() {
     if (!state?.selection) return;
     const selId = state.selection;
+    play('delete');
     const next = removeLayer(state.handout, selId);
     state.edit(next, { label: 'Excluir camada' });
   }
@@ -1181,6 +1186,18 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
           state.edit(next, { label: `Adicionar ${newL.name}` });
           state.select(newL.id);
           layersPanel?.flash?.(newL.id);
+
+          const cat = item.category?.toLowerCase() || '';
+          const name = item.name?.toLowerCase() || '';
+          if (cat === 'fitas' || name.includes('fita')) {
+            play('tape');
+          } else if (name.includes('lacre') || name.includes('cera')) {
+            play('stamp', { variant: 'wax' });
+          } else if (isPaper || cat === 'papeis' || cat === 'papéis' || cat === 'texturas') {
+            play('paper-slide');
+          } else {
+            play('stamp');
+          }
           return;
         }
       } catch {}
@@ -1239,6 +1256,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
         state.edit(next, { label: 'Adicionar imagem' });
         state.select(newL.id);
         layersPanel?.flash?.(newL.id);
+        play('paper-slide');
         cascade += 20;
       } catch (err) {
         shell.notify(`Erro ao enviar imagem: ${err.message}`, { tone: 'error' });

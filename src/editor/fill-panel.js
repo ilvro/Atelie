@@ -2,6 +2,7 @@ import { escapeHTML as esc, icon as renderIcon } from '../ui/icons.js';
 import { tape } from '../ui/primitives.js';
 import { fillFields } from '../domain/handouts.js';
 import { getSampleText } from './sample-text.js';
+import { play, isSoundEnabled } from '../ui/sound.js';
 
 export function createFillPanel(shell, { state, api, images } = {}) {
   const container = document.createElement('div');
@@ -9,7 +10,23 @@ export function createFillPanel(shell, { state, api, images } = {}) {
 
   let unsubscribe = null;
 
+  // Handle typing sounds on fill inputs via delegation so re-renders keep listening
+  container.addEventListener('keydown', (e) => {
+    const input = e.target.closest('.fill-field-input');
+    if (!input) return;
+    if (isSoundEnabled() && !e.ctrlKey && !e.metaKey && !e.altKey && !['Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 'Tab'].includes(e.key)) {
+      const layer = state.handout?.layers?.find(l => l.id === input.dataset.fieldId);
+      play('type', { font: layer?.text?.font, key: e.key });
+    }
+  });
+
   function render() {
+    const activeEl = typeof document !== 'undefined' ? document.activeElement : null;
+    const isInputActive = activeEl && container.contains(activeEl) && activeEl.classList.contains('fill-field-input');
+    const activeFieldId = isInputActive ? activeEl.dataset.fieldId : null;
+    const activeSelectionStart = isInputActive ? activeEl.selectionStart : null;
+    const activeSelectionEnd = isInputActive ? activeEl.selectionEnd : null;
+
     if (!state || !state.handout) {
       container.innerHTML = `
         <div class="fill-empty-state">
@@ -115,6 +132,16 @@ export function createFillPanel(shell, { state, api, images } = {}) {
     `;
 
     attachEvents();
+
+    if (activeFieldId) {
+      const restored = container.querySelector(`.fill-field-input[data-field-id="${activeFieldId}"]`);
+      if (restored) {
+        restored.focus();
+        if (activeSelectionStart !== null && activeSelectionEnd !== null) {
+          try { restored.setSelectionRange(activeSelectionStart, activeSelectionEnd); } catch {}
+        }
+      }
+    }
   }
 
   function attachEvents() {

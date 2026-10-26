@@ -13,6 +13,8 @@ import { api } from './data/api.js';
 import * as exchange from './data/exchange.js';
 import { createEditor } from './editor/editor.js';
 import { createReading } from './reading/reading.js';
+import { play, getSoundSettings, setSoundSettings, matchTypingVoice, isSoundEnabled } from './ui/sound.js';
+import { notify } from './ui/notify.js';
 
 const appRoot = document.getElementById('app');
 if (appRoot) {
@@ -48,9 +50,18 @@ if (appRoot) {
       }
     });
 
+    const soundApi = {
+      play,
+      getSettings: getSoundSettings,
+      setSettings: setSoundSettings,
+      matchTypingVoice,
+      isSoundEnabled,
+    };
+
     const atelieApi = {
       ...shell,
       api,
+      sound: soundApi,
       ...(reading ? { reading } : {}),
       ...(isDiagnostics && editor ? { editor, exchange } : {}),
       renderHandout: async (handout, { scale = 0.25, light = 'normal', at = [] } = {}) => {
@@ -78,5 +89,30 @@ if (appRoot) {
     };
 
     window.__atelie = Object.freeze(atelieApi);
+
+    // Initial polite welcome offer for sound (opt-in)
+    if (typeof localStorage !== 'undefined' && !localStorage.getItem('atelie-sound-prompt')) {
+      setTimeout(() => {
+        try {
+          if (!localStorage.getItem('atelie-sound-prompt')) {
+            localStorage.setItem('atelie-sound-prompt', 'seen');
+            if (!getSoundSettings().enabled) {
+              notify('A bancada tem sons táteis (máquina de escrever, caneta e carimbos). Deseja ligar?', {
+                tone: 'info',
+                duration: 9000,
+                action: {
+                  label: 'Ligar sons',
+                  run: () => {
+                    setSoundSettings({ enabled: true });
+                    play('stamp', { preview: true });
+                    notify('Sons da bancada ativados!', { tone: 'ok' });
+                  },
+                },
+              });
+            }
+          }
+        } catch {}
+      }, 1500);
+    }
   }
 }

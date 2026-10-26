@@ -22,6 +22,8 @@ const DESK_COLORS = {
   preto: '#0e0e11',
 };
 
+let memorySettings = null;
+
 export const DEFAULT_SETTINGS = {
   deskMaterial: 'madeira',
   lampIntensity: 100,
@@ -29,26 +31,49 @@ export const DEFAULT_SETTINGS = {
   reduceMotion: false,
   unit: 'px',
   shareWithTabletop: true,
+  sound: {
+    enabled: false,
+    volume: 80,
+    typing: 'auto', // 'auto' | 'typewriter' | 'pen' | 'off'
+    ambient: false,
+  },
 };
 
 export function getSettings() {
-  if (typeof localStorage === 'undefined') return { ...DEFAULT_SETTINGS };
+  if (typeof localStorage === 'undefined') {
+    return memorySettings ? { ...memorySettings } : { ...DEFAULT_SETTINGS, sound: { ...DEFAULT_SETTINGS.sound } };
+  }
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { ...DEFAULT_SETTINGS };
-    return { ...DEFAULT_SETTINGS, ...JSON.parse(raw) };
+    if (!raw) return { ...DEFAULT_SETTINGS, sound: { ...DEFAULT_SETTINGS.sound } };
+    const parsed = JSON.parse(raw);
+    return {
+      ...DEFAULT_SETTINGS,
+      ...parsed,
+      sound: {
+        ...DEFAULT_SETTINGS.sound,
+        ...(parsed.sound || {}),
+      },
+    };
   } catch {
-    return { ...DEFAULT_SETTINGS };
+    return { ...DEFAULT_SETTINGS, sound: { ...DEFAULT_SETTINGS.sound } };
   }
 }
 
 export function saveSettings(updates) {
   const current = getSettings();
-  const next = { ...current, ...updates };
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-  } catch (err) {
-    console.error('Failed to save settings:', err);
+  const next = {
+    ...current,
+    ...updates,
+    ...(updates.sound ? { sound: { ...current.sound, ...updates.sound } } : {}),
+  };
+  memorySettings = next;
+  if (typeof localStorage !== 'undefined') {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    } catch (err) {
+      console.error('Failed to save settings:', err);
+    }
   }
   applySettings(next);
   return next;
@@ -69,6 +94,10 @@ export function applySettings(settings = getSettings()) {
   root.dataset.unit = settings.unit;
 
   document.body.classList.toggle('reduce-motion', Boolean(settings.reduceMotion));
+
+  if (typeof window !== 'undefined' && window.__atelieSound?.setSettings) {
+    window.__atelieSound.setSettings(settings.sound || {});
+  }
 }
 
 let settingsModal = null;
@@ -161,6 +190,110 @@ export function openSettingsModal() {
             <input type="checkbox" id="setting-share-tabletop" ${current.shareWithTabletop !== false ? 'checked' : ''} />
             <span>Compartilhar com o Tabletop neste navegador</span>
           </label>
+        </section>
+
+        <section class="at-settings-section" id="setting-sound-section">
+          <div class="at-settings-row">
+            <label class="at-settings-check" style="font-weight: 600;">
+              <input type="checkbox" id="setting-sound-enabled" ${current.sound?.enabled ? 'checked' : ''} />
+              <span>Sons da bancada</span>
+            </label>
+            <button type="button" class="at-btn is-sm sound-preview-btn" data-sound-preview="master" title="Ouvir exemplo de som geral">
+              Ouvir exemplo
+            </button>
+          </div>
+          <p class="at-settings-desc" style="font-size:12px; color:var(--text-muted, #888); margin:4px 0 10px;">
+            Sons táteis sintetizados em tempo real: teclas de máquina de escrever, risco de caneta, carimbos e fita crepe.
+          </p>
+
+          <div id="setting-sound-options" style="${current.sound?.enabled ? '' : 'opacity: 0.55;'}">
+            <div class="at-settings-row" style="margin-top: 8px;">
+              <label for="setting-sound-volume" class="at-settings-label">Volume geral</label>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="at-settings-value" id="setting-sound-volume-val">${current.sound?.volume ?? 80}%</span>
+                <button type="button" class="at-btn is-sm sound-preview-btn" data-sound-preview="volume">
+                  Ouvir exemplo
+                </button>
+              </div>
+            </div>
+            <input type="range"
+                   id="setting-sound-volume"
+                   min="0"
+                   max="100"
+                   value="${current.sound?.volume ?? 80}"
+                   style="--range-progress: ${current.sound?.volume ?? 80}%;"
+                   class="at-settings-slider" />
+
+            <div style="margin-top: 12px;">
+              <label class="at-settings-label" style="margin-bottom: 6px; display: block;">Voz de digitação nas camadas de texto</label>
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <button type="button"
+                          class="at-settings-choice${(current.sound?.typing ?? 'auto') === 'auto' ? ' active' : ''}"
+                          style="flex: 1; margin-right: 8px;"
+                          role="radio"
+                          aria-checked="${(current.sound?.typing ?? 'auto') === 'auto'}"
+                          data-sound-typing="auto">
+                    Automático (pela fonte do texto)
+                  </button>
+                  <button type="button" class="at-btn is-sm sound-preview-btn" data-sound-preview="typing-auto">
+                    Ouvir exemplo
+                  </button>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <button type="button"
+                          class="at-settings-choice${current.sound?.typing === 'typewriter' ? ' active' : ''}"
+                          style="flex: 1; margin-right: 8px;"
+                          role="radio"
+                          aria-checked="${current.sound?.typing === 'typewriter'}"
+                          data-sound-typing="typewriter">
+                    Máquina de escrever
+                  </button>
+                  <button type="button" class="at-btn is-sm sound-preview-btn" data-sound-preview="typing-typewriter">
+                    Ouvir exemplo
+                  </button>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <button type="button"
+                          class="at-settings-choice${current.sound?.typing === 'pen' ? ' active' : ''}"
+                          style="flex: 1; margin-right: 8px;"
+                          role="radio"
+                          aria-checked="${current.sound?.typing === 'pen'}"
+                          data-sound-typing="pen">
+                    Caneta / Lápis
+                  </button>
+                  <button type="button" class="at-btn is-sm sound-preview-btn" data-sound-preview="typing-pen">
+                    Ouvir exemplo
+                  </button>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <button type="button"
+                          class="at-settings-choice${current.sound?.typing === 'off' ? ' active' : ''}"
+                          style="flex: 1; margin-right: 8px;"
+                          role="radio"
+                          aria-checked="${current.sound?.typing === 'off'}"
+                          data-sound-typing="off">
+                    Desligado (digitação silenciosa)
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 12px;">
+              <div class="at-settings-row">
+                <label class="at-settings-check">
+                  <input type="checkbox" id="setting-sound-ambient" ${current.sound?.ambient ? 'checked' : ''} />
+                  <span>Zumbido elétrico quando a lâmpada UV estiver acesa</span>
+                </label>
+                <button type="button" class="at-btn is-sm sound-preview-btn" data-sound-preview="ambient">
+                  Ouvir exemplo
+                </button>
+              </div>
+            </div>
+          </div>
         </section>
 
         <section class="at-settings-section">
@@ -297,6 +430,72 @@ export function openSettingsModal() {
     if (typeof window !== 'undefined' && window.dispatchEvent) {
       window.dispatchEvent(new CustomEvent('atelie:share-tabletop-changed', { detail: { enabled } }));
     }
+  });
+
+  // Sound enabled
+  const soundEnabledCheck = settingsModal.querySelector('#setting-sound-enabled');
+  const soundOptionsEl = settingsModal.querySelector('#setting-sound-options');
+  soundEnabledCheck?.addEventListener('change', () => {
+    const enabled = soundEnabledCheck.checked;
+    if (soundOptionsEl) soundOptionsEl.style.opacity = enabled ? '1' : '0.55';
+    saveSettings({ sound: { enabled } });
+  });
+
+  // Sound volume
+  const soundVolSlider = settingsModal.querySelector('#setting-sound-volume');
+  const soundVolLabel = settingsModal.querySelector('#setting-sound-volume-val');
+  soundVolSlider?.addEventListener('input', () => {
+    const val = Number(soundVolSlider.value);
+    if (soundVolLabel) soundVolLabel.textContent = `${val}%`;
+    soundVolSlider.style.setProperty('--range-progress', `${val}%`);
+    saveSettings({ sound: { volume: val } });
+  });
+
+  // Sound typing choice
+  settingsModal.querySelectorAll('[data-sound-typing]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      settingsModal.querySelectorAll('[data-sound-typing]').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-checked', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-checked', 'true');
+      saveSettings({ sound: { typing: btn.dataset.soundTyping } });
+    });
+  });
+
+  // Sound ambient
+  const soundAmbientCheck = settingsModal.querySelector('#setting-sound-ambient');
+  soundAmbientCheck?.addEventListener('change', () => {
+    saveSettings({ sound: { ambient: soundAmbientCheck.checked } });
+  });
+
+  // Preview buttons ("Ouvir exemplo")
+  settingsModal.querySelectorAll('[data-sound-preview]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const type = btn.dataset.soundPreview;
+      const soundApi = (typeof window !== 'undefined' && window.__atelieSound) || null;
+      if (!soundApi) return;
+
+      if (type === 'master' || type === 'volume') {
+        soundApi.play('stamp', { preview: true });
+      } else if (type === 'typing-typewriter') {
+        soundApi.play('type', { preview: true, forceVoice: 'typewriter', key: 'a' });
+        setTimeout(() => soundApi.play('type', { preview: true, forceVoice: 'typewriter', key: ' ' }), 60);
+        setTimeout(() => soundApi.play('type', { preview: true, forceVoice: 'typewriter', key: 'Enter' }), 140);
+      } else if (type === 'typing-pen') {
+        soundApi.play('type', { preview: true, forceVoice: 'pen' });
+        setTimeout(() => soundApi.play('type', { preview: true, forceVoice: 'pen' }), 70);
+      } else if (type === 'typing-auto') {
+        soundApi.play('type', { preview: true, forceVoice: 'typewriter', key: 'x' });
+        setTimeout(() => soundApi.play('type', { preview: true, forceVoice: 'pen' }), 80);
+      } else if (type === 'ambient') {
+        soundApi.play('uv-toggle', { preview: true, on: true });
+        setTimeout(() => {
+          soundApi.play('uv-toggle', { preview: true, on: false });
+        }, 1200);
+      }
+    });
   });
 
   // Unit selection

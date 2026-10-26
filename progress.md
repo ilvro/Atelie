@@ -41,7 +41,52 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | Refinamento de Tipografia e Camadas | concluída | 2026-10-25 | Geometria e alinhamento de textos, proporção de fontes mistas, recorte de caixas de texto, e painel de camadas com pastas, cores e snippets |
 | Refinamento de Expansões na Gaveta de Modelos | concluída | 2026-10-25 | Botão direto de instalação de expansão na gaveta Modelos, atalho em buscas vazias e mensagens claras sobre PSDs brutos |
 | Qualidade de Vida · Fase 0 — Inserção de Camadas | concluída | 2026-10-25 | Função pura insertionIndex, papéis acima de papéis existentes, assets acima da seleção ou no topo, addLayer estrito, rolagem e flash no painel |
+| Qualidade de Vida · Fase 1 — Sons da bancada | concluída | 2026-10-25 | Síntese Web Audio pura sem arquivos, vozes de digitação por fonte, carimbos, fita, papel, luz UV e controles de áudio nos Ajustes |
 | Refinamento Visual e Ergonomia de UI | concluída | 2026-10-25 | Ergonomia de campos numéricos (scroll wheel com Shift/Alt), tokens CSS limpos, carimbos de estado (ARQUIVADO/RASCUNHO), botões de alinhamento com feedback e contraste tipográfico |
+
+---
+
+## Qualidade de Vida · Fase 1 — Sons da bancada (desligáveis)
+
+### Feito
+- **Síntese Sonora Procedural com Web Audio API (`src/ui/sound.js`)**:
+  - Arquitetura de som com zero dependências externas, zero arquivos de áudio e zero licenças a registrar: envelopes rápidos, ruído filtrado (bandpass/lowpass/highpass), osciladores de impacto e modulação procedural sutil a cada acionamento para prevenir fadiga auditiva.
+  - Sons sintetizados implementados:
+    - **Digitação (`type`)**:
+      - `typewriter`: batida mecânica metálica, barra de espaço grave em madeira, e no Enter sininho nítido de fim de linha acompanhado pelo deslize do carro.
+      - `pen`: atrito sutil de grafite/tinta no papel texturizado para caligrafia e marcadores.
+      - `computer`: clique seco de teclado de terminal e bipe característico de terminal retrô no Enter.
+      - `soft`: toque suave amortecido para fontes tipográficas de livros e jornais.
+    - **Carimbos e Selos (`stamp`)**: batida seca e encorpada de madeira sobre a mesa, com camada de chiado e crepitação térmica quando aplicado a lacres de cera (`isWax`).
+    - **Fita crepe (`tape`)**: rasgo tátil de fita adesiva descolando do rolo.
+    - **Deslize de papel (`paper-slide`)**: atrito aerodinâmico suave ao abrir documentos, alternar páginas ou virar a folha frente/verso.
+    - **Luz UV (`uv-toggle` e zumbido ambiente)**: interruptor seco mecânico duplo e oscilação elétrica de baixa frequência contínua (60 Hz / 120 Hz) simulando o reator da lâmpada negra.
+    - **Arquivamento (`archive`)**: carimbada pesada de ARQUIVADO com ressonância profunda.
+    - **Exclusão de camada (`delete` / `crumple`)**: amassado tátil rápido de papel descartado.
+- **Mapeamento Inteligente de Fontes e Vozes (`matchTypingVoice`)**:
+  - Classificação automática da voz de digitação baseada na família, nome, categoria ou biblioteca da camada de texto (ex: Courier/Cutive/Special Elite → máquina de escrever; Caveat/Kalam/Permanent Marker/Rock Salt → caneta/marcador; VT323/Share Tech → computador; Baskerville/Playfair → toque suave).
+- **Políticas de Áudio e Ergonomia de Navegador**:
+  - Inicialização estritamente lazy do `AudioContext` no primeiro gesto do usuário (`pointerdown`, `keydown`).
+  - Desligado por padrão na primeira visita (`sound.enabled: false`) evitando sustos ao usuário.
+  - Bilhete de boas-vindas não intrusivo oferecendo ligar os sons com prévia imediata.
+  - Suspensão e silenciamento automático quando a aba perde visibilidade (`visibilitychange` / `document.hidden`).
+  - Limitação inteligente de taxa de digitação (throttling de no máximo 1 som a cada 35 ms) prevenindo efeito de metralhadora em repetição rápida de teclas.
+  - Preservação fluida do cursor e foco no painel Preencher (`fill-panel.js`) durante digitação contínua.
+- **Painel de Ajustes da Mesa (`src/ui/settings.js` e `src/ui/sound.js`)**:
+  - Nova seção dedicada "Sons da bancada" com alternador geral, controle deslizante de volume (0–100%), seletor de voz de digitação (Automático, Máquina de escrever, Caneta/Lápis, Silencioso) e zumbido elétrico ambiente para luz UV.
+  - Botões táteis "Ouvir exemplo" em cada opção permitindo experimentar os sons diretamente antes de salvar.
+  - Exposição de `window.__atelie.sound` com API completa e suporte a espiões de teste (`onPlay`, `history` e interceptação).
+- **Testes Abrangentes**:
+  - `tests/sound.test.js`: 4 testes unitários cobrindo mapeamento de fontes, persistência de configurações, limitação estrita de 35ms e garantia de não-instanciação de `AudioContext` quando desativado.
+  - `tests/e2e/sound.test.js`: teste Playwright E2E ponta a ponta validando que com som desativado 0 eventos são disparados e com som ativado exatamente 5 toques chamam `play('type')` 5 vezes, além da navegação completa e botões de exemplo no modal de Ajustes.
+
+### Validação
+- `npm test`: 173 testes unitários passando 100%.
+- `node --test tests/e2e/sound.test.js tests/e2e/bundle-import.test.js tests/e2e/templates.test.js`: 3 suítes E2E passando 100%.
+- `npm run build` e `npm run build:pages`: ambos os builds de produção e GitHub Pages concluídos com sucesso.
+
+### Pendências reais
+- Nenhuma pendência na Fase 1. Próxima fase: **Fase 2 · Movimento e retorno visual**.
 
 ---
 

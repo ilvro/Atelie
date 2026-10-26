@@ -9,6 +9,7 @@ import {
 } from './library-search.js';
 import { imageLayer, textLayer, addLayer, updateLayer, insertionIndex } from '../domain/handouts.js';
 import { contextMenu } from '../ui/context-menu.js';
+import { play } from '../ui/sound.js';
 
 const CANONICAL_CATEGORIES = [
   'Papéis',
@@ -171,6 +172,18 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
     state.edit(next, { label: `Adicionar ${newLayer.name}` });
     state.select(newLayer.id);
     state.flash?.(newLayer.id);
+
+    const cat = item.category?.toLowerCase() || '';
+    const name = item.name?.toLowerCase() || '';
+    if (cat === 'fitas' || name.includes('fita')) {
+      play('tape');
+    } else if (name.includes('lacre') || name.includes('cera')) {
+      play('stamp', { variant: 'wax' });
+    } else if (isPaper || cat === 'papeis' || cat === 'papéis' || cat === 'texturas') {
+      play('paper-slide');
+    } else {
+      play('stamp');
+    }
   }
 
   function applyFontToHandout(item) {
@@ -224,6 +237,7 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
       state.edit(addLayer(state.handout, newL, insertIdx), { label: `Adicionar ${newL.name}` });
       state.select(newL.id);
       state.flash?.(newL.id);
+      play('type', { font: item.family, key: 'a' });
     }
   }
 

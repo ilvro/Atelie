@@ -9,6 +9,7 @@ import { hasUvLayers } from '../editor/bake.js';
 import { renderIcon, escapeHTML as esc } from '../ui/icons.js';
 import { tiltOf } from '../ui/primitives.js';
 import { getRecentIds } from '../editor/navigator.js';
+import { play } from '../ui/sound.js';
 
 export { fitPage, neighbors };
 
@@ -355,6 +356,7 @@ export function createReading(shell, { api, images, fonts, editor, onExit = () =
   async function flipSheet() {
     if (!currentHandout?.back?.handoutId) return;
 
+    play('paper-slide');
     isFlipped = !isFlipped;
     sheetEl.classList.toggle('is-flipped', isFlipped);
 
@@ -611,6 +613,7 @@ export function createReading(shell, { api, images, fonts, editor, onExit = () =
   }
 
   async function open(handoutId) {
+    play('paper-slide');
     let targetDoc = null;
 
     if (handoutId) {
