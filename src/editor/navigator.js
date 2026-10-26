@@ -286,7 +286,16 @@ export function createNavigator(container, {
           console.warn('[atelie] Erro ao despublicar troca:', exErr);
         }
       }
-      shell?.notify?.('Documento movido para a lixeira.', { tone: 'info' });
+      shell?.notify?.('Documento movido para a lixeira.', {
+        tone: 'info',
+        duration: 5000,
+        action: {
+          label: 'Desfazer',
+          run: () => {
+            restoreTrash(docId);
+          },
+        },
+      });
       await loadData();
       render();
     } catch (err) {

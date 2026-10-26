@@ -59,6 +59,44 @@ export function choiceField(field, label, value, options, { swatch, columns, dis
   const kind = swatch ? 'swatches' : options.length <= 3 ? 'segments' : 'chips';
   return `<div class="field choice-field">${label ? `<span class="field-label">${label}</span>` : ''}${native}<div class="${kind}" role="radiogroup" aria-label="${esc(label || field)}" ${columns ? `style="--columns:${columns}"` : ''}>${buttons}</div></div>`;
 }
+let activeRangeBubble = null;
+
+function showRangeBubble(range) {
+  if (typeof document === 'undefined' || !range) return;
+  if (!activeRangeBubble) {
+    activeRangeBubble = document.createElement('div');
+    activeRangeBubble.className = 'range-tooltip-bubble';
+    document.body.appendChild(activeRangeBubble);
+  }
+  const min = Number(range.min || 0);
+  const max = Number(range.max || 100);
+  const val = Number(range.value || 0);
+  const pct = max > min ? Math.max(0, Math.min(1, (val - min) / (max - min))) : 0;
+
+  activeRangeBubble.textContent = range.value;
+  activeRangeBubble.classList.add('visible');
+
+  if (typeof range.getBoundingClientRect === 'function') {
+    const rect = range.getBoundingClientRect();
+    const thumbX = rect.left + pct * rect.width;
+    activeRangeBubble.style.left = `${Math.round(thumbX)}px`;
+    activeRangeBubble.style.top = `${Math.round(rect.top - 26)}px`;
+  }
+}
+
+function hideRangeBubble() {
+  if (activeRangeBubble) {
+    activeRangeBubble.classList.remove('visible');
+    const bubbleToClean = activeRangeBubble;
+    setTimeout(() => {
+      if (bubbleToClean && !bubbleToClean.classList.contains('visible')) {
+        bubbleToClean.remove();
+        if (activeRangeBubble === bubbleToClean) activeRangeBubble = null;
+      }
+    }, 200);
+  }
+}
+
 /** Wires the companions of every control inside `root` to their native field. */
 export function bindControls(root, commit) {
   const numberOf = range => range.closest('.range-field')?.querySelector(`[data-field="${range.dataset.range}"]`);
@@ -74,8 +112,21 @@ export function bindControls(root, commit) {
 
   root.querySelectorAll?.('input[type="range"][data-range]').forEach(syncProgress);
 
+  root.addEventListener('pointerdown', event => {
+    if (event.target.dataset?.range || event.target.type === 'range') {
+      showRangeBubble(event.target);
+    }
+  });
+
+  const onPointerEnd = () => hideRangeBubble();
+  root.addEventListener('pointerup', onPointerEnd);
+  root.addEventListener('pointercancel', onPointerEnd);
+
   root.addEventListener('input', event => {
     const target = event.target;
+    if (target.dataset?.range || target.type === 'range') {
+      showRangeBubble(target);
+    }
     if (target.type === 'color' && target.dataset?.field) { const box = target.parentElement?.querySelector(`[data-hex="${target.dataset.field}"]`); if (box) box.value = target.value; }
     else if (target.dataset?.range) { 
       const number = numberOf(target); 
@@ -92,6 +143,7 @@ export function bindControls(root, commit) {
   });
   // A drag ends in a single change, so it is a single undo step.
   root.addEventListener('change', event => {
+    hideRangeBubble();
     // A typed code is committed through its picker, as if it had been picked there.
     if (event.target.dataset?.hex) {
       const box = event.target, picker = pickerOf(box), code = normalizeHex(box.value);
@@ -110,10 +162,11 @@ export function bindControls(root, commit) {
     }
   });
 
-  // Mouse wheel smoothly steps number inputs (Shift = 10x, Alt = 0.1x)
+  // Mouse wheel smoothly steps number and range inputs (Shift = 10x, Alt = 0.1x)
+  let wheelBubbleTimer = null;
   root.addEventListener('wheel', event => {
     const target = event.target;
-    if (!target || target.tagName !== 'INPUT' || target.type !== 'number' || target.disabled || target.readOnly) return;
+    if (!target || target.tagName !== 'INPUT' || (target.type !== 'number' && target.type !== 'range') || target.disabled || target.readOnly) return;
 
     event.preventDefault();
     const step = Number(target.step) || 1;
@@ -130,12 +183,21 @@ export function bindControls(root, commit) {
     );
     target.value = format(Number(nextVal.toFixed(Math.min(stepDecimals, 3))));
 
-    const rangeField = target.closest('.range-field');
-    if (rangeField) {
-      const range = rangeField.querySelector('[data-range]');
-      if (range) {
-        range.value = target.value;
-        syncProgress(range);
+    if (target.type === 'range') {
+      showRangeBubble(target);
+      syncProgress(target);
+      const number = numberOf(target);
+      if (number) number.value = target.value;
+      if (wheelBubbleTimer) clearTimeout(wheelBubbleTimer);
+      wheelBubbleTimer = setTimeout(() => hideRangeBubble(), 600);
+    } else {
+      const rangeField = target.closest('.range-field');
+      if (rangeField) {
+        const range = rangeField.querySelector('[data-range]');
+        if (range) {
+          range.value = target.value;
+          syncProgress(range);
+        }
       }
     }
 

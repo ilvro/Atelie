@@ -347,6 +347,21 @@ html, body {
   padding: var(--eco-space-4);
 }
 
+@keyframes tab-crossfade {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tab-crossfade {
+  animation: tab-crossfade var(--eco-fast) var(--eco-ease);
+}
+
 .inspector-empty {
   padding: var(--eco-space-5) 0;
   color: var(--at-muted);

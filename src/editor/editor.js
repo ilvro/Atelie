@@ -634,7 +634,11 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     delete document.documentElement.dataset.light;
     if (uvStamp) uvStamp.style.display = 'none';
 
+    const hadPreviousHandout = Boolean(state?.handout);
+    const isSwitching = hadPreviousHandout && stageContainer.style.display !== 'none';
+
     state = createEditorState(handout);
+    state.land = (id) => stage?.land(id);
     hideStartScreen();
 
     // Warn if document references an uninstalled expansion
@@ -661,20 +665,20 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       }).catch(() => {});
     }
 
-    if (stage) {
-      stage.destroy();
+    if (!stage) {
+      stage = createStage(stageContainer, {
+        images,
+        fonts,
+        onSelect: layerId => state?.select(layerId),
+        onEdit: (nextHandout, meta) => state?.edit(nextHandout, meta),
+      });
+    } else {
+      stage.select(null);
     }
-
-    stage = createStage(stageContainer, {
-      images,
-      fonts,
-      onSelect: layerId => state.select(layerId),
-      onEdit: (nextHandout, meta) => state.edit(nextHandout, meta),
-    });
 
     // Inspector panels
     const layersWrap = document.createElement('div');
-    layersPanel = createLayersPanel(layersWrap, { state, getLight: () => currentLight });
+    layersPanel = createLayersPanel(layersWrap, { state, getLight: () => currentLight, shell });
     shell.inspector.panel('layers', layersWrap);
 
     const propertiesWrap = document.createElement('div');
@@ -731,9 +735,17 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       }
     });
 
-    stage.show(state.handout, { light: currentLight });
+    if (isSwitching) {
+      stage.animateSwitch(() => {
+        stage.show(state.handout, { light: currentLight });
+        stage.zoom('fit');
+      });
+    } else {
+      stage.show(state.handout, { light: currentLight });
+      stage.zoom('fit');
+      stage.animateOpen();
+    }
     updateDocBar();
-    stage.zoom('fit');
 
     setReadOnly(false);
     updateStageLayout();
@@ -974,8 +986,15 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   // Helper actions for layers
   function duplicateSelected() {
     if (!state?.selection) return;
+    const oldLayers = state.handout.layers;
     const next = duplicateLayer(state.handout, state.selection);
     state.edit(next, { label: 'Duplicar camada' });
+    const duplicated = next.layers.find(l => !oldLayers.some(oldL => oldL.id === l.id));
+    if (duplicated) {
+      state.select(duplicated.id);
+      layersPanel?.flash?.(duplicated.id);
+      stage?.land(duplicated.id);
+    }
   }
 
   function removeSelected() {
@@ -984,6 +1003,15 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     play('delete');
     const next = removeLayer(state.handout, selId);
     state.edit(next, { label: 'Excluir camada' });
+    shell?.notify?.('Camada excluída', {
+      duration: 5000,
+      action: {
+        label: 'Desfazer',
+        run: () => {
+          state.undo();
+        },
+      },
+    });
   }
 
   function moveSelected(delta) {
@@ -1049,6 +1077,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     state.edit(next, { label: `Colar ${cloned.name}` });
     state.select(cloned.id);
     layersPanel?.flash?.(cloned.id);
+    stage?.land(cloned.id);
   }
 
   function addTextAt(pos) {
@@ -1066,6 +1095,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     state.edit(next, { label: 'Adicionar texto' });
     state.select(newL.id);
     layersPanel?.flash?.(newL.id);
+    stage?.land(newL.id);
   }
 
   function addImageAt(pos) {
@@ -1083,6 +1113,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     state.edit(next, { label: 'Adicionar imagem' });
     state.select(newL.id);
     layersPanel?.flash?.(newL.id);
+    stage?.land(newL.id);
   }
 
   function triggerEyedropper() {
@@ -1115,15 +1146,94 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     });
   }
 
-  // --- External Image Drag-and-Drop & Paste ---
+  // --- External Image Drag-and-Drop, Library Drag Ghost & Paste ---
+  let dragGhost = null;
+
+  function ensureDragGhost(pageWrap) {
+    if (!dragGhost) {
+      dragGhost = document.createElement('div');
+      dragGhost.className = 'stage-drag-ghost';
+      pageWrap.appendChild(dragGhost);
+    }
+    return dragGhost;
+  }
+
+  function removeDragGhost() {
+    if (dragGhost) {
+      dragGhost.remove();
+      dragGhost = null;
+    }
+  }
+
   deskStage.addEventListener('dragover', event => {
     event.preventDefault();
     if (event.dataTransfer) {
       event.dataTransfer.dropEffect = 'copy';
     }
+
+    const item = typeof window !== 'undefined' ? window.__atelieActiveDragItem : null;
+    const pageWrap = deskStage.querySelector('.stage-page-wrap');
+    if (item && pageWrap && state?.handout && stage) {
+      const ghost = ensureDragGhost(pageWrap);
+      const defaults = defaultsFor(item);
+      const pageWidth = state.handout.page.width;
+      const pageHeight = state.handout.page.height;
+      const zoom = stage.getZoom();
+
+      let w, h;
+      if (defaults.cover) {
+        w = pageWidth;
+        h = pageHeight;
+      } else {
+        const aspect = (item.width && item.height) ? (item.width / item.height) : 1;
+        const targetDim = Math.min(pageWidth, pageHeight) * 0.45;
+        if (aspect >= 1) {
+          w = Math.round(targetDim);
+          h = Math.round(targetDim / aspect);
+        } else {
+          h = Math.round(targetDim);
+          w = Math.round(targetDim * aspect);
+        }
+      }
+
+      const pRect = pageWrap.getBoundingClientRect();
+      const dropX = (event.clientX - pRect.left) / zoom;
+      const dropY = (event.clientY - pRect.top) / zoom;
+
+      const left = defaults.cover ? 0 : Math.round((dropX - w / 2) * zoom);
+      const top = defaults.cover ? 0 : Math.round((dropY - h / 2) * zoom);
+
+      ghost.style.left = `${left}px`;
+      ghost.style.top = `${top}px`;
+      ghost.style.width = `${Math.round(w * zoom)}px`;
+      ghost.style.height = `${Math.round(h * zoom)}px`;
+      ghost.style.mixBlendMode = defaults.blend || 'normal';
+      ghost.style.opacity = '0.55';
+
+      if (ghost.dataset.renderedId !== item.id) {
+        ghost.dataset.renderedId = item.id;
+        const thumbSrc = item.thumbUrl || item.thumbnail;
+        if (thumbSrc) {
+          ghost.innerHTML = `<img src="${thumbSrc}" alt="" style="width:100%;height:100%;object-fit:${defaults.cover ? 'cover' : 'contain'};display:block;pointer-events:none;" />`;
+        } else {
+          ghost.innerHTML = `<div class="drag-ghost-placeholder">${item.name || 'Camada'}</div>`;
+        }
+      }
+    }
   });
 
+  deskStage.addEventListener('dragleave', event => {
+    if (!deskStage.contains(event.relatedTarget)) {
+      removeDragGhost();
+    }
+  });
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener('dragend', () => removeDragGhost());
+  }
+
   deskStage.addEventListener('drop', async event => {
+    removeDragGhost();
     event.preventDefault();
     const dt = event.dataTransfer;
     if (!dt) return;
@@ -1186,6 +1296,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
           state.edit(next, { label: `Adicionar ${newL.name}` });
           state.select(newL.id);
           layersPanel?.flash?.(newL.id);
+          stage?.land(newL.id);
 
           const cat = item.category?.toLowerCase() || '';
           const name = item.name?.toLowerCase() || '';
@@ -1256,6 +1367,8 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
         state.edit(next, { label: 'Adicionar imagem' });
         state.select(newL.id);
         layersPanel?.flash?.(newL.id);
+        stage?.land(newL.id);
+        stage?.land(newL.id);
         play('paper-slide');
         cascade += 20;
       } catch (err) {
@@ -1648,6 +1761,8 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
         state.edit(addLayer(state.handout, newL, insertIdx), { label: 'Adicionar Retângulo' });
         state.select(newL.id);
         layersPanel?.flash?.(newL.id);
+        stage?.land(newL.id);
+        stage?.land(newL.id);
       },
     },
     {
@@ -1903,6 +2018,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     duplicateSelected,
     copySelected,
     pasteCopiedLayer,
+    removeSelected,
     triggerEyedropper,
     showStartScreen,
     hideStartScreen,

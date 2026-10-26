@@ -14,6 +14,7 @@ import {
   updateLayer,
 } from '../domain/handouts.js';
 import { EFFECTS, drawEffect, drawCutMask } from '../render/handout-effects.js';
+import { play } from '../ui/sound.js';
 
 const thumbnailCache = new Map();
 
@@ -136,7 +137,7 @@ function getEffectThumbnail(typeKey, defaultParams, defaultBlend) {
   }
 }
 
-export function createLayersPanel(container, { state, onAction = () => {}, getLight = () => 'normal' } = {}) {
+export function createLayersPanel(container, { state, onAction = () => {}, getLight = () => 'normal', shell } = {}) {
   let isPlusMenuOpen = false;
   let isEffectsMenuOpen = false;
   let activeFilter = 'all'; // 'all' | 'text' | 'image' | 'effect'
@@ -301,6 +302,16 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
       }).join('');
     }
 
+    // FLIP animation: record initial positions
+    const prevPositions = new Map();
+    if (typeof container.querySelectorAll === 'function') {
+      container.querySelectorAll('.layer-item[data-id]').forEach(el => {
+        if (el.dataset?.id && typeof el.getBoundingClientRect === 'function') {
+          prevPositions.set(el.dataset.id, el.getBoundingClientRect().top);
+        }
+      });
+    }
+
     container.innerHTML = `
       <div class="layers-panel">
         <div class="layers-toolbar">
@@ -382,6 +393,31 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
         </div>
       </div>
     `;
+
+    // FLIP animation: invert and play
+    if (prevPositions.size > 0 && typeof document !== 'undefined' && !document.body.classList.contains('reduce-motion')) {
+      const rows = container.querySelectorAll('.layer-item[data-id]');
+      const flips = [];
+      rows.forEach(row => {
+        const prevTop = prevPositions.get(row.dataset.id);
+        if (prevTop === undefined || typeof row.getBoundingClientRect !== 'function') return;
+        const currentTop = row.getBoundingClientRect().top;
+        const deltaY = prevTop - currentTop;
+        if (Math.abs(deltaY) > 1) {
+          row.style.transform = `translateY(${deltaY}px)`;
+          row.style.transition = 'none';
+          flips.push(row);
+        }
+      });
+      if (flips.length > 0) {
+        requestAnimationFrame(() => {
+          flips.forEach(row => {
+            row.style.transition = 'transform var(--eco-fast) var(--eco-ease)';
+            row.style.transform = '';
+          });
+        });
+      }
+    }
 
     if (pendingFlashId) {
       const flashId = pendingFlashId;
@@ -563,6 +599,7 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
         state.edit(next, { label: `Adicionar ${newLayer.name}` });
         state.select(newLayer.id);
         flash(newLayer.id);
+        state.land?.(newLayer.id);
       }
       return;
     }
@@ -645,6 +682,7 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
         state.edit(next, { label: `Adicionar ${newLayer.name}` });
         state.select(newLayer.id);
         flash(newLayer.id);
+        state.land?.(newLayer.id);
       }
       return;
     }
@@ -691,9 +729,25 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
       } else if (action === 'duplicate') {
         const next = duplicateLayer(handout, id);
         state.edit(next, { label: 'Duplicar camada' });
+        const duplicated = next.layers.find(l => !handout.layers.some(oldL => oldL.id === l.id));
+        if (duplicated) {
+          state.select(duplicated.id);
+          flash(duplicated.id);
+          state.land?.(duplicated.id);
+        }
       } else if (action === 'remove') {
+        play('delete');
         const next = removeLayer(handout, id);
         state.edit(next, { label: 'Excluir camada' });
+        shell?.notify?.('Camada excluída', {
+          duration: 5000,
+          action: {
+            label: 'Desfazer',
+            run: () => {
+              state.undo();
+            },
+          },
+        });
       }
       return;
     }

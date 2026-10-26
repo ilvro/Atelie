@@ -174,6 +174,7 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
     outline.style.height = `${Math.round(h)}px`;
     outline.style.left = `${Math.round(layer.x * currentZoom)}px`;
     outline.style.top = `${Math.round(layer.y * currentZoom)}px`;
+    outline.style.setProperty('--outline-transform', `rotate(${rot}deg)`);
     outline.style.transform = `rotate(${rot}deg)`;
     outline.classList.toggle('is-locked', Boolean(layer.locked));
 
@@ -730,6 +731,40 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
     select(layerId) {
       selectedLayerId = layerId;
       updateSelectionOutline();
+    },
+    land(layerId) {
+      if (layerId) {
+        selectedLayerId = layerId;
+        updateSelectionOutline();
+      }
+      outline.classList.remove('is-landing');
+      void outline.offsetWidth;
+      outline.classList.add('is-landing');
+      outline.addEventListener('animationend', () => {
+        outline.classList.remove('is-landing');
+      }, { once: true });
+    },
+    animateOpen() {
+      pageWrap.classList.remove('is-entering-open', 'is-exiting-left', 'is-entering-right');
+      void pageWrap.offsetWidth;
+      pageWrap.classList.add('is-entering-open');
+      pageWrap.addEventListener('animationend', () => {
+        pageWrap.classList.remove('is-entering-open');
+      }, { once: true });
+    },
+    animateSwitch(onMidpoint) {
+      pageWrap.classList.remove('is-entering-open', 'is-exiting-left', 'is-entering-right');
+      void pageWrap.offsetWidth;
+      pageWrap.classList.add('is-exiting-left');
+      pageWrap.addEventListener('animationend', () => {
+        pageWrap.classList.remove('is-exiting-left');
+        onMidpoint?.();
+        void pageWrap.offsetWidth;
+        pageWrap.classList.add('is-entering-right');
+        pageWrap.addEventListener('animationend', () => {
+          pageWrap.classList.remove('is-entering-right');
+        }, { once: true });
+      }, { once: true });
     },
     startInlineTextEdit(layerId) {
       startInlineTextEdit(layerId);

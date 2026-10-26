@@ -42,6 +42,7 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 | Refinamento de Expansões na Gaveta de Modelos | concluída | 2026-10-25 | Botão direto de instalação de expansão na gaveta Modelos, atalho em buscas vazias e mensagens claras sobre PSDs brutos |
 | Qualidade de Vida · Fase 0 — Inserção de Camadas | concluída | 2026-10-25 | Função pura insertionIndex, papéis acima de papéis existentes, assets acima da seleção ou no topo, addLayer estrito, rolagem e flash no painel |
 | Qualidade de Vida · Fase 1 — Sons da bancada | concluída | 2026-10-25 | Síntese Web Audio pura sem arquivos, vozes de digitação por fonte, carimbos, fita, papel, luz UV e controles de áudio nos Ajustes |
+| Qualidade de Vida · Fase 2 — Movimento e retorno visual | concluída | 2026-10-25 | Folha em movimento (§4), contorno de pouso de camada, FLIP em camadas, desfazer em 5s, fantasma na biblioteca, transição de abas e conformidade total com reduce-motion |
 | Refinamento Visual e Ergonomia de UI | concluída | 2026-10-25 | Ergonomia de campos numéricos (scroll wheel com Shift/Alt), tokens CSS limpos, carimbos de estado (ARQUIVADO/RASCUNHO), botões de alinhamento com feedback e contraste tipográfico |
 
 ---
@@ -86,7 +87,47 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 - `npm run build` e `npm run build:pages`: ambos os builds de produção e GitHub Pages concluídos com sucesso.
 
 ### Pendências reais
-- Nenhuma pendência na Fase 1. Próxima fase: **Fase 2 · Movimento e retorno visual**.
+- Nenhuma pendência na Fase 1.
+
+---
+
+## Qualidade de Vida · Fase 2 — Movimento e retorno visual
+
+### Feito
+- **Folha em movimento (§4)**:
+  - **Entrada na abertura**: animação `@keyframes sheet-enter-open` com deslocamento de `translateY(24px) rotate(2deg)` para a posição neutra com tokens de tempo e curvas do sistema (`--eco-slow`, `--eco-ease`).
+  - **Troca coordenada de documento**: `stage.animateSwitch(onMidpoint)` executa saída lateral suave pela esquerda (`sheet-exit-left`), realiza a troca de estado no ponto médio e traz a nova folha entrando pela direita (`sheet-enter-right`), com temporizadores de segurança para ambientes assíncronos.
+  - **Notificações toast físicas**: notas informativas descem suavemente do canto com leve rotação física (`translateY(-24px) rotate(-3deg)` para `translateY(0) rotate(-0.5deg)`).
+- **Camada pousa na página**:
+  - Contorno de seleção com animação `@keyframes layer-land-outline` escalando de 1,06 → 1 com a sombra baixando (`--eco-fast`), seguido imediatamente pelos sons táteis sintetizados (carimbos, cera, fita ou papel).
+  - Integrado em todas as origens de novas camadas: biblioteca (clique e arraste), upload de imagens externas, atalhos de colar (`Ctrl+V`), duplicação (`Ctrl+D`) e inserção rápida de texto ou formas.
+- **Lista de camadas com FLIP**:
+  - Implementação da técnica FLIP (*First, Last, Invert, Play*) em `src/editor/layers-panel.js`: captura posições verticais anteriores, calcula os deltas de translação e anima com `--eco-fast` e `--eco-ease`.
+  - Reordenação (subir/descer), duplicação e exclusão animam suavemente sem saltos visuais.
+- **Exclusão com Desfazer de 5 segundos**:
+  - Notificação de aviso com botão de ação `"Camada excluída · Desfazer"` fixada por 5.000 ms ao excluir camadas via painel de camadas ou atalho de teclado (`Del`/`Backspace`), revertendo a exclusão via `state.undo()`.
+  - Notificação `"Documento movido para a lixeira · Desfazer"` fixada por 5.000 ms no navegador, restaurando imediatamente via `restoreTrash(docId)`.
+- **Fantasma de arraste da biblioteca**:
+  - Elemento `.stage-drag-ghost` dinâmico seguindo o cursor sobre a folha durante o arraste da biblioteca.
+  - O fantasma herda antecipadamente o tamanho real calculado pela proporção do item e o modo de mesclagem (`mixBlendMode`) definido por `defaultsFor(item)`.
+- **Gavetas e Inspetor**:
+  - Deslizamento suave das gavetas (`.app-drawer` com `margin-left` e `--eco-mid`).
+  - Cruzamento de opacidade e translação vertical suave ao alternar abas do inspetor (`.tab-crossfade`).
+- **Sliders, números e balão de valor**:
+  - Rolagem do mouse (`wheel`) em campos numéricos e sliders com modificadores `Shift` (passo ×10) e `Alt` (passo 0,1×).
+  - Balão flutuante `.range-tooltip-bubble` exibindo o valor exato acima do cursor durante o arraste e rolagem.
+- **Acessibilidade e Movimento Reduzido (`prefers-reduced-motion`)**:
+  - Regras estritas em `src/ui/primitives.css` forçando `animation-duration: 0s !important` e `transition-duration: 0s !important` sob `prefers-reduced-motion: reduce` e `body.reduce-motion`.
+  - Bypass inteligente de cálculos FLIP quando a redução de movimento estiver ativa.
+
+### Validação
+- `npm test`: 173 testes unitários passando 100%.
+- `tests/e2e/motion.test.js`: teste E2E dedicado validando a queda dos avisos, o contorno de pouso, a exclusão com desfazer em 5s, o cruzamento de abas, o balão do slider, o fantasma de arraste e atestando que com redução de movimento ligada nenhuma animação permanece ativa (`getAnimations().filter(a => a.playState === 'running').length === 0`).
+- `tests/e2e/editor.test.js` e `tests/e2e/sound.test.js`: ambos passando sem regressões.
+- Builds `npm run build` e `npm run build:pages` concluídos com sucesso.
+
+### Pendências reais
+- Nenhuma pendência na Fase 2. Próxima fase: **Fase 3 · Palco fluido (desempenho)**.
 
 ---
 

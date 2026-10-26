@@ -172,6 +172,7 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
     state.edit(next, { label: `Adicionar ${newLayer.name}` });
     state.select(newLayer.id);
     state.flash?.(newLayer.id);
+    state.land?.(newLayer.id);
 
     const cat = item.category?.toLowerCase() || '';
     const name = item.name?.toLowerCase() || '';
@@ -237,6 +238,7 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
       state.edit(addLayer(state.handout, newL, insertIdx), { label: `Adicionar ${newL.name}` });
       state.select(newL.id);
       state.flash?.(newL.id);
+      state.land?.(newL.id);
       play('type', { font: item.family, key: 'a' });
     }
   }
@@ -585,6 +587,9 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
       card.addEventListener('dragstart', (e) => {
         hideHoverPreview();
         card.classList.add('is-dragging');
+        if (typeof window !== 'undefined') {
+          window.__atelieActiveDragItem = item;
+        }
         e.dataTransfer.setData('text/x-atelie-library', JSON.stringify(item));
         e.dataTransfer.setData('application/json', JSON.stringify({ libraryId: item.id, item }));
         e.dataTransfer.effectAllowed = 'copy';
@@ -592,6 +597,9 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
 
       card.addEventListener('dragend', () => {
         card.classList.remove('is-dragging');
+        if (typeof window !== 'undefined') {
+          window.__atelieActiveDragItem = null;
+        }
       });
     });
 

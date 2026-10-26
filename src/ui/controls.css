@@ -490,3 +490,27 @@
   color: #ffffff;
 }
 
+/* Balão flutuante de valor durante o arraste de slider */
+.range-tooltip-bubble {
+  position: fixed;
+  z-index: 1000;
+  transform: translate(-50%, -4px);
+  background: var(--at-desk-3, #24201c);
+  color: var(--at-paper, #fdfbf7);
+  border: 1px solid var(--at-line-strong, #574c40);
+  border-radius: var(--eco-radius-s, 4px);
+  padding: 2px 7px;
+  font-family: var(--eco-font-ui);
+  font-size: var(--eco-fs-11, 11px);
+  font-weight: 700;
+  pointer-events: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity var(--eco-fast) var(--eco-ease), transform var(--eco-fast) var(--eco-ease);
+}
+
+.range-tooltip-bubble.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+

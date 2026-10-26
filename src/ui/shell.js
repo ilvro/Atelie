@@ -324,7 +324,11 @@ export function createShell(root, { onAction } = {}) {
       const panel = inspectorPanels.get(tabName);
       if (panel) {
         inspectorContent.innerHTML = '';
-        inspectorContent.appendChild(typeof panel === 'function' ? panel() : panel);
+        const panelEl = typeof panel === 'function' ? panel() : panel;
+        panelEl.classList.remove('tab-crossfade');
+        void panelEl.offsetWidth;
+        panelEl.classList.add('tab-crossfade');
+        inspectorContent.appendChild(panelEl);
       } else {
         inspectorContent.innerHTML = `
           <div class="inspector-empty">
