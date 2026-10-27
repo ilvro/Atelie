@@ -5,18 +5,18 @@
  */
 
 .at-desk {
-  --desk-lamp: radial-gradient(ellipse at var(--at-lamp-x, 50%) var(--at-lamp-y, 40%), color-mix(in srgb, var(--at-lamp, #f2c58a) calc(var(--at-lamp-intensity, 1) * 16%), transparent), transparent 75%);
+  --desk-lamp: radial-gradient(ellipse at var(--at-lamp-x, 50%) var(--at-lamp-y, 40%), color-mix(in srgb, var(--at-lamp, #f2c58a) calc(var(--at-lamp-intensity, 1) * 11%), transparent), transparent 75%);
 }
 
 /* Madeira escura envernizada: veios longos horizontais e brilho de verniz */
 html[data-desk-material="madeira"] .at-desk {
-  background-color: #1b130d;
+  background-color: #140d08;
   background-image:
     var(--desk-lamp),
-    linear-gradient(180deg, rgba(255, 220, 170, 0.07) 0%, transparent 18%, transparent 80%, rgba(0, 0, 0, 0.35) 100%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='240'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.004 0.19' numOctaves='4' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.36  0 0 0 0 0.2  0 0 0 0 0.09  0.9 0.9 0.9 0 -0.88'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.9'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, rgba(255, 220, 170, 0.04) 0%, transparent 18%, transparent 80%, rgba(0, 0, 0, 0.35) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='240'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence stitchTiles='stitch' type='fractalNoise' baseFrequency='0.004 0.19' numOctaves='4' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.25  0 0 0 0 0.14  0 0 0 0 0.06  0.9 0.9 0.9 0 -0.88'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.75'/%3E%3C/svg%3E"),
     repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.18) 0 1px, transparent 1px 58px),
-    linear-gradient(180deg, #24180f 0%, #170f09 100%);
+    linear-gradient(180deg, #1b110a 0%, #110a06 100%);
   background-size: auto, auto, 600px 240px, auto, auto;
 }
 
@@ -26,7 +26,7 @@ html[data-desk-material="feltro"] .at-desk {
   background-image:
     var(--desk-lamp),
     radial-gradient(ellipse at 50% 45%, rgba(60, 160, 100, 0.16) 0%, transparent 70%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='3' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.12  0 0 0 0 0.45  0 0 0 0 0.25  1.4 0 0 0 -0.45'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence stitchTiles='stitch' type='fractalNoise' baseFrequency='1.15' numOctaves='3' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.12  0 0 0 0 0.45  0 0 0 0 0.25  1.4 0 0 0 -0.45'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
     linear-gradient(180deg, #14301f 0%, #0a1810 100%);
   background-size: auto, auto, 180px 180px, auto;
 }
@@ -37,8 +37,8 @@ html[data-desk-material="couro"] .at-desk {
   background-image:
     var(--desk-lamp),
     radial-gradient(circle at 12% 18%, rgba(200, 90, 80, 0.1) 0%, transparent 40%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.09' numOctaves='3' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 0.05  0 0 0 0 0.02  0 0 0 0 0.03  2.2 0 0 0 -0.75'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' seed='5'/%3E%3CfeColorMatrix values='0 0 0 0 0.9  0 0 0 0 0.6  0 0 0 0 0.55  0 0 0 0.9 -0.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='0.18'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence stitchTiles='stitch' type='turbulence' baseFrequency='0.09' numOctaves='3' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 0.05  0 0 0 0 0.02  0 0 0 0 0.03  2.2 0 0 0 -0.75'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence stitchTiles='stitch' type='fractalNoise' baseFrequency='0.7' numOctaves='2' seed='5'/%3E%3CfeColorMatrix values='0 0 0 0 0.9  0 0 0 0 0.6  0 0 0 0 0.55  0 0 0 0.9 -0.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='0.18'/%3E%3C/svg%3E"),
     linear-gradient(180deg, #2d1a20 0%, #170d11 100%);
   background-size: auto, auto, 260px 260px, 120px 120px, auto;
 }
@@ -49,8 +49,8 @@ html[data-desk-material="concreto"] .at-desk {
   background-image:
     var(--desk-lamp),
     radial-gradient(circle at 82% 18%, rgba(120, 160, 210, 0.1) 0%, transparent 50%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='s' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.02' numOctaves='5' seed='21'/%3E%3CfeColorMatrix values='0 0 0 0 0.72  0 0 0 0 0.78  0 0 0 0 0.86  0 0 0 1.1 -0.45'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)' opacity='0.5'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='d' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='2'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.7 -0.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23d)' opacity='0.2'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='s' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence stitchTiles='stitch' type='fractalNoise' baseFrequency='0.012 0.02' numOctaves='5' seed='21'/%3E%3CfeColorMatrix values='0 0 0 0 0.72  0 0 0 0 0.78  0 0 0 0 0.86  0 0 0 1.1 -0.45'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)' opacity='0.5'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='d' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence stitchTiles='stitch' type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='2'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.7 -0.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23d)' opacity='0.2'/%3E%3C/svg%3E"),
     linear-gradient(180deg, #20242b 0%, #121417 100%);
   background-size: auto, auto, 420px 420px, 160px 160px, auto;
 }
@@ -62,8 +62,8 @@ html[data-desk-material="cortica"] .at-desk {
     var(--desk-lamp),
     radial-gradient(ellipse at 50% 40%, rgba(255, 220, 160, 0.16) 0%, transparent 70%),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cg fill='%232a170a'%3E%3Ccircle cx='28' cy='41' r='1.7' opacity='.55'/%3E%3Ccircle cx='31' cy='42' r='.9' fill='%23c79a62' opacity='.6'/%3E%3Ccircle cx='171' cy='23' r='1.6' opacity='.5'/%3E%3Ccircle cx='96' cy='133' r='1.8' opacity='.55'/%3E%3Ccircle cx='99' cy='134' r='.9' fill='%23c79a62' opacity='.6'/%3E%3Ccircle cx='205' cy='188' r='1.6' opacity='.5'/%3E%3Ccircle cx='52' cy='201' r='1.7' opacity='.55'/%3E%3Ccircle cx='140' cy='84' r='1.5' opacity='.45'/%3E%3C/g%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='k' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='4' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 0.16  0 0 0 0 0.08  0 0 0 0 0.03  2.6 0 0 0 -1.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23k)'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='l' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' seed='14'/%3E%3CfeColorMatrix values='0 0 0 0 0.95  0 0 0 0 0.75  0 0 0 0 0.5  0 0 0 2.2 -1.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23l)' opacity='0.8'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='k' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence stitchTiles='stitch' type='fractalNoise' baseFrequency='0.55' numOctaves='4' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 0.16  0 0 0 0 0.08  0 0 0 0 0.03  2.6 0 0 0 -1.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23k)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='l' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence stitchTiles='stitch' type='fractalNoise' baseFrequency='0.8' numOctaves='3' seed='14'/%3E%3CfeColorMatrix values='0 0 0 0 0.95  0 0 0 0 0.75  0 0 0 0 0.5  0 0 0 2.2 -1.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23l)' opacity='0.8'/%3E%3C/svg%3E"),
     linear-gradient(180deg, #8a6038 0%, #6a4627 100%);
   background-size: auto, auto, 240px 240px, 200px 200px, 160px 160px, auto;
 }
