@@ -2146,6 +2146,12 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
 
     if (isEditingField) return;
 
+    if (matches(event, 'tool-text') && state) {
+      event.preventDefault();
+      addTextAt([state.handout.page.width / 2, state.handout.page.height / 2], { edit: true });
+      return;
+    }
+
     for (const [shortcut, tool] of [['tool-select', 'select'], ['tool-brush', 'brush'], ['tool-rect', 'rect'], ['tool-ellipse', 'ellipse'], ['tool-line', 'line'], ['tool-scissors', 'scissors'], ['tool-tear', 'tear'], ['tool-lighter', 'lighter']]) {
       if (matches(event, shortcut) && state) {
         event.preventDefault();

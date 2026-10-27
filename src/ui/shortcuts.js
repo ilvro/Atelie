@@ -368,6 +368,16 @@ export const SHORTCUTS = [
   },
 
   {
+    id: 'tool-text',
+    scope: 'editor',
+    key: 'T',
+    label: 'Texto',
+    description: 'Criar uma caixa de texto no meio da página e já escrever (duplo clique também cria no ponto clicado)',
+    category: 'Ferramentas',
+    handledIn: ['src/editor/editor.js'],
+    tokens: ["'tool-text'"],
+  },
+  {
     id: 'tool-scissors',
     scope: 'editor',
     key: 'X',
@@ -380,7 +390,7 @@ export const SHORTCUTS = [
   {
     id: 'tool-tear',
     scope: 'editor',
-    key: 'T',
+    key: 'G',
     label: 'Ferramenta: rasgar',
     description: 'Arrastar de borda a borda para rasgar; Alt arranca um canto',
     category: 'Ferramentas',

@@ -94,6 +94,21 @@ test('typing is safe: tool letters never fire while writing; B is the brush and 
   assert.equal(await drawer(), false);
   assert.equal(await page.evaluate(() => window.__atelie.editor.state.handout.layers.find(l => l.id === 'tx').text.content), SENTENCE);
 
+  // T makes a text box and writes at once; G (not T) is the tear tool
+  await page.evaluate(() => { document.activeElement?.blur(); window.__atelie.editor.state.select(null); });
+  const before = await page.evaluate(() => window.__atelie.editor.state.handout.layers.length);
+  await page.keyboard.press('t');
+  await page.waitForFunction(() => document.activeElement?.classList.contains('stage-inline-text-editor'));
+  assert.equal(await page.evaluate(() => window.__atelie.editor.state.handout.layers.length), before + 1, 'T creates a text layer');
+  assert.equal(await tool(), 'select', 'T is not a drawing tool');
+  await page.keyboard.type('Gato');
+  assert.equal(await page.evaluate(() => document.querySelector('.stage-inline-text-editor').value), 'Gato', 'the letters go into the new text');
+  await page.keyboard.press('Escape');
+  await page.evaluate(() => document.activeElement?.blur());
+  await page.keyboard.press('g');
+  assert.equal(await tool(), 'tear', 'G picks the tear tool');
+  await page.keyboard.press('v');
+
   // B picks the brush when nothing is being typed
   await page.evaluate(() => { document.activeElement?.blur(); window.__atelie.editor.state.select(null); });
   await page.click('.rail-btn[data-action="desk"]').catch(() => {});

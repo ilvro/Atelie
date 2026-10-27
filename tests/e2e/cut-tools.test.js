@@ -53,7 +53,7 @@ test('cut tools e2e: tear the sheet, lasso one layer, hold the lighter, undo, hi
   await page.evaluate(() => window.__atelie.editor.state.select(null));
   assert.ok((await pixel(40, 40))[3] > 250, 'the corner is paper before the tear');
   await blur();
-  await page.keyboard.press('t');
+  await page.keyboard.press('g');
   assert.equal(await page.evaluate(() => window.__atelie.editor.stage.getTool()), 'tear');
   assert.match(await page.textContent('[data-cut-target]'), /a folha/);
   const before = (await layers()).length;
