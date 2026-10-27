@@ -4836,7 +4836,14 @@
         "Destinatário",
         "Corpo",
         "Assinatura"
-      ]
+      ],
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "carta",
+        "manuscrito"
+      ],
+      "org": "solar"
     },
     {
       "id": "casa-tpl-carta-datilografada-anos-50",
@@ -4852,6 +4859,12 @@
         "Destinatário",
         "Corpo",
         "Assinatura"
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "carta",
+        "datilografado"
       ]
     },
     {
@@ -4864,6 +4877,12 @@
       "preview": "previews/casa-tpl-bilhete-caderno-rasgado.webp",
       "fields": [
         "Texto"
+      ],
+      "era": "hoje",
+      "tom": "cotidiano",
+      "tags": [
+        "bilhete",
+        "manuscrito"
       ]
     },
     {
@@ -4876,6 +4895,12 @@
       "preview": "previews/casa-tpl-bilhete-geladeira.webp",
       "fields": [
         "Texto"
+      ],
+      "era": "hoje",
+      "tom": "cotidiano",
+      "tags": [
+        "bilhete",
+        "manuscrito"
       ]
     },
     {
@@ -4889,6 +4914,11 @@
       "fields": [
         "Imagem",
         "Saudação"
+      ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "postal"
       ],
       "backTemplate": "casa-tpl-cartao-postal-verso"
     },
@@ -4905,6 +4935,12 @@
         "Destinatário",
         "Endereço"
       ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "postal",
+        "manuscrito"
+      ],
       "backTemplate": "casa-tpl-cartao-postal-frente"
     },
     {
@@ -4920,7 +4956,13 @@
         "Data",
         "Destinatário",
         "Mensagem"
-      ]
+      ],
+      "era": "1920",
+      "tom": "investigação",
+      "tags": [
+        "telegrama"
+      ],
+      "org": "companhia"
     },
     {
       "id": "casa-tpl-carta-envelope-frente",
@@ -4935,6 +4977,11 @@
         "Corpo",
         "Assinatura"
       ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "envelope"
+      ],
       "backTemplate": "casa-tpl-carta-envelope-verso"
     },
     {
@@ -4948,6 +4995,11 @@
       "fields": [
         "Destinatário",
         "Endereço"
+      ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "envelope"
       ],
       "backTemplate": "casa-tpl-carta-envelope-frente"
     },
@@ -4965,7 +5017,14 @@
         "Texto",
         "Foto",
         "Legenda"
-      ]
+      ],
+      "era": "1920",
+      "tom": "investigação",
+      "tags": [
+        "jornal",
+        "recorte"
+      ],
+      "org": "gazeta"
     },
     {
       "id": "casa-tpl-capa-jornal",
@@ -4981,7 +5040,14 @@
         "Manchete",
         "Texto",
         "Foto"
-      ]
+      ],
+      "era": "1920",
+      "tom": "investigação",
+      "tags": [
+        "jornal",
+        "capa"
+      ],
+      "org": "gazeta"
     },
     {
       "id": "casa-tpl-obituario",
@@ -4995,7 +5061,14 @@
         "Nome",
         "Datas",
         "Texto"
-      ]
+      ],
+      "era": "1920",
+      "tom": "cotidiano",
+      "tags": [
+        "jornal",
+        "obituário"
+      ],
+      "org": "gazeta"
     },
     {
       "id": "casa-tpl-classificados",
@@ -5007,7 +5080,14 @@
       "preview": "previews/casa-tpl-classificados.webp",
       "fields": [
         "Anúncio em destaque"
-      ]
+      ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "jornal",
+        "classificados"
+      ],
+      "org": "gazeta"
     },
     {
       "id": "casa-tpl-relatorio-policial",
@@ -5023,7 +5103,15 @@
         "Agente",
         "Ocorrência",
         "Relato"
-      ]
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "polícia",
+        "relatório",
+        "formulário"
+      ],
+      "org": "delegacia"
     },
     {
       "id": "casa-tpl-boletim-ocorrencia",
@@ -5038,7 +5126,15 @@
         "Local",
         "Data",
         "Fato"
-      ]
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "polícia",
+        "boletim",
+        "formulário"
+      ],
+      "org": "delegacia"
     },
     {
       "id": "casa-tpl-ficha-criminal",
@@ -5054,7 +5150,15 @@
         "Apelido",
         "Crimes",
         "Observações"
-      ]
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "polícia",
+        "ficha",
+        "formulário"
+      ],
+      "org": "delegacia"
     },
     {
       "id": "casa-tpl-mandado",
@@ -5069,7 +5173,15 @@
         "Motivo",
         "Data",
         "Juiz"
-      ]
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "polícia",
+        "mandado",
+        "formulário"
+      ],
+      "org": "delegacia"
     },
     {
       "id": "casa-tpl-laudo-pericial",
@@ -5083,7 +5195,15 @@
         "Número",
         "Vítima",
         "Conclusão"
-      ]
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "perícia",
+        "laudo",
+        "formulário"
+      ],
+      "org": "iml"
     },
     {
       "id": "casa-tpl-cartao-evidencia",
@@ -5098,7 +5218,14 @@
         "Item",
         "Local",
         "Responsável"
-      ]
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "evidência",
+        "formulário"
+      ],
+      "org": "delegacia"
     },
     {
       "id": "casa-tpl-prontuario",
@@ -5112,7 +5239,15 @@
         "Paciente",
         "Data",
         "Anotações"
-      ]
+      ],
+      "era": "1950",
+      "tom": "horror",
+      "tags": [
+        "médico",
+        "prontuário",
+        "formulário"
+      ],
+      "org": "sanatorio"
     },
     {
       "id": "casa-tpl-receita-medica",
@@ -5126,6 +5261,13 @@
         "Médico",
         "Paciente",
         "Prescrição"
+      ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "médico",
+        "receita",
+        "formulário"
       ]
     },
     {
@@ -5141,7 +5283,15 @@
         "Data",
         "Causa",
         "Médico"
-      ]
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "certidão",
+        "cartório",
+        "formulário"
+      ],
+      "org": "cartorio"
     },
     {
       "id": "casa-tpl-internacao-sanatorio",
@@ -5156,7 +5306,15 @@
         "Foto",
         "Diagnóstico",
         "Observações"
-      ]
+      ],
+      "era": "1920",
+      "tom": "horror",
+      "tags": [
+        "médico",
+        "internação",
+        "formulário"
+      ],
+      "org": "sanatorio"
     },
     {
       "id": "casa-tpl-pagina-grimorio",
@@ -5170,6 +5328,12 @@
         "Título",
         "Texto",
         "Nota na margem"
+      ],
+      "era": "medieval",
+      "tom": "horror",
+      "tags": [
+        "grimório",
+        "ocultismo"
       ]
     },
     {
@@ -5182,6 +5346,12 @@
       "preview": "previews/casa-tpl-circulo-ritual.webp",
       "fields": [
         "Instruções"
+      ],
+      "era": "medieval",
+      "tom": "horror",
+      "tags": [
+        "ritual",
+        "ocultismo"
       ]
     },
     {
@@ -5196,7 +5366,15 @@
         "Data",
         "Texto",
         "Mensagem oculta"
-      ]
+      ],
+      "era": "1920",
+      "tom": "horror",
+      "tags": [
+        "culto",
+        "diário",
+        "luz negra"
+      ],
+      "org": "irmandade"
     },
     {
       "id": "casa-tpl-pergaminho-selo",
@@ -5209,6 +5387,12 @@
       "fields": [
         "Título",
         "Texto"
+      ],
+      "era": "medieval",
+      "tom": "fantasia",
+      "tags": [
+        "pergaminho",
+        "selo"
       ]
     },
     {
@@ -5223,6 +5407,12 @@
         "Título",
         "Texto",
         "Assinatura"
+      ],
+      "era": "medieval",
+      "tom": "fantasia",
+      "tags": [
+        "édito",
+        "pergaminho"
       ]
     },
     {
@@ -5236,6 +5426,11 @@
       "fields": [
         "Mapa",
         "Legenda"
+      ],
+      "era": "medieval",
+      "tom": "fantasia",
+      "tags": [
+        "mapa"
       ]
     },
     {
@@ -5251,6 +5446,12 @@
         "Nome",
         "Crime",
         "Recompensa"
+      ],
+      "era": "1890",
+      "tom": "fantasia",
+      "tags": [
+        "cartaz",
+        "procurado"
       ]
     },
     {
@@ -5266,6 +5467,12 @@
         "Itens",
         "Total",
         "Data"
+      ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "recibo",
+        "comércio"
       ]
     },
     {
@@ -5281,6 +5488,12 @@
         "Destino",
         "Data",
         "Assento"
+      ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "bilhete",
+        "trem"
       ]
     },
     {
@@ -5295,6 +5508,11 @@
         "Nome",
         "Ofício",
         "Endereço"
+      ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "cartão"
       ]
     },
     {
@@ -5309,6 +5527,12 @@
         "Espetáculo",
         "Data",
         "Poltrona"
+      ],
+      "era": "1920",
+      "tom": "cotidiano",
+      "tags": [
+        "ingresso",
+        "teatro"
       ]
     },
     {
@@ -5323,6 +5547,12 @@
         "Foto",
         "Legenda"
       ],
+      "era": "1980",
+      "tom": "cotidiano",
+      "tags": [
+        "foto",
+        "polaroide"
+      ],
       "backTemplate": "casa-tpl-polaroide-verso"
     },
     {
@@ -5335,6 +5565,12 @@
       "preview": "previews/casa-tpl-polaroide-verso.webp",
       "fields": [
         "Dedicatória"
+      ],
+      "era": "1980",
+      "tom": "cotidiano",
+      "tags": [
+        "foto",
+        "polaroide"
       ],
       "backTemplate": "casa-tpl-polaroide-frente"
     },
@@ -5349,6 +5585,12 @@
       "fields": [
         "Contato",
         "Mensagens"
+      ],
+      "era": "hoje",
+      "tom": "cotidiano",
+      "tags": [
+        "celular",
+        "mensagens"
       ]
     },
     {
@@ -5364,6 +5606,12 @@
         "Para",
         "Assunto",
         "Corpo"
+      ],
+      "era": "hoje",
+      "tom": "investigação",
+      "tags": [
+        "e-mail",
+        "impresso"
       ]
     },
     {
@@ -5376,6 +5624,12 @@
       "preview": "previews/casa-tpl-tela-terminal.webp",
       "fields": [
         "Texto"
+      ],
+      "era": "1980",
+      "tom": "sci-fi",
+      "tags": [
+        "terminal",
+        "tela"
       ]
     },
     {

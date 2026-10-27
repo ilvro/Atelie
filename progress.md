@@ -251,6 +251,24 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ---
 
+## Coleção ampliada · Fase C2 (linha de montagem, sem conteúdo novo)
+
+### Feito
+- `scripts/colecao/templates.js` virou só o pipeline; os 39 modelos moram em `scripts/colecao/modelos/<categoria>.js` (+ `index.js`). Os JSON e as 39 prévias saíram **idênticos** aos da C0 (diff 0).
+- `modelos/meta.js` e o manifesto: cada item do `library.json` ganhou `era`, `tom`, `tags` e `org`.
+- `universo.js`: 13 instituições (6 existentes + 7 novas) com sigla, endereço, fontes, paleta, época e elenco de 4–5 pessoas com retrato da C0; tabela fonte → épocas (`FONT_ERAS`).
+- `kit.js`: camadas nomeadas e puras (`paper`, `aging`, `letterhead`, `formField`, `photo`, `signature`, `initials`, `stamp` ±4° com semente, `marginNote`, `barcode`, `tape`, `clip`). `silhouette` fica para a C4.
+- `audit.js` (`node scripts/colecao/audit.js`): foto sem padrão, A4 com <10 camadas ou sem envelhecimento, texto que não cabe ou <14 px, contraste <3:1 sobre o papel, lorem, nomes proibidos (acervo privado), inglês fora de contexto e fonte fora da época (aviso), formulário com <4 campos, recurso inexistente, orçamento de 60 MB. As falhas dos 39 modelos antigos ficam num `LEGADO` que só deve encolher; modelos novos entram limpos.
+- Folhas de contato por categoria em `docs/referencias/colecao-modelos-<categoria>.png`.
+- `compare-private.js`: compara casa × Arquivos Confidenciais, gravando só em `data-private/.../reports/comparacao/` (recusa qualquer outro caminho, com teste).
+
+### Validação
+- `npm test`: 228 passando (novos testes de universo, kit, auditoria, manifesto e privacidade do comparador).
+
+### Pendências reais
+- Decidir como o Tabletop trata folhas recortadas (PNG com alfa) sem fundo: exige detecção de alfa no Tabletop ou mudança de contrato.
+- Reduzir o `LEGADO` refazendo os modelos antigos (C3 em diante).
+
 ## Refinamento Visual e Ergonomia de UI
 
 ### Feito

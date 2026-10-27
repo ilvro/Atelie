@@ -166,3 +166,44 @@ test('colecao-externos: o tamanho da coleção continua dentro do orçamento de 
   await walk(colecaoDir);
   assert.ok(total < 60 * 1024 * 1024, `public/colecao tem ${(total / 1048576).toFixed(1)} MB (limite 60 MB)`);
 });
+
+test('colecao-c2: o universo e o kit têm só recursos da coleção e a auditoria passa (fora do legado)', async () => {
+  const { INSTITUICOES, FONT_ERAS, RETRATOS, fontFitsEra } = await import('../scripts/colecao/universo.js');
+  const kit = await import('../scripts/colecao/kit.js');
+  const { auditCollection } = await import('../scripts/colecao/audit.js');
+  const lib = JSON.parse(await fs.readFile(libraryPath, 'utf8'));
+  const ids = new Set(lib.items.map(i => i.id));
+
+  assert.equal(Object.keys(INSTITUICOES).length, 13);
+  for (const org of Object.values(INSTITUICOES)) {
+    assert.ok(org.elenco.length >= 4 && org.elenco.length <= 6, `${org.id}: elenco de 4 a 6 pessoas`);
+    for (const p of org.elenco) assert.ok(ids.has(p.retrato), `${org.id}: retrato ${p.retrato} existe na coleção`);
+    for (const f of org.fontes) assert.ok(FONT_ERAS[f], `${org.id}: fonte ${f} está na tabela de épocas`);
+  }
+  assert.equal(fontFitsEra('Share Tech Mono', '1890'), false);
+  assert.ok(Object.values(RETRATOS).flat().length >= 6);
+
+  const demo = [
+    kit.aging('antigo', { seed: 3 }), kit.stamp('casa-carimbo-pago', { x: 1, y: 1, seed: 2 }),
+    kit.tape('topo', { x: 10, y: 10, width: 100, height: 100 }), kit.clip('topo', { x: 1, y: 1, width: 5, height: 5 }),
+    kit.photo({ x: 0, y: 0, width: 9, height: 9 }, { default: 'casa-foto-retrato-rapaz-cdv' }),
+  ].flat();
+  for (const l of demo) if (l.image?.src?.library) assert.ok(ids.has(l.image.src.library), `kit usa recurso inexistente ${l.image.src.library}`);
+  assert.deepEqual(kit.stamp('casa-carimbo-pago', { x: 0, y: 0, seed: 5 }), kit.stamp('casa-carimbo-pago', { x: 0, y: 0, seed: 5 }), 'carimbo é determinístico');
+  assert.ok(Math.abs(kit.stamp('casa-carimbo-pago', { x: 0, y: 0, seed: 9 }).rotation) <= 4, 'inclinação do carimbo dentro de ±4°');
+  assert.throws(() => kit.photo({ x: 0, y: 0, width: 1, height: 1 }, {}), /foto padrão/);
+
+  const { erros } = await auditCollection();
+  assert.deepEqual(erros.map(e => `${e.modelo}:${e.regra}`), [], 'auditoria sem erros fora do legado');
+  for (const item of lib.items.filter(i => i.kind === 'template')) {
+    assert.ok(item.era && item.tom && Array.isArray(item.tags), `${item.id}: manifesto com era, tom e tags`);
+  }
+});
+
+test('colecao-c2: compare-private recusa gravar fora da pasta privada de comparação', async () => {
+  const { assertPrivateOutput, saidaDir } = await import('../scripts/colecao/compare-private.js');
+  assert.ok(assertPrivateOutput(path.join(saidaDir, 'x.png')).startsWith(saidaDir));
+  for (const bad of [path.join(projectRoot, 'docs/referencias/x.png'), path.join(saidaDir, '../x.png'), path.join(projectRoot, 'public/colecao/x.png'), saidaDir]) {
+    assert.throws(() => assertPrivateOutput(bad), /só grava/);
+  }
+});
