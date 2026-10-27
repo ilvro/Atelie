@@ -42,7 +42,7 @@ import { createExportDrawer } from './export-drawer.js';
 import { play } from '../ui/sound.js';
 import { wireModal } from '../ui/modal.js';
 import { recordRecentLibraryId } from './library-search.js';
-import { matches, normalizeCombo, label as keyLabel } from '../ui/keymap.js';
+import { matches, normalizeCombo, isTypingTarget, label as keyLabel } from '../ui/keymap.js';
 import { createAmbient, loadAmbient } from '../ui/ambient.js';
 import { createLayerThumbs } from './layer-thumbs.js';
 import { normalizeStroke, appendStroke } from '../domain/brush.js';
@@ -1979,9 +1979,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   });
 
   window.addEventListener('paste', async event => {
-    const isEditingField =
-      ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) ||
-      document.activeElement?.isContentEditable;
+    const isEditingField = isTypingTarget();
     if (isEditingField) return;
 
     // Check if clipboard contains an image file
@@ -2123,9 +2121,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   window.addEventListener('keydown', event => {
     if (document.body.classList.contains('is-reading')) return;
 
-    const isEditingField =
-      ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) ||
-      document.activeElement?.isContentEditable;
+    const isEditingField = isTypingTarget();
 
     if (matches(event, 'close-tab')) {
       if (activeId) {
@@ -2297,7 +2293,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     if (event.key !== 'Escape' || document.body.classList.contains('is-reading')) return;
     if (document.querySelector('.at-modal-backdrop, .at-settings-modal, .at-palette-modal')) return;
     const active = document.activeElement;
-    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(active?.tagName) || active?.isContentEditable) return;
+    if (isTypingTarget(active)) return;
     // A half-made cut (choosing which part leaves) takes the Esc first.
     if (stage?.isChoosingCut?.()) return;
     if (stage && stage.getTool() !== 'select') {

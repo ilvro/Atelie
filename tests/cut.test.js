@@ -118,3 +118,59 @@ test('roughenPolygon: deterministic by seed, different by seed, and each edge ha
   assert.deepEqual(polys, cutPolygons(eff, 500, 500, 1));
   assert.equal(holePolygons([], 100, 100, 1).length, 0);
 });
+
+test('splitByPath: a curved trace divides the sheet along the curve, and the parts add up to the whole', async () => {
+  const { splitByPath, chaikin, truncateAtSelfCrossing } = await import('../src/domain/cut.js');
+  const box = { width: 200, height: 300 };
+  // An S across the sheet, from the left edge to the right edge
+  const s = [];
+  for (let i = 0; i <= 40; i++) s.push([i * 5, 150 + Math.sin(i / 6) * 40]);
+  const r = splitByPath(box, s);
+  assert.ok(r, 'the S splits the sheet');
+  assert.ok(near(r.areaA + r.areaB, 60000, 600), `areas add up (${r.areaA + r.areaB})`);
+  assert.ok(r.path.length > 30, 'the cut follows the whole trace');
+  const straight = splitByPath(box, [[0, 150], [200, 150]]);
+  assert.ok(Math.abs(straight.areaA - 30000) < 1);
+  const arc = [];
+  for (let i = 0; i <= 40; i++) arc.push([i * 5, 150 + Math.sin((i / 40) * Math.PI) * 90]);
+  const bowed = splitByPath(box, arc);
+  assert.ok(Math.abs(bowed.areaA - straight.areaA) > 3000, 'a bowed trace does not give the same parts as its chord');
+  // Both parts follow the curve: some polygon point sits well off the chord
+  assert.ok(r.a.some(p => Math.abs(p[1] - 150) > 25 && p[0] > 20 && p[0] < 180));
+});
+
+test('splitByPath: ends that stop inside the sheet are carried straight on to the edge', async () => {
+  const { splitByPath } = await import('../src/domain/cut.js');
+  const box = { width: 100, height: 100 };
+  const r = splitByPath(box, [[30, 50], [45, 50], [60, 50], [70, 50]]);
+  assert.ok(r, 'a trace that does not reach the edges still divides the sheet');
+  assert.ok(near(r.areaA, 5000, 1) && near(r.areaB, 5000, 1));
+  const xs = r.path.map(p => p[0]);
+  assert.ok(Math.min(...xs) <= 1e-6 && Math.max(...xs) >= 99.999, 'extended to both edges');
+});
+
+test('splitByPath: a trace that leaves and re-enters the sheet, a miss and a sliver', async () => {
+  const { splitByPath } = await import('../src/domain/cut.js');
+  const box = { width: 100, height: 100 };
+  assert.ok(splitByPath(box, [[-30, 40], [20, 40], [80, 40], [130, 40]]), 'starts and ends outside');
+  assert.equal(splitByPath(box, [[-30, 140], [130, 140]]), null, 'a trace beside the sheet');
+  assert.equal(splitByPath(box, [[-5, 0.4], [105, 0.4]]), null, 'a sliver under 1 % is refused');
+  assert.equal(splitByPath(box, [[10, 10]]), null);
+});
+
+test('splitByPath: stops at the first self-crossing; chaikin rounds a trace', async () => {
+  const { splitByPath, chaikin, truncateAtSelfCrossing } = await import('../src/domain/cut.js');
+  const loop = [[0, 50], [60, 50], [60, 90], [30, 90], [30, 20], [90, 20], [120, 20]];
+  const cut = truncateAtSelfCrossing(loop);
+  assert.ok(cut.length < loop.length, 'the part after the crossing is dropped');
+  const last = cut.at(-1);
+  assert.ok(near(last[0], 30, 1e-6) && near(last[1], 50, 1e-6), 'closes at the crossing point');
+  assert.ok(splitByPath({ width: 100, height: 100 }, loop));
+
+  const corner = [[0, 0], [10, 0], [10, 10]];
+  const round = chaikin(corner, 2);
+  assert.ok(round.length > corner.length);
+  assert.deepEqual(round[0], [0, 0]);
+  assert.deepEqual(round.at(-1), [10, 10]);
+  assert.ok(!round.some(p => p[0] === 10 && p[1] === 0), 'the sharp corner is gone');
+});

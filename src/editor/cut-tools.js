@@ -1,5 +1,5 @@
 import {
-  splitByLine, smallerPart, pointToUnit, toUnit, lassoRemove, cornerTear, nearestCorner, flameRadius,
+  splitByPath, chaikin, smallerPart, pointToUnit, toUnit, lassoRemove, cornerTear, nearestCorner, flameRadius,
 } from '../domain/cut.js';
 import { thinPoints } from '../domain/brush.js';
 import { createRng, holePolygons } from '../render/handout-effects.js';
@@ -36,13 +36,23 @@ function boxToPage([x, y], box) {
  * description; the editor turns it into a "cut" layer. While the gesture is going on only this overlay
  * canvas is drawn; the document is rendered once, when the layer is born.
  */
-export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOptions, getTarget, onCut, onSound = () => {}, reducedMotion = () => false } = {}) {
+/** Is there paper (any opaque pixel of the rendered page) at this page point? Without a map, assume yes. */
+export function paperAt(map, [x, y]) {
+  if (!map) return true;
+  const px = Math.floor(x * map.k);
+  const py = Math.floor(y * map.k);
+  if (px < 0 || py < 0 || px >= map.width || py >= map.height) return false;
+  return map.data[(py * map.width + px) * 4 + 3] > 24;
+}
+
+export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOptions, getTarget, onCut, onSound = () => {}, reducedMotion = () => false, getAlphaMap = () => null } = {}) {
   const overlay = document.createElement('canvas');
   overlay.className = 'stage-tool-overlay';
   overlay.style.display = 'none';
   pageWrap.appendChild(overlay);
 
   let gesture = null;
+  let alphaMap = null;
   let chooser = null;
   let frame = 0;
   let glow = null;
@@ -55,8 +65,9 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
     return target || { id: null, name: 'a folha', x: 0, y: 0, width: handout.page.width, height: handout.page.height, rotation: 0 };
   }
 
+  let pageRect = null;
   const pagePoint = event => {
-    const rect = pageWrap.getBoundingClientRect();
+    const rect = gesture?.kind === 'lighter' && pageRect ? pageRect : pageWrap.getBoundingClientRect();
     const zoom = getZoom();
     return [(event.clientX - rect.left) / zoom, (event.clientY - rect.top) / zoom];
   };
@@ -64,7 +75,7 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
   function setup() {
     const handout = getHandout();
     const zoom = getZoom();
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = Math.min(1.5, window.devicePixelRatio || 1);
     const pw = Math.round(handout.page.width * zoom * dpr);
     const ph = Math.round(handout.page.height * zoom * dpr);
     if (overlay.width !== pw || overlay.height !== ph) {
@@ -97,18 +108,22 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
     ctx.closePath();
   }
 
-  function drawScissorLine(ctx, k, a, b) {
+  /** The dashed line follows the whole trace of the hand, smoothed for the scissors and as shaky as it is for tearing. */
+  function drawTrace(ctx, k, points, kind) {
+    const trace = kind === 'scissors' ? chaikin(points.length > 200 ? points.filter((_, i) => i % 3 === 0) : points, 2) : points;
+    const b = trace[trace.length - 1];
+    const a = trace[Math.max(0, trace.length - 6)];
     ctx.save();
     ctx.setLineDash([10, 7]);
     ctx.lineWidth = 2;
     ctx.strokeStyle = '#f7f3e6';
     ctx.shadowColor = 'rgba(0,0,0,0.6)';
     ctx.shadowBlur = 3;
+    ctx.lineJoin = 'round';
     ctx.beginPath();
-    ctx.moveTo(a[0] * k, a[1] * k);
-    ctx.lineTo(b[0] * k, b[1] * k);
+    trace.forEach(([x, y], i) => (i ? ctx.lineTo(x * k, y * k) : ctx.moveTo(x * k, y * k)));
     ctx.stroke();
-    if (!reducedMotion()) {
+    if (!reducedMotion() && (a[0] !== b[0] || a[1] !== b[1])) {
       // a little pair of scissors rides on the line, pointing the way it is cut
       ctx.setLineDash([]);
       ctx.translate(b[0] * k, b[1] * k);
@@ -177,12 +192,12 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
   }
 
   function stepParticles(ctx, k, now, rimPoints) {
-    if (rimPoints.length && embers.length < 140) {
+    if (rimPoints.length && embers.length < 60) {
       for (let i = 0; i < 3; i++) {
         const [x, y] = rimPoints[Math.floor(Math.random() * rimPoints.length)];
         embers.push({ x, y, born: now, vx: (Math.random() - 0.5) * 14, vy: -Math.random() * 18 });
       }
-      if (smoke.length < 18 && Math.random() < 0.5) {
+      if (smoke.length < 8 && Math.random() < 0.5) {
         const [x, y] = rimPoints[Math.floor(Math.random() * rimPoints.length)];
         smoke.push({ x, y, born: now, vx: (Math.random() - 0.5) * 6 });
       }
@@ -211,33 +226,91 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
     return g.trail.map(([x, y, r]) => [clamp01(x), clamp01(y), Math.round(r * 10) / 10]);
   }
 
+  /** Two persistent canvases (rim and dark centre) hold the discs already burned; each frame only adds new ones. */
+  function burnLayers(w, h) {
+    const make = () => {
+      const c = document.createElement('canvas');
+      c.width = w;
+      c.height = h;
+      return c;
+    };
+    return { rim: make(), dark: make(), committed: 0 };
+  }
+
+  function disc(ctx, x, y, r, color) {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(x, y, Math.max(0.5, r), 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  /** Burns the segment from one trail point to the next as overlapping discs (page px → canvas px). */
+  function burnSegment(layers, k, target, from, to) {
+    const rim = layers.rim.getContext('2d');
+    const dark = layers.dark.getContext('2d');
+    const a = boxToPage([from[0] * target.width, from[1] * target.height], target);
+    const b = to ? boxToPage([to[0] * target.width, to[1] * target.height], target) : a;
+    const gap = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    const r0 = from[2];
+    const r1 = to ? to[2] : r0;
+    const steps = to ? Math.min(40, Math.max(0, Math.floor(gap / Math.max(1, Math.min(r0, r1) * 0.5)))) : 0;
+    for (let i = 0; i <= steps; i++) {
+      const t = steps ? i / (steps + 1) : 0;
+      const x = (a[0] + (b[0] - a[0]) * t) * k;
+      const y = (a[1] + (b[1] - a[1]) * t) * k;
+      const r = (r0 + (r1 - r0) * t) * k;
+      disc(rim, x, y, r + 2.5 * k, '#ff8c28');
+      disc(dark, x, y, r, '#080504');
+    }
+  }
+
+  /** Work done per lighter frame (ms), for the performance test. */
+  const frameTimes = [];
+
   function lighterFrame() {
     frame = requestAnimationFrame(lighterFrame);
     const g = gesture;
-    if (!g || g.kind !== 'lighter') return;
+    if (!g || g.kind !== 'lighter' || !g.view) return;
     const now = performance.now();
+    try { drawLighterFrame(g, now); } finally {
+      frameTimes.push(performance.now() - now);
+      if (frameTimes.length > 600) frameTimes.shift();
+    }
+  }
+
+  function drawLighterFrame(g, now) {
     const options = getOptions();
     const base = options.flame;
     const held = (now - g.lastMove) / 1000;
     const radius = flameRadius(base, held, { speed: options.speed / 100 });
     const last = g.trail[g.trail.length - 1];
     if (last) last[2] = Math.max(last[2], radius);
-    const { ctx, k } = setup();
-    const target = targetBox();
-    const effectLike = { remove: [], holes: g.trail.map(([x, y, r]) => [[x, y, r]]).length ? [g.trail] : [], seed: g.seed };
-    const polys = holePolygons(effectLike.holes, target.width, target.height, g.seed, 1);
-    const toPage = poly => poly.map(p => boxToPage(p, target));
+    const { ctx, k, target, layers } = g.view;
+
+    // Points that are no longer the last one are finished: they go to the persistent canvases once
+    while (layers.committed < g.trail.length - 1) {
+      burnSegment(layers, k, target, g.trail[layers.committed], g.trail[layers.committed + 1]);
+      layers.committed++;
+    }
+
+    ctx.clearRect(0, 0, overlay.width, overlay.height);
+    ctx.drawImage(layers.rim, 0, 0);
     ctx.save();
-    ctx.beginPath();
-    for (const poly of polys) tracePolygon(ctx, toPage(poly), k);
-    ctx.fillStyle = 'rgba(8, 5, 4, 0.62)';
-    ctx.fill();
-    ctx.lineWidth = 3 * k;
-    ctx.strokeStyle = 'rgba(255, 140, 40, 0.75)';
-    ctx.stroke();
+    ctx.globalAlpha = 0.72;
+    ctx.drawImage(layers.dark, 0, 0);
     ctx.restore();
+    // The point under the flame is still growing: drawn live on top
+    if (last) {
+      const p = boxToPage([last[0] * target.width, last[1] * target.height], target);
+      disc(ctx, p[0] * k, p[1] * k, (last[2] + 2.5) * k, 'rgba(255, 140, 40, 0.8)');
+      disc(ctx, p[0] * k, p[1] * k, last[2] * k, 'rgba(8, 5, 4, 0.78)');
+    }
     if (!reducedMotion()) {
-      const rim = polys.slice(-8).flatMap(poly => toPage(poly).filter((_, i) => i % 4 === 0));
+      const rim = last ? Array.from({ length: 3 }, () => {
+        const p = boxToPage([last[0] * target.width, last[1] * target.height], target);
+        const a = Math.random() * Math.PI * 2;
+        return [p[0] + Math.cos(a) * last[2], p[1] + Math.sin(a) * last[2]];
+      }) : [];
       stepParticles(ctx, k, now, rim);
       const dx = g.current[0] - g.prev[0];
       drawFlame(ctx, k, g.current[0], g.current[1], now, Math.max(-0.5, Math.min(0.5, -dx * 0.03)), base * 0.5 + 4);
@@ -252,7 +325,7 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
       glow.className = 'stage-flame-glow';
       document.body.appendChild(glow);
     }
-    glow.style.transform = `translate(${event.clientX - 220}px, ${event.clientY - 220}px)`;
+    glow.style.transform = `translate3d(${event.clientX - 160}px, ${event.clientY - 160}px, 0)`;
   }
 
   // --- gestures -----------------------------------------------------------------------------------------
@@ -262,11 +335,16 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
     return [ux * target.width, uy * target.height];
   }
 
-  function finishLine(g) {
+  function finishLine(g, straight = false) {
     const target = targetBox();
-    const length = Math.hypot(g.current[0] - g.start[0], g.current[1] - g.start[1]);
+    let length = 0;
+    for (let i = 1; i < g.points.length; i++) length += Math.hypot(g.points[i][0] - g.points[i - 1][0], g.points[i][1] - g.points[i - 1][1]);
     if (length < 12) return;
-    const split = splitByLine({ width: target.width, height: target.height }, [localPx(g.start, target), localPx(g.current, target)]);
+    // The cut follows the hand: Alt+Shift at the end straightens it into a line
+    const local = thinPoints(g.points.map(p => [...localPx(p, target), 0.5]), 2.5).map(p => [p[0], p[1]]);
+    let path = straight ? [local[0], local[local.length - 1]] : local;
+    if (g.kind === 'scissors' && !straight) path = chaikin(path, 2);
+    const split = splitByPath({ width: target.width, height: target.height }, path);
     if (!split) return;
     const seconds = Math.max(0.05, (performance.now() - g.t0) / 1000);
     const speed = length / seconds;
@@ -370,8 +448,13 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
       return;
     }
 
-    try { pageWrap.setPointerCapture(event.pointerId); } catch {}
     const start = pagePoint(event);
+    if (tool === 'lighter') {
+      // The flame has nothing to burn on the desk or on paper that is already gone
+      alphaMap = getAlphaMap();
+      if (!paperAt(alphaMap, start)) return;
+    }
+    try { pageWrap.setPointerCapture(event.pointerId); } catch {}
     const now = performance.now();
     gesture = {
       kind: tool, pointerId: event.pointerId, start, current: start, prev: start, t0: now, lastMove: now,
@@ -383,6 +466,9 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
       const [ux, uy] = pointToUnit(start, target);
       gesture.trail.push([clamp01(ux), clamp01(uy), getOptions().flame]);
       gesture.appendTo = event.shiftKey ? 'selected' : null;
+      const view = setup();
+      gesture.view = { ...view, target, layers: burnLayers(overlay.width, overlay.height) };
+      pageRect = pageWrap.getBoundingClientRect();
       onSound('lighter', {});
       onSound('burn', { on: true });
       moveGlow(event);
@@ -401,9 +487,13 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
       const target = targetBox();
       const [ux, uy] = pointToUnit(point, target);
       const dist = Math.hypot((ux - lastUnit[0]) * target.width, (uy - lastUnit[1]) * target.height);
-      if (dist >= 2) {
-        g.trail.push([clamp01(ux), clamp01(uy), getOptions().flame]);
+      // Moving the hand at all stops the fire from spreading; only paper receives a burn point
+      if (Math.hypot(point[0] - (g.lastPointer?.[0] ?? g.start[0]), point[1] - (g.lastPointer?.[1] ?? g.start[1])) >= 2) {
         g.lastMove = performance.now();
+        g.lastPointer = point;
+      }
+      if (dist >= 2 && paperAt(alphaMap, point)) {
+        g.trail.push([clamp01(ux), clamp01(uy), getOptions().flame]);
       }
       return;
     }
@@ -434,7 +524,7 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
       ctx.stroke();
       ctx.restore();
     } else {
-      drawScissorLine(ctx, k, g.start, g.current);
+      drawTrace(ctx, k, g.points, g.kind);
     }
   }
 
@@ -453,7 +543,7 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
       finishCorner(g);
       clear();
     } else {
-      finishLine(g);
+      finishLine(g, event.altKey && event.shiftKey && !g.alt);
       if (!chooser) clear();
     }
   }
@@ -465,6 +555,11 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
 
   return {
     isChoosing: () => Boolean(chooser),
+    frameStats() {
+      const sorted = [...frameTimes].sort((a, b) => a - b);
+      return { count: sorted.length, median: sorted[Math.floor(sorted.length / 2)] ?? 0, p95: sorted[Math.floor(sorted.length * 0.95)] ?? 0, max: sorted.at(-1) ?? 0 };
+    },
+    clearStats() { frameTimes.length = 0; },
     cancel,
     /** Leaving the tool drops a half-made gesture. */
     reset() {

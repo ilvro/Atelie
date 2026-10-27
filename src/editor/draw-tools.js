@@ -105,8 +105,8 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
       const target = `<span class="stage-tool-target" data-cut-target>Cortando: ${targetLabel}</span>`;
       const range = (key, label, min, max, step) => `<label class="stage-tool-field" title="${label}"><span>${label}</span><input type="range" data-option="${key}" min="${min}" max="${max}" step="${step}" value="${options[key]}" /></label>`;
       strip.innerHTML = target + ({
-        scissors: `<label class="stage-tool-field"><input type="checkbox" data-option="picote" ${options.picote ? 'checked' : ''} /><span>Picote</span></label><span class="stage-tool-hint">Arraste uma linha · Alt: laço · Enter aceita · Esc cancela</span>`,
-        tear: `${range('rough', 'Aspereza', 5, 100, 5)}<span class="stage-tool-hint">Arraste de borda a borda · Alt: arrancar um canto</span>`,
+        scissors: `<label class="stage-tool-field"><input type="checkbox" data-option="picote" ${options.picote ? 'checked' : ''} /><span>Picote</span></label><span class="stage-tool-hint">Arraste pelo caminho do corte · Alt: laço · Alt+Shift ao soltar: reta · Enter aceita · Esc cancela</span>`,
+        tear: `${range('rough', 'Aspereza', 5, 100, 5)}<span class="stage-tool-hint">Arraste de borda a borda, pelo caminho que quiser · Alt: arrancar um canto</span>`,
         lighter: `${range('flame', 'Chama', 6, 40, 1)}${range('speed', 'Fogo', 20, 200, 10)}${range('char', 'Tostado', 0, 100, 5)}<span class="stage-tool-hint">Segure e passe · Shift: acrescentar à queima</span>`,
       }[tool]);
       return;

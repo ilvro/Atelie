@@ -63,3 +63,24 @@ test('conflicts: same combo in the same scope, or against a global one', () => {
   assert.deepEqual(keymap.conflicts('P', 'editor', 'reader'), [], 'a shortcut does not conflict with itself');
   assert.deepEqual(keymap.conflicts('ctrl+w', 'editor').map(s => s.id), ['close-tab']);
 });
+
+test('B is the brush and Shift+B the library, with no conflict between them', () => {
+  keymap.reload();
+  keymap.reset(null);
+  assert.equal(keymap.matches(ev('b'), 'tool-brush'), true);
+  assert.equal(keymap.matches(ev('b'), 'library'), false);
+  assert.equal(keymap.matches(ev('B', { shiftKey: true }), 'library'), true);
+  assert.equal(keymap.matches(ev('B', { shiftKey: true }), 'tool-brush'), false);
+  assert.deepEqual(keymap.conflicts('B', 'editor').map(s => s.id), ['tool-brush']);
+  assert.deepEqual(keymap.conflicts('Shift+B', 'editor').map(s => s.id), ['library']);
+});
+
+test('isTypingTarget: fields, text areas, contenteditable and an open stage text box all count as typing', () => {
+  const none = keymap.isTypingTarget(null);
+  assert.equal(none, false);
+  assert.equal(keymap.isTypingTarget({ tagName: 'TEXTAREA' }), true);
+  assert.equal(keymap.isTypingTarget({ tagName: 'INPUT' }), true);
+  assert.equal(keymap.isTypingTarget({ tagName: 'DIV', isContentEditable: true }), true);
+  assert.equal(keymap.isTypingTarget({ tagName: 'DIV', getAttribute: n => (n === 'role' ? 'textbox' : null) }), true);
+  assert.equal(keymap.isTypingTarget({ tagName: 'BODY', getAttribute: () => null }), false);
+});

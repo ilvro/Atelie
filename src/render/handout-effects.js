@@ -845,8 +845,8 @@ export function holePolygons(holes, W, H, seed, scale = 1) {
         }
       }
     }
-    for (const [cx, cy, radius] of circles.slice(0, 700)) {
-      const sides = 26;
+    for (const [cx, cy, radius] of circles.slice(0, 3000)) {
+      const sides = radius < 8 ? 10 : radius < 40 ? 18 : 26;
       const phase = rand() * Math.PI * 2;
       const poly = [];
       for (let k = 0; k < sides; k++) {

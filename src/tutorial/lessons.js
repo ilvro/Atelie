@@ -184,7 +184,7 @@ export const LESSONS = [
     start: 'blank',
     steps: [
       { say: 'A barra à esquerda da mesa tem as ferramentas de desenho.', done: ['read'], act: 'continue' },
-      { say: 'Escolha o <b>Pincel</b> (tecla <b>Shift+B</b>).', target: '.stage-tool-btn[data-tool="brush"]', done: ['tool', 'brush'] },
+      { say: 'Escolha o <b>Pincel</b> (tecla <b>B</b>).', target: '.stage-tool-btn[data-tool="brush"]', done: ['tool', 'brush'] },
       { say: 'Arraste sobre a página para fazer um traço.', target: '.stage-page-wrap', done: ['layerWhere', { kind: 'shape', 'shape.type': 'path' }], act: ['draw', [[300, 400], [420, 470], [540, 400], [660, 480]]] },
       { say: 'Volte à ferramenta <b>Selecionar</b> (tecla <b>V</b> ou Esc).', target: '.stage-tool-btn[data-tool="select"]', done: ['tool', 'select'], learn: ['Esc', 'voltar a selecionar'] },
       { say: 'Agora sozinho: desenhe um <b>retângulo</b> arrastando na página.', try: true, target: '.stage-tool-btn[data-tool="rect"]', done: ['layerWhere', { kind: 'shape', 'shape.type': 'rect', name: 'Retângulo' }], act: [['click', '.stage-tool-btn[data-tool="rect"]'], ['draw', [[300, 700], [700, 900]]]] },

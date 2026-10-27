@@ -236,6 +236,21 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ---
 
+## Coleção ampliada · Fase C1b (ajustes depois do primeiro uso)
+
+### Feito
+- **Escrita (item 4):** a causa real era outra. Cada letra digitada em **Propriedades** refazia o painel inteiro, o campo perdia o foco e as letras seguintes caíam na janela, onde T, R, Q… viravam ferramentas; além disso o som de digitação lançava `currentHandout is not defined` a cada tecla. `properties-panel.js` agora guarda foco, cursor e rolagem ao redesenhar, e o erro foi corrigido. `isTypingTarget` (campos, `contentEditable`, `role=textbox` e caixa de texto do palco desde que abre) vale para todos os atalhos. Teste: `tests/e2e/typing-safe.test.js`.
+- **B é o pincel (item 5):** `tool-brush` = B, Biblioteca = Shift+B (trilho mostra ⇧B); lição, Ajuda e testes atualizados.
+- **Isqueiro só queima papel (item 2):** a faixa tostada e a fibra de um corte são compostas só sobre o que tem papel (`destination-in` do canvas); o gesto não começa sobre alfa 0, a trilha só recebe pontos sobre papel e nenhuma camada nasce sem queima. O mapa de papel vem de uma renderização pequena (¼) no CPU: ler o canvas do palco travava ~0,6 s.
+- **Fluidez (item 3):** desenho incremental (dois canvases persistentes para aro e centro, só o disco vivo é redesenhado), luz quente sem `mix-blend-mode`, partículas em orçamento (60 brasas, 8 fumaças), prévia limitada a 1,5× e até 3 000 discos no render final (antes 700, que cortava trilhas longas). `perf.test.js` mede o trabalho por quadro do isqueiro no A4 de 15 camadas: mediana ~0,4 ms.
+- **Cortes que seguem a mão (item 1):** `splitByPath` (traçado cortado à folha, pontas prolongadas pela tangente até a borda, para no primeiro cruzamento), suavização Chaikin na tesoura, tremor mantido no rasgo, Alt+Shift ao soltar endireita.
+
+### Pendências reais
+- Duas sessões trabalharam no mesmo diretório ao mesmo tempo (a outra fez as trocas de atalho dos itens 4 e 5). Rodar `git diff` antes de commitar para confirmar que tudo pertence a esta fase.
+- Tabletop: a folha recortada ainda chega com fundo (ver C1).
+
+---
+
 ## Refinamento Visual e Ergonomia de UI
 
 ### Feito

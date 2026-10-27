@@ -357,7 +357,26 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
     loadUploads();
   }
 
+  /** Rebuilds the panel keeping the field being typed in: the edit it caused must not take its focus. */
   function render() {
+    const active = document.activeElement;
+    const field = active && container.contains(active) && active.dataset?.field ? active : null;
+    const keep = field && {
+      name: field.dataset.field,
+      start: field.selectionStart,
+      end: field.selectionEnd,
+      scroll: field.scrollTop,
+    };
+    renderPanel();
+    if (!keep) return;
+    const next = container.querySelector(`[data-field="${CSS.escape(keep.name)}"]`);
+    if (!next || next === active) return;
+    next.focus({ preventScroll: true });
+    try { next.setSelectionRange(keep.start, keep.end); } catch {}
+    next.scrollTop = keep.scroll;
+  }
+
+  function renderPanel() {
     const layer = getSelectedLayer();
 
     if (!layer) {
@@ -830,7 +849,7 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
   container.addEventListener('keydown', event => {
     if (event.target.tagName === 'TEXTAREA' && event.target.dataset?.field === 'h:text.content') {
       if (!event.ctrlKey && !event.metaKey && !event.altKey && !['Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 'Tab'].includes(event.key)) {
-        const layer = currentHandout?.layers?.find(l => l.id === selectedId);
+        const layer = getSelectedLayer();
         play('type', { font: layer?.text?.font, key: event.key });
       }
     }

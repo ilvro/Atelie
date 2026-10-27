@@ -91,6 +91,46 @@ test('cut tools e2e: tear the sheet, lasso one layer, hold the lighter, undo, hi
   assert.ok((await pixel(40, 40))[3] > 250, 'hiding the cut layer gives the paper back, nothing is lost');
   await page.evaluate(() => window.__atelie.editor.state.undo());
 
+  // --- Scissors follow the hand: a curve gives a curved cut, Alt+Shift straightens it
+  await page.evaluate(() => { window.__atelie.editor.state.select(null); });
+  await blur();
+  await page.keyboard.press('x');
+  const arc = [];
+  for (let i = 0; i <= 12; i++) arc.push(await screen(120 + i * 80, 500 + Math.sin((i / 12) * Math.PI) * 300));
+  await page.mouse.move(arc[0].x, arc[0].y);
+  await page.mouse.down();
+  for (const p of arc.slice(1)) await page.mouse.move(p.x, p.y, { steps: 3 });
+  await page.mouse.up();
+  const arcPick = await screen(600, 1500);
+  await page.mouse.click(arcPick.x, arcPick.y);
+  const curved = (await layers()).at(-1);
+  assert.equal(curved.effect.edge, 'tesoura');
+  const contour = curved.effect.remove[0];
+  assert.ok(contour.length > 8, `the cut keeps the shape of the trace (${contour.length} points)`);
+  assert.ok(contour.some(([x, y]) => x > 0.15 && x < 0.85 && y > 0.4 && y < 0.5), 'the contour bows down like the arc, not along the chord');
+  await page.evaluate(() => window.__atelie.editor.state.undo());
+
+  await blur();
+  await page.keyboard.press('x');
+  const l1 = await screen(120, 500);
+  const l2 = await screen(1100, 650);
+  await page.keyboard.down('Alt');
+  await page.keyboard.down('Shift');
+  await page.mouse.move(l1.x, l1.y);
+  await page.keyboard.up('Alt');
+  await page.mouse.down();
+  await page.keyboard.down('Alt');
+  await page.mouse.move((l1.x + l2.x) / 2, l1.y + 90, { steps: 4 });
+  await page.mouse.move(l2.x, l2.y, { steps: 4 });
+  await page.mouse.up();
+  await page.keyboard.up('Alt');
+  await page.keyboard.up('Shift');
+  const flat = await screen(600, 1500);
+  await page.mouse.click(flat.x, flat.y);
+  const straightCut = (await layers()).at(-1);
+  assert.ok(straightCut.effect.remove[0].length <= 8, `Alt+Shift straightens the cut (${straightCut.effect.remove[0].length} points)`);
+  await page.evaluate(() => window.__atelie.editor.state.undo());
+
   // --- Lasso on a selected layer: only that layer is cut, the paper below stays
   await page.evaluate(() => {
     const ed = window.__atelie.editor;
@@ -147,6 +187,25 @@ test('cut tools e2e: tear the sheet, lasso one layer, hold the lighter, undo, hi
   assert.equal(quick.blend, 'multiply');
   assert.ok(radius(slow) > radius(quick) + 15, `the fire spreads while held: ${radius(quick)} → ${radius(slow)}`);
   assert.ok((await pixel(800, 1300))[3] === 0, 'a hole in the paper where the flame stayed');
+
+  // The lighter has nothing to burn where the paper is already gone: no layer, and nothing on the desk
+  const burnedCount = (await layers()).length;
+  const again = await hold([800, 1300], 400);
+  assert.equal((await layers()).length, burnedCount, 'holding over the hole creates no new layer');
+  assert.equal(again.id, slow.id);
+  // A burn next to an earlier cut never paints its scorched band over the cut-away area
+  const overlap = await page.evaluate(async () => {
+    const ed = window.__atelie.editor;
+    const doc = ed.createHandout({ name: 'Faixa', preset: 'a4' });
+    const cutA = { id: 'a', name: 'Corte', kind: 'effect', visible: true, locked: false, x: 0, y: 0, width: 1240, height: 1754, rotation: 0, opacity: 1, blend: 'normal', light: 'both',
+      effect: { type: 'cut', amount: 1, seed: 1, params: { rough: 0.5 }, edge: 'tesoura', remove: [[[0.4, 0.4], [0.6, 0.4], [0.6, 0.6], [0.4, 0.6]]], holes: [], char: 0.5, fiber: 0.5 } };
+    const burn = { id: 'b', name: 'Queimado', kind: 'effect', visible: true, locked: false, x: 0, y: 0, width: 1240, height: 1754, rotation: 0, opacity: 1, blend: 'multiply', light: 'both',
+      effect: { type: 'cut', amount: 1, seed: 2, params: { rough: 0.5 }, edge: 'queimado', remove: [], holes: [[[0.5, 0.5, 160]]], char: 1, fiber: 0.5 } };
+    const res = await window.__atelie.renderHandout({ ...doc, layers: [...doc.layers, cutA, burn] }, { scale: 0.5, at: [[620, 877], [620, 700], [100, 100]] });
+    return res.pixels;
+  });
+  assert.equal(overlap[0][3], 0, 'the cut-away centre stays transparent');
+  assert.ok(overlap[2][3] > 250, 'the untouched paper stays');
 
   // --- Reduced motion: no flame glow, the cut is applied the same
   await page.evaluate(() => document.body.classList.add('reduce-motion'));

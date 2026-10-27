@@ -38,7 +38,7 @@ export const SHORTCUTS = [
   {
     id: 'library',
     scope: 'global',
-    key: 'B',
+    key: 'Shift+B',
     label: 'Biblioteca',
     description: 'Abrir gaveta de biblioteca (papéis, texturas e carimbos)',
     category: 'Navegação',
@@ -329,7 +329,7 @@ export const SHORTCUTS = [
   {
     id: 'tool-brush',
     scope: 'editor',
-    key: 'Shift+B',
+    key: 'B',
     label: 'Ferramenta: pincel',
     description: 'Pintar à mão livre na página (Shift ao começar acrescenta o traço à camada de pincel selecionada)',
     category: 'Ferramentas',

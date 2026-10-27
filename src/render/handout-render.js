@@ -393,6 +393,7 @@ export function renderHandoutSync(
     ctx.fillRect(0, 0, pw, ph);
   }
 
+  let cutScratch = null;
   let groupCanvas = null;
   let baseCanvas = null;
   let tempCanvas = null;
@@ -428,6 +429,21 @@ export function renderHandoutSync(
       if (clipped.length === 0) {
         if (isCutEffect(base)) {
           applyCutEffect(ctx, base, pw, ph, scale);
+          // Scorched band and torn fibre only go where paper is left: never over the desk or an earlier cut
+          cutScratch ??= createPageCanvas(pw, ph);
+          const sctx = cutScratch.getContext('2d');
+          sctx.setTransform(1, 0, 0, 1, 0, 0);
+          sctx.globalCompositeOperation = 'source-over';
+          sctx.clearRect(0, 0, pw, ph);
+          drawLayer(sctx, base, scale, loadedImages, missing, warnings, { emptyImage });
+          sctx.globalCompositeOperation = 'destination-in';
+          sctx.drawImage(canvas, 0, 0);
+          ctx.save();
+          ctx.globalAlpha = base.opacity;
+          ctx.globalCompositeOperation = canvasOperation(base.blend);
+          ctx.drawImage(cutScratch, 0, 0);
+          ctx.restore();
+          continue;
         }
         ctx.save();
         ctx.globalAlpha = base.opacity;

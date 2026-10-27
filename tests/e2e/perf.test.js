@@ -454,6 +454,35 @@ test('perf e2e: 15-layer A4 open < 400ms, drag at 60fps (< 16.7ms/frame), and id
   assert.ok(perfResults.avgFrameTimeMs < 16.7, `Average frame time should be < 16.7 ms for 60fps (was ${perfResults.avgFrameTimeMs.toFixed(2)} ms)`);
   assert.equal(perfResults.pixelDiffCount, 0, 'Canvas pixels after releasing drag must be identical to fresh render');
 
+  // The lighter on the busy A4: the work per frame while the flame is held and moved over the paper
+  await page.evaluate(() => {
+    const ed = window.__atelie.editor;
+    ed.state.select(null);
+    ed.stage.zoom('fit');
+    ed.stage.setTool('lighter');
+  });
+  await page.waitForTimeout(400);
+  const rect = await page.evaluate(() => {
+    const r = document.querySelector('.stage-page-wrap').getBoundingClientRect();
+    return { x: r.left, y: r.top, w: r.width, h: r.height };
+  });
+  await page.evaluate(() => window.__atelie.editor.stage.clearCutFrameStats());
+  const x0 = rect.x + rect.w * 0.3;
+  const y0 = rect.y + rect.h * 0.5;
+  await page.mouse.move(x0, y0);
+  await page.mouse.down();
+  for (let i = 0; i < 60; i++) {
+    await page.mouse.move(x0 + i * 5, y0 + Math.sin(i / 5) * 40);
+    await page.waitForTimeout(16);
+  }
+  await page.waitForTimeout(500);
+  const flame = await page.evaluate(() => window.__atelie.editor.stage.cutFrameStats());
+  await page.mouse.up();
+  console.log(`[PERF METRICS] Lighter frame work: median ${flame.median.toFixed(2)} ms, p95 ${flame.p95.toFixed(2)} ms, max ${flame.max.toFixed(2)} ms over ${flame.count} frames`);
+  assert.ok(flame.count > 30, 'the lighter drew frames');
+  assert.ok(flame.median < 8, `lighter median frame work should be < 8 ms (was ${flame.median.toFixed(2)})`);
+  assert.ok(flame.p95 < 20, `lighter p95 frame work should be < 20 ms (was ${flame.p95.toFixed(2)})`);
+
   await page.close();
   assert.deepEqual(errors, []);
 });

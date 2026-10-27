@@ -251,6 +251,60 @@ Ela entra no relatório de cobertura.
   - com reduce-motion, nenhum canvas de partículas aparece.
 - **`perf.test.js`:** um documento com 3 camadas de corte continua abrindo em menos de 400 ms.
 
+### C1b · Ajustes depois do primeiro uso (revisão do usuário)
+
+A C1 foi entregue e usada. Cinco pontos saíram da prática e entram no plano **antes da C2**. Cada um vira um commit com teste.
+
+**1. Tesoura e rasgar seguem o gesto, não uma reta.**
+- **Hoje:** `finishLine` em `src/editor/cut-tools.js` descarta o traçado e usa só a corda do ponto inicial ao final, em `splitByLine`. O corte sai sempre reto, e o rasgo só ganha irregularidade do ruído da borda. Isso tira a dinâmica do gesto.
+- **Novo:**
+  - função pura `splitByPath(box, path)` em `src/domain/cut.js`: pega o traçado (pontos do arraste, já com `thinPoints`), **prolonga as pontas** pela tangente até a borda da caixa e devolve as duas partes como polígonos, com as áreas. Traçado que cruza a si mesmo: use só até o primeiro cruzamento.
+  - o traçado é **suavizado** (Chaikin, 2 passos) para a tesoura, e **mantém os tremores** para o rasgo; o ruído de `roughenPolygon` entra por cima, como hoje.
+  - a linha de prévia (tracejada) e a escolha da parte usam o traçado, não a reta.
+  - Shift continua trocando a tesoura para picote. **Alt+Shift** durante o arraste trava o gesto em linha reta (para quem quer reta de propósito).
+  - `remove` já aceita contornos com qualquer número de pontos, então **o formato do documento não muda**.
+- **Teste:** unidade de `splitByPath` (traçado em S e em arco divide a folha, áreas somam o total, prolongamento chega às bordas, traçado em laço fecha no primeiro cruzamento); E2E que arrasta uma curva e confere que o contorno gravado em `remove` tem mais de 2 pontos fora da reta.
+
+**2. O isqueiro não queima onde não há papel.**
+- **Causa:** o gesto nasce em qualquer ponto da página, e a trilha é desenhada em `holes` sem olhar o que existe embaixo. A faixa tostada (`drawCutOverlay`) é pintada na caixa da camada inteira e só apaga a área removida **da própria camada**. Onde outra camada de corte (ou uma queima anterior) já tirou o papel, a faixa aparece sobre o vazio e parece queimar a mesa.
+- **Correção:**
+  - **no render:** a sobreposição de um corte passa a ser composta **só sobre o que já tem papel** (`source-atop` sobre o canvas da página), nunca sobre alfa 0. Vale para tostado e fibra de qualquer corte, e para camadas presas a uma camada.
+  - **no gesto:** ao começar, testa o alfa do documento renderizado no ponto (o editor já tem o canvas do palco). Alfa 0 → o gesto não começa, sem som, sem chama e sem luz quente. Durante a trilha, pontos sobre alfa 0 não entram em `holes`.
+  - **na criação:** se nenhum ponto da trilha ficou sobre papel, **nenhuma camada** é criada.
+  - **na prévia:** o furo escuro e o aro de brasa só aparecem sobre papel; a chama e a luz continuam seguindo o cursor.
+- **Teste:** E2E: queimar um canto, queimar de novo o mesmo lugar (nenhuma camada nova, nenhum pixel mudado fora do papel); pixel da mesa na prévia e no assado não muda; recorte de uma queimadura vizinha não ganha faixa sobre o vazio.
+
+**3. Fluidez do isqueiro (e dos cortes).**
+- **Causas prováveis** (medir antes de mexer): a cada quadro `lighterFrame` chama `setup()` (que redimensiona e limpa o canvas inteiro), recalcula `holePolygons` de **toda** a trilha (até 700 discos de 26 pontos) e preenche tudo de novo; a luz quente é um `div` de 440 px com `mix-blend-mode: screen`, que força recomposição a cada movimento; as brasas e a fumaça são recriadas por quadro; no `pointerup` o documento é renderizado com a máscara cheia (bordas com até 5 000 pontos).
+- **Plano:**
+  1. **medir:** `tests/e2e/perf.test.js` ganha um gesto de isqueiro de 2 s sobre o A4 de 15 camadas, com tempo médio e máximo por quadro (meta: média < 8 ms, máximo < 20 ms, como o arraste de camadas);
+  2. **desenho incremental:** o canvas sobreposto guarda o que já foi desenhado e cada quadro acrescenta só os **discos novos** (e a chama); a trilha inteira só é redesenhada ao mudar o zoom;
+  3. **resolução da prévia:** o canvas sobreposto usa no máximo 1× de `devicePixelRatio` e sem tamanho da página inteira durante o gesto (apenas a caixa do alvo);
+  4. **luz quente barata:** gradiente em uma camada própria promovida (`will-change: transform`), 220 px, movida só por `transform`, sem `mix-blend-mode` no caminho quente (a cor já é aditiva); desligada se o quadro passar de 20 ms;
+  5. **partículas com orçamento:** no máximo 60 brasas e 8 fumaças, em *pool* (sem criar objetos por quadro);
+  6. **render final:** no `pointerup`, a máscara do corte usa o passo de subdivisão adaptado ao tamanho (já há `perimeter / 5000`; baixar para 2 500 na prévia) e o cache de máscara é preenchido **antes** do primeiro quadro completo, em `requestIdleCallback`;
+  7. o mesmo cuidado (itens 2 e 3) vale para a linha de prévia da tesoura e do rasgo, agora com traçado.
+
+**4. As letras T, X e Q não podem atrapalhar a escrita.**
+- **Relato:** apertar **T** não deixa escrever; troca para a ferramenta de rasgar.
+- **Causa a confirmar:** o tratamento de teclas do editor ignora campos (`INPUT`, `TEXTAREA`, `SELECT`, `contentEditable`) em `editor.js`, mas as ferramentas e a edição de texto no palco, o Preencher e a mini-barra são partes diferentes da tela. Reproduzir em cada uma: caixa de texto no palco recém-criada por duplo clique, campo do Preencher, nome do documento, busca da Biblioteca e campos da mini-barra. Verificar também o foco logo depois de criar o texto (o `textarea` ainda não recebeu o foco e a tecla cai no `window`).
+- **Correção:**
+  - função única `isTypingTarget(element)` em `src/ui/keymap.js` (campos, `textarea`, `contentEditable`, `[role=textbox]`, e o `textarea` do palco **mesmo antes de receber o foco**, pela marca `data-editing` no palco enquanto a edição está aberta); **todos** os tratadores de atalho usam essa função;
+  - as ferramentas de uma letra só valem com o palco em foco; **com um texto em edição, nenhuma letra é atalho**;
+  - as ferramentas ganham, além da letra, o **alternador pela barra** (já existe) e a dica "T: rasgar" na `title` do botão, para o atalho ser descoberto sem acidente.
+- **Teste:** E2E que cria um texto por duplo clique e digita "Tarde, queimado. Xícara." em seguida (sem esperar), e repete no Preencher, no nome do documento e na busca da Biblioteca; nenhuma ferramenta muda.
+
+**5. B é o pincel.**
+- **Hoje:** `B` abre a **Biblioteca** (atalho global do trilho) e o pincel ficou em `Shift+B`, por conflito.
+- **Novo:**
+  - `tool-brush` passa para **B**, como nos editores de imagem;
+  - a Biblioteca passa para **Shift+B** (e o trilho mostra "⇧B" no `data-key`); a Mesa, Documentos e Modelos continuam em `1`, `D` e `M`;
+  - quem já tinha personalizado essas duas combinações em `settings.shortcuts` **não é sobrescrito**; se a personalização colidir com a nova combinação, o aviso de conflito da Ajuda aparece na próxima abertura.
+- **Atenção:** o texto das lições (`Shift+B` na "Desenhar com o pincel"), a Ajuda, `shortcuts.js`, o teste `tests/shortcuts.test.js` (confere os `data-key` do trilho) e `tests/e2e/draw-tools.test.js` mudam juntos.
+- **Teste:** `keymap.test.js` (nenhum par em conflito depois da troca) e E2E: `b` escolhe o pincel e `Shift+B` abre a Biblioteca.
+
+**Ordem:** 4 (escrita) → 5 (B) → 2 (queima só sobre papel) → 3 (fluidez, com a medição do item 2 já no `perf.test.js`) → 1 (traçado livre). O 4 vem primeiro porque bloqueia o uso normal do editor.
+
 ---
 
 ## Fase C2 · Linha de montagem (sem conteúdo novo)

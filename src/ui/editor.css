@@ -3106,14 +3106,13 @@ body.reduce-motion .library-hover-preview { animation: none; transition: none; }
   position: fixed;
   top: 0;
   left: 0;
-  width: 440px;
-  height: 440px;
+  width: 320px;
+  height: 320px;
   border-radius: 50%;
   pointer-events: none;
   z-index: 11;
-  mix-blend-mode: screen;
-  background: radial-gradient(circle, rgba(255, 150, 50, 0.38) 0%, rgba(255, 110, 20, 0.14) 40%, transparent 70%);
-  animation: flame-glow-flicker 0.4s ease-in-out infinite alternate;
+  will-change: transform;
+  background: radial-gradient(circle, rgba(255, 150, 50, 0.3) 0%, rgba(255, 110, 20, 0.1) 40%, transparent 70%);
 }
 
 @keyframes flame-glow-flicker {

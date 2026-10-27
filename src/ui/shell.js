@@ -1,5 +1,5 @@
 import { escapeHTML as esc, icon as renderIcon } from './icons.js';
-import { matches } from './keymap.js';
+import { matches, isTypingTarget } from './keymap.js';
 import { tape, card } from './primitives.js';
 import { emptyDeskIllustration } from './illustrations.js';
 import { notify } from './notify.js';
@@ -29,7 +29,7 @@ export function createShell(root, { onAction } = {}) {
               ${renderIcon('folder', 20)}
               <span>Documentos</span>
             </button>
-            <button type="button" class="rail-btn" data-action="library" data-tip="Biblioteca" data-key="B" aria-label="Biblioteca">
+            <button type="button" class="rail-btn" data-action="library" data-tip="Biblioteca" data-key="⇧B" aria-label="Biblioteca">
               ${renderIcon('layers', 20)}
               <span>Biblioteca</span>
             </button>
@@ -290,9 +290,7 @@ export function createShell(root, { onAction } = {}) {
       }
     }
 
-    const isEditing =
-      ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) ||
-      document.activeElement?.isContentEditable;
+    const isEditing = isTypingTarget();
     if (isEditing) return;
 
     if (matches(e, 'help')) {

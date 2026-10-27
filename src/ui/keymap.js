@@ -46,6 +46,18 @@ export function canonicalCombo(text) {
   return out.join('+');
 }
 
+/**
+ * True when the key is meant for text: a field, a text area, a contenteditable or the stage's text
+ * box, which is "editing" from the moment it opens even before the browser hands it the focus.
+ */
+export function isTypingTarget(element = typeof document !== 'undefined' ? document.activeElement : null) {
+  if (typeof document !== 'undefined' && document.body?.querySelector?.('[data-editing]')) return true;
+  if (!element) return false;
+  if (['INPUT', 'TEXTAREA', 'SELECT'].includes(element.tagName)) return true;
+  if (element.isContentEditable) return true;
+  return element.getAttribute?.('role') === 'textbox';
+}
+
 function sameScope(a, b) {
   return a === b || a === 'global' || b === 'global';
 }

@@ -92,7 +92,7 @@ test('shortcuts: todos os botões do trilho com data-key estão registrados', as
 
   for (const key of dataKeyMatches) {
     assert.ok(
-      registeredKeys.has(key.toUpperCase()),
+      registeredKeys.has(key.replace('⇧', 'Shift+').toUpperCase()),
       `tecla do trilho "${key}" não está registrada em src/ui/shortcuts.js`
     );
   }

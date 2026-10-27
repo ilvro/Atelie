@@ -75,7 +75,7 @@ test('keymap e2e: change a shortcut in Help, conflicts, reset, Esc cascade, vari
     const ed = window.__atelie.editor;
     ed.state.select(ed.state.handout.layers[0].id);
   });
-  await page.keyboard.press('b'); // library drawer
+  await page.keyboard.press('Shift+B'); // library drawer
   await page.waitForSelector('#app-drawer.open');
   await page.keyboard.press('Escape');
   assert.equal(await page.evaluate(() => window.__atelie.editor.state.selection), null, 'first Esc drops the selection');
@@ -111,7 +111,7 @@ test('keymap e2e: change a shortcut in Help, conflicts, reset, Esc cascade, vari
     const stamp = items.find(i => i.category === 'Carimbos');
     return { id: stamp.id };
   });
-  await page.keyboard.press('b');
+  await page.keyboard.press('Shift+B');
   await page.waitForSelector('.library-item-card');
   await page.click('.filter-chip[data-filter-group="category"][data-filter-value="Carimbos"]');
   const rotations = [];

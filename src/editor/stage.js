@@ -19,6 +19,7 @@ import { createRulers } from './rulers.js';
 import { createSelectionBar } from './selection-bar.js';
 import { createDrawTools } from './draw-tools.js';
 import { createCutTools } from './cut-tools.js';
+import { isTypingTarget } from '../ui/keymap.js';
 import { play, isSoundEnabled } from '../ui/sound.js';
 
 const MIN_ZOOM = 0.1;
@@ -179,6 +180,22 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
     onCut: description => onDraw(description),
     onSound,
     reducedMotion: prefersReducedMotion,
+    // Where is there paper? A small CPU render of the document (reading back the visible GPU canvas stalls for ~half a second).
+    getAlphaMap: () => {
+      try {
+        const k = 0.25;
+        const w = Math.max(1, Math.ceil(currentHandout.page.width * k));
+        const h = Math.max(1, Math.ceil(currentHandout.page.height * k));
+        const small = document.createElement('canvas');
+        small.width = w;
+        small.height = h;
+        renderHandoutSync(small, currentHandout, { scale: k, light: currentLight, loadedImages: lastLoadedImages });
+        const data = small.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, w, h);
+        return { data: data.data, width: w, height: h, k };
+      } catch {
+        return null;
+      }
+    },
   });
 
   const loupe = document.createElement('div');
@@ -411,6 +428,7 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
     if (!layer || layer.kind !== 'text' || layer.locked) return;
 
     editingLayerId = layer.id;
+    container.dataset.editing = 'text';
     updateSelectionOutline();
     scheduleRender(currentHandout);
 
@@ -439,6 +457,7 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
     inlineTextEditor.style.display = 'none';
     const finishedId = editingLayerId;
     editingLayerId = null;
+    delete container.dataset.editing;
 
     if (currentHandout) {
       scheduleRender(currentHandout);
@@ -938,8 +957,7 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
   window.addEventListener('keydown', event => {
     if (
       event.code === 'Space' &&
-      !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) &&
-      !document.activeElement?.isContentEditable
+      !isTypingTarget()
     ) {
       isSpacePressed = true;
       if (!isPanning && viewport) {
@@ -1196,6 +1214,12 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
     },
     isChoosingCut() {
       return cutTools.isChoosing();
+    },
+    cutFrameStats() {
+      return cutTools.frameStats();
+    },
+    clearCutFrameStats() {
+      cutTools.clearStats();
     },
     getTool() {
       return drawTools.tool;

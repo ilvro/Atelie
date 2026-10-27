@@ -100,7 +100,7 @@ test('draw tools e2e: shapes by dragging, brush stroke paints pixels, Shift appe
   assert.equal((await layers()).length, count);
 
   // Brush: a stroke becomes a path layer and paints pixels along it
-  await page.keyboard.press('Shift+B');
+  await page.keyboard.press('b');
   assert.equal(await page.evaluate(() => window.__atelie.editor.stage.getTool()), 'brush');
   const pts = [[400, 900], [480, 940], [560, 900], [640, 950]];
   const screen = [];
