@@ -45,6 +45,7 @@ const CANONICAL_CATEGORIES = [
   'Símbolos',
   'Marcas',
   'Digitais',
+  'Fotografias',
 ];
 
 function sortCategories(categories) {

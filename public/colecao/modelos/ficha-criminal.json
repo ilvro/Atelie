@@ -133,7 +133,9 @@
       "clip": false,
       "light": "both",
       "image": {
-        "src": null,
+        "src": {
+          "library": "casa-foto-retrato-rapaz-cdv"
+        },
         "fit": "cover",
         "crop": null,
         "flipX": false,

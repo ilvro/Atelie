@@ -306,6 +306,13 @@ test('perf e2e: 15-layer A4 open < 400ms, drag at 60fps (< 16.7ms/frame), and id
           light: 'both',
           text: { content: 'Delegado Chefe Titular — Comarca Central', size: 16, font: { family: 'IM Fell English', italic: true } },
         },
+        // Free cuts (phase C1): a torn top, a scissors corner and a burn trail must not slow opening down
+        { id: 'l-cut-1', name: 'Rasgo', kind: 'effect', visible: true, locked: false, x: 0, y: 0, width: 1240, height: 1754, rotation: 0, opacity: 1, blend: 'normal', light: 'both',
+          effect: { type: 'cut', amount: 1, seed: 4, params: { rough: 0.7 }, edge: 'rasgado', remove: [[[0, 0], [1, 0], [1, 0.05], [0, 0.07]]], holes: [], char: 0.5, fiber: 0.6 } },
+        { id: 'l-cut-2', name: 'Corte · tesoura', kind: 'effect', visible: true, locked: false, x: 0, y: 0, width: 1240, height: 1754, rotation: 0, opacity: 1, blend: 'normal', light: 'both',
+          effect: { type: 'cut', amount: 1, seed: 5, params: { rough: 0.5 }, edge: 'tesoura', remove: [[[1, 1], [0.9, 1], [1, 0.93]]], holes: [], char: 0.5, fiber: 0.5 } },
+        { id: 'l-cut-3', name: 'Queimado', kind: 'effect', visible: true, locked: false, x: 0, y: 0, width: 1240, height: 1754, rotation: 0, opacity: 1, blend: 'multiply', light: 'both',
+          effect: { type: 'cut', amount: 1, seed: 6, params: { rough: 0.5 }, edge: 'queimado', remove: [], holes: [[[0.1, 0.9, 20], [0.14, 0.92, 30], [0.2, 0.93, 40]]], char: 0.5, fiber: 0.5 } },
         // 15. Procedural grain layer
         {
           id: 'l-effect-grain',

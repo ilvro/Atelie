@@ -207,7 +207,9 @@
       "clip": false,
       "light": "both",
       "image": {
-        "src": null,
+        "src": {
+          "library": "casa-foto-retrato-homem-bigode-oculos"
+        },
         "fit": "cover",
         "crop": null,
         "flipX": false,

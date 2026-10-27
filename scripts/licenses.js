@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { licensesSection } from './colecao/externos/section.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '..');
@@ -202,7 +203,10 @@ Unless required by applicable law or agreed to in writing, Licensor provides
 the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND.
 \`\`\`
-`;
+
+---
+
+${licensesSection()}`;
 }
 
 // Execução direta como script CLI

@@ -154,24 +154,43 @@ function createPageCanvas(width, height) {
   return c;
 }
 
-function drawCheckerboard(ctx, w, h, scale) {
-  const cellSize = Math.max(8, 16 * scale);
+/**
+ * What the editor stage shows in an empty photo box: a discreet frame with a hint, never the grey checkerboard.
+ * Previews, bakes, exports, the reader and the Tabletop get nothing there (`emptyImage: 'none'`).
+ */
+export function drawEmptyImagePlaceholder(ctx, w, h, scale) {
   ctx.save();
+  ctx.fillStyle = 'rgba(233, 223, 200, 0.08)';
+  ctx.fillRect(-w / 2, -h / 2, w, h);
+  ctx.setLineDash([8 * scale, 6 * scale]);
+  ctx.lineWidth = Math.max(1, 1.5 * scale);
+  ctx.strokeStyle = 'rgba(233, 223, 200, 0.45)';
+  ctx.strokeRect(-w / 2 + ctx.lineWidth, -h / 2 + ctx.lineWidth, w - ctx.lineWidth * 2, h - ctx.lineWidth * 2);
+  ctx.setLineDash([]);
+  const size = Math.max(10, Math.min(w, h) * 0.12);
+  ctx.strokeStyle = 'rgba(233, 223, 200, 0.7)';
+  ctx.fillStyle = 'rgba(233, 223, 200, 0.7)';
+  ctx.lineWidth = Math.max(1, size * 0.08);
+  // photo icon: frame, sun and hill
+  ctx.strokeRect(-size / 2, -size * 0.9, size, size * 0.75);
   ctx.beginPath();
-  ctx.rect(-w / 2, -h / 2, w, h);
-  ctx.clip();
-  for (let y = -h / 2; y < h / 2; y += cellSize) {
-    for (let x = -w / 2; x < w / 2; x += cellSize) {
-      const isEven = (Math.floor((x + w / 2) / cellSize) + Math.floor((y + h / 2) / cellSize)) % 2 === 0;
-      ctx.fillStyle = isEven ? '#808080' : '#969696';
-      ctx.fillRect(x, y, cellSize, cellSize);
-    }
-  }
+  ctx.arc(-size * 0.2, -size * 0.65, size * 0.08, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(-size / 2, -size * 0.2);
+  ctx.lineTo(-size * 0.1, -size * 0.5);
+  ctx.lineTo(size * 0.15, -size * 0.3);
+  ctx.lineTo(size * 0.5, -size * 0.55);
+  ctx.stroke();
+  ctx.font = `${Math.max(9, size * 0.32)}px sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  ctx.fillText('Solte uma foto aqui', 0, size * 0.1);
   ctx.restore();
 }
 
 export function isCutEffect(layer) {
-  return layer?.kind === 'effect' && (layer.effect?.type === 'burn' || layer.effect?.type === 'tear');
+  return layer?.kind === 'effect' && (layer.effect?.type === 'burn' || layer.effect?.type === 'tear' || layer.effect?.type === 'cut');
 }
 
 export function applyCutEffect(targetCtx, layer, pw, ph, scale) {
@@ -206,7 +225,7 @@ export function applyCutEffect(targetCtx, layer, pw, ph, scale) {
   targetCtx.restore();
 }
 
-export function drawLayer(ctx, layer, scale, loadedImages = new Map(), missing = [], warnings = []) {
+export function drawLayer(ctx, layer, scale, loadedImages = new Map(), missing = [], warnings = [], { emptyImage = 'none' } = {}) {
   if (layer.kind === 'adjust') {
     // Adjust layers are handled at the canvas/group composition level
     return;
@@ -318,7 +337,7 @@ export function drawLayer(ctx, layer, scale, loadedImages = new Map(), missing =
       if (layer.image?.src) {
         missing.push(layer.image.src);
       }
-      drawCheckerboard(ctx, w, h, scale);
+      if (emptyImage === 'placeholder') drawEmptyImagePlaceholder(ctx, w, h, scale);
     }
   } else if (layer.kind === 'text') {
     drawTextLayer(ctx, layer, scale);
@@ -357,7 +376,7 @@ function applyAdjustment(sourceCanvas, targetCtx, adjust, scale, opacity = 1) {
 export function renderHandoutSync(
   canvas,
   handout,
-  { scale = 1, light = 'normal', loadedImages = new Map(), missing = [], warnings = [] } = {}
+  { scale = 1, light = 'normal', loadedImages = new Map(), missing = [], warnings = [], emptyImage = 'none' } = {}
 ) {
   const pw = Math.round(handout.page.width * scale);
   const ph = Math.round(handout.page.height * scale);
@@ -413,7 +432,7 @@ export function renderHandoutSync(
         ctx.save();
         ctx.globalAlpha = base.opacity;
         ctx.globalCompositeOperation = canvasOperation(base.blend);
-        drawLayer(ctx, base, scale, loadedImages, missing, warnings);
+        drawLayer(ctx, base, scale, loadedImages, missing, warnings, { emptyImage });
         ctx.restore();
         continue;
       }
@@ -429,7 +448,7 @@ export function renderHandoutSync(
       if (isCutEffect(base)) {
         applyCutEffect(ctx, base, pw, ph, scale);
       }
-      drawLayer(groupCtx, base, scale, loadedImages, missing, warnings);
+      drawLayer(groupCtx, base, scale, loadedImages, missing, warnings, { emptyImage });
       baseCtx.drawImage(groupCanvas, 0, 0);
 
       // 2. Draw each clipped layer
@@ -458,7 +477,7 @@ export function renderHandoutSync(
           if (isCutEffect(clippedLayer)) {
             applyCutEffect(groupCtx, clippedLayer, pw, ph, scale);
           }
-          drawLayer(tempCtx, clippedLayer, scale, loadedImages, missing, warnings);
+          drawLayer(tempCtx, clippedLayer, scale, loadedImages, missing, warnings, { emptyImage });
 
           // Clip by base alpha
           tempCtx.save();
@@ -525,7 +544,7 @@ export function renderHandoutSync(
 export async function renderHandout(
   canvas,
   handout,
-  { scale = 1, light = 'normal', loadImage, loadFont = async () => {}, loadedImages = new Map() } = {}
+  { scale = 1, light = 'normal', loadImage, loadFont = async () => {}, loadedImages = new Map(), emptyImage = 'none' } = {}
 ) {
   const missing = [];
   const warnings = [];
@@ -557,6 +576,6 @@ export async function renderHandout(
 
   await Promise.all([...imagePromises, ...fontPromises]);
 
-  return renderHandoutSync(canvas, handout, { scale, light, loadedImages, missing, warnings });
+  return renderHandoutSync(canvas, handout, { scale, light, loadedImages, missing, warnings, emptyImage });
 }
 

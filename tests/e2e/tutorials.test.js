@@ -94,7 +94,22 @@ for (const lesson of LESSONS) {
               const [chooser] = await Promise.all([page.waitForEvent('filechooser'), page.locator(one[1]).first().click()]);
               await chooser.setFiles(fixtures[one[2]]);
             }
+          } else if (one[0] === 'clickPage' || one[0] === 'hold') {
+            const at = await page.evaluate(([x, y]) => {
+              const rect = document.querySelector('.stage-page-wrap').getBoundingClientRect();
+              const zoom = window.__atelie.editor.stage.getZoom();
+              return { x: rect.left + x * zoom, y: rect.top + y * zoom };
+            }, one[1]);
+            if (one[0] === 'clickPage') {
+              await page.mouse.click(at.x, at.y);
+            } else {
+              await page.mouse.move(at.x, at.y);
+              await page.mouse.down();
+              await page.waitForTimeout(one[2]);
+              await page.mouse.up();
+            }
           } else if (one[0] === 'draw') {
+            if (one[2]?.alt) await page.keyboard.down('Alt');
             const points = await page.evaluate(pts => {
               const rect = document.querySelector('.stage-page-wrap').getBoundingClientRect();
               const zoom = window.__atelie.editor.stage.getZoom();
@@ -104,6 +119,7 @@ for (const lesson of LESSONS) {
             await page.mouse.down();
             for (const p of points.slice(1)) await page.mouse.move(p.x, p.y, { steps: 6 });
             await page.mouse.up();
+            if (one[2]?.alt) await page.keyboard.up('Alt');
           }
         }
         await page.waitForFunction(i => !window.atelieTutor.active || window.atelieTutor.active.step > i, index).catch(() => assert.fail(`${where}: doing the step did not complete it`));

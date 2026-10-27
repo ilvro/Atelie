@@ -367,6 +367,37 @@ export const SHORTCUTS = [
     tokens: ["'tool-line'"],
   },
 
+  {
+    id: 'tool-scissors',
+    scope: 'editor',
+    key: 'X',
+    label: 'Ferramenta: tesoura',
+    description: 'Arrastar uma linha para cortar a folha ou a camada selecionada; Alt faz um laço; Shift usa picote',
+    category: 'Ferramentas',
+    handledIn: ['src/editor/editor.js'],
+    tokens: ["'tool-scissors'"],
+  },
+  {
+    id: 'tool-tear',
+    scope: 'editor',
+    key: 'T',
+    label: 'Ferramenta: rasgar',
+    description: 'Arrastar de borda a borda para rasgar; Alt arranca um canto',
+    category: 'Ferramentas',
+    handledIn: ['src/editor/editor.js'],
+    tokens: ["'tool-tear'"],
+  },
+  {
+    id: 'tool-lighter',
+    scope: 'editor',
+    key: 'Q',
+    label: 'Ferramenta: isqueiro',
+    description: 'Segurar e passar a chama: o fogo avança e queima o papel (Shift acrescenta à queima selecionada)',
+    category: 'Ferramentas',
+    handledIn: ['src/editor/editor.js'],
+    tokens: ["'tool-lighter'"],
+  },
+
   // --- Modo Leitura ---
   {
     id: 'reader-loupe',

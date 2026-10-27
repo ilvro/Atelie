@@ -107,7 +107,9 @@
       "clip": false,
       "light": "both",
       "image": {
-        "src": null,
+        "src": {
+          "library": "casa-foto-mapa-londres-1890"
+        },
         "fit": "cover",
         "crop": null,
         "flipX": false,

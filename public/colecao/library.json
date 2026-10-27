@@ -5377,6 +5377,295 @@
       "fields": [
         "Texto"
       ]
+    },
+    {
+      "id": "casa-foto-retrato-homem-bigode-oculos",
+      "kind": "element",
+      "name": "Retrato · homem de bigode e óculos",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-homem-bigode-oculos.webp",
+      "preview": "previews/casa-foto-retrato-homem-bigode-oculos.webp",
+      "width": 697,
+      "height": 900,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-retrato-rapaz-cdv",
+      "kind": "element",
+      "name": "Retrato · rapaz de cartão de visita",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-rapaz-cdv.webp",
+      "preview": "previews/casa-foto-retrato-rapaz-cdv.webp",
+      "width": 488,
+      "height": 900,
+      "license": "CC0"
+    },
+    {
+      "id": "casa-foto-retrato-senhora-capa",
+      "kind": "element",
+      "name": "Retrato · senhora idosa de capa",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-senhora-capa.webp",
+      "preview": "previews/casa-foto-retrato-senhora-capa.webp",
+      "width": 584,
+      "height": 900,
+      "license": "PD-old-70"
+    },
+    {
+      "id": "casa-foto-retrato-jovem-hussardo",
+      "kind": "element",
+      "name": "Retrato · jovem de uniforme",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-jovem-hussardo.webp",
+      "preview": "previews/casa-foto-retrato-jovem-hussardo.webp",
+      "width": 812,
+      "height": 900,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-retrato-oficial-sabre",
+      "kind": "element",
+      "name": "Retrato · oficial de sabre",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-oficial-sabre.webp",
+      "preview": "previews/casa-foto-retrato-oficial-sabre.webp",
+      "width": 831,
+      "height": 900,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-retrato-mulher-sanfona",
+      "kind": "element",
+      "name": "Retrato · mulher com sanfona",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-mulher-sanfona.webp",
+      "preview": "previews/casa-foto-retrato-mulher-sanfona.webp",
+      "width": 900,
+      "height": 851,
+      "license": "CC0"
+    },
+    {
+      "id": "casa-foto-lugar-rua-torre",
+      "kind": "element",
+      "name": "Lugar · rua com torre de igreja",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-rua-torre.webp",
+      "preview": "previews/casa-foto-lugar-rua-torre.webp",
+      "width": 900,
+      "height": 582,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-fabrica-obra",
+      "kind": "element",
+      "name": "Lugar · fábrica em construção",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-fabrica-obra.webp",
+      "preview": "previews/casa-foto-lugar-fabrica-obra.webp",
+      "width": 900,
+      "height": 770,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-usina-acucar",
+      "kind": "element",
+      "name": "Lugar · usina de açúcar",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-usina-acucar.webp",
+      "preview": "previews/casa-foto-lugar-usina-acucar.webp",
+      "width": 900,
+      "height": 623,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-rio-obra",
+      "kind": "element",
+      "name": "Lugar · rio e obra de fábrica",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-rio-obra.webp",
+      "preview": "previews/casa-foto-lugar-rio-obra.webp",
+      "width": 667,
+      "height": 900,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-casarao-1895",
+      "kind": "element",
+      "name": "Lugar · casarão de fazenda (1895)",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-casarao-1895.webp",
+      "preview": "previews/casa-foto-lugar-casarao-1895.webp",
+      "width": 900,
+      "height": 499,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-aldeia-igreja",
+      "kind": "element",
+      "name": "Lugar · aldeia com igreja",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-aldeia-igreja.webp",
+      "preview": "previews/casa-foto-lugar-aldeia-igreja.webp",
+      "width": 900,
+      "height": 705,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-matriz-coluna",
+      "kind": "element",
+      "name": "Lugar · igreja matriz e coluna",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-matriz-coluna.webp",
+      "preview": "previews/casa-foto-lugar-matriz-coluna.webp",
+      "width": 863,
+      "height": 900,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-mapa-londres-1890",
+      "kind": "element",
+      "name": "Mapa · Londres (1890)",
+      "category": "Fotografias",
+      "subcategory": "Mapas",
+      "tags": [
+        "foto",
+        "mapa",
+        "antigo"
+      ],
+      "file": "fotos/casa-foto-mapa-londres-1890.webp",
+      "preview": "previews/casa-foto-mapa-londres-1890.webp",
+      "width": 900,
+      "height": 690,
+      "license": "PD-old-auto-expired"
+    },
+    {
+      "id": "casa-foto-mapa-fortificacoes-1816",
+      "kind": "element",
+      "name": "Mapa · cidade e fortificações (1816)",
+      "category": "Fotografias",
+      "subcategory": "Mapas",
+      "tags": [
+        "foto",
+        "mapa",
+        "antigo"
+      ],
+      "file": "fotos/casa-foto-mapa-fortificacoes-1816.webp",
+      "preview": "previews/casa-foto-mapa-fortificacoes-1816.webp",
+      "width": 900,
+      "height": 724,
+      "license": "PD-old-100"
+    },
+    {
+      "id": "casa-foto-mapa-amsterda-1835",
+      "kind": "element",
+      "name": "Mapa · Amsterdã (1835)",
+      "category": "Fotografias",
+      "subcategory": "Mapas",
+      "tags": [
+        "foto",
+        "mapa",
+        "antigo"
+      ],
+      "file": "fotos/casa-foto-mapa-amsterda-1835.webp",
+      "preview": "previews/casa-foto-mapa-amsterda-1835.webp",
+      "width": 900,
+      "height": 731,
+      "license": "PD-Art, PD-old"
+    },
+    {
+      "id": "casa-foto-mapa-singapura-1893",
+      "kind": "element",
+      "name": "Mapa · porto colonial (1893)",
+      "category": "Fotografias",
+      "subcategory": "Mapas",
+      "tags": [
+        "foto",
+        "mapa",
+        "antigo"
+      ],
+      "file": "fotos/casa-foto-mapa-singapura-1893.webp",
+      "preview": "previews/casa-foto-mapa-singapura-1893.webp",
+      "width": 900,
+      "height": 698,
+      "license": "PD-old-70"
     }
   ]
 }

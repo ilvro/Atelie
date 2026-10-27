@@ -3093,3 +3093,47 @@ body.reduce-motion .library-hover-preview { animation: none; transition: none; }
     repeating-conic-gradient(rgba(255, 255, 255, 0.1) 0% 25%, rgba(0, 0, 0, 0.18) 0% 50%) 0 0 / 8px 8px,
     var(--at-desk-3);
 }
+
+/* --- Tesoura, rasgar e isqueiro (Fase C1) --- */
+.stage-tool-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 8;
+}
+
+.stage-flame-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 11;
+  mix-blend-mode: screen;
+  background: radial-gradient(circle, rgba(255, 150, 50, 0.38) 0%, rgba(255, 110, 20, 0.14) 40%, transparent 70%);
+  animation: flame-glow-flicker 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes flame-glow-flicker {
+  from { opacity: 0.85; }
+  to { opacity: 1; }
+}
+
+.stage-tool-target { color: var(--at-text); font-weight: 700; }
+.stage-tool-hint { color: var(--at-muted); font-size: 11px; max-width: 280px; }
+
+/* A folha recortada tem sombra que segue o contorno (alfa), e não a caixa */
+.stage-page-wrap.has-cut {
+  background: transparent;
+  box-shadow: none;
+}
+
+.stage-page-wrap.has-cut .stage-canvas {
+  filter:
+    drop-shadow(var(--page-shadow-x) calc(6px + 14px * var(--page-lift)) calc(9px + 17px * var(--page-lift)) rgba(0, 0, 0, var(--page-shadow-alpha)));
+}
+
+body.reduce-motion .stage-flame-glow { display: none; }
+@media (prefers-reduced-motion: reduce) { .stage-flame-glow { display: none; } }

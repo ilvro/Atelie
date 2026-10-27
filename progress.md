@@ -202,6 +202,40 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ---
 
+## Coleção ampliada · Fase C0 (fotos de verdade)
+
+### Feito
+- **Fotos no projeto:** `scripts/colecao/externos/fetch.js` + `externos.lock.json` (origem, autor, licença, SHA-256 do original e do arquivo gravado, recorte em frações). Fluxo: baixa para `.cache/externos/` (fora do git), confere o hash, recorta, passa para P&B neutro, lado maior 900 px, WebP 80, grava em `public/colecao/fotos/` e em `library.json` (categoria "Fotografias", subcategorias Retratos, Lugares e Mapas). `--lock` registra hashes novos, `--verify` só confere (sem rede). Seção "Material de terceiros (CC0 e domínio público)" gerada em `docs/LICENCAS.md` por `scripts/licenses.js`.
+- **17 fotos** (6 retratos, 7 lugares, 4 mapas), 2,2 MB: Wikimedia Commons com CC0 (Rijksmuseum, Met), `PD-1923`/`PD-US-expired` (Fortepan) e `PD-old-70`/`PD-old-100`.
+- **Os 8 modelos** com `src: null` agora usam fotos diferentes (postal, jornal ×2, ficha criminal, internação, mapa rasgado, procurado, polaroide); prévias e folha de contato regeradas, sem xadrez.
+- **`emptyImage: 'placeholder' | 'none'`** em `drawLayer` e nos renders (padrão `'none'`): só o palco do editor mostra o quadro tracejado "Solte uma foto aqui"; prévia, assado, exportação, Leitura e Tabletop não desenham nada.
+- **Auditoria:** `tests/colecao-templates.test.js` falha com camada de imagem vazia (sem `allowEmpty`), foto ligada que não existe, lock com licença/hash errados e coleção acima de 60 MB.
+
+### Pendências reais
+- O plano pedia 44 fotos (24 retratos, 16 lugares, 4 mapas); entraram 17. A busca por retratos de estúdio de pessoas não identificadas, com licença verificável e busto utilizável, rendeu pouco por meio da API do Commons. Faltam 18 retratos e 9 lugares; as fontes seguintes da ordem do plano (Smithsonian, Met, LoC, NYPL) ainda não foram usadas.
+- Lugares e mapas são principalmente húngaros e europeus (Fortepan); os textos dos modelos falam de cidades brasileiras. Vale trocar por fotos do Brasil quando houver.
+
+---
+
+## Coleção ampliada · Fase C1 (tesoura, isqueiro e rasgar)
+
+### Feito
+- **Modelo:** `effect.type: 'cut'` (`src/domain/cut.js`): `edge` (tesoura, picote, rasgado, queimado), `remove` (contornos 0–1 da caixa, regra par-ímpar), `holes` (trilhas `[x, y, raio em px]`), `seed`, `char`, `fiber`, `params.rough`. Validação com limites (20 000 pontos, raio, seed inteiro). `burn` e `tear` ficam como estavam.
+- **Geometria pura e testada:** `splitByLine` (divide a folha e devolve as duas partes e as áreas), laço invertido, canto arrancado, `flameRadius` (o fogo cresce com o tempo até um máximo), `pointToUnit` (camada girada), `cutHash`.
+- **Render:** `drawFreeCutMask` e `drawCutOverlay` em `handout-effects.js`: bordas distintas por tipo (ondulação de ±0,6 px, zigue-zague do picote, ruído em duas escalas mais fibra clara no rasgo, faixa preto/marrom/tostado na queima), máscara e sobreposição em cache por hash e determinísticas pela semente. O assado já grava alfa.
+- **Ferramentas** (barra e atalhos X, T, Q): tesoura (linha com escolha da parte por clique ou Enter, Esc cancela; Alt = laço; Shift/opção = picote), rasgar (borda mais áspera e mais fibra quanto mais rápido o gesto; Alt = canto arrancado) e isqueiro (segurar faz o furo crescer, passar deixa trilha, Shift acrescenta à queima selecionada). Cada gesto vira uma camada ("Corte · tesoura", "Rasgo", "Queimado"), presa à camada selecionada ou no topo da folha; faixa de opções com "Cortando: …".
+- **Sensação:** chama em canvas sobreposto que tremula e se inclina, brasas, fumaça e luz quente em `screen`; tesoura tracejada que acompanha o cursor; sons sintetizados `scissors`, `paper-tear`, `lighter` e `burn` (crepitar em laço). Tudo some com `reduce-motion`.
+- **Propriedades** da camada de corte (borda, aspereza, tostado, fibra, variação) e sombra da folha que segue o alfa (`has-cut`).
+- **Tutorial** "Rasgar, cortar e queimar" (entra no relatório de cobertura).
+- **Testes:** `tests/cut.test.js` (geometria, validação, determinismo) e `tests/e2e/cut-tools.test.js` (rasgar e escolher a parte, desfazer, ocultar, laço só na camada, isqueiro, sem brilho com reduce-motion); `perf.test.js` com 3 camadas de corte abre em ~371 ms.
+
+### Pendências reais
+- **Tabletop (parar e perguntar, como manda o plano):** em `Tabletop/src/render/page-textures.js`, o papel `design` devolve `torn = false` e por isso não usa `alphaTest`; uma folha recortada (PNG com alfa) chegaria **com fundo**. A correção é do lado do Tabletop (detectar alfa no PNG assado ou receber um indicador no contrato) e não foi feita.
+- A chama e a trilha começam dentro da folha: começar **fora** da folha para queimar a partir da borda ainda não é capturado (o gesto só nasce sobre a página).
+- A sombra pelo alfa só vale no editor; a Leitura ainda usa a caixa.
+
+---
+
 ## Refinamento Visual e Ergonomia de UI
 
 ### Feito

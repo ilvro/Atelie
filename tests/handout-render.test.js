@@ -131,3 +131,36 @@ test('visibleIn correctly respects visibility and light modes', () => {
   assert.equal(visibleIn(uvOnly, 'uv'), true);
 });
 
+
+function recordingContext() {
+  const calls = [];
+  const ctx = new Proxy({}, {
+    get(target, prop) {
+      if (prop === 'calls') return calls;
+      if (prop in target) return target[prop];
+      return (...args) => { calls.push([String(prop), ...args]); };
+    },
+    set(target, prop, value) { target[prop] = value; return true; },
+  });
+  return ctx;
+}
+
+test('empty photo boxes: nothing is drawn by default, the editor stage gets a discreet placeholder, never a checkerboard', async () => {
+  const { drawLayer } = await import('../src/render/handout-render.js');
+  const layer = { id: 'f', kind: 'image', x: 0, y: 0, width: 200, height: 100, rotation: 0, opacity: 1, image: { src: null, fit: 'cover' } };
+
+  const none = recordingContext();
+  drawLayer(none, layer, 1);
+  assert.equal(none.calls.some(([name]) => ['fillRect', 'strokeRect', 'fillText'].includes(name)), false, 'default draws nothing');
+
+  const explicit = recordingContext();
+  drawLayer(explicit, layer, 1, new Map(), [], [], { emptyImage: 'none' });
+  assert.equal(explicit.calls.some(([name]) => ['fillRect', 'strokeRect', 'fillText'].includes(name)), false);
+
+  const placeholder = recordingContext();
+  drawLayer(placeholder, layer, 1, new Map(), [], [], { emptyImage: 'placeholder' });
+  assert.ok(placeholder.calls.some(([name]) => name === 'strokeRect'), 'dashed frame');
+  assert.ok(placeholder.calls.some(([name, text]) => name === 'fillText' && /Solte uma foto/.test(text)), 'hint text');
+  const squares = placeholder.calls.filter(([name]) => name === 'fillRect');
+  assert.equal(squares.length, 1, 'one soft fill, not a checkerboard of cells');
+});

@@ -1,5 +1,6 @@
 import { ValidationError } from './errors.js';
 import { pointsError } from './brush.js';
+import { cutError } from './cut.js';
 
 export const HANDOUT_LIMITS = {
   layers: 200,
@@ -728,13 +729,17 @@ export function validateHandout(value) {
       }
     } else if (layer.kind === 'effect') {
       const eff = layer.effect;
-      const effectTypes = ['crumple', 'fold', 'stain', 'burn', 'tear', 'damp', 'fade', 'blood', 'grain'];
+      const effectTypes = ['crumple', 'fold', 'stain', 'burn', 'tear', 'damp', 'fade', 'blood', 'grain', 'cut'];
       if (!effectTypes.includes(eff.type)) fail(`${path}.effect.type`, 'Tipo de efeito inválido.');
       if (!Number.isInteger(eff.seed)) fail(`${path}.effect.seed`, 'seed deve ser inteiro.');
       if (typeof eff.amount !== 'number' || eff.amount < 0 || eff.amount > 1) {
         fail(`${path}.effect.amount`, 'amount deve estar entre 0 e 1.');
       }
       if (!isPlainObject(eff.params)) fail(`${path}.effect.params`, 'params deve ser um objeto.');
+      if (eff.type === 'cut') {
+        const problem = cutError(eff, value.page.width, value.page.height);
+        if (problem) fail(`${path}.effect`, problem);
+      }
     }
   });
 

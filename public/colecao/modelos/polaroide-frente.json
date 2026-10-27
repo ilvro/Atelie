@@ -59,7 +59,9 @@
       "clip": false,
       "light": "both",
       "image": {
-        "src": null,
+        "src": {
+          "library": "casa-foto-lugar-casarao-1895"
+        },
         "fit": "cover",
         "crop": null,
         "flipX": false,

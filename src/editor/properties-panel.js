@@ -218,8 +218,8 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
       }
     } else if (path === 'effect.params.smear') {
       parsed = Boolean(rawValue);
-    } else if (path.endsWith('.depth')) {
-      parsed = (Number(rawValue) || 0) / 100;
+    } else if (path.endsWith('.depth') || ['effect.char', 'effect.fiber', 'effect.params.rough'].includes(path)) {
+      parsed = Math.max(0, Math.min(100, Number(rawValue) || 0)) / 100;
     } else if (['effect.seed', 'effect.params.creases', 'effect.params.horizontal', 'effect.params.vertical', 'effect.params.count', 'effect.params.drops', 'effect.params.size'].includes(path)) {
       parsed = Number(rawValue) || 0;
     } else if (path === 'opacity') {
@@ -671,6 +671,13 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
               ${colorField('h:effect.params.color', 'Cor do café', p.color || '#7a4a1e')}
               ${renderColorSwatchesHTML('h:effect.params.color')}
             `;
+          case 'cut':
+            return `
+              ${choiceField('h:effect.edge', 'Borda', layer.effect.edge || 'tesoura', [['tesoura', 'Tesoura'], ['picote', 'Picote'], ['rasgado', 'Rasgada'], ['queimado', 'Queimada']], { disabled: locked })}
+              ${numberField('h:effect.params.rough', 'Aspereza · %', Math.round((p.rough ?? 0.5) * 100), { min: 0, max: 100, step: 5, disabled: locked })}
+              ${numberField('h:effect.char', 'Tostado · %', Math.round((layer.effect.char ?? 0.5) * 100), { min: 0, max: 100, step: 5, disabled: locked })}
+              ${numberField('h:effect.fiber', 'Fibra · %', Math.round((layer.effect.fiber ?? 0.5) * 100), { min: 0, max: 100, step: 5, disabled: locked })}
+            `;
           case 'burn':
             return numberField('h:effect.params.depth', 'Profundidade · %', Math.round((p.depth ?? 0.08) * 100), { min: 1, max: 35, step: 1, disabled: locked });
           case 'tear':
@@ -713,6 +720,7 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
           <label class="field">
             <span class="field-label">Tipo de efeito</span>
             <select data-field="h:effect.type" ${stateAttr}>
+              ${eff.type === 'cut' ? '<option value="cut" selected>Corte (tesoura, rasgo, queima)</option>' : ''}
               ${EFFECTS.map(([id, name]) => `<option value="${esc(id)}" ${eff.type === id ? 'selected' : ''}>${esc(name)}</option>`).join('')}
             </select>
           </label>

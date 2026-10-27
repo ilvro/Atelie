@@ -518,6 +518,128 @@ function synthTapeTear(ctx, destination, vol = 1) {
   noise.stop(t + 0.13);
 }
 
+/** Two blades closing: a short bright snip. */
+function synthScissors(ctx, destination, vol = 1) {
+  const t = ctx.currentTime;
+  const noise = ctx.createBufferSource();
+  noise.buffer = getNoiseBuffer(ctx);
+  const filter = ctx.createBiquadFilter();
+  filter.type = 'highpass';
+  filter.frequency.setValueAtTime(2600 + Math.random() * 900, t);
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(0.0001, t);
+  gain.gain.linearRampToValueAtTime(0.22 * vol, t + 0.004);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+  noise.connect(filter);
+  filter.connect(gain);
+  gain.connect(destination);
+  noise.start(t);
+  noise.stop(t + 0.06);
+}
+
+/** Paper tearing: filtered noise whose length follows the speed of the gesture (px/s). */
+function synthPaperTear(ctx, destination, speed = 600, vol = 1) {
+  const t = ctx.currentTime;
+  const length = Math.max(0.12, Math.min(0.6, 380 / Math.max(120, speed)));
+  const noise = ctx.createBufferSource();
+  noise.buffer = getNoiseBuffer(ctx);
+  noise.loop = true;
+  const filter = ctx.createBiquadFilter();
+  filter.type = 'bandpass';
+  filter.frequency.setValueAtTime(1100, t);
+  filter.frequency.exponentialRampToValueAtTime(2800, t + length);
+  filter.Q.setValueAtTime(0.9, t);
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(0.0001, t);
+  gain.gain.linearRampToValueAtTime(0.26 * vol, t + 0.02);
+  gain.gain.setValueAtTime(0.26 * vol, t + length * 0.6);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + length);
+  noise.connect(filter);
+  filter.connect(gain);
+  gain.connect(destination);
+  noise.start(t);
+  noise.stop(t + length + 0.02);
+}
+
+/** A flint wheel and the hiss of the flame catching. */
+function synthLighter(ctx, destination, vol = 1) {
+  const t = ctx.currentTime;
+  const click = ctx.createOscillator();
+  click.type = 'square';
+  click.frequency.setValueAtTime(3100, t);
+  click.frequency.exponentialRampToValueAtTime(900, t + 0.018);
+  const clickGain = ctx.createGain();
+  clickGain.gain.setValueAtTime(0.2 * vol, t);
+  clickGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.03);
+  click.connect(clickGain);
+  clickGain.connect(destination);
+  click.start(t);
+  click.stop(t + 0.04);
+
+  const hiss = ctx.createBufferSource();
+  hiss.buffer = getNoiseBuffer(ctx);
+  const filter = ctx.createBiquadFilter();
+  filter.type = 'highpass';
+  filter.frequency.setValueAtTime(2200, t);
+  const hissGain = ctx.createGain();
+  hissGain.gain.setValueAtTime(0.0001, t + 0.03);
+  hissGain.gain.linearRampToValueAtTime(0.1 * vol, t + 0.06);
+  hissGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.28);
+  hiss.connect(filter);
+  filter.connect(hissGain);
+  hissGain.connect(destination);
+  hiss.start(t + 0.03);
+  hiss.stop(t + 0.3);
+}
+
+let burnNode = null;
+
+/** Crackling while the flame is over the paper; stopped on release. */
+function startBurnLoop() {
+  if (burnNode || !audioCtx || !masterGain) return;
+  try {
+    const t = audioCtx.currentTime;
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = getNoiseBuffer(audioCtx);
+    noise.loop = true;
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(1800, t);
+    filter.Q.setValueAtTime(0.7, t);
+    const gain = audioCtx.createGain();
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.linearRampToValueAtTime(0.05, t + 0.2);
+    const lfo = audioCtx.createOscillator();
+    lfo.type = 'sawtooth';
+    lfo.frequency.setValueAtTime(11, t);
+    const depth = audioCtx.createGain();
+    depth.gain.setValueAtTime(0.03, t);
+    lfo.connect(depth);
+    depth.connect(gain.gain);
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(masterGain);
+    noise.start(t);
+    lfo.start(t);
+    burnNode = { noise, lfo, gain };
+  } catch (err) {
+    console.warn('[atelie:sound] Erro ao iniciar crepitar:', err);
+  }
+}
+
+function stopBurnLoop() {
+  if (!burnNode || !audioCtx) return;
+  const { noise, lfo, gain } = burnNode;
+  burnNode = null;
+  try {
+    gain.gain.cancelScheduledValues(audioCtx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 0.12);
+    setTimeout(() => {
+      try { noise.stop(); lfo.stop(); noise.disconnect(); lfo.disconnect(); } catch {}
+    }, 140);
+  } catch {}
+}
+
 function synthPaperSlide(ctx, destination, vol = 1) {
   const t = ctx.currentTime;
   const noise = ctx.createBufferSource();
@@ -745,7 +867,7 @@ let inWindowPlay = false;
 
 /**
  * Main public playback function.
- * @param {'type'|'stamp'|'tape'|'paper-slide'|'slide'|'uv-toggle'|'archive'|'delete'|'crumple'|'undo'} name
+ * @param {'type'|'stamp'|'tape'|'paper-slide'|'slide'|'uv-toggle'|'archive'|'delete'|'crumple'|'undo'|'scissors'|'paper-tear'|'lighter'|'burn'} name
  * @param {object} [options]
  * @returns {boolean} Whether sound was synthesized
  */
@@ -844,6 +966,22 @@ export function play(name, options = {}) {
         }
         return true;
       }
+
+      case 'scissors':
+        synthScissors(ctx, masterGain);
+        return true;
+
+      case 'paper-tear':
+        synthPaperTear(ctx, masterGain, options.speed);
+        return true;
+
+      case 'lighter':
+        synthLighter(ctx, masterGain);
+        return true;
+
+      case 'burn':
+        if (options.on === false) stopBurnLoop(); else startBurnLoop();
+        return true;
 
       case 'light-switch': {
         synthLightSwitch(ctx, masterGain, options.mode || 'lamp');

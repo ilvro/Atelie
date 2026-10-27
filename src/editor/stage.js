@@ -18,6 +18,7 @@ import { updateLayer, canvasOperation, isPaperLayer } from '../domain/handouts.j
 import { createRulers } from './rulers.js';
 import { createSelectionBar } from './selection-bar.js';
 import { createDrawTools } from './draw-tools.js';
+import { createCutTools } from './cut-tools.js';
 import { play, isSoundEnabled } from '../ui/sound.js';
 
 const MIN_ZOOM = 0.1;
@@ -64,7 +65,7 @@ function getHandleCursor(handle, rotation = 0) {
   }
 }
 
-export function createStage(container, { images, fonts, api, onSelect = () => {}, onEdit = () => {}, onMore = () => {}, onCreateTextAt = () => {}, onDraw = () => {}, onToolChange = () => {}, shortcutLabel = () => '' } = {}) {
+export function createStage(container, { images, fonts, api, onSelect = () => {}, onEdit = () => {}, onMore = () => {}, onCreateTextAt = () => {}, onDraw = () => {}, onSound = () => {}, onToolChange = () => {}, shortcutLabel = () => '' } = {}) {
   let currentHandout = null;
   let currentLight = 'normal';
   let currentZoom = 0.6;
@@ -154,10 +155,30 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
     onDraw,
     onToolChange: (tool) => {
       activeToolId = tool;
+      try { cutTools.reset(); } catch { /* not built yet */ }
       updateSelectionOutline();
       onToolChange(tool);
     },
     shortcutLabel,
+  });
+
+  /** What the cutting tools cut: the selected layer (clipped to it), otherwise the whole sheet. */
+  function cutTarget() {
+    const layer = currentHandout?.layers.find(l => l.id === selectedLayerId);
+    if (!layer || layer.kind === 'adjust' || (layer.kind === 'effect' && layer.effect?.type === 'cut') || layer.locked) return null;
+    return { id: layer.id, name: layer.name, x: layer.x, y: layer.y, width: layer.width, height: layer.height, rotation: layer.rotation || 0 };
+  }
+
+  const cutTools = createCutTools({
+    pageWrap,
+    getZoom: () => currentZoom,
+    getHandout: () => currentHandout,
+    getTool: () => drawTools.tool,
+    getOptions: () => drawTools.options,
+    getTarget: cutTarget,
+    onCut: description => onDraw(description),
+    onSound,
+    reducedMotion: prefersReducedMotion,
   });
 
   const loupe = document.createElement('div');
@@ -191,6 +212,7 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
   let activeToolId = 'select';
 
   function updateSelectionOutline() {
+    try { drawTools.setTargetLabel(cutTarget()?.name || 'a folha'); } catch { /* the tools are still being built */ }
     if (!currentHandout || !selectedLayerId || editingLayerId || activeToolId !== 'select') {
       outline.style.display = 'none';
       selectionBar.hide();
@@ -283,8 +305,10 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
       loadImage: images?.load,
       loadFont: fonts?.load,
       loadedImages: lastLoadedImages,
+      emptyImage: 'placeholder',
     });
 
+    pageWrap.classList.toggle('has-cut', handout.layers.some(l => l.kind === 'effect' && l.visible && l.effect?.type === 'cut'));
     updateSelectionOutline();
     rulers.draw();
   }
@@ -550,7 +574,7 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
         l.visible && (
           (l.blend && l.blend !== 'normal') ||
           l.kind === 'adjust' ||
-          (l.kind === 'effect' && (l.effect?.type === 'burn' || l.effect?.type === 'tear'))
+          (l.kind === 'effect' && (l.effect?.type === 'burn' || l.effect?.type === 'tear' || l.effect?.type === 'cut'))
         )
       );
 
@@ -581,6 +605,7 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
           scale,
           light: currentLight,
           loadedImages: lastLoadedImages,
+          emptyImage: 'placeholder',
         });
       }
       if (aboveCanvas) {
@@ -588,6 +613,7 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
           scale,
           light: currentLight,
           loadedImages: lastLoadedImages,
+          emptyImage: 'placeholder',
         });
       }
 
@@ -648,7 +674,7 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
         ctx.save();
         ctx.globalAlpha = movingLayer.opacity ?? 1;
         ctx.globalCompositeOperation = canvasOperation(movingLayer.blend);
-        drawLayer(ctx, movingLayer, scale, lastLoadedImages, [], []);
+        drawLayer(ctx, movingLayer, scale, lastLoadedImages, [], [], { emptyImage: 'placeholder' });
         ctx.restore();
 
         // 3. Above k
@@ -661,7 +687,7 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
             ctx.save();
             ctx.globalAlpha = l.opacity ?? 1;
             ctx.globalCompositeOperation = canvasOperation(l.blend);
-            drawLayer(ctx, l, scale, lastLoadedImages, [], []);
+            drawLayer(ctx, l, scale, lastLoadedImages, [], [], { emptyImage: 'placeholder' });
             ctx.restore();
           }
         }
@@ -673,7 +699,7 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
 
       if (!dragCache?.belowCanvas && isFastDrag) {
         const dpr = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1;
-        renderHandoutSync(canvas, currentHandout, { scale: currentZoom * dpr, light: currentLight, loadedImages: lastLoadedImages });
+        renderHandoutSync(canvas, currentHandout, { scale: currentZoom * dpr, light: currentLight, loadedImages: lastLoadedImages, emptyImage: 'placeholder' });
         updateSelectionOutlineForBox(finalBox);
       }
 
@@ -1167,6 +1193,9 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
     },
     setTool(tool) {
       drawTools.setTool(tool);
+    },
+    isChoosingCut() {
+      return cutTools.isChoosing();
     },
     getTool() {
       return drawTools.tool;

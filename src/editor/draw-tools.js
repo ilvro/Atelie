@@ -8,10 +8,15 @@ export const TOOLS = [
   { id: 'rect', label: 'Retângulo', icon: 'rect', shortcut: 'tool-rect' },
   { id: 'ellipse', label: 'Elipse', icon: 'ellipse', shortcut: 'tool-ellipse' },
   { id: 'line', label: 'Linha', icon: 'line', shortcut: 'tool-line' },
+  { id: 'scissors', label: 'Tesoura', icon: 'scissors', shortcut: 'tool-scissors' },
+  { id: 'tear', label: 'Rasgar', icon: 'tear', shortcut: 'tool-tear' },
+  { id: 'lighter', label: 'Isqueiro', icon: 'lighter', shortcut: 'tool-lighter' },
 ];
 
+const CUT_IDS = new Set(['scissors', 'tear', 'lighter']);
+
 const OPTIONS_KEY = 'atelie-tool-options';
-const DEFAULT_OPTIONS = { color: '#1d1b24', width: 6, opacity: 100, fill: false };
+const DEFAULT_OPTIONS = { color: '#1d1b24', width: 6, opacity: 100, fill: false, picote: false, rough: 50, flame: 14, speed: 100, char: 50 };
 
 function loadOptions() {
   try {
@@ -66,6 +71,7 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
   let tool = 'select';
   const options = loadOptions();
   let gesture = null;
+  let targetLabel = 'a folha';
 
   const bar = document.createElement('div');
   bar.className = 'stage-tools';
@@ -95,6 +101,16 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
     }
     const canFill = tool === 'rect' || tool === 'ellipse';
     strip.style.display = 'flex';
+    if (CUT_IDS.has(tool)) {
+      const target = `<span class="stage-tool-target" data-cut-target>Cortando: ${targetLabel}</span>`;
+      const range = (key, label, min, max, step) => `<label class="stage-tool-field" title="${label}"><span>${label}</span><input type="range" data-option="${key}" min="${min}" max="${max}" step="${step}" value="${options[key]}" /></label>`;
+      strip.innerHTML = target + ({
+        scissors: `<label class="stage-tool-field"><input type="checkbox" data-option="picote" ${options.picote ? 'checked' : ''} /><span>Picote</span></label><span class="stage-tool-hint">Arraste uma linha · Alt: laço · Enter aceita · Esc cancela</span>`,
+        tear: `${range('rough', 'Aspereza', 5, 100, 5)}<span class="stage-tool-hint">Arraste de borda a borda · Alt: arrancar um canto</span>`,
+        lighter: `${range('flame', 'Chama', 6, 40, 1)}${range('speed', 'Fogo', 20, 200, 10)}${range('char', 'Tostado', 0, 100, 5)}<span class="stage-tool-hint">Segure e passe · Shift: acrescentar à queima</span>`,
+      }[tool]);
+      return;
+    }
     strip.innerHTML = `
       <label class="stage-tool-field" title="Cor"><span>Cor</span><input type="color" data-option="color" value="${options.color}" /></label>
       <label class="stage-tool-field" title="Espessura"><span>Espessura</span><input type="number" data-option="width" min="1" max="200" step="1" value="${options.width}" /></label>
@@ -111,9 +127,14 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
     const el = e.target.closest('[data-option]');
     if (!el) return;
     const key = el.dataset.option;
-    if (key === 'fill') options.fill = el.checked;
+    if (key === 'fill' || key === 'picote') options[key] = el.checked;
     else if (key === 'color') options.color = el.value;
-    else options[key] = Math.max(Number(el.min) || 1, Math.min(Number(el.max) || 200, Number(el.value) || 1));
+    else {
+      const min = Number.isFinite(parseFloat(el.min)) ? parseFloat(el.min) : 1;
+      const max = Number.isFinite(parseFloat(el.max)) ? parseFloat(el.max) : 200;
+      const value = parseFloat(el.value);
+      options[key] = Math.max(min, Math.min(max, Number.isFinite(value) ? value : min));
+    }
     if (key === 'opacity') strip.querySelector('output').textContent = `${options.opacity}%`;
     persist();
   });
@@ -203,7 +224,7 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
   }
 
   pageWrap.addEventListener('pointerdown', (event) => {
-    if (tool === 'select' || event.button !== 0 || !getHandout()) return;
+    if (tool === 'select' || CUT_IDS.has(tool) || event.button !== 0 || !getHandout()) return;
     if (event.target.closest('.stage-selection-bar, .stage-inline-text-editor')) return;
     event.preventDefault();
     event.stopPropagation();
@@ -261,5 +282,11 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
     setTool,
     refreshLabels: renderBar,
     isDrawing: () => Boolean(gesture),
+    /** Names what the cutting tools will cut ("Foto 3x4" or "a folha"). */
+    setTargetLabel(label) {
+      targetLabel = label;
+      const el = strip.querySelector('[data-cut-target]');
+      if (el) el.textContent = `Cortando: ${label}`;
+    },
   };
 }

@@ -87,7 +87,7 @@ O acervo artístico público do Ateliê distribuído em `public/colecao/` é com
 
 - **Papéis procedurais (48 arquivos WebP em 3 idades)**: gerados por algoritmos puros em código (`src/domain/noise.js` e `scripts/colecao/papers.js`).
 - **Texturas de sobreposição (53 arquivos WebP com canal alfa)**: manchas de café, umidade, sangue oxidado, poeira, marcas queimadas, relevos de amassados, dobras e impressões digitais.
-- **Elementos vetoriais (241 itens em SVG)**: carimbos burocráticos, marcas periciais, selos consulares, grampos, clipes, fitas adesivas transparentes e fita crepe.
+- **Elementos vetoriais (258 itens em SVG)**: carimbos burocráticos, marcas periciais, selos consulares, grampos, clipes, fitas adesivas transparentes e fita crepe.
 - **Modelos de documentos (39 modelos estruturados em JSON)**: cartas de época, telegramas, certidões, boletins de ocorrência, fichas de investigação, recortes de jornal, polaroides e laudos.
 
 ### Licença dos Ativos da Coleção da Casa
@@ -187,3 +187,29 @@ Unless required by applicable law or agreed to in writing, Licensor provides
 the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND.
 ```
+
+---
+
+## Material de terceiros (CC0 e domínio público)
+
+Fotografias e mapas da coleção da casa vêm de arquivos em domínio público ou CC0. Cada arquivo é recortado, passado para preto e branco e reduzido para 900 px; o original, o autor e a licença ficam registrados em `scripts/colecao/externos/externos.lock.json` (com SHA-256).
+
+| Id | Item | Autor | Licença | Origem | SHA-256 (início) |
+|---|---|---|---|---|---|
+| `casa-foto-retrato-homem-bigode-oculos` | Retrato · homem de bigode e óculos | Fortepan, ID 12462 (doadores no site) | PD-1923, PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:Man,_moustache,_portrait,_glasses,_studio_Fortepan_12462.jpg) | `03f9574609e6` |
+| `casa-foto-retrato-rapaz-cdv` | Retrato · rapaz de cartão de visita | Rijksmuseum | CC0 | [página](https://commons.wikimedia.org/wiki/File:Portret_jonge_man,_RP-F-F23596.jpg) | `91acc456da88` |
+| `casa-foto-retrato-senhora-capa` | Retrato · senhora idosa de capa | desconhecido | PD-old-70 | [página](https://commons.wikimedia.org/wiki/File:Unknown_CDV_002.jpg) | `b8ce492332c9` |
+| `casa-foto-retrato-jovem-hussardo` | Retrato · jovem de uniforme | Fortepan, ID 4346 (doadores no site) | PD-1923, PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:Portrait,_man,_uniform,_studio,_sword_Fortepan_4346.jpg) | `bf264ea477f7` |
+| `casa-foto-retrato-oficial-sabre` | Retrato · oficial de sabre | Fortepan, ID 4345 (doadores no site) | PD-1923, PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:Portrait,_man,_uniform,_studio,_sword,_medal_Fortepan_4345.jpg) | `f07b1ab1ea8e` |
+| `casa-foto-retrato-mulher-sanfona` | Retrato · mulher com sanfona | desconhecido | CC0 | [página](https://commons.wikimedia.org/wiki/File:Woman_Holding_an_Accordion_tintype_MET_DP224725.jpg) | `bfdf4a10984e` |
+| `casa-foto-lugar-rua-torre` | Lugar · rua com torre de igreja | Fortepan, ID 19062 (doadores no site) | PD-1923, PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:K%C3%B3rh%C3%A1z_utca_a_K%C3%B3rh%C3%A1z_templommal_%C3%A9s_az_Erzs%C3%A9bet_ap%C3%A1c%C3%A1k_templom%C3%A1val._Fortepan_19062.jpg) | `31922b4644a5` |
+| `casa-foto-lugar-fabrica-obra` | Lugar · fábrica em construção | Fortepan, ID 18172 (doadores no site) | PD-1923, PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:Picture,_factory,_construction_Fortepan_18172.jpg) | `468db2425154` |
+| `casa-foto-lugar-usina-acucar` | Lugar · usina de açúcar | Fortepan, ID 86695 (doadores no site) | PD-1923, PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:B%C3%BCk_1911,_cukorgy%C3%A1r._Fortepan_86695.jpg) | `6e5a547e581d` |
+| `casa-foto-lugar-rio-obra` | Lugar · rio e obra de fábrica | Fortepan, ID 84774 (doadores no site) | PD-1923, PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:B%C3%A9ga_foly%C3%B3_az_olajgy%C3%A1r_%C3%A9p%C3%ADtkez%C3%A9s%C3%A9n%C3%A9l._Fortepan_84774.jpg) | `aa3b46fca41c` |
+| `casa-foto-lugar-casarao-1895` | Lugar · casarão de fazenda (1895) | Fortepan, ID 83440 (doadores no site) | PD-1923, PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:Abony,_Vigy%C3%A1z%C3%B3_Antal_f%C3%B6ldbirtokos_kast%C3%A9ly%C3%A1nak_el%C3%B6ln%C3%A9zete._A_felv%C3%A9tel_1895-1899_k%C3%B6z%C3%B6tt_k%C3%A9sz%C3%BClt._-_Fortepan_83440.jpg) | `bf51c388bf23` |
+| `casa-foto-lugar-aldeia-igreja` | Lugar · aldeia com igreja | Fortepan, ID 82678 (doadores no site) | PD-1923, PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:Hungary,_Budapest_XIV._Fortepan_82678.jpg) | `1d415c7056b7` |
+| `casa-foto-lugar-matriz-coluna` | Lugar · igreja matriz e coluna | Fortepan, ID 86777 (doadores no site) | PD-1923, PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:Pl%C3%A9b%C3%A1niatemplom,_el%C5%91tte_a_M%C3%A1ria-oszlop._Fortepan_86777.jpg) | `0f8ebd77feb0` |
+| `casa-foto-mapa-londres-1890` | Mapa · Londres (1890) | George Washington Bacon | PD-old-auto-expired | [página](https://commons.wikimedia.org/wiki/File:1890_Bacon_Traveler%27s_Pocket_Map_of_London,_England_-_Geographicus_-_London-bacon-1890.jpg) | `aafd0a9864ea` |
+| `casa-foto-mapa-fortificacoes-1816` | Mapa · cidade e fortificações (1816) | Sidney Hall | PD-old-100 | [página](https://commons.wikimedia.org/wiki/File:Plan_of_the_city_and_fortifications_of_algiers_-_1816.jpg) | `7eb54dc41750` |
+| `casa-foto-mapa-amsterda-1835` | Mapa · Amsterdã (1835) | William Barnard Clarke | PD-Art, PD-old | [página](https://commons.wikimedia.org/wiki/File:1835_S.D.U.K._City_Map_or_Plan_of_Amsterdam,_The_Netherlands_-_Geographicus_-_Amsterdam-SUDK-1835.jpg) | `9efebf23df67` |
+| `casa-foto-mapa-singapura-1893` | Mapa · porto colonial (1893) | The Edinburgh Geographical Institute / John Bartholomew and Co. | PD-old-70 | [página](https://commons.wikimedia.org/wiki/File:Plan_map_of_the_City_of_Singapore_of_British_Malaya,_from_the_Constable%27s_Hand_Atlas_of_India_(1893).jpg) | `46db138b3619` |

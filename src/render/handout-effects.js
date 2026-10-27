@@ -3,6 +3,7 @@
  * crumple, fold, stain, burn, tear, damp, fade, blood, grain.
  * Deterministic PRNG: same seed, same pixels; never Math.random().
  */
+import { cutHash } from '../domain/cut.js';
 
 export const EFFECTS = [
   // [type, nome, mesclagem inicial, parâmetros com padrão]
@@ -107,7 +108,9 @@ function renderEffectDirect(ctx, W, H, type, amt, params, rand, scale) {
 /**
  * Returns a cached procedural effect canvas or generates and caches one.
  */
-export function getEffectCanvas(width, height, { type, seed = 1, amount = 0.5, params = {} } = {}, scale = 1) {
+export function getEffectCanvas(width, height, effect = {}, scale = 1) {
+  if (effect.type === 'cut') return getCutOverlayCanvas(width, height, effect, scale);
+  const { type, seed = 1, amount = 0.5, params = {} } = effect;
   const W = Math.max(1, Math.round(width));
   const H = Math.max(1, Math.round(height));
   const amt = Math.max(0, Math.min(1, Number(amount ?? 0.5)));
@@ -141,6 +144,10 @@ export function drawEffect(ctx, width, height, effect = {}, scale = 1) {
   const cached = getEffectCanvas(width, height, effect, scale);
   if (cached) {
     ctx.drawImage(cached, 0, 0);
+    return;
+  }
+  if (effect.type === 'cut') {
+    drawCutOverlay(ctx, Math.max(1, Math.round(width)), Math.max(1, Math.round(height)), effect, scale);
     return;
   }
 
@@ -253,7 +260,12 @@ function renderCutMaskDirect(ctx, W, H, type, amt, params, rand, scale) {
  * For the effects that cut the paper (burn, tear): the shape that remains.
  * white (#ffffff) = keep, transparent (alpha 0) = gone. Caches cut masks by (type, seed, amount, params, W, H, scale).
  */
-export function drawCutMask(ctx, width, height, { type, seed = 1, amount = 0.5, params = {} } = {}, scale = 1) {
+export function drawCutMask(ctx, width, height, effect = {}, scale = 1) {
+  if (effect.type === 'cut') {
+    drawFreeCutMask(ctx, width, height, effect, scale);
+    return;
+  }
+  const { type, seed = 1, amount = 0.5, params = {} } = effect;
   const W = Math.max(1, Math.round(width));
   const H = Math.max(1, Math.round(height));
   const amt = Math.max(0, Math.min(1, Number(amount ?? 0.5)));
@@ -747,3 +759,202 @@ function drawGrain(ctx, W, H, amt, params, rand, scale) {
   }
 }
 
+
+
+// --- Free cuts (scissors, tearing and the lighter): the "cut" effect ---
+
+const cutOverlayCache = new Map();
+
+/** 1D value noise from a table: smooth along the arc length of an edge. */
+function smoothNoise(table, t) {
+  const n = table.length;
+  const f = ((t % n) + n) % n;
+  const i = Math.floor(f);
+  const u = f - i;
+  const k = u * u * (3 - 2 * u);
+  return table[i] * (1 - k) + table[(i + 1) % n] * k;
+}
+
+/** How far (px) a point of the edge is pushed sideways, for each way of cutting. */
+function edgeOffset(edge, distance, rough, noiseA, noiseB, rand, scale) {
+  const r = 0.4 + rough * 1.2;
+  switch (edge) {
+    case 'picote': {
+      const period = 7 * scale;
+      const phase = (distance / period) % 1;
+      return (phase < 0.5 ? -1 : 1) * 2.5 * scale;
+    }
+    case 'rasgado':
+      return (smoothNoise(noiseA, distance / (40 * scale)) * 5 * scale + smoothNoise(noiseB, distance / (9 * scale)) * 2.2 * scale + (rand() - 0.5) * 1.6 * scale) * r;
+    case 'queimado':
+      return (smoothNoise(noiseA, distance / (26 * scale)) * 4 * scale + (rand() - 0.5) * 2.2 * scale) * r;
+    default:
+      return Math.sin(distance / (60 * scale) * Math.PI * 2) * 0.6 * scale;
+  }
+}
+
+/** Splits a closed polygon into short steps and pushes each point sideways by the edge's character. */
+export function roughenPolygon(poly, edge, seed, scale = 1, rough = 0.5) {
+  if (poly.length < 3) return poly;
+  const rand = createRng(seed);
+  const noiseA = Array.from({ length: 64 }, () => rand() * 2 - 1);
+  const noiseB = Array.from({ length: 64 }, () => rand() * 2 - 1);
+  let perimeter = 0;
+  for (let i = 0; i < poly.length; i++) {
+    const a = poly[i];
+    const b = poly[(i + 1) % poly.length];
+    perimeter += Math.hypot(b[0] - a[0], b[1] - a[1]);
+  }
+  const step = Math.max((edge === 'picote' ? 3.5 : 3) * scale, perimeter / 5000);
+  const out = [];
+  let distance = 0;
+  for (let i = 0; i < poly.length; i++) {
+    const a = poly[i];
+    const b = poly[(i + 1) % poly.length];
+    const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    if (len === 0) continue;
+    const nx = -(b[1] - a[1]) / len;
+    const ny = (b[0] - a[0]) / len;
+    const count = Math.max(1, Math.round(len / step));
+    for (let k = 0; k < count; k++) {
+      const t = k / count;
+      const off = k === 0 ? 0 : edgeOffset(edge, distance + len * t, rough, noiseA, noiseB, rand, scale);
+      out.push([a[0] + (b[0] - a[0]) * t + nx * off, a[1] + (b[1] - a[1]) * t + ny * off]);
+    }
+    distance += len;
+  }
+  return out;
+}
+
+/** The burn trail as overlapping, irregular discs (radius in page px, so scaled by `scale`). */
+export function holePolygons(holes, W, H, seed, scale = 1) {
+  const rand = createRng(seed + 17);
+  const polys = [];
+  for (const trail of holes) {
+    const circles = [];
+    for (let i = 0; i < trail.length; i++) {
+      const [x, y, r] = trail[i];
+      circles.push([x * W, y * H, r * scale]);
+      const next = trail[i + 1];
+      if (next) {
+        const gap = Math.hypot((next[0] - x) * W, (next[1] - y) * H);
+        const steps = Math.min(40, Math.floor(gap / Math.max(1, Math.min(r, next[2]) * scale * 0.5)));
+        for (let s = 1; s <= steps; s++) {
+          const t = s / (steps + 1);
+          circles.push([(x + (next[0] - x) * t) * W, (y + (next[1] - y) * t) * H, (r + (next[2] - r) * t) * scale]);
+        }
+      }
+    }
+    for (const [cx, cy, radius] of circles.slice(0, 700)) {
+      const sides = 26;
+      const phase = rand() * Math.PI * 2;
+      const poly = [];
+      for (let k = 0; k < sides; k++) {
+        const a = (k / sides) * Math.PI * 2;
+        const wobble = 1 + Math.sin(a * 3 + phase) * 0.09 + (rand() - 0.5) * 0.12;
+        poly.push([cx + Math.cos(a) * radius * wobble, cy + Math.sin(a) * radius * wobble]);
+      }
+      polys.push(poly);
+    }
+  }
+  return polys;
+}
+
+/** The removed contours of a cut in box pixels, edges roughened. `holes` come out as their own list. */
+export function cutPolygons(effect, W, H, scale = 1) {
+  const rough = Number(effect.params?.rough ?? 0.5);
+  const seed = Number(effect.seed) || 1;
+  const remove = (effect.remove || []).map((contour, i) =>
+    roughenPolygon(contour.map(([x, y]) => [x * W, y * H]), effect.edge, seed + i * 101, scale, rough));
+  const holes = holePolygons(effect.holes || [], W, H, seed, scale);
+  return { remove, holes };
+}
+
+function pathOf(polys) {
+  const path = new Path2D();
+  for (const poly of polys) {
+    poly.forEach(([x, y], i) => (i ? path.lineTo(x, y) : path.moveTo(x, y)));
+    path.closePath();
+  }
+  return path;
+}
+
+function eraseRemoved(ctx, { remove, holes }) {
+  ctx.save();
+  ctx.globalCompositeOperation = 'destination-out';
+  ctx.fillStyle = '#000';
+  if (remove.length) ctx.fill(pathOf(remove), 'evenodd');
+  if (holes.length) ctx.fill(pathOf(holes), 'nonzero');
+  ctx.restore();
+}
+
+/** White = paper kept, transparent = cut away. Cached by geometry hash, size and scale. */
+export function drawFreeCutMask(ctx, width, height, effect, scale = 1) {
+  const W = Math.max(1, Math.round(width));
+  const H = Math.max(1, Math.round(height));
+  const key = `cutmask::${effect.seed}::${cutHash(effect)}::${effect.params?.rough ?? 0.5}::${W}::${H}::${(scale || 1).toFixed(2)}`;
+  const cached = cutMaskCache.get(key);
+  if (cached) {
+    ctx.drawImage(cached, 0, 0);
+    return;
+  }
+  const target = createCachedCanvas(W, H);
+  const mctx = target ? target.getContext('2d') : ctx;
+  mctx.save();
+  mctx.fillStyle = '#ffffff';
+  mctx.fillRect(0, 0, W, H);
+  eraseRemoved(mctx, cutPolygons(effect, W, H, scale));
+  mctx.restore();
+  if (target) {
+    if (cutMaskCache.size >= MAX_CACHE_ENTRIES) cutMaskCache.delete(cutMaskCache.keys().next().value);
+    cutMaskCache.set(key, target);
+    ctx.drawImage(target, 0, 0);
+  }
+}
+
+/** What stays on the paper around a cut: torn fibre, scorched band. Never drawn over the removed area. */
+export function drawCutOverlay(ctx, W, H, effect, scale = 1) {
+  const polys = cutPolygons(effect, W, H, scale);
+  const stroke = (list, color, alpha, width) => {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = Math.max(1, width);
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    for (const poly of list) {
+      ctx.beginPath();
+      poly.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+      ctx.closePath();
+      ctx.stroke();
+    }
+    ctx.restore();
+  };
+  const char = Math.max(0, Math.min(1, Number(effect.char ?? 0.5)));
+  const fiber = Math.max(0, Math.min(1, Number(effect.fiber ?? 0.5)));
+  const burned = effect.edge === 'queimado' ? [...polys.remove, ...polys.holes] : polys.holes;
+  if (burned.length) {
+    const band = (3 + 12 * char) * scale;
+    stroke(burned, '#c58a45', 0.35, band * 2.2);
+    stroke(burned, '#5b2b0d', 0.6, band * 1.3);
+    stroke(burned, '#120804', 0.9, band * 0.55);
+  }
+  if (effect.edge === 'rasgado') {
+    stroke(polys.remove, '#f7f3e6', 0.55 + 0.4 * fiber, (1 + 2 * fiber) * 2 * scale);
+  }
+  eraseRemoved(ctx, polys);
+}
+
+function getCutOverlayCanvas(width, height, effect, scale) {
+  const W = Math.max(1, Math.round(width));
+  const H = Math.max(1, Math.round(height));
+  const key = `cutover::${effect.seed}::${cutHash(effect)}::${effect.params?.rough ?? 0.5}::${W}::${H}::${(scale || 1).toFixed(2)}`;
+  const cached = effectCache.get(key);
+  if (cached) return cached;
+  const off = createCachedCanvas(W, H);
+  if (!off) return null;
+  drawCutOverlay(off.getContext('2d'), W, H, effect, scale);
+  if (effectCache.size >= MAX_CACHE_ENTRIES) effectCache.delete(effectCache.keys().next().value);
+  effectCache.set(key, off);
+  return off;
+}

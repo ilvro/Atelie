@@ -83,7 +83,9 @@
       "clip": false,
       "light": "both",
       "image": {
-        "src": null,
+        "src": {
+          "library": "casa-foto-lugar-rua-torre"
+        },
         "fit": "cover",
         "crop": null,
         "flipX": false,

@@ -191,6 +191,23 @@ export const LESSONS = [
     ],
   },
   {
+    id: 'cut-tear-burn', folder: 'news', kind: 'lesson', task: ['cuts'], next: null, minutes: 4, since: '2026-10-26',
+    title: 'Rasgar, cortar e queimar',
+    summary: 'Recorte uma camada com o laço, rasgue o topo da folha, queime um canto e veja que nada se perde.',
+    start: 'rect',
+    steps: [
+      { say: 'Tesoura, rasgo e isqueiro não apagam nada: cada gesto vira uma camada de corte, que você pode ocultar, ajustar ou desfazer.', done: ['read'], act: 'continue' },
+      { say: 'Escolha a <b>Tesoura</b> (tecla <b>X</b>). A mancha está selecionada: o corte vale só para ela.', target: '.stage-tool-btn[data-tool="scissors"]', done: ['tool', 'scissors'], learn: ['X', 'tesoura (Alt: laço; Shift: picote)'] },
+      { say: 'Segure <b>Alt</b> e desenhe um <b>laço</b> dentro da mancha. O que ficar fora do laço é cortado.', why: 'Assim se recorta uma foto de revista ou as letras de um bilhete de ameaça.', target: '.stage-page-wrap', done: ['layerWhere', { kind: 'effect', 'effect.type': 'cut', 'effect.edge': 'tesoura', clip: true }], act: ['draw', [[260, 380], [540, 380], [540, 540], [260, 540], [262, 390]], { alt: true }] },
+      { say: 'Volte à seleção (tecla <b>Esc</b>) e tire a seleção com outro <b>Esc</b>: agora o corte vale para a folha inteira.', target: '.stage-tool-btn[data-tool="select"]', done: [['tool', 'select'], ['noSelection']], act: [['key', 'Escape'], ['key', 'Escape']] },
+      { say: 'Escolha <b>Rasgar</b> (tecla <b>T</b>).', target: '.stage-tool-btn[data-tool="tear"]', done: ['tool', 'tear'], learn: ['T', 'rasgar (Alt arranca um canto)'] },
+      { say: 'Arraste de um lado ao outro, perto do topo, e clique na parte de cima, a que sai.', why: 'Quanto mais rápido o gesto, mais irregular fica a borda. Enter aceita a parte sugerida; Esc cancela.', target: '.stage-page-wrap', done: ['layerWhere', { kind: 'effect', 'effect.type': 'cut', 'effect.edge': 'rasgado' }], act: [['draw', [[80, 240], [1160, 270]]], ['clickPage', [600, 80]]] },
+      { say: 'Escolha o <b>Isqueiro</b> (tecla <b>Q</b>).', target: '.stage-tool-btn[data-tool="lighter"]', done: ['tool', 'lighter'], learn: ['Q', 'isqueiro: segure para o fogo avançar'] },
+      { say: 'Segure a chama sobre um canto da folha até o furo crescer, e solte.', target: '.stage-page-wrap', done: ['layerWhere', { kind: 'effect', name: 'Queimado' }], act: ['hold', [200, 1500], 700] },
+      { say: 'Em <b>Camadas</b>, oculte a camada <b>Queimado</b> no olho: o canto volta, nada foi perdido.', target: '.inspector-tab[data-tab="layers"]', tab: 'layers', done: ['layerWhere', { name: 'Queimado', visible: false }], act: [['click', '.inspector-tab[data-tab="layers"]'], ['wait', 300], ['click', '.layer-item:has-text("Queimado") [data-action="toggle-visible"]']] },
+    ],
+  },
+  {
     id: 'own-font', folder: 'news', kind: 'lesson', task: ['fonts'], next: null, minutes: 3, since: '2026-10-26',
     title: 'Enviar uma fonte própria',
     summary: 'Mande uma fonte do seu computador para a Biblioteca e use-a num texto.',

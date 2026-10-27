@@ -431,7 +431,7 @@ export const TEMPLATES = [
         y: 60,
         width: 1280,
         height: 680,
-        image: { src: null, fit: 'cover' },
+        image: { src: { library: 'casa-foto-lugar-rua-torre' }, fit: 'cover' },
       },
       {
         id: 'l-saudacao',
@@ -963,7 +963,7 @@ export const TEMPLATES = [
         y: 280,
         width: 320,
         height: 250,
-        image: { src: null, fit: 'cover', filter: { sepia: 0.6, contrast: 0.2, brightness: -0.05 } },
+        image: { src: { library: 'casa-foto-lugar-aldeia-igreja' }, fit: 'cover', filter: { sepia: 0.6, contrast: 0.2, brightness: -0.05 } },
       },
       {
         id: 'l-legenda',
@@ -1108,7 +1108,7 @@ export const TEMPLATES = [
         y: 375,
         width: 500,
         height: 420,
-        image: { src: null, fit: 'cover', filter: { grayscale: 0.8, contrast: 0.2 } },
+        image: { src: { library: 'casa-foto-lugar-fabrica-obra' }, fit: 'cover', filter: { grayscale: 0.8, contrast: 0.2 } },
       },
       {
         id: 'l-texto',
@@ -1784,7 +1784,7 @@ export const TEMPLATES = [
         y: 160,
         width: 340,
         height: 420,
-        image: { src: null, fit: 'cover', filter: { grayscale: 1, contrast: 0.25 } },
+        image: { src: { library: 'casa-foto-retrato-rapaz-cdv' }, fit: 'cover', filter: { grayscale: 1, contrast: 0.25 } },
       },
       {
         kind: 'image',
@@ -2909,7 +2909,7 @@ export const TEMPLATES = [
         y: 190,
         width: 280,
         height: 350,
-        image: { src: null, fit: 'cover', filter: { grayscale: 1, contrast: 0.2 } },
+        image: { src: { library: 'casa-foto-retrato-mulher-sanfona' }, fit: 'cover', filter: { grayscale: 1, contrast: 0.2 } },
       },
       {
         id: 'l-paciente',
@@ -3450,7 +3450,7 @@ export const TEMPLATES = [
         y: 80,
         width: 1240,
         height: 760,
-        image: { src: null, fit: 'cover' },
+        image: { src: { library: 'casa-foto-mapa-londres-1890' }, fit: 'cover' },
       },
       {
         kind: 'image',
@@ -3559,7 +3559,7 @@ export const TEMPLATES = [
         y: 300,
         width: 440,
         height: 440,
-        image: { src: null, fit: 'cover', filter: { sepia: 0.8, contrast: 0.3 } },
+        image: { src: { library: 'casa-foto-retrato-homem-bigode-oculos' }, fit: 'cover', filter: { sepia: 0.8, contrast: 0.3 } },
       },
       {
         id: 'l-nome',
@@ -4158,7 +4158,7 @@ export const TEMPLATES = [
         y: 50,
         width: 780,
         height: 780,
-        image: { src: null, fit: 'cover' },
+        image: { src: { library: 'casa-foto-lugar-casarao-1895' }, fit: 'cover' },
       },
       {
         id: 'l-legenda',

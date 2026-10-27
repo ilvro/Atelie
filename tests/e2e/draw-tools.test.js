@@ -40,8 +40,8 @@ test('draw tools e2e: shapes by dragging, brush stroke paints pixels, Shift appe
     return { x: r.left + x * z, y: r.top + y * z };
   }, [px, py]);
 
-  // Tool bar: five tools, select active
-  assert.equal(await page.locator('.stage-tool-btn').count(), 5);
+  // Tool bar: eight tools, select active
+  assert.equal(await page.locator('.stage-tool-btn').count(), 8);
   assert.equal(await page.evaluate(() => window.__atelie.editor.stage.getTool()), 'select');
 
   // Options strip appears with a tool; set a red colour and width 8
@@ -54,8 +54,8 @@ test('draw tools e2e: shapes by dragging, brush stroke paints pixels, Shift appe
 
   const before = (await layers()).length;
   // Drag a rectangle (Shift keeps it square)
-  const a = await toScreen(200, 300);
-  const b = await toScreen(500, 420);
+  const a = await toScreen(400, 300);
+  const b = await toScreen(700, 420);
   await page.keyboard.down('Shift');
   await page.mouse.move(a.x, a.y);
   await page.mouse.down();
@@ -81,8 +81,8 @@ test('draw tools e2e: shapes by dragging, brush stroke paints pixels, Shift appe
   assert.equal((await layers()).at(-1).shape.type, 'ellipse');
 
   await page.keyboard.press('l');
-  const e = await toScreen(200, 700);
-  const f = await toScreen(500, 705);
+  const e = await toScreen(400, 700);
+  const f = await toScreen(700, 705);
   await page.mouse.move(e.x, e.y);
   await page.mouse.down();
   await page.mouse.move(f.x, f.y, { steps: 4 });
@@ -102,7 +102,7 @@ test('draw tools e2e: shapes by dragging, brush stroke paints pixels, Shift appe
   // Brush: a stroke becomes a path layer and paints pixels along it
   await page.keyboard.press('Shift+B');
   assert.equal(await page.evaluate(() => window.__atelie.editor.stage.getTool()), 'brush');
-  const pts = [[300, 900], [380, 940], [460, 900], [540, 950]];
+  const pts = [[400, 900], [480, 940], [560, 900], [640, 950]];
   const screen = [];
   for (const [x, y] of pts) screen.push(await toScreen(x, y));
   await page.mouse.move(screen[0].x, screen[0].y);
@@ -115,7 +115,7 @@ test('draw tools e2e: shapes by dragging, brush stroke paints pixels, Shift appe
   assert.ok(brush.shape.points.every(p => p.every(n => n >= 0 && n <= 1)), 'points are normalized');
   const painted = await page.evaluate(async () => {
     const doc = window.__atelie.editor.state.handout;
-    const res = await window.__atelie.renderHandout(doc, { scale: 1, at: [[380, 940], [300, 900], [100, 100]] });
+    const res = await window.__atelie.renderHandout(doc, { scale: 1, at: [[480, 940], [400, 900], [100, 100]] });
     return res.pixels;
   });
   assert.ok(painted[0][0] > 150 && painted[0][1] < 80, `stroke pixel is red, got ${painted[0]}`);
@@ -123,8 +123,8 @@ test('draw tools e2e: shapes by dragging, brush stroke paints pixels, Shift appe
 
   // Shift at the start adds a stroke to the selected brush layer
   const countBefore = (await layers()).length;
-  const g = await toScreen(300, 1100);
-  const h = await toScreen(500, 1150);
+  const g = await toScreen(400, 1100);
+  const h = await toScreen(700, 1150);
   await page.keyboard.down('Shift');
   await page.mouse.move(g.x, g.y);
   await page.mouse.down();

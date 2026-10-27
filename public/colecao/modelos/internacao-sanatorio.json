@@ -172,7 +172,9 @@
       "clip": false,
       "light": "both",
       "image": {
-        "src": null,
+        "src": {
+          "library": "casa-foto-retrato-mulher-sanfona"
+        },
         "fit": "cover",
         "crop": null,
         "flipX": false,

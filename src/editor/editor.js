@@ -24,6 +24,7 @@ import {
   insertionIndex,
   textLayer,
   textStyleFrom,
+  effectLayer,
   inheritedTextStyle,
   isPaperLayer,
   newLayerId,
@@ -45,6 +46,7 @@ import { matches, normalizeCombo, label as keyLabel } from '../ui/keymap.js';
 import { createAmbient, loadAmbient } from '../ui/ambient.js';
 import { createLayerThumbs } from './layer-thumbs.js';
 import { normalizeStroke, appendStroke } from '../domain/brush.js';
+import { cutEffect } from '../domain/cut.js';
 import { createTabBar, reorderIds, nextAfterClose, cycleTab, loadTabs, saveTabs } from './tabs.js';
 import { downloadHandoutPng, printHandout, exportScale, printLayout } from './export.js';
 
@@ -1073,6 +1075,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
         onMore: () => shell.inspector.tab('properties'),
         onCreateTextAt: (point) => addTextAt(point, { edit: true }),
         onDraw: (description) => addDrawing(description),
+        onSound: (name, options) => play(name, options),
         shortcutLabel: (id) => keyLabel(id),
       });
     } else {
@@ -1623,8 +1626,50 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   }
 
   /** A finished gesture of the drawing tools becomes a layer (or a stroke added to a brush layer). */
+  /** A finished cutting gesture becomes one "cut" layer: clipped to the layer it cut, or on top for the whole sheet. */
+  function addCut(desc) {
+    const handout = state.handout;
+    const target = desc.target;
+    const onLayer = Boolean(target.id);
+    const light = currentLight === 'uv' ? 'uv' : 'both';
+
+    if (desc.type === 'burn' && desc.appendTo === 'selected') {
+      const selected = handout.layers.find(l => l.id === state.selection);
+      if (selected?.kind === 'effect' && selected.effect?.type === 'cut' && selected.effect.holes) {
+        const holes = [...selected.effect.holes, desc.trail];
+        state.edit(updateLayer(handout, selected.id, { effect: { ...selected.effect, holes } }), { label: 'Acrescentar queima' });
+        return;
+      }
+    }
+
+    const names = { tesoura: 'Corte · tesoura', picote: 'Corte · picote', rasgado: 'Rasgo', queimado: 'Queimado' };
+    let effect;
+    if (desc.type === 'burn') {
+      effect = cutEffect({ edge: 'queimado', holes: [desc.trail], seed: desc.seed, char: desc.char });
+    } else {
+      effect = cutEffect({ edge: desc.edge, remove: desc.remove, seed: desc.seed, char: desc.edge === 'queimado' ? 0.5 : 0.5, fiber: desc.fiber });
+      effect.params = { rough: desc.rough };
+    }
+    const newL = effectLayer({
+      name: desc.type === 'burn' ? names.queimado : names[desc.edge],
+      x: target.x, y: target.y, width: target.width, height: target.height, rotation: target.rotation || 0,
+      blend: desc.type === 'burn' ? 'multiply' : 'normal',
+      clip: onLayer,
+      light,
+      effect,
+    });
+    const insertIdx = insertionIndex(handout, newL, { selectedId: onLayer ? target.id : null });
+    state.edit(addLayer(handout, newL, insertIdx), { label: `Adicionar ${newL.name}` });
+    state.select(newL.id);
+    layersPanel?.flash?.(newL.id);
+  }
+
   function addDrawing(desc) {
     if (!state || isReadOnly) return;
+    if (desc.type === 'cut' || desc.type === 'burn') {
+      addCut(desc);
+      return;
+    }
     const o = desc.options;
     const light = currentLight === 'uv' ? 'uv' : 'both';
     const opacity = Math.max(0.05, Math.min(1, o.opacity / 100));
@@ -2105,7 +2150,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
 
     if (isEditingField) return;
 
-    for (const [shortcut, tool] of [['tool-select', 'select'], ['tool-brush', 'brush'], ['tool-rect', 'rect'], ['tool-ellipse', 'ellipse'], ['tool-line', 'line']]) {
+    for (const [shortcut, tool] of [['tool-select', 'select'], ['tool-brush', 'brush'], ['tool-rect', 'rect'], ['tool-ellipse', 'ellipse'], ['tool-line', 'line'], ['tool-scissors', 'scissors'], ['tool-tear', 'tear'], ['tool-lighter', 'lighter']]) {
       if (matches(event, shortcut) && state) {
         event.preventDefault();
         stage?.setTool(tool);
@@ -2253,6 +2298,8 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     if (document.querySelector('.at-modal-backdrop, .at-settings-modal, .at-palette-modal')) return;
     const active = document.activeElement;
     if (['INPUT', 'TEXTAREA', 'SELECT'].includes(active?.tagName) || active?.isContentEditable) return;
+    // A half-made cut (choosing which part leaves) takes the Esc first.
+    if (stage?.isChoosingCut?.()) return;
     if (stage && stage.getTool() !== 'select') {
       event.preventDefault();
       stage.setTool('select');
