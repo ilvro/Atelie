@@ -112,3 +112,18 @@ test('stampTilt: only stamps, seals and wax, within ±3°', async () => {
     assert.ok(t >= -3 && t <= 3);
   }
 });
+
+test('library defaults: categorias da C5 (objetos, postal, marcas de investigação…) entram sem tinta; rabiscos e códigos imprimem', async () => {
+  const { defaultsFor, stampTilt } = await import('../src/editor/library-defaults.js');
+  for (const category of ['Objetos', 'Interfaces', 'Postal', 'Marcas de investigação', 'Emblemas do universo']) {
+    const d = defaultsFor({ category, name: 'x', id: 'casa-x' });
+    assert.equal(d.blend, 'normal', category);
+    assert.equal(d.tint, undefined, `${category}: sem tinta`);
+  }
+  assert.equal(defaultsFor({ category: 'Rabiscos à mão', name: 'x', id: 'casa-rabisco-x' }).blend, 'multiply');
+  assert.equal(defaultsFor({ category: 'Códigos', name: 'x', id: 'casa-codigo-x' }).blend, 'multiply');
+  assert.equal(defaultsFor({ category: 'Emblemas do universo', name: 'x', id: 'casa-emblema-universo-die-carimbo' }).blend, 'multiply');
+  assert.ok(defaultsFor({ category: 'Carimbos brasileiros', name: 'x', id: 'casa-carimbo-br-x' }).tint);
+  assert.equal(stampTilt({ category: 'Objetos' }, () => 1), 0);
+  assert.notEqual(stampTilt({ category: 'Carimbos brasileiros' }, () => 1), 0);
+});

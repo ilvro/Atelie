@@ -56,6 +56,18 @@ export function defaultsFor(item, { defaultInkColor = null } = {}) {
     };
   }
 
+  // 3b. Colored or physical things (objects, interface frames, stamps of the post, investigation marks, emblems
+  // in colour): placed as they are, with no ink tint. Barcodes and serial numbers print into the paper.
+  if (
+    cat === 'objetos' || cat === 'interfaces' || cat === 'postal' ||
+    cat === 'marcas de investigação' || (cat === 'emblemas do universo' && !id.endsWith('-carimbo'))
+  ) {
+    return { blend: 'normal', cover: false, position: 'top' };
+  }
+  if (cat === 'códigos') {
+    return { blend: 'multiply', opacity: 0.95, cover: false, position: 'top' };
+  }
+
   // 4. Carimbos, Selos, Marcas, Ornamentos, Símbolos (monocromáticos)
   if (
     cat === 'carimbos' ||
@@ -65,6 +77,8 @@ export function defaultsFor(item, { defaultInkColor = null } = {}) {
     cat === 'símbolos' ||
     cat === 'simbolos' ||
     cat.includes('carimbo') ||
+    cat.includes('rabisco') ||
+    id.endsWith('-carimbo') ||
     cat.includes('selo') ||
     cat.includes('marca') ||
     cat.includes('ornamento') ||
@@ -120,7 +134,7 @@ export function defaultsFor(item, { defaultInkColor = null } = {}) {
   };
 }
 
-const TILTED_CATEGORIES = new Set(['carimbos', 'selos', 'lacres']);
+const TILTED_CATEGORIES = new Set(['carimbos', 'selos', 'lacres', 'carimbos brasileiros', 'postal']);
 
 /**
  * Stamps, seals and wax are never pressed perfectly straight: a small turn, at most ±3°.

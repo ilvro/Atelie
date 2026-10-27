@@ -280,3 +280,42 @@ test('colecao-c4: a montagem de modelos carrega os campos de um corte', async ()
   assert.ok(doc.layers[0].effect.remove.length > 0);
   assert.equal(doc.layers[0].effect.edge, 'rasgado');
 });
+
+test('colecao-c5: elementos novos (objetos, interfaces, códigos, postal, emblemas, carimbos, rabiscos, marcas) estão completos e válidos', async () => {
+  const lib = JSON.parse(await fs.readFile(libraryPath, 'utf8'));
+  const want = { 'Objetos': 25, 'Interfaces': 18, 'Códigos': 12, 'Postal': 16, 'Emblemas do universo': 16, 'Carimbos brasileiros': 14, 'Rabiscos à mão': 24, 'Marcas de investigação': 14 };
+  let total = 0;
+  for (const [category, min] of Object.entries(want)) {
+    const items = lib.items.filter(i => i.category === category);
+    assert.ok(items.length >= min, `${category}: ${items.length} itens (mínimo ${min})`);
+    total += items.length;
+    for (const it of items) {
+      assert.match(it.id, /^casa-/, `${it.id} é da casa`);
+      assert.ok(it.width > 0 && it.height > 0 && it.tags.length >= 3, `${it.id}: tamanho e etiquetas`);
+      const svg = await fs.readFile(path.join(colecaoDir, it.file), 'utf8');
+      assert.match(svg, /^<svg [^>]*viewBox=/, `${it.id}: SVG com viewBox`);
+      assert.doesNotMatch(svg, /<text[\s>]/, `${it.id}: letras são traços, nunca <text>`);
+      assert.doesNotMatch(svg, /<image|href="http/i, `${it.id}: sem imagem embutida nem link externo`);
+      await fs.access(path.join(colecaoDir, it.preview));
+    }
+  }
+  assert.ok(total >= 140, `${total} elementos novos (plano: cerca de 140)`);
+  assert.equal(new Set(lib.items.map(i => i.id)).size, lib.items.length, 'ids únicos no manifesto');
+});
+
+test('colecao-c5: os emblemas do universo cobrem todas as instituições, coloridos e em carimbo', async () => {
+  const { INSTITUICOES } = await import('../scripts/colecao/universo.js');
+  const lib = JSON.parse(await fs.readFile(libraryPath, 'utf8'));
+  for (const org of Object.values(INSTITUICOES)) {
+    assert.ok(lib.items.some(i => i.id === `casa-emblema-universo-${org.id}`), `${org.id}: emblema colorido`);
+    assert.ok(lib.items.some(i => i.id === `casa-emblema-universo-${org.id}-carimbo`), `${org.id}: emblema de carimbo`);
+  }
+});
+
+test('colecao-c5: o letreiro de traços acentua certo (agudo sobe para a direita) e a mão é determinística', async () => {
+  const { GLYPHS, handWord } = await import('../scripts/colecao/vectors/letters.js');
+  assert.match(GLYPHS['Á'], /M 1\.5 -0\.6 L 2\.5 -1\.6/);
+  assert.ok(GLYPHS['ª'] && GLYPHS['º']);
+  assert.equal(handWord('NÃO CONFIE', { seed: 3 }).d, handWord('NÃO CONFIE', { seed: 3 }).d);
+  assert.notEqual(handWord('NÃO CONFIE', { seed: 3 }).d, handWord('NÃO CONFIE', { seed: 4 }).d);
+});

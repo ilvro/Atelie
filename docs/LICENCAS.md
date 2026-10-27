@@ -87,7 +87,7 @@ O acervo artístico público do Ateliê distribuído em `public/colecao/` é com
 
 - **Papéis procedurais (48 arquivos WebP em 3 idades)**: gerados por algoritmos puros em código (`src/domain/noise.js` e `scripts/colecao/papers.js`).
 - **Texturas de sobreposição (53 arquivos WebP com canal alfa)**: manchas de café, umidade, sangue oxidado, poeira, marcas queimadas, relevos de amassados, dobras e impressões digitais.
-- **Elementos vetoriais (309 itens em SVG)**: carimbos burocráticos, marcas periciais, selos consulares, grampos, clipes, fitas adesivas transparentes e fita crepe.
+- **Elementos vetoriais (463 itens em SVG)**: carimbos burocráticos, marcas periciais, selos consulares, grampos, clipes, fitas adesivas transparentes e fita crepe.
 - **Modelos de documentos (39 modelos estruturados em JSON)**: cartas de época, telegramas, certidões, boletins de ocorrência, fichas de investigação, recortes de jornal, polaroides e laudos.
 
 ### Licença dos Ativos da Coleção da Casa

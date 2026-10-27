@@ -48,11 +48,11 @@ export const GLYPHS = {
   'Ç': 'M 4 1 L 3 0 L 1 0 L 0 1 L 0 5 L 1 6 L 3 6 L 4 5 M 2 6 L 2 7.2 L 1 7.2',
 
   // Acute accents
-  'Á': 'M 0 6 L 0 2 L 2 0 L 4 2 L 4 6 M 0 3.5 L 4 3.5 M 1.5 -1.6 L 2.5 -0.6',
-  'É': 'M 4 0 L 0 0 L 0 6 L 4 6 M 0 3 L 3 3 M 1.5 -1.6 L 2.5 -0.6',
-  'Í': 'M 0.5 0 L 3.5 0 M 2 0 L 2 6 M 0.5 6 L 3.5 6 M 1.5 -1.6 L 2.5 -0.6',
-  'Ó': 'M 1 0 L 3 0 L 4 1 L 4 5 L 3 6 L 1 6 L 0 5 L 0 1 Z M 1.5 -1.6 L 2.5 -0.6',
-  'Ú': 'M 0 0 L 0 5 L 1 6 L 3 6 L 4 5 L 4 0 M 1.5 -1.6 L 2.5 -0.6',
+  'Á': 'M 0 6 L 0 2 L 2 0 L 4 2 L 4 6 M 0 3.5 L 4 3.5 M 1.5 -0.6 L 2.5 -1.6',
+  'É': 'M 4 0 L 0 0 L 0 6 L 4 6 M 0 3 L 3 3 M 1.5 -0.6 L 2.5 -1.6',
+  'Í': 'M 0.5 0 L 3.5 0 M 2 0 L 2 6 M 0.5 6 L 3.5 6 M 1.5 -0.6 L 2.5 -1.6',
+  'Ó': 'M 1 0 L 3 0 L 4 1 L 4 5 L 3 6 L 1 6 L 0 5 L 0 1 Z M 1.5 -0.6 L 2.5 -1.6',
+  'Ú': 'M 0 0 L 0 5 L 1 6 L 3 6 L 4 5 L 4 0 M 1.5 -0.6 L 2.5 -1.6',
 
   // Circumflex accents
   'Â': 'M 0 6 L 0 2 L 2 0 L 4 2 L 4 6 M 0 3.5 L 4 3.5 M 1 -0.6 L 2 -1.6 L 3 -0.6',
@@ -71,6 +71,15 @@ export const GLYPHS = {
   ':': 'M 1.5 1.5 L 2.5 1.5 L 2.5 2 L 1.5 2 Z M 1.5 5.5 L 2.5 5.5 L 2.5 6 L 1.5 6 Z',
   '!': 'M 2 0 L 2 4 M 1.5 5.5 L 2.5 5.5 L 2.5 6 L 1.5 6 Z',
   '?': 'M 0 1 L 1 0 L 3 0 L 4 1 L 4 2.5 L 2 3.5 L 2 4.5 M 1.5 5.5 L 2.5 5.5 L 2.5 6 L 1.5 6 Z',
+  '#': 'M 1.2 0 L 0.8 6 M 3.2 0 L 2.8 6 M 0 2 L 4 2 M 0 4 L 4 4',
+  '(': 'M 3 0 L 1.5 1.5 L 1.5 4.5 L 3 6',
+  ')': 'M 1 0 L 2.5 1.5 L 2.5 4.5 L 1 6',
+  '&': 'M 4 6 L 1 2.5 L 1 1 L 2 0 L 3 1 L 3 2 L 0.5 4.5 L 1.5 6 L 3 6 L 4 4',
+  '+': 'M 0.5 3 L 3.5 3 M 2 1.5 L 2 4.5',
+  'º': 'M 1 0 L 3 0 L 3 2 L 1 2 Z',
+  '°': 'M 1 0 L 3 0 L 3 2 L 1 2 Z',
+  "'": 'M 2 0 L 2 1.8',
+  'ª': 'M 1 0 L 3 0 L 3 2 L 1 2 Z M 1 3 L 3 3',
   ' ': '',
 };
 
@@ -132,3 +141,44 @@ export function wordPath(text, { scale = 1, letterSpacing = 1.5, glyphWidth = 4.
   };
 }
 
+
+const hash = n => {
+  let x = (n * 2654435761) >>> 0;
+  x ^= x >>> 15; x = Math.imul(x, 2246822507) >>> 0; x ^= x >>> 13;
+  return (x >>> 0) / 4294967296;
+};
+
+/**
+ * Handwritten look: the same strokes as `wordPath`, but every point wobbles, every letter leans and sits
+ * a little off the line, and strokes are drawn with round joins by the caller. Deterministic by `seed`.
+ */
+export function handWord(text, { scale = 1, letterSpacing = 1.2, jitter = 0.35, seed = 1 } = {}) {
+  const clean = String(text || '').toUpperCase();
+  const parts = [];
+  let curX = 0;
+  let n = 0;
+  for (const ch of clean) {
+    if (ch === ' ') { curX += 3 + letterSpacing; continue; }
+    const d = GLYPHS[ch] || GLYPHS['?'];
+    const lean = (hash(seed * 31 + n) - 0.5) * 0.28;
+    const drop = (hash(seed * 17 + n) - 0.5) * 0.9;
+    const tokens = d.trim().split(/\s+/);
+    const out = [];
+    let k = 0;
+    for (let i = 0; i < tokens.length; i++) {
+      const t = tokens[i];
+      if (t === 'M' || t === 'L') {
+        const gx = parseFloat(tokens[++i]);
+        const gy = parseFloat(tokens[++i]);
+        const x = (gx + (3 - gy) * lean + curX + (hash(seed * 7 + n * 13 + k) - 0.5) * jitter) * scale;
+        const y = (gy + 2 + drop + (hash(seed * 11 + n * 19 + k) - 0.5) * jitter) * scale;
+        out.push(t, x.toFixed(2), y.toFixed(2));
+        k++;
+      } else out.push(t);
+    }
+    parts.push(out.join(' '));
+    curX += 4.2 + letterSpacing + (hash(seed + n * 3) - 0.5) * 0.8;
+    n++;
+  }
+  return { d: parts.join(' '), width: Math.max(1, (curX - letterSpacing) * scale), height: 10 * scale };
+}

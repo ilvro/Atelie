@@ -305,6 +305,25 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ---
 
+## Coleção ampliada · Fase C5 (elementos novos)
+
+### Feito
+- **154 elementos novos em SVG** (8 categorias, geradores em `scripts/colecao/vectors/`, ligados ao `build.js`): Objetos (29: espirais de caderno, argolas de fichário, prancheta e prendedor, crachás com cordão, hastes de pergaminho, lombadas de livro, capas de dossiê, pasta suspensa, envelope pardo com cordão, fita VHS e etiqueta, cassete, etiqueta de corpo, chaveiro, tachinha, quadro de cortiça, caixa de arquivo…), Interfaces (19: celular Android e tipo iPhone em claro e escuro, barra de status, balões e "digitando…", janela de e-mail, janelas retrô dos anos 90, CRT, monitor, notificações), Códigos (12: código de barras, QR fictício que não decodifica, numeração de série, guilhochê, microtexto, marca d'água), Postal (16: 8 selos de épocas, 4 carimbos de correio com data, 4 etiquetas), Emblemas do universo (26: as 13 instituições, coloridas e em carimbo), Carimbos brasileiros (14), Rabiscos à mão (24: setas, círculos, riscos, contagem de dias, letra à mão, rostos, mapas) e Marcas de investigação (14: barbante, alfinetes, post-its, etiquetas numeradas, régua forense).
+- Sombreado com gradientes, `feDropShadow` e ruído `feTurbulence`; as letras são sempre traços do `letters.js` (nenhum `<text>`), e os textos dos modelos ficam em camadas por cima.
+- `letters.js`: `handWord` (letra à mão determinística), glifos novos (`#`, `( )`, `&`, `+`, `º`, `ª`, `°`) e **correção do acento agudo**, que estava desenhado como crase (afetava os carimbos CÓPIA e EVIDÊNCIA e todos os modelos que os usam).
+- Biblioteca: as 8 categorias novas aparecem na ordem canônica das abas; `library-defaults.js` põe objetos, interfaces, postal, marcas de investigação e emblemas coloridos sem tinta, rabiscos e carimbos brasileiros com tinta, códigos em multiply; carimbos brasileiros e postal ganham a inclinação de ±3°.
+- Folha de contato: `docs/referencias/colecao-elementos-c5.png`. Prévias dos modelos regeradas por causa da correção do acento.
+
+### Validação
+- `npm test`: 238 passando (categorias completas, SVG válido sem `<text>` nem imagem embutida, ids únicos, emblemas de todas as instituições, acento, padrões da biblioteca). Auditoria: 0 erros fora do legado. Coleção: 32,0 MB. E2E de biblioteca e modelos passaram.
+
+### Pendências reais
+- Objetos e Interfaces ficaram com 29 e 19 itens (plano: 25 e 18); Emblemas do universo com 26 (13 instituições × 2), acima dos 16 do plano.
+- Não há raster nesta fase (o plano permitia "SVG e raster"); tudo é vetorial.
+- Os modelos ainda não usam os elementos novos: isso começa na C7 e nos lotes C8 a C11.
+
+---
+
 ## Refinamento Visual e Ergonomia de UI
 
 ### Feito

@@ -20,6 +20,14 @@ import * as ornaments from './vectors/ornaments.js';
 import * as emblems from './vectors/emblems.js';
 import * as symbols from './vectors/symbols.js';
 import * as marks from './vectors/marks.js';
+import * as objetos from './vectors/objetos.js';
+import * as interfaces from './vectors/interfaces.js';
+import * as codigos from './vectors/codigos.js';
+import * as postal from './vectors/postal.js';
+import * as emblemasUniverso from './vectors/emblemas-universo.js';
+import * as carimbosBrasileiros from './vectors/carimbos-brasileiros.js';
+import * as rabiscos from './vectors/rabiscos.js';
+import * as investigacao from './vectors/investigacao.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '../..');
@@ -44,6 +52,14 @@ const VECTOR_MODULES = [
   emblems,
   symbols,
   marks,
+  objetos,
+  interfaces,
+  codigos,
+  postal,
+  emblemasUniverso,
+  carimbosBrasileiros,
+  rabiscos,
+  investigacao,
 ];
 
 function slugify(name) {
