@@ -239,5 +239,425 @@
     "crop": null,
     "sha256": "46db138b36194695cbcce36fc9af37b210577484e401587e4f5c187a6b41a8eb",
     "outputSha256": "3d934569428188c7c9640c36e4d3bdeead7dd1e973976bbeeb190b7f1794412a"
+  },
+  {
+    "id": "casa-scan-paper001",
+    "kind": "papel",
+    "name": "Escaneado · Papel branco liso",
+    "group": "Papéis escaneados",
+    "sourceUrl": "https://ambientcg.com/get?file=Paper001_2K-JPG.zip",
+    "zipMember": "Paper001_2K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Paper001",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "branco"
+    ],
+    "sha256": "21b3b955d9cd8bd6c83ebac6a71f7dcbaea819d28b6a0f82a1a3805f67793dcb",
+    "outputSha256": "4eb29e2888758b9b67ef60e8b8c18f6f87ee953d5ffd7da3667bd486c230d6ac"
+  },
+  {
+    "id": "casa-scan-paper002",
+    "kind": "papel",
+    "name": "Escaneado · Papel pardo de embrulho",
+    "group": "Papéis escaneados",
+    "sourceUrl": "https://ambientcg.com/get?file=Paper002_2K-JPG.zip",
+    "zipMember": "Paper002_2K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Paper002",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "pardo"
+    ],
+    "sha256": "74b88bf99a8d6ce67874d88d8b3f2435eed3032b3492dee4ecdd1c1278e2f830",
+    "outputSha256": "0ff7c73fddc446c750f3a36061e4dfcca8d9de8e6a1ec56c2f72eca1fa6ef4e5"
+  },
+  {
+    "id": "casa-scan-paper003",
+    "kind": "papel",
+    "name": "Escaneado · Papel branco vincado",
+    "group": "Papéis escaneados",
+    "sourceUrl": "https://ambientcg.com/get?file=Paper003_2K-JPG.zip",
+    "zipMember": "Paper003_2K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Paper003",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "vincado"
+    ],
+    "sha256": "7939efd9c04e3da41341386730ad657034ed19dafc2211bad80e6f5182e89a2c",
+    "outputSha256": "02234c13b6bc150856b755f8fb40931e4de4c94f1bf579f8f027cee0cc5394f4"
+  },
+  {
+    "id": "casa-scan-paper004",
+    "kind": "papel",
+    "name": "Escaneado · Papel pardo de pacote",
+    "group": "Papéis escaneados",
+    "sourceUrl": "https://ambientcg.com/get?file=Paper004_2K-JPG.zip",
+    "zipMember": "Paper004_2K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Paper004",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "pardo"
+    ],
+    "sha256": "b85d4ec4a4facffe335d4ef61f64058b85320208f9f3310921998d7275635554",
+    "outputSha256": "7f620f5c1b8ec6ae5320be7d799792d0b846741fe1da75118da5dd3da417669c"
+  },
+  {
+    "id": "casa-scan-paper005",
+    "kind": "papel",
+    "name": "Escaneado · Papel pardo ondulado",
+    "group": "Papéis escaneados",
+    "sourceUrl": "https://ambientcg.com/get?file=Paper005_2K-JPG.zip",
+    "zipMember": "Paper005_2K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Paper005",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "pardo"
+    ],
+    "sha256": "1da2f1a7e26a5e58bda7d799be3d2af2ab615611cfddeb78a464002f6b01897a",
+    "outputSha256": "3935a202a1bf668e2b79ff3e8b34709d77508026b9b8c6213fcf36b6b8b80a5b"
+  },
+  {
+    "id": "casa-scan-paper006",
+    "kind": "papel",
+    "name": "Escaneado · Papel bege",
+    "group": "Papéis escaneados",
+    "sourceUrl": "https://ambientcg.com/get?file=Paper006_2K-JPG.zip",
+    "zipMember": "Paper006_2K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Paper006",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "bege"
+    ],
+    "sha256": "b307a70907ee1b01a7132ed16142df140180c13b6132955907ad00861720f839",
+    "outputSha256": "d512989a1d41e685d2d7bf85029d67daa5f370425e3202f2fc265e411c1d5f16"
+  },
+  {
+    "id": "casa-scan-cardboard001",
+    "kind": "papel",
+    "name": "Escaneado · Papelão rasgado",
+    "group": "Papéis escaneados",
+    "sourceUrl": "https://ambientcg.com/get?file=Cardboard001_2K-JPG.zip",
+    "zipMember": "Cardboard001_2K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Cardboard001",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "papelão"
+    ],
+    "sha256": "0c9c5b33e2377881bc0bfeeb2464f1ae44f27946d611591618e9572234498e2f",
+    "outputSha256": "333a82dfc3b59112525eecdd27b6398c6ac13801a8c39c2c25b48fb9e2ac85c9"
+  },
+  {
+    "id": "casa-scan-cardboard002",
+    "kind": "papel",
+    "name": "Escaneado · Papelão limpo",
+    "group": "Papéis escaneados",
+    "sourceUrl": "https://ambientcg.com/get?file=Cardboard002_2K-JPG.zip",
+    "zipMember": "Cardboard002_2K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Cardboard002",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "papelão"
+    ],
+    "sha256": "915a3827d343b3091297d19df79545303bd8f76959a2767193249bcc395f453b",
+    "outputSha256": "be5067d1cf172fd06576ea7ad16eea8a5a87a89af0f5ae6acbbe8c4ef44796b1"
+  },
+  {
+    "id": "casa-scan-cardboard003",
+    "kind": "papel",
+    "name": "Escaneado · Papelão rompido",
+    "group": "Papéis escaneados",
+    "sourceUrl": "https://ambientcg.com/get?file=Cardboard003_2K-JPG.zip",
+    "zipMember": "Cardboard003_2K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Cardboard003",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "papelão"
+    ],
+    "sha256": "8decccfdaad9d586609fdd9b882466d3a77ebc702a8f7b1a8a8b2d20e810a8a0",
+    "outputSha256": "001a70675e536e1677a1413eac290ca9117ac0cd4810cf6bf1345f3de20bafaf"
+  },
+  {
+    "id": "casa-scan-cardboard004",
+    "kind": "papel",
+    "name": "Escaneado · Papelão liso",
+    "group": "Papéis escaneados",
+    "sourceUrl": "https://ambientcg.com/get?file=Cardboard004_2K-JPG.zip",
+    "zipMember": "Cardboard004_2K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Cardboard004",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "papelão"
+    ],
+    "sha256": "c75c518d8ab2cc54eb496a8c01d83236de29c8110590e0f8e599ef8e62e2caae",
+    "outputSha256": "efe3b494ed5382dbe9f477e239c1293f14920a6b9521fe07ddef9e949b7b096b"
+  },
+  {
+    "id": "casa-superficie-cork001",
+    "kind": "superficie",
+    "name": "Superfície · Cortiça fina",
+    "group": "Superfícies",
+    "sourceUrl": "https://ambientcg.com/get?file=Cork001_1K-JPG.zip",
+    "zipMember": "Cork001_1K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Cork001",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "cortiça"
+    ],
+    "sha256": "54e845caae513c86d244fefe794e27140317eb91642f88937afedfded2032c82",
+    "outputSha256": "f3978add3af4e2a83ed55f023a4128a2577705ef3dc78b2202098734fbb99649"
+  },
+  {
+    "id": "casa-superficie-cork002",
+    "kind": "superficie",
+    "name": "Superfície · Cortiça grossa",
+    "group": "Superfícies",
+    "sourceUrl": "https://ambientcg.com/get?file=Cork002_1K-JPG.zip",
+    "zipMember": "Cork002_1K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Cork002",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "cortiça"
+    ],
+    "sha256": "1177bc13e72f073610c10b42731dad9965399c1c398ee666e8541d3347f59954",
+    "outputSha256": "59cd8b27e78ebe69a9060678a7833dddeeeaee90de6a861445d948ed2831a4f3"
+  },
+  {
+    "id": "casa-superficie-leather004",
+    "kind": "superficie",
+    "name": "Superfície · Couro marrom",
+    "group": "Superfícies",
+    "sourceUrl": "https://ambientcg.com/get?file=Leather004_1K-JPG.zip",
+    "zipMember": "Leather004_1K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Leather004",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "couro"
+    ],
+    "sha256": "edffeca90b6df73a1182dea1ee3f7904e16d6a9ef2c7aaea41d2668a553d34b0",
+    "outputSha256": "ae9ebcdf3f50729e1196a946e2e461e46dd57368a7f102fac9a1956c64cbc75f"
+  },
+  {
+    "id": "casa-superficie-leather026",
+    "kind": "superficie",
+    "name": "Superfície · Couro escuro",
+    "group": "Superfícies",
+    "sourceUrl": "https://ambientcg.com/get?file=Leather026_1K-JPG.zip",
+    "zipMember": "Leather026_1K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Leather026",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "couro"
+    ],
+    "sha256": "6af2f446f9855c641da2a072f128d30965431ffae3306d22d75dbfff99c04646",
+    "outputSha256": "568a62a06289c494faf404c5de4e93c4ed810206b75669d2476c3f53a36b4891"
+  },
+  {
+    "id": "casa-superficie-wood026",
+    "kind": "superficie",
+    "name": "Superfície · Madeira clara",
+    "group": "Superfícies",
+    "sourceUrl": "https://ambientcg.com/get?file=Wood026_1K-JPG.zip",
+    "zipMember": "Wood026_1K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Wood026",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "madeira"
+    ],
+    "sha256": "66ce02780f03e68068fb8d1bc7d5797819073d0218c6f83d7ecf310991b30407",
+    "outputSha256": "843ca366a0e0a06de831585a48516975294343cfc54310c82f63f6c0e06ba4fe"
+  },
+  {
+    "id": "casa-superficie-wood060",
+    "kind": "superficie",
+    "name": "Superfície · Madeira escura",
+    "group": "Superfícies",
+    "sourceUrl": "https://ambientcg.com/get?file=Wood060_1K-JPG.zip",
+    "zipMember": "Wood060_1K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Wood060",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "madeira"
+    ],
+    "sha256": "d24016c47f4c385bb029cd52d616de97da1509cbc033c49b5670a549d194b136",
+    "outputSha256": "d30960102a864fe70b57e04cee87f5934d5ffcabc626078d2912ca57d437747d"
+  },
+  {
+    "id": "casa-superficie-fabric034",
+    "kind": "superficie",
+    "name": "Superfície · Feltro",
+    "group": "Superfícies",
+    "sourceUrl": "https://ambientcg.com/get?file=Fabric034_1K-JPG.zip",
+    "zipMember": "Fabric034_1K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Fabric034",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "feltro"
+    ],
+    "sha256": "10ce98f31a2fd336d2bcb82731d35502932f38da42446980bc91a08166d5fb53",
+    "outputSha256": "8e8d2ba056e2f42c36c46d2d14fe99b6818e5d936220362cce86034b8d9e942e"
+  },
+  {
+    "id": "casa-superficie-metal032",
+    "kind": "superficie",
+    "name": "Superfície · Metal riscado",
+    "group": "Superfícies",
+    "sourceUrl": "https://ambientcg.com/get?file=Metal032_1K-JPG.zip",
+    "zipMember": "Metal032_1K-JPG_Color.jpg",
+    "page": "https://ambientcg.com/a/Metal032",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [
+      "metal"
+    ],
+    "sha256": "9e4f363905a647958c273154fa125d2a6440892d0e583f9b3af24bb08b5afc3c",
+    "outputSha256": "59d4a57a1d9aec1fff3d8922bf915c20492efb6ced5c19583b3c6627697af13c"
+  },
+  {
+    "id": "casa-micro-smear001",
+    "kind": "micro",
+    "name": "Microtextura · Borrões de dedo",
+    "group": "Microtexturas",
+    "sourceUrl": "https://ambientcg.com/get?file=Smear001_1K-JPG.zip",
+    "zipMember": "Smear001_1K-JPG_Roughness.jpg",
+    "page": "https://ambientcg.com/a/Smear001",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [],
+    "sha256": "ed505926162830f5974abe32898c20b56acc4eae4fc115e6a53cc162feafe61e",
+    "outputSha256": "dd427dab65bea75b7c761ba859eb6dc2b957dc9befa3bd2889d191459563beb9"
+  },
+  {
+    "id": "casa-micro-scratches001",
+    "kind": "micro",
+    "name": "Microtextura · Riscos A",
+    "group": "Microtexturas",
+    "sourceUrl": "https://ambientcg.com/get?file=Scratches001_1K-JPG.zip",
+    "zipMember": "Scratches001_1K-JPG_Opacity.jpg",
+    "page": "https://ambientcg.com/a/Scratches001",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [],
+    "sha256": "58fe2b177277e2344ceb540820c4ac6a6180ffd9dcd817f54732b8ee2d0fade8",
+    "outputSha256": "326d704863d0c91ebe014cba9165b0662d1d87fee5f9ae4de2d5d4a1a12b9a59"
+  },
+  {
+    "id": "casa-micro-scratches002",
+    "kind": "micro",
+    "name": "Microtextura · Riscos B",
+    "group": "Microtexturas",
+    "sourceUrl": "https://ambientcg.com/get?file=Scratches002_1K-JPG.zip",
+    "zipMember": "Scratches002_1K-JPG_Opacity.jpg",
+    "page": "https://ambientcg.com/a/Scratches002",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [],
+    "sha256": "4b20f9a08798c00fc01787c176a28de06896a77c5cf2ad7f3093a4fd18ab1091",
+    "outputSha256": "5f565c3b7bda93f0fa71f098a0c6914d26775aa15f165cb7b2d87341071d786a"
+  },
+  {
+    "id": "casa-micro-scratches003",
+    "kind": "micro",
+    "name": "Microtextura · Riscos C",
+    "group": "Microtexturas",
+    "sourceUrl": "https://ambientcg.com/get?file=Scratches003_1K-JPG.zip",
+    "zipMember": "Scratches003_1K-JPG_Opacity.jpg",
+    "page": "https://ambientcg.com/a/Scratches003",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [],
+    "sha256": "6c7dbaabc15e9085759f9d18ae7008c5696cce87bf637cf272f159a3cdee5e7c",
+    "outputSha256": "8dc54ae5bcb6f06a67d6aed9c887c297435ca2fd1d2e4f9281187ab05b96b5c4"
+  },
+  {
+    "id": "casa-micro-scratches004",
+    "kind": "micro",
+    "name": "Microtextura · Riscos D",
+    "group": "Microtexturas",
+    "sourceUrl": "https://ambientcg.com/get?file=Scratches004_1K-JPG.zip",
+    "zipMember": "Scratches004_1K-JPG_Opacity.jpg",
+    "page": "https://ambientcg.com/a/Scratches004",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [],
+    "sha256": "f6869bcadc20ba3af8d4d4714a54c6f9fa10002598bd297ea034875e64b5fb0b",
+    "outputSha256": "65847e54f9a68a80c45b5ae1504ecbd1e778a4ea8bb57b11dfd1f4059b69c152"
+  },
+  {
+    "id": "casa-micro-scratches005",
+    "kind": "micro",
+    "name": "Microtextura · Riscos E",
+    "group": "Microtexturas",
+    "sourceUrl": "https://ambientcg.com/get?file=Scratches005_1K-JPG.zip",
+    "zipMember": "Scratches005_1K-JPG_Opacity.jpg",
+    "page": "https://ambientcg.com/a/Scratches005",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "crop": null,
+    "tags": [],
+    "sha256": "22dee57dad7d7658bf7b0073d8da2948df8bd47da594c78a89ed14d6432a3c2c",
+    "outputSha256": "1c74d6f6bd2bb8f62a0df18990385b7c39316150c3ec8beb2ae1a43543b62ef6"
   }
 ]

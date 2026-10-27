@@ -87,7 +87,7 @@ O acervo artístico público do Ateliê distribuído em `public/colecao/` é com
 
 - **Papéis procedurais (48 arquivos WebP em 3 idades)**: gerados por algoritmos puros em código (`src/domain/noise.js` e `scripts/colecao/papers.js`).
 - **Texturas de sobreposição (53 arquivos WebP com canal alfa)**: manchas de café, umidade, sangue oxidado, poeira, marcas queimadas, relevos de amassados, dobras e impressões digitais.
-- **Elementos vetoriais (258 itens em SVG)**: carimbos burocráticos, marcas periciais, selos consulares, grampos, clipes, fitas adesivas transparentes e fita crepe.
+- **Elementos vetoriais (282 itens em SVG)**: carimbos burocráticos, marcas periciais, selos consulares, grampos, clipes, fitas adesivas transparentes e fita crepe.
 - **Modelos de documentos (39 modelos estruturados em JSON)**: cartas de época, telegramas, certidões, boletins de ocorrência, fichas de investigação, recortes de jornal, polaroides e laudos.
 
 ### Licença dos Ativos da Coleção da Casa
@@ -192,7 +192,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND.
 
 ## Material de terceiros (CC0 e domínio público)
 
-Fotografias e mapas da coleção da casa vêm de arquivos em domínio público ou CC0. Cada arquivo é recortado, passado para preto e branco e reduzido para 900 px; o original, o autor e a licença ficam registrados em `scripts/colecao/externos/externos.lock.json` (com SHA-256).
+Fotografias, mapas, papéis escaneados, superfícies e microtexturas da coleção da casa vêm de arquivos em domínio público ou CC0. Fotos e microtexturas são recortadas e passadas para preto e branco; papéis e superfícies mantêm a cor; todos são reduzidos e gravados em WebP; o original, o autor e a licença ficam registrados em `scripts/colecao/externos/externos.lock.json` (com SHA-256).
 
 | Id | Item | Autor | Licença | Origem | SHA-256 (início) |
 |---|---|---|---|---|---|
@@ -213,3 +213,27 @@ Fotografias e mapas da coleção da casa vêm de arquivos em domínio público o
 | `casa-foto-mapa-fortificacoes-1816` | Mapa · cidade e fortificações (1816) | Sidney Hall | PD-old-100 | [página](https://commons.wikimedia.org/wiki/File:Plan_of_the_city_and_fortifications_of_algiers_-_1816.jpg) | `7eb54dc41750` |
 | `casa-foto-mapa-amsterda-1835` | Mapa · Amsterdã (1835) | William Barnard Clarke | PD-Art, PD-old | [página](https://commons.wikimedia.org/wiki/File:1835_S.D.U.K._City_Map_or_Plan_of_Amsterdam,_The_Netherlands_-_Geographicus_-_Amsterdam-SUDK-1835.jpg) | `9efebf23df67` |
 | `casa-foto-mapa-singapura-1893` | Mapa · porto colonial (1893) | The Edinburgh Geographical Institute / John Bartholomew and Co. | PD-old-70 | [página](https://commons.wikimedia.org/wiki/File:Plan_map_of_the_City_of_Singapore_of_British_Malaya,_from_the_Constable%27s_Hand_Atlas_of_India_(1893).jpg) | `46db138b3619` |
+| `casa-scan-paper001` | Escaneado · Papel branco liso | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Paper001) | `21b3b955d9cd` |
+| `casa-scan-paper002` | Escaneado · Papel pardo de embrulho | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Paper002) | `74b88bf99a8d` |
+| `casa-scan-paper003` | Escaneado · Papel branco vincado | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Paper003) | `7939efd9c04e` |
+| `casa-scan-paper004` | Escaneado · Papel pardo de pacote | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Paper004) | `b85d4ec4a4fa` |
+| `casa-scan-paper005` | Escaneado · Papel pardo ondulado | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Paper005) | `1da2f1a7e26a` |
+| `casa-scan-paper006` | Escaneado · Papel bege | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Paper006) | `b307a70907ee` |
+| `casa-scan-cardboard001` | Escaneado · Papelão rasgado | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Cardboard001) | `0c9c5b33e237` |
+| `casa-scan-cardboard002` | Escaneado · Papelão limpo | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Cardboard002) | `915a3827d343` |
+| `casa-scan-cardboard003` | Escaneado · Papelão rompido | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Cardboard003) | `8decccfdaad9` |
+| `casa-scan-cardboard004` | Escaneado · Papelão liso | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Cardboard004) | `c75c518d8ab2` |
+| `casa-superficie-cork001` | Superfície · Cortiça fina | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Cork001) | `54e845caae51` |
+| `casa-superficie-cork002` | Superfície · Cortiça grossa | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Cork002) | `1177bc13e72f` |
+| `casa-superficie-leather004` | Superfície · Couro marrom | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Leather004) | `edffeca90b6d` |
+| `casa-superficie-leather026` | Superfície · Couro escuro | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Leather026) | `6af2f446f985` |
+| `casa-superficie-wood026` | Superfície · Madeira clara | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Wood026) | `66ce02780f03` |
+| `casa-superficie-wood060` | Superfície · Madeira escura | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Wood060) | `d24016c47f4c` |
+| `casa-superficie-fabric034` | Superfície · Feltro | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Fabric034) | `10ce98f31a2f` |
+| `casa-superficie-metal032` | Superfície · Metal riscado | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Metal032) | `9e4f363905a6` |
+| `casa-micro-smear001` | Microtextura · Borrões de dedo | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Smear001) | `ed5059261628` |
+| `casa-micro-scratches001` | Microtextura · Riscos A | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Scratches001) | `58fe2b177277` |
+| `casa-micro-scratches002` | Microtextura · Riscos B | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Scratches002) | `4b20f9a08798` |
+| `casa-micro-scratches003` | Microtextura · Riscos C | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Scratches003) | `6c7dbaabc15e` |
+| `casa-micro-scratches004` | Microtextura · Riscos D | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Scratches004) | `f6869bcadc20` |
+| `casa-micro-scratches005` | Microtextura · Riscos E | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Scratches005) | `22dee57dad7d` |

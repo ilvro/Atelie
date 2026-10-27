@@ -5920,6 +5920,418 @@
       "width": 900,
       "height": 698,
       "license": "PD-old-70"
+    },
+    {
+      "id": "casa-scan-paper001",
+      "kind": "element",
+      "name": "Escaneado · Papel branco liso",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "branco"
+      ],
+      "file": "papeis/escaneados/casa-scan-paper001.webp",
+      "preview": "previews/casa-scan-paper001.webp",
+      "width": 2048,
+      "height": 1201,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-paper002",
+      "kind": "element",
+      "name": "Escaneado · Papel pardo de embrulho",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "pardo"
+      ],
+      "file": "papeis/escaneados/casa-scan-paper002.webp",
+      "preview": "previews/casa-scan-paper002.webp",
+      "width": 1588,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-paper003",
+      "kind": "element",
+      "name": "Escaneado · Papel branco vincado",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "vincado"
+      ],
+      "file": "papeis/escaneados/casa-scan-paper003.webp",
+      "preview": "previews/casa-scan-paper003.webp",
+      "width": 2048,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-paper004",
+      "kind": "element",
+      "name": "Escaneado · Papel pardo de pacote",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "pardo"
+      ],
+      "file": "papeis/escaneados/casa-scan-paper004.webp",
+      "preview": "previews/casa-scan-paper004.webp",
+      "width": 2048,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-paper005",
+      "kind": "element",
+      "name": "Escaneado · Papel pardo ondulado",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "pardo"
+      ],
+      "file": "papeis/escaneados/casa-scan-paper005.webp",
+      "preview": "previews/casa-scan-paper005.webp",
+      "width": 2048,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-paper006",
+      "kind": "element",
+      "name": "Escaneado · Papel bege",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "bege"
+      ],
+      "file": "papeis/escaneados/casa-scan-paper006.webp",
+      "preview": "previews/casa-scan-paper006.webp",
+      "width": 2048,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-cardboard001",
+      "kind": "element",
+      "name": "Escaneado · Papelão rasgado",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "papelão"
+      ],
+      "file": "papeis/escaneados/casa-scan-cardboard001.webp",
+      "preview": "previews/casa-scan-cardboard001.webp",
+      "width": 2048,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-cardboard002",
+      "kind": "element",
+      "name": "Escaneado · Papelão limpo",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "papelão"
+      ],
+      "file": "papeis/escaneados/casa-scan-cardboard002.webp",
+      "preview": "previews/casa-scan-cardboard002.webp",
+      "width": 2048,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-cardboard003",
+      "kind": "element",
+      "name": "Escaneado · Papelão rompido",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "papelão"
+      ],
+      "file": "papeis/escaneados/casa-scan-cardboard003.webp",
+      "preview": "previews/casa-scan-cardboard003.webp",
+      "width": 2048,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-cardboard004",
+      "kind": "element",
+      "name": "Escaneado · Papelão liso",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "papelão"
+      ],
+      "file": "papeis/escaneados/casa-scan-cardboard004.webp",
+      "preview": "previews/casa-scan-cardboard004.webp",
+      "width": 2048,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-superficie-cork001",
+      "kind": "element",
+      "name": "Superfície · Cortiça fina",
+      "category": "Texturas",
+      "subcategory": "Superfícies",
+      "tags": [
+        "superfície",
+        "material",
+        "cortiça"
+      ],
+      "file": "texturas/superficies/casa-superficie-cork001.webp",
+      "preview": "previews/casa-superficie-cork001.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-superficie-cork002",
+      "kind": "element",
+      "name": "Superfície · Cortiça grossa",
+      "category": "Texturas",
+      "subcategory": "Superfícies",
+      "tags": [
+        "superfície",
+        "material",
+        "cortiça"
+      ],
+      "file": "texturas/superficies/casa-superficie-cork002.webp",
+      "preview": "previews/casa-superficie-cork002.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-superficie-leather004",
+      "kind": "element",
+      "name": "Superfície · Couro marrom",
+      "category": "Texturas",
+      "subcategory": "Superfícies",
+      "tags": [
+        "superfície",
+        "material",
+        "couro"
+      ],
+      "file": "texturas/superficies/casa-superficie-leather004.webp",
+      "preview": "previews/casa-superficie-leather004.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-superficie-leather026",
+      "kind": "element",
+      "name": "Superfície · Couro escuro",
+      "category": "Texturas",
+      "subcategory": "Superfícies",
+      "tags": [
+        "superfície",
+        "material",
+        "couro"
+      ],
+      "file": "texturas/superficies/casa-superficie-leather026.webp",
+      "preview": "previews/casa-superficie-leather026.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-superficie-wood026",
+      "kind": "element",
+      "name": "Superfície · Madeira clara",
+      "category": "Texturas",
+      "subcategory": "Superfícies",
+      "tags": [
+        "superfície",
+        "material",
+        "madeira"
+      ],
+      "file": "texturas/superficies/casa-superficie-wood026.webp",
+      "preview": "previews/casa-superficie-wood026.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-superficie-wood060",
+      "kind": "element",
+      "name": "Superfície · Madeira escura",
+      "category": "Texturas",
+      "subcategory": "Superfícies",
+      "tags": [
+        "superfície",
+        "material",
+        "madeira"
+      ],
+      "file": "texturas/superficies/casa-superficie-wood060.webp",
+      "preview": "previews/casa-superficie-wood060.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-superficie-fabric034",
+      "kind": "element",
+      "name": "Superfície · Feltro",
+      "category": "Texturas",
+      "subcategory": "Superfícies",
+      "tags": [
+        "superfície",
+        "material",
+        "feltro"
+      ],
+      "file": "texturas/superficies/casa-superficie-fabric034.webp",
+      "preview": "previews/casa-superficie-fabric034.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-superficie-metal032",
+      "kind": "element",
+      "name": "Superfície · Metal riscado",
+      "category": "Texturas",
+      "subcategory": "Superfícies",
+      "tags": [
+        "superfície",
+        "material",
+        "metal"
+      ],
+      "file": "texturas/superficies/casa-superficie-metal032.webp",
+      "preview": "previews/casa-superficie-metal032.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-micro-smear001",
+      "kind": "element",
+      "name": "Microtextura · Borrões de dedo",
+      "category": "Texturas",
+      "subcategory": "Microtexturas",
+      "tags": [
+        "microtextura",
+        "sobreposição"
+      ],
+      "file": "texturas/micro/casa-micro-smear001.webp",
+      "preview": "previews/casa-micro-smear001.webp",
+      "width": 1024,
+      "height": 941,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-micro-scratches001",
+      "kind": "element",
+      "name": "Microtextura · Riscos A",
+      "category": "Texturas",
+      "subcategory": "Microtexturas",
+      "tags": [
+        "microtextura",
+        "sobreposição"
+      ],
+      "file": "texturas/micro/casa-micro-scratches001.webp",
+      "preview": "previews/casa-micro-scratches001.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-micro-scratches002",
+      "kind": "element",
+      "name": "Microtextura · Riscos B",
+      "category": "Texturas",
+      "subcategory": "Microtexturas",
+      "tags": [
+        "microtextura",
+        "sobreposição"
+      ],
+      "file": "texturas/micro/casa-micro-scratches002.webp",
+      "preview": "previews/casa-micro-scratches002.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-micro-scratches003",
+      "kind": "element",
+      "name": "Microtextura · Riscos C",
+      "category": "Texturas",
+      "subcategory": "Microtexturas",
+      "tags": [
+        "microtextura",
+        "sobreposição"
+      ],
+      "file": "texturas/micro/casa-micro-scratches003.webp",
+      "preview": "previews/casa-micro-scratches003.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-micro-scratches004",
+      "kind": "element",
+      "name": "Microtextura · Riscos D",
+      "category": "Texturas",
+      "subcategory": "Microtexturas",
+      "tags": [
+        "microtextura",
+        "sobreposição"
+      ],
+      "file": "texturas/micro/casa-micro-scratches004.webp",
+      "preview": "previews/casa-micro-scratches004.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-micro-scratches005",
+      "kind": "element",
+      "name": "Microtextura · Riscos E",
+      "category": "Texturas",
+      "subcategory": "Microtexturas",
+      "tags": [
+        "microtextura",
+        "sobreposição"
+      ],
+      "file": "texturas/micro/casa-micro-scratches005.webp",
+      "preview": "previews/casa-micro-scratches005.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
     }
   ]
 }

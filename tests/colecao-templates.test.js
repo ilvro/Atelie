@@ -135,24 +135,37 @@ test('colecao-templates: nenhum modelo da casa tem foto vazia (a não ser allowE
 });
 
 test('colecao-externos: o lock registra origem, licença aceita e SHA-256 batendo com os arquivos gravados', async () => {
-  const { readLock, entryProblems, sha256, licensesSection } = await import('../scripts/colecao/externos/fetch.js');
+  const { readLock, entryProblems, sha256, licensesSection, kindOf } = await import('../scripts/colecao/externos/fetch.js');
   const entries = await readLock();
-  assert.ok(entries.length >= 8, 'ao menos 8 fotos');
+  assert.ok(entries.length >= 8, 'ao menos 8 entradas');
   const lib = JSON.parse(await fs.readFile(libraryPath, 'utf8'));
   for (const entry of entries) {
     assert.deepEqual(entryProblems(entry), [], entry.id);
     assert.match(entry.sha256, /^[0-9a-f]{64}$/, `${entry.id}: SHA-256 do original`);
-    const out = await fs.readFile(path.join(colecaoDir, 'fotos', `${entry.id}.webp`));
+    const out = await fs.readFile(path.join(colecaoDir, kindOf(entry).dir, `${entry.id}.webp`));
     assert.equal(sha256(out), entry.outputSha256, `${entry.id}: arquivo gravado confere com o lock`);
     const item = lib.items.find(i => i.id === entry.id);
-    assert.equal(item?.category, 'Fotografias', `${entry.id} está na biblioteca`);
-    assert.ok(['Retratos', 'Lugares', 'Mapas'].includes(item.subcategory));
+    assert.equal(item?.category, kindOf(entry).category, `${entry.id} está na biblioteca`);
+    if (!entry.kind) assert.ok(['Retratos', 'Lugares', 'Mapas'].includes(item.subcategory));
   }
   const licencas = await fs.readFile(path.join(projectRoot, 'docs/LICENCAS.md'), 'utf8');
   for (const entry of entries) assert.ok(licencas.includes(`\`${entry.id}\``), `${entry.id} está em docs/LICENCAS.md`);
   assert.match(licensesSection(entries), /Material de terceiros \(CC0 e domínio público\)/);
   assert.deepEqual(entryProblems({ ...entries[0], license: 'CC-BY-NC-4.0' }).length > 0, true, 'licença NC é recusada');
   assert.equal(entryProblems({ ...entries[0], id: 'foto-solta' }).length > 0, true);
+});
+
+test('colecao-externos: papéis, superfícies e microtexturas CC0 da C3 estão no lock com zip e arquivo de dentro', async () => {
+  const { readLock, KINDS } = await import('../scripts/colecao/externos/fetch.js');
+  const entries = await readLock();
+  const by = kind => entries.filter(e => e.kind === kind);
+  assert.ok(by('papel').length >= 10 && by('superficie').length >= 8 && by('micro').length >= 6);
+  for (const e of entries.filter(e => e.kind)) {
+    assert.ok(KINDS[e.kind], e.id);
+    assert.match(e.sourceUrl, /\.zip$/, `${e.id}: ambientCG entrega .zip`);
+    assert.match(e.zipMember, /_Color\.jpg$|_Opacity\.jpg$|_Roughness\.jpg$/, `${e.id}: mapa de dentro do zip`);
+    assert.equal(e.license, 'CC0-1.0');
+  }
 });
 
 test('colecao-externos: o tamanho da coleção continua dentro do orçamento de 60 MB', async () => {

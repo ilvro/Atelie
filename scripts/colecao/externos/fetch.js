@@ -15,6 +15,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
+import { unzipSync } from 'fflate';
 import { licensesSection } from './section.js';
 
 export { licensesSection };
@@ -24,6 +25,19 @@ const lockPath = path.join(root, 'scripts/colecao/externos/externos.lock.json');
 const cacheDir = path.join(root, '.cache/externos');
 const colecaoDir = path.join(root, 'public/colecao');
 const fotosDir = path.join(colecaoDir, 'fotos');
+
+/**
+ * What each kind of entry becomes. `foto` is the default (the first lock entries have no `kind`).
+ * Scans and surfaces keep their colour; micro-textures go to grey so they can sit over anything.
+ */
+export const KINDS = {
+  foto: { prefix: 'casa-foto-', dir: 'fotos', category: 'Fotografias', side: 900, quality: 80, grayscale: true, tags: ['foto'] },
+  papel: { prefix: 'casa-scan-', dir: 'papeis/escaneados', category: 'Papéis', subcategory: 'Escaneados', side: 2048, quality: 78, grayscale: false, tags: ['papel', 'escaneado', 'fibra'] },
+  superficie: { prefix: 'casa-superficie-', dir: 'texturas/superficies', category: 'Texturas', subcategory: 'Superfícies', side: 1024, quality: 78, grayscale: false, tags: ['superfície', 'material'] },
+  micro: { prefix: 'casa-micro-', dir: 'texturas/micro', category: 'Texturas', subcategory: 'Microtexturas', side: 1024, quality: 74, grayscale: true, tags: ['microtextura', 'sobreposição'] },
+};
+export const kindOf = entry => KINDS[entry.kind || 'foto'];
+export const EXTERNAL_PREFIXES = Object.values(KINDS).map(k => k.prefix);
 const previewsDir = path.join(colecaoDir, 'previews');
 const libraryPath = path.join(colecaoDir, 'library.json');
 
@@ -44,7 +58,10 @@ export function entryProblems(entry) {
   for (const key of ['id', 'name', 'group', 'sourceUrl', 'page', 'author', 'license', 'licenseUrl']) {
     if (!entry[key]) problems.push(`${entry.id || '?'}: falta "${key}"`);
   }
-  if (!/^casa-foto-[a-z0-9-]+$/.test(entry.id || '')) problems.push(`${entry.id}: id deve ser casa-foto-…`);
+  const kind = kindOf(entry);
+  if (!kind) problems.push(`${entry.id}: tipo "${entry.kind}" desconhecido`);
+  else if (!new RegExp(`^${kind.prefix}[a-z0-9-]+$`).test(entry.id || '')) problems.push(`${entry.id}: id deve ser ${kind.prefix}…`);
+  if (entry.zipMember && !/\.zip(\?|$)/i.test(entry.sourceUrl || '')) problems.push(`${entry.id}: zipMember pede um arquivo .zip`);
   if (!ALLOWED_LICENSE.test(entry.license || '')) problems.push(`${entry.id}: licença "${entry.license}" não é CC0 nem domínio público aceito`);
   if (/NC|personal use|royalty/i.test(entry.license || '')) problems.push(`${entry.id}: licença proibida`);
   if (entry.crop) {
@@ -65,7 +82,7 @@ async function download(url) {
 }
 
 /** Crop, neutral black and white, long side 900 px, WebP 80. */
-export async function processPhoto(buffer, { crop, grayscale = true } = {}) {
+export async function processPhoto(buffer, { crop, grayscale = true, side = LONG_SIDE, quality = QUALITY } = {}) {
   let image = sharp(buffer, { failOn: 'none' }).rotate();
   const meta = await image.metadata();
   if (crop) {
@@ -77,7 +94,16 @@ export async function processPhoto(buffer, { crop, grayscale = true } = {}) {
     }).toBuffer());
   }
   if (grayscale) image = image.grayscale().normalise({ lower: 1, upper: 99 });
-  return image.resize({ width: LONG_SIDE, height: LONG_SIDE, fit: 'inside', withoutEnlargement: true }).webp({ quality: QUALITY }).toBuffer({ resolveWithObject: true });
+  return image.resize({ width: side, height: side, fit: 'inside', withoutEnlargement: true }).webp({ quality }).toBuffer({ resolveWithObject: true });
+}
+
+/** The picture inside what was downloaded: the file itself, or one member of a zip (ambientCG ships .zip). */
+export function pictureOf(original, entry) {
+  if (!entry.zipMember) return original;
+  const files = unzipSync(new Uint8Array(original), { filter: f => f.name === entry.zipMember });
+  const found = files[entry.zipMember];
+  if (!found) throw new Error(`${entry.id}: "${entry.zipMember}" não está no zip`);
+  return Buffer.from(found);
 }
 
 const GROUP_TAGS = { Retratos: ['foto', 'retrato', 'pessoa'], Lugares: ['foto', 'lugar', 'cena'], Mapas: ['foto', 'mapa', 'antigo'] };
@@ -95,7 +121,10 @@ export async function run({ lock: recordNew = false, verify = false } = {}) {
 
   for (const entry of entries) {
     const cachePath = path.join(cacheDir, `${entry.id}.bin`);
-    const outPath = path.join(fotosDir, `${entry.id}.webp`);
+    const kind = kindOf(entry);
+    const outDir = path.join(colecaoDir, kind.dir);
+    const outPath = path.join(outDir, `${entry.id}.webp`);
+    await fs.mkdir(outDir, { recursive: true });
 
     if (verify) {
       if (await exists(cachePath)) {
@@ -122,7 +151,7 @@ export async function run({ lock: recordNew = false, verify = false } = {}) {
       throw new Error(`${entry.id}: SHA-256 do original mudou (${hash})`);
     }
 
-    const { data, info } = await processPhoto(original, { crop: entry.crop, grayscale: entry.grayscale !== false });
+    const { data, info } = await processPhoto(pictureOf(original, entry), { crop: entry.crop, grayscale: entry.grayscale ?? kind.grayscale, side: kind.side, quality: kind.quality });
     await fs.writeFile(outPath, data);
     const outputHash = sha256(data);
     if (recordNew || !entry.outputSha256) entry.outputSha256 = outputHash;
@@ -135,10 +164,10 @@ export async function run({ lock: recordNew = false, verify = false } = {}) {
       id: entry.id,
       kind: 'element',
       name: entry.name,
-      category: 'Fotografias',
-      subcategory: entry.group,
-      tags: GROUP_TAGS[entry.group] || ['foto'],
-      file: `fotos/${entry.id}.webp`,
+      category: kind.category,
+      subcategory: kind.subcategory || entry.group,
+      tags: [...(GROUP_TAGS[entry.group] || kind.tags), ...(entry.tags || [])],
+      file: `${kind.dir}/${entry.id}.webp`,
       preview: `previews/${entry.id}.webp`,
       width: info.width,
       height: info.height,
@@ -155,11 +184,11 @@ export async function run({ lock: recordNew = false, verify = false } = {}) {
   if (recordNew) await fs.writeFile(lockPath, `${JSON.stringify(entries, null, 2)}\n`);
 
   const library = JSON.parse(await fs.readFile(libraryPath, 'utf8'));
-  library.items = [...library.items.filter(i => !i.id.startsWith('casa-foto-')), ...items];
+  library.items = [...library.items.filter(i => !EXTERNAL_PREFIXES.some(prefix => i.id.startsWith(prefix))), ...items];
   await fs.writeFile(libraryPath, JSON.stringify(library, null, 2), 'utf8');
 
   console.log('[externos] rode `node scripts/licenses.js` para atualizar docs/LICENCAS.md.');
-  console.log(`[externos] ${items.length} fotografias na coleção.`);
+  console.log(`[externos] ${items.length} arquivos de terceiros na coleção.`);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

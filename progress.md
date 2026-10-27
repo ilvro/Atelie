@@ -269,6 +269,23 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 - Decidir como o Tabletop trata folhas recortadas (PNG com alfa) sem fundo: exige detecção de alfa no Tabletop ou mudança de contrato.
 - Reduzir o `LEGADO` refazendo os modelos antigos (C3 em diante).
 
+## Coleção ampliada · Fase C3 (resto do material externo)
+
+### Feito
+- `externos/fetch.js` ganhou tipos de entrada (`kind`: `papel`, `superficie`, `micro`, além de `foto`) e `zipMember` (ambientCG entrega `.zip`; o mapa de dentro é extraído com `fflate`). Papéis e superfícies mantêm a cor; microtexturas vão para cinza; cada tipo tem lado maior e qualidade próprios. Mesmo lock, mesmo `--lock`/`--verify`, mesma seção em `docs/LICENCAS.md`.
+- **10 papéis escaneados** (Paper001–006, Cardboard001–004; categoria Papéis › Escaneados, 2048 px, 3,1 MB), **8 superfícies** (2 cortiças, 2 couros, 2 madeiras, feltro, metal; Texturas › Superfícies, 1,1 MB) e **6 microtexturas** (riscos A–E e borrões de dedo; Texturas › Microtexturas). Todas ambientCG, CC0-1.0, com SHA-256 do zip e do arquivo gravado.
+- Coleção em ~26 MB (limite de 60 MB).
+
+### Validação
+- `npm test`: 229 passando; `fetch.js --verify` confere as 41 entradas.
+
+### Pendências reais
+- O plano pedia 20 papéis escaneados; o ambientCG só tem 10 papéis/papelões CC0 (pautado, arroz, cartolina e almaço não existem como escaneamento CC0 lá). Esses ficam para os papéis procedurais da C4.
+- Três "Marcas de uso" (SurfaceImperfections) foram descartadas por saírem quase lisas; faltam poeira e meio-tom de jornal (4 das 10 microtexturas previstas), melhor gerar por código na C4.
+- Mais fotos (até 20) não entraram: só valem se os lotes C8–C11 pedirem. Continuam faltando 27 das 44 fotos da C0.
+
+---
+
 ## Refinamento Visual e Ergonomia de UI
 
 ### Feito
