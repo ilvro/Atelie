@@ -45,6 +45,28 @@
     },
     {
       "id": "l-2-bilhete-geladeira",
+      "name": "Grão fino",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.15,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 700,
+      "height": 700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "grain",
+        "seed": 434,
+        "amount": 0.5,
+        "params": {}
+      }
+    },
+    {
+      "id": "l-3-bilhete-geladeira",
       "name": "Fita crepe no topo",
       "kind": "image",
       "visible": true,

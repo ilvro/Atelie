@@ -57,6 +57,115 @@
     },
     {
       "id": "l-2-carta-envelope-frente",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 558,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-carta-envelope-frente",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 575,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-carta-envelope-frente",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.2,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-carta-envelope-frente",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 609,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-carta-envelope-frente",
       "name": "Dobra de três",
       "kind": "image",
       "visible": true,
@@ -152,7 +261,7 @@
           "weight": 400,
           "italic": false
         },
-        "size": 36,
+        "size": 35,
         "color": "#181938",
         "align": "left",
         "valign": "top",
@@ -206,7 +315,7 @@
       }
     },
     {
-      "id": "l-3-carta-envelope-frente",
+      "id": "l-7-carta-envelope-frente",
       "name": "Mancha d'água",
       "kind": "image",
       "visible": true,

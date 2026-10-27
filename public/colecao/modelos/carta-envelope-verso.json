@@ -57,6 +57,115 @@
     },
     {
       "id": "l-2-carta-envelope-verso",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 650,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 589,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-carta-envelope-verso",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 650,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 606,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-carta-envelope-verso",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.2,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 650,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-carta-envelope-verso",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 650,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 640,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-carta-envelope-verso",
       "name": "Selo de postagem",
       "kind": "image",
       "visible": true,
@@ -92,7 +201,7 @@
       }
     },
     {
-      "id": "l-3-carta-envelope-verso",
+      "id": "l-7-carta-envelope-verso",
       "name": "Carimbo de postagem",
       "kind": "image",
       "visible": true,
@@ -131,7 +240,7 @@
       }
     },
     {
-      "id": "l-4-carta-envelope-verso",
+      "id": "l-8-carta-envelope-verso",
       "name": "Lacre de cera vermelho",
       "kind": "image",
       "visible": true,
@@ -189,7 +298,7 @@
           "weight": 400,
           "italic": false
         },
-        "size": 38,
+        "size": 36,
         "color": "#181b33",
         "align": "left",
         "valign": "top",
@@ -227,7 +336,7 @@
           "weight": 400,
           "italic": false
         },
-        "size": 32,
+        "size": 29,
         "color": "#181b33",
         "align": "left",
         "valign": "top",

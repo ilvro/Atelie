@@ -57,6 +57,115 @@
     },
     {
       "id": "l-2-diario-culto-uv",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 1643,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-diario-culto-uv",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 1660,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-diario-culto-uv",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.2,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-diario-culto-uv",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 1694,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-diario-culto-uv",
       "name": "Marcas de fuligem",
       "kind": "image",
       "visible": true,
@@ -109,8 +218,8 @@
       "text": {
         "content": "14 de Novembro — Entrada XVII",
         "font": {
-          "family": "Caveat",
-          "library": "casa-font-caveat-regular",
+          "family": "La Belle Aurore",
+          "library": "casa-font-labelleaurore",
           "weight": 400,
           "italic": false
         },
@@ -147,8 +256,8 @@
       "text": {
         "content": "As reuniões na cripta sob o convento estão cada vez mais concorridas. Ontem compareceram mais de vinte irmãos, todos encapuzados e em silêncio absoluto.\n\nO padre Bento liderou as preces em latim arcaico enquanto o cálice de bronze passava de mão em mão. Todos bebemos. O gosto era amargo e ferroso, como água colhida de poço profundo.\n\nDepois que as tochas foram apagadas, ouvimos os sussurros novamente vindos do fundo da nave. Não eram vozes humanas. Sei que não posso mais voltar atrás.",
         "font": {
-          "family": "Caveat",
-          "library": "casa-font-caveat-regular",
+          "family": "La Belle Aurore",
+          "library": "casa-font-labelleaurore",
           "weight": 400,
           "italic": false
         },
@@ -185,8 +294,8 @@
       "text": {
         "content": "O QUE DORME NAS PROFUNDEZAS DESPERTARÁ QUANDO A ESTRELA NEGRA ASCENDER AO ZÊNITE",
         "font": {
-          "family": "Pirata One",
-          "library": "casa-font-pirataone-regular",
+          "family": "La Belle Aurore",
+          "library": "casa-font-labelleaurore",
           "weight": 400,
           "italic": false
         },
@@ -203,6 +312,42 @@
           "wear": 0,
           "seed": 1
         }
+      }
+    },
+    {
+      "id": "l-7-diario-culto-uv",
+      "name": "Selo da instituição",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 100,
+      "y": 1454,
+      "width": 190,
+      "height": 215,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-emblema-universo-irmandade-carimbo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
       }
     }
   ],

@@ -57,6 +57,115 @@
     },
     {
       "id": "l-2-cartao-evidencia",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 1116,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-cartao-evidencia",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 1133,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-cartao-evidencia",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.2,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-cartao-evidencia",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 1167,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-cartao-evidencia",
       "name": "Ilhós",
       "kind": "shape",
       "visible": true,
@@ -80,7 +189,7 @@
       }
     },
     {
-      "id": "l-3-cartao-evidencia",
+      "id": "l-7-cartao-evidencia",
       "name": "Fita barbante",
       "kind": "image",
       "visible": true,
@@ -116,7 +225,7 @@
       }
     },
     {
-      "id": "l-4-cartao-evidencia",
+      "id": "l-8-cartao-evidencia",
       "name": "Título etiqueta",
       "kind": "text",
       "visible": true,
@@ -154,7 +263,7 @@
       }
     },
     {
-      "id": "l-5-cartao-evidencia",
+      "id": "l-9-cartao-evidencia",
       "name": "Linha topo",
       "kind": "shape",
       "visible": true,
@@ -216,7 +325,7 @@
       }
     },
     {
-      "id": "l-6-cartao-evidencia",
+      "id": "l-10-cartao-evidencia",
       "name": "Carimbo EVIDÊNCIA",
       "kind": "image",
       "visible": true,
@@ -369,7 +478,7 @@
       }
     },
     {
-      "id": "l-7-cartao-evidencia",
+      "id": "l-11-cartao-evidencia",
       "name": "Data da coleta",
       "kind": "text",
       "visible": true,

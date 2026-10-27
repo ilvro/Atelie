@@ -57,6 +57,115 @@
     },
     {
       "id": "l-2-internacao-sanatorio",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 1364,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-internacao-sanatorio",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 1381,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-internacao-sanatorio",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.2,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-internacao-sanatorio",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 1415,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-internacao-sanatorio",
       "name": "Cabeçalho sanatório",
       "kind": "text",
       "visible": true,
@@ -78,7 +187,7 @@
           "weight": 700,
           "italic": false
         },
-        "size": 25,
+        "size": 24,
         "color": "#1a1a1a",
         "align": "center",
         "valign": "top",
@@ -94,7 +203,7 @@
       }
     },
     {
-      "id": "l-3-internacao-sanatorio",
+      "id": "l-7-internacao-sanatorio",
       "name": "Linha topo",
       "kind": "shape",
       "visible": true,
@@ -118,7 +227,7 @@
       }
     },
     {
-      "id": "l-4-internacao-sanatorio",
+      "id": "l-8-internacao-sanatorio",
       "name": "Carimbo URGENTE",
       "kind": "image",
       "visible": true,
@@ -269,7 +378,7 @@
       }
     },
     {
-      "id": "l-5-internacao-sanatorio",
+      "id": "l-9-internacao-sanatorio",
       "name": "Linha observações",
       "kind": "shape",
       "visible": true,
@@ -331,7 +440,7 @@
       }
     },
     {
-      "id": "l-6-internacao-sanatorio",
+      "id": "l-10-internacao-sanatorio",
       "name": "Assinatura diretor",
       "kind": "text",
       "visible": true,
@@ -366,6 +475,42 @@
           "wear": 0,
           "seed": 1
         }
+      }
+    },
+    {
+      "id": "l-11-internacao-sanatorio",
+      "name": "Selo da instituição",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 100,
+      "y": 1454,
+      "width": 190,
+      "height": 215,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-emblema-universo-sanatorio-carimbo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
       }
     }
   ],

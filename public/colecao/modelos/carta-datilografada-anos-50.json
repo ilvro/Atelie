@@ -57,6 +57,115 @@
     },
     {
       "id": "l-2-carta-datilografada-anos-50",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 372,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-carta-datilografada-anos-50",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 389,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-carta-datilografada-anos-50",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.2,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-4"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-carta-datilografada-anos-50",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 423,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-carta-datilografada-anos-50",
       "name": "Dobra de três partes",
       "kind": "image",
       "visible": true,
@@ -92,7 +201,7 @@
       }
     },
     {
-      "id": "l-3-carta-datilografada-anos-50",
+      "id": "l-7-carta-datilografada-anos-50",
       "name": "Cabeçalho timbrado",
       "kind": "text",
       "visible": true,
@@ -130,7 +239,7 @@
       }
     },
     {
-      "id": "l-4-carta-datilografada-anos-50",
+      "id": "l-8-carta-datilografada-anos-50",
       "name": "Linha timbrada",
       "kind": "shape",
       "visible": true,
@@ -164,7 +273,7 @@
       "x": 160,
       "y": 270,
       "width": 500,
-      "height": 45,
+      "height": 70,
       "rotation": 0,
       "clip": false,
       "light": "both",
@@ -344,7 +453,7 @@
       }
     },
     {
-      "id": "l-5-carta-datilografada-anos-50",
+      "id": "l-9-carta-datilografada-anos-50",
       "name": "Carimbo RECEBIDO",
       "kind": "image",
       "visible": true,
@@ -383,7 +492,7 @@
       }
     },
     {
-      "id": "l-6-carta-datilografada-anos-50",
+      "id": "l-10-carta-datilografada-anos-50",
       "name": "Variação · Carimbo ARQUIVADO",
       "kind": "image",
       "visible": false,

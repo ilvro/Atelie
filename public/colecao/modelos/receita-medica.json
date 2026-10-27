@@ -57,6 +57,115 @@
     },
     {
       "id": "l-2-receita-medica",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1000,
+      "height": 1400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 1302,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-receita-medica",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1000,
+      "height": 1400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 1319,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-receita-medica",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.2,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1000,
+      "height": 1400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-4"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-receita-medica",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1000,
+      "height": 1400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 1353,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-receita-medica",
       "name": "Símbolo médico",
       "kind": "image",
       "visible": true,
@@ -130,7 +239,7 @@
       }
     },
     {
-      "id": "l-3-receita-medica",
+      "id": "l-7-receita-medica",
       "name": "Linha cabeçalho",
       "kind": "shape",
       "visible": true,
@@ -192,7 +301,7 @@
       }
     },
     {
-      "id": "l-4-receita-medica",
+      "id": "l-8-receita-medica",
       "name": "Linha paciente",
       "kind": "shape",
       "visible": true,
@@ -216,7 +325,7 @@
       }
     },
     {
-      "id": "l-5-receita-medica",
+      "id": "l-9-receita-medica",
       "name": "Símbolo Rx",
       "kind": "text",
       "visible": true,
@@ -233,8 +342,8 @@
       "text": {
         "content": "℞",
         "font": {
-          "family": "IM Fell English",
-          "library": "casa-font-im-fell-english-roman",
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
           "weight": 400,
           "italic": false
         },
@@ -292,7 +401,7 @@
       }
     },
     {
-      "id": "l-6-receita-medica",
+      "id": "l-10-receita-medica",
       "name": "Carimbo do médico",
       "kind": "image",
       "visible": true,
@@ -331,7 +440,7 @@
       }
     },
     {
-      "id": "l-7-receita-medica",
+      "id": "l-11-receita-medica",
       "name": "Assinatura",
       "kind": "text",
       "visible": true,
@@ -369,7 +478,7 @@
       }
     },
     {
-      "id": "l-8-receita-medica",
+      "id": "l-12-receita-medica",
       "name": "Data e local",
       "kind": "text",
       "visible": true,
@@ -405,6 +514,82 @@
           "seed": 1
         }
       }
+    },
+    {
+      "id": "l-13-receita-medica",
+      "name": "Posologia",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 1000,
+      "width": 440,
+      "height": 120,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Tomar uma colher após as refeições, por dez dias.",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-14-receita-medica",
+      "name": "Validade",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 1290,
+      "width": 400,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Válida por 30 dias",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
     }
   ],
   "fields": [
@@ -419,6 +604,14 @@
     {
       "layerId": "l-prescricao",
       "label": "Prescrição"
+    },
+    {
+      "layerId": "l-13-receita-medica",
+      "label": "Posologia"
+    },
+    {
+      "layerId": "l-14-receita-medica",
+      "label": "Validade"
     }
   ],
   "source": {

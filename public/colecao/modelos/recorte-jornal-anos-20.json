@@ -57,22 +57,120 @@
     },
     {
       "id": "l-2-recorte-jornal-anos-20",
-      "name": "Rasgo lateral",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 651,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-3-recorte-jornal-anos-20",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 668,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-recorte-jornal-anos-20",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 685,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-5-recorte-jornal-anos-20",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.45,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 702,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-6-recorte-jornal-anos-20",
+      "name": "Sujeira",
       "kind": "image",
       "visible": true,
       "locked": false,
-      "opacity": 1,
-      "blend": "normal",
-      "x": 740,
+      "opacity": 0.4,
+      "blend": "multiply",
+      "x": 0,
       "y": 0,
-      "width": 160,
+      "width": 900,
       "height": 1200,
       "rotation": 0,
       "clip": false,
       "light": "both",
       "image": {
         "src": {
-          "library": "casa-rasgos-4"
+          "library": "casa-sujeira-1"
         },
         "fit": "stretch",
         "crop": null,
@@ -89,6 +187,246 @@
           "invert": false
         },
         "tint": null
+      }
+    },
+    {
+      "id": "l-7-recorte-jornal-anos-20",
+      "name": "Rasgo · bordas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "cut",
+        "seed": 21,
+        "amount": 1,
+        "params": {
+          "rough": 0.9
+        },
+        "edge": "rasgado",
+        "remove": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              0.0143
+            ],
+            [
+              0.9286,
+              0.0124
+            ],
+            [
+              0.8571,
+              0.0132
+            ],
+            [
+              0.7857,
+              0.0129
+            ],
+            [
+              0.7143,
+              0.0136
+            ],
+            [
+              0.6429,
+              0.0149
+            ],
+            [
+              0.5714,
+              0.0177
+            ],
+            [
+              0.5,
+              0.0189
+            ],
+            [
+              0.4286,
+              0.0202
+            ],
+            [
+              0.3571,
+              0.0203
+            ],
+            [
+              0.2857,
+              0.0189
+            ],
+            [
+              0.2143,
+              0.0178
+            ],
+            [
+              0.1429,
+              0.0159
+            ],
+            [
+              0.0714,
+              0.0132
+            ],
+            [
+              0,
+              0.0116
+            ]
+          ],
+          [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              0.9722
+            ],
+            [
+              0.9286,
+              0.9747
+            ],
+            [
+              0.8571,
+              0.9771
+            ],
+            [
+              0.7857,
+              0.9781
+            ],
+            [
+              0.7143,
+              0.9768
+            ],
+            [
+              0.6429,
+              0.98
+            ],
+            [
+              0.5714,
+              0.9796
+            ],
+            [
+              0.5,
+              0.9754
+            ],
+            [
+              0.4286,
+              0.9746
+            ],
+            [
+              0.3571,
+              0.9725
+            ],
+            [
+              0.2857,
+              0.9713
+            ],
+            [
+              0.2143,
+              0.9669
+            ],
+            [
+              0.1429,
+              0.9661
+            ],
+            [
+              0.0714,
+              0.9668
+            ],
+            [
+              0,
+              0.9652
+            ]
+          ],
+          [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0.0115,
+              1
+            ],
+            [
+              0.0112,
+              0.9286
+            ],
+            [
+              0.0136,
+              0.8571
+            ],
+            [
+              0.0158,
+              0.7857
+            ],
+            [
+              0.0177,
+              0.7143
+            ],
+            [
+              0.019,
+              0.6429
+            ],
+            [
+              0.0194,
+              0.5714
+            ],
+            [
+              0.0175,
+              0.5
+            ],
+            [
+              0.0174,
+              0.4286
+            ],
+            [
+              0.0152,
+              0.3571
+            ],
+            [
+              0.0129,
+              0.2857
+            ],
+            [
+              0.0122,
+              0.2143
+            ],
+            [
+              0.0117,
+              0.1429
+            ],
+            [
+              0.0113,
+              0.0714
+            ],
+            [
+              0.0135,
+              0
+            ]
+          ]
+        ],
+        "holes": [],
+        "char": 0.5,
+        "fiber": 0.9
       }
     },
     {
@@ -168,7 +506,7 @@
       }
     },
     {
-      "id": "l-3-recorte-jornal-anos-20",
+      "id": "l-8-recorte-jornal-anos-20",
       "name": "Linha divisória",
       "kind": "shape",
       "visible": true,
@@ -266,7 +604,7 @@
       }
     },
     {
-      "id": "l-4-recorte-jornal-anos-20",
+      "id": "l-9-recorte-jornal-anos-20",
       "name": "Coluna 1",
       "kind": "text",
       "visible": true,

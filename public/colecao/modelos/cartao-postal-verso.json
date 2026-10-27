@@ -57,6 +57,115 @@
     },
     {
       "id": "l-2-cartao-postal-verso",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1400,
+      "height": 900,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 496,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-cartao-postal-verso",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1400,
+      "height": 900,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 513,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-cartao-postal-verso",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.2,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1400,
+      "height": 900,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-cartao-postal-verso",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1400,
+      "height": 900,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 547,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-cartao-postal-verso",
       "name": "Linha divisória central",
       "kind": "shape",
       "visible": true,
@@ -80,7 +189,7 @@
       }
     },
     {
-      "id": "l-3-cartao-postal-verso",
+      "id": "l-7-cartao-postal-verso",
       "name": "Selo de postagem",
       "kind": "image",
       "visible": true,
@@ -116,7 +225,7 @@
       }
     },
     {
-      "id": "l-4-cartao-postal-verso",
+      "id": "l-8-cartao-postal-verso",
       "name": "Carimbo de postagem",
       "kind": "image",
       "visible": true,
@@ -155,7 +264,7 @@
       }
     },
     {
-      "id": "l-5-cartao-postal-verso",
+      "id": "l-9-cartao-postal-verso",
       "name": "Linha de endereço 1",
       "kind": "shape",
       "visible": true,
@@ -179,7 +288,7 @@
       }
     },
     {
-      "id": "l-6-cartao-postal-verso",
+      "id": "l-10-cartao-postal-verso",
       "name": "Linha de endereço 2",
       "kind": "shape",
       "visible": true,
@@ -203,7 +312,7 @@
       }
     },
     {
-      "id": "l-7-cartao-postal-verso",
+      "id": "l-11-cartao-postal-verso",
       "name": "Linha de endereço 3",
       "kind": "shape",
       "visible": true,

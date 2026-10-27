@@ -57,6 +57,115 @@
     },
     {
       "id": "l-2-prontuario",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 1271,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-prontuario",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 1288,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-prontuario",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.2,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-prontuario",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 1322,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-prontuario",
       "name": "Símbolo médico",
       "kind": "image",
       "visible": true,
@@ -92,7 +201,7 @@
       }
     },
     {
-      "id": "l-3-prontuario",
+      "id": "l-7-prontuario",
       "name": "Mancha d'água",
       "kind": "image",
       "visible": true,
@@ -128,7 +237,7 @@
       }
     },
     {
-      "id": "l-4-prontuario",
+      "id": "l-8-prontuario",
       "name": "Cabeçalho hospitalar",
       "kind": "text",
       "visible": true,
@@ -166,7 +275,7 @@
       }
     },
     {
-      "id": "l-5-prontuario",
+      "id": "l-9-prontuario",
       "name": "Linha topo",
       "kind": "shape",
       "visible": true,
@@ -266,7 +375,7 @@
       }
     },
     {
-      "id": "l-6-prontuario",
+      "id": "l-10-prontuario",
       "name": "Linha anotações",
       "kind": "shape",
       "visible": true,
@@ -328,7 +437,7 @@
       }
     },
     {
-      "id": "l-7-prontuario",
+      "id": "l-11-prontuario",
       "name": "Assinatura médico",
       "kind": "text",
       "visible": true,
@@ -364,6 +473,82 @@
           "seed": 1
         }
       }
+    },
+    {
+      "id": "l-12-prontuario",
+      "name": "Diagnóstico",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 1200,
+      "width": 1000,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Diagnóstico: neurastenia aguda com delírios de perseguição",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-13-prontuario",
+      "name": "Médico responsável",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 1260,
+      "width": 460,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Dr. Augusto Vilela Neto",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
     }
   ],
   "fields": [
@@ -378,6 +563,14 @@
     {
       "layerId": "l-anotacoes",
       "label": "Anotações"
+    },
+    {
+      "layerId": "l-12-prontuario",
+      "label": "Diagnóstico"
+    },
+    {
+      "layerId": "l-13-prontuario",
+      "label": "Médico responsável"
     }
   ],
   "source": {

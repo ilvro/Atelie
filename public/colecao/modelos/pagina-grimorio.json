@@ -57,6 +57,140 @@
     },
     {
       "id": "l-2-pagina-grimorio",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 1581,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-3-pagina-grimorio",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 1598,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-pagina-grimorio",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 1615,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-5-pagina-grimorio",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.45,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 1632,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-6-pagina-grimorio",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.4,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-pagina-grimorio",
       "name": "Canto queimado",
       "kind": "image",
       "visible": true,
@@ -130,7 +264,7 @@
       }
     },
     {
-      "id": "l-3-pagina-grimorio",
+      "id": "l-8-pagina-grimorio",
       "name": "Sigilo de invocação",
       "kind": "image",
       "visible": true,
@@ -224,8 +358,8 @@
       "text": {
         "content": "Cuidado! A terceira palavra deve ser sussurrada de costas para o altar. O mestre perdeu a visão ao ignorar este aviso.",
         "font": {
-          "family": "Caveat",
-          "library": "casa-font-caveat-regular",
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
           "weight": 400,
           "italic": false
         },

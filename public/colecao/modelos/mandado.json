@@ -57,6 +57,140 @@
     },
     {
       "id": "l-2-mandado",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.42,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 1054,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-3-mandado",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.21,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 1071,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-mandado",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.18,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 1088,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-5-mandado",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.27,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 1105,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-6-mandado",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-mandado",
       "name": "Brasão do Estado",
       "kind": "image",
       "visible": true,
@@ -92,7 +226,7 @@
       }
     },
     {
-      "id": "l-3-mandado",
+      "id": "l-8-mandado",
       "name": "Cabeçalho tribunal",
       "kind": "text",
       "visible": true,
@@ -109,8 +243,8 @@
       "text": {
         "content": "PODER JUDICIÁRIO — ESTADO DE SÃO PAULO\n1ª VARA DE EXECUÇÕES CRIMINAIS DA COMARCA DA CAPITAL",
         "font": {
-          "family": "IM Fell English",
-          "library": "casa-font-im-fell-english-roman",
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
           "weight": 400,
           "italic": false
         },
@@ -130,7 +264,7 @@
       }
     },
     {
-      "id": "l-4-mandado",
+      "id": "l-9-mandado",
       "name": "Título mandado",
       "kind": "text",
       "visible": true,
@@ -147,8 +281,8 @@
       "text": {
         "content": "MANDADO DE BUSCA, APREENSÃO E PRISÃO",
         "font": {
-          "family": "IM Fell English",
-          "library": "casa-font-im-fell-english-roman",
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
           "weight": 400,
           "italic": false
         },
@@ -185,12 +319,12 @@
       "text": {
         "content": "A QUALQUER OFICIAL DE JUSTIÇA OU AUTORIDADE POLICIAL:\n\nMANDA o Meritíssimo Juiz de Direito que, em cumprimento ao presente, dirija-se ao domicílio de Bento de Camargo Bueno, sito à Estrada das Lágrimas nº 305.",
         "font": {
-          "family": "IM Fell English",
-          "library": "casa-font-im-fell-english-roman",
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
           "weight": 400,
           "italic": false
         },
-        "size": 25,
+        "size": 24,
         "color": "#1a1a1a",
         "align": "left",
         "valign": "top",
@@ -223,8 +357,8 @@
       "text": {
         "content": "MOTIVO DO PROVIMENTO:\n\nProceder à imediata busca e apreensão de todos os livros contábeis, caixas de documentação manuscrita e quaisquer substâncias químicas ou compostos não catalogados que se encontrem ocultos nas dependências do referido imóvel, procedendo à custódia cautelar do citado réu para garantia da ordem pública e instrução do inquérito nº 812.",
         "font": {
-          "family": "IM Fell English",
-          "library": "casa-font-im-fell-english-roman",
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
           "weight": 400,
           "italic": false
         },
@@ -261,12 +395,12 @@
       "text": {
         "content": "Dado e passado nesta comarca, aos vinte e dois dias do mês de setembro do ano de 1927.",
         "font": {
-          "family": "IM Fell English",
-          "library": "casa-font-im-fell-english-roman",
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
           "weight": 400,
           "italic": false
         },
-        "size": 24,
+        "size": 22,
         "color": "#1a1a1a",
         "align": "left",
         "valign": "top",
@@ -282,7 +416,7 @@
       }
     },
     {
-      "id": "l-5-mandado",
+      "id": "l-10-mandado",
       "name": "Selo cartorial",
       "kind": "image",
       "visible": true,
@@ -318,7 +452,7 @@
       }
     },
     {
-      "id": "l-6-mandado",
+      "id": "l-11-mandado",
       "name": "Assinatura juiz",
       "kind": "text",
       "visible": true,
@@ -335,8 +469,8 @@
       "text": {
         "content": "Aureliano de Mello",
         "font": {
-          "family": "Homemade Apple",
-          "library": "casa-font-homemadeapple-regular",
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
           "weight": 400,
           "italic": false
         },
@@ -373,8 +507,8 @@
       "text": {
         "content": "Dr. Aureliano de Mello e Silva\nJuiz de Direito Titular",
         "font": {
-          "family": "Cormorant Garamond",
-          "library": "casa-font-cormorantgaramond-light",
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
           "weight": 400,
           "italic": false
         },

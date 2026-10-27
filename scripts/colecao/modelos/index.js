@@ -33,7 +33,9 @@ export const TEMPLATES_BY_CATEGORY = {
   'Tecnologia': tecnologia,
 };
 
-export const TEMPLATES = [
+import { reformarTodos } from './reforma.js';
+
+const ORIGINAIS = [
   ...cartasEBilhetes,
   ...jornal,
   ...policiaEInvestigacao,
@@ -43,3 +45,6 @@ export const TEMPLATES = [
   ...cotidiano,
   ...tecnologia,
 ];
+
+/** Os modelos publicados: as especificações por categoria, reformadas pela C7 (ver reforma.js). */
+export const TEMPLATES = reformarTodos(ORIGINAIS);

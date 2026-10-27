@@ -342,6 +342,26 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ---
 
+## Coleção ampliada · Fase C7 (reforma dos 39 modelos atuais)
+
+### Feito
+- **`modelos/reforma.js`:** cada um dos 39 modelos tem uma entrada (`REFORMA`) com receita de envelhecimento (com `intensity` onde há muito texto), silhueta de corte, camadas substituídas, fontes combinadas com a época (com o `library` id certo, sem o qual a letra cai na fonte padrão), ajustes de campo, camadas e campos novos e o carimbo da instituição no canto inferior esquerdo. `reformar(spec)` roda no `index.js`, então as especificações por categoria continuam como estavam e o pipeline e a auditoria enxergam só o resultado.
+- **Defeitos da folha de contato resolvidos:** as faixas brancas dos modelos "Recorte de jornal", "Mapa rasgado" e "Bilhete de caderno rasgado" eram imagens de rasgo; saíram e entraram silhuetas `cut` de verdade. O envelope e os demais ganharam envelhecimento (`usado`, `antigo`) e o terminal deixou de ser uma tela cinza (o grão estava em mesclagem normal).
+- **Formulários:** laudo pericial, prontuário e receita médica passam de 3 para 5 campos (data do exame e perito; diagnóstico e médico responsável; posologia e validade). A tela de terminal ganhou barra do sistema, teclas de função, moldura, brilho do vidro e bordas desbotadas (de 4 para 10 camadas).
+- **Texto:** `autofit` encolhe (até 85 %, nunca abaixo de 14 px) e depois aumenta a caixa dos textos que a diagramação aproximada diz que transbordam.
+- **Auditoria:** `LEGADO` está vazio (eram 39 pares); 0 erros e 0 avisos. Duas melhorias na régua: o contraste agora mede o papel pelos quatro cantos da caixa (a média da caixa inteira misturava as próprias letras e fazia texto claro sobre fundo escuro parecer cinza) e camadas só de luz UV não entram no contraste.
+- Folhas de contato regeradas e comparação em `docs/referencias/colecao-reforma-antes-depois.png`.
+
+### Validação
+- `npm test`: 240 passando (reforma completa, sem legado, sem faixa branca, campos novos). E2E de modelos, biblioteca e início passaram. Auditoria: 0 achados.
+
+### Pendências reais
+- **Parada para revisão** (plano): comparar a folha antes/depois com o usuário antes dos lotes C8 a C11.
+- A diagramação aproximada da auditoria (largura média por caractere) pode divergir do canvas real: vale olhar os textos mais densos em tamanho real.
+- Os selos nos cantos inferiores esquerdos ficam onde há espaço livre na maioria dos modelos, mas não foram conferidos um a um em tamanho real.
+
+---
+
 ## Refinamento Visual e Ergonomia de UI
 
 ### Feito

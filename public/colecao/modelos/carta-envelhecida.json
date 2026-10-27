@@ -57,6 +57,140 @@
     },
     {
       "id": "l-2-carta-envelhecida",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.49,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 341,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-3-carta-envelhecida",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.245,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 358,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-carta-envelhecida",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.21,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 375,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-5-carta-envelhecida",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.315,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 392,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-6-carta-envelhecida",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.28,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-carta-envelhecida",
       "name": "Dobra",
       "kind": "image",
       "visible": true,
@@ -92,7 +226,7 @@
       }
     },
     {
-      "id": "l-3-carta-envelhecida",
+      "id": "l-8-carta-envelhecida",
       "name": "Mancha de café",
       "kind": "image",
       "visible": true,
@@ -145,8 +279,8 @@
       "text": {
         "content": "São Paulo, 14 de outubro de 1932",
         "font": {
-          "family": "Special Elite",
-          "library": "casa-font-specialelite-regular",
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
           "weight": 400,
           "italic": false
         },
@@ -183,8 +317,8 @@
       "text": {
         "content": "Prezado Dr. Alencar,",
         "font": {
-          "family": "Special Elite",
-          "library": "casa-font-specialelite-regular",
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
           "weight": 400,
           "italic": false
         },
@@ -221,8 +355,8 @@
       "text": {
         "content": "Escrevo-lhe em caráter de extrema urgência a respeito dos documentos encontrados no porão do casarão da família Ramos.\n\nConforme suspeitávamos, os registros da década de 1890 confirmam a transferência clandestina das caixas para o litoral antes do confisco judicial. As anotações marginais indicam um ponto de encontro marcado junto ao antigo farol na noite de lua nova.\n\nPeço que destrua este aviso logo após a leitura e mantenha a discrição necessária até o nosso próximo contato.",
         "font": {
-          "family": "Special Elite",
-          "library": "casa-font-specialelite-regular",
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
           "weight": 400,
           "italic": false
         },
@@ -259,8 +393,8 @@
       "text": {
         "content": "Arthur H. Mendonça",
         "font": {
-          "family": "Homemade Apple",
-          "library": "casa-font-homemadeapple-regular",
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
           "weight": 400,
           "italic": false
         },
@@ -280,7 +414,7 @@
       }
     },
     {
-      "id": "l-4-carta-envelhecida",
+      "id": "l-9-carta-envelhecida",
       "name": "Variação · Poça de café",
       "kind": "image",
       "visible": false,
@@ -297,6 +431,42 @@
       "image": {
         "src": {
           "library": "casa-manchas-cafe-5"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-10-carta-envelhecida",
+      "name": "Selo da instituição",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 100,
+      "y": 1454,
+      "width": 190,
+      "height": 215,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-emblema-universo-solar-carimbo"
         },
         "fit": "stretch",
         "crop": null,

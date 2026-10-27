@@ -57,6 +57,140 @@
     },
     {
       "id": "l-2-cartaz-procurado",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1000,
+      "height": 1400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 1984,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-3-cartaz-procurado",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1000,
+      "height": 1400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 2001,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-cartaz-procurado",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 1000,
+      "height": 1400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 2018,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-5-cartaz-procurado",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.45,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1000,
+      "height": 1400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 2035,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-6-cartaz-procurado",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.4,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1000,
+      "height": 1400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-4"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-cartaz-procurado",
       "name": "Prendedor no topo",
       "kind": "image",
       "visible": true,
@@ -92,7 +226,7 @@
       }
     },
     {
-      "id": "l-3-cartaz-procurado",
+      "id": "l-8-cartaz-procurado",
       "name": "Título cartaz",
       "kind": "text",
       "visible": true,
@@ -109,12 +243,12 @@
       "text": {
         "content": "PROCURADO",
         "font": {
-          "family": "Anton",
-          "library": "casa-font-anton-regular",
+          "family": "Rye",
+          "library": "casa-font-rye-regular",
           "weight": 400,
           "italic": false
         },
-        "size": 86,
+        "size": 80,
         "color": "#1a1410",
         "align": "center",
         "valign": "top",
@@ -130,7 +264,7 @@
       }
     },
     {
-      "id": "l-4-cartaz-procurado",
+      "id": "l-9-cartaz-procurado",
       "name": "Subtítulo",
       "kind": "text",
       "visible": true,
@@ -147,8 +281,8 @@
       "text": {
         "content": "VIVO OU MORTO",
         "font": {
-          "family": "Bebas Neue",
-          "library": "casa-font-bebasneue-regular",
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
           "weight": 400,
           "italic": false
         },
@@ -168,7 +302,7 @@
       }
     },
     {
-      "id": "l-5-cartaz-procurado",
+      "id": "l-10-cartaz-procurado",
       "name": "Moldura da foto",
       "kind": "shape",
       "visible": true,
@@ -245,8 +379,8 @@
       "text": {
         "content": "VALENTIN \"OLHO DE VIDRO\" MORAES",
         "font": {
-          "family": "Anton",
-          "library": "casa-font-anton-regular",
+          "family": "Rye",
+          "library": "casa-font-rye-regular",
           "weight": 400,
           "italic": false
         },
@@ -321,13 +455,13 @@
       "text": {
         "content": "RECOMPENSA: 5.000$000 RÉIS",
         "font": {
-          "family": "Bebas Neue",
-          "library": "casa-font-bebasneue-regular",
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
           "weight": 400,
           "italic": false
         },
         "size": 52,
-        "color": "#8c1616",
+        "color": "#4a0c0c",
         "align": "center",
         "valign": "top",
         "lineHeight": 1.25,
@@ -342,7 +476,7 @@
       }
     },
     {
-      "id": "l-6-cartaz-procurado",
+      "id": "l-11-cartaz-procurado",
       "name": "Nota da autoridade",
       "kind": "text",
       "visible": true,

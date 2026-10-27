@@ -57,6 +57,140 @@
     },
     {
       "id": "l-2-edito-real",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 1922,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-3-edito-real",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 1939,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-edito-real",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 1956,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-5-edito-real",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.45,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 1973,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-6-edito-real",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.4,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-edito-real",
       "name": "Moldura iluminura medieval",
       "kind": "image",
       "visible": true,
@@ -92,7 +226,7 @@
       }
     },
     {
-      "id": "l-3-edito-real",
+      "id": "l-8-edito-real",
       "name": "Brasão real com leão",
       "kind": "image",
       "visible": true,
@@ -204,7 +338,7 @@
       }
     },
     {
-      "id": "l-4-edito-real",
+      "id": "l-9-edito-real",
       "name": "Lacre de cera vermelho",
       "kind": "image",
       "visible": true,
@@ -257,8 +391,8 @@
       "text": {
         "content": "Carlos IV — Pela Graça de Deus, Rei",
         "font": {
-          "family": "Homemade Apple",
-          "library": "casa-font-homemadeapple-regular",
+          "family": "IM Fell DW Pica",
+          "library": "casa-font-im-fell-dw-pica-roman",
           "weight": 400,
           "italic": false
         },

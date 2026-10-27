@@ -57,6 +57,140 @@
     },
     {
       "id": "l-2-pergaminho-selo",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 1891,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-3-pergaminho-selo",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 1908,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-pergaminho-selo",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 1925,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-5-pergaminho-selo",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.45,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 1942,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-6-pergaminho-selo",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.4,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-pergaminho-selo",
       "name": "Lacre de cera vermelho com brasão",
       "kind": "image",
       "visible": true,
@@ -130,7 +264,7 @@
       }
     },
     {
-      "id": "l-3-pergaminho-selo",
+      "id": "l-8-pergaminho-selo",
       "name": "Linha decorativa",
       "kind": "shape",
       "visible": true,

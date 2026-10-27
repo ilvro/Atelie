@@ -19,48 +19,8 @@ export const ORCAMENTO_BYTES = 60 * 1024 * 1024;
 export const TAMANHO_MIN_TEXTO = 14;
 export const CONTRASTE_MIN = 3;
 
-/** Pares "slug:regra" aceitos enquanto os modelos antigos não são refeitos. Não crescer: só diminuir. */
-export const LEGADO = new Set([
-  'bilhete-caderno-rasgado:texto-transborda',
-  'boletim-ocorrencia:poucas-camadas',
-  'capa-jornal:sem-envelhecimento',
-  'carta-datilografada-anos-50:texto-transborda',
-  'carta-envelhecida:poucas-camadas',
-  'carta-envelope-frente:poucas-camadas',
-  'carta-envelope-frente:texto-transborda',
-  'carta-envelope-verso:texto-transborda',
-  'cartaz-procurado:contraste',
-  'cartaz-procurado:texto-transborda',
-  'certidao-obito:sem-envelhecimento',
-  'certidao-obito:texto-transborda',
-  'circulo-ritual:poucas-camadas',
-  'classificados:poucas-camadas',
-  'conversa-celular:texto-transborda',
-  'diario-culto-uv:contraste',
-  'diario-culto-uv:poucas-camadas',
-  'edito-real:poucas-camadas',
-  'edito-real:sem-envelhecimento',
-  'email-impresso:poucas-camadas',
-  'email-impresso:sem-envelhecimento',
-  'ficha-criminal:texto-transborda',
-  'internacao-sanatorio:texto-transborda',
-  'laudo-pericial:poucas-camadas',
-  'laudo-pericial:texto-transborda',
-  'mandado:sem-envelhecimento',
-  'mandado:texto-transborda',
-  'obituario:texto-transborda',
-  'pagina-grimorio:poucas-camadas',
-  'passagem-trem:texto-transborda',
-  'pergaminho-selo:poucas-camadas',
-  'pergaminho-selo:sem-envelhecimento',
-  'polaroide-frente:texto-transborda',
-  'tela-terminal:contraste',
-  'tela-terminal:poucas-camadas',
-  'tela-terminal:texto-transborda',
-  'laudo-pericial:formulario-curto',
-  'prontuario:formulario-curto',
-  'receita-medica:formulario-curto',
-]);
+/** Pares "slug:regra" aceitos de propósito. Vazio desde a C7 (os 39 modelos foram reformados): não voltar a crescer. */
+export const LEGADO = new Set([]);
 
 const MONO = new Set(['Courier Prime', 'Share Tech Mono', 'VT323', 'Special Elite', 'Cutive Mono']);
 
@@ -83,16 +43,23 @@ export function contrast(a, b) {
 
 const toHex = ([r, g, b]) => '#' + [r, g, b].map(v => Math.round(v).toString(16).padStart(2, '0')).join('');
 
-/** Cor média da prévia por trás da caixa (coordenadas do documento). */
+/**
+ * Cor do papel por trás da caixa: média de quatro retalhos nos cantos da caixa. Tirar a média da caixa inteira
+ * misturaria as próprias letras (texto claro sobre fundo escuro pareceria cinza), e os cantos quase nunca têm letra.
+ */
 async function paperBehind(previewPath, doc, layer) {
-  const img = sharp(previewPath);
-  const { width, height } = await img.metadata();
+  const { width, height } = await sharp(previewPath).metadata();
   const sx = width / doc.page.width, sy = height / doc.page.height;
-  const left = Math.max(0, Math.floor(layer.x * sx)), top = Math.max(0, Math.floor(layer.y * sy));
-  const w = Math.max(1, Math.min(width - left, Math.floor(layer.width * sx)));
-  const h = Math.max(1, Math.min(height - top, Math.floor(layer.height * sy)));
-  const { channels } = await sharp(previewPath).extract({ left, top, width: w, height: h }).stats();
-  return toHex([channels[0].mean, channels[1].mean, channels[2].mean]);
+  const x0 = Math.max(0, Math.floor(layer.x * sx)), y0 = Math.max(0, Math.floor(layer.y * sy));
+  const x1 = Math.min(width, Math.ceil((layer.x + layer.width) * sx)), y1 = Math.min(height, Math.ceil((layer.y + layer.height) * sy));
+  const patch = Math.max(2, Math.min(6, Math.floor((x1 - x0) / 4), Math.floor((y1 - y0) / 4)));
+  const spots = [[x0, y0], [x1 - patch, y0], [x0, y1 - patch], [x1 - patch, y1 - patch]];
+  const sums = [0, 0, 0];
+  for (const [left, top] of spots) {
+    const { channels } = await sharp(previewPath).extract({ left: Math.max(0, left), top: Math.max(0, top), width: patch, height: patch }).stats();
+    for (let i = 0; i < 3; i++) sums[i] += channels[i].mean / spots.length;
+  }
+  return toHex(sums);
 }
 
 const isLarge = doc => Math.max(doc.page.width, doc.page.height) >= 1500 && Math.min(doc.page.width, doc.page.height) >= 1000;
@@ -127,7 +94,8 @@ export async function auditTemplate(item, { colecaoDir: dir = colecaoDir, librar
     for (const nome of NOMES_PROIBIDOS) if (t.content.includes(nome)) add('erro', 'nome-proibido', `"${l.name}" cita "${nome}"`);
     if (ingles.test(t.content) && item.era !== 'hoje' && item.tom !== 'sci-fi') add('aviso', 'ingles', `"${l.name}" parece ter inglês fora de contexto`);
     if (!fontFitsEra(t.font.family, item.era)) add('aviso', 'fonte-epoca', `"${l.name}": ${t.font.family} destoa da época ${item.era}`);
-    if (/^#[0-9a-f]{6}$/i.test(t.color || '')) {
+    // O que só aparece sob luz UV não se lê sobre o papel comum: o contraste dele não se mede aqui.
+    if (l.light !== 'uv' && /^#[0-9a-f]{6}$/i.test(t.color || '')) {
       try {
         const fundo = await paperBehind(previewPath, doc, l);
         const c = contrast(t.color, fundo);

@@ -57,6 +57,115 @@
     },
     {
       "id": "l-2-obituario",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 713,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-obituario",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 730,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-obituario",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.2,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-obituario",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 764,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-obituario",
       "name": "Moldura de luto grossa",
       "kind": "shape",
       "visible": true,
@@ -80,7 +189,7 @@
       }
     },
     {
-      "id": "l-3-obituario",
+      "id": "l-7-obituario",
       "name": "Moldura fina interna",
       "kind": "shape",
       "visible": true,
@@ -104,7 +213,7 @@
       }
     },
     {
-      "id": "l-4-obituario",
+      "id": "l-8-obituario",
       "name": "Título necrologia",
       "kind": "text",
       "visible": true,
@@ -218,7 +327,7 @@
       }
     },
     {
-      "id": "l-5-obituario",
+      "id": "l-9-obituario",
       "name": "Linha divisória",
       "kind": "shape",
       "visible": true,
@@ -264,7 +373,7 @@
           "weight": 400,
           "italic": false
         },
-        "size": 26,
+        "size": 25,
         "color": "#222222",
         "align": "center",
         "valign": "top",
@@ -280,7 +389,7 @@
       }
     },
     {
-      "id": "l-6-obituario",
+      "id": "l-10-obituario",
       "name": "Epitáfio",
       "kind": "text",
       "visible": true,

@@ -57,6 +57,115 @@
     },
     {
       "id": "l-2-telegrama-anos-20",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 880,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 527,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-telegrama-anos-20",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 880,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 544,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-telegrama-anos-20",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.2,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 880,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-telegrama-anos-20",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 880,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 578,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-telegrama-anos-20",
       "name": "Dobra do telegrama",
       "kind": "image",
       "visible": true,
@@ -92,7 +201,7 @@
       }
     },
     {
-      "id": "l-3-telegrama-anos-20",
+      "id": "l-7-telegrama-anos-20",
       "name": "Cabeçalho oficial",
       "kind": "text",
       "visible": true,
@@ -244,7 +353,7 @@
       }
     },
     {
-      "id": "l-4-telegrama-anos-20",
+      "id": "l-8-telegrama-anos-20",
       "name": "Linha divisória",
       "kind": "shape",
       "visible": true,
@@ -268,7 +377,7 @@
       }
     },
     {
-      "id": "l-5-telegrama-anos-20",
+      "id": "l-9-telegrama-anos-20",
       "name": "Tira de papel colada",
       "kind": "shape",
       "visible": true,
@@ -330,7 +439,7 @@
       }
     },
     {
-      "id": "l-6-telegrama-anos-20",
+      "id": "l-10-telegrama-anos-20",
       "name": "Carimbo TRANSMITIDO",
       "kind": "image",
       "visible": true,
@@ -366,6 +475,42 @@
           "color": "#5c1d1d",
           "amount": 1
         }
+      }
+    },
+    {
+      "id": "l-11-telegrama-anos-20",
+      "name": "Selo da instituição",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 100,
+      "y": 580,
+      "width": 190,
+      "height": 215,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-emblema-universo-companhia-carimbo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
       }
     }
   ],

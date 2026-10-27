@@ -57,6 +57,140 @@
     },
     {
       "id": "l-2-certidao-obito",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 1333,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-3-certidao-obito",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 1350,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-certidao-obito",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 1367,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-5-certidao-obito",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.45,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 1384,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-6-certidao-obito",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.4,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-certidao-obito",
       "name": "Moldura vitoriana",
       "kind": "image",
       "visible": true,
@@ -92,7 +226,7 @@
       }
     },
     {
-      "id": "l-3-certidao-obito",
+      "id": "l-8-certidao-obito",
       "name": "Selo do cartório",
       "kind": "image",
       "visible": true,
@@ -128,7 +262,7 @@
       }
     },
     {
-      "id": "l-4-certidao-obito",
+      "id": "l-9-certidao-obito",
       "name": "Título certidão",
       "kind": "text",
       "visible": true,
@@ -145,8 +279,8 @@
       "text": {
         "content": "REGISTRO CIVIL DAS PESSOAS NATURAIS\nCERTIDÃO DE ÓBITO",
         "font": {
-          "family": "IM Fell English",
-          "library": "casa-font-im-fell-english-roman",
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
           "weight": 400,
           "italic": false
         },
@@ -183,8 +317,8 @@
       "text": {
         "content": "CERTIFICO que, no Livro C-14 de Registro de Óbitos, às folhas 88, consta o assento do falecimento de:\n\nSEBASTIÃO CORRÊA DE AZEVEDO",
         "font": {
-          "family": "IM Fell English",
-          "library": "casa-font-im-fell-english-roman",
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
           "weight": 400,
           "italic": false
         },
@@ -221,8 +355,8 @@
       "text": {
         "content": "Ocorrido no dia 07 de Julho de 1923, às 14 horas e 30 minutos, na Santa Casa de Misericórdia, com a idade de 52 anos, do sexo masculino, casado, de profissão comerciante.",
         "font": {
-          "family": "IM Fell English",
-          "library": "casa-font-im-fell-english-roman",
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
           "weight": 400,
           "italic": false
         },
@@ -259,8 +393,8 @@
       "text": {
         "content": "CAUSA DA MORTE: Colapso cardiorrespiratório fulminante decorrente de choque séptico e ferimento pérfuro-contuso infectado no membro superior direito.",
         "font": {
-          "family": "IM Fell English",
-          "library": "casa-font-im-fell-english-roman",
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
           "weight": 400,
           "italic": false
         },
@@ -297,8 +431,8 @@
       "text": {
         "content": "MÉDICO ATESTANTE: Dr. Alberto Fontoura (CRM 312)",
         "font": {
-          "family": "IM Fell English",
-          "library": "casa-font-im-fell-english-roman",
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
           "weight": 400,
           "italic": false
         },
@@ -318,7 +452,7 @@
       }
     },
     {
-      "id": "l-5-certidao-obito",
+      "id": "l-10-certidao-obito",
       "name": "Sepultamento",
       "kind": "text",
       "visible": true,
@@ -335,12 +469,12 @@
       "text": {
         "content": "SEPULTAMENTO: Cemitério Municipal da Boa Vista, na sepultura nº 1.402 da quadra 6.",
         "font": {
-          "family": "IM Fell English",
-          "library": "casa-font-im-fell-english-roman",
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
           "weight": 400,
           "italic": false
         },
-        "size": 24,
+        "size": 22,
         "color": "#1a1a1a",
         "align": "left",
         "valign": "top",
@@ -356,7 +490,7 @@
       }
     },
     {
-      "id": "l-6-certidao-obito",
+      "id": "l-11-certidao-obito",
       "name": "Oficial do cartório",
       "kind": "text",
       "visible": true,
@@ -373,10 +507,10 @@
       "text": {
         "content": "O Oficial do Registro Civil:\nBel. Waldomiro Pederneiras",
         "font": {
-          "family": "IM Fell English",
-          "library": "casa-font-im-fell-english-italic",
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
           "weight": 400,
-          "italic": true
+          "italic": false
         },
         "size": 24,
         "color": "#222222",
@@ -391,6 +525,42 @@
           "wear": 0,
           "seed": 1
         }
+      }
+    },
+    {
+      "id": "l-12-certidao-obito",
+      "name": "Selo da instituição",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 100,
+      "y": 1454,
+      "width": 190,
+      "height": 215,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-emblema-universo-cartorio-carimbo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
       }
     }
   ],

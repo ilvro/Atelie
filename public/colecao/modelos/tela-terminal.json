@@ -45,6 +45,28 @@
     },
     {
       "id": "l-2-tela-terminal",
+      "name": "Grão fino",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.15,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1600,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "grain",
+        "seed": 2573,
+        "amount": 0.5,
+        "params": {}
+      }
+    },
+    {
+      "id": "l-3-tela-terminal",
       "name": "Borda CRT",
       "kind": "shape",
       "visible": true,
@@ -68,13 +90,13 @@
       }
     },
     {
-      "id": "l-3-tela-terminal",
+      "id": "l-4-tela-terminal",
       "name": "Efeito grão de tela",
       "kind": "effect",
       "visible": true,
       "locked": false,
-      "opacity": 1,
-      "blend": "normal",
+      "opacity": 0.3,
+      "blend": "soft-light",
       "x": 0,
       "y": 0,
       "width": 1600,
@@ -112,8 +134,8 @@
           "weight": 400,
           "italic": false
         },
-        "size": 34,
-        "color": "#33ff33",
+        "size": 29,
+        "color": "#7dff9a",
         "align": "left",
         "valign": "top",
         "lineHeight": 1.35,
@@ -124,6 +146,154 @@
           "style": "clean",
           "wear": 0,
           "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-5-tela-terminal",
+      "name": "Barra do sistema",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 44,
+      "width": 1440,
+      "height": 34,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "ARQUIVO CENTRAL · TERMINAL 07 · SESSÃO 0412",
+        "font": {
+          "family": "VT323",
+          "library": "casa-font-vt323-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#4fd873",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-6-tela-terminal",
+      "name": "Teclas de função",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 930,
+      "width": 1440,
+      "height": 34,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "F1 AJUDA   F5 BUSCAR   F9 IMPRIMIR   F10 SAIR",
+        "font": {
+          "family": "VT323",
+          "library": "casa-font-vt323-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#4fd873",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-7-tela-terminal",
+      "name": "Brilho do vidro",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.07,
+      "blend": "screen",
+      "x": 60,
+      "y": 50,
+      "width": 1480,
+      "height": 900,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#9dffb5",
+        "stroke": null,
+        "strokeWidth": 0,
+        "radius": 40,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-8-tela-terminal",
+      "name": "Moldura interna da tela",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.5,
+      "blend": "normal",
+      "x": 56,
+      "y": 56,
+      "width": 1488,
+      "height": 888,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#2a7a44",
+        "strokeWidth": 3,
+        "radius": 36,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-9-tela-terminal",
+      "name": "Bordas desbotadas da tela",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.45,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1600,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 85,
+        "amount": 0.6,
+        "params": {
+          "color": "#0a2a14"
         }
       }
     }

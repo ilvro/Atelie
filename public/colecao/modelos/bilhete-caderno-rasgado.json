@@ -57,8 +57,30 @@
     },
     {
       "id": "l-2-bilhete-caderno-rasgado",
-      "name": "Rasgo superior",
-      "kind": "image",
+      "name": "Grão fino",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.15,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "grain",
+        "seed": 403,
+        "amount": 0.5,
+        "params": {}
+      }
+    },
+    {
+      "id": "l-3-bilhete-caderno-rasgado",
+      "name": "Rasgo · topo",
+      "kind": "effect",
       "visible": true,
       "locked": false,
       "opacity": 1,
@@ -66,29 +88,93 @@
       "x": 0,
       "y": 0,
       "width": 900,
-      "height": 160,
+      "height": 700,
       "rotation": 0,
       "clip": false,
       "light": "both",
-      "image": {
-        "src": {
-          "library": "casa-rasgos-2"
+      "effect": {
+        "type": "cut",
+        "seed": 13,
+        "amount": 1,
+        "params": {
+          "rough": 0.8
         },
-        "fit": "stretch",
-        "crop": null,
-        "flipX": false,
-        "flipY": false,
-        "filter": {
-          "grayscale": 0,
-          "sepia": 0,
-          "brightness": 0,
-          "contrast": 0,
-          "saturation": 0,
-          "hue": 0,
-          "blur": 0,
-          "invert": false
-        },
-        "tint": null
+        "edge": "rasgado",
+        "remove": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              0.0544
+            ],
+            [
+              0.9286,
+              0.0547
+            ],
+            [
+              0.8571,
+              0.0526
+            ],
+            [
+              0.7857,
+              0.0567
+            ],
+            [
+              0.7143,
+              0.0653
+            ],
+            [
+              0.6429,
+              0.0768
+            ],
+            [
+              0.5714,
+              0.0859
+            ],
+            [
+              0.5,
+              0.0865
+            ],
+            [
+              0.4286,
+              0.0872
+            ],
+            [
+              0.3571,
+              0.0907
+            ],
+            [
+              0.2857,
+              0.0841
+            ],
+            [
+              0.2143,
+              0.0808
+            ],
+            [
+              0.1429,
+              0.0719
+            ],
+            [
+              0.0714,
+              0.0612
+            ],
+            [
+              0,
+              0.0581
+            ]
+          ]
+        ],
+        "holes": [],
+        "char": 0.5,
+        "fiber": 0.8
       }
     },
     {
@@ -114,7 +200,7 @@
           "weight": 400,
           "italic": false
         },
-        "size": 40,
+        "size": 37,
         "color": "#1e2040",
         "align": "left",
         "valign": "top",
@@ -130,7 +216,7 @@
       }
     },
     {
-      "id": "l-3-bilhete-caderno-rasgado",
+      "id": "l-4-bilhete-caderno-rasgado",
       "name": "Variação · Digital de sangue",
       "kind": "image",
       "visible": false,

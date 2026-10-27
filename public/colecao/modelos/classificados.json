@@ -57,6 +57,140 @@
     },
     {
       "id": "l-2-classificados",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.42,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 744,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-3-classificados",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.21,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 761,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-classificados",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.18,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 778,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-5-classificados",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.27,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 795,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-6-classificados",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-classificados",
       "name": "Cabeçalho classificados",
       "kind": "text",
       "visible": true,
@@ -94,7 +228,7 @@
       }
     },
     {
-      "id": "l-3-classificados",
+      "id": "l-8-classificados",
       "name": "Linha topo",
       "kind": "shape",
       "visible": true,
@@ -118,7 +252,7 @@
       }
     },
     {
-      "id": "l-4-classificados",
+      "id": "l-9-classificados",
       "name": "Coluna esquerda de anúncios",
       "kind": "text",
       "visible": true,
@@ -156,7 +290,7 @@
       }
     },
     {
-      "id": "l-5-classificados",
+      "id": "l-10-classificados",
       "name": "Coluna direita de anúncios",
       "kind": "text",
       "visible": true,
@@ -194,7 +328,7 @@
       }
     },
     {
-      "id": "l-6-classificados",
+      "id": "l-11-classificados",
       "name": "Linha meio",
       "kind": "shape",
       "visible": true,
@@ -256,7 +390,7 @@
       }
     },
     {
-      "id": "l-7-classificados",
+      "id": "l-12-classificados",
       "name": "Círculo vermelho à mão",
       "kind": "image",
       "visible": true,
@@ -295,7 +429,7 @@
       }
     },
     {
-      "id": "l-8-classificados",
+      "id": "l-13-classificados",
       "name": "Anúncios inferiores",
       "kind": "text",
       "visible": true,

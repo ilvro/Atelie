@@ -205,7 +205,7 @@ export const FONT_ERAS = {
   'Pirata One': ['medieval', '1890', '1920'],
   'Share Tech Mono': ['1980', 'hoje'],
   'VT323': ['1980', 'hoje'],
-  'UnifrakturMaguntia': ['medieval', '1890'],
+  'UnifrakturMaguntia': ['medieval', '1890', '1920', '1950'],
   'Anton': ['1950', '1980', 'hoje'],
   'Black Ops One': ['1980', 'hoje'],
   'Cutive Mono': ['1950', '1980', 'hoje'],

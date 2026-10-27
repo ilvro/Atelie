@@ -1221,7 +1221,9 @@
       "fields": [
         "Número",
         "Vítima",
-        "Conclusão"
+        "Conclusão",
+        "Data do exame",
+        "Perito responsável"
       ],
       "era": "1950",
       "tom": "investigação",
@@ -1265,7 +1267,9 @@
       "fields": [
         "Paciente",
         "Data",
-        "Anotações"
+        "Anotações",
+        "Diagnóstico",
+        "Médico responsável"
       ],
       "era": "1950",
       "tom": "horror",
@@ -1287,7 +1291,9 @@
       "fields": [
         "Médico",
         "Paciente",
-        "Prescrição"
+        "Prescrição",
+        "Posologia",
+        "Validade"
       ],
       "era": "1950",
       "tom": "cotidiano",

@@ -319,3 +319,28 @@ test('colecao-c5: o letreiro de traços acentua certo (agudo sobe para a direita
   assert.equal(handWord('NÃO CONFIE', { seed: 3 }).d, handWord('NÃO CONFIE', { seed: 3 }).d);
   assert.notEqual(handWord('NÃO CONFIE', { seed: 3 }).d, handWord('NÃO CONFIE', { seed: 4 }).d);
 });
+
+test('colecao-c7: os 39 modelos foram reformados, a auditoria não tem mais legado e formulários têm 4 campos ou mais', async () => {
+  const { REFORMA } = await import('../scripts/colecao/modelos/reforma.js');
+  const { TEMPLATES } = await import('../scripts/colecao/modelos/index.js');
+  const { LEGADO, auditCollection } = await import('../scripts/colecao/audit.js');
+  assert.equal(LEGADO.size, 0, 'LEGADO só podia diminuir: acabou');
+  assert.equal(TEMPLATES.length, 39);
+  const slugs = new Set(TEMPLATES.map(t => t.slug));
+  for (const slug of Object.keys(REFORMA)) assert.ok(slugs.has(slug), `reforma de modelo que não existe: ${slug}`);
+  for (const t of TEMPLATES) assert.ok(REFORMA[t.slug], `${t.slug} sem reforma`);
+  for (const t of TEMPLATES) {
+    if (REFORMA[t.slug].aging) assert.ok(t.layers.some(l => l.kind === 'effect' || (l.kind === 'image' && l.blend === 'multiply')), `${t.slug}: sem envelhecimento`);
+    for (const l of t.layers) if (l.kind === 'text') assert.ok(l.text.size >= 14, `${t.slug}/${l.name}: ${l.text.size}px`);
+  }
+  // As faixas brancas de "rasgo" viraram corte de verdade
+  for (const slug of ['recorte-jornal-anos-20', 'mapa-rasgado', 'bilhete-caderno-rasgado']) {
+    const t = TEMPLATES.find(x => x.slug === slug);
+    assert.ok(!t.layers.some(l => l.image?.src?.library?.startsWith('casa-rasgos-')), `${slug}: ainda tem a faixa branca de rasgo`);
+    assert.ok(t.layers.some(l => l.effect?.type === 'cut'), `${slug}: sem silhueta de corte`);
+  }
+  for (const slug of ['laudo-pericial', 'prontuario', 'receita-medica']) assert.ok(TEMPLATES.find(x => x.slug === slug).fields.length >= 5, `${slug}: campos novos`);
+  const { erros, achados } = await auditCollection();
+  assert.deepEqual(erros, []);
+  assert.deepEqual(achados.filter(a => a.nivel === 'erro'), [], 'nenhum erro, nem legado');
+});

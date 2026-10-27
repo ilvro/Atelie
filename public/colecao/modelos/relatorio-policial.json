@@ -57,6 +57,115 @@
     },
     {
       "id": "l-2-relatorio-policial",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 961,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-relatorio-policial",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 978,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-relatorio-policial",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.2,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-relatorio-policial",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 1012,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-relatorio-policial",
       "name": "Distintivo de polícia",
       "kind": "image",
       "visible": true,
@@ -92,7 +201,7 @@
       }
     },
     {
-      "id": "l-3-relatorio-policial",
+      "id": "l-7-relatorio-policial",
       "name": "Título oficial",
       "kind": "text",
       "visible": true,
@@ -130,7 +239,7 @@
       }
     },
     {
-      "id": "l-4-relatorio-policial",
+      "id": "l-8-relatorio-policial",
       "name": "Linha cabeçalho",
       "kind": "shape",
       "visible": true,
@@ -306,7 +415,7 @@
       }
     },
     {
-      "id": "l-5-relatorio-policial",
+      "id": "l-9-relatorio-policial",
       "name": "Linha divisão dados",
       "kind": "shape",
       "visible": true,
@@ -368,7 +477,7 @@
       }
     },
     {
-      "id": "l-6-relatorio-policial",
+      "id": "l-10-relatorio-policial",
       "name": "Carimbo CONFIDENCIAL",
       "kind": "image",
       "visible": true,
@@ -407,7 +516,7 @@
       }
     },
     {
-      "id": "l-7-relatorio-policial",
+      "id": "l-11-relatorio-policial",
       "name": "Assinatura policial",
       "kind": "text",
       "visible": true,

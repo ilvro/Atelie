@@ -57,6 +57,115 @@
     },
     {
       "id": "l-2-ficha-criminal",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 1023,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-ficha-criminal",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 1040,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-ficha-criminal",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.2,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-4"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-ficha-criminal",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 1074,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-ficha-criminal",
       "name": "Cabeçalho criminal",
       "kind": "text",
       "visible": true,
@@ -94,7 +203,7 @@
       }
     },
     {
-      "id": "l-3-ficha-criminal",
+      "id": "l-7-ficha-criminal",
       "name": "Moldura da foto",
       "kind": "shape",
       "visible": true,
@@ -154,7 +263,7 @@
       }
     },
     {
-      "id": "l-4-ficha-criminal",
+      "id": "l-8-ficha-criminal",
       "name": "Cantoneira 1",
       "kind": "image",
       "visible": true,
@@ -190,7 +299,7 @@
       }
     },
     {
-      "id": "l-5-ficha-criminal",
+      "id": "l-9-ficha-criminal",
       "name": "Cantoneira 2",
       "kind": "image",
       "visible": true,
@@ -226,7 +335,7 @@
       }
     },
     {
-      "id": "l-6-ficha-criminal",
+      "id": "l-10-ficha-criminal",
       "name": "Cantoneira 3",
       "kind": "image",
       "visible": true,
@@ -262,7 +371,7 @@
       }
     },
     {
-      "id": "l-7-ficha-criminal",
+      "id": "l-11-ficha-criminal",
       "name": "Cantoneira 4",
       "kind": "image",
       "visible": true,
@@ -374,7 +483,7 @@
       }
     },
     {
-      "id": "l-8-ficha-criminal",
+      "id": "l-12-ficha-criminal",
       "name": "Dados físicos",
       "kind": "text",
       "visible": true,
@@ -434,7 +543,7 @@
           "weight": 400,
           "italic": false
         },
-        "size": 21,
+        "size": 20,
         "color": "#222222",
         "align": "left",
         "valign": "top",
@@ -450,7 +559,7 @@
       }
     },
     {
-      "id": "l-9-ficha-criminal",
+      "id": "l-13-ficha-criminal",
       "name": "Linha meio",
       "kind": "shape",
       "visible": true,
@@ -474,7 +583,7 @@
       }
     },
     {
-      "id": "l-10-ficha-criminal",
+      "id": "l-14-ficha-criminal",
       "name": "Título digitais",
       "kind": "text",
       "visible": true,
@@ -512,7 +621,7 @@
       }
     },
     {
-      "id": "l-11-ficha-criminal",
+      "id": "l-15-ficha-criminal",
       "name": "Digital polegar",
       "kind": "image",
       "visible": true,
@@ -548,7 +657,7 @@
       }
     },
     {
-      "id": "l-12-ficha-criminal",
+      "id": "l-16-ficha-criminal",
       "name": "Digital indicador",
       "kind": "image",
       "visible": true,
@@ -584,7 +693,7 @@
       }
     },
     {
-      "id": "l-13-ficha-criminal",
+      "id": "l-17-ficha-criminal",
       "name": "Carimbo CLASSIFICADO",
       "kind": "image",
       "visible": true,
@@ -623,7 +732,7 @@
       }
     },
     {
-      "id": "l-14-ficha-criminal",
+      "id": "l-18-ficha-criminal",
       "name": "Linha observações",
       "kind": "shape",
       "visible": true,

@@ -57,6 +57,28 @@
     },
     {
       "id": "l-2-cartao-visita",
+      "name": "Grão fino",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.15,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 850,
+      "height": 500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "grain",
+        "seed": 2263,
+        "amount": 0.5,
+        "params": {}
+      }
+    },
+    {
+      "id": "l-3-cartao-visita",
       "name": "Moldura externa",
       "kind": "shape",
       "visible": true,
@@ -80,7 +102,7 @@
       }
     },
     {
-      "id": "l-3-cartao-visita",
+      "id": "l-4-cartao-visita",
       "name": "Moldura interna",
       "kind": "shape",
       "visible": true,
@@ -142,7 +164,7 @@
       }
     },
     {
-      "id": "l-4-cartao-visita",
+      "id": "l-5-cartao-visita",
       "name": "Linha separadora",
       "kind": "shape",
       "visible": true,

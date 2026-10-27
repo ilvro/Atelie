@@ -57,6 +57,115 @@
     },
     {
       "id": "l-2-ingresso-teatro",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "height": 500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 2294,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-ingresso-teatro",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "height": 500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 2311,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-ingresso-teatro",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.2,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "height": 500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-ingresso-teatro",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "height": 500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 2345,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-ingresso-teatro",
       "name": "Picote canhoto",
       "kind": "shape",
       "visible": true,
@@ -83,7 +192,7 @@
       }
     },
     {
-      "id": "l-3-ingresso-teatro",
+      "id": "l-7-ingresso-teatro",
       "name": "Canhoto do bilheteiro",
       "kind": "text",
       "visible": true,
@@ -100,8 +209,8 @@
       "text": {
         "content": "THEATRO MUNICIPAL\n\nCANHOTO\n\nPLATEIA\nFILA D - 14",
         "font": {
-          "family": "Bebas Neue",
-          "library": "casa-font-bebasneue-regular",
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-regular",
           "weight": 400,
           "italic": false
         },
@@ -121,7 +230,7 @@
       }
     },
     {
-      "id": "l-4-ingresso-teatro",
+      "id": "l-8-ingresso-teatro",
       "name": "Moldura art déco",
       "kind": "image",
       "visible": true,
@@ -174,8 +283,8 @@
       "text": {
         "content": "A ÓPERA DOS ESPECTROS\nGrande Companhia Lírica Italiana",
         "font": {
-          "family": "Bebas Neue",
-          "library": "casa-font-bebasneue-regular",
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-regular",
           "weight": 400,
           "italic": false
         },
@@ -271,7 +380,7 @@
       }
     },
     {
-      "id": "l-5-ingresso-teatro",
+      "id": "l-9-ingresso-teatro",
       "name": "Preço e aviso",
       "kind": "text",
       "visible": true,
