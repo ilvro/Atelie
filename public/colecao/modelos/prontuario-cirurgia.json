@@ -1,0 +1,1140 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-prontuario-cirurgia",
+  "revision": 0,
+  "name": "Prontuário de cirurgia",
+  "category": "Médico",
+  "tags": [
+    "médico"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-prontuario-cirurgia",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-papel-de-fax-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-prontuario-cirurgia",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 9424,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-prontuario-cirurgia",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 9441,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-prontuario-cirurgia",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.1,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-prontuario-cirurgia",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 9475,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-prontuario-cirurgia",
+      "name": "Emblema",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 80,
+      "width": 120,
+      "height": 136,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-emblema-medico-bastao"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-prontuario-cirurgia",
+      "name": "Cabeçalho",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 250,
+      "y": 90,
+      "width": 880,
+      "height": 71,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "HOSPITAL DE CLÍNICAS DE VILA AURORA\nCENTRO CIRÚRGICO · FICHA DE PROCEDIMENTO",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-8-prontuario-cirurgia",
+      "name": "Linha do cabeçalho",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 226,
+      "width": 1020,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#1d1b24",
+        "strokeWidth": 3,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-9-prontuario-cirurgia",
+      "name": "Paciente (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 248,
+      "width": 495,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "PACIENTE",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-10-prontuario-cirurgia",
+      "name": "Paciente",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 270,
+      "width": 495,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Edmundo Vaz Cavalcanti, 52 anos",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-11-prontuario-cirurgia",
+      "name": "Paciente (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 308,
+      "width": 495,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-12-prontuario-cirurgia",
+      "name": "Procedimento (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 248,
+      "width": 495,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "PROCEDIMENTO",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 10
+        }
+      }
+    },
+    {
+      "id": "l-13-prontuario-cirurgia",
+      "name": "Procedimento",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 270,
+      "width": 495,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Apendicectomia de urgência",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 10
+        }
+      }
+    },
+    {
+      "id": "l-14-prontuario-cirurgia",
+      "name": "Procedimento (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 308,
+      "width": 495,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-15-prontuario-cirurgia",
+      "name": "Equipe (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 328,
+      "width": 1020,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "EQUIPE",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-16-prontuario-cirurgia",
+      "name": "Equipe",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 350,
+      "width": 1020,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Dr. A. Vilela (cirurgião) · Dra. M. Reis (anestesia) · Enf. D. Nunes",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-17-prontuario-cirurgia",
+      "name": "Equipe (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 388,
+      "width": 1020,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-18-prontuario-cirurgia",
+      "name": "Início (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 408,
+      "width": 495,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "INÍCIO",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-19-prontuario-cirurgia",
+      "name": "Início",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 430,
+      "width": 495,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "03h12",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-20-prontuario-cirurgia",
+      "name": "Início (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 468,
+      "width": 495,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-21-prontuario-cirurgia",
+      "name": "Término (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 408,
+      "width": 495,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "TÉRMINO",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-22-prontuario-cirurgia",
+      "name": "Término",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 430,
+      "width": 495,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "04h05",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-23-prontuario-cirurgia",
+      "name": "Término (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 468,
+      "width": 495,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-24-prontuario-cirurgia",
+      "name": "Assinatura 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1580,
+      "width": 490,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "A. Vilela",
+        "font": {
+          "family": "Homemade Apple",
+          "library": "casa-font-homemadeapple-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 10
+        }
+      }
+    },
+    {
+      "id": "l-25-prontuario-cirurgia",
+      "name": "Linha de assinatura 1",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1646,
+      "width": 490,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#444444",
+        "strokeWidth": 1.5,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-26-prontuario-cirurgia",
+      "name": "Cargo 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1652,
+      "width": 490,
+      "height": 30,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Cirurgião",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 17,
+        "color": "#444444",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-27-prontuario-cirurgia",
+      "name": "Assinatura 2",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 640,
+      "y": 1580,
+      "width": 490,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "M. Reis",
+        "font": {
+          "family": "Homemade Apple",
+          "library": "casa-font-homemadeapple-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 10
+        }
+      }
+    },
+    {
+      "id": "l-28-prontuario-cirurgia",
+      "name": "Linha de assinatura 2",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 640,
+      "y": 1646,
+      "width": 490,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#444444",
+        "strokeWidth": 1.5,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-29-prontuario-cirurgia",
+      "name": "Cargo 2",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 640,
+      "y": 1652,
+      "width": 490,
+      "height": 30,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Anestesista",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 17,
+        "color": "#444444",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-30-prontuario-cirurgia",
+      "name": "Diagrama · tronco",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 920,
+      "width": 240,
+      "height": 420,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#00000008",
+        "stroke": "#222222",
+        "strokeWidth": 3,
+        "radius": 80,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-31-prontuario-cirurgia",
+      "name": "Diagrama · incisão",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 242,
+      "y": 1180,
+      "width": 70,
+      "height": 8,
+      "rotation": 30,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#b3261e",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-32-prontuario-cirurgia",
+      "name": "Diagrama · marcação",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 262,
+      "y": 1120,
+      "width": 56,
+      "height": 56,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": null,
+        "stroke": "#b3261e",
+        "strokeWidth": 3,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-33-prontuario-cirurgia",
+      "name": "Cronologia",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 450,
+      "y": 920,
+      "width": 680,
+      "height": 300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "03h12 — indução anestésica\n03h20 — incisão\n03h41 — apêndice retirado\n03h58 — sutura\n04h05 — paciente estável",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.5,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-34-prontuario-cirurgia",
+      "name": "Observações",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 450,
+      "y": 1260,
+      "width": 680,
+      "height": 130,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Sem intercorrências. Paciente relatou, ao despertar, \"vozes no corredor\" — atribuído ao efeito anestésico.",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 9
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-10-prontuario-cirurgia",
+      "label": "Paciente"
+    },
+    {
+      "layerId": "l-13-prontuario-cirurgia",
+      "label": "Procedimento"
+    },
+    {
+      "layerId": "l-16-prontuario-cirurgia",
+      "label": "Equipe"
+    },
+    {
+      "layerId": "l-19-prontuario-cirurgia",
+      "label": "Início"
+    },
+    {
+      "layerId": "l-22-prontuario-cirurgia",
+      "label": "Término"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

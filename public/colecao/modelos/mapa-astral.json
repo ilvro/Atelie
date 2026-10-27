@@ -1,0 +1,1335 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-mapa-astral",
+  "revision": 0,
+  "name": "Mapa astral",
+  "category": "Ocultismo",
+  "tags": [
+    "ocultismo"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1300,
+    "height": 1500,
+    "background": "#d7c9a6"
+  },
+  "layers": [
+    {
+      "id": "l-1-mapa-astral",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-creme-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-mapa-astral",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.42,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 10044,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-3-mapa-astral",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.21,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 10061,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-mapa-astral",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.18,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 10078,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-5-mapa-astral",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.27,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 10095,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-6-mapa-astral",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-mapa-astral",
+      "name": "Título",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 150,
+      "y": 70,
+      "width": 1000,
+      "height": 90,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "MAPA ASTRAL",
+        "font": {
+          "family": "Cinzel",
+          "library": "casa-font-cinzel-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 64,
+        "color": "#3a2a1a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-8-mapa-astral",
+      "name": "Círculo externo",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 210,
+      "y": 340,
+      "width": 880,
+      "height": 880,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": null,
+        "stroke": "#3a2a1a",
+        "strokeWidth": 5,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-9-mapa-astral",
+      "name": "Círculo dos signos",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 320,
+      "y": 450,
+      "width": 660,
+      "height": 660,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": null,
+        "stroke": "#3a2a1a",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-10-mapa-astral",
+      "name": "Círculo interno",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 420,
+      "y": 550,
+      "width": 460,
+      "height": 460,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": null,
+        "stroke": "#3a2a1a",
+        "strokeWidth": 3,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-11-mapa-astral",
+      "name": "Divisão ARI",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 650,
+      "y": 340,
+      "width": 1,
+      "height": 210,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "path",
+        "fill": null,
+        "stroke": "#3a2a1a",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": [],
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l-12-mapa-astral",
+      "name": "Divisão TOU",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 765,
+      "y": 398.948822334847,
+      "width": 105,
+      "height": 181.86533479473212,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "path",
+        "fill": null,
+        "stroke": "#3a2a1a",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": [],
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l-13-mapa-astral",
+      "name": "Divisão GÊM",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 849.1858428704209,
+      "y": 560,
+      "width": 181.86533479473223,
+      "height": 105,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "path",
+        "fill": null,
+        "stroke": "#3a2a1a",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": [],
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l-14-mapa-astral",
+      "name": "Divisão CÂN",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 880,
+      "y": 780,
+      "width": 210,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "path",
+        "fill": null,
+        "stroke": "#3a2a1a",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": [],
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l-15-mapa-astral",
+      "name": "Divisão LEÃ",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 849.1858428704209,
+      "y": 895,
+      "width": 181.86533479473223,
+      "height": 105,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "path",
+        "fill": null,
+        "stroke": "#3a2a1a",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": [],
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l-16-mapa-astral",
+      "name": "Divisão VIR",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 765,
+      "y": 979.1858428704209,
+      "width": 105,
+      "height": 181.865334794732,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "path",
+        "fill": null,
+        "stroke": "#3a2a1a",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": [],
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l-17-mapa-astral",
+      "name": "Divisão LIB",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 650,
+      "y": 1010,
+      "width": 1,
+      "height": 210,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "path",
+        "fill": null,
+        "stroke": "#3a2a1a",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": [],
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l-18-mapa-astral",
+      "name": "Divisão ESC",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 430.0000000000001,
+      "y": 979.1858428704209,
+      "width": 104.99999999999989,
+      "height": 181.86533479473223,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "path",
+        "fill": null,
+        "stroke": "#3a2a1a",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": [],
+        "points": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l-19-mapa-astral",
+      "name": "Divisão SAG",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 268.94882233484697,
+      "y": 895,
+      "width": 181.86533479473212,
+      "height": 105,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "path",
+        "fill": null,
+        "stroke": "#3a2a1a",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": [],
+        "points": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l-20-mapa-astral",
+      "name": "Divisão CAP",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 210,
+      "y": 780,
+      "width": 210,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "path",
+        "fill": null,
+        "stroke": "#3a2a1a",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": [],
+        "points": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l-21-mapa-astral",
+      "name": "Divisão AQU",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 268.948822334847,
+      "y": 560,
+      "width": 181.86533479473212,
+      "height": 105,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "path",
+        "fill": null,
+        "stroke": "#3a2a1a",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": [],
+        "points": [
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l-22-mapa-astral",
+      "name": "Divisão PEI",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 429.9999999999998,
+      "y": 398.9488223348471,
+      "width": 105.00000000000011,
+      "height": 181.86533479473206,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "path",
+        "fill": null,
+        "stroke": "#3a2a1a",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": [],
+        "points": [
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "id": "l-23-mapa-astral",
+      "name": "Signo ARI",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 708.3512371389579,
+      "y": 392.948186010154,
+      "width": 80,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "ARI",
+        "font": {
+          "family": "Cinzel",
+          "library": "casa-font-cinzel-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#3a2a1a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-24-mapa-astral",
+      "name": "Signo TOU",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 878.7005768508881,
+      "y": 491.299423149112,
+      "width": 80,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "TOU",
+        "font": {
+          "family": "Cinzel",
+          "library": "casa-font-cinzel-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#3a2a1a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-25-mapa-astral",
+      "name": "Signo GÊM",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 977.051813989846,
+      "y": 661.6487628610421,
+      "width": 80,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "GÊM",
+        "font": {
+          "family": "Cinzel",
+          "library": "casa-font-cinzel-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#3a2a1a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-26-mapa-astral",
+      "name": "Signo CÂN",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 977.051813989846,
+      "y": 858.3512371389579,
+      "width": 80,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "CÂN",
+        "font": {
+          "family": "Cinzel",
+          "library": "casa-font-cinzel-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#3a2a1a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-27-mapa-astral",
+      "name": "Signo LEÃ",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 878.7005768508881,
+      "y": 1028.700576850888,
+      "width": 80,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "LEÃ",
+        "font": {
+          "family": "Cinzel",
+          "library": "casa-font-cinzel-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#3a2a1a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-28-mapa-astral",
+      "name": "Signo VIR",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 708.3512371389579,
+      "y": 1127.0518139898459,
+      "width": 80,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "VIR",
+        "font": {
+          "family": "Cinzel",
+          "library": "casa-font-cinzel-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#3a2a1a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-29-mapa-astral",
+      "name": "Signo LIB",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 511.6487628610421,
+      "y": 1127.0518139898459,
+      "width": 80,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "LIB",
+        "font": {
+          "family": "Cinzel",
+          "library": "casa-font-cinzel-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#3a2a1a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-30-mapa-astral",
+      "name": "Signo ESC",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 341.299423149112,
+      "y": 1028.700576850888,
+      "width": 80,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "ESC",
+        "font": {
+          "family": "Cinzel",
+          "library": "casa-font-cinzel-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#3a2a1a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-31-mapa-astral",
+      "name": "Signo SAG",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 242.94818601015407,
+      "y": 858.351237138958,
+      "width": 80,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "SAG",
+        "font": {
+          "family": "Cinzel",
+          "library": "casa-font-cinzel-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#3a2a1a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-32-mapa-astral",
+      "name": "Signo CAP",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 242.94818601015402,
+      "y": 661.6487628610423,
+      "width": 80,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "CAP",
+        "font": {
+          "family": "Cinzel",
+          "library": "casa-font-cinzel-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#3a2a1a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-33-mapa-astral",
+      "name": "Signo AQU",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 341.2994231491119,
+      "y": 491.299423149112,
+      "width": 80,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "AQU",
+        "font": {
+          "family": "Cinzel",
+          "library": "casa-font-cinzel-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#3a2a1a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-34-mapa-astral",
+      "name": "Signo PEI",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 511.6487628610422,
+      "y": 392.948186010154,
+      "width": 80,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "PEI",
+        "font": {
+          "family": "Cinzel",
+          "library": "casa-font-cinzel-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#3a2a1a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-35-mapa-astral",
+      "name": "Centro",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.75,
+      "blend": "multiply",
+      "x": 530,
+      "y": 660,
+      "width": 240,
+      "height": 240,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-simbolo-pentaculo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-36-mapa-astral",
+      "name": "Nome",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 150,
+      "y": 1280,
+      "width": 1000,
+      "height": 44,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Nome: Helena Maria Pires",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#2a1f14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-37-mapa-astral",
+      "name": "Nascimento",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 150,
+      "y": 1330,
+      "width": 1000,
+      "height": 44,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Nascida em 9 de março de 1900, às 5h, Vila Aurora",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#2a1f14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-38-mapa-astral",
+      "name": "Leitura",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 150,
+      "y": 1380,
+      "width": 1000,
+      "height": 90,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Lua cheia em Escorpião: casa oito marcada. Grande tendência a lidar com o que está sob a terra.",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-italic",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 28,
+        "color": "#5a1a14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.15,
+          "seed": 14
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-36-mapa-astral",
+      "label": "Nome"
+    },
+    {
+      "layerId": "l-37-mapa-astral",
+      "label": "Data"
+    },
+    {
+      "layerId": "l-38-mapa-astral",
+      "label": "Leitura"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

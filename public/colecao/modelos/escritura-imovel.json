@@ -1,0 +1,963 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-escritura-imovel",
+  "revision": 0,
+  "name": "Escritura de imóvel",
+  "category": "Oficial e jurídico",
+  "tags": [
+    "oficial e jurídico"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-escritura-imovel",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-creme-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-escritura-imovel",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.42,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 4123,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-3-escritura-imovel",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.21,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 4140,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-escritura-imovel",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.18,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 4157,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-5-escritura-imovel",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.27,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 4174,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-6-escritura-imovel",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-escritura-imovel",
+      "name": "Emblema",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 80,
+      "width": 120,
+      "height": 136,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-emblema-universo-cartorio"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-8-escritura-imovel",
+      "name": "Cabeçalho",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 250,
+      "y": 90,
+      "width": 880,
+      "height": 71,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "CARTÓRIO DO 2º OFÍCIO DE NOTAS\nVILA AURORA · ESTADO DE SÃO PAULO",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#201a14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-9-escritura-imovel",
+      "name": "Linha do cabeçalho",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 226,
+      "width": 1020,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#201a14",
+        "strokeWidth": 3,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-10-escritura-imovel",
+      "name": "Título do documento",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 248,
+      "width": 1020,
+      "height": 48,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "ESCRITURA PÚBLICA DE COMPRA E VENDA",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#201a14",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-11-escritura-imovel",
+      "name": "Imóvel (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 314,
+      "width": 1020,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "IMÓVEL",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-12-escritura-imovel",
+      "name": "Imóvel",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 336,
+      "width": 1020,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Solar dos Pinhais, Estrada Velha, km 7",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#201a14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-13-escritura-imovel",
+      "name": "Imóvel (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 374,
+      "width": 1020,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-14-escritura-imovel",
+      "name": "Outorgantes (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 394,
+      "width": 1020,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "OUTORGANTES",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 9
+        }
+      }
+    },
+    {
+      "id": "l-15-escritura-imovel",
+      "name": "Outorgantes",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 416,
+      "width": 1020,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Cornélio de A. Pinhais, vendedor, e Banco Comercial do Planalto, comprador",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#201a14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 9
+        }
+      }
+    },
+    {
+      "id": "l-16-escritura-imovel",
+      "name": "Outorgantes (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 454,
+      "width": 1020,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-17-escritura-imovel",
+      "name": "Valor (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 474,
+      "width": 495,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "VALOR",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-18-escritura-imovel",
+      "name": "Valor",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 496,
+      "width": 495,
+      "height": 66,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "180:000$000 (cento e oitenta contos de réis)",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#201a14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-19-escritura-imovel",
+      "name": "Valor (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 564,
+      "width": 495,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-20-escritura-imovel",
+      "name": "Cláusulas (título)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 592,
+      "width": 1020,
+      "height": 32,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "CLÁUSULAS",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 21,
+        "color": "#201a14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-21-escritura-imovel",
+      "name": "Cláusulas",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 630,
+      "width": 1020,
+      "height": 152,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "1. O imóvel é vendido livre e desembaraçado de quaisquer ônus.\n2. O pagamento será feito em três parcelas iguais, a primeira neste ato.\n3. O vendedor reserva-se o uso do porão da ala velha até o fim da vida.\n4. As custas e os impostos correm por conta do comprador.\n5. Assim o disseram e outorgaram, do que dou fé.",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#201a14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-22-escritura-imovel",
+      "name": "Assinatura 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1430,
+      "width": 490,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Cornélio A. Pinhais",
+        "font": {
+          "family": "Homemade Apple",
+          "library": "casa-font-homemadeapple-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 10
+        }
+      }
+    },
+    {
+      "id": "l-23-escritura-imovel",
+      "name": "Linha de assinatura 1",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1496,
+      "width": 490,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#444444",
+        "strokeWidth": 1.5,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-24-escritura-imovel",
+      "name": "Cargo 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1502,
+      "width": 490,
+      "height": 30,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Vendedor",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 17,
+        "color": "#444444",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-25-escritura-imovel",
+      "name": "Assinatura 2",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 640,
+      "y": 1430,
+      "width": 490,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "R. Siqueira",
+        "font": {
+          "family": "Homemade Apple",
+          "library": "casa-font-homemadeapple-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 10
+        }
+      }
+    },
+    {
+      "id": "l-26-escritura-imovel",
+      "name": "Linha de assinatura 2",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 640,
+      "y": 1496,
+      "width": 490,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#444444",
+        "strokeWidth": 1.5,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-27-escritura-imovel",
+      "name": "Cargo 2",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 640,
+      "y": 1502,
+      "width": 490,
+      "height": 30,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "p/ Banco Comercial do Planalto",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 17,
+        "color": "#444444",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-28-escritura-imovel",
+      "name": "Carimbo",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 840,
+      "y": 1140,
+      "width": 260,
+      "height": 260,
+      "rotation": -7,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-carimbo-br-cartorio"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-12-escritura-imovel",
+      "label": "Imóvel"
+    },
+    {
+      "layerId": "l-15-escritura-imovel",
+      "label": "Outorgantes"
+    },
+    {
+      "layerId": "l-18-escritura-imovel",
+      "label": "Valor"
+    },
+    {
+      "layerId": "l-21-escritura-imovel",
+      "label": "Cláusulas"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

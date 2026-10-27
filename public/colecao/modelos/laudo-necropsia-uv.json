@@ -1,0 +1,1420 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-laudo-necropsia-uv",
+  "revision": 0,
+  "name": "Laudo de necropsia · luz negra",
+  "category": "Forense e perícia",
+  "tags": [
+    "forense e perícia"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-laudo-necropsia-uv",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-branco-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-laudo-necropsia-uv",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 3441,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-laudo-necropsia-uv",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 3458,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-laudo-necropsia-uv",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.1,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-laudo-necropsia-uv",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 3492,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-laudo-necropsia-uv",
+      "name": "Emblema",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 80,
+      "width": 120,
+      "height": 136,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-emblema-universo-iml"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-laudo-necropsia-uv",
+      "name": "Cabeçalho",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 250,
+      "y": 90,
+      "width": 880,
+      "height": 71,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "INSTITUTO MÉDICO LEGAL DO ESTADO\nSERVIÇO DE NECROPSIA",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#1d2a2a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-8-laudo-necropsia-uv",
+      "name": "Linha do cabeçalho",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 226,
+      "width": 1020,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#1d2a2a",
+        "strokeWidth": 3,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-9-laudo-necropsia-uv",
+      "name": "Título do documento",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 248,
+      "width": 1020,
+      "height": 48,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "LAUDO DE EXAME NECROSCÓPICO",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#1d2a2a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-10-laudo-necropsia-uv",
+      "name": "Número (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 314,
+      "width": 495,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "NÚMERO",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-11-laudo-necropsia-uv",
+      "name": "Número",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 336,
+      "width": 495,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "NEC-1.386/63",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d2a2a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-12-laudo-necropsia-uv",
+      "name": "Número (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 374,
+      "width": 495,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-13-laudo-necropsia-uv",
+      "name": "Data do exame (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 314,
+      "width": 495,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "DATA DO EXAME",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-14-laudo-necropsia-uv",
+      "name": "Data do exame",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 336,
+      "width": 495,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "22 de setembro de 1963",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d2a2a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-15-laudo-necropsia-uv",
+      "name": "Data do exame (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 374,
+      "width": 495,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-16-laudo-necropsia-uv",
+      "name": "Vítima (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 394,
+      "width": 1020,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "VÍTIMA",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-17-laudo-necropsia-uv",
+      "name": "Vítima",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 416,
+      "width": 1020,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Homem, cerca de 40 anos, não identificado",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d2a2a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-18-laudo-necropsia-uv",
+      "name": "Vítima (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 454,
+      "width": 1020,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-19-laudo-necropsia-uv",
+      "name": "Achados (título)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 482,
+      "width": 1020,
+      "height": 32,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "ACHADOS",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 21,
+        "color": "#1d2a2a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-20-laudo-necropsia-uv",
+      "name": "Achados",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 520,
+      "width": 1020,
+      "height": 119,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Cadáver em decúbito dorsal, rigidez cadavérica generalizada. Equimose circular de 3 cm na região cervical anterior. Ausência de lesões perfurantes. Pulmões congestos e edemaciados; coração sem alterações macroscópicas. Estômago contendo líquido escuro e fragmentos vegetais não identificados.",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 21,
+        "color": "#1d2a2a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-21-laudo-necropsia-uv",
+      "name": "Causa da morte (título)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 657,
+      "width": 1020,
+      "height": 32,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "CAUSA DA MORTE",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 21,
+        "color": "#1d2a2a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-22-laudo-necropsia-uv",
+      "name": "Causa da morte",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 695,
+      "width": 1020,
+      "height": 69,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Asfixia mecânica, a esclarecer quanto ao instrumento. Remessa de vísceras para exame toxicológico.",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#1d2a2a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-23-laudo-necropsia-uv",
+      "name": "Assinatura 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1560,
+      "width": 1020,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Dr. Gaspar Lemos",
+        "font": {
+          "family": "Homemade Apple",
+          "library": "casa-font-homemadeapple-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 10
+        }
+      }
+    },
+    {
+      "id": "l-24-laudo-necropsia-uv",
+      "name": "Linha de assinatura 1",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1626,
+      "width": 1020,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#444444",
+        "strokeWidth": 1.5,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-25-laudo-necropsia-uv",
+      "name": "Cargo 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1632,
+      "width": 1020,
+      "height": 30,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Médico-legista",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 17,
+        "color": "#444444",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-26-laudo-necropsia-uv",
+      "name": "Carimbo",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 880,
+      "y": 1460,
+      "width": 230,
+      "height": 230,
+      "rotation": 8,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-carimbo-br-autenticado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-27-laudo-necropsia-uv",
+      "name": "Frente · cabeça",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 200,
+      "y": 1050,
+      "width": 60,
+      "height": 74,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": "#00000008",
+        "stroke": "#333333",
+        "strokeWidth": 2.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-28-laudo-necropsia-uv",
+      "name": "Frente · tronco",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 178,
+      "y": 1132,
+      "width": 104,
+      "height": 150,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#00000008",
+        "stroke": "#333333",
+        "strokeWidth": 2.2,
+        "radius": 26,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-29-laudo-necropsia-uv",
+      "name": "Frente · braço esquerdo",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 136,
+      "y": 1138,
+      "width": 34,
+      "height": 150,
+      "rotation": 4,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#00000008",
+        "stroke": "#333333",
+        "strokeWidth": 2.2,
+        "radius": 16,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-30-laudo-necropsia-uv",
+      "name": "Frente · braço direito",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 290,
+      "y": 1138,
+      "width": 34,
+      "height": 150,
+      "rotation": -4,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#00000008",
+        "stroke": "#333333",
+        "strokeWidth": 2.2,
+        "radius": 16,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-31-laudo-necropsia-uv",
+      "name": "Frente · perna esquerda",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 182,
+      "y": 1288,
+      "width": 46,
+      "height": 190,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#00000008",
+        "stroke": "#333333",
+        "strokeWidth": 2.2,
+        "radius": 18,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-32-laudo-necropsia-uv",
+      "name": "Frente · perna direita",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 232,
+      "y": 1288,
+      "width": 46,
+      "height": 190,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#00000008",
+        "stroke": "#333333",
+        "strokeWidth": 2.2,
+        "radius": 18,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-33-laudo-necropsia-uv",
+      "name": "Costas · cabeça",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 590,
+      "y": 1050,
+      "width": 60,
+      "height": 74,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": "#00000008",
+        "stroke": "#333333",
+        "strokeWidth": 2.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-34-laudo-necropsia-uv",
+      "name": "Costas · tronco",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 568,
+      "y": 1132,
+      "width": 104,
+      "height": 150,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#00000008",
+        "stroke": "#333333",
+        "strokeWidth": 2.2,
+        "radius": 26,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-35-laudo-necropsia-uv",
+      "name": "Costas · braço esquerdo",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 526,
+      "y": 1138,
+      "width": 34,
+      "height": 150,
+      "rotation": 4,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#00000008",
+        "stroke": "#333333",
+        "strokeWidth": 2.2,
+        "radius": 16,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-36-laudo-necropsia-uv",
+      "name": "Costas · braço direito",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 680,
+      "y": 1138,
+      "width": 34,
+      "height": 150,
+      "rotation": -4,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#00000008",
+        "stroke": "#333333",
+        "strokeWidth": 2.2,
+        "radius": 16,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-37-laudo-necropsia-uv",
+      "name": "Costas · perna esquerda",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 572,
+      "y": 1288,
+      "width": 46,
+      "height": 190,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#00000008",
+        "stroke": "#333333",
+        "strokeWidth": 2.2,
+        "radius": 18,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-38-laudo-necropsia-uv",
+      "name": "Costas · perna direita",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 622,
+      "y": 1288,
+      "width": 46,
+      "height": 190,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#00000008",
+        "stroke": "#333333",
+        "strokeWidth": 2.2,
+        "radius": 18,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-39-laudo-necropsia-uv",
+      "name": "Legenda do diagrama",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 130,
+      "y": 1500,
+      "width": 700,
+      "height": 30,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "FRENTE                       COSTAS",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 17,
+        "color": "#444444",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-40-laudo-necropsia-uv",
+      "name": "Marca no pescoço",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 195,
+      "y": 1118,
+      "width": 60,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "✕",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 48,
+        "color": "#a3182b",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-41-laudo-necropsia-uv",
+      "name": "Marca no pulso",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 150,
+      "y": 1260,
+      "width": 60,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "✕",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 48,
+        "color": "#a3182b",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-42-laudo-necropsia-uv",
+      "name": "Faixa do aviso de luz negra",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.92,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 72,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#2a1760",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-43-laudo-necropsia-uv",
+      "name": "Aviso de luz negra",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 14,
+      "width": 1040,
+      "height": 44,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "EXAMINAR SOB LUZ NEGRA",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 30,
+        "color": "#e6dcff",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-44-laudo-necropsia-uv",
+      "name": "Mensagem sob luz negra",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 130,
+      "y": 1394,
+      "width": 980,
+      "height": 220,
+      "rotation": -1.5,
+      "clip": false,
+      "light": "uv",
+      "text": {
+        "content": "A marca no pescoço brilha.\nNão é de corda: é de mão.",
+        "font": {
+          "family": "La Belle Aurore",
+          "library": "casa-font-labelleaurore",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 52,
+        "color": "#c8ffd4",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.3,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.1,
+          "seed": 11
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-11-laudo-necropsia-uv",
+      "label": "Número"
+    },
+    {
+      "layerId": "l-14-laudo-necropsia-uv",
+      "label": "Data do exame"
+    },
+    {
+      "layerId": "l-17-laudo-necropsia-uv",
+      "label": "Vítima"
+    },
+    {
+      "layerId": "l-20-laudo-necropsia-uv",
+      "label": "Achados"
+    },
+    {
+      "layerId": "l-22-laudo-necropsia-uv",
+      "label": "Causa"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

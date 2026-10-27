@@ -1,0 +1,1194 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-termo-depoimento",
+  "revision": 0,
+  "name": "Termo de depoimento",
+  "category": "Polícia e investigação",
+  "tags": [
+    "polícia e investigação"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-termo-depoimento",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-papel-maquina-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-termo-depoimento",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 3131,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-termo-depoimento",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 3148,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-termo-depoimento",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.1,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-4"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-termo-depoimento",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 3182,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-termo-depoimento",
+      "name": "Emblema",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 80,
+      "width": 120,
+      "height": 136,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-emblema-universo-delegacia"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-termo-depoimento",
+      "name": "Cabeçalho",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 250,
+      "y": 90,
+      "width": 880,
+      "height": 71,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "DELEGACIA DE INVESTIGAÇÕES ESPECIAIS\nCARTÓRIO DO 1º DISTRITO",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-8-termo-depoimento",
+      "name": "Linha do cabeçalho",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 226,
+      "width": 1020,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#1d1b24",
+        "strokeWidth": 3,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-9-termo-depoimento",
+      "name": "Título do documento",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 248,
+      "width": 1020,
+      "height": 48,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "TERMO DE DEPOIMENTO",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-10-termo-depoimento",
+      "name": "Depoente (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 314,
+      "width": 495,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "DEPOENTE",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-11-termo-depoimento",
+      "name": "Depoente",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 336,
+      "width": 495,
+      "height": 66,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Joaquim Pereira Dutra, 52 anos, vigia noturno",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-12-termo-depoimento",
+      "name": "Depoente (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 404,
+      "width": 495,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-13-termo-depoimento",
+      "name": "Data (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 314,
+      "width": 495,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "DATA",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-14-termo-depoimento",
+      "name": "Data",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 336,
+      "width": 495,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "03 de abril de 1954",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-15-termo-depoimento",
+      "name": "Data (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 374,
+      "width": 495,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-16-termo-depoimento",
+      "name": "Escrivão (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 424,
+      "width": 495,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "ESCRIVÃO",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-17-termo-depoimento",
+      "name": "Escrivão",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 446,
+      "width": 495,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Marta Quintanilha",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-18-termo-depoimento",
+      "name": "Escrivão (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 484,
+      "width": 495,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-19-termo-depoimento",
+      "name": "Local (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 496,
+      "width": 1020,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "LOCAL",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-20-termo-depoimento",
+      "name": "Local",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 518,
+      "width": 1020,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Sala de oitivas da Delegacia, Praça Velha, 120",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-21-termo-depoimento",
+      "name": "Local (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 556,
+      "width": 1020,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-22-termo-depoimento",
+      "name": "Depoimento (título)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 584,
+      "width": 1020,
+      "height": 32,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "DEPOIMENTO",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 21,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-23-termo-depoimento",
+      "name": "Depoimento",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 622,
+      "width": 1020,
+      "height": 289,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Aos três dias do mês de abril de mil novecentos e cinquenta e quatro, perante a autoridade policial, compareceu o depoente acima qualificado, que, devidamente compromissado, declarou o seguinte: que trabalha como vigia no Solar dos Pinhais há onze anos; que na noite de 14 de março, por volta das vinte e três horas, ouviu passos no porão, embora a porta estivesse trancada por dentro; que desceu com a lanterna e encontrou a chave sobre a mesa, o que o depoente não soube explicar; que sentiu um cheiro de terra úmida e de vela queimada; que não viu ninguém, mas que a lanterna se apagou duas vezes; que não tocou em coisa alguma e subiu para chamar o patrão. Nada mais disse nem lhe foi perguntado. Lido e achado conforme, vai assinado.",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-24-termo-depoimento",
+      "name": "Assinatura 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1450,
+      "width": 490,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Joaquim P. Dutra",
+        "font": {
+          "family": "Homemade Apple",
+          "library": "casa-font-homemadeapple-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 10
+        }
+      }
+    },
+    {
+      "id": "l-25-termo-depoimento",
+      "name": "Linha de assinatura 1",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1516,
+      "width": 490,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#444444",
+        "strokeWidth": 1.5,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-26-termo-depoimento",
+      "name": "Cargo 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1522,
+      "width": 490,
+      "height": 30,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Depoente",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 17,
+        "color": "#444444",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-27-termo-depoimento",
+      "name": "Assinatura 2",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 640,
+      "y": 1450,
+      "width": 490,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Marta Quintanilha",
+        "font": {
+          "family": "Homemade Apple",
+          "library": "casa-font-homemadeapple-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 10
+        }
+      }
+    },
+    {
+      "id": "l-28-termo-depoimento",
+      "name": "Linha de assinatura 2",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 640,
+      "y": 1516,
+      "width": 490,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#444444",
+        "strokeWidth": 1.5,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-29-termo-depoimento",
+      "name": "Cargo 2",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 640,
+      "y": 1522,
+      "width": 490,
+      "height": 30,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Escrivã",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 17,
+        "color": "#444444",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-30-termo-depoimento",
+      "name": "Carimbo",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 870,
+      "y": 1180,
+      "width": 250,
+      "height": 190,
+      "rotation": 5,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-carimbo-br-recebido-em"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-31-termo-depoimento",
+      "name": "Rubrica 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1130,
+      "y": 350,
+      "width": 140,
+      "height": 39.199999999999996,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "J.P.D.",
+        "font": {
+          "family": "Nothing You Could Do",
+          "library": null,
+          "weight": 400,
+          "italic": false
+        },
+        "size": 28,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-32-termo-depoimento",
+      "name": "Rubrica 2",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1130,
+      "y": 700,
+      "width": 140,
+      "height": 39.199999999999996,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "J.P.D.",
+        "font": {
+          "family": "Nothing You Could Do",
+          "library": null,
+          "weight": 400,
+          "italic": false
+        },
+        "size": 28,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-33-termo-depoimento",
+      "name": "Rubrica 3",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1130,
+      "y": 1050,
+      "width": 140,
+      "height": 39.199999999999996,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "J.P.D.",
+        "font": {
+          "family": "Nothing You Could Do",
+          "library": null,
+          "weight": 400,
+          "italic": false
+        },
+        "size": 28,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-34-termo-depoimento",
+      "name": "Rubrica 4",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1130,
+      "y": 1400,
+      "width": 140,
+      "height": 39.199999999999996,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "J.P.D.",
+        "font": {
+          "family": "Nothing You Could Do",
+          "library": null,
+          "weight": 400,
+          "italic": false
+        },
+        "size": 28,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-11-termo-depoimento",
+      "label": "Depoente"
+    },
+    {
+      "layerId": "l-14-termo-depoimento",
+      "label": "Data"
+    },
+    {
+      "layerId": "l-17-termo-depoimento",
+      "label": "Escrivão"
+    },
+    {
+      "layerId": "l-20-termo-depoimento",
+      "label": "Local"
+    },
+    {
+      "layerId": "l-23-termo-depoimento",
+      "label": "Depoimento"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

@@ -111,6 +111,7 @@ export function buildHandoutFromSpec(spec) {
         strokeWidth: layerSpec.shape?.strokeWidth ?? 1,
         radius: layerSpec.shape?.radius ?? 0,
         dash: layerSpec.shape?.dash ?? [],
+        ...(layerSpec.shape?.type === 'path' ? { points: layerSpec.shape.points } : {}),
       };
     } else if (layerSpec.kind === 'effect') {
       base.effect = {
@@ -231,7 +232,9 @@ async function renderContactSheet(items, outPath) {
   console.log(`[contact-sheet] Folha de contato gerada em ${outPath} (${sheetW}x${sheetH} px)`);
 }
 
-function metaOf(slug) {
+function metaOf(spec) {
+  if (spec.meta) return { era: spec.meta.era, tom: spec.meta.tom, tags: spec.meta.tags || [], ...(spec.meta.org ? { org: spec.meta.org } : {}), ...(spec.family ? { family: spec.family } : {}) };
+  const slug = spec.slug;
   const m = META[slug];
   if (!m) throw new Error(`Modelo sem metadados em modelos/meta.js: ${slug}`);
   return { era: m.era, tom: m.tom, tags: m.tags || [], ...(m.org ? { org: m.org } : {}) };
@@ -269,7 +272,7 @@ export async function generateAllTemplates() {
       file: modelFile,
       preview: previewFile,
       fields: handout.fields.map(f => f.label),
-      ...metaOf(spec.slug),
+      ...metaOf(spec),
       ...(spec.backTemplate ? { backTemplate: spec.backTemplate } : {}),
     };
 

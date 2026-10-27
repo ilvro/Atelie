@@ -1,0 +1,535 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-pagina-grimorio-queimado",
+  "revision": 0,
+  "name": "Página de grimório · queimada",
+  "category": "Ocultismo",
+  "tags": [
+    "ocultismo"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#dcc99f"
+  },
+  "layers": [
+    {
+      "id": "l-1-pagina-grimorio-queimado",
+      "name": "Papel pergaminho antigo",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-pergaminho-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-pagina-grimorio-queimado",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 1581,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-3-pagina-grimorio-queimado",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 1598,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-pagina-grimorio-queimado",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 1615,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-5-pagina-grimorio-queimado",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.45,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 1632,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-6-pagina-grimorio-queimado",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.4,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-pagina-grimorio-queimado",
+      "name": "Canto queimado",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "multiply",
+      "x": 900,
+      "y": 50,
+      "width": 340,
+      "height": 340,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-queimado-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-titulo",
+      "name": "Título arcano",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 120,
+      "width": 1000,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "CAPITULUM VII — DE VINCULIS UMBRARUM",
+        "font": {
+          "family": "IM Fell DW Pica",
+          "library": "casa-font-im-fell-dw-pica-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#251b14",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 2,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-8-pagina-grimorio-queimado",
+      "name": "Sigilo de invocação",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.85,
+      "blend": "multiply",
+      "x": 445,
+      "y": 210,
+      "width": 350,
+      "height": 350,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-simbolo-sigilo-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": {
+          "color": "#3b2518",
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "l-texto",
+      "name": "Texto arcano",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 600,
+      "width": 720,
+      "height": 650,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Quando as constelações septentrionais declinarem além do horizonte setentrional, traça-se o tríplice anel de sal e cinza consagrada sobre a laje de pedra nua.\n\nNenhuma voz mortal poderá proferir os nove nomes inomináveis antes que o incenso de mirra e absinto queime até a última brasa. O círculo não tolera hesitação: qualquer fenda na barreira permitirá que o sopro abissal transpasse a carne do conjurador e devore suas lembranças terrestres.",
+        "font": {
+          "family": "IM Fell DW Pica",
+          "library": "casa-font-im-fell-dw-pica-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 25,
+        "color": "#281c15",
+        "align": "justify",
+        "valign": "top",
+        "lineHeight": 1.6,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-nota-margem",
+      "name": "Nota na margem",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 900,
+      "y": 640,
+      "width": 260,
+      "height": 450,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Cuidado! A terceira palavra deve ser sussurrada de costas para o altar. O mestre perdeu a visão ao ignorar este aviso.",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 30,
+        "color": "#661414",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.35,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-9-pagina-grimorio-queimado",
+      "name": "Fuligem",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-queimado-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-10-pagina-grimorio-queimado",
+      "name": "Papel tostado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "burn",
+        "seed": 12851,
+        "amount": 0.6,
+        "params": {
+          "depth": 0.1
+        }
+      }
+    },
+    {
+      "id": "l-11-pagina-grimorio-queimado",
+      "name": "Queimado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "cut",
+        "seed": 416,
+        "amount": 1,
+        "params": {},
+        "edge": "queimado",
+        "remove": [],
+        "holes": [
+          [
+            [
+              0,
+              0.991,
+              38
+            ],
+            [
+              0.0153,
+              0.9891,
+              67
+            ],
+            [
+              0.0253,
+              0.9728,
+              88
+            ],
+            [
+              0.0489,
+              0.9702,
+              93
+            ],
+            [
+              0.0516,
+              0.9466,
+              117
+            ],
+            [
+              0.082,
+              0.9507,
+              93
+            ],
+            [
+              0.0918,
+              0.9343,
+              98
+            ],
+            [
+              0.1133,
+              0.9295,
+              82
+            ],
+            [
+              0.1171,
+              0.9071,
+              50
+            ]
+          ]
+        ],
+        "char": 0.55,
+        "fiber": 0.5
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-titulo",
+      "label": "Título"
+    },
+    {
+      "layerId": "l-texto",
+      "label": "Texto"
+    },
+    {
+      "layerId": "l-nota-margem",
+      "label": "Nota na margem"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

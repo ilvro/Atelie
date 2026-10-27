@@ -1,0 +1,525 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-livro-antigo-pagina",
+  "revision": 0,
+  "name": "Livro antigo · página impressa",
+  "category": "Cadernos, diários e livros",
+  "tags": [
+    "cadernos, diários e livros"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1100,
+    "height": 1600,
+    "background": "#d7c9a6"
+  },
+  "layers": [
+    {
+      "id": "l-1-livro-antigo-pagina",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1600,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-creme-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-livro-antigo-pagina",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.49,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1600,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 6324,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-3-livro-antigo-pagina",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.245,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1600,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 6341,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-livro-antigo-pagina",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.21,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1600,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 6358,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-5-livro-antigo-pagina",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.315,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1600,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 6375,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-6-livro-antigo-pagina",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.28,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1600,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-livro-antigo-pagina",
+      "name": "Título corrente",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 90,
+      "width": 860,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "DE REBUS ARCANIS · LIBER SECUNDUS",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#2a1f14",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-8-livro-antigo-pagina",
+      "name": "Linha",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 140,
+      "width": 860,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#2a1f14",
+        "strokeWidth": 1.4,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-9-livro-antigo-pagina",
+      "name": "Capitular",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 190,
+      "width": 150,
+      "height": 210,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "A",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 161,
+        "color": "#7a1f1f",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-10-livro-antigo-pagina",
+      "name": "Texto",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 280,
+      "y": 190,
+      "width": 700,
+      "height": 560,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "o cabo de muitos anos de estudo, concluiu o autor que certas portas não se abrem com chave, mas com nome. E quem conhece o nome da porta conhece, por consequência, o de quem a guarda. Assim se lê nas antigas crônicas dos monges de São Gabriel, que viram, numa noite de inverno, descer da serra uma luz que não era de fogo nem de lua, e ouviram debaixo da terra um canto de muitas vozes, tão lento que parecia o próprio silêncio a respirar. Dizem que desse dia em diante nenhum deles quis mais ler em voz alta.",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 29,
+        "color": "#2a1f14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.4,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-11-livro-antigo-pagina",
+      "name": "Texto (continuação)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 780,
+      "width": 860,
+      "height": 300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Pelo que toca à natureza dessa luz, divergem os autores: uns a tomam por fogo-fátuo, outros por sinal dos mortos; o certo é que, onde ela pousa, o capim não torna a crescer por três estações. Notem os curiosos que tal fenômeno cessa ao toque do ferro frio e do sal, o que dá a entender sua origem, ainda que não sua causa.",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 29,
+        "color": "#2a1f14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.4,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-12-livro-antigo-pagina",
+      "name": "Linha",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 1320,
+      "width": 300,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#2a1f14",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-13-livro-antigo-pagina",
+      "name": "Notas de rodapé",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 1335,
+      "width": 860,
+      "height": 90,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "¹ Crônica de São Gabriel, fol. 41v.\n² Cf. o capítulo sobre o ferro, adiante.",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#2a1f14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-14-livro-antigo-pagina",
+      "name": "Anotação a lápis",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.85,
+      "blend": "normal",
+      "x": 640,
+      "y": 1100,
+      "width": 380,
+      "height": 110,
+      "rotation": -3,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "conferir c/ o outro exemplar!\nsal na soleira — funciona?",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 29,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.4,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-15-livro-antigo-pagina",
+      "name": "Fólio",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 400,
+      "y": 1500,
+      "width": 300,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "— 112 —",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#2a1f14",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 12
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-7-livro-antigo-pagina",
+      "label": "Título"
+    },
+    {
+      "layerId": "l-10-livro-antigo-pagina",
+      "label": "Texto"
+    },
+    {
+      "layerId": "l-13-livro-antigo-pagina",
+      "label": "Notas"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

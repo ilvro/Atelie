@@ -110,7 +110,7 @@
       "kind": "image",
       "visible": true,
       "locked": false,
-      "opacity": 0.2,
+      "opacity": 0.1,
       "blend": "multiply",
       "x": 0,
       "y": 0,

@@ -1,0 +1,370 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-invocacao-uv",
+  "revision": 0,
+  "name": "Invocação · UV",
+  "category": "Ocultismo",
+  "tags": [
+    "ocultismo"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-invocacao-uv",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-branco-novo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-invocacao-uv",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.275,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 10075,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-invocacao-uv",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.15,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 10092,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-invocacao-uv",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.05,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-4"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-invocacao-uv",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.15,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 10126,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-invocacao-uv",
+      "name": "Título",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 110,
+      "width": 1020,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "ATA DA REUNIÃO DO CONDOMÍNIO",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-7-invocacao-uv",
+      "name": "Texto visível",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 230,
+      "width": 1020,
+      "height": 560,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "1. Aprovação das contas do mês anterior.\n2. Reforma do telhado do bloco B.\n3. Barulho vindo do subsolo, segundo moradores do térreo — adiado para a próxima reunião.\n4. Assuntos gerais.\n\nNada mais havendo a tratar, encerrou-se a reunião às 21h30.",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 28,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.5,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-8-invocacao-uv",
+      "name": "Texto UV",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 130,
+      "y": 880,
+      "width": 980,
+      "height": 520,
+      "rotation": -1,
+      "clip": false,
+      "light": "uv",
+      "text": {
+        "content": "Eu te chamo pelo nome que não tem nome,\nTu que dormes sob o concreto e sob o sal.\nAbre a porta que o tempo fechou.\nVem pela escada que ninguém desce.\nVem, e fica.",
+        "font": {
+          "family": "La Belle Aurore",
+          "library": "casa-font-labelleaurore",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 55,
+        "color": "#c8ffd4",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.35,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.1,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-9-invocacao-uv",
+      "name": "Rodapé da ata",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 780,
+      "width": 1020,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Ata lavrada pela síndica, Sra. Dalva Nunes.",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-10-invocacao-uv",
+      "name": "Sigilo UV",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.9,
+      "blend": "screen",
+      "x": 780,
+      "y": 1360,
+      "width": 300,
+      "height": 300,
+      "rotation": 0,
+      "clip": false,
+      "light": "uv",
+      "image": {
+        "src": {
+          "library": "casa-simbolo-sigilo-7"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-7-invocacao-uv",
+      "label": "Texto visível"
+    },
+    {
+      "layerId": "l-8-invocacao-uv",
+      "label": "Texto UV"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

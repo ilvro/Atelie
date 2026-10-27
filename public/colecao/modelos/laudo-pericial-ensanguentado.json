@@ -1,0 +1,685 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-laudo-pericial-ensanguentado",
+  "revision": 0,
+  "name": "Laudo pericial · ensanguentado",
+  "category": "Polícia e investigação",
+  "tags": [
+    "polícia e investigação"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f5f3ec"
+  },
+  "layers": [
+    {
+      "id": "l-1-laudo-pericial-ensanguentado",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-branco-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-laudo-pericial-ensanguentado",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 1085,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-laudo-pericial-ensanguentado",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 1102,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-laudo-pericial-ensanguentado",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.1,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-laudo-pericial-ensanguentado",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 1136,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-laudo-pericial-ensanguentado",
+      "name": "Cabeçalho IML",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 90,
+      "width": 1000,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "INSTITUTO MÉDICO LEGAL DO ESTADO\nDEPARTAMENTO DE TANATOLOGIA FORENSE",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1a1a1a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-7-laudo-pericial-ensanguentado",
+      "name": "Linha topo",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 160,
+      "width": 1000,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#222222",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-numero",
+      "name": "Número",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 180,
+      "width": 500,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "LAUDO DE EXAME CADAVÉRICO Nº 874/1935",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#111111",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-vitima",
+      "name": "Vítima",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 230,
+      "width": 1000,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "EXAMINADO: Indivíduo não identificado (sexo masculino, aprox. 40 anos)",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#111111",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-8-laudo-pericial-ensanguentado",
+      "name": "Seções periciais",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 290,
+      "width": 1000,
+      "height": 500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "I — HISTÓRICO:\nCorpo removido das águas da represa por homens da guarda florestal na manhã de ontem.\n\nII — EXAME EXTERNO:\nCadáver em adiantado estado de rigidez cadavérica. Observam-se escoriações múltiplas na região dorsal e nos membros superiores, compatíveis com arrastamento sobre terreno rochoso.\n\nIII — EXAME INTERNO:\nAusência de água nos pulmões ou nas vias respiratórias superiores, descartando afogamento como causa imediata do óbito. Constatada fratura cominutiva na base do crânio com hemorragia subdural maciça decorrente de impacto contundente com instrumento pesado.",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#222222",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-conclusao",
+      "name": "Conclusão",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 820,
+      "width": 1000,
+      "height": 260,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "IV — CONCLUSÃO:\nO perito signatário conclui que a morte decorreu de traumatismo cranioencefálico provocado por ação mecânica de terceiro (homicídio), tendo ocorrido entre 24 e 36 horas antes do início da necropsia.\n\nPerito Relator: Dr. Jonas Guimarães (CRM 1.942)",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#111111",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-9-laudo-pericial-ensanguentado",
+      "name": "Carimbo CONFIDENCIAL",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 300,
+      "y": 450,
+      "width": 650,
+      "height": 260,
+      "rotation": -18,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-carimbo-confidencial"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": {
+          "color": "#b01010",
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "l-10-laudo-pericial-ensanguentado",
+      "name": "Assinatura perito",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 620,
+      "y": 1180,
+      "width": 440,
+      "height": 80,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Dr. Jonas Guimarães",
+        "font": {
+          "family": "Nothing You Could Do",
+          "library": "casa-font-nothingyoucoulddo",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 36,
+        "color": "#1a1a36",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-11-laudo-pericial-ensanguentado",
+      "name": "Selo da instituição",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 100,
+      "y": 1454,
+      "width": 190,
+      "height": 215,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-emblema-universo-iml-carimbo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-12-laudo-pericial-ensanguentado",
+      "name": "Data do exame",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 1130,
+      "width": 480,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Data do exame: 14/11/1951",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-13-laudo-pericial-ensanguentado",
+      "name": "Perito responsável",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 1180,
+      "width": 480,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Perito: Dr. Jonas Hernandes",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-14-laudo-pericial-ensanguentado",
+      "name": "Respingos",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.85,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "blood",
+        "seed": 12741,
+        "amount": 0.7,
+        "params": {
+          "drops": 10,
+          "smear": false,
+          "color": "#6e0b0b"
+        }
+      }
+    },
+    {
+      "id": "l-15-laudo-pericial-ensanguentado",
+      "name": "Arrasto",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "blood",
+        "seed": 12789,
+        "amount": 0.5,
+        "params": {
+          "drops": 3,
+          "smear": true,
+          "color": "#5a0808"
+        }
+      }
+    },
+    {
+      "id": "l-16-laudo-pericial-ensanguentado",
+      "name": "Digital",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-digitais-4"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-numero",
+      "label": "Número"
+    },
+    {
+      "layerId": "l-vitima",
+      "label": "Vítima"
+    },
+    {
+      "layerId": "l-conclusao",
+      "label": "Conclusão"
+    },
+    {
+      "layerId": "l-12-laudo-pericial-ensanguentado",
+      "label": "Data do exame"
+    },
+    {
+      "layerId": "l-13-laudo-pericial-ensanguentado",
+      "label": "Perito responsável"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

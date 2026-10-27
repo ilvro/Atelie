@@ -1,0 +1,1170 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-ficha-cobaia-uv",
+  "revision": 0,
+  "name": "Ficha de cobaia · luz negra",
+  "category": "Ciência e laboratório",
+  "tags": [
+    "ciência e laboratório"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-ficha-cobaia-uv",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-creme-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-ficha-cobaia-uv",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 9672,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-ficha-cobaia-uv",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 9689,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-ficha-cobaia-uv",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.1,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-ficha-cobaia-uv",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 9723,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-ficha-cobaia-uv",
+      "name": "Emblema",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 80,
+      "width": 120,
+      "height": 136,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-emblema-universo-halden"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-ficha-cobaia-uv",
+      "name": "Cabeçalho",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 250,
+      "y": 90,
+      "width": 880,
+      "height": 69,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "INSTITUTO HALDEN DE BIOLOGIA EXPERIMENTAL\nFICHA INDIVIDUAL DE COBAIA",
+        "font": {
+          "family": "Share Tech Mono",
+          "library": "casa-font-sharetechmono-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 25,
+        "color": "#12261f",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-8-ficha-cobaia-uv",
+      "name": "Linha do cabeçalho",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 226,
+      "width": 1020,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#12261f",
+        "strokeWidth": 3,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-9-ficha-cobaia-uv",
+      "name": "Espécie (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 248,
+      "width": 495,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "ESPÉCIE",
+        "font": {
+          "family": "Share Tech Mono",
+          "library": "casa-font-sharetechmono-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-10-ficha-cobaia-uv",
+      "name": "Espécie",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 270,
+      "width": 495,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Rattus norvegicus (macho adulto)",
+        "font": {
+          "family": "Share Tech Mono",
+          "library": "casa-font-sharetechmono-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#12261f",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-11-ficha-cobaia-uv",
+      "name": "Espécie (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 308,
+      "width": 495,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-12-ficha-cobaia-uv",
+      "name": "Cobaia nº (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 248,
+      "width": 495,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "COBAIA Nº",
+        "font": {
+          "family": "Share Tech Mono",
+          "library": "casa-font-sharetechmono-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-13-ficha-cobaia-uv",
+      "name": "Cobaia nº",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 270,
+      "width": 495,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "H-0417",
+        "font": {
+          "family": "Share Tech Mono",
+          "library": "casa-font-sharetechmono-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#12261f",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-14-ficha-cobaia-uv",
+      "name": "Cobaia nº (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 308,
+      "width": 495,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-15-ficha-cobaia-uv",
+      "name": "Assinatura 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1600,
+      "width": 1020,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "T. Moreira",
+        "font": {
+          "family": "Homemade Apple",
+          "library": "casa-font-homemadeapple-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 10
+        }
+      }
+    },
+    {
+      "id": "l-16-ficha-cobaia-uv",
+      "name": "Linha de assinatura 1",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1666,
+      "width": 1020,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#444444",
+        "strokeWidth": 1.5,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-17-ficha-cobaia-uv",
+      "name": "Cargo 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1672,
+      "width": 1020,
+      "height": 30,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Técnico responsável",
+        "font": {
+          "family": "Share Tech Mono",
+          "library": "casa-font-sharetechmono-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 17,
+        "color": "#444444",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-18-ficha-cobaia-uv",
+      "name": "Foto",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 780,
+      "y": 330,
+      "width": 350,
+      "height": 330,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-lugar-matriz-coluna"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 1,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0.3,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-19-ficha-cobaia-uv",
+      "name": "Registro (cabeçalho)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.6,
+      "blend": "multiply",
+      "x": 102,
+      "y": 834,
+      "width": 1036,
+      "height": 42,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#d8d2c0",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-20-ficha-cobaia-uv",
+      "name": "Dia (coluna)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 840,
+      "width": 80,
+      "height": 34,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "DIA",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 17,
+        "color": "#2a1f14",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 10
+        }
+      }
+    },
+    {
+      "id": "l-21-ficha-cobaia-uv",
+      "name": "Dia",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 882,
+      "width": 80,
+      "height": 161,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "1\n3\n5\n7\n9",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 21,
+        "color": "#2a1f14",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 10
+        }
+      }
+    },
+    {
+      "id": "l-22-ficha-cobaia-uv",
+      "name": "Peso (coluna)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 200,
+      "y": 840,
+      "width": 120,
+      "height": 34,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "PESO",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 17,
+        "color": "#2a1f14",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-23-ficha-cobaia-uv",
+      "name": "Peso",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 200,
+      "y": 882,
+      "width": 120,
+      "height": 161,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "212 g\n208 g\n197 g\n180 g\n—",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 21,
+        "color": "#2a1f14",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-24-ficha-cobaia-uv",
+      "name": "Observação (coluna)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 330,
+      "y": 840,
+      "width": 790,
+      "height": 34,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "OBSERVAÇÃO",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 17,
+        "color": "#2a1f14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-25-ficha-cobaia-uv",
+      "name": "Observação",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 330,
+      "y": 882,
+      "width": 790,
+      "height": 161,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Comportamento normal. Apetite regular.\nInquietude após o estímulo. Recusa parcial da ração.\nNão dorme; fica imóvel diante da parede norte da gaiola.\nAtaca o próprio reflexo. Pelagem escurecida na região dorsal.\nO animal olhou para o observador e repetiu o som do estímulo.",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 21,
+        "color": "#2a1f14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-26-ficha-cobaia-uv",
+      "name": "Linha do topo",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 102,
+      "y": 882,
+      "width": 1036,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#7a7466",
+        "strokeWidth": 1.4,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-27-ficha-cobaia-uv",
+      "name": "Linha 1",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 102,
+      "y": 914.45,
+      "width": 1036,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#7a7466",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-28-ficha-cobaia-uv",
+      "name": "Linha 2",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 102,
+      "y": 944.9000000000001,
+      "width": 1036,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#7a7466",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-29-ficha-cobaia-uv",
+      "name": "Linha 3",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 102,
+      "y": 975.3500000000001,
+      "width": 1036,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#7a7466",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-30-ficha-cobaia-uv",
+      "name": "Linha 4",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 102,
+      "y": 1005.8000000000002,
+      "width": 1036,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#7a7466",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-31-ficha-cobaia-uv",
+      "name": "Linha 5",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 102,
+      "y": 1036.2500000000002,
+      "width": 1036,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#7a7466",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-32-ficha-cobaia-uv",
+      "name": "Observação final",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1330,
+      "width": 1020,
+      "height": 70,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Encerrar o experimento imediatamente. — K. Halden",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 41,
+        "color": "#a3182b",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.15,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-33-ficha-cobaia-uv",
+      "name": "Faixa do aviso de luz negra",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.92,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 72,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#2a1760",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-34-ficha-cobaia-uv",
+      "name": "Aviso de luz negra",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 14,
+      "width": 1040,
+      "height": 44,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "EXAMINAR SOB LUZ NEGRA",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 30,
+        "color": "#e6dcff",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-35-ficha-cobaia-uv",
+      "name": "Mensagem sob luz negra",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 130,
+      "y": 1394,
+      "width": 980,
+      "height": 220,
+      "rotation": -1.5,
+      "clip": false,
+      "light": "uv",
+      "text": {
+        "content": "H-0417 não é um rato.\nNunca foi.",
+        "font": {
+          "family": "La Belle Aurore",
+          "library": "casa-font-labelleaurore",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 52,
+        "color": "#c8ffd4",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.3,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.1,
+          "seed": 11
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-10-ficha-cobaia-uv",
+      "label": "Espécie"
+    },
+    {
+      "layerId": "l-13-ficha-cobaia-uv",
+      "label": "Cobaia nº"
+    },
+    {
+      "layerId": "l-15-ficha-cobaia-uv",
+      "label": "Técnico"
+    },
+    {
+      "layerId": "l-18-ficha-cobaia-uv",
+      "label": "Foto"
+    },
+    {
+      "layerId": "l-21-ficha-cobaia-uv",
+      "label": "Dia"
+    },
+    {
+      "layerId": "l-23-ficha-cobaia-uv",
+      "label": "Peso"
+    },
+    {
+      "layerId": "l-25-ficha-cobaia-uv",
+      "label": "Observação"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

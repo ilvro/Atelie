@@ -1,0 +1,994 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-cartaz-desaparecido",
+  "revision": 0,
+  "name": "Cartaz de desaparecido",
+  "category": "Jornal",
+  "tags": [
+    "jornal"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-cartaz-desaparecido",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-cartolina-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-cartaz-desaparecido",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.495,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 6634,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-cartaz-desaparecido",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.27,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 6651,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-cartaz-desaparecido",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.09,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-cartaz-desaparecido",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.27,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 6685,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-cartaz-desaparecido",
+      "name": "Título",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 90,
+      "y": 90,
+      "width": 1060,
+      "height": 160,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "PROCURA-SE",
+        "font": {
+          "family": "Bebas Neue",
+          "library": "casa-font-bebasneue-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 127,
+        "color": "#111111",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.15,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-7-cartaz-desaparecido",
+      "name": "Foto",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 290,
+      "width": 480,
+      "height": 620,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-rapaz-cdv"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 1,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0.2,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-8-cartaz-desaparecido",
+      "name": "Nome",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 620,
+      "y": 300,
+      "width": 520,
+      "height": 170,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Rodrigo\nFernandes Lessa",
+        "font": {
+          "family": "Oswald",
+          "library": "casa-font-oswald-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 62,
+        "color": "#111111",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.1,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-9-cartaz-desaparecido",
+      "name": "Descrição",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 620,
+      "y": 500,
+      "width": 520,
+      "height": 260,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "17 anos · 1,75 m\ncabelos pretos, magro\nusava jaqueta jeans\ne um colar com chave",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 33,
+        "color": "#111111",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.4,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-10-cartaz-desaparecido",
+      "name": "Desde",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 620,
+      "y": 780,
+      "width": 520,
+      "height": 130,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Desapareceu em 02/09/1993,\nperto do Solar dos Pinhais.",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 30,
+        "color": "#a3182b",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.3,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-11-cartaz-desaparecido",
+      "name": "Apelo",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 960,
+      "width": 1020,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "QUALQUER INFORMAÇÃO AJUDA. NÃO PRECISA SE IDENTIFICAR.",
+        "font": {
+          "family": "Oswald",
+          "library": "casa-font-oswald-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#111111",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-12-cartaz-desaparecido",
+      "name": "Contato",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1030,
+      "width": 1020,
+      "height": 100,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "LIGUE: (011) 5555-0184",
+        "font": {
+          "family": "Bebas Neue",
+          "library": "casa-font-bebasneue-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 80,
+        "color": "#a3182b",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-13-cartaz-desaparecido",
+      "name": "Corte da tira 1",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1200,
+      "width": 1,
+      "height": 400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#555555",
+        "strokeWidth": 1.4,
+        "radius": 0,
+        "dash": [
+          8,
+          6
+        ]
+      }
+    },
+    {
+      "id": "l-14-cartaz-desaparecido",
+      "name": "Tira 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 130,
+      "y": 1220,
+      "width": 220,
+      "height": 56,
+      "rotation": 90,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "(011) 5555-0184",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#111111",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-15-cartaz-desaparecido",
+      "name": "Corte da tira 2",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 237.5,
+      "y": 1200,
+      "width": 1,
+      "height": 400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#555555",
+        "strokeWidth": 1.4,
+        "radius": 0,
+        "dash": [
+          8,
+          6
+        ]
+      }
+    },
+    {
+      "id": "l-16-cartaz-desaparecido",
+      "name": "Tira 2",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 257.5,
+      "y": 1220,
+      "width": 220,
+      "height": 56,
+      "rotation": 90,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "(011) 5555-0184",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#111111",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-17-cartaz-desaparecido",
+      "name": "Corte da tira 3",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 365,
+      "y": 1200,
+      "width": 1,
+      "height": 400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#555555",
+        "strokeWidth": 1.4,
+        "radius": 0,
+        "dash": [
+          8,
+          6
+        ]
+      }
+    },
+    {
+      "id": "l-18-cartaz-desaparecido",
+      "name": "Tira 3",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 385,
+      "y": 1220,
+      "width": 220,
+      "height": 56,
+      "rotation": 90,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "(011) 5555-0184",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#111111",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-19-cartaz-desaparecido",
+      "name": "Corte da tira 4",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 492.5,
+      "y": 1200,
+      "width": 1,
+      "height": 400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#555555",
+        "strokeWidth": 1.4,
+        "radius": 0,
+        "dash": [
+          8,
+          6
+        ]
+      }
+    },
+    {
+      "id": "l-20-cartaz-desaparecido",
+      "name": "Tira 4",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 512.5,
+      "y": 1220,
+      "width": 220,
+      "height": 56,
+      "rotation": 90,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "(011) 5555-0184",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#111111",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-21-cartaz-desaparecido",
+      "name": "Corte da tira 5",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 620,
+      "y": 1200,
+      "width": 1,
+      "height": 400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#555555",
+        "strokeWidth": 1.4,
+        "radius": 0,
+        "dash": [
+          8,
+          6
+        ]
+      }
+    },
+    {
+      "id": "l-22-cartaz-desaparecido",
+      "name": "Tira 5",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 640,
+      "y": 1220,
+      "width": 220,
+      "height": 56,
+      "rotation": 90,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "(011) 5555-0184",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#111111",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-23-cartaz-desaparecido",
+      "name": "Corte da tira 6",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 747.5,
+      "y": 1200,
+      "width": 1,
+      "height": 400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#555555",
+        "strokeWidth": 1.4,
+        "radius": 0,
+        "dash": [
+          8,
+          6
+        ]
+      }
+    },
+    {
+      "id": "l-24-cartaz-desaparecido",
+      "name": "Tira 6",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 767.5,
+      "y": 1220,
+      "width": 220,
+      "height": 56,
+      "rotation": 90,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "(011) 5555-0184",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#111111",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-25-cartaz-desaparecido",
+      "name": "Corte da tira 7",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 875,
+      "y": 1200,
+      "width": 1,
+      "height": 400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#555555",
+        "strokeWidth": 1.4,
+        "radius": 0,
+        "dash": [
+          8,
+          6
+        ]
+      }
+    },
+    {
+      "id": "l-26-cartaz-desaparecido",
+      "name": "Tira 7",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 895,
+      "y": 1220,
+      "width": 220,
+      "height": 56,
+      "rotation": 90,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "(011) 5555-0184",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#111111",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-27-cartaz-desaparecido",
+      "name": "Corte da tira 8",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1002.5,
+      "y": 1200,
+      "width": 1,
+      "height": 400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#555555",
+        "strokeWidth": 1.4,
+        "radius": 0,
+        "dash": [
+          8,
+          6
+        ]
+      }
+    },
+    {
+      "id": "l-28-cartaz-desaparecido",
+      "name": "Tira 8",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1022.5,
+      "y": 1220,
+      "width": 220,
+      "height": 56,
+      "rotation": 90,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "(011) 5555-0184",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#111111",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-29-cartaz-desaparecido",
+      "name": "Linha das tiras",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1200,
+      "width": 1020,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#555555",
+        "strokeWidth": 1.6,
+        "radius": 0,
+        "dash": []
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-7-cartaz-desaparecido",
+      "label": "Foto"
+    },
+    {
+      "layerId": "l-8-cartaz-desaparecido",
+      "label": "Nome"
+    },
+    {
+      "layerId": "l-12-cartaz-desaparecido",
+      "label": "Contato"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

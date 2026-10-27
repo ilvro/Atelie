@@ -51,5 +51,5 @@ npm run preview:pages
 
 ## 📦 Acervo e Privacidade
 
-- **Coleção da casa (`public/colecao/`)**: acompanha o aplicativo no Git e é 100% livre. Traz 75 papéis, 53 texturas de acabamento, 294 elementos vetoriais em SVG, 40 famílias de fontes livres e 39 modelos prontos para jogar. O aplicativo é completo e independente sem necessidade de nenhuma expansão.
+- **Coleção da casa (`public/colecao/`)**: acompanha o aplicativo no Git e é 100% livre. Traz 75 papéis, 53 texturas de acabamento, 294 elementos vetoriais em SVG, 40 famílias de fontes livres e 125 modelos prontos para jogar (106 documentos e 19 variações). O aplicativo é completo e independente sem necessidade de nenhuma expansão.
 - **Expansões privadas (`data-private/expansoes/`)**: pacotes opcionais e particulares (como o acervo *Arquivos Confidenciais*) ficam estritamente isolados fora do Git e nunca são incluídos em `public/`, `dist/` ou `dist-pages/`.

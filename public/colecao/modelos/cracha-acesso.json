@@ -1,0 +1,343 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-cracha-acesso",
+  "revision": 0,
+  "name": "Crachá de acesso",
+  "category": "Militar e governo",
+  "tags": [
+    "militar e governo"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 800,
+    "height": 1200,
+    "background": "#c9c4b6"
+  },
+  "layers": [
+    {
+      "id": "l-1-cracha-acesso",
+      "name": "Mesa",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 800,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-superficie-metal032"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-cracha-acesso",
+      "name": "Crachá",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 60,
+      "width": 580,
+      "height": 904,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-objeto-cracha-azul"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-3-cracha-acesso",
+      "name": "Instituição",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 180,
+      "y": 520,
+      "width": 440,
+      "height": 50,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "DOE · ACESSO RESTRITO",
+        "font": {
+          "family": "Oswald",
+          "library": "casa-font-oswald-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 36,
+        "color": "#ffffff",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 9
+        }
+      }
+    },
+    {
+      "id": "l-4-cracha-acesso",
+      "name": "Foto",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 280,
+      "y": 590,
+      "width": 240,
+      "height": 240,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-homem-bigode-oculos"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-cracha-acesso",
+      "name": "Nome",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 195,
+      "y": 832,
+      "width": 410,
+      "height": 56,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "MARCOS REIS",
+        "font": {
+          "family": "Oswald",
+          "library": "casa-font-oswald-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 44,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-6-cracha-acesso",
+      "name": "Nível",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 195,
+      "y": 890,
+      "width": 410,
+      "height": 44,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "NÍVEL DE ACESSO: 4-B",
+        "font": {
+          "family": "Oswald",
+          "library": "casa-font-oswald-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 28,
+        "color": "#a3182b",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-7-cracha-acesso",
+      "name": "Matrícula",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 160,
+      "y": 1000,
+      "width": 480,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "MATRÍCULA 00417804",
+        "font": {
+          "family": "Oswald",
+          "library": "casa-font-oswald-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-8-cracha-acesso",
+      "name": "Código de barras",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 230,
+      "y": 1060,
+      "width": 340,
+      "height": 80,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "▌▕▎▕▌▕▏▕▊▕▎▕▌▕▊\n00417804",
+        "font": {
+          "family": "Share Tech Mono",
+          "library": null,
+          "weight": 400,
+          "italic": false
+        },
+        "size": 18,
+        "color": "#111111",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-4-cracha-acesso",
+      "label": "Foto"
+    },
+    {
+      "layerId": "l-5-cracha-acesso",
+      "label": "Nome"
+    },
+    {
+      "layerId": "l-6-cracha-acesso",
+      "label": "Nível"
+    },
+    {
+      "layerId": "l-7-cracha-acesso",
+      "label": "Matrícula"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

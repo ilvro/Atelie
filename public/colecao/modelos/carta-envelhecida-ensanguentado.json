@@ -1,0 +1,599 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-carta-envelhecida-ensanguentado",
+  "revision": 0,
+  "name": "Carta envelhecida · ensanguentada",
+  "category": "Cartas e bilhetes",
+  "tags": [
+    "cartas e bilhetes"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f5eee2"
+  },
+  "layers": [
+    {
+      "id": "l-1-carta-envelhecida-ensanguentado",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-creme-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-carta-envelhecida-ensanguentado",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.49,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 341,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-3-carta-envelhecida-ensanguentado",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.245,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 358,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-carta-envelhecida-ensanguentado",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.21,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 375,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-5-carta-envelhecida-ensanguentado",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.315,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 392,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-6-carta-envelhecida-ensanguentado",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.28,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-carta-envelhecida-ensanguentado",
+      "name": "Dobra",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.65,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-dobras-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-8-carta-envelhecida-ensanguentado",
+      "name": "Mancha de café",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 820,
+      "y": 1100,
+      "width": 340,
+      "height": 340,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-manchas-cafe-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-local-data",
+      "name": "Local e data",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 180,
+      "y": 180,
+      "width": 880,
+      "height": 50,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "São Paulo, 14 de outubro de 1932",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 28,
+        "color": "#2a2521",
+        "align": "right",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.4,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-destinatario",
+      "name": "Destinatário",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 180,
+      "y": 280,
+      "width": 880,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Prezado Dr. Alencar,",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 30,
+        "color": "#2a2521",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.4,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-corpo",
+      "name": "Corpo da carta",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 180,
+      "y": 380,
+      "width": 880,
+      "height": 750,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Escrevo-lhe em caráter de extrema urgência a respeito dos documentos encontrados no porão do casarão da família Ramos.\n\nConforme suspeitávamos, os registros da década de 1890 confirmam a transferência clandestina das caixas para o litoral antes do confisco judicial. As anotações marginais indicam um ponto de encontro marcado junto ao antigo farol na noite de lua nova.\n\nPeço que destrua este aviso logo após a leitura e mantenha a discrição necessária até o nosso próximo contato.",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#25211d",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.55,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.5,
+          "seed": 42
+        }
+      }
+    },
+    {
+      "id": "l-assinatura",
+      "name": "Assinatura",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 540,
+      "y": 1220,
+      "width": 520,
+      "height": 100,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Arthur H. Mendonça",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#1b1828",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.1,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-9-carta-envelhecida-ensanguentado",
+      "name": "Variação · Poça de café",
+      "kind": "image",
+      "visible": false,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "multiply",
+      "x": 100,
+      "y": 1200,
+      "width": 380,
+      "height": 380,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-manchas-cafe-5"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-10-carta-envelhecida-ensanguentado",
+      "name": "Selo da instituição",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 100,
+      "y": 1454,
+      "width": 190,
+      "height": 215,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-emblema-universo-solar-carimbo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-11-carta-envelhecida-ensanguentado",
+      "name": "Respingos",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.85,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "blood",
+        "seed": 12462,
+        "amount": 0.7,
+        "params": {
+          "drops": 10,
+          "smear": false,
+          "color": "#6e0b0b"
+        }
+      }
+    },
+    {
+      "id": "l-12-carta-envelhecida-ensanguentado",
+      "name": "Arrasto",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "blood",
+        "seed": 12510,
+        "amount": 0.5,
+        "params": {
+          "drops": 3,
+          "smear": true,
+          "color": "#5a0808"
+        }
+      }
+    },
+    {
+      "id": "l-13-carta-envelhecida-ensanguentado",
+      "name": "Digital",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-digitais-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-local-data",
+      "label": "Local e data"
+    },
+    {
+      "layerId": "l-destinatario",
+      "label": "Destinatário"
+    },
+    {
+      "layerId": "l-corpo",
+      "label": "Corpo"
+    },
+    {
+      "layerId": "l-assinatura",
+      "label": "Assinatura"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

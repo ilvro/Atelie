@@ -325,11 +325,12 @@ test('colecao-c7: os 39 modelos foram reformados, a auditoria não tem mais lega
   const { TEMPLATES } = await import('../scripts/colecao/modelos/index.js');
   const { LEGADO, auditCollection } = await import('../scripts/colecao/audit.js');
   assert.equal(LEGADO.size, 0, 'LEGADO só podia diminuir: acabou');
-  assert.equal(TEMPLATES.length, 39);
+  assert.equal(Object.keys(REFORMA).length, 39);
   const slugs = new Set(TEMPLATES.map(t => t.slug));
   for (const slug of Object.keys(REFORMA)) assert.ok(slugs.has(slug), `reforma de modelo que não existe: ${slug}`);
-  for (const t of TEMPLATES) assert.ok(REFORMA[t.slug], `${t.slug} sem reforma`);
-  for (const t of TEMPLATES) {
+  const antigos = TEMPLATES.filter(t => REFORMA[t.slug]);
+  assert.equal(antigos.length, 39);
+  for (const t of antigos) {
     if (REFORMA[t.slug].aging) assert.ok(t.layers.some(l => l.kind === 'effect' || (l.kind === 'image' && l.blend === 'multiply')), `${t.slug}: sem envelhecimento`);
     for (const l of t.layers) if (l.kind === 'text') assert.ok(l.text.size >= 14, `${t.slug}/${l.name}: ${l.text.size}px`);
   }
@@ -343,4 +344,30 @@ test('colecao-c7: os 39 modelos foram reformados, a auditoria não tem mais lega
   const { erros, achados } = await auditCollection();
   assert.deepEqual(erros, []);
   assert.deepEqual(achados.filter(a => a.nivel === 'erro'), [], 'nenhum erro, nem legado');
+});
+
+test('colecao-c8-c10: lotes novos (investigação e Estado, escrita e imprensa, saúde, ciência, oculto e fantasia) e suas variações', async () => {
+  const lib = JSON.parse(await fs.readFile(libraryPath, 'utf8'));
+  const { ERAS, TONS } = await import('../scripts/colecao/universo.js');
+  const templates = lib.items.filter(i => i.kind === 'template');
+  const por = c => templates.filter(i => i.category === c && !i.family).length;
+  const esperado = { 'Forense e perícia': 6, 'Oficial e jurídico': 7, 'Militar e governo': 6, 'Cadernos, diários e livros': 6, 'Escola e juventude': 5, 'Ciência e laboratório': 6 };
+  for (const [c, n] of Object.entries(esperado)) assert.equal(por(c), n, c);
+  assert.ok(templates.filter(i => !i.family).length >= 39 + 65, 'ao menos 65 modelos novos além dos 39');
+  for (const i of templates) {
+    assert.ok(ERAS.includes(i.era), `${i.id}: época "${i.era}" fora de ERAS`);
+    assert.ok(TONS.includes(i.tom), `${i.id}: tom "${i.tom}"`);
+  }
+  // Variações: família igual a uma base existente e prévia visivelmente diferente (exceto luz negra, que só aparece sob UV)
+  const sharp = (await import('sharp')).default;
+  const variantes = templates.filter(i => i.family);
+  assert.ok(variantes.length >= 15, `${variantes.length} variações`);
+  for (const v of variantes) {
+    const base = templates.find(i => i.id === `casa-tpl-${v.family}`);
+    assert.ok(base, `${v.id}: base ${v.family} existe`);
+    const [a, b] = await Promise.all([base, v].map(async x => sharp(path.join(colecaoDir, x.preview)).resize(120, 160, { fit: 'fill' }).removeAlpha().raw().toBuffer()));
+    let soma = 0;
+    for (let k = 0; k < a.length; k++) soma += Math.abs(a[k] - b[k]);
+    assert.ok(soma / a.length > 1.2, `${v.id}: variação quase igual à base (diferença média ${(soma / a.length).toFixed(2)})`);
+  }
 });

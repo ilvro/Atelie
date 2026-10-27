@@ -1,0 +1,458 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-panfleto-culto",
+  "revision": 0,
+  "name": "Panfleto de culto",
+  "category": "Jornal",
+  "tags": [
+    "jornal"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-panfleto-culto",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-papel-maquina-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-panfleto-culto",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.44,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 6603,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-panfleto-culto",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 6620,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-panfleto-culto",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.08,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-panfleto-culto",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 6654,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-panfleto-culto",
+      "name": "Cópia de xerox",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fade",
+        "seed": 41,
+        "amount": 0.7,
+        "params": {
+          "color": "#bdbdb5"
+        }
+      }
+    },
+    {
+      "id": "l-7-panfleto-culto",
+      "name": "Grão do xerox",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.5,
+      "blend": "overlay",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "grain",
+        "seed": 42,
+        "amount": 0.7,
+        "params": {
+          "size": 1.4
+        }
+      }
+    },
+    {
+      "id": "l-8-panfleto-culto",
+      "name": "Sigilo da Irmandade",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.9,
+      "blend": "multiply",
+      "x": 390,
+      "y": 90,
+      "width": 460,
+      "height": 520,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-emblema-universo-irmandade-carimbo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-9-panfleto-culto",
+      "name": "Título",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 650,
+      "width": 1020,
+      "height": 230,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "A LUA TRÍPLICE\nOLHA POR VOCÊ",
+        "font": {
+          "family": "Cinzel",
+          "library": "casa-font-cinzel-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 72,
+        "color": "#111111",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.2,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.2,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-10-panfleto-culto",
+      "name": "Convite",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 130,
+      "y": 920,
+      "width": 980,
+      "height": 330,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Cansado de esperar respostas?\nVenha conhecer a Irmandade.\nReuniões abertas toda lua cheia, sem compromisso.\nTraga apenas o seu nome verdadeiro.",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 38,
+        "color": "#111111",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.5,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-11-panfleto-culto",
+      "name": "Endereço",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 130,
+      "y": 1320,
+      "width": 980,
+      "height": 120,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Estrada Velha, km 7 — Vila Aurora\nPortão dos fundos, 23h",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 36,
+        "color": "#111111",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-12-panfleto-culto",
+      "name": "Rodapé",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1560,
+      "width": 1020,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Entrada franca · Não é necessário confirmar presença",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#333333",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.2,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-13-panfleto-culto",
+      "name": "Marca de grampo",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "normal",
+      "x": 70,
+      "y": 40,
+      "width": 110,
+      "height": 70,
+      "rotation": 45,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-prendedor-grampo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-9-panfleto-culto",
+      "label": "Título"
+    },
+    {
+      "layerId": "l-10-panfleto-culto",
+      "label": "Convite"
+    },
+    {
+      "layerId": "l-11-panfleto-culto",
+      "label": "Endereço"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

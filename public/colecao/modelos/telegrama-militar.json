@@ -1,0 +1,650 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-telegrama-militar",
+  "revision": 0,
+  "name": "Telegrama militar",
+  "category": "Militar e governo",
+  "tags": [
+    "militar e governo"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1500,
+    "height": 1000,
+    "background": "#d8cdb0"
+  },
+  "layers": [
+    {
+      "id": "l-1-telegrama-militar",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1500,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-telegrama-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-telegrama-militar",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1500,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 4402,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-telegrama-militar",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1500,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 4419,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-telegrama-militar",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.1,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1500,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-4"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-telegrama-militar",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1500,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 4453,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-telegrama-militar",
+      "name": "Cabeçalho",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 60,
+      "width": 1300,
+      "height": 50,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "REDE TELEGRÁFICA MILITAR · SERVIÇO URGENTE",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-7-telegrama-militar",
+      "name": "Origem",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 150,
+      "width": 600,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "ORIGEM: Comando da 2ª Região",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-8-telegrama-militar",
+      "name": "Destino",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 700,
+      "y": 150,
+      "width": 700,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "DESTINO: Posto Avançado de Paranapiacaba",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-9-telegrama-militar",
+      "name": "Prioridade",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 205,
+      "width": 800,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "PRIORIDADE: A-1 · HORA: 03H42",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-10-telegrama-militar",
+      "name": "Tira 1",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 300,
+      "width": 1180,
+      "height": 84,
+      "rotation": -0.8,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#efe6cf",
+        "stroke": "#b8ab88",
+        "strokeWidth": 1.4,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-11-telegrama-militar",
+      "name": "Mensagem",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 150,
+      "y": 320,
+      "width": 1130,
+      "height": 50,
+      "rotation": -0.8,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "SEGUIMOS INSTRUÇÕES STOP DESLOCAR TROPA À",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-12-telegrama-militar",
+      "name": "Tira 2",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 138,
+      "y": 410,
+      "width": 1180,
+      "height": 84,
+      "rotation": 0.6,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#efe6cf",
+        "stroke": "#b8ab88",
+        "strokeWidth": 1.4,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-13-telegrama-militar",
+      "name": "Linha 2",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 168,
+      "y": 430,
+      "width": 1130,
+      "height": 50,
+      "rotation": 0.6,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "VILA AURORA AO AMANHECER STOP SIGILO ABSOLUTO",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-14-telegrama-militar",
+      "name": "Tira 3",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 520,
+      "width": 1180,
+      "height": 84,
+      "rotation": -0.4,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#efe6cf",
+        "stroke": "#b8ab88",
+        "strokeWidth": 1.4,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-15-telegrama-militar",
+      "name": "Linha 3",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 150,
+      "y": 540,
+      "width": 1130,
+      "height": 50,
+      "rotation": -0.4,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "NÃO PERMITIR ENTRADA NO SOLAR STOP AGUARDAR",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-16-telegrama-militar",
+      "name": "Tira 4",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 138,
+      "y": 630,
+      "width": 1180,
+      "height": 84,
+      "rotation": 0.9,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#efe6cf",
+        "stroke": "#b8ab88",
+        "strokeWidth": 1.4,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-17-telegrama-militar",
+      "name": "Linha 4",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 168,
+      "y": 650,
+      "width": 1130,
+      "height": 50,
+      "rotation": 0.9,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "ORDENS DO COMANDO CENTRAL STOP",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-18-telegrama-militar",
+      "name": "Tarja de censura",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 760,
+      "y": 428,
+      "width": 480,
+      "height": 46,
+      "rotation": 0.6,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#0b0b0b",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-19-telegrama-militar",
+      "name": "Carimbo de censura",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 1000,
+      "y": 700,
+      "width": 340,
+      "height": 170,
+      "rotation": -9,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-carimbo-aprovado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-7-telegrama-militar",
+      "label": "Origem"
+    },
+    {
+      "layerId": "l-8-telegrama-militar",
+      "label": "Destino"
+    },
+    {
+      "layerId": "l-9-telegrama-militar",
+      "label": "Prioridade"
+    },
+    {
+      "layerId": "l-11-telegrama-militar",
+      "label": "Mensagem"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

@@ -1,0 +1,1207 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-exame-sangue",
+  "revision": 0,
+  "name": "Exame de sangue",
+  "category": "Médico",
+  "tags": [
+    "médico"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-exame-sangue",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-branco-novo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-exame-sangue",
+      "name": "Grão fino",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.15,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "grain",
+        "seed": 9486,
+        "amount": 0.5,
+        "params": {}
+      }
+    },
+    {
+      "id": "l-3-exame-sangue",
+      "name": "Emblema",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 80,
+      "width": 120,
+      "height": 136,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-emblema-medico-bastao"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-exame-sangue",
+      "name": "Cabeçalho",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 250,
+      "y": 90,
+      "width": 880,
+      "height": 74,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "LABORATÓRIO CENTRAL DE ANÁLISES CLÍNICAS\nRESULTADO DE EXAMES",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 27,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-5-exame-sangue",
+      "name": "Linha do cabeçalho",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 226,
+      "width": 1020,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#1d1b24",
+        "strokeWidth": 3,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-6-exame-sangue",
+      "name": "Paciente (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 248,
+      "width": 495,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "PACIENTE",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-7-exame-sangue",
+      "name": "Paciente",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 270,
+      "width": 495,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Duda Alencar Lessa",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-8-exame-sangue",
+      "name": "Paciente (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 308,
+      "width": 495,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-9-exame-sangue",
+      "name": "Data da coleta (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 248,
+      "width": 495,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "DATA DA COLETA",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-10-exame-sangue",
+      "name": "Data da coleta",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 270,
+      "width": 495,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "12/03/2023",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-11-exame-sangue",
+      "name": "Data da coleta (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 635,
+      "y": 308,
+      "width": 495,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-12-exame-sangue",
+      "name": "Médico solicitante (rótulo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 328,
+      "width": 1020,
+      "height": 22,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "MÉDICO SOLICITANTE",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-13-exame-sangue",
+      "name": "Médico solicitante",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 350,
+      "width": 1020,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Dra. Mariana Reis (CRM-SP 220.381)",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-14-exame-sangue",
+      "name": "Médico solicitante (linha)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 388,
+      "width": 1020,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#777777",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-15-exame-sangue",
+      "name": "Assinatura 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1560,
+      "width": 1020,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Dr. R. Prado",
+        "font": {
+          "family": "Homemade Apple",
+          "library": "casa-font-homemadeapple-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 10
+        }
+      }
+    },
+    {
+      "id": "l-16-exame-sangue",
+      "name": "Linha de assinatura 1",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1626,
+      "width": 1020,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#444444",
+        "strokeWidth": 1.5,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-17-exame-sangue",
+      "name": "Cargo 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1632,
+      "width": 1020,
+      "height": 30,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Responsável técnico",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 17,
+        "color": "#444444",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-18-exame-sangue",
+      "name": "Resultados (cabeçalho)",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.6,
+      "blend": "multiply",
+      "x": 102,
+      "y": 734,
+      "width": 1036,
+      "height": 45,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#d8d2c0",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-19-exame-sangue",
+      "name": "Exame (coluna)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 740,
+      "width": 370,
+      "height": 37,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "EXAME",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 19,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-20-exame-sangue",
+      "name": "Exame",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 785,
+      "width": 370,
+      "height": 209,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Hemoglobina\nLeucócitos\nPlaquetas\nGlicose em jejum\nFerro sérico\nCreatinina",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 23,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-21-exame-sangue",
+      "name": "Resultado (coluna)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 490,
+      "y": 740,
+      "width": 190,
+      "height": 37,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "RESULTADO",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 19,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-22-exame-sangue",
+      "name": "Resultado",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 490,
+      "y": 785,
+      "width": 190,
+      "height": 209,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "12,9\n18.400\n212.000\n88\n41\n0,9",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 23,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-23-exame-sangue",
+      "name": "Unidade (coluna)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 690,
+      "y": 740,
+      "width": 160,
+      "height": 37,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "UNIDADE",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 19,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-24-exame-sangue",
+      "name": "Unidade",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 690,
+      "y": 785,
+      "width": 160,
+      "height": 209,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "g/dL\n/mm³\n/mm³\nmg/dL\nµg/dL\nmg/dL",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 23,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-25-exame-sangue",
+      "name": "Referência (coluna)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 860,
+      "y": 740,
+      "width": 260,
+      "height": 37,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "REFERÊNCIA",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 19,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-26-exame-sangue",
+      "name": "Referência",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 860,
+      "y": 785,
+      "width": 260,
+      "height": 209,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "12,0 a 16,0\n4.000 a 11.000\n150.000 a 450.000\n70 a 99\n60 a 170\n0,6 a 1,1",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 23,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-27-exame-sangue",
+      "name": "Linha do topo",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 102,
+      "y": 785,
+      "width": 1036,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#7a7466",
+        "strokeWidth": 1.4,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-28-exame-sangue",
+      "name": "Linha 1",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 102,
+      "y": 820.35,
+      "width": 1036,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#7a7466",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-29-exame-sangue",
+      "name": "Linha 2",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 102,
+      "y": 853.7,
+      "width": 1036,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#7a7466",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-30-exame-sangue",
+      "name": "Linha 3",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 102,
+      "y": 887.0500000000001,
+      "width": 1036,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#7a7466",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-31-exame-sangue",
+      "name": "Linha 4",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 102,
+      "y": 920.4000000000001,
+      "width": 1036,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#7a7466",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-32-exame-sangue",
+      "name": "Linha 5",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 102,
+      "y": 953.7500000000001,
+      "width": 1036,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#7a7466",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-33-exame-sangue",
+      "name": "Linha 6",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 102,
+      "y": 987.1000000000001,
+      "width": 1036,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#7a7466",
+        "strokeWidth": 1.2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-34-exame-sangue",
+      "name": "Destaque do valor",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.45,
+      "blend": "multiply",
+      "x": 102,
+      "y": 892,
+      "width": 1050,
+      "height": 42,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#ffe45a",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-35-exame-sangue",
+      "name": "Círculo no valor",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.85,
+      "blend": "multiply",
+      "x": 530,
+      "y": 880,
+      "width": 260,
+      "height": 74,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-rabisco-circulo-simples"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-36-exame-sangue",
+      "name": "Nota do médico",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 800,
+      "y": 940,
+      "width": 340,
+      "height": 90,
+      "rotation": -3,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "repetir exame em 7 dias!",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#b3261e",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.15,
+          "seed": 12
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-7-exame-sangue",
+      "label": "Paciente"
+    },
+    {
+      "layerId": "l-10-exame-sangue",
+      "label": "Data da coleta"
+    },
+    {
+      "layerId": "l-13-exame-sangue",
+      "label": "Médico solicitante"
+    },
+    {
+      "layerId": "l-20-exame-sangue",
+      "label": "Exame"
+    },
+    {
+      "layerId": "l-22-exame-sangue",
+      "label": "Resultado"
+    },
+    {
+      "layerId": "l-24-exame-sangue",
+      "label": "Unidade"
+    },
+    {
+      "layerId": "l-26-exame-sangue",
+      "label": "Referência"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

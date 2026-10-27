@@ -1,0 +1,418 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-carta-taverna",
+  "revision": 0,
+  "name": "Carta de taverna",
+  "category": "Fantasia",
+  "tags": [
+    "fantasia"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1300,
+    "height": 1700,
+    "background": "#4a3a2a"
+  },
+  "layers": [
+    {
+      "id": "l-1-carta-taverna",
+      "name": "Madeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 1700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-superficie-wood060"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-carta-taverna",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.275,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 1700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 10385,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-carta-taverna",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.15,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 1700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 10402,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-carta-taverna",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.05,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 1700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-carta-taverna",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.15,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 1700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 10436,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-carta-taverna",
+      "name": "Moldura da tábua",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "normal",
+      "x": 50,
+      "y": 50,
+      "width": 1200,
+      "height": 1600,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#2a1a0a",
+        "strokeWidth": 22,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-7-carta-taverna",
+      "name": "Taverna",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 120,
+      "width": 1020,
+      "height": 130,
+      "rotation": -1,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "O GALO MANCO",
+        "font": {
+          "family": "Rye",
+          "library": "casa-font-rye-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 100,
+        "color": "#f1ead6",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.5,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-8-carta-taverna",
+      "name": "Subtítulo",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 270,
+      "width": 1020,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "~ comida honesta e cerveja fria ~",
+        "font": {
+          "family": "Shadows Into Light",
+          "library": "casa-font-shadowsintolight",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 44,
+        "color": "#e6dec6",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.5,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-9-carta-taverna",
+      "name": "Pratos",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 150,
+      "y": 400,
+      "width": 780,
+      "height": 960,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Sopa de cebola e osso\nGuisado do dia, com pão preto\nCoelho assado com ervas\nTorta de maçã e canela\nQueijo curado e nozes\nCerveja escura (a caneca)\nHidromel da casa (o cálice)",
+        "font": {
+          "family": "Shadows Into Light",
+          "library": "casa-font-shadowsintolight",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 52,
+        "color": "#f1ead6",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.6,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.5,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-10-carta-taverna",
+      "name": "Preços",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 960,
+      "y": 400,
+      "width": 260,
+      "height": 960,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "2 cobres\n5 cobres\n9 cobres\n4 cobres\n3 cobres\n1 cobre\n2 cobres",
+        "font": {
+          "family": "Shadows Into Light",
+          "library": "casa-font-shadowsintolight",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 52,
+        "color": "#e6c978",
+        "align": "right",
+        "valign": "top",
+        "lineHeight": 1.6,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.5,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-11-carta-taverna",
+      "name": "Aviso",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 150,
+      "y": 1480,
+      "width": 1000,
+      "height": 70,
+      "rotation": -1,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Fiado só para quem já morreu.",
+        "font": {
+          "family": "Shadows Into Light",
+          "library": "casa-font-shadowsintolight",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 46,
+        "color": "#e6dec6",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.5,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-12-carta-taverna",
+      "name": "Pó de giz",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.2,
+      "blend": "screen",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 1700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "grain",
+        "seed": 71,
+        "amount": 0.6,
+        "params": {}
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-9-carta-taverna",
+      "label": "Pratos"
+    },
+    {
+      "layerId": "l-10-carta-taverna",
+      "label": "Preços"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

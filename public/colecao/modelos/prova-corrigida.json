@@ -1,0 +1,566 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-prova-corrigida",
+  "revision": 0,
+  "name": "Prova corrigida",
+  "category": "Escola e juventude",
+  "tags": [
+    "escola e juventude"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-prova-corrigida",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-almaco-de-prova-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-prova-corrigida",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.44,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 6758,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-prova-corrigida",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 6775,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-prova-corrigida",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.08,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-prova-corrigida",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 6809,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-prova-corrigida",
+      "name": "Cabeçalho",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 190,
+      "y": 90,
+      "width": 940,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "COLÉGIO ESTADUAL VISCONDE DE MAUÁ · PROVA DE HISTÓRIA · 2º BIM.",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-7-prova-corrigida",
+      "name": "Aluno",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 190,
+      "y": 160,
+      "width": 940,
+      "height": 44,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Nome: Rodrigo F. Lessa     Série: 8ª B     Data: 12/06/91",
+        "font": {
+          "family": "Shadows Into Light",
+          "library": "casa-font-shadowsintolight",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#1c3a8a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-8-prova-corrigida",
+      "name": "Respostas",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 190,
+      "y": 250,
+      "width": 940,
+      "height": 940,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "1) A Proclamação da República aconteceu em 15 de novembro de 1889, quando o Marechal Deodoro derrubou o Império.\n\n2) A Lei Áurea foi assinada pela Princesa Isabel em 1888 e libertou os escravos, mas não deu terra nem trabalho pra eles.\n\n3) Os bandeirantes eram paulistas que entravam no sertão atrás de ouro e de índios pra escravizar.\n\n4) Não lembro direito, mas acho que foi o Getúlio.",
+        "font": {
+          "family": "Shadows Into Light",
+          "library": "casa-font-shadowsintolight",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 36,
+        "color": "#1c3a8a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-9-prova-corrigida",
+      "name": "Correção 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 900,
+      "y": 270,
+      "width": 220,
+      "height": 50,
+      "rotation": -4,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "ótimo! ✓",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 40,
+        "color": "#c0141c",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.15,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-10-prova-corrigida",
+      "name": "Correção 2",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 760,
+      "y": 560,
+      "width": 370,
+      "height": 90,
+      "rotation": -3,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "faltou citar a Lei do Ventre Livre",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#c0141c",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.15,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-11-prova-corrigida",
+      "name": "Correção 4",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 700,
+      "y": 1150,
+      "width": 400,
+      "height": 60,
+      "rotation": 2,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "getúlio ??  (-1,0)",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 40,
+        "color": "#c0141c",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.15,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-12-prova-corrigida",
+      "name": "Risco na resposta 4",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.75,
+      "blend": "multiply",
+      "x": 190,
+      "y": 1110,
+      "width": 520,
+      "height": 80,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-rabisco-risco-ziguezague"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-13-prova-corrigida",
+      "name": "Professor",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 190,
+      "y": 1330,
+      "width": 520,
+      "height": 50,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Prof. Teodoro Brandão",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 38,
+        "color": "#c0141c",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.15,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-14-prova-corrigida",
+      "name": "Nota",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 820,
+      "y": 1330,
+      "width": 260,
+      "height": 160,
+      "rotation": -6,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "7,0",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 128,
+        "color": "#c0141c",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.15,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-15-prova-corrigida",
+      "name": "Círculo da nota",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.9,
+      "blend": "multiply",
+      "x": 760,
+      "y": 1310,
+      "width": 330,
+      "height": 200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-rabisco-circulo-alto"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-7-prova-corrigida",
+      "label": "Aluno"
+    },
+    {
+      "layerId": "l-8-prova-corrigida",
+      "label": "Respostas"
+    },
+    {
+      "layerId": "l-13-prova-corrigida",
+      "label": "Professor"
+    },
+    {
+      "layerId": "l-14-prova-corrigida",
+      "label": "Nota"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

@@ -1,0 +1,428 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-carta-amor-perfumada",
+  "revision": 0,
+  "name": "Carta de amor · perfumada",
+  "category": "Cartas e bilhetes",
+  "tags": [
+    "cartas e bilhetes"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-carta-amor-perfumada",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-papel-de-seda-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-carta-amor-perfumada",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.385,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 6417,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-carta-amor-perfumada",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.21,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 6434,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-carta-amor-perfumada",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.07,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-carta-amor-perfumada",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.21,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 6468,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-carta-amor-perfumada",
+      "name": "Data",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 160,
+      "width": 1000,
+      "height": 81,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Santos, 3 de junho de 1943",
+        "font": {
+          "family": "Pinyon Script",
+          "library": "casa-font-pinyonscript-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 54,
+        "color": "#3a2a4a",
+        "align": "right",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-7-carta-amor-perfumada",
+      "name": "Saudação",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 251.8,
+      "width": 1000,
+      "height": 81,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Meu querido Henrique,",
+        "font": {
+          "family": "Pinyon Script",
+          "library": "casa-font-pinyonscript-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 54,
+        "color": "#3a2a4a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-8-carta-amor-perfumada",
+      "name": "Texto",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 349,
+      "width": 1000,
+      "height": 808,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Escrevo-te à luz da vela, porque a luz elétrica faltou outra vez e achei que assim as palavras ficam mais perto de ti. Não passa uma hora sem que eu repare no teu lugar vazio à mesa. Guardei o lenço que me deixaste e o perfume dele já quase se foi, mas ainda o respiro antes de dormir. Volta logo, e volta inteiro, que eu não sei amar-te de outro modo senão à espera.",
+        "font": {
+          "family": "Pinyon Script",
+          "library": "casa-font-pinyonscript-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 54,
+        "color": "#3a2a4a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.35,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-9-carta-amor-perfumada",
+      "name": "Despedida",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 1177,
+      "width": 1000,
+      "height": 81,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Para sempre tua,",
+        "font": {
+          "family": "Pinyon Script",
+          "library": "casa-font-pinyonscript-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 54,
+        "color": "#3a2a4a",
+        "align": "right",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-10-carta-amor-perfumada",
+      "name": "Assinatura",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 620,
+      "y": 1268.8,
+      "width": 500,
+      "height": 108,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Lúcia",
+        "font": {
+          "family": "Great Vibes",
+          "library": "casa-font-greatvibes-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 58,
+        "color": "#3a2a4a",
+        "align": "right",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-11-carta-amor-perfumada",
+      "name": "Marca de batom",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "multiply",
+      "x": 760,
+      "y": 1450,
+      "width": 130,
+      "height": 60,
+      "rotation": -12,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": "#9c1c2b",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-12-carta-amor-perfumada",
+      "name": "Marca de batom · detalhe",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.5,
+      "blend": "multiply",
+      "x": 790,
+      "y": 1462,
+      "width": 70,
+      "height": 12,
+      "rotation": -12,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": "#6a0f1c",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-6-carta-amor-perfumada",
+      "label": "Data"
+    },
+    {
+      "layerId": "l-7-carta-amor-perfumada",
+      "label": "Destinatário"
+    },
+    {
+      "layerId": "l-8-carta-amor-perfumada",
+      "label": "Texto"
+    },
+    {
+      "layerId": "l-10-carta-amor-perfumada",
+      "label": "Assinatura"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

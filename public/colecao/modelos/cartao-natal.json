@@ -1,0 +1,486 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-cartao-natal",
+  "revision": 0,
+  "name": "Cartão de Natal",
+  "category": "Cartas e bilhetes",
+  "tags": [
+    "cartas e bilhetes"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1200,
+    "height": 1500,
+    "background": "#2d5a3a"
+  },
+  "layers": [
+    {
+      "id": "l-1-cartao-natal",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-cartolina-novo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-cartao-natal",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.33,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 6541,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-cartao-natal",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.18,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 6558,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-cartao-natal",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.06,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-cartao-natal",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.18,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 6592,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-cartao-natal",
+      "name": "Borda vermelha",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 40,
+      "y": 40,
+      "width": 1120,
+      "height": 1420,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#a3182b",
+        "strokeWidth": 18,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-7-cartao-natal",
+      "name": "Borda verde",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 74,
+      "y": 74,
+      "width": 1052,
+      "height": 1352,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#2d5a3a",
+        "strokeWidth": 10,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-8-cartao-natal",
+      "name": "Saudação",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 120,
+      "width": 920,
+      "height": 160,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Boas Festas",
+        "font": {
+          "family": "Great Vibes",
+          "library": "casa-font-greatvibes-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 128,
+        "color": "#a3182b",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-9-cartao-natal",
+      "name": "Moldura da ilustração",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 180,
+      "y": 330,
+      "width": 840,
+      "height": 640,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-moldura-fio-duplo-retangular"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-10-cartao-natal",
+      "name": "Ilustração",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 205,
+      "y": 355,
+      "width": 790,
+      "height": 590,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-lugar-casarao-1895"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0.5,
+          "brightness": 0,
+          "contrast": 0.1,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-11-cartao-natal",
+      "name": "Ornamento",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "multiply",
+      "x": 300,
+      "y": 1010,
+      "width": 600,
+      "height": 70,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-ornamento-divisoria-estrelas"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-12-cartao-natal",
+      "name": "Dedicatória",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 200,
+      "y": 1100,
+      "width": 800,
+      "height": 260,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Para a querida Tia Dalva,\ncom os votos de um Natal feliz\ne um Ano Novo cheio de paz.\n\nDe Arnaldo, Odete e as crianças",
+        "font": {
+          "family": "Pinyon Script",
+          "library": "casa-font-pinyonscript-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 40,
+        "color": "#1f3a28",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.3,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.15,
+          "seed": 9
+        }
+      }
+    },
+    {
+      "id": "l-13-cartao-natal",
+      "name": "Estrela 1",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.6,
+      "blend": "multiply",
+      "x": 110,
+      "y": 330,
+      "width": 70,
+      "height": 70,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-marca-estrela"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-14-cartao-natal",
+      "name": "Estrela 2",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.6,
+      "blend": "multiply",
+      "x": 1030,
+      "y": 900,
+      "width": 70,
+      "height": 70,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-marca-estrela"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-10-cartao-natal",
+      "label": "Ilustração"
+    },
+    {
+      "layerId": "l-12-cartao-natal",
+      "label": "Dedicatória"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

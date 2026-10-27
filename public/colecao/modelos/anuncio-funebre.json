@@ -1,0 +1,462 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-anuncio-funebre",
+  "revision": 0,
+  "name": "Anúncio fúnebre",
+  "category": "Jornal",
+  "tags": [
+    "jornal"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 900,
+    "height": 1300,
+    "background": "#d7c9a6"
+  },
+  "layers": [
+    {
+      "id": "l-1-anuncio-funebre",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-papel-jornal-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-anuncio-funebre",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.385,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 6696,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-anuncio-funebre",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.21,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 6713,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-anuncio-funebre",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.07,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-anuncio-funebre",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.21,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 6747,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-anuncio-funebre",
+      "name": "Tarja preta",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 50,
+      "y": 50,
+      "width": 800,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#111111",
+        "strokeWidth": 22,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-7-anuncio-funebre",
+      "name": "Filete interno",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 90,
+      "y": 90,
+      "width": 720,
+      "height": 1120,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#111111",
+        "strokeWidth": 3,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-8-anuncio-funebre",
+      "name": "Cruz",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 350,
+      "y": 140,
+      "width": 200,
+      "height": 200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "✝",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 160,
+        "color": "#111111",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-9-anuncio-funebre",
+      "name": "Aviso",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 360,
+      "width": 660,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "FALECEU",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 40,
+        "color": "#111111",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-10-anuncio-funebre",
+      "name": "Nome",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 450,
+      "width": 660,
+      "height": 200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Dona Carlota Marques\nde Alencar",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 56,
+        "color": "#111111",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.15,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-11-anuncio-funebre",
+      "name": "Datas",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 690,
+      "width": 660,
+      "height": 120,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "* 11 de março de 1881\n† 20 de abril de 1958",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#111111",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-12-anuncio-funebre",
+      "name": "Convite",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 850,
+      "width": 620,
+      "height": 280,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Seus filhos, netos e demais parentes convidam para a missa de sétimo dia, a realizar-se na Igreja Matriz de Vila Aurora, às 8 horas, e para o sepultamento no Cemitério da Consolação.",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 28,
+        "color": "#111111",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.4,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-13-anuncio-funebre",
+      "name": "Assinatura da família",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 1150,
+      "width": 660,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "A FAMÍLIA ENLUTADA",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#111111",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 10
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-10-anuncio-funebre",
+      "label": "Nome"
+    },
+    {
+      "layerId": "l-11-anuncio-funebre",
+      "label": "Datas"
+    },
+    {
+      "layerId": "l-12-anuncio-funebre",
+      "label": "Convite"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

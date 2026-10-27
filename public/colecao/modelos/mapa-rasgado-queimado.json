@@ -1,0 +1,625 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-mapa-rasgado-queimado",
+  "revision": 0,
+  "name": "Mapa rasgado · queimado",
+  "category": "Fantasia",
+  "tags": [
+    "fantasia"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1400,
+    "height": 1000,
+    "background": "#d2be9d"
+  },
+  "layers": [
+    {
+      "id": "l-1-mapa-rasgado-queimado",
+      "name": "Papel kraft",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1400,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-kraft-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-mapa-rasgado-queimado",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1400,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 1953,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-3-mapa-rasgado-queimado",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1400,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 1970,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-mapa-rasgado-queimado",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 1400,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 1987,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-5-mapa-rasgado-queimado",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.45,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1400,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 2004,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-6-mapa-rasgado-queimado",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.4,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1400,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-mapa-rasgado-queimado",
+      "name": "Rasgo · bordas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1400,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "cut",
+        "seed": 63,
+        "amount": 1,
+        "params": {
+          "rough": 0.9
+        },
+        "edge": "rasgado",
+        "remove": [
+          [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0.9843,
+              1
+            ],
+            [
+              0.986,
+              0.9286
+            ],
+            [
+              0.9859,
+              0.8571
+            ],
+            [
+              0.9878,
+              0.7857
+            ],
+            [
+              0.9872,
+              0.7143
+            ],
+            [
+              0.988,
+              0.6429
+            ],
+            [
+              0.9878,
+              0.5714
+            ],
+            [
+              0.9863,
+              0.5
+            ],
+            [
+              0.9853,
+              0.4286
+            ],
+            [
+              0.9822,
+              0.3571
+            ],
+            [
+              0.9823,
+              0.2857
+            ],
+            [
+              0.9795,
+              0.2143
+            ],
+            [
+              0.9803,
+              0.1429
+            ],
+            [
+              0.9807,
+              0.0714
+            ],
+            [
+              0.9803,
+              0
+            ]
+          ],
+          [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0.0117,
+              1
+            ],
+            [
+              0.0117,
+              0.9286
+            ],
+            [
+              0.0126,
+              0.8571
+            ],
+            [
+              0.0126,
+              0.7857
+            ],
+            [
+              0.0153,
+              0.7143
+            ],
+            [
+              0.016,
+              0.6429
+            ],
+            [
+              0.0168,
+              0.5714
+            ],
+            [
+              0.0181,
+              0.5
+            ],
+            [
+              0.0194,
+              0.4286
+            ],
+            [
+              0.0188,
+              0.3571
+            ],
+            [
+              0.0197,
+              0.2857
+            ],
+            [
+              0.0182,
+              0.2143
+            ],
+            [
+              0.0165,
+              0.1429
+            ],
+            [
+              0.0158,
+              0.0714
+            ],
+            [
+              0.0141,
+              0
+            ]
+          ]
+        ],
+        "holes": [],
+        "char": 0.5,
+        "fiber": 0.9
+      }
+    },
+    {
+      "id": "l-mapa",
+      "name": "Desenho do mapa",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 80,
+      "width": 1240,
+      "height": 760,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-mapa-londres-1890"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-8-mapa-rasgado-queimado",
+      "name": "Rosa dos ventos",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.85,
+      "blend": "multiply",
+      "x": 1100,
+      "y": 650,
+      "width": 180,
+      "height": 180,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-simbolo-sigilo-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": {
+          "color": "#382515",
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "l-legenda",
+      "name": "Legenda do mapa",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 890,
+      "width": 1200,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "CARTA NÁUTICA DAS ILHAS SOMBRIAS — ROTA PROIBIDA (1644)",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 30,
+        "color": "#2a1a0e",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 2,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-9-mapa-rasgado-queimado",
+      "name": "Fuligem",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1400,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-queimado-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-10-mapa-rasgado-queimado",
+      "name": "Papel tostado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1400,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "burn",
+        "seed": 12882,
+        "amount": 0.6,
+        "params": {
+          "depth": 0.1
+        }
+      }
+    },
+    {
+      "id": "l-11-mapa-rasgado-queimado",
+      "name": "Queimado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1400,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "cut",
+        "seed": 417,
+        "amount": 1,
+        "params": {},
+        "edge": "queimado",
+        "remove": [],
+        "holes": [
+          [
+            [
+              0.3366,
+              0.9962,
+              43
+            ],
+            [
+              0.3998,
+              1,
+              61
+            ],
+            [
+              0.4373,
+              0.9971,
+              64
+            ],
+            [
+              0.4832,
+              0.993,
+              83
+            ],
+            [
+              0.5136,
+              0.9735,
+              93
+            ],
+            [
+              0.556,
+              0.966,
+              74
+            ],
+            [
+              0.6014,
+              0.9614,
+              74
+            ],
+            [
+              0.6519,
+              0.962,
+              49
+            ],
+            [
+              0.7119,
+              0.9721,
+              33
+            ]
+          ]
+        ],
+        "char": 0.55,
+        "fiber": 0.5
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-mapa",
+      "label": "Mapa"
+    },
+    {
+      "layerId": "l-legenda",
+      "label": "Legenda"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

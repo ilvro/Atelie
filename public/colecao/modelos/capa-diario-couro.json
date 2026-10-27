@@ -1,0 +1,453 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-capa-diario-couro",
+  "revision": 0,
+  "name": "Capa de diário de couro",
+  "category": "Cadernos, diários e livros",
+  "tags": [
+    "cadernos, diários e livros"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1100,
+    "height": 1500,
+    "background": "#3a2f25"
+  },
+  "layers": [
+    {
+      "id": "l-1-capa-diario-couro",
+      "name": "Mesa",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-superficie-wood060"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-capa-diario-couro",
+      "name": "Sombra da capa",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.45,
+      "blend": "normal",
+      "x": 110,
+      "y": 130,
+      "width": 880,
+      "height": 1260,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#000000",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 30,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-3-capa-diario-couro",
+      "name": "Couro",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 90,
+      "y": 100,
+      "width": 880,
+      "height": 1260,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-superficie-leather026"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-capa-diario-couro",
+      "name": "Borda de costura",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "normal",
+      "x": 130,
+      "y": 140,
+      "width": 800,
+      "height": 1180,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#d8b66a",
+        "strokeWidth": 3,
+        "radius": 0,
+        "dash": [
+          14,
+          10
+        ]
+      }
+    },
+    {
+      "id": "l-5-capa-diario-couro",
+      "name": "Lombada",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "normal",
+      "x": 90,
+      "y": 100,
+      "width": 70,
+      "height": 1260,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#000000",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-6-capa-diario-couro",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.44,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 6386,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-7-capa-diario-couro",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 6403,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-8-capa-diario-couro",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.08,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-9-capa-diario-couro",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 6437,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-10-capa-diario-couro",
+      "name": "Etiqueta do título",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.95,
+      "blend": "normal",
+      "x": 290,
+      "y": 330,
+      "width": 440,
+      "height": 200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-etiqueta-pasta"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-11-capa-diario-couro",
+      "name": "Título",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 310,
+      "y": 380,
+      "width": 400,
+      "height": 90,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "DIÁRIO",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 56,
+        "color": "#2a1f14",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-12-capa-diario-couro",
+      "name": "Dono",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 310,
+      "y": 1100,
+      "width": 460,
+      "height": 100,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Pertence a Helena M. Pires",
+        "font": {
+          "family": "La Belle Aurore",
+          "library": "casa-font-labelleaurore",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 37,
+        "color": "#d8b66a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.3,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-13-capa-diario-couro",
+      "name": "Fecho · fita",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 780,
+      "y": 620,
+      "width": 220,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#2a1f14",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 10,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-14-capa-diario-couro",
+      "name": "Fecho · metal",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 930,
+      "y": 626,
+      "width": 56,
+      "height": 48,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#c9a24a",
+        "stroke": "#7a5a1a",
+        "strokeWidth": 2,
+        "radius": 8,
+        "dash": []
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-11-capa-diario-couro",
+      "label": "Título"
+    },
+    {
+      "layerId": "l-12-capa-diario-couro",
+      "label": "Dono"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

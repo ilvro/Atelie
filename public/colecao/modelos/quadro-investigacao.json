@@ -1,0 +1,1119 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-quadro-investigacao",
+  "revision": 0,
+  "name": "Quadro de investigação",
+  "category": "Polícia e investigação",
+  "tags": [
+    "polícia e investigação"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1600,
+    "height": 1100,
+    "background": "#6a4423"
+  },
+  "layers": [
+    {
+      "id": "l-1-quadro-investigacao",
+      "name": "Cortiça",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1600,
+      "height": 1100,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-superficie-cork002"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-quadro-investigacao",
+      "name": "Moldura de madeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1600,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-superficie-wood060"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-3-quadro-investigacao",
+      "name": "Moldura inferior",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 1060,
+      "width": 1600,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-superficie-wood060"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-quadro-investigacao",
+      "name": "Título do caso",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 440,
+      "y": 60,
+      "width": 720,
+      "height": 70,
+      "rotation": -1.2,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "CASO SOLAR DOS PINHAIS",
+        "font": {
+          "family": "Permanent Marker",
+          "library": "casa-font-permanentmarker-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 50,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-5-quadro-investigacao",
+      "name": "Moldura da foto 1",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 220,
+      "width": 250,
+      "height": 320,
+      "rotation": -4,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-moldura-foto-antiga-serrilhada"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-6-quadro-investigacao",
+      "name": "Foto 1",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 138,
+      "y": 238,
+      "width": 214,
+      "height": 250,
+      "rotation": -4,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-homem-bigode-oculos"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-quadro-investigacao",
+      "name": "Alfinete 1",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 220,
+      "y": 200,
+      "width": 70,
+      "height": 90,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-investigacao-alfinete-vermelho"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-8-quadro-investigacao",
+      "name": "Moldura da foto 2",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 520,
+      "y": 200,
+      "width": 250,
+      "height": 320,
+      "rotation": 3,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-moldura-foto-antiga-serrilhada"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-9-quadro-investigacao",
+      "name": "Foto 2",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 538,
+      "y": 218,
+      "width": 214,
+      "height": 250,
+      "rotation": 3,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-oficial-sabre"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-10-quadro-investigacao",
+      "name": "Alfinete 2",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 620,
+      "y": 180,
+      "width": 70,
+      "height": 90,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-investigacao-alfinete-azul"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-11-quadro-investigacao",
+      "name": "Moldura da foto 3",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 940,
+      "y": 230,
+      "width": 250,
+      "height": 320,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-moldura-foto-antiga-serrilhada"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-12-quadro-investigacao",
+      "name": "Foto 3",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 958,
+      "y": 248,
+      "width": 214,
+      "height": 250,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-mulher-sanfona"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-13-quadro-investigacao",
+      "name": "Alfinete 3",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1040,
+      "y": 210,
+      "width": 70,
+      "height": 90,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-investigacao-alfinete-amarelo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-14-quadro-investigacao",
+      "name": "Moldura da foto 4",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1290,
+      "y": 210,
+      "width": 250,
+      "height": 320,
+      "rotation": 4,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-moldura-foto-antiga-serrilhada"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-15-quadro-investigacao",
+      "name": "Foto 4",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1308,
+      "y": 228,
+      "width": 214,
+      "height": 250,
+      "rotation": 4,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-senhora-capa"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-16-quadro-investigacao",
+      "name": "Alfinete 4",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1390,
+      "y": 190,
+      "width": 70,
+      "height": 90,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-investigacao-alfinete-verde"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-17-quadro-investigacao",
+      "name": "Barbante 1",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 220,
+      "y": 270,
+      "width": 480,
+      "height": 170,
+      "rotation": 8,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-investigacao-barbante-curvo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-18-quadro-investigacao",
+      "name": "Barbante 2",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 640,
+      "y": 340,
+      "width": 480,
+      "height": 80,
+      "rotation": -4,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-investigacao-barbante-reto"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-19-quadro-investigacao",
+      "name": "Barbante 3",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1040,
+      "y": 330,
+      "width": 480,
+      "height": 150,
+      "rotation": 5,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-investigacao-barbante-frouxo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-20-quadro-investigacao",
+      "name": "Post-it 1",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 130,
+      "y": 640,
+      "width": 300,
+      "height": 300,
+      "rotation": -3,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-investigacao-postit-amarelo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-21-quadro-investigacao",
+      "name": "Nota 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 166,
+      "y": 710,
+      "width": 230,
+      "height": 150,
+      "rotation": -3,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "quem tinha a\nchave do porão?",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-22-quadro-investigacao",
+      "name": "Post-it 2",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 560,
+      "y": 700,
+      "width": 300,
+      "height": 300,
+      "rotation": 2,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-investigacao-postit-rosa"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-23-quadro-investigacao",
+      "name": "Nota 2",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 596,
+      "y": 770,
+      "width": 230,
+      "height": 150,
+      "rotation": 2,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "vigia mente?\nlanterna apagou 2x",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-24-quadro-investigacao",
+      "name": "Post-it 3",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1000,
+      "y": 650,
+      "width": 300,
+      "height": 300,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-investigacao-postit-azul"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-25-quadro-investigacao",
+      "name": "Nota 3",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1036,
+      "y": 720,
+      "width": 230,
+      "height": 150,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "ligar p/ o IML\nsegunda cedo",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-26-quadro-investigacao",
+      "name": "Recorte de jornal",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1290,
+      "y": 700,
+      "width": 250,
+      "height": 330,
+      "rotation": 5,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-papel-jornal-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-27-quadro-investigacao",
+      "name": "Manchete do recorte",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1305,
+      "y": 730,
+      "width": 220,
+      "height": 200,
+      "rotation": 5,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "VIGIA DIZ TER OUVIDO PASSOS NO PORÃO",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-28-quadro-investigacao",
+      "name": "Etiqueta numerada",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 860,
+      "y": 770,
+      "width": 130,
+      "height": 180,
+      "rotation": -6,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-investigacao-etiqueta-numerada-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-29-quadro-investigacao",
+      "name": "Sombra do quadro",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1600,
+      "height": 1100,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 105,
+        "amount": 0.5,
+        "params": {
+          "color": "#3a2512"
+        }
+      }
+    },
+    {
+      "id": "l-30-quadro-investigacao",
+      "name": "Grão da cortiça",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1600,
+      "height": 1100,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "grain",
+        "seed": 106,
+        "amount": 0.5,
+        "params": {
+          "size": 1.5
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-4-quadro-investigacao",
+      "label": "Título do caso"
+    },
+    {
+      "layerId": "l-6-quadro-investigacao",
+      "label": "Fotos"
+    },
+    {
+      "layerId": "l-9-quadro-investigacao",
+      "label": "Foto 2"
+    },
+    {
+      "layerId": "l-12-quadro-investigacao",
+      "label": "Foto 3"
+    },
+    {
+      "layerId": "l-15-quadro-investigacao",
+      "label": "Foto 4"
+    },
+    {
+      "layerId": "l-21-quadro-investigacao",
+      "label": "Notas"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

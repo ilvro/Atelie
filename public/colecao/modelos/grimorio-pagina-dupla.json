@@ -1,0 +1,569 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-grimorio-pagina-dupla",
+  "revision": 0,
+  "name": "Grimório · página dupla",
+  "category": "Ocultismo",
+  "tags": [
+    "ocultismo"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 2000,
+    "height": 1300,
+    "background": "#2a2018"
+  },
+  "layers": [
+    {
+      "id": "l-1-grimorio-pagina-dupla",
+      "name": "Mesa",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 2000,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-superficie-wood060"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-grimorio-pagina-dupla",
+      "name": "Página esquerda (papel)",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 60,
+      "y": 50,
+      "width": 940,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-pergaminho-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-3-grimorio-pagina-dupla",
+      "name": "Página direita (papel)",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1000,
+      "y": 50,
+      "width": 940,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-pergaminho-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-grimorio-pagina-dupla",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.49,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 2000,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 9951,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-5-grimorio-pagina-dupla",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.245,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 2000,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 9968,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-6-grimorio-pagina-dupla",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.21,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 2000,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 9985,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-7-grimorio-pagina-dupla",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.315,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 2000,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 10002,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-8-grimorio-pagina-dupla",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.28,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 2000,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-4"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-9-grimorio-pagina-dupla",
+      "name": "Sombra da lombada",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.45,
+      "blend": "multiply",
+      "x": 940,
+      "y": 50,
+      "width": 120,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#2a1a0a",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-10-grimorio-pagina-dupla",
+      "name": "Título",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 160,
+      "y": 120,
+      "width": 740,
+      "height": 70,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "DE VINCULIS UMBRARUM",
+        "font": {
+          "family": "Uncial Antiqua",
+          "library": "casa-font-uncialantiqua-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 46,
+        "color": "#5a1a14",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-11-grimorio-pagina-dupla",
+      "name": "Sigilo",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.85,
+      "blend": "multiply",
+      "x": 220,
+      "y": 230,
+      "width": 620,
+      "height": 620,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-simbolo-sigilo-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-12-grimorio-pagina-dupla",
+      "name": "Legenda do sigilo",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 260,
+      "y": 880,
+      "width": 540,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Sigillum Tertium",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-italic",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 30,
+        "color": "#2a1f14",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-13-grimorio-pagina-dupla",
+      "name": "Texto (esquerda)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 160,
+      "y": 960,
+      "width": 740,
+      "height": 260,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Aquele que desejar prender uma sombra a um lugar deve primeiro conhecer-lhe o nome e o dia em que o lugar foi fundado. Desenhe-se o sigilo com sal e cinza, e sobre ele se acendam três velas de sebo, uma ao norte, outra ao sul, a terceira no centro, de modo que as chamas não se toquem.",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 29,
+        "color": "#2a1f14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.35,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-14-grimorio-pagina-dupla",
+      "name": "Texto (direita)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1100,
+      "y": 160,
+      "width": 740,
+      "height": 480,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Cuidado: a sombra, uma vez presa, não aceita outro dono. Quem a prende fica preso com ela, e à sua morte passa a ser guarda da casa, sem repouso. Assim se explica porque tantos solares antigos guardam um porão que ninguém abre, nem de dia.",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 29,
+        "color": "#2a1f14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.35,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-15-grimorio-pagina-dupla",
+      "name": "Ornamento",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "multiply",
+      "x": 1180,
+      "y": 660,
+      "width": 580,
+      "height": 70,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-ornamento-divisoria-estrelas"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-16-grimorio-pagina-dupla",
+      "name": "Nota posterior",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1100,
+      "y": 780,
+      "width": 740,
+      "height": 130,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Experimentei em 1871. Funciona. Que Deus me perdoe. — C.",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-italic",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 34,
+        "color": "#3a2a3a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.3,
+          "seed": 12
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-10-grimorio-pagina-dupla",
+      "label": "Título"
+    },
+    {
+      "layerId": "l-11-grimorio-pagina-dupla",
+      "label": "Ilustração"
+    },
+    {
+      "layerId": "l-13-grimorio-pagina-dupla",
+      "label": "Texto"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

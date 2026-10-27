@@ -1,0 +1,449 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-dossie-agente",
+  "revision": 0,
+  "name": "Dossiê de agente",
+  "category": "Militar e governo",
+  "tags": [
+    "militar e governo"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1500,
+    "height": 1250,
+    "background": "#4a4540"
+  },
+  "layers": [
+    {
+      "id": "l-1-dossie-agente",
+      "name": "Mesa",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1500,
+      "height": 1250,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-superficie-wood060"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-dossie-agente",
+      "name": "Capa do dossiê",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 60,
+      "y": 40,
+      "width": 860,
+      "height": 1160,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-objeto-capa-dossie-preta"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-3-dossie-agente",
+      "name": "Ficha de serviço",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 640,
+      "y": 120,
+      "width": 760,
+      "height": 1040,
+      "rotation": 3,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-creme-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-dossie-agente",
+      "name": "Título da capa",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 150,
+      "y": 140,
+      "width": 480,
+      "height": 220,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "DOSSIÊ\nPESSOAL",
+        "font": {
+          "family": "Stardos Stencil",
+          "library": "casa-font-stardosstencil-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 84,
+        "color": "#c9c3b0",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-5-dossie-agente",
+      "name": "Selo do departamento",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "normal",
+      "x": 340,
+      "y": 700,
+      "width": 250,
+      "height": 283,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-emblema-universo-doe"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-6-dossie-agente",
+      "name": "Foto",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 730,
+      "y": 190,
+      "width": 280,
+      "height": 360,
+      "rotation": 3,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-jovem-hussardo"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-dossie-agente",
+      "name": "Clipe",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 840,
+      "y": 160,
+      "width": 60,
+      "height": 120,
+      "rotation": 3,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-prendedor-clipe-prata-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-8-dossie-agente",
+      "name": "Nome",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1030,
+      "y": 230,
+      "width": 330,
+      "height": 120,
+      "rotation": 3,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "NOME: Rodrigo Fernandes Lessa",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-9-dossie-agente",
+      "name": "Codinome",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1030,
+      "y": 350,
+      "width": 330,
+      "height": 60,
+      "rotation": 3,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "CODINOME: \"Corvo\"",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-10-dossie-agente",
+      "name": "Histórico",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 700,
+      "y": 600,
+      "width": 640,
+      "height": 380,
+      "rotation": 3,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "HISTÓRICO DE SERVIÇO\n1958 — ingressa no Departamento\n1961 — missão em Paranapiacaba\n1964 — afastado por motivo de saúde\n1967 — retorna; designado ao caso \"Lua Tríplice\"\n1970 — último relatório recebido",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 23,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.4,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-11-dossie-agente",
+      "name": "Carimbo SIGILOSO",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.85,
+      "blend": "multiply",
+      "x": 1000,
+      "y": 950,
+      "width": 320,
+      "height": 120,
+      "rotation": -8,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-carimbo-br-sigiloso"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-6-dossie-agente",
+      "label": "Foto"
+    },
+    {
+      "layerId": "l-8-dossie-agente",
+      "label": "Nome"
+    },
+    {
+      "layerId": "l-9-dossie-agente",
+      "label": "Codinome"
+    },
+    {
+      "layerId": "l-10-dossie-agente",
+      "label": "Histórico"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

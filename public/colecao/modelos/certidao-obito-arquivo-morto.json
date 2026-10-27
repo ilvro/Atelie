@@ -1,0 +1,819 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-certidao-obito-arquivo-morto",
+  "revision": 0,
+  "name": "Certidão de óbito · arquivo morto",
+  "category": "Médico",
+  "tags": [
+    "médico"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f3ecdb"
+  },
+  "layers": [
+    {
+      "id": "l-1-certidao-obito-arquivo-morto",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-creme-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-certidao-obito-arquivo-morto",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 1333,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-3-certidao-obito-arquivo-morto",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 1350,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-certidao-obito-arquivo-morto",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 1367,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-5-certidao-obito-arquivo-morto",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.45,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 1384,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-6-certidao-obito-arquivo-morto",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.4,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-certidao-obito-arquivo-morto",
+      "name": "Moldura vitoriana",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 50,
+      "y": 50,
+      "width": 1140,
+      "height": 1654,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-moldura-vitoriana-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-8-certidao-obito-arquivo-morto",
+      "name": "Selo do cartório",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 120,
+      "width": 170,
+      "height": 170,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-selo-cartorio"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-9-certidao-obito-arquivo-morto",
+      "name": "Título certidão",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 280,
+      "y": 140,
+      "width": 820,
+      "height": 80,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "REGISTRO CIVIL DAS PESSOAS NATURAIS\nCERTIDÃO DE ÓBITO",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#111111",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-nome",
+      "name": "Nome do falecido",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 160,
+      "y": 350,
+      "width": 920,
+      "height": 180,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "CERTIFICO que, no Livro C-14 de Registro de Óbitos, às folhas 88, consta o assento do falecimento de:\n\nSEBASTIÃO CORRÊA DE AZEVEDO",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 27,
+        "color": "#111111",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.5,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-data",
+      "name": "Data do óbito",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 160,
+      "y": 560,
+      "width": 920,
+      "height": 150,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Ocorrido no dia 07 de Julho de 1923, às 14 horas e 30 minutos, na Santa Casa de Misericórdia, com a idade de 52 anos, do sexo masculino, casado, de profissão comerciante.",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1a1a1a",
+        "align": "justify",
+        "valign": "top",
+        "lineHeight": 1.5,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-causa",
+      "name": "Causa da morte",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 160,
+      "y": 730,
+      "width": 920,
+      "height": 120,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "CAUSA DA MORTE: Colapso cardiorrespiratório fulminante decorrente de choque séptico e ferimento pérfuro-contuso infectado no membro superior direito.",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1a1a1a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.5,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-medico",
+      "name": "Médico atestante",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 160,
+      "y": 880,
+      "width": 920,
+      "height": 50,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "MÉDICO ATESTANTE: Dr. Alberto Fontoura (CRM 312)",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1a1a1a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-10-certidao-obito-arquivo-morto",
+      "name": "Sepultamento",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 160,
+      "y": 950,
+      "width": 920,
+      "height": 50,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "SEPULTAMENTO: Cemitério Municipal da Boa Vista, na sepultura nº 1.402 da quadra 6.",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#1a1a1a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-11-certidao-obito-arquivo-morto",
+      "name": "Oficial do cartório",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 620,
+      "y": 1240,
+      "width": 440,
+      "height": 80,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "O Oficial do Registro Civil:\nBel. Waldomiro Pederneiras",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#222222",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 1
+        }
+      }
+    },
+    {
+      "id": "l-12-certidao-obito-arquivo-morto",
+      "name": "Selo da instituição",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 100,
+      "y": 1454,
+      "width": 190,
+      "height": 215,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-emblema-universo-cartorio-carimbo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-13-certidao-obito-arquivo-morto",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 12896,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-14-certidao-obito-arquivo-morto",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 12913,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-15-certidao-obito-arquivo-morto",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 12930,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-16-certidao-obito-arquivo-morto",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.45,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 12947,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-17-certidao-obito-arquivo-morto",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.4,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-18-certidao-obito-arquivo-morto",
+      "name": "Umidade no canto",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 12913,
+        "amount": 0.6,
+        "params": {
+          "color": "#8a8460"
+        }
+      }
+    },
+    {
+      "id": "l-19-certidao-obito-arquivo-morto",
+      "name": "Carimbo de arquivo",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.75,
+      "blend": "multiply",
+      "x": 645,
+      "y": 105,
+      "width": 471,
+      "height": 351,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-carimbo-arquivo-morto"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-20-certidao-obito-arquivo-morto",
+      "name": "Furos de grampo",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 50,
+      "y": 35,
+      "width": 248,
+      "height": 123,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-prendedor-dois-grampos"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-nome",
+      "label": "Nome"
+    },
+    {
+      "layerId": "l-data",
+      "label": "Data"
+    },
+    {
+      "layerId": "l-causa",
+      "label": "Causa"
+    },
+    {
+      "layerId": "l-medico",
+      "label": "Médico"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

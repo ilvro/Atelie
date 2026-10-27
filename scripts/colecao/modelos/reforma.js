@@ -29,7 +29,7 @@ const text = (name, content, box, { family = 'Courier Prime', size = 22, color =
   text: { content, font: { family, library: FONT_ID[family] ?? null, weight: 400, italic: false }, size, color, align, lineHeight: 1.25, ink: { style, wear, seed: 7 } },
 });
 const campo = (name, content, box, opts) => ({ layer: text(name, content, box, opts), field: name });
-const hand = { family: 'Nothing You Could Do', size: 32, color: '#1c2a5a', style: 'pen', wear: 0.2 };
+const hand = { family: 'Nothing You Could Do', size: 32, color: '#1c2a5a', style: 'handwriting', wear: 0.2 };
 
 export const REFORMA = {
   // --- Cartas e bilhetes

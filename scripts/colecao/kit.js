@@ -27,7 +27,7 @@ export const AGING_PRESETS = {
   usado: [
     ['fx', 'Amassado leve', 'crumple', { blend: 'soft-light', opacity: 0.55, amount: 0.35, params: { creases: 10 } }],
     ['fx', 'Dobra', 'fold', { blend: 'multiply', opacity: 0.3, amount: 0.4, params: { horizontal: 1, vertical: 0 } }],
-    ['img', 'Poeira', 'casa-sujeira-3', { blend: 'multiply', opacity: 0.2 }],
+    ['img', 'Poeira', 'casa-sujeira-3', { blend: 'multiply', opacity: 0.1 }],
     ['fx', 'Bordas escurecidas', 'damp', { blend: 'multiply', opacity: 0.3, amount: 0.4, params: { color: '#a58f63' } }],
   ],
   antigo: [
@@ -149,7 +149,7 @@ export function photo(slot, { default: src, frame = 'cantoneiras', tilt = 0 } = 
 /** Assinatura manuscrita (texto em fonte à mão). */
 export function signature(name, { x, y, width = 320, size = 44, color = '#1c2a5a' } = {}) {
   return { kind: 'text', name: 'Assinatura', x, y, width, height: size * 1.6,
-    text: { content: name, font: { family: 'Homemade Apple', library: null, weight: 400, italic: false }, size, color, ink: { style: 'pen', wear: 0.2, seed: 7 } } };
+    text: { content: name, font: { family: 'Homemade Apple', library: null, weight: 400, italic: false }, size, color, ink: { style: 'handwriting', wear: 0.2, seed: 7 } } };
 }
 
 /** Rubrica: as iniciais, pequenas. */
@@ -168,7 +168,7 @@ export function stamp(id, { x, y, size = 220, rot, opacity = 0.85, seed = 1 } = 
 /** Anotação à margem, em letra de mão. */
 export function marginNote(text, { x, y, width = 300, size = 30, color = '#2a3a8a', rot = -2 } = {}) {
   return { kind: 'text', name: 'Anotação à margem', x, y, width, height: size * 3, rotation: rot,
-    text: { content: text, font: { family: 'Caveat', library: null, weight: 400, italic: false }, size, color, ink: { style: 'pen', wear: 0.15, seed: 11 } } };
+    text: { content: text, font: { family: 'Caveat', library: null, weight: 400, italic: false }, size, color, ink: { style: 'handwriting', wear: 0.15, seed: 11 } } };
 }
 
 /** Código de barras desenhado com blocos de texto (sem imagem extra). */

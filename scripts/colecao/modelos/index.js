@@ -20,6 +20,12 @@ export const CATEGORIES = [
   { slug: 'fantasia', name: 'Fantasia' },
   { slug: 'cotidiano', name: 'Cotidiano' },
   { slug: 'tecnologia', name: 'Tecnologia' },
+  { slug: 'forense-e-pericia', name: 'Forense e perícia' },
+  { slug: 'oficial-e-juridico', name: 'Oficial e jurídico' },
+  { slug: 'militar-e-governo', name: 'Militar e governo' },
+  { slug: 'cadernos-diarios-e-livros', name: 'Cadernos, diários e livros' },
+  { slug: 'escola-e-juventude', name: 'Escola e juventude' },
+  { slug: 'ciencia-e-laboratorio', name: 'Ciência e laboratório' },
 ];
 
 export const TEMPLATES_BY_CATEGORY = {
@@ -34,6 +40,10 @@ export const TEMPLATES_BY_CATEGORY = {
 };
 
 import { reformarTodos } from './reforma.js';
+import loteC8 from './lote-c8.js';
+import loteC9 from './lote-c9.js';
+import loteC10 from './lote-c10.js';
+import { expandir } from './variacoes.js';
 
 const ORIGINAIS = [
   ...cartasEBilhetes,
@@ -47,4 +57,5 @@ const ORIGINAIS = [
 ];
 
 /** Os modelos publicados: as especificações por categoria, reformadas pela C7 (ver reforma.js). */
-export const TEMPLATES = reformarTodos(ORIGINAIS);
+const BASES = [...reformarTodos(ORIGINAIS), ...loteC8, ...loteC9, ...loteC10];
+export const TEMPLATES = [...BASES, ...expandir(BASES)];

@@ -1,0 +1,307 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-etiqueta-corpo",
+  "revision": 0,
+  "name": "Etiqueta de corpo",
+  "category": "Forense e perícia",
+  "tags": [
+    "forense e perícia"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 900,
+    "height": 1300,
+    "background": "#c9b48a"
+  },
+  "layers": [
+    {
+      "id": "l-1-etiqueta-corpo",
+      "name": "Mesa",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-kraft-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-etiqueta-corpo",
+      "name": "Etiqueta",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 130,
+      "y": 80,
+      "width": 640,
+      "height": 1220,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-objeto-etiqueta-corpo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-3-etiqueta-corpo",
+      "name": "Instituição",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 290,
+      "y": 400,
+      "width": 330,
+      "height": 90,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "I.M.L.\nNECROTÉRIO",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 30,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 9
+        }
+      }
+    },
+    {
+      "id": "l-4-etiqueta-corpo",
+      "name": "Nome",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 270,
+      "y": 560,
+      "width": 380,
+      "height": 100,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Nome: desconhecido (homem, adulto)",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 38,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-5-etiqueta-corpo",
+      "name": "Data",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 270,
+      "y": 700,
+      "width": 400,
+      "height": 80,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Entrada: 22/09/1973, 06h40",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-6-etiqueta-corpo",
+      "name": "Número",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 270,
+      "y": 800,
+      "width": 380,
+      "height": 120,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Nº 386",
+        "font": {
+          "family": "Permanent Marker",
+          "library": "casa-font-permanentmarker-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 78,
+        "color": "#8a1414",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-7-etiqueta-corpo",
+      "name": "Gaveta",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 270,
+      "y": 960,
+      "width": 380,
+      "height": 60,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Gaveta 7-B",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 38,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 13
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-4-etiqueta-corpo",
+      "label": "Nome"
+    },
+    {
+      "layerId": "l-5-etiqueta-corpo",
+      "label": "Data"
+    },
+    {
+      "layerId": "l-6-etiqueta-corpo",
+      "label": "Número"
+    },
+    {
+      "layerId": "l-7-etiqueta-corpo",
+      "label": "Gaveta"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

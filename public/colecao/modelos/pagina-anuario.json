@@ -1,0 +1,996 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-pagina-anuario",
+  "revision": 0,
+  "name": "Página de anuário",
+  "category": "Escola e juventude",
+  "tags": [
+    "escola e juventude"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-pagina-anuario",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-papel-fotografico-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-pagina-anuario",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.44,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 6820,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-pagina-anuario",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 6837,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-pagina-anuario",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.08,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-pagina-anuario",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 6871,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-pagina-anuario",
+      "name": "Título",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 80,
+      "width": 1020,
+      "height": 90,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "TURMA 8ª B · 1974",
+        "font": {
+          "family": "Cinzel",
+          "library": "casa-font-cinzel-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 64,
+        "color": "#1f3f7a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-7-pagina-anuario",
+      "name": "Foto 1",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 220,
+      "width": 320,
+      "height": 330,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-rapaz-cdv"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 1,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0.12,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-8-pagina-anuario",
+      "name": "Nome 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 556,
+      "width": 320,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Rodrigo L.",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-italic",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 26,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-9-pagina-anuario",
+      "name": "Foto 2",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 460,
+      "y": 220,
+      "width": 320,
+      "height": 330,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-mulher-sanfona"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 1,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0.16999999999999998,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-10-pagina-anuario",
+      "name": "Nome 2",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 460,
+      "y": 556,
+      "width": 320,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Helena P.",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-italic",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 26,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-11-pagina-anuario",
+      "name": "Foto 3",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 810,
+      "y": 220,
+      "width": 320,
+      "height": 330,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-homem-bigode-oculos"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 1,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0.22,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-12-pagina-anuario",
+      "name": "Nome 3",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 810,
+      "y": 556,
+      "width": 320,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Beto S.",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-italic",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 26,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-13-pagina-anuario",
+      "name": "Foto 4",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 620,
+      "width": 320,
+      "height": 330,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-senhora-capa"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 1,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0.12,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-14-pagina-anuario",
+      "name": "Nome 4",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 956,
+      "width": 320,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Odete M.",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-italic",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 26,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-15-pagina-anuario",
+      "name": "Foto 5",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 460,
+      "y": 620,
+      "width": 320,
+      "height": 330,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-jovem-hussardo"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 1,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0.16999999999999998,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-16-pagina-anuario",
+      "name": "Nome 5",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 460,
+      "y": 956,
+      "width": 320,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Arnaldo C.",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-italic",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 26,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-17-pagina-anuario",
+      "name": "Foto 6",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 810,
+      "y": 620,
+      "width": 320,
+      "height": 330,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-oficial-sabre"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 1,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0.22,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-18-pagina-anuario",
+      "name": "Nome 6",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 810,
+      "y": 956,
+      "width": 320,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Paulo R.",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-italic",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 26,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-19-pagina-anuario",
+      "name": "Foto 7",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1020,
+      "width": 320,
+      "height": 330,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-mulher-sanfona"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 1,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0.12,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-20-pagina-anuario",
+      "name": "Nome 7",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 1356,
+      "width": 320,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Lúcia T.",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-italic",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 26,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-21-pagina-anuario",
+      "name": "Foto 8",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 460,
+      "y": 1020,
+      "width": 320,
+      "height": 330,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-rapaz-cdv"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 1,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0.16999999999999998,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-22-pagina-anuario",
+      "name": "Nome 8",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 460,
+      "y": 1356,
+      "width": 320,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Edmundo V.",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-italic",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 26,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-23-pagina-anuario",
+      "name": "Foto 9",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 810,
+      "y": 1020,
+      "width": 320,
+      "height": 330,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-homem-bigode-oculos"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 1,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0.22,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-24-pagina-anuario",
+      "name": "Nome 9",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 810,
+      "y": 1356,
+      "width": 320,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Dalva N.",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-italic",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 26,
+        "color": "#1d1b24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-25-pagina-anuario",
+      "name": "Dedicatória",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 130,
+      "y": 1470,
+      "width": 980,
+      "height": 150,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "\"Aos que ficam, a saudade; aos que vão, a esperança.\"\n— Turma de 74",
+        "font": {
+          "family": "Great Vibes",
+          "library": "casa-font-greatvibes-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 40,
+        "color": "#1f3f7a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.1,
+          "seed": 9
+        }
+      }
+    },
+    {
+      "id": "l-26-pagina-anuario",
+      "name": "Ornamento",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.6,
+      "blend": "multiply",
+      "x": 340,
+      "y": 1400,
+      "width": 560,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-ornamento-divisoria-florete"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-7-pagina-anuario",
+      "label": "Fotos"
+    },
+    {
+      "layerId": "l-8-pagina-anuario",
+      "label": "Nomes"
+    },
+    {
+      "layerId": "l-9-pagina-anuario",
+      "label": "Foto 2"
+    },
+    {
+      "layerId": "l-11-pagina-anuario",
+      "label": "Foto 3"
+    },
+    {
+      "layerId": "l-13-pagina-anuario",
+      "label": "Foto 4"
+    },
+    {
+      "layerId": "l-15-pagina-anuario",
+      "label": "Foto 5"
+    },
+    {
+      "layerId": "l-17-pagina-anuario",
+      "label": "Foto 6"
+    },
+    {
+      "layerId": "l-19-pagina-anuario",
+      "label": "Foto 7"
+    },
+    {
+      "layerId": "l-21-pagina-anuario",
+      "label": "Foto 8"
+    },
+    {
+      "layerId": "l-23-pagina-anuario",
+      "label": "Foto 9"
+    },
+    {
+      "layerId": "l-25-pagina-anuario",
+      "label": "Dedicatória"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

@@ -1,0 +1,412 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-recorte-livro-proibido",
+  "revision": 0,
+  "name": "Recorte de livro proibido",
+  "category": "Ocultismo",
+  "tags": [
+    "ocultismo"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-recorte-livro-proibido",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-creme-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-recorte-livro-proibido",
+      "name": "Fuligem",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.63,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-queimado-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-3-recorte-livro-proibido",
+      "name": "Papel tostado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.495,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "burn",
+        "seed": 10030,
+        "amount": 0.6,
+        "params": {
+          "depth": 0.1
+        }
+      }
+    },
+    {
+      "id": "l-4-recorte-livro-proibido",
+      "name": "Queimado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "cut",
+        "seed": 325,
+        "amount": 1,
+        "params": {},
+        "edge": "queimado",
+        "remove": [],
+        "holes": [
+          [
+            [
+              0.9938,
+              0.9938,
+              49
+            ],
+            [
+              0.9998,
+              1,
+              82
+            ],
+            [
+              0.9836,
+              0.9911,
+              100
+            ],
+            [
+              0.9412,
+              0.9524,
+              92
+            ],
+            [
+              0.9333,
+              0.9483,
+              112
+            ],
+            [
+              0.9325,
+              0.9512,
+              103
+            ],
+            [
+              0.9171,
+              0.9396,
+              101
+            ],
+            [
+              0.8866,
+              0.9128,
+              71
+            ],
+            [
+              0.8653,
+              0.8953,
+              52
+            ]
+          ]
+        ],
+        "char": 0.55,
+        "fiber": 0.5
+      }
+    },
+    {
+      "id": "l-5-recorte-livro-proibido",
+      "name": "Título corrente",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 100,
+      "width": 1020,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "INDEX LIBRORUM PROHIBITORUM",
+        "font": {
+          "family": "Old Standard TT",
+          "library": "casa-font-oldstandardtt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#2a1f14",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.2,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-6-recorte-livro-proibido",
+      "name": "Texto",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 200,
+      "width": 1020,
+      "height": 620,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Quarto. Que ninguém ouse ler em voz alta o que se segue, sob pena de ser ouvido por quem não deve. A palavra dita no escuro tem peso, e o peso vai ao fundo, onde espera. Os que sobreviveram a esta leitura relataram um frio nos pés e a certeza de que a página seguinte já fora lida por outro antes deles. Convém queimar o livro, mas o fogo, dizem, apenas o abre.",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 38,
+        "color": "#2a1f14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.25,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-7-recorte-livro-proibido",
+      "name": "Cinzas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "grain",
+        "seed": 81,
+        "amount": 0.6,
+        "params": {}
+      }
+    },
+    {
+      "id": "l-8-recorte-livro-proibido",
+      "name": "Marca de fuligem",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.6,
+      "blend": "multiply",
+      "x": 600,
+      "y": 900,
+      "width": 560,
+      "height": 560,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-queimado-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-9-recorte-livro-proibido",
+      "name": "Digital na margem",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.4,
+      "blend": "multiply",
+      "x": 860,
+      "y": 1180,
+      "width": 200,
+      "height": 250,
+      "rotation": 20,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-digitais-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-10-recorte-livro-proibido",
+      "name": "Texto (continuação)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 860,
+      "width": 1020,
+      "height": 400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Quinto. Para romper a ligação, é preciso nomear os três guardas pela ordem inversa à que foram chamados, e fazê-lo antes do nascer da lua, com a porta fechada e a cabeça coberta; depois, sem olhar para trás, atravessar o limiar de espinho e",
+        "font": {
+          "family": "IM Fell English",
+          "library": "casa-font-im-fell-english-roman",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 38,
+        "color": "#2a1f14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.25,
+          "seed": 8
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-6-recorte-livro-proibido",
+      "label": "Texto"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

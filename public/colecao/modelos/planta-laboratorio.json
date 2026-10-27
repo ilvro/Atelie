@@ -1,0 +1,638 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-planta-laboratorio",
+  "revision": 0,
+  "name": "Planta de laboratório",
+  "category": "Ciência e laboratório",
+  "tags": [
+    "ciência e laboratório"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1700,
+    "height": 1200,
+    "background": "#1f4f8a"
+  },
+  "layers": [
+    {
+      "id": "l-1-planta-laboratorio",
+      "name": "Papel de planta",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1700,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-planta-azul-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-planta-laboratorio",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.33,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1700,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 9703,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-planta-laboratorio",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.18,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1700,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 9720,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-planta-laboratorio",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.06,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1700,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-planta-laboratorio",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.18,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1700,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 9754,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-planta-laboratorio",
+      "name": "Planta · contorno",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 130,
+      "width": 1100,
+      "height": 760,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#e6f1fb",
+        "strokeWidth": 6,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-7-planta-laboratorio",
+      "name": "Planta · sala principal",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 130,
+      "width": 640,
+      "height": 500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#e6f1fb",
+        "strokeWidth": 4,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-8-planta-laboratorio",
+      "name": "Planta · câmara",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 740,
+      "y": 130,
+      "width": 460,
+      "height": 330,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#e6f1fb",
+        "strokeWidth": 4,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-9-planta-laboratorio",
+      "name": "Planta · depósito",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 740,
+      "y": 460,
+      "width": 460,
+      "height": 430,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#e6f1fb",
+        "strokeWidth": 4,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-10-planta-laboratorio",
+      "name": "Planta · corredor",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 630,
+      "width": 640,
+      "height": 260,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#e6f1fb",
+        "strokeWidth": 4,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-11-planta-laboratorio",
+      "name": "Porta A",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 696,
+      "y": 600,
+      "width": 90,
+      "height": 8,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#1f4f8a",
+        "stroke": "#e6f1fb",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-12-planta-laboratorio",
+      "name": "Porta B",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 930,
+      "y": 440,
+      "width": 90,
+      "height": 8,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#1f4f8a",
+        "stroke": "#e6f1fb",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-13-planta-laboratorio",
+      "name": "Mesa de trabalho",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 180,
+      "y": 220,
+      "width": 300,
+      "height": 110,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#ffffff10",
+        "stroke": "#e6f1fb",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-14-planta-laboratorio",
+      "name": "Câmara de cultivo",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 860,
+      "y": 200,
+      "width": 220,
+      "height": 200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": null,
+        "stroke": "#e6f1fb",
+        "strokeWidth": 3,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-15-planta-laboratorio",
+      "name": "Cota horizontal",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 930,
+      "width": 1100,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#e6f1fb",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-16-planta-laboratorio",
+      "name": "Cota",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 560,
+      "y": 935,
+      "width": 180,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "18,40 m",
+        "font": {
+          "family": "Share Tech Mono",
+          "library": "casa-font-sharetechmono-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#e6f1fb",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-17-planta-laboratorio",
+      "name": "Título",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 50,
+      "width": 1100,
+      "height": 50,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "PLANTA BAIXA · PAVIMENTO SUBTERRÂNEO",
+        "font": {
+          "family": "Share Tech Mono",
+          "library": "casa-font-sharetechmono-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 36,
+        "color": "#e6f1fb",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-18-planta-laboratorio",
+      "name": "Quadro da legenda",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1260,
+      "y": 130,
+      "width": 340,
+      "height": 760,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#e6f1fb",
+        "strokeWidth": 3,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-19-planta-laboratorio",
+      "name": "Legenda",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1280,
+      "y": 150,
+      "width": 300,
+      "height": 720,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "LEGENDA\n\n1  Sala principal\n2  Câmara de cultivo\n3  Depósito de amostras\n4  Corredor técnico\n\nEscala 1:50\nProjeto IHBE-114",
+        "font": {
+          "family": "Share Tech Mono",
+          "library": "casa-font-sharetechmono-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 25,
+        "color": "#e6f1fb",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.5,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-20-planta-laboratorio",
+      "name": "Planta (campo)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1260,
+      "y": 940,
+      "width": 340,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Subsolo do Pavilhão B",
+        "font": {
+          "family": "Share Tech Mono",
+          "library": "casa-font-sharetechmono-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#e6f1fb",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-21-planta-laboratorio",
+      "name": "Carimbo de aprovação",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "screen",
+      "x": 1290,
+      "y": 990,
+      "width": 300,
+      "height": 120,
+      "rotation": -6,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-carimbo-aprovado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-17-planta-laboratorio",
+      "label": "Título"
+    },
+    {
+      "layerId": "l-19-planta-laboratorio",
+      "label": "Legenda"
+    },
+    {
+      "layerId": "l-20-planta-laboratorio",
+      "label": "Planta"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

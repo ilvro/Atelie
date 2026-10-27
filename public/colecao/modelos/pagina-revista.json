@@ -1,0 +1,450 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-pagina-revista",
+  "revision": 0,
+  "name": "Página de revista",
+  "category": "Jornal",
+  "tags": [
+    "jornal"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-pagina-revista",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-papel-fotografico-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-pagina-revista",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.385,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 6572,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-pagina-revista",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.21,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 6589,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-pagina-revista",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.07,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-4"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-pagina-revista",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.21,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 6623,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-pagina-revista",
+      "name": "Título",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 90,
+      "width": 1040,
+      "height": 130,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "O MISTÉRIO DO SOLAR",
+        "font": {
+          "family": "Bebas Neue",
+          "library": "casa-font-bebasneue-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 104,
+        "color": "#a3182b",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-7-pagina-revista",
+      "name": "Linha de apoio",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 230,
+      "width": 1040,
+      "height": 50,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "A casa que ninguém ousa visitar, nas colinas de Vila Aurora",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-italic",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 32,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-8-pagina-revista",
+      "name": "Foto",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 310,
+      "width": 1040,
+      "height": 560,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-lugar-casarao-1895"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0.15,
+          "saturation": -0.3,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-9-pagina-revista",
+      "name": "Legenda",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 880,
+      "width": 1040,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "O casarão em 1971: janelas vedadas há mais de duas décadas. Foto de Paulo Rangel.",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-italic",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 20,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-10-pagina-revista",
+      "name": "Texto (coluna 1)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 960,
+      "width": 500,
+      "height": 600,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Quem passa pela estrada velha de Vila Aurora ainda vê, ao longe, a silhueta do Solar dos Pinhais: duas torres, um telhado vencido, e um jardim que a hera engoliu. Os moradores evitam falar dele. \"Em casa de gente séria não se fala disso\", resume a dona de um armazém.",
+        "font": {
+          "family": "Libre Baskerville",
+          "library": "casa-font-librebaskerville-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.08,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-11-pagina-revista",
+      "name": "Texto (coluna 2)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 640,
+      "y": 960,
+      "width": 500,
+      "height": 600,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Nossa reportagem passou três dias na região. Colhemos relatos de luzes no porão, de passos e de um canto distante que, segundo o vigia, começa depois da meia-noite. A família proprietária, ouvida por telefone, preferiu não comentar. Na próxima edição: o que a polícia encontrou em 1954.",
+        "font": {
+          "family": "Libre Baskerville",
+          "library": "casa-font-librebaskerville-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.08,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-12-pagina-revista",
+      "name": "Fólio",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 1650,
+      "width": 1040,
+      "height": 30,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "REVISTA PANORAMA · 54",
+        "font": {
+          "family": "Bebas Neue",
+          "library": "casa-font-bebasneue-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#555555",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-6-pagina-revista",
+      "label": "Título"
+    },
+    {
+      "layerId": "l-8-pagina-revista",
+      "label": "Foto"
+    },
+    {
+      "layerId": "l-10-pagina-revista",
+      "label": "Texto"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

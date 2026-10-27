@@ -56,8 +56,10 @@ async function paperBehind(previewPath, doc, layer) {
   const spots = [[x0, y0], [x1 - patch, y0], [x0, y1 - patch], [x1 - patch, y1 - patch]];
   const sums = [0, 0, 0];
   for (const [left, top] of spots) {
-    const { channels } = await sharp(previewPath).extract({ left: Math.max(0, left), top: Math.max(0, top), width: patch, height: patch }).stats();
-    for (let i = 0; i < 3; i++) sums[i] += channels[i].mean / spots.length;
+    // stats() ignora o extract: os pixels do retalho vêm de um buffer cru
+    const { data, info } = await sharp(previewPath).extract({ left: Math.max(0, left), top: Math.max(0, top), width: patch, height: patch }).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+    const n = info.width * info.height;
+    for (let i = 0; i < n; i++) for (let k = 0; k < 3; k++) sums[k] += data[i * info.channels + k] / n / spots.length;
   }
   return toHex(sums);
 }

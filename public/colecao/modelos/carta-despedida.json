@@ -1,0 +1,380 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-carta-despedida",
+  "revision": 0,
+  "name": "Carta de despedida",
+  "category": "Cartas e bilhetes",
+  "tags": [
+    "cartas e bilhetes"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-carta-despedida",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-caderno-novo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-carta-despedida",
+      "name": "Data",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 170,
+      "width": 1000,
+      "height": 54,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "12/03",
+        "font": {
+          "family": "Gloria Hallelujah",
+          "library": "casa-font-gloriahallelujah",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 36,
+        "color": "#22304f",
+        "align": "right",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-3-carta-despedida",
+      "name": "Saudação",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 231.2,
+      "width": 1000,
+      "height": 54,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Mãe,",
+        "font": {
+          "family": "Gloria Hallelujah",
+          "library": "casa-font-gloriahallelujah",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 36,
+        "color": "#22304f",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-4-carta-despedida",
+      "name": "Texto",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 296,
+      "width": 1000,
+      "height": 330,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "não me procura. Eu tentei explicar mil vezes e você nunca escutou, então vou escrever. Peguei a mala do pai e o dinheiro da gaveta, desculpa por isso. Vou pra casa da Bia, depois não sei. O que eu vi naquela casa velha eu não consigo contar. Só não deixa ninguém ir lá, por favor. Eu te amo, mesmo que você ache que não.",
+        "font": {
+          "family": "Gloria Hallelujah",
+          "library": "casa-font-gloriahallelujah",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 36,
+        "color": "#22304f",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.5,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-5-carta-despedida",
+      "name": "Despedida",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 646,
+      "width": 1000,
+      "height": 54,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Beijos,",
+        "font": {
+          "family": "Gloria Hallelujah",
+          "library": "casa-font-gloriahallelujah",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 36,
+        "color": "#22304f",
+        "align": "right",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-6-carta-despedida",
+      "name": "Assinatura",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 620,
+      "y": 707.2,
+      "width": 500,
+      "height": 72,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Duda",
+        "font": {
+          "family": "Homemade Apple",
+          "library": "casa-font-homemadeapple-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 40,
+        "color": "#22304f",
+        "align": "right",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-7-carta-despedida",
+      "name": "Folha amassada",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.9,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 31,
+        "amount": 0.9,
+        "params": {
+          "creases": 30
+        }
+      }
+    },
+    {
+      "id": "l-8-carta-despedida",
+      "name": "Dobras da folha",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 32,
+        "amount": 0.6,
+        "params": {
+          "horizontal": 2,
+          "vertical": 2
+        }
+      }
+    },
+    {
+      "id": "l-9-carta-despedida",
+      "name": "Marcas de lágrima",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.2,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 33,
+        "amount": 0.4,
+        "params": {
+          "color": "#a0a5b5"
+        }
+      }
+    },
+    {
+      "id": "l-10-carta-despedida",
+      "name": "Mancha de lágrima 1",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.5,
+      "blend": "multiply",
+      "x": 520,
+      "y": 820,
+      "width": 170,
+      "height": 170,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-agua-umidade-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-2-carta-despedida",
+      "label": "Data"
+    },
+    {
+      "layerId": "l-3-carta-despedida",
+      "label": "Destinatário"
+    },
+    {
+      "layerId": "l-4-carta-despedida",
+      "label": "Texto"
+    },
+    {
+      "layerId": "l-6-carta-despedida",
+      "label": "Assinatura"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

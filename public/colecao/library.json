@@ -9847,6 +9847,2020 @@
       "variable": null,
       "file": "fontes/apache/homemadeapple/HomemadeApple-Regular.ttf",
       "license": "Apache-2.0"
+    },
+    {
+      "id": "casa-tpl-termo-depoimento",
+      "kind": "template",
+      "name": "Termo de depoimento",
+      "category": "Polícia e investigação",
+      "license": "CC0-1.0",
+      "file": "modelos/termo-depoimento.json",
+      "preview": "previews/casa-tpl-termo-depoimento.webp",
+      "fields": [
+        "Depoente",
+        "Data",
+        "Escrivão",
+        "Local",
+        "Depoimento"
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "polícia",
+        "depoimento",
+        "formulário"
+      ],
+      "org": "delegacia"
+    },
+    {
+      "id": "casa-tpl-auto-apreensao",
+      "kind": "template",
+      "name": "Auto de apreensão",
+      "category": "Polícia e investigação",
+      "license": "CC0-1.0",
+      "file": "modelos/auto-apreensao.json",
+      "preview": "previews/casa-tpl-auto-apreensao.webp",
+      "fields": [
+        "Número",
+        "Data",
+        "Local",
+        "Autoridade",
+        "Testemunhas",
+        "Nº",
+        "Descrição do item",
+        "Qtd.",
+        "Estado"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "polícia",
+        "apreensão",
+        "formulário"
+      ],
+      "org": "delegacia"
+    },
+    {
+      "id": "casa-tpl-ficha-desaparecido",
+      "kind": "template",
+      "name": "Ficha de pessoa desaparecida",
+      "category": "Polícia e investigação",
+      "license": "CC0-1.0",
+      "file": "modelos/ficha-desaparecido.json",
+      "preview": "previews/casa-tpl-ficha-desaparecido.webp",
+      "fields": [
+        "Foto",
+        "Nome",
+        "Idade",
+        "Visto por último"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "polícia",
+        "desaparecido",
+        "cartaz"
+      ],
+      "org": "delegacia"
+    },
+    {
+      "id": "casa-tpl-relatorio-vigilancia",
+      "kind": "template",
+      "name": "Relatório de vigilância",
+      "category": "Polícia e investigação",
+      "license": "CC0-1.0",
+      "file": "modelos/relatorio-vigilancia.json",
+      "preview": "previews/casa-tpl-relatorio-vigilancia.webp",
+      "fields": [
+        "Agente",
+        "Alvo",
+        "Período",
+        "Hora",
+        "Local",
+        "Registro",
+        "Fotos",
+        "Foto 2"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "polícia",
+        "vigilância",
+        "formulário"
+      ],
+      "org": "delegacia"
+    },
+    {
+      "id": "casa-tpl-quadro-investigacao",
+      "kind": "template",
+      "name": "Quadro de investigação",
+      "category": "Polícia e investigação",
+      "license": "CC0-1.0",
+      "file": "modelos/quadro-investigacao.json",
+      "preview": "previews/casa-tpl-quadro-investigacao.webp",
+      "fields": [
+        "Título do caso",
+        "Fotos",
+        "Foto 2",
+        "Foto 3",
+        "Foto 4",
+        "Notas"
+      ],
+      "era": "hoje",
+      "tom": "investigação",
+      "tags": [
+        "investigação",
+        "composição",
+        "quadro"
+      ]
+    },
+    {
+      "id": "casa-tpl-laudo-necropsia",
+      "kind": "template",
+      "name": "Laudo de necropsia",
+      "category": "Forense e perícia",
+      "license": "CC0-1.0",
+      "file": "modelos/laudo-necropsia.json",
+      "preview": "previews/casa-tpl-laudo-necropsia.webp",
+      "fields": [
+        "Número",
+        "Data do exame",
+        "Vítima",
+        "Achados",
+        "Causa"
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "perícia",
+        "necropsia",
+        "formulário"
+      ],
+      "org": "iml"
+    },
+    {
+      "id": "casa-tpl-cadeia-custodia",
+      "kind": "template",
+      "name": "Cadeia de custódia",
+      "category": "Forense e perícia",
+      "license": "CC0-1.0",
+      "file": "modelos/cadeia-custodia.json",
+      "preview": "previews/casa-tpl-cadeia-custodia.webp",
+      "fields": [
+        "Item",
+        "Número",
+        "Origem",
+        "Data",
+        "De",
+        "Para",
+        "Assinatura"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "perícia",
+        "evidência",
+        "formulário"
+      ],
+      "org": "iml"
+    },
+    {
+      "id": "casa-tpl-etiqueta-corpo",
+      "kind": "template",
+      "name": "Etiqueta de corpo",
+      "category": "Forense e perícia",
+      "license": "CC0-1.0",
+      "file": "modelos/etiqueta-corpo.json",
+      "preview": "previews/casa-tpl-etiqueta-corpo.webp",
+      "fields": [
+        "Nome",
+        "Data",
+        "Número",
+        "Gaveta"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "perícia",
+        "etiqueta",
+        "cartolina",
+        "formulário"
+      ],
+      "org": "iml"
+    },
+    {
+      "id": "casa-tpl-laudo-balistica",
+      "kind": "template",
+      "name": "Laudo de balística",
+      "category": "Forense e perícia",
+      "license": "CC0-1.0",
+      "file": "modelos/laudo-balistica.json",
+      "preview": "previews/casa-tpl-laudo-balistica.webp",
+      "fields": [
+        "Arma",
+        "Calibre",
+        "Material",
+        "Conclusão"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "perícia",
+        "balística",
+        "formulário"
+      ],
+      "org": "iml"
+    },
+    {
+      "id": "casa-tpl-analise-digitais",
+      "kind": "template",
+      "name": "Análise de digitais",
+      "category": "Forense e perícia",
+      "license": "CC0-1.0",
+      "file": "modelos/analise-digitais.json",
+      "preview": "previews/casa-tpl-analise-digitais.webp",
+      "fields": [
+        "Nome",
+        "Classificação",
+        "Observações",
+        "Perito"
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "perícia",
+        "digitais",
+        "ficha",
+        "formulário"
+      ],
+      "org": "delegacia"
+    },
+    {
+      "id": "casa-tpl-relatorio-cena-crime",
+      "kind": "template",
+      "name": "Relatório de cena de crime",
+      "category": "Forense e perícia",
+      "license": "CC0-1.0",
+      "file": "modelos/relatorio-cena-crime.json",
+      "preview": "previews/casa-tpl-relatorio-cena-crime.webp",
+      "fields": [
+        "Local",
+        "Data",
+        "Legenda",
+        "Perito"
+      ],
+      "era": "hoje",
+      "tom": "investigação",
+      "tags": [
+        "perícia",
+        "cena do crime",
+        "planta",
+        "formulário"
+      ],
+      "org": "delegacia"
+    },
+    {
+      "id": "casa-tpl-certidao-nascimento",
+      "kind": "template",
+      "name": "Certidão de nascimento",
+      "category": "Oficial e jurídico",
+      "license": "CC0-1.0",
+      "file": "modelos/certidao-nascimento.json",
+      "preview": "previews/casa-tpl-certidao-nascimento.webp",
+      "fields": [
+        "Nome",
+        "Assinatura",
+        "Pais",
+        "Data",
+        "Local"
+      ],
+      "era": "1920",
+      "tom": "investigação",
+      "tags": [
+        "certidão",
+        "cartório",
+        "formulário"
+      ],
+      "org": "cartorio"
+    },
+    {
+      "id": "casa-tpl-certidao-casamento",
+      "kind": "template",
+      "name": "Certidão de casamento",
+      "category": "Oficial e jurídico",
+      "license": "CC0-1.0",
+      "file": "modelos/certidao-casamento.json",
+      "preview": "previews/casa-tpl-certidao-casamento.webp",
+      "fields": [
+        "Testemunhas",
+        "Cônjuges",
+        "Data",
+        "Cartório"
+      ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "certidão",
+        "cartório",
+        "casamento",
+        "formulário"
+      ],
+      "org": "cartorio"
+    },
+    {
+      "id": "casa-tpl-carteira-identidade-antiga",
+      "kind": "template",
+      "name": "Carteira de identidade antiga",
+      "category": "Oficial e jurídico",
+      "license": "CC0-1.0",
+      "file": "modelos/carteira-identidade-antiga.json",
+      "preview": "previews/casa-tpl-carteira-identidade-antiga.webp",
+      "fields": [
+        "Foto",
+        "Nome",
+        "Filiação",
+        "Número"
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "identidade",
+        "cartão",
+        "objeto",
+        "formulário"
+      ]
+    },
+    {
+      "id": "casa-tpl-passaporte-dados",
+      "kind": "template",
+      "name": "Passaporte · página de dados",
+      "category": "Oficial e jurídico",
+      "license": "CC0-1.0",
+      "file": "modelos/passaporte-dados.json",
+      "preview": "previews/casa-tpl-passaporte-dados.webp",
+      "fields": [
+        "Foto",
+        "Nome",
+        "Número",
+        "Carimbos"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "passaporte",
+        "viagem",
+        "formulário"
+      ]
+    },
+    {
+      "id": "casa-tpl-testamento",
+      "kind": "template",
+      "name": "Testamento",
+      "category": "Oficial e jurídico",
+      "license": "CC0-1.0",
+      "file": "modelos/testamento.json",
+      "preview": "previews/casa-tpl-testamento.webp",
+      "fields": [
+        "Testador",
+        "Texto",
+        "Assinatura",
+        "Testemunhas"
+      ],
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "testamento",
+        "manuscrito",
+        "formulário"
+      ],
+      "org": "solar"
+    },
+    {
+      "id": "casa-tpl-escritura-imovel",
+      "kind": "template",
+      "name": "Escritura de imóvel",
+      "category": "Oficial e jurídico",
+      "license": "CC0-1.0",
+      "file": "modelos/escritura-imovel.json",
+      "preview": "previews/casa-tpl-escritura-imovel.webp",
+      "fields": [
+        "Imóvel",
+        "Outorgantes",
+        "Valor",
+        "Cláusulas"
+      ],
+      "era": "1920",
+      "tom": "investigação",
+      "tags": [
+        "escritura",
+        "cartório",
+        "formulário"
+      ],
+      "org": "cartorio"
+    },
+    {
+      "id": "casa-tpl-procuracao",
+      "kind": "template",
+      "name": "Procuração",
+      "category": "Oficial e jurídico",
+      "license": "CC0-1.0",
+      "file": "modelos/procuracao.json",
+      "preview": "previews/casa-tpl-procuracao.webp",
+      "fields": [
+        "Outorgante",
+        "Procurador",
+        "Poderes",
+        "Assinatura"
+      ],
+      "era": "1980",
+      "tom": "cotidiano",
+      "tags": [
+        "procuração",
+        "cartório",
+        "formulário"
+      ],
+      "org": "cartorio"
+    },
+    {
+      "id": "casa-tpl-ordem-missao-ultrassecreta",
+      "kind": "template",
+      "name": "Ordem de missão · ultrassecreto",
+      "category": "Militar e governo",
+      "license": "CC0-1.0",
+      "file": "modelos/ordem-missao-ultrassecreta.json",
+      "preview": "previews/casa-tpl-ordem-missao-ultrassecreta.webp",
+      "fields": [
+        "Código",
+        "Agentes",
+        "Objetivo",
+        "Instruções"
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "governo",
+        "missão",
+        "sigilo",
+        "formulário"
+      ],
+      "org": "doe"
+    },
+    {
+      "id": "casa-tpl-dossie-agente",
+      "kind": "template",
+      "name": "Dossiê de agente",
+      "category": "Militar e governo",
+      "license": "CC0-1.0",
+      "file": "modelos/dossie-agente.json",
+      "preview": "previews/casa-tpl-dossie-agente.webp",
+      "fields": [
+        "Foto",
+        "Nome",
+        "Codinome",
+        "Histórico"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "governo",
+        "dossiê",
+        "agente",
+        "formulário"
+      ],
+      "org": "doe"
+    },
+    {
+      "id": "casa-tpl-telegrama-militar",
+      "kind": "template",
+      "name": "Telegrama militar",
+      "category": "Militar e governo",
+      "license": "CC0-1.0",
+      "file": "modelos/telegrama-militar.json",
+      "preview": "previews/casa-tpl-telegrama-militar.webp",
+      "fields": [
+        "Origem",
+        "Destino",
+        "Prioridade",
+        "Mensagem"
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "telegrama",
+        "militar",
+        "censura",
+        "formulário"
+      ]
+    },
+    {
+      "id": "casa-tpl-mapa-tatico",
+      "kind": "template",
+      "name": "Mapa tático",
+      "category": "Militar e governo",
+      "license": "CC0-1.0",
+      "file": "modelos/mapa-tatico.json",
+      "preview": "previews/casa-tpl-mapa-tatico.webp",
+      "fields": [
+        "Mapa",
+        "Legenda",
+        "Escala",
+        "Data"
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "mapa",
+        "militar",
+        "tático",
+        "formulário"
+      ]
+    },
+    {
+      "id": "casa-tpl-relatorio-redigido",
+      "kind": "template",
+      "name": "Relatório redigido",
+      "category": "Militar e governo",
+      "license": "CC0-1.0",
+      "file": "modelos/relatorio-redigido.json",
+      "preview": "previews/casa-tpl-relatorio-redigido.webp",
+      "fields": [
+        "Data",
+        "Local",
+        "Assunto",
+        "Texto",
+        "Trechos tarjados"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "governo",
+        "redigido",
+        "tarjas",
+        "formulário"
+      ],
+      "org": "doe"
+    },
+    {
+      "id": "casa-tpl-cracha-acesso",
+      "kind": "template",
+      "name": "Crachá de acesso",
+      "category": "Militar e governo",
+      "license": "CC0-1.0",
+      "file": "modelos/cracha-acesso.json",
+      "preview": "previews/casa-tpl-cracha-acesso.webp",
+      "fields": [
+        "Foto",
+        "Nome",
+        "Nível",
+        "Matrícula"
+      ],
+      "era": "hoje",
+      "tom": "investigação",
+      "tags": [
+        "crachá",
+        "acesso",
+        "objeto",
+        "formulário"
+      ],
+      "org": "doe"
+    },
+    {
+      "id": "casa-tpl-caderno-espiral-pagina",
+      "kind": "template",
+      "name": "Caderno espiral · página",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/caderno-espiral-pagina.json",
+      "preview": "previews/casa-tpl-caderno-espiral-pagina.webp",
+      "fields": [
+        "Data",
+        "Texto"
+      ],
+      "era": "1980",
+      "tom": "cotidiano",
+      "tags": [
+        "caderno",
+        "espiral",
+        "manuscrito"
+      ]
+    },
+    {
+      "id": "casa-tpl-diario-aberto-dupla",
+      "kind": "template",
+      "name": "Diário aberto · página dupla",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/diario-aberto-dupla.json",
+      "preview": "previews/casa-tpl-diario-aberto-dupla.webp",
+      "fields": [
+        "Data",
+        "Página esquerda",
+        "Página direita"
+      ],
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "diário",
+        "livro aberto",
+        "manuscrito"
+      ],
+      "org": "solar"
+    },
+    {
+      "id": "casa-tpl-caderneta-bolso",
+      "kind": "template",
+      "name": "Caderneta de bolso",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/caderneta-bolso.json",
+      "preview": "previews/casa-tpl-caderneta-bolso.webp",
+      "fields": [
+        "Anotações"
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "caderneta",
+        "anotações",
+        "bolso"
+      ]
+    },
+    {
+      "id": "casa-tpl-livro-antigo-pagina",
+      "kind": "template",
+      "name": "Livro antigo · página impressa",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/livro-antigo-pagina.json",
+      "preview": "previews/casa-tpl-livro-antigo-pagina.webp",
+      "fields": [
+        "Título",
+        "Texto",
+        "Notas"
+      ],
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "livro",
+        "impresso",
+        "anotações"
+      ]
+    },
+    {
+      "id": "casa-tpl-agenda-compromissos",
+      "kind": "template",
+      "name": "Agenda de compromissos",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/agenda-compromissos.json",
+      "preview": "previews/casa-tpl-agenda-compromissos.webp",
+      "fields": [
+        "Semana",
+        "Compromissos"
+      ],
+      "era": "1980",
+      "tom": "cotidiano",
+      "tags": [
+        "agenda",
+        "semana",
+        "manuscrito"
+      ]
+    },
+    {
+      "id": "casa-tpl-capa-diario-couro",
+      "kind": "template",
+      "name": "Capa de diário de couro",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/capa-diario-couro.json",
+      "preview": "previews/casa-tpl-capa-diario-couro.webp",
+      "fields": [
+        "Título",
+        "Dono"
+      ],
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "diário",
+        "capa",
+        "couro",
+        "objeto"
+      ]
+    },
+    {
+      "id": "casa-tpl-carta-amor-perfumada",
+      "kind": "template",
+      "name": "Carta de amor · perfumada",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/carta-amor-perfumada.json",
+      "preview": "previews/casa-tpl-carta-amor-perfumada.webp",
+      "fields": [
+        "Data",
+        "Destinatário",
+        "Texto",
+        "Assinatura"
+      ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "carta",
+        "amor",
+        "perfumada",
+        "manuscrito"
+      ]
+    },
+    {
+      "id": "casa-tpl-carta-despedida",
+      "kind": "template",
+      "name": "Carta de despedida",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/carta-despedida.json",
+      "preview": "previews/casa-tpl-carta-despedida.webp",
+      "fields": [
+        "Data",
+        "Destinatário",
+        "Texto",
+        "Assinatura"
+      ],
+      "era": "hoje",
+      "tom": "cotidiano",
+      "tags": [
+        "carta",
+        "despedida",
+        "manuscrito"
+      ]
+    },
+    {
+      "id": "casa-tpl-bilhete-ameaca-recortes",
+      "kind": "template",
+      "name": "Bilhete de ameaça · recortes",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/bilhete-ameaca-recortes.json",
+      "preview": "previews/casa-tpl-bilhete-ameaca-recortes.webp",
+      "fields": [
+        "Palavra 1",
+        "Palavra 2",
+        "Palavra 3",
+        "Palavra 4",
+        "Palavra 5",
+        "Palavra 6",
+        "Palavra 7"
+      ],
+      "era": "1980",
+      "tom": "horror",
+      "tags": [
+        "bilhete",
+        "ameaça",
+        "recortes",
+        "jornal"
+      ]
+    },
+    {
+      "id": "casa-tpl-carta-em-codigo",
+      "kind": "template",
+      "name": "Carta em código",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/carta-em-codigo.json",
+      "preview": "previews/casa-tpl-carta-em-codigo.webp",
+      "fields": [
+        "Texto cifrado",
+        "Pista"
+      ],
+      "era": "1920",
+      "tom": "investigação",
+      "tags": [
+        "carta",
+        "código",
+        "cifra",
+        "enigma"
+      ]
+    },
+    {
+      "id": "casa-tpl-cartao-natal",
+      "kind": "template",
+      "name": "Cartão de Natal",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/cartao-natal.json",
+      "preview": "previews/casa-tpl-cartao-natal.webp",
+      "fields": [
+        "Ilustração",
+        "Dedicatória"
+      ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "cartão",
+        "natal",
+        "festa"
+      ]
+    },
+    {
+      "id": "casa-tpl-pagina-revista",
+      "kind": "template",
+      "name": "Página de revista",
+      "category": "Jornal",
+      "license": "CC0-1.0",
+      "file": "modelos/pagina-revista.json",
+      "preview": "previews/casa-tpl-pagina-revista.webp",
+      "fields": [
+        "Título",
+        "Foto",
+        "Texto"
+      ],
+      "era": "1980",
+      "tom": "cotidiano",
+      "tags": [
+        "revista",
+        "impresso",
+        "foto",
+        "colunas"
+      ]
+    },
+    {
+      "id": "casa-tpl-panfleto-culto",
+      "kind": "template",
+      "name": "Panfleto de culto",
+      "category": "Jornal",
+      "license": "CC0-1.0",
+      "file": "modelos/panfleto-culto.json",
+      "preview": "previews/casa-tpl-panfleto-culto.webp",
+      "fields": [
+        "Título",
+        "Convite",
+        "Endereço"
+      ],
+      "era": "1980",
+      "tom": "horror",
+      "tags": [
+        "panfleto",
+        "culto",
+        "xerox",
+        "convite"
+      ],
+      "org": "irmandade"
+    },
+    {
+      "id": "casa-tpl-cartaz-desaparecido",
+      "kind": "template",
+      "name": "Cartaz de desaparecido",
+      "category": "Jornal",
+      "license": "CC0-1.0",
+      "file": "modelos/cartaz-desaparecido.json",
+      "preview": "previews/casa-tpl-cartaz-desaparecido.webp",
+      "fields": [
+        "Foto",
+        "Nome",
+        "Contato"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "cartaz",
+        "desaparecido",
+        "foto",
+        "destacável"
+      ]
+    },
+    {
+      "id": "casa-tpl-edicao-extra",
+      "kind": "template",
+      "name": "Edição extra",
+      "category": "Jornal",
+      "license": "CC0-1.0",
+      "file": "modelos/edicao-extra.json",
+      "preview": "previews/casa-tpl-edicao-extra.webp",
+      "fields": [
+        "Manchete",
+        "Texto"
+      ],
+      "era": "1920",
+      "tom": "investigação",
+      "tags": [
+        "jornal",
+        "extra",
+        "manchete"
+      ],
+      "org": "gazeta"
+    },
+    {
+      "id": "casa-tpl-anuncio-funebre",
+      "kind": "template",
+      "name": "Anúncio fúnebre",
+      "category": "Jornal",
+      "license": "CC0-1.0",
+      "file": "modelos/anuncio-funebre.json",
+      "preview": "previews/casa-tpl-anuncio-funebre.webp",
+      "fields": [
+        "Nome",
+        "Datas",
+        "Convite"
+      ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "jornal",
+        "fúnebre",
+        "obituário",
+        "convite"
+      ],
+      "org": "gazeta"
+    },
+    {
+      "id": "casa-tpl-boletim-escolar",
+      "kind": "template",
+      "name": "Boletim escolar",
+      "category": "Escola e juventude",
+      "license": "CC0-1.0",
+      "file": "modelos/boletim-escolar.json",
+      "preview": "previews/casa-tpl-boletim-escolar.webp",
+      "fields": [
+        "Aluno",
+        "Série",
+        "Observações",
+        "Disciplina",
+        "1º bim.",
+        "2º bim.",
+        "3º bim.",
+        "Faltas"
+      ],
+      "era": "1980",
+      "tom": "cotidiano",
+      "tags": [
+        "escola",
+        "boletim",
+        "notas",
+        "formulário"
+      ],
+      "org": "colegio"
+    },
+    {
+      "id": "casa-tpl-prova-corrigida",
+      "kind": "template",
+      "name": "Prova corrigida",
+      "category": "Escola e juventude",
+      "license": "CC0-1.0",
+      "file": "modelos/prova-corrigida.json",
+      "preview": "previews/casa-tpl-prova-corrigida.webp",
+      "fields": [
+        "Aluno",
+        "Respostas",
+        "Professor",
+        "Nota"
+      ],
+      "era": "1980",
+      "tom": "cotidiano",
+      "tags": [
+        "escola",
+        "prova",
+        "correção",
+        "formulário"
+      ],
+      "org": "colegio"
+    },
+    {
+      "id": "casa-tpl-bilhetinho-sala",
+      "kind": "template",
+      "name": "Bilhetinho passado em sala",
+      "category": "Escola e juventude",
+      "license": "CC0-1.0",
+      "file": "modelos/bilhetinho-sala.json",
+      "preview": "previews/casa-tpl-bilhetinho-sala.webp",
+      "fields": [
+        "Texto"
+      ],
+      "era": "1980",
+      "tom": "cotidiano",
+      "tags": [
+        "bilhete",
+        "escola",
+        "dobrado",
+        "adolescente"
+      ]
+    },
+    {
+      "id": "casa-tpl-carteirinha-estudante",
+      "kind": "template",
+      "name": "Carteirinha de estudante",
+      "category": "Escola e juventude",
+      "license": "CC0-1.0",
+      "file": "modelos/carteirinha-estudante.json",
+      "preview": "previews/casa-tpl-carteirinha-estudante.webp",
+      "fields": [
+        "Foto",
+        "Nome",
+        "Série",
+        "Número"
+      ],
+      "era": "1980",
+      "tom": "cotidiano",
+      "tags": [
+        "carteirinha",
+        "estudante",
+        "cartão",
+        "objeto",
+        "formulário"
+      ],
+      "org": "colegio"
+    },
+    {
+      "id": "casa-tpl-pagina-anuario",
+      "kind": "template",
+      "name": "Página de anuário",
+      "category": "Escola e juventude",
+      "license": "CC0-1.0",
+      "file": "modelos/pagina-anuario.json",
+      "preview": "previews/casa-tpl-pagina-anuario.webp",
+      "fields": [
+        "Fotos",
+        "Nomes",
+        "Foto 2",
+        "Foto 3",
+        "Foto 4",
+        "Foto 5",
+        "Foto 6",
+        "Foto 7",
+        "Foto 8",
+        "Foto 9",
+        "Dedicatória"
+      ],
+      "era": "1980",
+      "tom": "cotidiano",
+      "tags": [
+        "anuário",
+        "escola",
+        "fotos",
+        "turma"
+      ],
+      "org": "colegio"
+    },
+    {
+      "id": "casa-tpl-atestado-medico",
+      "kind": "template",
+      "name": "Atestado médico",
+      "category": "Médico",
+      "license": "CC0-1.0",
+      "file": "modelos/atestado-medico.json",
+      "preview": "previews/casa-tpl-atestado-medico.webp",
+      "fields": [
+        "Paciente",
+        "Dias",
+        "Data",
+        "Médico",
+        "Atestado"
+      ],
+      "era": "1980",
+      "tom": "cotidiano",
+      "tags": [
+        "médico",
+        "atestado",
+        "receituário",
+        "formulário"
+      ]
+    },
+    {
+      "id": "casa-tpl-ficha-triagem-sanatorio",
+      "kind": "template",
+      "name": "Ficha de triagem do sanatório",
+      "category": "Médico",
+      "license": "CC0-1.0",
+      "file": "modelos/ficha-triagem-sanatorio.json",
+      "preview": "previews/casa-tpl-ficha-triagem-sanatorio.webp",
+      "fields": [
+        "Paciente",
+        "Admissão",
+        "Procedência",
+        "Médico",
+        "Aspecto avaliado",
+        "Ausente",
+        "Leve",
+        "Grave",
+        "Foto"
+      ],
+      "era": "1920",
+      "tom": "horror",
+      "tags": [
+        "médico",
+        "sanatório",
+        "triagem",
+        "formulário"
+      ],
+      "org": "sanatorio"
+    },
+    {
+      "id": "casa-tpl-desenho-paciente",
+      "kind": "template",
+      "name": "Desenho de paciente",
+      "category": "Médico",
+      "license": "CC0-1.0",
+      "file": "modelos/desenho-paciente.json",
+      "preview": "previews/casa-tpl-desenho-paciente.webp",
+      "fields": [
+        "Desenho",
+        "Anotação"
+      ],
+      "era": "1950",
+      "tom": "horror",
+      "tags": [
+        "médico",
+        "desenho",
+        "sanatório",
+        "rabiscos"
+      ],
+      "org": "sanatorio"
+    },
+    {
+      "id": "casa-tpl-prontuario-cirurgia",
+      "kind": "template",
+      "name": "Prontuário de cirurgia",
+      "category": "Médico",
+      "license": "CC0-1.0",
+      "file": "modelos/prontuario-cirurgia.json",
+      "preview": "previews/casa-tpl-prontuario-cirurgia.webp",
+      "fields": [
+        "Paciente",
+        "Procedimento",
+        "Equipe",
+        "Início",
+        "Término"
+      ],
+      "era": "1980",
+      "tom": "cotidiano",
+      "tags": [
+        "médico",
+        "cirurgia",
+        "prontuário",
+        "formulário"
+      ]
+    },
+    {
+      "id": "casa-tpl-rotulo-remedio",
+      "kind": "template",
+      "name": "Bula / rótulo de remédio",
+      "category": "Médico",
+      "license": "CC0-1.0",
+      "file": "modelos/rotulo-remedio.json",
+      "preview": "previews/casa-tpl-rotulo-remedio.webp",
+      "fields": [
+        "Remédio",
+        "Posologia"
+      ],
+      "era": "1920",
+      "tom": "cotidiano",
+      "tags": [
+        "remédio",
+        "rótulo",
+        "farmácia"
+      ]
+    },
+    {
+      "id": "casa-tpl-exame-sangue",
+      "kind": "template",
+      "name": "Exame de sangue",
+      "category": "Médico",
+      "license": "CC0-1.0",
+      "file": "modelos/exame-sangue.json",
+      "preview": "previews/casa-tpl-exame-sangue.webp",
+      "fields": [
+        "Paciente",
+        "Data da coleta",
+        "Médico solicitante",
+        "Exame",
+        "Resultado",
+        "Unidade",
+        "Referência"
+      ],
+      "era": "hoje",
+      "tom": "cotidiano",
+      "tags": [
+        "médico",
+        "exame",
+        "laboratório",
+        "formulário"
+      ]
+    },
+    {
+      "id": "casa-tpl-relatorio-experimento",
+      "kind": "template",
+      "name": "Relatório de experimento",
+      "category": "Ciência e laboratório",
+      "license": "CC0-1.0",
+      "file": "modelos/relatorio-experimento.json",
+      "preview": "previews/casa-tpl-relatorio-experimento.webp",
+      "fields": [
+        "Experimento",
+        "Responsável",
+        "Data",
+        "Método",
+        "Resultado",
+        "Foto do laboratório"
+      ],
+      "era": "1950",
+      "tom": "sci-fi",
+      "tags": [
+        "ciência",
+        "experimento",
+        "relatório",
+        "formulário"
+      ],
+      "org": "halden"
+    },
+    {
+      "id": "casa-tpl-ficha-cobaia",
+      "kind": "template",
+      "name": "Ficha de cobaia",
+      "category": "Ciência e laboratório",
+      "license": "CC0-1.0",
+      "file": "modelos/ficha-cobaia.json",
+      "preview": "previews/casa-tpl-ficha-cobaia.webp",
+      "fields": [
+        "Espécie",
+        "Cobaia nº",
+        "Técnico",
+        "Foto",
+        "Dia",
+        "Peso",
+        "Observação"
+      ],
+      "era": "1980",
+      "tom": "horror",
+      "tags": [
+        "ciência",
+        "cobaia",
+        "registro",
+        "formulário"
+      ],
+      "org": "halden"
+    },
+    {
+      "id": "casa-tpl-planta-laboratorio",
+      "kind": "template",
+      "name": "Planta de laboratório",
+      "category": "Ciência e laboratório",
+      "license": "CC0-1.0",
+      "file": "modelos/planta-laboratorio.json",
+      "preview": "previews/casa-tpl-planta-laboratorio.webp",
+      "fields": [
+        "Título",
+        "Legenda",
+        "Planta"
+      ],
+      "era": "1950",
+      "tom": "sci-fi",
+      "tags": [
+        "ciência",
+        "planta",
+        "azul",
+        "laboratório"
+      ],
+      "org": "halden"
+    },
+    {
+      "id": "casa-tpl-caderno-pesquisa-uv",
+      "kind": "template",
+      "name": "Caderno de pesquisa · UV",
+      "category": "Ciência e laboratório",
+      "license": "CC0-1.0",
+      "file": "modelos/caderno-pesquisa-uv.json",
+      "preview": "previews/casa-tpl-caderno-pesquisa-uv.webp",
+      "fields": [
+        "Anotações",
+        "Segredo UV"
+      ],
+      "era": "1980",
+      "tom": "sci-fi",
+      "tags": [
+        "ciência",
+        "caderno",
+        "luz negra",
+        "segredo"
+      ],
+      "org": "halden"
+    },
+    {
+      "id": "casa-tpl-grafico-sismografo",
+      "kind": "template",
+      "name": "Gráfico de sismógrafo",
+      "category": "Ciência e laboratório",
+      "license": "CC0-1.0",
+      "file": "modelos/grafico-sismografo.json",
+      "preview": "previews/casa-tpl-grafico-sismografo.webp",
+      "fields": [
+        "Data",
+        "Leitura",
+        "Nota"
+      ],
+      "era": "1980",
+      "tom": "sci-fi",
+      "tags": [
+        "ciência",
+        "sismógrafo",
+        "gráfico"
+      ]
+    },
+    {
+      "id": "casa-tpl-memorando-interno",
+      "kind": "template",
+      "name": "Memorando interno",
+      "category": "Ciência e laboratório",
+      "license": "CC0-1.0",
+      "file": "modelos/memorando-interno.json",
+      "preview": "previews/casa-tpl-memorando-interno.webp",
+      "fields": [
+        "Para",
+        "De",
+        "Assunto",
+        "Data",
+        "Texto"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "memorando",
+        "ciência",
+        "interno",
+        "formulário"
+      ],
+      "org": "halden"
+    },
+    {
+      "id": "casa-tpl-grimorio-pagina-dupla",
+      "kind": "template",
+      "name": "Grimório · página dupla",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/grimorio-pagina-dupla.json",
+      "preview": "previews/casa-tpl-grimorio-pagina-dupla.webp",
+      "fields": [
+        "Título",
+        "Ilustração",
+        "Texto"
+      ],
+      "era": "medieval",
+      "tom": "horror",
+      "tags": [
+        "grimório",
+        "ocultismo",
+        "livro aberto",
+        "ilustração"
+      ]
+    },
+    {
+      "id": "casa-tpl-pacto-sangue",
+      "kind": "template",
+      "name": "Pacto assinado em sangue",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/pacto-sangue.json",
+      "preview": "previews/casa-tpl-pacto-sangue.webp",
+      "fields": [
+        "Termos",
+        "Assinatura"
+      ],
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "ocultismo",
+        "pacto",
+        "pergaminho",
+        "assinatura"
+      ]
+    },
+    {
+      "id": "casa-tpl-recorte-livro-proibido",
+      "kind": "template",
+      "name": "Recorte de livro proibido",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/recorte-livro-proibido.json",
+      "preview": "previews/casa-tpl-recorte-livro-proibido.webp",
+      "fields": [
+        "Texto"
+      ],
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "ocultismo",
+        "livro",
+        "queimado",
+        "proibido"
+      ]
+    },
+    {
+      "id": "casa-tpl-mapa-astral",
+      "kind": "template",
+      "name": "Mapa astral",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/mapa-astral.json",
+      "preview": "previews/casa-tpl-mapa-astral.webp",
+      "fields": [
+        "Nome",
+        "Data",
+        "Leitura"
+      ],
+      "era": "1920",
+      "tom": "horror",
+      "tags": [
+        "ocultismo",
+        "astrologia",
+        "mapa"
+      ]
+    },
+    {
+      "id": "casa-tpl-invocacao-uv",
+      "kind": "template",
+      "name": "Invocação · UV",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/invocacao-uv.json",
+      "preview": "previews/casa-tpl-invocacao-uv.webp",
+      "fields": [
+        "Texto visível",
+        "Texto UV"
+      ],
+      "era": "hoje",
+      "tom": "horror",
+      "tags": [
+        "ocultismo",
+        "invocação",
+        "luz negra",
+        "segredo"
+      ]
+    },
+    {
+      "id": "casa-tpl-carta-nautica",
+      "kind": "template",
+      "name": "Carta náutica",
+      "category": "Fantasia",
+      "license": "CC0-1.0",
+      "file": "modelos/carta-nautica.json",
+      "preview": "previews/casa-tpl-carta-nautica.webp",
+      "fields": [
+        "Mapa",
+        "Legenda"
+      ],
+      "era": "medieval",
+      "tom": "fantasia",
+      "tags": [
+        "mapa",
+        "náutica",
+        "pergaminho"
+      ]
+    },
+    {
+      "id": "casa-tpl-contrato-guilda",
+      "kind": "template",
+      "name": "Contrato de guilda",
+      "category": "Fantasia",
+      "license": "CC0-1.0",
+      "file": "modelos/contrato-guilda.json",
+      "preview": "previews/casa-tpl-contrato-guilda.webp",
+      "fields": [
+        "Guilda",
+        "Contratado",
+        "Cláusulas"
+      ],
+      "era": "medieval",
+      "tom": "fantasia",
+      "tags": [
+        "guilda",
+        "contrato",
+        "pergaminho"
+      ]
+    },
+    {
+      "id": "casa-tpl-bestiario-pagina",
+      "kind": "template",
+      "name": "Página de bestiário",
+      "category": "Fantasia",
+      "license": "CC0-1.0",
+      "file": "modelos/bestiario-pagina.json",
+      "preview": "previews/casa-tpl-bestiario-pagina.webp",
+      "fields": [
+        "Criatura",
+        "Ilustração",
+        "Descrição"
+      ],
+      "era": "medieval",
+      "tom": "fantasia",
+      "tags": [
+        "bestiário",
+        "criatura",
+        "pergaminho",
+        "ilustração"
+      ]
+    },
+    {
+      "id": "casa-tpl-recompensa-reino",
+      "kind": "template",
+      "name": "Recompensa do reino",
+      "category": "Fantasia",
+      "license": "CC0-1.0",
+      "file": "modelos/recompensa-reino.json",
+      "preview": "previews/casa-tpl-recompensa-reino.webp",
+      "fields": [
+        "Procurado",
+        "Recompensa"
+      ],
+      "era": "medieval",
+      "tom": "fantasia",
+      "tags": [
+        "recompensa",
+        "procurado",
+        "reino",
+        "cartaz"
+      ]
+    },
+    {
+      "id": "casa-tpl-carta-taverna",
+      "kind": "template",
+      "name": "Carta de taverna",
+      "category": "Fantasia",
+      "license": "CC0-1.0",
+      "file": "modelos/carta-taverna.json",
+      "preview": "previews/casa-tpl-carta-taverna.webp",
+      "fields": [
+        "Pratos",
+        "Preços"
+      ],
+      "era": "medieval",
+      "tom": "fantasia",
+      "tags": [
+        "taverna",
+        "cardápio",
+        "madeira",
+        "giz"
+      ]
+    },
+    {
+      "id": "casa-tpl-carta-envelhecida-ensanguentado",
+      "kind": "template",
+      "name": "Carta envelhecida · ensanguentada",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/carta-envelhecida-ensanguentado.json",
+      "preview": "previews/casa-tpl-carta-envelhecida-ensanguentado.webp",
+      "fields": [
+        "Local e data",
+        "Destinatário",
+        "Corpo",
+        "Assinatura"
+      ],
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "carta",
+        "manuscrito",
+        "ensanguentada"
+      ],
+      "org": "solar",
+      "family": "carta-envelhecida"
+    },
+    {
+      "id": "casa-tpl-carta-envelhecida-queimado",
+      "kind": "template",
+      "name": "Carta envelhecida · queimada",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/carta-envelhecida-queimado.json",
+      "preview": "previews/casa-tpl-carta-envelhecida-queimado.webp",
+      "fields": [
+        "Local e data",
+        "Destinatário",
+        "Corpo",
+        "Assinatura"
+      ],
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "carta",
+        "manuscrito",
+        "queimada"
+      ],
+      "org": "solar",
+      "family": "carta-envelhecida"
+    },
+    {
+      "id": "casa-tpl-bilhete-caderno-rasgado-ensanguentado",
+      "kind": "template",
+      "name": "Bilhete de caderno rasgado · ensanguentado",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/bilhete-caderno-rasgado-ensanguentado.json",
+      "preview": "previews/casa-tpl-bilhete-caderno-rasgado-ensanguentado.webp",
+      "fields": [
+        "Texto"
+      ],
+      "era": "hoje",
+      "tom": "cotidiano",
+      "tags": [
+        "bilhete",
+        "manuscrito",
+        "ensanguentado"
+      ],
+      "family": "bilhete-caderno-rasgado"
+    },
+    {
+      "id": "casa-tpl-bilhete-caderno-rasgado-molhado",
+      "kind": "template",
+      "name": "Bilhete de caderno rasgado · molhado",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/bilhete-caderno-rasgado-molhado.json",
+      "preview": "previews/casa-tpl-bilhete-caderno-rasgado-molhado.webp",
+      "fields": [
+        "Texto"
+      ],
+      "era": "hoje",
+      "tom": "cotidiano",
+      "tags": [
+        "bilhete",
+        "manuscrito",
+        "molhado"
+      ],
+      "family": "bilhete-caderno-rasgado"
+    },
+    {
+      "id": "casa-tpl-relatorio-policial-ensanguentado",
+      "kind": "template",
+      "name": "Relatório policial · ensanguentado",
+      "category": "Polícia e investigação",
+      "license": "CC0-1.0",
+      "file": "modelos/relatorio-policial-ensanguentado.json",
+      "preview": "previews/casa-tpl-relatorio-policial-ensanguentado.webp",
+      "fields": [
+        "Número",
+        "Data",
+        "Agente",
+        "Ocorrência",
+        "Relato"
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "polícia",
+        "relatório",
+        "formulário",
+        "ensanguentado"
+      ],
+      "org": "delegacia",
+      "family": "relatorio-policial"
+    },
+    {
+      "id": "casa-tpl-relatorio-policial-uv",
+      "kind": "template",
+      "name": "Relatório policial · luz negra",
+      "category": "Polícia e investigação",
+      "license": "CC0-1.0",
+      "file": "modelos/relatorio-policial-uv.json",
+      "preview": "previews/casa-tpl-relatorio-policial-uv.webp",
+      "fields": [
+        "Número",
+        "Data",
+        "Agente",
+        "Ocorrência",
+        "Relato"
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "polícia",
+        "relatório",
+        "formulário",
+        "luz negra"
+      ],
+      "org": "delegacia",
+      "family": "relatorio-policial"
+    },
+    {
+      "id": "casa-tpl-ficha-criminal-ensanguentado",
+      "kind": "template",
+      "name": "Ficha criminal · ensanguentada",
+      "category": "Polícia e investigação",
+      "license": "CC0-1.0",
+      "file": "modelos/ficha-criminal-ensanguentado.json",
+      "preview": "previews/casa-tpl-ficha-criminal-ensanguentado.webp",
+      "fields": [
+        "Foto",
+        "Nome",
+        "Apelido",
+        "Crimes",
+        "Observações"
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "polícia",
+        "ficha",
+        "formulário",
+        "ensanguentada"
+      ],
+      "org": "delegacia",
+      "family": "ficha-criminal"
+    },
+    {
+      "id": "casa-tpl-mandado-ensanguentado",
+      "kind": "template",
+      "name": "Mandado judicial · ensanguentado",
+      "category": "Polícia e investigação",
+      "license": "CC0-1.0",
+      "file": "modelos/mandado-ensanguentado.json",
+      "preview": "previews/casa-tpl-mandado-ensanguentado.webp",
+      "fields": [
+        "Nome",
+        "Motivo",
+        "Data",
+        "Juiz"
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "polícia",
+        "mandado",
+        "formulário",
+        "ensanguentado"
+      ],
+      "org": "delegacia",
+      "family": "mandado"
+    },
+    {
+      "id": "casa-tpl-laudo-pericial-ensanguentado",
+      "kind": "template",
+      "name": "Laudo pericial · ensanguentado",
+      "category": "Polícia e investigação",
+      "license": "CC0-1.0",
+      "file": "modelos/laudo-pericial-ensanguentado.json",
+      "preview": "previews/casa-tpl-laudo-pericial-ensanguentado.webp",
+      "fields": [
+        "Número",
+        "Vítima",
+        "Conclusão",
+        "Data do exame",
+        "Perito responsável"
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "perícia",
+        "laudo",
+        "formulário",
+        "ensanguentado"
+      ],
+      "org": "iml",
+      "family": "laudo-pericial"
+    },
+    {
+      "id": "casa-tpl-certidao-obito-arquivo-morto",
+      "kind": "template",
+      "name": "Certidão de óbito · arquivo morto",
+      "category": "Médico",
+      "license": "CC0-1.0",
+      "file": "modelos/certidao-obito-arquivo-morto.json",
+      "preview": "previews/casa-tpl-certidao-obito-arquivo-morto.webp",
+      "fields": [
+        "Nome",
+        "Data",
+        "Causa",
+        "Médico"
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "certidão",
+        "cartório",
+        "formulário",
+        "arquivo morto"
+      ],
+      "org": "cartorio",
+      "family": "certidao-obito"
+    },
+    {
+      "id": "casa-tpl-pagina-grimorio-queimado",
+      "kind": "template",
+      "name": "Página de grimório · queimada",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/pagina-grimorio-queimado.json",
+      "preview": "previews/casa-tpl-pagina-grimorio-queimado.webp",
+      "fields": [
+        "Título",
+        "Texto",
+        "Nota na margem"
+      ],
+      "era": "medieval",
+      "tom": "horror",
+      "tags": [
+        "grimório",
+        "ocultismo",
+        "queimada"
+      ],
+      "family": "pagina-grimorio"
+    },
+    {
+      "id": "casa-tpl-mapa-rasgado-queimado",
+      "kind": "template",
+      "name": "Mapa rasgado · queimado",
+      "category": "Fantasia",
+      "license": "CC0-1.0",
+      "file": "modelos/mapa-rasgado-queimado.json",
+      "preview": "previews/casa-tpl-mapa-rasgado-queimado.webp",
+      "fields": [
+        "Mapa",
+        "Legenda"
+      ],
+      "era": "medieval",
+      "tom": "fantasia",
+      "tags": [
+        "mapa",
+        "queimado"
+      ],
+      "family": "mapa-rasgado"
+    },
+    {
+      "id": "casa-tpl-laudo-necropsia-uv",
+      "kind": "template",
+      "name": "Laudo de necropsia · luz negra",
+      "category": "Forense e perícia",
+      "license": "CC0-1.0",
+      "file": "modelos/laudo-necropsia-uv.json",
+      "preview": "previews/casa-tpl-laudo-necropsia-uv.webp",
+      "fields": [
+        "Número",
+        "Data do exame",
+        "Vítima",
+        "Achados",
+        "Causa"
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "perícia",
+        "necropsia",
+        "formulário",
+        "luz negra"
+      ],
+      "org": "iml",
+      "family": "laudo-necropsia"
+    },
+    {
+      "id": "casa-tpl-certidao-nascimento-arquivo-morto",
+      "kind": "template",
+      "name": "Certidão de nascimento · arquivo morto",
+      "category": "Oficial e jurídico",
+      "license": "CC0-1.0",
+      "file": "modelos/certidao-nascimento-arquivo-morto.json",
+      "preview": "previews/casa-tpl-certidao-nascimento-arquivo-morto.webp",
+      "fields": [
+        "Nome",
+        "Assinatura",
+        "Pais",
+        "Data",
+        "Local"
+      ],
+      "era": "1920",
+      "tom": "investigação",
+      "tags": [
+        "certidão",
+        "cartório",
+        "formulário",
+        "arquivo morto"
+      ],
+      "org": "cartorio",
+      "family": "certidao-nascimento"
+    },
+    {
+      "id": "casa-tpl-certidao-casamento-arquivo-morto",
+      "kind": "template",
+      "name": "Certidão de casamento · arquivo morto",
+      "category": "Oficial e jurídico",
+      "license": "CC0-1.0",
+      "file": "modelos/certidao-casamento-arquivo-morto.json",
+      "preview": "previews/casa-tpl-certidao-casamento-arquivo-morto.webp",
+      "fields": [
+        "Testemunhas",
+        "Cônjuges",
+        "Data",
+        "Cartório"
+      ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "certidão",
+        "cartório",
+        "casamento",
+        "formulário",
+        "arquivo morto"
+      ],
+      "org": "cartorio",
+      "family": "certidao-casamento"
+    },
+    {
+      "id": "casa-tpl-dossie-agente-arquivo-morto",
+      "kind": "template",
+      "name": "Dossiê de agente · arquivo morto",
+      "category": "Militar e governo",
+      "license": "CC0-1.0",
+      "file": "modelos/dossie-agente-arquivo-morto.json",
+      "preview": "previews/casa-tpl-dossie-agente-arquivo-morto.webp",
+      "fields": [
+        "Foto",
+        "Nome",
+        "Codinome",
+        "Histórico"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "governo",
+        "dossiê",
+        "agente",
+        "formulário",
+        "arquivo morto"
+      ],
+      "org": "doe",
+      "family": "dossie-agente"
+    },
+    {
+      "id": "casa-tpl-diario-aberto-dupla-ensanguentado",
+      "kind": "template",
+      "name": "Diário aberto · página dupla · ensanguentado",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/diario-aberto-dupla-ensanguentado.json",
+      "preview": "previews/casa-tpl-diario-aberto-dupla-ensanguentado.webp",
+      "fields": [
+        "Data",
+        "Página esquerda",
+        "Página direita"
+      ],
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "diário",
+        "livro aberto",
+        "manuscrito",
+        "ensanguentado"
+      ],
+      "org": "solar",
+      "family": "diario-aberto-dupla"
+    },
+    {
+      "id": "casa-tpl-diario-aberto-dupla-molhado",
+      "kind": "template",
+      "name": "Diário aberto · página dupla · molhado",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/diario-aberto-dupla-molhado.json",
+      "preview": "previews/casa-tpl-diario-aberto-dupla-molhado.webp",
+      "fields": [
+        "Data",
+        "Página esquerda",
+        "Página direita"
+      ],
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "diário",
+        "livro aberto",
+        "manuscrito",
+        "molhado"
+      ],
+      "org": "solar",
+      "family": "diario-aberto-dupla"
+    },
+    {
+      "id": "casa-tpl-ficha-cobaia-uv",
+      "kind": "template",
+      "name": "Ficha de cobaia · luz negra",
+      "category": "Ciência e laboratório",
+      "license": "CC0-1.0",
+      "file": "modelos/ficha-cobaia-uv.json",
+      "preview": "previews/casa-tpl-ficha-cobaia-uv.webp",
+      "fields": [
+        "Espécie",
+        "Cobaia nº",
+        "Técnico",
+        "Foto",
+        "Dia",
+        "Peso",
+        "Observação"
+      ],
+      "era": "1980",
+      "tom": "horror",
+      "tags": [
+        "ciência",
+        "cobaia",
+        "registro",
+        "formulário",
+        "luz negra"
+      ],
+      "org": "halden",
+      "family": "ficha-cobaia"
     }
   ]
 }

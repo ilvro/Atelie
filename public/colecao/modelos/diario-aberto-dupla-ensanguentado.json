@@ -1,0 +1,605 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-diario-aberto-dupla-ensanguentado",
+  "revision": 0,
+  "name": "Diário aberto · página dupla · ensanguentado",
+  "category": "Cadernos, diários e livros",
+  "tags": [
+    "cadernos, diários e livros"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 2000,
+    "height": 1300,
+    "background": "#4a3a2a"
+  },
+  "layers": [
+    {
+      "id": "l-1-diario-aberto-dupla-ensanguentado",
+      "name": "Mesa",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 2000,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-superficie-wood060"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-diario-aberto-dupla-ensanguentado",
+      "name": "Página esquerda (papel)",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 60,
+      "y": 50,
+      "width": 940,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-creme-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-3-diario-aberto-dupla-ensanguentado",
+      "name": "Página direita (papel)",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1000,
+      "y": 50,
+      "width": 940,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-creme-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-diario-aberto-dupla-ensanguentado",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.49,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 2000,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 6262,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-5-diario-aberto-dupla-ensanguentado",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.245,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 2000,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 6279,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-6-diario-aberto-dupla-ensanguentado",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.21,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 2000,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 6296,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-7-diario-aberto-dupla-ensanguentado",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.315,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 2000,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 6313,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-8-diario-aberto-dupla-ensanguentado",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.28,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 2000,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-9-diario-aberto-dupla-ensanguentado",
+      "name": "Sombra da lombada",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 940,
+      "y": 50,
+      "width": 120,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#3a2a1a",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-10-diario-aberto-dupla-ensanguentado",
+      "name": "Vinco central",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "normal",
+      "x": 997,
+      "y": 50,
+      "width": 6,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#000000",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-11-diario-aberto-dupla-ensanguentado",
+      "name": "Data",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 120,
+      "width": 780,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "14 de novembro de 1893",
+        "font": {
+          "family": "La Belle Aurore",
+          "library": "casa-font-labelleaurore",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 42,
+        "color": "#2a1f14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-12-diario-aberto-dupla-ensanguentado",
+      "name": "Página esquerda",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 200,
+      "width": 780,
+      "height": 900,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Hoje o pai voltou a descer ao porão. Ouvi a chave girar às dez e meia e os passos desceram devagar, como quem conta os degraus. Quando subiu, trazia nas botas a terra vermelha que só existe lá embaixo. A mãe não quis jantar. Eu fingi dormir, mas escutei: ele falava baixo com alguém, e ninguém respondia.",
+        "font": {
+          "family": "La Belle Aurore",
+          "library": "casa-font-labelleaurore",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 38,
+        "color": "#2a1f14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.5,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-13-diario-aberto-dupla-ensanguentado",
+      "name": "Página direita",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1080,
+      "y": 200,
+      "width": 780,
+      "height": 900,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Quinta-feira. Perguntei à Maria o que há no porão. Ela benzeu-se e disse que eu não pergunte, que a casa escuta. Esta noite as velas da sala apagaram sozinhas, todas ao mesmo tempo. Escrevo isto ao pé da janela, com a vela da cozinha, e juro que a terra vermelha chegou até a escada.",
+        "font": {
+          "family": "La Belle Aurore",
+          "library": "casa-font-labelleaurore",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 38,
+        "color": "#2a1f14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.5,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-14-diario-aberto-dupla-ensanguentado",
+      "name": "Flor seca · pétala 1",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.6,
+      "blend": "normal",
+      "x": 1560,
+      "y": 1020,
+      "width": 70,
+      "height": 120,
+      "rotation": 20,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": "#8a4a5a",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-15-diario-aberto-dupla-ensanguentado",
+      "name": "Flor seca · pétala 2",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.6,
+      "blend": "normal",
+      "x": 1620,
+      "y": 1040,
+      "width": 70,
+      "height": 120,
+      "rotation": -25,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": "#9a5a6a",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-16-diario-aberto-dupla-ensanguentado",
+      "name": "Flor seca · caule",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "normal",
+      "x": 1612,
+      "y": 1120,
+      "width": 6,
+      "height": 90,
+      "rotation": 8,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#4a5a2a",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-17-diario-aberto-dupla-ensanguentado",
+      "name": "Respingos",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.85,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 2000,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "blood",
+        "seed": 12586,
+        "amount": 0.7,
+        "params": {
+          "drops": 10,
+          "smear": false,
+          "color": "#6e0b0b"
+        }
+      }
+    },
+    {
+      "id": "l-18-diario-aberto-dupla-ensanguentado",
+      "name": "Arrasto",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 2000,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "blood",
+        "seed": 12634,
+        "amount": 0.5,
+        "params": {
+          "drops": 3,
+          "smear": true,
+          "color": "#5a0808"
+        }
+      }
+    },
+    {
+      "id": "l-19-diario-aberto-dupla-ensanguentado",
+      "name": "Digital",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 2000,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-digitais-4"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-11-diario-aberto-dupla-ensanguentado",
+      "label": "Data"
+    },
+    {
+      "layerId": "l-12-diario-aberto-dupla-ensanguentado",
+      "label": "Página esquerda"
+    },
+    {
+      "layerId": "l-13-diario-aberto-dupla-ensanguentado",
+      "label": "Página direita"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

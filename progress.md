@@ -362,6 +362,28 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ---
 
+## Coleção ampliada · Lotes C8, C9 e C10 (67 modelos novos e 19 variações)
+
+### Feito
+- **`modelos/montagem.js`:** compositores de dados para montar modelos inteiros com o kit e o universo: `formulario` (timbre da instituição, grade de campos em duas colunas, seções, assinaturas, carimbos), `carta` (escrita corrida), `tabela` (colunas com quebra de linha e linhas alinhadas), ajudantes de camada (`T`, `IMG`, `FOTO`, `BOX`, `RULE`, `TRACO` para formas `path`) e `modelo()` (metadados e campos). Os modelos novos moram em `lote-c8.js`, `lote-c9.js` e `lote-c10.js`, curtos e legíveis.
+- **C8 · Investigação e Estado (24):** termo de depoimento, auto de apreensão, ficha de pessoa desaparecida, relatório de vigilância, quadro de investigação (composição com cortiça, fotos, alfinetes, barbante e post-its); laudo de necropsia, cadeia de custódia, etiqueta de corpo, laudo de balística, análise de digitais, relatório de cena de crime; certidões de nascimento e casamento, carteira de identidade, passaporte, testamento, escritura, procuração; ordem de missão ultrassecreta, dossiê de agente, telegrama militar, mapa tático, relatório redigido, crachá de acesso.
+- **C9 · Escrita e imprensa (21):** caderno espiral, diário aberto em página dupla, caderneta de bolso, página de livro antigo, agenda, capa de diário de couro; carta de amor perfumada, carta de despedida, bilhete de ameaça com recortes, carta em código, cartão de Natal; página de revista, panfleto de culto, cartaz de desaparecido, edição extra, anúncio fúnebre; boletim escolar, prova corrigida, bilhetinho de sala, carteirinha de estudante, página de anuário.
+- **C10 · Saúde, ciência, oculto e fantasia (22):** atestado, ficha de triagem do sanatório, desenho de paciente, prontuário de cirurgia, rótulo de remédio, exame de sangue; relatório de experimento, ficha de cobaia, planta de laboratório, caderno de pesquisa com texto só sob UV, gráfico de sismógrafo, memorando; grimório em página dupla, pacto em sangue, recorte de livro proibido, mapa astral, invocação sob UV; carta náutica, contrato de guilda, página de bestiário, recompensa do reino, carta de taverna.
+- **19 variações** (`variacoes.js`, `family` no manifesto): ensanguentado (7), queimado (3), molhado (2), luz negra (3, com faixa visível e mensagem só sob UV) e arquivo morto (4), geradas pelas receitas da C4.
+- **Auditoria mais fiel:** `stats()` do sharp ignora o `extract`, então o contraste vinha sendo medido contra a média da imagem inteira desde a C2; agora lê os pixels dos quatro cantos da caixa de verdade. As épocas dos modelos caem nas seis faixas de `ERAS` (`faixaEra`). O estilo de tinta `pen` do kit era inválido (o correto é `handwriting`) e foi corrigido.
+- Manifesto: 125 modelos em 14 categorias (6 novas: Forense e perícia, Oficial e jurídico, Militar e governo, Cadernos diários e livros, Escola e juventude, Ciência e laboratório). Contagens atualizadas na Ajuda, no README e no USO.
+
+### Validação
+- `npm test`: 241 passando (categorias dos lotes, épocas e tons válidos, 19 variações com base existente e prévia visivelmente diferente). Auditoria: 0 erros e 26 avisos de fonte fora da época. E2E de modelos, biblioteca, início, Ajuda e tutoriais passaram. Coleção: 39,3 MB.
+
+### Pendências reais
+- **Parada para revisão** (plano): folha de contato de cada categoria nova com o usuário antes do lote C11.
+- A silhueta de corpo do laudo de necropsia e as plantas são feitas só com formas simples; a ilustração do bestiário usa o espiral dos símbolos, e a foto da cápsula do laudo de balística ficou de fora (não há foto adequada).
+- Só existem 6 retratos (C0), então vários modelos repetem rostos, com filtros diferentes; faltam fotos do Brasil e retratos extras.
+- Desempenho: `tests/e2e/colecao-perf.test.js` abre o modelo mais pesado de cada lote (30 a 51 camadas) em cerca de 225 ms, abaixo dos 400 ms do plano (melhor de três aberturas).
+
+---
+
 ## Refinamento Visual e Ergonomia de UI
 
 ### Feito
