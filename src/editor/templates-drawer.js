@@ -4,6 +4,7 @@ import { pickAndInstallExpansion, openExpansionInstallDialog } from '../ui/expan
 import { readFolderFromFileList } from '../data/expansion-installer.js';
 import { scanBundleFiles } from '../data/bundle-scanner.js';
 import { openConversionDialog } from '../ui/conversion-dialog.js';
+import { createFilterBar } from '../ui/filter-bar.js';
 
 const TEMPLATE_CATEGORIES = [
   'Cartas e bilhetes',
@@ -52,6 +53,22 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
   let activeCategory = 'all';
   let searchQuery = '';
   let activeTemplateDetail = null;
+  let gridScrollTop = 0;
+
+  const filterBar = createFilterBar({
+    onChange(key, value) {
+      if (key === 'source') activeSource = value;
+      if (key === 'category') activeCategory = value;
+      gridScrollTop = 0;
+      render();
+    },
+    onClear() {
+      activeSource = 'all';
+      activeCategory = 'all';
+      gridScrollTop = 0;
+      render();
+    },
+  });
 
   async function loadData() {
     try {
@@ -104,7 +121,7 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
     const btnLabel = isPending ? 'Preparar e usar este modelo' : 'Usar este modelo';
 
     container.innerHTML = `
-      <div class="template-detail-view" tabindex="0">
+      <div class="template-detail-view tab-crossfade" tabindex="0">
         <button type="button" class="template-detail-back-btn" data-action="back-to-grid" aria-label="Voltar para os modelos">
           ${renderIcon('arrow-left', 14)}
           <span>Voltar para modelos</span>
@@ -221,6 +238,8 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
   }
 
   function render() {
+    const currentGrid = container.querySelector('.templates-grid');
+    if (currentGrid) gridScrollTop = currentGrid.scrollTop;
     if (activeTemplateDetail) {
       renderDetailView(activeTemplateDetail);
       return;
@@ -228,17 +247,7 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
 
     const filtered = filterTemplates();
 
-    // Source chips
-    const sourceChips = [
-      `<button type="button" class="templates-chip ${activeSource === 'all' ? 'active' : ''}" data-source="all">Todas as origens</button>`,
-      ...sources.map(s => `
-        <button type="button" class="templates-chip ${activeSource === s.id ? 'active' : ''}" data-source="${esc(s.id)}">
-          ${esc(s.name)}
-        </button>
-      `)
-    ].join('');
-
-    // Category chips
+    // Filter groups (chips wrap onto lines, with counts)
     const sourceTemplates = activeSource === 'all'
       ? rawTemplates
       : rawTemplates.filter(t => matchSource(t, activeSource));
@@ -248,24 +257,33 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
     ).filter(c => !TEMPLATE_CATEGORIES.includes(c))
      .sort((a, b) => a.localeCompare(b, 'pt-BR'));
 
-    const allCategories = [...TEMPLATE_CATEGORIES, ...extraCategories];
-    const displayCategories = allCategories.filter(cat => {
+    const displayCategories = [...TEMPLATE_CATEGORIES, ...extraCategories].filter(cat => {
       const count = sourceTemplates.filter(t => t.category === cat).length;
       return count > 0 || cat === activeCategory;
     });
 
-    const categoryChips = [
-      `<button type="button" class="templates-chip ${activeCategory === 'all' ? 'active' : ''}" data-category="all">Todas as categorias</button>`,
-      ...displayCategories.map(cat => {
-        const count = sourceTemplates.filter(t => t.category === cat).length;
-        const isActive = activeCategory === cat;
-        return `
-          <button type="button" class="templates-chip ${isActive ? 'active' : ''}" data-category="${esc(cat)}">
-            ${esc(cat)} (${count})
-          </button>
-        `;
-      })
-    ].join('');
+    const filterGroups = [];
+    if (sources.length > 1) {
+      filterGroups.push({
+        key: 'source',
+        label: 'Origem',
+        value: activeSource,
+        segmented: true,
+        allLabel: 'Todas',
+        options: sources.map(s => ({ value: s.id, label: s.name })),
+      });
+    }
+    filterGroups.push({
+      key: 'category',
+      label: 'Categoria',
+      value: activeCategory,
+      allLabel: `Todas (${sourceTemplates.length})`,
+      options: displayCategories.map(cat => ({
+        value: cat,
+        label: cat,
+        count: sourceTemplates.filter(t => t.category === cat).length,
+      })),
+    });
 
     // Template grid items
     const gridItems = filtered.length > 0
@@ -330,29 +348,17 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
         <input type="file" class="templates-expansion-folder-input" webkitdirectory directory multiple style="display:none;" />
       </div>
 
-      ${sources.length > 1 ? `<div class="templates-chips-bar source-chips">${sourceChips}</div>` : ''}
-
-      <div class="templates-chips-bar category-chips">${categoryChips}</div>
+      <div class="templates-filter-slot"></div>
 
       <div class="templates-grid" role="region" aria-label="Modelos de documento">
         ${gridItems}
       </div>
     `;
 
-    // Horizontal wheel scrolling on chips bars
-    container.querySelectorAll('.templates-chips-bar').forEach(bar => {
-      bar.addEventListener('wheel', (e) => {
-        if (e.deltaY !== 0) {
-          e.preventDefault();
-          bar.scrollLeft += e.deltaY;
-        }
-      }, { passive: false });
-    });
-
-    // Auto-scroll active chip into view
-    container.querySelectorAll('.templates-chip.active').forEach(chip => {
-      chip.scrollIntoView({ behavior: 'auto', inline: 'nearest', block: 'nearest' });
-    });
+    filterBar.update({ groups: filterGroups });
+    container.querySelector('.templates-filter-slot').appendChild(filterBar.element);
+    const gridEl = container.querySelector('.templates-grid');
+    if (gridEl) gridEl.scrollTop = gridScrollTop;
 
     // Asynchronously resolve preview URLs for browser items if needed
     container.querySelectorAll('.template-card').forEach(async (card) => {
@@ -514,6 +520,7 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
     const searchInput = container.querySelector('.templates-search-input');
     searchInput?.addEventListener('input', (e) => {
       searchQuery = e.target.value;
+      gridScrollTop = 0;
       render();
       // restore focus and cursor
       const newInp = container.querySelector('.templates-search-input');
@@ -521,22 +528,6 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
         newInp.focus();
         newInp.selectionStart = newInp.selectionEnd = searchQuery.length;
       }
-    });
-
-    // Bind source chips
-    container.querySelectorAll('.source-chips .templates-chip').forEach(btn => {
-      btn.addEventListener('click', () => {
-        activeSource = btn.dataset.source;
-        render();
-      });
-    });
-
-    // Bind category chips
-    container.querySelectorAll('.category-chips .templates-chip').forEach(btn => {
-      btn.addEventListener('click', () => {
-        activeCategory = btn.dataset.category;
-        render();
-      });
     });
 
     // Bind card clicks and keyboard
@@ -637,6 +628,12 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
       }
     }
   });
+
+  container.innerHTML = `
+    <div class="templates-skeleton" aria-busy="true" aria-label="Carregando os modelos">
+      <div class="skeleton-line" style="width:60%"></div>
+      <div class="templates-grid">${Array.from({ length: 6 }, () => '<div class="skeleton-card is-tall"></div>').join('')}</div>
+    </div>`;
 
   loadData();
 

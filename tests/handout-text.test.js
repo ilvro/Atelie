@@ -173,3 +173,41 @@ test('handout fonts: loader behavior', async () => {
   assert.equal(libRes, true);
 });
 
+
+function recordingContext() {
+  const calls = [];
+  const ctx = {
+    calls,
+    globalAlpha: 1,
+    save() {}, restore() {}, beginPath() {}, rect() {}, clip() {},
+    measureText: (t) => ({ width: t.length * 8 }),
+    fillRect(x, y, w, h) { calls.push(['fillRect', ctx.fillStyle, ctx.globalAlpha, x, y, w, h]); },
+    fillText(t) { calls.push(['fillText', t]); },
+  };
+  return ctx;
+}
+
+test('text highlight: a band is painted behind each line, before the text', async () => {
+  const { drawTextLayer, clearTextLayoutCache } = await import('../src/render/handout-text.js');
+  clearTextLayoutCache();
+  const layer = {
+    width: 400, height: 100,
+    text: {
+      content: 'primeira linha', font: { family: 'X', weight: 400, italic: false }, size: 20, color: '#000000',
+      align: 'left', valign: 'top', lineHeight: 1.2, letterSpacing: 0, box: 'area', fit: 'overflow',
+      highlight: { color: '#ffee00', opacity: 0.5, padding: 2 }, ink: { style: 'clean', wear: 0, seed: 1 },
+    },
+  };
+  const ctx = recordingContext();
+  drawTextLayer(ctx, layer, 1);
+  const rectIdx = ctx.calls.findIndex(c => c[0] === 'fillRect');
+  const textIdx = ctx.calls.findIndex(c => c[0] === 'fillText');
+  assert.ok(rectIdx >= 0 && textIdx > rectIdx, 'highlight band comes before the text');
+  assert.equal(ctx.calls[rectIdx][1], '#ffee00');
+  assert.equal(ctx.calls[rectIdx][2], 0.5);
+
+  clearTextLayoutCache();
+  const plain = recordingContext();
+  drawTextLayer(plain, { ...layer, text: { ...layer.text, highlight: null } }, 1);
+  assert.equal(plain.calls.some(c => c[0] === 'fillRect'), false, 'no band without highlight');
+});

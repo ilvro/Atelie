@@ -74,3 +74,19 @@ test('library search: filtro por favoritos', () => {
   assert.deepEqual(favItems.map(i => i.id).sort(), ['ac-sangue-1', 'casa-mancha-1'].sort());
 });
 
+
+test('recentes da biblioteca: mais novo primeiro, sem repetir, no máximo 12', async () => {
+  const store = new Map();
+  globalThis.localStorage = {
+    getItem: k => (store.has(k) ? store.get(k) : null),
+    setItem: (k, v) => store.set(k, String(v)),
+  };
+  const { recordRecentLibraryId, getRecentLibraryIds } = await import('../src/editor/library-search.js');
+  for (let i = 0; i < 15; i++) recordRecentLibraryId(`item-${i}`);
+  recordRecentLibraryId('item-10');
+  const list = getRecentLibraryIds();
+  assert.equal(list.length, 12);
+  assert.equal(list[0], 'item-10');
+  assert.equal(new Set(list).size, 12);
+  delete globalThis.localStorage;
+});

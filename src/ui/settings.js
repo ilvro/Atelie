@@ -16,6 +16,7 @@ const LAMP_COLORS = {
 
 const DESK_COLORS = {
   madeira: '#131110',
+  cortica: '#21170f',
   feltro: '#111a14',
   couro: '#191412',
   concreto: '#18191c',
@@ -31,6 +32,8 @@ export const DEFAULT_SETTINGS = {
   reduceMotion: false,
   unit: 'px',
   shareWithTabletop: true,
+  tiltStamps: true,
+  shortcuts: {},
   sound: {
     enabled: false,
     volume: 80,
@@ -54,6 +57,7 @@ export function getSettings() {
         ...DEFAULT_SETTINGS.sound,
         ...(parsed.sound || {}),
       },
+      shortcuts: { ...(parsed.shortcuts || {}) },
     };
   } catch {
     return { ...DEFAULT_SETTINGS, sound: { ...DEFAULT_SETTINGS.sound } };
@@ -66,6 +70,7 @@ export function saveSettings(updates) {
     ...current,
     ...updates,
     ...(updates.sound ? { sound: { ...current.sound, ...updates.sound } } : {}),
+    ...(updates.shortcuts ? { shortcuts: { ...current.shortcuts, ...updates.shortcuts } } : {}),
   };
   memorySettings = next;
   if (typeof localStorage !== 'undefined') {
@@ -112,11 +117,12 @@ export function openSettingsModal() {
   settingsModal.id = 'at-settings-modal';
 
   const materials = [
-    ['madeira', 'Madeira escura'],
-    ['feltro', 'Feltro verde'],
+    ['madeira', 'Madeira escura envernizada'],
+    ['feltro', 'Feltro verde de jogo'],
     ['couro', 'Couro'],
-    ['concreto', 'Concreto'],
-    ['preto', 'Preto liso'],
+    ['concreto', 'Concreto · ardósia forense'],
+    ['cortica', 'Cortiça investigativa'],
+    ['preto', 'Preto neutro'],
   ];
 
   const temps = [
@@ -182,6 +188,13 @@ export function openSettingsModal() {
           <label class="at-settings-check">
             <input type="checkbox" id="setting-reduce-motion" ${current.reduceMotion ? 'checked' : ''} />
             <span>Reduzir animações (além do sistema)</span>
+          </label>
+        </section>
+
+        <section class="at-settings-section">
+          <label class="at-settings-check">
+            <input type="checkbox" id="setting-tilt-stamps" ${current.tiltStamps !== false ? 'checked' : ''} />
+            <span>Carimbos, selos e lacres entram levemente tortos</span>
           </label>
         </section>
 
@@ -420,6 +433,12 @@ export function openSettingsModal() {
   const motionCheck = settingsModal.querySelector('#setting-reduce-motion');
   motionCheck?.addEventListener('change', () => {
     saveSettings({ reduceMotion: motionCheck.checked });
+  });
+
+  // Stamps land a little crooked
+  const tiltCheck = settingsModal.querySelector('#setting-tilt-stamps');
+  tiltCheck?.addEventListener('change', () => {
+    saveSettings({ tiltStamps: tiltCheck.checked });
   });
 
   // Share with Tabletop

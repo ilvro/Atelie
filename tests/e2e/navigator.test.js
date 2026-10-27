@@ -157,9 +157,8 @@ test('navigator e2e: folders, drag/move, accent-insensitive search, pin, favorit
   await page.waitForTimeout(1100);
 
   // Reload page
+  // The document was open in a tab, so it comes back with its draft and no question asked.
   await page.reload();
-  await page.waitForSelector('.draft-recovery-modal', { state: 'visible' });
-  await page.click('.draft-recover-btn');
   await page.waitForFunction(() => !!window.__atelie?.editor?.state);
   await page.waitForTimeout(400);
 

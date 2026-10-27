@@ -7,6 +7,7 @@ export const SHORTCUTS = [
   // --- Navegação e Casca ---
   {
     id: 'help',
+    scope: 'global',
     key: '?',
     label: 'Ajuda',
     description: 'Abrir ou fechar gaveta de ajuda e guia de uso',
@@ -16,6 +17,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'desk',
+    scope: 'global',
     key: '1',
     label: 'Mesa',
     description: 'Voltar à visualização principal da bancada de trabalho',
@@ -25,6 +27,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'documents',
+    scope: 'global',
     key: 'D',
     label: 'Documentos',
     description: 'Abrir gaveta de documentos, pastas e lixeira',
@@ -34,6 +37,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'library',
+    scope: 'global',
     key: 'B',
     label: 'Biblioteca',
     description: 'Abrir gaveta de biblioteca (papéis, texturas e carimbos)',
@@ -43,6 +47,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'templates',
+    scope: 'global',
     key: 'M',
     label: 'Modelos',
     description: 'Abrir gaveta de modelos prontos para preencher',
@@ -52,6 +57,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'settings',
+    scope: 'global',
     key: ',',
     label: 'Ajustes',
     description: 'Abrir ajustes da mesa, iluminação e superfícies',
@@ -61,6 +67,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'palette',
+    scope: 'global',
     key: 'Ctrl+K',
     label: 'Paleta de comandos',
     description: 'Abrir paleta rápida de busca e execução de comandos',
@@ -70,6 +77,8 @@ export const SHORTCUTS = [
   },
   {
     id: 'close-drawer',
+    scope: 'global',
+    configurable: false,
     key: 'Esc',
     label: 'Fechar gaveta / desselecionar',
     description: 'Fechar gaveta ativa ou remover seleção de camada',
@@ -81,6 +90,7 @@ export const SHORTCUTS = [
   // --- Documento ---
   {
     id: 'archive',
+    scope: 'editor',
     key: 'Ctrl+S',
     label: 'Arquivar documento',
     description: 'Salvar alterações e arquivar versão no armazenamento',
@@ -90,6 +100,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'reader',
+    scope: 'editor',
     key: 'P',
     label: 'Modo leitura',
     description: 'Entrar no modo imersivo de leitura em tela cheia',
@@ -99,6 +110,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'export',
+    scope: 'editor',
     key: 'E',
     label: 'Exportar / Imprimir',
     description: 'Abrir gaveta de exportação em alta resolução (2048 px) e impressão 1:1',
@@ -107,9 +119,51 @@ export const SHORTCUTS = [
     tokens: ["'e'"],
   },
 
+  {
+    id: 'close-tab',
+    scope: 'editor',
+    key: 'Ctrl+W',
+    label: 'Fechar aba',
+    description: 'Fechar a aba do documento aberto (pergunta antes se houver alterações não arquivadas)',
+    category: 'Documento',
+    handledIn: ['src/editor/editor.js'],
+    tokens: ["'close-tab'"],
+  },
+  {
+    id: 'next-tab',
+    scope: 'editor',
+    key: 'Ctrl+Tab',
+    label: 'Próxima aba',
+    description: 'Passar para a aba seguinte (a Mesa é a primeira)',
+    category: 'Documento',
+    handledIn: ['src/editor/editor.js'],
+    tokens: ["'next-tab'"],
+  },
+  {
+    id: 'prev-tab',
+    scope: 'editor',
+    key: 'Ctrl+Shift+Tab',
+    label: 'Aba anterior',
+    description: 'Voltar para a aba anterior',
+    category: 'Documento',
+    handledIn: ['src/editor/editor.js'],
+    tokens: ["'prev-tab'"],
+  },
+  {
+    id: 'flip-sheet',
+    scope: 'editor',
+    key: 'F',
+    label: 'Virar a folha',
+    description: 'Alternar entre a frente e o verso do documento (cria o verso se ainda não existe)',
+    category: 'Documento',
+    handledIn: ['src/editor/editor.js'],
+    tokens: ["'flip-sheet'"],
+  },
+
   // --- Edição e Manipulação ---
   {
     id: 'undo',
+    scope: 'editor',
     key: 'Ctrl+Z',
     label: 'Desfazer',
     description: 'Desfazer a última ação de edição',
@@ -119,6 +173,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'redo',
+    scope: 'editor',
     key: 'Ctrl+Y',
     label: 'Refazer',
     description: 'Refazer a ação desfeita',
@@ -128,6 +183,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'copy',
+    scope: 'editor',
     key: 'Ctrl+C',
     label: 'Copiar camada',
     description: 'Copiar camada selecionada para a área de transferência',
@@ -137,6 +193,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'paste',
+    scope: 'editor',
     key: 'Ctrl+V',
     label: 'Colar camada',
     description: 'Colar camada copiada sobre a página',
@@ -146,6 +203,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'duplicate',
+    scope: 'editor',
     key: 'Ctrl+D',
     label: 'Duplicar camada',
     description: 'Duplicar a camada selecionada',
@@ -154,7 +212,28 @@ export const SHORTCUTS = [
     tokens: ["'d'"],
   },
   {
+    id: 'duplicate-varied',
+    scope: 'editor',
+    key: 'Ctrl+Shift+D',
+    label: 'Duplicar com variação',
+    description: 'Duplicar a camada com a cópia deslocada, levemente girada e com semente nova nos efeitos',
+    category: 'Edição',
+    handledIn: ['src/editor/editor.js'],
+    tokens: ["'duplicate-varied'"],
+  },
+  {
+    id: 'ambient-cycle',
+    scope: 'editor',
+    key: 'Shift+U',
+    label: 'Trocar a iluminação da mesa',
+    description: 'Passar pelos modos: luminária, velas, lanterna de inspeção, luz negra e estúdio',
+    category: 'Edição',
+    handledIn: ['src/editor/editor.js'],
+    tokens: ["'ambient-cycle'"],
+  },
+  {
     id: 'layer-up',
+    scope: 'editor',
     key: 'Ctrl+]',
     label: 'Avançar camada',
     description: 'Mover camada selecionada um nível para cima na pilha',
@@ -164,6 +243,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'layer-down',
+    scope: 'editor',
     key: 'Ctrl+[',
     label: 'Recuar camada',
     description: 'Mover camada selecionada um nível para baixo na pilha',
@@ -173,6 +253,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'rulers',
+    scope: 'editor',
     key: 'Shift+R',
     label: 'Alternar réguas',
     description: 'Exibir ou ocultar réguas milimetradas e guias',
@@ -182,6 +263,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'eyedropper',
+    scope: 'editor',
     key: 'I',
     label: 'Conta-gotas',
     description: 'Ativar amostrador de cor em qualquer ponto da página',
@@ -191,6 +273,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'uv-light',
+    scope: 'editor',
     key: 'U',
     label: 'Luz ultravioleta',
     description: 'Ligar ou desligar lâmpada UV na bancada de trabalho',
@@ -200,6 +283,8 @@ export const SHORTCUTS = [
   },
   {
     id: 'nudge',
+    scope: 'editor',
+    configurable: false,
     key: 'Setas',
     label: 'Mover camada',
     description: 'Deslocar camada selecionada em 1 px (ou 10 px segurando Shift)',
@@ -209,6 +294,8 @@ export const SHORTCUTS = [
   },
   {
     id: 'edit-text',
+    scope: 'editor',
+    configurable: false,
     key: 'Enter',
     label: 'Editar texto',
     description: 'Entrar na edição direta de texto na camada selecionada',
@@ -218,6 +305,8 @@ export const SHORTCUTS = [
   },
   {
     id: 'delete-layer',
+    scope: 'editor',
+    configurable: false,
     key: 'Del / Backspace',
     label: 'Excluir camada',
     description: 'Remover a camada selecionada do documento',
@@ -226,9 +315,62 @@ export const SHORTCUTS = [
     tokens: ["'Delete'", "'Backspace'"],
   },
 
+  // --- Ferramentas de desenho ---
+  {
+    id: 'tool-select',
+    scope: 'editor',
+    key: 'V',
+    label: 'Ferramenta: selecionar',
+    description: 'Voltar a selecionar e mover camadas (Esc também volta)',
+    category: 'Ferramentas',
+    handledIn: ['src/editor/editor.js'],
+    tokens: ["'tool-select'"],
+  },
+  {
+    id: 'tool-brush',
+    scope: 'editor',
+    key: 'Shift+B',
+    label: 'Ferramenta: pincel',
+    description: 'Pintar à mão livre na página (Shift ao começar acrescenta o traço à camada de pincel selecionada)',
+    category: 'Ferramentas',
+    handledIn: ['src/editor/editor.js'],
+    tokens: ["'tool-brush'"],
+  },
+  {
+    id: 'tool-rect',
+    scope: 'editor',
+    key: 'R',
+    label: 'Ferramenta: retângulo',
+    description: 'Arrastar para desenhar um retângulo (Shift trava em quadrado)',
+    category: 'Ferramentas',
+    handledIn: ['src/editor/editor.js'],
+    tokens: ["'tool-rect'"],
+  },
+  {
+    id: 'tool-ellipse',
+    scope: 'editor',
+    key: 'O',
+    label: 'Ferramenta: elipse',
+    description: 'Arrastar para desenhar uma elipse (Shift trava em círculo)',
+    category: 'Ferramentas',
+    handledIn: ['src/editor/editor.js'],
+    tokens: ["'tool-ellipse'"],
+  },
+  {
+    id: 'tool-line',
+    scope: 'editor',
+    key: 'L',
+    label: 'Ferramenta: linha',
+    description: 'Arrastar para desenhar uma linha (Shift trava em ângulos de 45°)',
+    category: 'Ferramentas',
+    handledIn: ['src/editor/editor.js'],
+    tokens: ["'tool-line'"],
+  },
+
   // --- Modo Leitura ---
   {
     id: 'reader-loupe',
+    scope: 'reading',
     key: 'L',
     label: 'Lupa de aumento',
     description: 'Ativar ou desativar lente de aumento de 2,5×',
@@ -238,6 +380,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'reader-uv',
+    scope: 'reading',
     key: 'U',
     label: 'Lanterna UV',
     description: 'Ativar feixe de lanterna ultravioleta para revelar segredos',
@@ -247,6 +390,7 @@ export const SHORTCUTS = [
   },
   {
     id: 'reader-flip',
+    scope: 'reading',
     key: 'F',
     label: 'Virar folha',
     description: 'Alternar entre frente e verso do documento',
@@ -256,6 +400,8 @@ export const SHORTCUTS = [
   },
   {
     id: 'reader-nav',
+    scope: 'reading',
+    configurable: false,
     key: '← / →',
     label: 'Navegar carrossel',
     description: 'Passar para o documento anterior ou seguinte da pasta',
@@ -265,6 +411,8 @@ export const SHORTCUTS = [
   },
   {
     id: 'reader-close',
+    scope: 'reading',
+    configurable: false,
     key: 'Esc',
     label: 'Sair da leitura',
     description: 'Encerrar leitura em tela cheia e voltar à bancada',

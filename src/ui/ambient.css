@@ -1,0 +1,153 @@
+/* Iluminação ambiente da mesa (Fase 13): uma camada por modo, trocadas por crossfade de opacidade. */
+
+.ambient-layers {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ambient-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--eco-slow, 400ms) var(--eco-ease, ease);
+  will-change: opacity;
+}
+
+.ambient-layer.is-on { opacity: 1; }
+
+/* Luminária: penumbra discreta nas bordas e um brilho quente onde a luz cai sobre a mesa */
+.ambient-layer[data-ambient-layer="lamp"] {
+  background:
+    radial-gradient(ellipse 55% 50% at 50% 42%, color-mix(in srgb, var(--at-lamp, #f2c58a) 9%, transparent) 0%, transparent 70%),
+    radial-gradient(ellipse 90% 85% at 50% 45%, transparent 55%, rgba(0, 0, 0, 0.38) 100%);
+}
+
+/* Vela: âmbar, vinheta mais fechada e uma tremulação suave da luz */
+.ambient-layer[data-ambient-layer="candle"] {
+  background:
+    radial-gradient(ellipse 48% 44% at 50% 46%, rgba(255, 150, 60, 0.2) 0%, transparent 72%),
+    radial-gradient(ellipse 80% 75% at 50% 48%, rgba(60, 24, 4, 0.1) 30%, rgba(8, 3, 0, 0.7) 100%);
+  mix-blend-mode: normal;
+}
+
+.ambient-layer[data-ambient-layer="candle"].is-on {
+  animation: candle-flicker 3.2s ease-in-out infinite;
+}
+
+@keyframes candle-flicker {
+  0%, 100% { opacity: 1; transform: scale(1) translate(0, 0); }
+  18% { opacity: 0.9; transform: scale(1.012) translate(2px, -1px); }
+  41% { opacity: 0.97; transform: scale(0.99) translate(-2px, 1px); }
+  63% { opacity: 0.86; transform: scale(1.016) translate(1px, 2px); }
+  82% { opacity: 0.95; transform: scale(1.004) translate(-1px, -1px); }
+}
+
+/* Lanterna: a sala escurece e um feixe circular segue o cursor */
+.ambient-layer[data-ambient-layer="flashlight"] {
+  background: radial-gradient(circle var(--beam-r, 190px) at var(--beam-x, 50%) var(--beam-y, 45%), transparent 0%, transparent 62%, rgba(2, 2, 6, 0.9) 100%);
+  background-color: transparent;
+}
+
+/* UV: o escurecimento violeta da sala já vem de .at-desk::after; aqui só um halo frio nas bordas */
+.ambient-layer[data-ambient-layer="uv"] {
+  background: radial-gradient(ellipse 80% 75% at 50% 45%, transparent 50%, rgba(40, 14, 90, 0.5) 100%);
+}
+
+/* Estúdio: luz uniforme, sem penumbra */
+.ambient-layer[data-ambient-layer="studio"] {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+/* Sombra e profundidade da folha, conforme o zoom e a luz */
+.stage-page-wrap {
+  --page-lift: 0.6;
+  --page-shadow-alpha: 0.45;
+  --page-shadow-x: 0px;
+  box-shadow:
+    var(--page-shadow-x) calc(6px + 16px * var(--page-lift)) calc(18px + 34px * var(--page-lift)) rgba(0, 0, 0, var(--page-shadow-alpha)),
+    0 2px 6px rgba(0, 0, 0, calc(var(--page-shadow-alpha) * 0.6));
+  transition: box-shadow var(--eco-slow, 400ms) var(--eco-ease, ease), transform var(--eco-fast) var(--eco-ease);
+}
+
+html[data-ambient="lamp"] .stage-page-wrap { --page-shadow-alpha: 0.5; --page-shadow-x: 6px; }
+html[data-ambient="candle"] .stage-page-wrap { --page-shadow-alpha: 0.62; --page-shadow-x: -8px; }
+html[data-ambient="flashlight"] .stage-page-wrap { --page-shadow-alpha: 0.7; }
+html[data-ambient="uv"] .stage-page-wrap { --page-shadow-alpha: 0.55; }
+html[data-ambient="studio"] .stage-page-wrap { --page-shadow-alpha: 0.18; --page-shadow-x: 0px; }
+
+/* Controle no topo do palco */
+.ambient-control {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  z-index: 22;
+}
+
+.ambient-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  background: var(--at-desk-2);
+  color: var(--at-text);
+  border: 1px solid var(--at-line-strong);
+  border-radius: var(--eco-radius-m);
+  font-size: var(--eco-fs-12);
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.ambient-btn:hover { border-color: var(--at-uv); }
+
+.ambient-menu {
+  position: absolute;
+  top: 34px;
+  right: 0;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  background: var(--at-desk-2);
+  border: 1px solid var(--at-line-strong);
+  border-radius: var(--eco-radius-m);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+  animation: tab-crossfade var(--eco-fast) var(--eco-ease);
+}
+
+.ambient-menu[hidden] { display: none; }
+
+.ambient-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  padding: 6px 10px;
+  background: transparent;
+  color: var(--at-text);
+  border: 0;
+  border-radius: var(--eco-radius-sm, 4px);
+  text-align: left;
+  cursor: pointer;
+}
+
+.ambient-item small { color: var(--at-muted); font-size: 11px; }
+.ambient-item:hover { background: var(--at-line); }
+.ambient-item[aria-checked="true"] { background: color-mix(in srgb, var(--at-uv) 22%, transparent); }
+
+body.reduce-motion .ambient-layer,
+body.reduce-motion .stage-page-wrap { transition: none; }
+body.reduce-motion .ambient-layer[data-ambient-layer="candle"].is-on { animation: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-layer, .stage-page-wrap { transition: none; }
+  .ambient-layer[data-ambient-layer="candle"].is-on { animation: none; }
+}
+
+@media (max-width: 719px) {
+  .ambient-btn-label { display: none; }
+  .ambient-control { right: 8px; }
+}

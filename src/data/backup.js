@@ -95,6 +95,17 @@ export async function exportBackup(api) {
     }
   }
 
+  // 4. Fonts sent by the person (private to this browser, so they are not anywhere else)
+  const fonts = [];
+  try {
+    const userFonts = typeof api.expansions?.listUserFonts === 'function' ? await api.expansions.listUserFonts() : [];
+    for (const { item, blob } of userFonts) {
+      fonts.push({ item, mime: blob.type || 'font/ttf', base64: await blobToBase64(blob) });
+    }
+  } catch {
+    // Ignora fontes ilegíveis
+  }
+
   return {
     schema: 1,
     app: 'atelie',
@@ -103,6 +114,7 @@ export async function exportBackup(api) {
     handouts,
     folders,
     uploads,
+    fonts,
   };
 }
 
@@ -209,6 +221,20 @@ export async function importBackup(api, backupData) {
         await api.uploads.send(file);
         result.importedUploads++;
       }
+    }
+  }
+
+  // 2b. Restaura fontes enviadas pela pessoa
+  result.importedFonts = 0;
+  if (Array.isArray(data.fonts) && typeof api.expansions?.restoreUserFont === 'function') {
+    let have = new Set();
+    try {
+      have = new Set((await api.expansions.listUserFonts()).map(f => f.item.id));
+    } catch {}
+    for (const f of data.fonts) {
+      if (!f?.item?.id || !f.base64 || have.has(f.item.id)) continue;
+      await api.expansions.restoreUserFont(f.item, base64ToBlob(f.base64, f.mime || 'font/ttf'));
+      result.importedFonts++;
     }
   }
 

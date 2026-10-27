@@ -202,3 +202,32 @@
   font-size: 13px;
 }
 
+
+.help-key-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.help-key-btn {
+  background: none;
+  border: 1px solid var(--at-line);
+  border-radius: var(--eco-radius-s, 4px);
+  color: var(--at-uv);
+  font-size: 11px;
+  padding: 1px 8px;
+  cursor: pointer;
+}
+
+.help-key-btn:hover { border-color: var(--at-uv); }
+.help-key-btn.is-capturing { background: var(--at-uv); color: var(--at-uv-ink); }
+
+.help-key-note {
+  display: block;
+  min-height: 0;
+  font-size: 11px;
+  color: var(--at-lamp, #f2c58a);
+}
+
+.help-key-note:empty { display: none; }

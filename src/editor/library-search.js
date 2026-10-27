@@ -96,3 +96,26 @@ export function filterLibraryItems(items = [], {
     return true;
   });
 }
+
+export const RECENTS_STORAGE_KEY = 'atelie-library-recents';
+const RECENTS_LIMIT = 12;
+
+export function getRecentLibraryIds() {
+  try {
+    const raw = localStorage.getItem(RECENTS_STORAGE_KEY);
+    const list = raw ? JSON.parse(raw) : [];
+    return Array.isArray(list) ? list : [];
+  } catch {
+    return [];
+  }
+}
+
+/** Puts an item first in "Usados recentemente" (12 at most, no repeats). */
+export function recordRecentLibraryId(id) {
+  if (!id) return [];
+  const list = [id, ...getRecentLibraryIds().filter(x => x !== id)].slice(0, RECENTS_LIMIT);
+  try {
+    localStorage.setItem(RECENTS_STORAGE_KEY, JSON.stringify(list));
+  } catch {}
+  return list;
+}

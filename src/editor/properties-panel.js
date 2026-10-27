@@ -12,6 +12,7 @@ import { boxCorners } from './geometry.js';
 import { EFFECTS } from '../render/handout-effects.js';
 import { mountFontSelector, getCachedFont } from './font-selector.js';
 import { play } from '../ui/sound.js';
+import { wireModal } from '../ui/modal.js';
 
 export function getDocumentColors(handout) {
   const colors = new Set();
@@ -175,6 +176,27 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
     const path = field.slice(2);
     const pathParts = path.split('.');
 
+    if (path === 'text.highlight.enabled') {
+      const next = updateLayer(state.handout, layer.id, {
+        text: { ...layer.text, highlight: rawValue ? { color: '#fff176', opacity: 0.6, padding: 2 } : null },
+      });
+      state.edit(next, { label: rawValue ? 'Ligar destaque' : 'Desligar destaque' });
+      render();
+      return;
+    }
+    if (path.startsWith('text.highlight.') && layer.text?.highlight) {
+      const key = pathParts[2];
+      const value = key === 'opacity'
+        ? Math.max(0, Math.min(100, Number(rawValue) || 0)) / 100
+        : key === 'padding' ? Math.max(0, Math.min(100, Number(rawValue) || 0)) : String(rawValue);
+      if (key === 'color') saveRecentColor(value);
+      const next = updateLayer(state.handout, layer.id, {
+        text: { ...layer.text, highlight: { ...layer.text.highlight, [key]: value } },
+      });
+      state.edit(next, { label: 'Alterar destaque', coalesce: `${layer.id}-highlight-${key}` });
+      return;
+    }
+
     let parsed = rawValue;
 
     // Type conversions
@@ -229,7 +251,12 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
     const prev = getDeep(layer, pathParts);
     if (prev === parsed) return;
 
-    const patch = setDeep({}, pathParts, parsed);
+    // Start from the layer's own nested object so sibling keys (font.family, ink.wear…) survive the shallow merge in updateLayer.
+    const head = layer[pathParts[0]];
+    const base = pathParts.length > 1 && head && typeof head === 'object' && !Array.isArray(head)
+      ? { [pathParts[0]]: head }
+      : {};
+    const patch = setDeep(base, pathParts, parsed);
     const next = updateLayer(state.handout, layer.id, patch);
     const coalesceKey = `${layer.id}-${path}`;
     state.edit(next, { label: `Alterar ${path}`, coalesce: coalesceKey });
@@ -269,8 +296,10 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
 
     const closeModal = () => {
       modal.remove();
+      dispose();
       isImageModalOpen = false;
     };
+    const dispose = wireModal(modal, { onCancel: closeModal, primary: '.image-upload-label' });
 
     closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', e => {
@@ -432,7 +461,7 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
 
           <div class="prop-advanced">
             <label class="field">
-              <span class="field-label">Mesclagem</span>
+              <span class="field-label">Mesclagem<button type="button" class="task-help" data-action="tutorial-help" data-task="blend" title="Como fazer uma mancha escurecer o papel" aria-label="Ajuda: mancha que escurece o papel">?</button></span>
               <select data-field="h:blend" ${stateAttr}>
                 ${blendOptions.map(([id, name]) => `<option value="${esc(id)}" ${layer.blend === id ? 'selected' : ''}>${esc(name)}</option>`).join('')}
               </select>
@@ -440,6 +469,7 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
 
             ${checkField('h:clip', 'Recortar na camada de baixo', layer.clip)}
             ${choiceField('h:light', 'Iluminação', layer.light, [['both', 'Sempre'], ['normal', 'Comum'], ['uv', 'Luz UV']], { disabled: isLocked })}
+            <button type="button" class="task-help" data-action="tutorial-help" data-task="light" title="Como esconder um texto sob a luz UV" aria-label="Ajuda: esconder um texto sob a luz UV">?</button>
 
             <div class="field align-actions-field">
               <span class="field-label">Alinhar à página</span>
@@ -502,6 +532,14 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
           ${numberField('h:text.size', 'Tamanho · px', txt.size, { min: 6, max: 200, step: 1, disabled: isLocked })}
           ${colorField('h:text.color', 'Cor da tinta', txt.color || '#1d1b24')}
           ${renderColorSwatchesHTML('h:text.color')}
+
+          ${checkField('h:text.highlight.enabled', 'Destaque (marca-texto)', Boolean(txt.highlight))}
+          ${txt.highlight ? `
+            <div class="field-row">
+              ${colorField('h:text.highlight.color', 'Cor do destaque', txt.highlight.color)}
+              ${numberField('h:text.highlight.opacity', 'Opacidade · %', Math.round(txt.highlight.opacity * 100), { min: 0, max: 100, step: 5, disabled: isLocked })}
+            </div>
+          ` : ''}
 
           ${choiceField('h:text.align', 'Alinhamento', txt.align, [
             ['left', 'Esquerda', '⟸'],

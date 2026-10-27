@@ -1,6 +1,7 @@
 import { escapeHTML as esc, icon as renderIcon } from '../ui/icons.js';
 import { normalizeText, matchesWords } from '../ui/palette.js';
 import { tiltOf } from '../ui/primitives.js';
+import { emptyStateIllustration } from '../ui/illustrations.js';
 import { contextMenu } from '../ui/context-menu.js';
 import {
   createFolder,
@@ -86,6 +87,7 @@ export function createNavigator(container, {
   let foldersData = { folders: [], revision: 1 };
   let handouts = [];
   let trashList = [];
+  let trashCount = 0;
   let collapsedFolders = new Set();
   let selectedIndex = -1;
   let flatItems = []; // For keyboard navigation
@@ -96,9 +98,8 @@ export function createNavigator(container, {
         foldersData = await api.folders.list();
       }
       handouts = await api.handouts.list();
-      if (activeFilter === 'lixeira') {
-        trashList = await api.trash.list();
-      }
+      trashList = await api.trash.list();
+      trashCount = trashList.length;
     } catch (err) {
       console.warn('[atelie] Erro ao carregar dados do navegador:', err);
     }
@@ -368,7 +369,7 @@ export function createNavigator(container, {
       { label: 'Abrir', icon: 'doc', run: () => onOpenDocument?.(h.id) },
       { label: 'Ler', icon: 'eye', key: 'P', run: () => onOpenReader?.(h.id) },
       { label: 'Exportar…', icon: 'download', key: 'E', run: () => onOpenExport?.(h.id) },
-      { label: 'Abrir em nova aba', icon: 'eye', run: () => window.open(`?handout=${encodeURIComponent(h.id)}`, '_blank') },
+      { label: 'Abrir em nova aba', icon: 'eye', run: () => onOpenDocument?.(h.id, { newTab: true }) },
       'separator',
       { label: 'Duplicar', icon: 'copy', run: () => duplicateDocument(h.id) },
       { label: 'Renomear', icon: 'edit', key: 'F2', run: () => promptRenameDoc(h) },
@@ -532,7 +533,7 @@ export function createNavigator(container, {
               Recentes
             </button>
             <button type="button" class="nav-chip ${activeFilter === 'lixeira' ? 'is-active' : ''}" data-filter="lixeira">
-              Lixeira
+              Lixeira${trashCount ? ` (${trashCount})` : ''}
             </button>
           </div>
 
@@ -559,7 +560,7 @@ export function createNavigator(container, {
               </div>
               ${
                 trashList.length === 0
-                  ? '<p class="nav-empty-hint">A lixeira está vazia.</p>'
+                  ? `<div class="nav-empty-hint empty-state">${emptyStateIllustration('folder')}<p>A lixeira está vazia.</p></div>`
                   : `
                 <div class="nav-trash-list">
                   ${trashList
@@ -610,7 +611,7 @@ export function createNavigator(container, {
                 <div class="nav-doc-list">
                   ${
                     recentDocs.length === 0
-                      ? '<p class="nav-empty-hint">Nenhum documento recente.</p>'
+                      ? `<div class="nav-empty-hint empty-state">${emptyStateIllustration('folder')}<p>Nenhum documento recente.</p></div>`
                       : recentDocs.map(h => renderDocRow(h, { isCurrent: h.id === currentId })).join('')
                   }
                 </div>
@@ -641,7 +642,7 @@ export function createNavigator(container, {
                 <div class="nav-doc-list nav-unassigned-list" data-folder-target="root">
                   ${
                     unassignedDocs.length === 0
-                      ? '<p class="nav-empty-hint">Nenhum documento sem pasta.</p>'
+                      ? `<div class="nav-empty-hint empty-state">${emptyStateIllustration('folder')}<p>Nenhum documento sem pasta.</p></div>`
                       : unassignedDocs.map(h => renderDocRow(h, { isCurrent: h.id === currentId })).join('')
                   }
                 </div>
@@ -661,7 +662,7 @@ export function createNavigator(container, {
                 <div class="nav-doc-list">
                   ${
                     filteredDocs.length === 0
-                      ? '<p class="nav-empty-hint">Nenhum documento favorito.</p>'
+                      ? `<div class="nav-empty-hint empty-state">${emptyStateIllustration('folder')}<p>Nenhum documento favorito.</p></div>`
                       : filteredDocs.map(h => renderDocRow(h, { isCurrent: h.id === currentId })).join('')
                   }
                 </div>
@@ -747,7 +748,15 @@ export function createNavigator(container, {
       row.addEventListener('click', e => {
         if (e.target.closest('.nav-doc-action-btn')) return;
         recordRecent(docId);
-        onOpenDocument?.(docId);
+        onOpenDocument?.(docId, { newTab: e.ctrlKey || e.metaKey });
+      });
+
+      // Middle button opens in a new tab
+      row.addEventListener('auxclick', e => {
+        if (e.button !== 1) return;
+        e.preventDefault();
+        recordRecent(docId);
+        onOpenDocument?.(docId, { newTab: true });
       });
 
       row.addEventListener('contextmenu', e => {

@@ -160,3 +160,13 @@ test('editor state: steps list and goTo navigation', () => {
   assert.equal(state.handout.name, 'Passo 3');
 });
 
+
+test('editor state: a document recovered from a draft starts dirty until archived', async () => {
+  const { createEditorState } = await import('../src/editor/state.js');
+  const doc = { id: 'x', layers: [] };
+  const st = createEditorState(doc, { unsaved: true });
+  assert.equal(st.dirty, true);
+  st.markSaved(doc);
+  assert.equal(st.dirty, false);
+  assert.equal(createEditorState(doc).dirty, false);
+});

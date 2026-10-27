@@ -270,7 +270,29 @@ test('exchange e2e (Caminho A): archive, BroadcastChannel, IndexedDB mesa-handou
 
   await pageBrowser.click('[data-action="archive"]');
   await pageBrowser.waitForFunction(() => !window.__atelie?.editor?.state?.dirty);
-  await pageBrowser.waitForTimeout(500);
+  // Baking and publishing take a moment after the document is marked saved: wait for the record, not for a fixed time.
+  await pageBrowser.evaluate(async (id) => {
+    for (let i = 0; i < 200; i++) {
+      const found = await new Promise(res => {
+        const req = indexedDB.open('mesa-handouts-v1', 1);
+        req.onupgradeneeded = () => {
+          const d = req.result;
+          if (!d.objectStoreNames.contains('handouts')) d.createObjectStore('handouts', { keyPath: 'id' });
+          if (!d.objectStoreNames.contains('bakes')) d.createObjectStore('bakes', { keyPath: ['id', 'light'] });
+        };
+        req.onsuccess = () => {
+          const db = req.result;
+          const tx = db.transaction(['handouts', 'bakes'], 'readonly');
+          const h = tx.objectStore('handouts').get(id);
+          const b = tx.objectStore('bakes').get([id, 'normal']);
+          tx.oncomplete = () => { db.close(); res(Boolean(h.result && b.result)); };
+        };
+        req.onerror = () => res(false);
+      });
+      if (found) return;
+      await new Promise(r => setTimeout(r, 100));
+    }
+  }, browserDocId);
 
   const exchangeDataBrowser = await pageBrowser.evaluate(async (id) => {
     const db = await new Promise((resolve, reject) => {

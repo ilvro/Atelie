@@ -15,6 +15,11 @@ export async function getLibraryFonts(api) {
   }
 }
 
+/** Forget the cached list (a font was added or removed). */
+export function clearLibraryFontsCache() {
+  cachedLibraryFonts = null;
+}
+
 export function getCachedFont(familyOrId) {
   if (!cachedLibraryFonts) return null;
   return cachedLibraryFonts.find(f => f.family === familyOrId || f.id === familyOrId) || null;

@@ -212,6 +212,7 @@ export async function downloadHandoutPng(handout, {
   }, 1000);
 
   onProgress({ status: 'done', filename });
+  if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('atelie:exported', { detail: { target } }));
   return { filename, blob, scale };
 }
 

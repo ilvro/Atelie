@@ -64,7 +64,8 @@ export const contextMenu = {
       if (idx < 0) idx = interactiveItems.length - 1;
       if (idx >= interactiveItems.length) idx = 0;
       activeIndex = idx;
-      interactiveItems[activeIndex].focus();
+      // Focusing must not scroll the page: a scroll closes the menu.
+      interactiveItems[activeIndex].focus({ preventScroll: true });
     };
 
     interactiveItems.forEach((btn) => {

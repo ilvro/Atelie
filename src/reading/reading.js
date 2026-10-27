@@ -10,6 +10,7 @@ import { renderIcon, escapeHTML as esc } from '../ui/icons.js';
 import { tiltOf } from '../ui/primitives.js';
 import { getRecentIds } from '../editor/navigator.js';
 import { play } from '../ui/sound.js';
+import { matches } from '../ui/keymap.js';
 
 export { fitPage, neighbors };
 
@@ -574,19 +575,19 @@ export function createReading(shell, { api, images, fonts, editor, onExit = () =
       return;
     }
 
-    if (e.key.toLowerCase() === 'l' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    if (matches(e, 'reader-loupe')) {
       e.preventDefault();
       toggleLoupe();
       return;
     }
 
-    if (e.key.toLowerCase() === 'u' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    if (matches(e, 'reader-uv')) {
       e.preventDefault();
       toggleLantern();
       return;
     }
 
-    if (e.key.toLowerCase() === 'f' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    if (matches(e, 'reader-flip')) {
       e.preventDefault();
       flipSheet();
       return;
@@ -606,6 +607,16 @@ export function createReading(shell, { api, images, fonts, editor, onExit = () =
     else if (action === 'prev-doc') navigateCarousel(-1);
     else if (action === 'next-doc') navigateCarousel(1);
   });
+
+  let enteredFullscreen = false;
+
+  function handleFullscreenChange() {
+    if (document.fullscreenElement) {
+      enteredFullscreen = true;
+      return;
+    }
+    if (isReaderOpen && enteredFullscreen) close();
+  }
 
   function handleResize() {
     if (!isReaderOpen || !currentHandout) return;
@@ -658,10 +669,13 @@ export function createReading(shell, { api, images, fonts, editor, onExit = () =
     readerRoot.style.display = 'flex';
 
     // Enter fullscreen if supported
+    // Em tela cheia o navegador consome o Esc: sair dela é o sinal para fechar a Leitura.
+    enteredFullscreen = false;
     if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
-      document.documentElement.requestFullscreen().catch(() => {});
+      document.documentElement.requestFullscreen().then(() => { enteredFullscreen = true; }).catch(() => {});
     }
 
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('resize', handleResize);
 
@@ -671,6 +685,8 @@ export function createReading(shell, { api, images, fonts, editor, onExit = () =
   function close() {
     if (!isReaderOpen) return;
     isReaderOpen = false;
+    enteredFullscreen = false;
+    document.removeEventListener('fullscreenchange', handleFullscreenChange);
 
     if (document.fullscreenElement && document.exitFullscreen) {
       document.exitFullscreen().catch(() => {});
@@ -696,6 +712,9 @@ export function createReading(shell, { api, images, fonts, editor, onExit = () =
     open,
     close,
     isOpen: () => isReaderOpen,
+    get loupeOn() { return isLoupeActive; },
+    get lanternOn() { return isLanternActive; },
+    get flipped() { return isFlipped; },
     get currentHandout() {
       return currentHandout;
     },

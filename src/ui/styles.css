@@ -686,6 +686,7 @@ html, body {
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.85);
   display: flex;
   flex-direction: column;
+  max-height: calc(100dvh - 32px);
 }
 
 .at-settings-header {
@@ -705,6 +706,9 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: var(--eco-space-4);
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .at-settings-section {
@@ -989,6 +993,60 @@ html, body {
 .at-conversion-modal {
   z-index: 450;
 }
+
+/* Modal de confirmação (criado por JS em editor.js, properties-panel.js, fill-panel.js) */
+.at-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  animation: at-modal-fade var(--eco-mid, 200ms) ease-out;
+}
+
+.at-modal {
+  width: 440px;
+  max-width: 100%;
+  max-height: calc(100dvh - 32px);
+  display: flex;
+  flex-direction: column;
+  background: var(--at-desk-2);
+  border: 1px solid var(--at-line-strong);
+  border-radius: var(--eco-radius-m);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.85);
+  animation: at-modal-rise var(--eco-mid, 200ms) ease-out;
+}
+
+.at-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--eco-space-4);
+  border-bottom: 1px solid var(--at-line);
+}
+
+.at-modal-title {
+  margin: 0;
+}
+
+.at-modal-body {
+  padding: var(--eco-space-5);
+  min-height: 0;
+  overflow-y: auto;
+}
+
+@keyframes at-modal-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes at-modal-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .at-modal-backdrop, .at-modal { animation: none; }
+}
+body.reduce-motion .at-modal-backdrop,
+body.reduce-motion .at-modal { animation: none; }
 
 .at-conversion-card {
   max-width: 480px;

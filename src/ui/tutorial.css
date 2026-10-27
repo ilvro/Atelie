@@ -1,0 +1,112 @@
+/* Tutoriais interativos (Fase 14): anel no controle e cartão com o passo. */
+.tutor { position: fixed; inset: 0; z-index: 1200; pointer-events: none; }
+.tutor[hidden] { display: none; }
+
+.tutor-ring {
+  position: fixed;
+  border: 2px solid var(--at-lamp, #f2c58a);
+  border-radius: 8px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--at-lamp, #f2c58a) 25%, transparent), 0 0 18px color-mix(in srgb, var(--at-lamp, #f2c58a) 55%, transparent);
+  pointer-events: none;
+  animation: tutor-pulse 1.6s ease-in-out infinite;
+  transition: left var(--eco-mid) var(--eco-ease), top var(--eco-mid) var(--eco-ease), width var(--eco-mid) var(--eco-ease), height var(--eco-mid) var(--eco-ease);
+}
+
+.tutor-ring[hidden] { display: none; }
+.tutor-ring.insist { animation-duration: 0.7s; border-width: 3px; }
+
+@keyframes tutor-pulse {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+
+.tutor-card {
+  position: fixed;
+  width: 340px;
+  max-width: calc(100vw - 24px);
+  padding: 14px 16px;
+  background: var(--at-desk-2);
+  color: var(--at-text);
+  border: 1px solid var(--at-line-strong);
+  border-radius: var(--eco-radius-m);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+  pointer-events: auto;
+  font-size: var(--eco-fs-13);
+}
+
+.tutor-card header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.tutor-card .eyebrow { font-family: var(--at-font-type); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--at-muted); }
+.tutor-card .quiet { background: none; border: 0; color: var(--at-muted); cursor: pointer; font-size: 12px; padding: 2px 4px; }
+.tutor-card .quiet:hover:not([disabled]) { color: var(--at-text); text-decoration: underline; }
+.tutor-card .quiet[disabled] { opacity: 0.4; cursor: default; }
+.tutor-card .primary { background: var(--at-uv); color: var(--at-uv-ink); border: 0; border-radius: var(--eco-radius-s); padding: 5px 12px; font-weight: 700; cursor: pointer; }
+.tutor-card footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; gap: 8px; }
+.tutor-progress { height: 3px; background: var(--at-line); border-radius: 2px; margin: 8px 0; }
+.tutor-progress i { display: block; height: 100%; background: var(--at-uv); border-radius: 2px; transition: width var(--eco-mid) var(--eco-ease); }
+.tutor-say { margin: 6px 0; font-size: 14px; line-height: 1.4; }
+.tutor-why, .tutor-hint, .tutor-lost { margin: 6px 0; font-size: 12px; color: var(--at-muted); line-height: 1.4; }
+.tutor-hint { color: var(--at-lamp, #f2c58a); }
+.tutor-lost { color: #ffb4a8; }
+.tutor-alone { margin: 6px 0 0; font-family: var(--at-font-type); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--at-uv); }
+.tutor-near { margin: 6px 0; font-size: 12px; color: var(--at-lamp, #f2c58a); }
+.tutor-near i { display: block; height: 4px; background: var(--at-line); border-radius: 2px; margin-top: 4px; }
+.tutor-near b { display: block; height: 100%; width: 0; background: var(--at-lamp, #f2c58a); border-radius: 2px; transition: width var(--eco-fast) var(--eco-ease); }
+.tutor-help { display: flex; gap: 10px; margin: 6px 0; }
+.tutor-help[hidden], .tutor-near[hidden], .tutor-hint[hidden], .tutor-lost[hidden] { display: none; }
+.tutor-learned { margin: 4px 0 0 18px; padding: 0; font-size: 12px; }
+.tutor-closing { flex-wrap: wrap; }
+
+body.reduce-motion .tutor-ring { animation: none; transition: none; }
+@media (prefers-reduced-motion: reduce) { .tutor-ring { animation: none; transition: none; } }
+
+/* Lista de tutoriais na ajuda e o cartão da tela de início */
+.lesson-folder { margin: 8px 0; border: 1px solid var(--at-line); border-radius: var(--eco-radius-s); padding: 4px 8px; }
+.lesson-folder > summary { cursor: pointer; display: flex; flex-direction: column; gap: 1px; padding: 4px 0; }
+.lesson-folder > summary small { color: var(--at-muted); font-size: 11px; }
+.lesson { padding: 8px 0; border-top: 1px dashed var(--at-line); }
+.lesson h4 { margin: 0 0 2px; font-size: 13px; }
+.lesson h4 small { display: block; color: var(--at-muted); font-weight: 400; font-size: 11px; }
+.lesson p { margin: 2px 0 6px; font-size: 12px; color: var(--at-text-2, var(--at-muted)); }
+.lesson.done h4::after { content: ' ✓'; color: #7fd69a; }
+.lesson-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.task-help {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-left: 6px;
+  padding: 0;
+  border: 1px solid var(--at-line-strong);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--at-muted);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.task-help:hover { color: var(--at-uv); border-color: var(--at-uv); }
+
+.start-learn-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 18px;
+  padding: 12px 14px;
+  border: 1px dashed var(--at-line-strong);
+  border-radius: var(--eco-radius-m);
+  background: color-mix(in srgb, var(--at-uv) 8%, transparent);
+}
+
+.start-learn-card p { margin: 0; flex: 1; font-size: 13px; }
+.start-learn-card strong { display: block; }
+
+.tab-practice-mark { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--at-lamp, #f2c58a); }
+
+/* Durante um tutorial, a barra da Leitura não se esconde: o passo pode apontar para ela */
+body.tutoring .reader-bar.is-hidden {
+  opacity: 1 !important;
+  transform: translate(-50%, 0) !important;
+  pointer-events: auto !important;
+}

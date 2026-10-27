@@ -205,3 +205,39 @@ test('backup: exportar e importar ida e volta; importar não apaga; revisão men
   assert.equal(doc1After.name, 'Carta Antiga Revisão Recente');
 });
 
+
+test('backup: fontes enviadas pela pessoa vão no backup e voltam com o mesmo id, sem duplicar', async () => {
+  const stored = new Map();
+  const withFonts = () => {
+    const api = createMockApi();
+    api.expansions = {
+      async listUserFonts() { return Array.from(stored.values()); },
+      async restoreUserFont(item, blob) { stored.set(item.id, { item, blob }); },
+    };
+    return api;
+  };
+  const original = withFonts();
+  const bytes = new Uint8Array([0, 1, 0, 0, 9, 8, 7]);
+  stored.set('usuario-font-x-400-1', {
+    item: { id: 'usuario-font-x-400-1', kind: 'font', family: 'X', file: 'fontes/x.ttf', source: 'usuario' },
+    blob: new Blob([bytes], { type: 'font/ttf' }),
+  });
+
+  const backup = await exportBackup(original);
+  assert.equal(backup.fonts.length, 1);
+  assert.equal(backup.fonts[0].item.id, 'usuario-font-x-400-1');
+
+  stored.clear();
+  const fresh = withFonts();
+  const result = await importBackup(fresh, backup);
+  assert.equal(result.importedFonts, 1);
+  const back = stored.get('usuario-font-x-400-1');
+  assert.deepEqual(new Uint8Array(await back.blob.arrayBuffer()), bytes);
+
+  const again = await importBackup(fresh, backup);
+  assert.equal(again.importedFonts, 0, 'a font that is already there is not added twice');
+
+  // An API without fonts (older, or server mode without browser storage) still backs up
+  const plain = await exportBackup(createMockApi());
+  assert.deepEqual(plain.fonts, []);
+});

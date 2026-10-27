@@ -1,5 +1,8 @@
 import './ui/styles.css';
 import './ui/editor.css';
+import './ui/surfaces.css';
+import './ui/ambient.css';
+import './ui/tutorial.css';
 import './ui/controls.css';
 import './ui/start.css';
 import './ui/reader.css';
@@ -15,6 +18,7 @@ import { createEditor } from './editor/editor.js';
 import { createReading } from './reading/reading.js';
 import { play, getSoundSettings, setSoundSettings, matchTypingVoice, isSoundEnabled } from './ui/sound.js';
 import { notify } from './ui/notify.js';
+import { mountTutorials } from './tutorial/host.js';
 
 const appRoot = document.getElementById('app');
 if (appRoot) {
@@ -89,6 +93,8 @@ if (appRoot) {
     };
 
     window.__atelie = Object.freeze(atelieApi);
+
+    mountTutorials({ root: document.body, shell, editor, reading, api, diagnostics: isDiagnostics });
 
     // Initial polite welcome offer for sound (opt-in)
     if (typeof localStorage !== 'undefined' && !localStorage.getItem('atelie-sound-prompt')) {

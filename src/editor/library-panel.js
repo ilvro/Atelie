@@ -1,15 +1,27 @@
 import { escapeHTML as esc, icon as renderIcon } from '../ui/icons.js';
 import { tape, stamp, tiltOf } from '../ui/primitives.js';
-import { defaultsFor } from './library-defaults.js';
+import { defaultsFor, libraryDropSize, stampTilt } from './library-defaults.js';
+import { getSettings } from '../ui/settings.js';
 import {
   filterLibraryItems,
   getStoredFavorites,
   toggleStoredFavorite,
   isStoredFavorite,
+  getRecentLibraryIds,
+  recordRecentLibraryId,
 } from './library-search.js';
+import { createFilterBar } from '../ui/filter-bar.js';
+import { preserveScroll } from '../ui/scroll.js';
 import { imageLayer, textLayer, addLayer, updateLayer, insertionIndex } from '../domain/handouts.js';
 import { contextMenu } from '../ui/context-menu.js';
 import { play } from '../ui/sound.js';
+
+const TRANSPARENT_DRAG_IMAGE = (() => {
+  if (typeof Image === 'undefined') return null;
+  const img = new Image();
+  img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+  return img;
+})();
 
 const CANONICAL_CATEGORIES = [
   'Papéis',
@@ -46,6 +58,9 @@ function sortCategories(categories) {
   });
 }
 
+import { uploadFont, removeUserFont } from './font-upload.js';
+import { emptyStateIllustration } from '../ui/illustrations.js';
+
 export function createLibraryPanel(shell, { api, state, fonts } = {}) {
   const container = document.createElement('div');
   container.className = 'library-panel-root';
@@ -54,13 +69,41 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
   let sources = [{ id: 'casa', name: 'Coleção do Ateliê' }];
   let activeType = 'elements'; // 'elements' | 'fonts'
   let activeSource = 'all'; // 'all' | 'casa' | expansion id
-  let activeCategory = 'all'; // 'all' | specific category name
+  let activeCategory = 'all'; // 'all' | specific category name (elements)
+  let activeFontCategory = 'all'; // 'all' | specific category name (fonts)
+  let openingCategory = null; // group that just opened: plays the expand animation
   let searchQuery = '';
   let favoritesOnly = false;
   let collapsedCategories = new Set();
   let itemsLimit = 60;
   let hoverTimeout = null;
   let hoverPreviewEl = null;
+
+  const filterBar = createFilterBar({
+    onChange(key, value) {
+      if (key === 'source') activeSource = value;
+      if (key === 'category') {
+        if (activeType === 'fonts') activeFontCategory = value; else activeCategory = value;
+      }
+      itemsLimit = 60;
+      render();
+    },
+    onClear() {
+      activeSource = 'all';
+      activeCategory = 'all';
+      activeFontCategory = 'all';
+      favoritesOnly = false;
+      itemsLimit = 60;
+      render();
+    },
+  });
+
+  const scrollEl = () => container.querySelector('.library-content-scroll');
+
+  /** Re-renders keeping the clicked header (or the scroll position) where it was. */
+  function renderKeepingScroll(anchorSelector) {
+    preserveScroll(scrollEl, anchorSelector || null, render, container);
+  }
 
   async function loadLibraryData() {
     try {
@@ -128,25 +171,13 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
     const defaults = defaultsFor(item);
     const shouldCover = cover || defaults.cover;
 
-    let w, h, x, y, fit;
-    if (shouldCover) {
-      w = doc.page.width;
-      h = doc.page.height;
-      x = 0;
-      y = 0;
-      fit = 'cover';
-    } else {
-      const pageW = doc.page.width;
-      const pageH = doc.page.height;
-      const maxW = Math.round(pageW * 0.5);
-      const itemW = item.width || 400;
-      const itemH = item.height || 400;
-      w = Math.min(itemW, maxW);
-      h = Math.round(w * (itemH / itemW));
-      x = Math.round((pageW - w) / 2);
-      y = Math.round((pageH - h) / 2);
-      fit = 'contain';
-    }
+    const dropSize = libraryDropSize(item, doc.page);
+    const shouldCoverNow = shouldCover || dropSize.cover;
+    const w = shouldCoverNow ? doc.page.width : dropSize.width;
+    const h = shouldCoverNow ? doc.page.height : dropSize.height;
+    const x = shouldCoverNow ? 0 : Math.round((doc.page.width - w) / 2);
+    const y = shouldCoverNow ? 0 : Math.round((doc.page.height - h) / 2);
+    const fit = shouldCoverNow ? 'cover' : 'contain';
 
     const newLayer = imageLayer({
       name: item.name || 'Elemento',
@@ -154,6 +185,7 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
       y,
       width: Math.round(w),
       height: Math.round(h),
+      rotation: getSettings().tiltStamps === false ? 0 : stampTilt(item),
       blend: defaults.blend,
       opacity: defaults.opacity ?? 1,
       image: {
@@ -170,6 +202,7 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
     const insertIdx = insertionIndex(doc, newLayer, { selectedId, role });
     const next = addLayer(doc, newLayer, insertIdx);
     state.edit(next, { label: `Adicionar ${newLayer.name}` });
+    recordRecentLibraryId(item.id);
     state.select(newLayer.id);
     state.flash?.(newLayer.id);
     state.land?.(newLayer.id);
@@ -189,6 +222,7 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
 
   function applyFontToHandout(item) {
     if (!state?.handout) return;
+    recordRecentLibraryId(item.id);
     const selectedId = state.selection ?? state.selectedLayerId;
     const selectedLayer = state.handout.layers.find(l => l.id === selectedId);
 
@@ -243,6 +277,29 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
     }
   }
 
+  function cardHTML(item, favorites) {
+    const isFav = favorites.includes(item.id);
+    const previewUrl = api?.library?.previewURL ? api.library.previewURL(item) : (item.preview || '');
+    return `
+      <div class="at-card library-item-card"
+           data-id="${esc(item.id)}"
+           data-category="${esc(item.category || '')}"
+           draggable="true"
+           style="transform: rotate(${tiltOf(item.id)}deg);">
+        <button type="button" class="library-item-fav-btn ${isFav ? 'is-fav' : ''}" data-fav-id="${esc(item.id)}" aria-label="Favoritar" title="Favoritar">
+          ${isFav ? '★' : '☆'}
+        </button>
+        <div class="library-card-thumb">
+          <img src="${esc(previewUrl)}" alt="${esc(item.name)}" loading="lazy" />
+        </div>
+        <div class="library-card-footer">
+          <span class="library-card-name" title="${esc(item.name)}">${esc(item.name)}</span>
+          ${item.source && item.source !== 'casa' ? `<span class="at-stamp is-default library-expansion-stamp">${esc(item.source)}</span>` : ''}
+        </div>
+      </div>
+    `;
+  }
+
   function render() {
     const favorites = getStoredFavorites();
 
@@ -253,6 +310,12 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
       favoritesOnly,
       favorites,
     });
+
+    if (activeType === 'fonts' && activeFontCategory !== 'all') {
+      for (let i = filtered.length - 1; i >= 0; i--) {
+        if (filtered[i].category !== activeFontCategory) filtered.splice(i, 1);
+      }
+    }
 
     const hasMultipleSources = sources && sources.length > 1;
 
@@ -277,28 +340,18 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
             </div>
           </div>
 
-          ${activeType === 'elements' ? `
-            <div class="library-category-filter-bar">
-              <div class="library-category-pills">
-                <button type="button" class="at-chip ${activeCategory === 'all' ? 'is-active' : ''}" data-cat-filter="all">Todas</button>
-                ${sortCategories(Array.from(new Set(rawItems.filter(i => i.kind === 'element').map(i => i.category).filter(Boolean)))).map(c => `
-                  <button type="button" class="at-chip ${activeCategory === c ? 'is-active' : ''}" data-cat-filter="${esc(c)}">${esc(c)}</button>
-                `).join('')}
-              </div>
-              <button type="button" class="library-toggle-all-btn" data-action="toggle-all-cats" title="Alternar recolher e expandir tudo">
-                ${collapsedCategories.size > 0 ? 'Expandir' : 'Recolher'}
-              </button>
-            </div>
+          ${activeType === 'fonts' && api?.expansions?.addUserFont ? `
+            <button type="button" class="at-btn is-sm library-upload-font-btn" data-action="upload-font" title="Enviar uma fonte (.ttf, .otf, .woff, .woff2) deste computador">
+              ${renderIcon('upload', 13)}<span>Enviar fonte</span>
+            </button>
           ` : ''}
 
-          ${hasMultipleSources ? `
-            <div class="library-source-chips">
-              <button type="button" class="at-chip ${activeSource === 'all' ? 'is-active' : ''}" data-source="all">Tudo</button>
-              <button type="button" class="at-chip ${activeSource === 'casa' ? 'is-active' : ''}" data-source="casa">Coleção do Ateliê</button>
-              ${sources.filter(s => s.id !== 'casa').map(s => `
-                <button type="button" class="at-chip ${activeSource === s.id ? 'is-active' : ''}" data-source="${esc(s.id)}">${esc(s.name)}</button>
-              `).join('')}
-            </div>
+          <div class="library-filter-slot"></div>
+
+          ${activeType === 'elements' ? `
+            <button type="button" class="library-toggle-all-btn" data-action="toggle-all-cats" title="Alternar recolher e expandir tudo">
+              ${collapsedCategories.size > 0 ? 'Expandir tudo' : 'Recolher tudo'}
+            </button>
           ` : ''}
         </div>
 
@@ -308,8 +361,10 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
 
     if (filtered.length === 0) {
       html += `
-        <div class="library-empty-results">
+        <div class="library-empty-results empty-state">
+          ${emptyStateIllustration('search')}
           <p>Nenhum item encontrado.</p>
+          <small>Tente outra palavra ou limpe os filtros.</small>
         </div>
       `;
     } else if (activeType === 'elements') {
@@ -327,15 +382,27 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
         : allSorted.filter(c => c === activeCategory);
       let renderedCount = 0;
 
+      const showRecents = activeCategory === 'all' && !searchQuery && !favoritesOnly;
+      const recentItems = showRecents
+        ? getRecentLibraryIds().map(id => filtered.find(i => i.id === id)).filter(Boolean)
+        : [];
+      if (recentItems.length) {
+        html += `
+          <div class="library-category-group library-recents" data-category="__recents">
+            <div class="library-category-header is-static"><span class="at-tape library-category-tape"><span class="category-name">Usados recentemente</span><span class="category-count">(${recentItems.length})</span></span></div>
+            <div class="library-card-grid">${recentItems.map(it => cardHTML(it, favorites)).join('')}</div>
+          </div>`;
+      }
+
       for (const cat of sortedCategories) {
         const catItems = byCategory.get(cat) || [];
         const isCollapsed = collapsedCategories.has(cat);
 
         html += `
-          <div class="library-category-group" data-category="${esc(cat)}">
+          <div class="library-category-group ${openingCategory === cat ? 'is-opening' : ''}" data-category="${esc(cat)}">
             <button type="button" class="library-category-header" data-toggle-category="${esc(cat)}" aria-expanded="${!isCollapsed}">
               <span class="at-tape library-category-tape">
-                <span class="category-arrow">${isCollapsed ? '▸' : '▾'}</span>
+                <span class="category-arrow ${isCollapsed ? '' : 'is-open'}">${renderIcon('chevron', 12)}</span>
                 <span class="category-name">${esc(cat)}</span>
                 <span class="category-count">(${catItems.length})</span>
               </span>
@@ -348,27 +415,7 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
             renderedCount++;
             if (renderedCount > itemsLimit) continue;
 
-            const isFav = favorites.includes(item.id);
-            const previewUrl = api?.library?.previewURL ? api.library.previewURL(item) : (item.preview || '');
-
-            html += `
-              <div class="at-card library-item-card"
-                   data-id="${esc(item.id)}"
-                   data-category="${esc(item.category || '')}"
-                   draggable="true"
-                   style="transform: rotate(${tiltOf(item.id)}deg);">
-                <button type="button" class="library-item-fav-btn ${isFav ? 'is-fav' : ''}" data-fav-id="${esc(item.id)}" aria-label="Favoritar" title="Favoritar">
-                  ${isFav ? '★' : '☆'}
-                </button>
-                <div class="library-card-thumb">
-                  <img src="${esc(previewUrl)}" alt="${esc(item.name)}" loading="lazy" />
-                </div>
-                <div class="library-card-footer">
-                  <span class="library-card-name" title="${esc(item.name)}">${esc(item.name)}</span>
-                  ${item.source && item.source !== 'casa' ? `<span class="at-stamp is-default library-expansion-stamp">${esc(item.source)}</span>` : ''}
-                </div>
-              </div>
-            `;
+            html += cardHTML(item, favorites);
           }
           html += '</div>';
         }
@@ -441,6 +488,29 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
     `;
 
     container.innerHTML = html;
+
+    // Filter groups: origin (only with more than one) and category, with counts
+    const typeItems = rawItems.filter(i => (activeType === 'fonts' ? i.kind === 'font' : i.kind === 'element'));
+    const bySource = activeSource === 'all' ? typeItems : typeItems.filter(i => (i.source || 'casa') === activeSource);
+    const categories = activeType === 'fonts'
+      ? Array.from(new Set(typeItems.map(i => i.category).filter(Boolean))).sort((a, b) => a.localeCompare(b, 'pt'))
+      : sortCategories(Array.from(new Set(typeItems.map(i => i.category).filter(Boolean))));
+    const filterGroups = [];
+    if (hasMultipleSources) {
+      filterGroups.push({
+        key: 'source', label: 'Origem', value: activeSource, segmented: true, allLabel: 'Tudo',
+        options: sources.map(s => ({ value: s.id, label: s.name })),
+      });
+    }
+    filterGroups.push({
+      key: 'category', label: 'Categoria',
+      value: activeType === 'fonts' ? activeFontCategory : activeCategory,
+      allLabel: `Todas (${bySource.length})`,
+      options: categories.map(c => ({ value: c, label: c, count: bySource.filter(i => i.category === c).length })),
+    });
+    filterBar.update({ groups: filterGroups, extraActive: favoritesOnly ? [{ label: 'Favoritos' }] : [] });
+    container.querySelector('.library-filter-slot')?.appendChild(filterBar.element);
+
     attachEvents();
   }
 
@@ -465,28 +535,10 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
       });
     });
 
-    // Source chips
-    container.querySelectorAll('[data-source]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        activeSource = btn.dataset.source;
-        itemsLimit = 60;
-        render();
-      });
-    });
-
     // Favorites filter
     container.querySelector('[data-action="toggle-fav-filter"]')?.addEventListener('click', () => {
       favoritesOnly = !favoritesOnly;
-      render();
-    });
-
-    // Category pills filter
-    container.querySelectorAll('[data-cat-filter]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        activeCategory = btn.dataset.catFilter;
-        itemsLimit = 60;
-        render();
-      });
+      renderKeepingScroll();
     });
 
     // Toggle all categories collapse/expand
@@ -497,7 +549,7 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
       } else {
         collapsedCategories.clear();
       }
-      render();
+      renderKeepingScroll('[data-action="toggle-all-cats"]');
     });
 
     // Category expand/collapse
@@ -506,17 +558,29 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
         const cat = btn.dataset.toggleCategory;
         if (collapsedCategories.has(cat)) {
           collapsedCategories.delete(cat);
+          openingCategory = cat;
         } else {
           collapsedCategories.add(cat);
         }
-        render();
+        renderKeepingScroll(`[data-toggle-category="${CSS.escape(cat)}"]`);
+        openingCategory = null;
+      });
+    });
+
+    container.querySelector('[data-action="upload-font"]')?.addEventListener('click', () => {
+      uploadFont({
+        api, fonts, shell,
+        onDone: (item) => {
+          activeFontCategory = item.category;
+          loadLibraryData();
+        },
       });
     });
 
     // "Mostrar mais"
     container.querySelector('.library-more-btn')?.addEventListener('click', () => {
       itemsLimit += 60;
-      render();
+      renderKeepingScroll();
     });
 
     // Favorite star clicks on items
@@ -525,7 +589,7 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
         e.stopPropagation();
         const id = btn.dataset.favId;
         toggleStoredFavorite(id);
-        render();
+        renderKeepingScroll();
       });
     });
 
@@ -572,7 +636,7 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
               icon: 'star',
               run: () => {
                 toggleStoredFavorite(item.id);
-                render();
+                renderKeepingScroll();
               },
             },
           ],
@@ -593,6 +657,8 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
         e.dataTransfer.setData('text/x-atelie-library', JSON.stringify(item));
         e.dataTransfer.setData('application/json', JSON.stringify({ libraryId: item.id, item }));
         e.dataTransfer.effectAllowed = 'copy';
+        // The browser must not draw the card: the stage shows the real element as a ghost.
+        if (TRANSPARENT_DRAG_IMAGE) e.dataTransfer.setDragImage(TRANSPARENT_DRAG_IMAGE, 0, 0);
       });
 
       card.addEventListener('dragend', () => {
@@ -613,6 +679,26 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
         if (e.target.closest('.library-item-fav-btn')) return;
         applyFontToHandout(item);
       });
+
+      // Only fonts the person sent can be removed
+      if (item.source === 'usuario') {
+        card.addEventListener('contextmenu', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          contextMenu.open({
+            x: e.clientX,
+            y: e.clientY,
+            items: [
+              {
+                label: 'Remover fonte',
+                icon: 'trash',
+                danger: true,
+                run: () => removeUserFont({ api, shell, item, onDone: () => { activeFontCategory = 'all'; loadLibraryData(); } }),
+              },
+            ],
+          });
+        });
+      }
     });
 
     // Lazy load fonts in specimens
@@ -647,6 +733,13 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
       }
     }
   }
+
+  // Paper-coloured rectangles pulse softly while the list loads
+  container.innerHTML = `
+    <div class="library-drawer-inner library-skeleton" aria-busy="true" aria-label="Carregando a biblioteca">
+      <div class="library-top-bar"><div class="skeleton-line" style="width:70%"></div><div class="skeleton-line" style="width:45%"></div></div>
+      <div class="library-content-scroll"><div class="library-card-grid">${Array.from({ length: 8 }, () => '<div class="skeleton-card"></div>').join('')}</div></div>
+    </div>`;
 
   // Initial load
   loadLibraryData();

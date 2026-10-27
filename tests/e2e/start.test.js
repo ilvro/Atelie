@@ -157,7 +157,7 @@ test('start screen, welcome notes, presets, featured templates, templates drawer
     await page.waitForFunction(() => document.querySelector('#app-drawer')?.classList.contains('open'));
 
     // Filtrar por categoria 'Médico'
-    const medicoChip = page.locator('.templates-drawer-view .category-chips [data-category="Médico"]');
+    const medicoChip = page.locator('.templates-drawer-view .filter-chip[data-filter-group="category"][data-filter-value="Médico"]');
     await medicoChip.click();
     await page.waitForTimeout(200);
 
@@ -185,7 +185,8 @@ test('start screen, welcome notes, presets, featured templates, templates drawer
     await page.locator('.template-detail-back-btn').click();
     await page.waitForSelector('.templates-grid', { state: 'visible' });
 
-    // Fechar gaveta
+    // Fechar gaveta (Esc tira primeiro a seleção; o segundo fecha a gaveta)
+    await page.keyboard.press('Escape');
     await page.keyboard.press('Escape');
     await page.waitForFunction(() => !document.querySelector('#app-drawer')?.classList.contains('open'));
 

@@ -1,4 +1,5 @@
 import { escapeHTML as esc, icon as renderIcon } from './icons.js';
+import { matches } from './keymap.js';
 
 export function normalizeText(str) {
   return String(str ?? '')
@@ -200,7 +201,7 @@ export const palette = {
 // Global Ctrl+K / Cmd+K listener
 if (typeof window !== 'undefined') {
   window.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+    if (matches(e, 'palette')) {
       e.preventDefault();
       palette.toggle();
     }

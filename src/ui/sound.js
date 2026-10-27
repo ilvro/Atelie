@@ -577,6 +577,48 @@ function synthUvToggle(ctx, destination, vol = 1) {
   osc2.stop(t + 0.028);
 }
 
+/** Changing the room light: a lamp button, a metal flashlight click, or a match being struck. */
+export function lightSwitchVoice(mode) {
+  if (mode === 'candle') return 'match';
+  if (mode === 'flashlight') return 'metal';
+  return 'button';
+}
+
+function synthLightSwitch(ctx, destination, mode = 'lamp', vol = 1) {
+  const t = ctx.currentTime;
+  const voice = lightSwitchVoice(mode);
+  if (voice === 'match') {
+    // Scratch, then the small flare
+    const noise = ctx.createBufferSource();
+    noise.buffer = getNoiseBuffer(ctx);
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(3200, t);
+    filter.frequency.exponentialRampToValueAtTime(1400, t + 0.18);
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.linearRampToValueAtTime(0.3 * vol, t + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(destination);
+    noise.start(t);
+    noise.stop(t + 0.22);
+    return;
+  }
+  const osc = ctx.createOscillator();
+  osc.type = voice === 'metal' ? 'square' : 'triangle';
+  osc.frequency.setValueAtTime(voice === 'metal' ? 1900 : 1100, t);
+  osc.frequency.exponentialRampToValueAtTime(voice === 'metal' ? 760 : 420, t + 0.02);
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(0.26 * vol, t);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + (voice === 'metal' ? 0.05 : 0.03));
+  osc.connect(gain);
+  gain.connect(destination);
+  osc.start(t);
+  osc.stop(t + 0.06);
+}
+
 function synthArchive(ctx, destination, vol = 1) {
   const t = ctx.currentTime;
 
@@ -800,6 +842,11 @@ export function play(name, options = {}) {
         } else {
           stopUvHum();
         }
+        return true;
+      }
+
+      case 'light-switch': {
+        synthLightSwitch(ctx, masterGain, options.mode || 'lamp');
         return true;
       }
 

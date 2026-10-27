@@ -33,3 +33,21 @@ export function emptyDeskIllustration() {
   `;
 }
 
+
+/**
+ * Small empty-state drawings (search with no result, empty folder, a document with only its paper).
+ * Paper sheets on the desk, tilted, drawn with the current text colour so they follow the theme.
+ */
+export function emptyStateIllustration(kind = 'search') {
+  const sheet = '<rect x="34" y="18" width="62" height="78" rx="3" fill="var(--at-paper, #e9dfc8)" stroke="currentColor" stroke-opacity=".25" transform="rotate(-6 65 57)"/>';
+  const lines = '<path d="M46 40h38M46 52h38M46 64h26" stroke="#1d1b24" stroke-opacity=".28" stroke-width="2.4" stroke-linecap="round" transform="rotate(-6 65 57)"/>';
+  let extra = '';
+  if (kind === 'search') {
+    extra = '<circle cx="92" cy="78" r="17" fill="none" stroke="currentColor" stroke-width="4"/><path d="m105 91 15 15" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><path d="M85 72l14 12M99 72 85 84" stroke="currentColor" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/>';
+  } else if (kind === 'folder') {
+    extra = '<path d="M26 74h30l8 10h42v30H26z" fill="var(--at-desk-3, #2a2634)" stroke="currentColor" stroke-opacity=".55" stroke-width="2.5" stroke-linejoin="round"/>';
+  } else if (kind === 'layers') {
+    extra = '<g fill="none" stroke="currentColor" stroke-opacity=".6" stroke-width="2.5" stroke-dasharray="5 5"><rect x="46" y="70" width="58" height="34" rx="3" transform="rotate(4 75 87)"/></g><path d="M75 80v14M68 87h14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>';
+  }
+  return `<svg class="empty-state-svg empty-state-${kind}" width="132" height="124" viewBox="0 0 140 124" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="color: var(--at-muted, #8d8578);">${sheet}${lines}${extra}</svg>`;
+}

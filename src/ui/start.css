@@ -805,3 +805,9 @@
   }
 }
 
+
+.templates-filter-slot {
+  flex-shrink: 0;
+  max-height: 40%;
+  overflow-y: auto;
+}

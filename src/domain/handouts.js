@@ -1,4 +1,5 @@
 import { ValidationError } from './errors.js';
+import { pointsError } from './brush.js';
 
 export const HANDOUT_LIMITS = {
   layers: 200,
@@ -112,6 +113,46 @@ export function imageLayer(patch = {}) {
   };
 }
 
+/** The look a new text should inherit from an existing text layer. */
+export function textStyleFrom(layer) {
+  if (!layer || layer.kind !== 'text' || !layer.text) return null;
+  const { font, color, size } = layer.text;
+  return { font: { ...font }, color, size };
+}
+
+/** Style for a new text: the last one edited in this document, else the topmost text layer, else none (defaults). */
+export function inheritedTextStyle(handout, recorded = null) {
+  if (recorded) return recorded;
+  const texts = (handout?.layers || []).filter(l => l.kind === 'text');
+  return texts.length ? textStyleFrom(texts[texts.length - 1]) : null;
+}
+
+/**
+ * A duplicate "with variation": the copy sits a little away, turned a few degrees either way,
+ * and procedural effects / worn ink get a new seed so it does not look photocopied.
+ * `rand` returns [0, 1) (injected for tests).
+ */
+export function varyLayer(layer, rand = Math.random) {
+  const patch = {
+    x: Math.round(layer.x + 24),
+    y: Math.round(layer.y + 24),
+  };
+  const magnitude = 2 + rand() * 2;
+  const sign = rand() < 0.5 ? -1 : 1;
+  patch.rotation = Math.round((((layer.rotation || 0) + sign * magnitude) % 360 + 360) % 360 * 100) / 100;
+  const nextSeed = () => 1 + Math.floor(rand() * 99998);
+  if (layer.kind === 'effect' && layer.effect) {
+    patch.effect = { ...layer.effect, seed: nextSeed() };
+  } else if (layer.kind === 'text' && layer.text?.ink) {
+    patch.text = { ...layer.text, ink: { ...layer.text.ink, seed: nextSeed() } };
+  }
+  return patch;
+}
+
+export function newLayerId() {
+  return 'l-' + randomId(8);
+}
+
 export function textLayer(patch = {}) {
   const { text: textPatch, ...layerPatch } = patch;
   return {
@@ -132,6 +173,7 @@ export function textLayer(patch = {}) {
       letterSpacing: 0,
       box: 'area',
       fit: 'overflow',
+      highlight: null,
       ink: {
         style: 'clean',
         wear: 0,
@@ -627,12 +669,24 @@ export function validateHandout(value) {
       }
       if (!['area', 'point'].includes(txt.box)) fail(`${path}.text.box`, 'box deve ser area ou point.');
       if (!['overflow', 'shrink'].includes(txt.fit)) fail(`${path}.text.fit`, 'fit deve ser overflow ou shrink.');
+      if (txt.highlight !== undefined && txt.highlight !== null) {
+        const hl = txt.highlight;
+        if (!isPlainObject(hl) || typeof hl.color !== 'string' || !HEX_COLOR_RE.test(hl.color) ||
+            typeof hl.opacity !== 'number' || hl.opacity < 0 || hl.opacity > 1 ||
+            typeof hl.padding !== 'number' || hl.padding < 0 || hl.padding > 100) {
+          fail(`${path}.text.highlight`, 'highlight deve ser null ou ter color hex, opacity 0 a 1 e padding 0 a 100.');
+        }
+      }
       if (!isPlainObject(txt.ink) || !['clean', 'typewriter', 'handwriting', 'stamp'].includes(txt.ink.style) || typeof txt.ink.wear !== 'number' || txt.ink.wear < 0 || txt.ink.wear > 1 || !Number.isInteger(txt.ink.seed)) {
         fail(`${path}.text.ink`, 'ink inválido.');
       }
     } else if (layer.kind === 'shape') {
       const shp = layer.shape;
-      if (!['rect', 'ellipse', 'line'].includes(shp.type)) fail(`${path}.shape.type`, 'Tipo de forma inválido.');
+      if (!['rect', 'ellipse', 'line', 'path'].includes(shp.type)) fail(`${path}.shape.type`, 'Tipo de forma inválido.');
+      if (shp.type === 'path') {
+        const problem = pointsError(shp.points);
+        if (problem) fail(`${path}.shape.points`, problem);
+      }
       if (shp.fill !== null && (typeof shp.fill !== 'string' || !HEX_COLOR_RE.test(shp.fill))) {
         fail(`${path}.shape.fill`, 'fill deve ser null ou cor hex.');
       }

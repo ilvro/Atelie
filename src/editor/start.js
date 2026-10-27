@@ -22,6 +22,7 @@ export function createStartScreen(container, {
   onOpenTemplate,
   onOpenTemplatesDrawer,
   onExploreExpansion,
+  getOpenIds = () => [],
 } = {}) {
   const root = document.createElement('div');
   root.className = 'at-start-screen';
@@ -43,7 +44,10 @@ export function createStartScreen(container, {
 
     // 2. Recent documents
     try {
-      const recentIds = getRecentIds().slice(0, 6);
+      // Documents open in tabs come first: "Continuar" is where you left off.
+      const openIds = getOpenIds();
+      const recentIds = [...openIds, ...getRecentIds().filter(id => !openIds.includes(id))]
+        .slice(0, Math.max(6, openIds.length));
       if (recentIds.length > 0 && api?.handouts?.list) {
         const allHandouts = await api.handouts.list();
         const found = [];
@@ -147,9 +151,10 @@ export function createStartScreen(container, {
       const prevData = recentPreviews.get(doc.id);
       const title = doc.name || 'Sem título';
       const updatedDate = doc.updatedAt ? new Date(doc.updatedAt).toLocaleDateString('pt-BR') : '';
+      const isOpen = getOpenIds().includes(doc.id);
 
       return `
-        <div class="at-card start-recent-card" role="button" tabindex="0" data-id="${esc(doc.id)}" aria-label="Abrir documento ${esc(title)}" style="transform: rotate(${tilt}deg);">
+        <div class="at-card start-recent-card ${isOpen ? 'is-open-tab' : ''}" role="button" tabindex="0" data-id="${esc(doc.id)}" aria-label="Abrir documento ${esc(title)}" style="transform: rotate(${tilt}deg);">
           <div class="start-recent-preview">
             ${prevData
               ? `<img src="${esc(prevData)}" alt="${esc(title)}" />`
@@ -158,7 +163,7 @@ export function createStartScreen(container, {
           </div>
           <div class="start-recent-info">
             <span class="start-recent-title">${esc(title)}</span>
-            <span class="start-recent-date">${esc(updatedDate)}</span>
+            <span class="start-recent-date">${isOpen ? 'Aberto em aba' : esc(updatedDate)}</span>
           </div>
         </div>
       `;
@@ -218,6 +223,12 @@ export function createStartScreen(container, {
           ${presetsMarkup}
         </div>
       </section>
+
+      <!-- Aprender o básico -->
+      <div class="start-learn-card">
+        <p><strong>Aprender o básico</strong>Preencha um modelo pronto em 3 minutos: o tutorial aponta, você faz.</p>
+        <button type="button" class="at-btn is-primary" data-action="tutorial-start" data-id="fill-template">Começar o tutorial</button>
+      </div>
 
       <!-- Seção CONTINUAR (se houver recentes) -->
       ${recentDocs.length > 0 ? `

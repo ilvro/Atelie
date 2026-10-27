@@ -28,7 +28,10 @@ const paths = {
   ruler: '<path d="m3 16 13-13 5 5L8 21zM7 12l2 2m1-5 3 3m0-6 2 2m1-5 3 3"/>',
   trash: '<path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7"/>',
   camera: '<path d="M3 7h5l2-3h4l2 3h5v14H3z"/><circle cx="12" cy="13" r="4"/>',
-  eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
+  rect: '<rect x="4" y="6" width="16" height="12" rx="1"/>',
+  ellipse: '<ellipse cx="12" cy="12" rx="9" ry="6"/>',
+  line: '<path d="M5 19 19 5"/>',
+  'arrow-left': '<path d="M19 12H5m6-6-6 6 6 6"/>',
   display: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M12 17v4M7 21h10"/>',
   close: '<path d="m5 5 14 14M19 5 5 19"/>',
   frame: '<path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/>',
@@ -53,6 +56,12 @@ const paths = {
   printer: '<path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/>',
 };
 
-export const icon = (name, size = 18) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name] || paths.room}</svg>`;
+function pathFor(name) {
+  if (paths[name]) return paths[name];
+  if (typeof import.meta !== 'undefined' && import.meta.env?.DEV) console.warn(`[atelie] ícone inexistente: "${name}"`);
+  return paths.room;
+}
+
+export const icon = (name, size = 18) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${pathFor(name)}</svg>`;
 export const renderIcon = icon;
 export const escapeHTML = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));

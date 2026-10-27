@@ -201,6 +201,23 @@ export function rotateBox(box, pointer, { snap = false } = {}) {
 }
 
 /**
+ * Rotation after dragging from `startPointer` to `pointer` around `center`: the angle the pointer
+ * swept is added to the rotation the layer had when the gesture began (no fixed +90° as in rotateBox).
+ * If snap is true, the result snaps to 15-degree multiples.
+ */
+export function rotateBoxBy(startRotation, center, startPointer, pointer, { snap = false } = {}) {
+  const a0 = Math.atan2(startPointer[1] - center[1], startPointer[0] - center[0]);
+  const a1 = Math.atan2(pointer[1] - center[1], pointer[0] - center[0]);
+  let deg = (startRotation || 0) + ((a1 - a0) * 180) / Math.PI;
+  deg = ((deg % 360) + 360) % 360;
+  if (snap) {
+    deg = Math.round(deg / 15) * 15;
+    deg = ((deg % 360) + 360) % 360;
+  }
+  return Math.round(deg * 100) / 100;
+}
+
+/**
  * Snaps unrotated box to target guidelines (edges and centers).
  * targets: { x: number[], y: number[] }
  * Returns { box, guides: [{ axis: 'x'|'y', at: number }] }
@@ -276,6 +293,25 @@ export function snapBox(box, targets = {}, threshold = 6) {
 /**
  * Returns the highest visible and unlocked layer containing the point, or null.
  */
+/** Every selectable layer under the point, topmost first. */
+export function layersAtPoint(handout, point) {
+  const hits = [];
+  const layers = handout.layers || [];
+  for (let i = layers.length - 1; i >= 0; i--) {
+    const layer = layers[i];
+    if (!layer.visible || layer.locked) continue;
+    if (pointInBox(point, layer)) hits.push(layer);
+  }
+  return hits;
+}
+
+/** Alt+click: the layer under the selected one in the stack (wraps to the top); the top one if nothing there is selected. */
+export function nextStackedLayer(hits, selectedId) {
+  if (!hits.length) return null;
+  const idx = hits.findIndex(l => l.id === selectedId);
+  return hits[(idx + 1) % hits.length];
+}
+
 export function layerAtPoint(handout, point) {
   const layers = handout.layers || [];
   // Highest layer is at the end of the array (rendered last on top)

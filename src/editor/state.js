@@ -2,10 +2,11 @@
  * Editor State & Undo History
  * Pure data model managing the open handout, selection, dirty flag, and coalescing undo history.
  */
-export function createEditorState(initialHandout, { now = () => Date.now(), limit = 100 } = {}) {
-  let savedSnapshot = initialHandout;
+export function createEditorState(initialHandout, { now = () => Date.now(), limit = 100, unsaved = false } = {}) {
+  // `unsaved`: the document came back from a draft, so it differs from what was last archived.
+  let savedSnapshot = unsaved ? null : initialHandout;
   let selectedLayerId = initialHandout.layers?.[0]?.id ?? null;
-  let isDirty = false;
+  let isDirty = Boolean(unsaved);
 
   // History is modeled as a list of step snapshots:
   // [ { label, handout, time, coalesce } ]

@@ -143,3 +143,29 @@ test('7. layerAtPoint ignores invisible and locked layers and chooses the top on
   assert.equal(none, null);
 });
 
+
+test('rotateBoxBy adds the swept angle to the starting rotation, with 15° snapping', async () => {
+  const { rotateBoxBy } = await import('../src/editor/geometry.js');
+  const center = [100, 100];
+  // Pointer sweeps a quarter turn clockwise (screen coordinates: +y is down)
+  assert.equal(rotateBoxBy(0, center, [200, 100], [100, 200]), 90);
+  assert.equal(rotateBoxBy(30, center, [200, 100], [100, 200]), 120);
+  // Counter-clockwise below zero wraps
+  assert.equal(rotateBoxBy(10, center, [200, 100], [100, 0]), 280);
+  // No movement keeps the rotation (no fixed +90°)
+  assert.equal(rotateBoxBy(37, center, [150, 150], [150, 150]), 37);
+  // Shift snaps to multiples of 15
+  assert.equal(rotateBoxBy(0, center, [200, 100], [190, 130], { snap: true }) % 15, 0);
+});
+
+test('layersAtPoint lists the whole stack topmost first and nextStackedLayer walks down it', async () => {
+  const { layersAtPoint, nextStackedLayer } = await import('../src/editor/geometry.js');
+  const mk = (id, extra = {}) => ({ id, x: 0, y: 0, width: 100, height: 100, rotation: 0, visible: true, locked: false, ...extra });
+  const doc = { layers: [mk('paper'), mk('mid'), mk('hidden', { visible: false }), mk('top'), mk('far', { x: 500 })] };
+  const hits = layersAtPoint(doc, [50, 50]);
+  assert.deepEqual(hits.map(l => l.id), ['top', 'mid', 'paper']);
+  assert.equal(nextStackedLayer(hits, null).id, 'top');
+  assert.equal(nextStackedLayer(hits, 'top').id, 'mid');
+  assert.equal(nextStackedLayer(hits, 'paper').id, 'top', 'wraps around');
+  assert.equal(nextStackedLayer([], 'x'), null);
+});

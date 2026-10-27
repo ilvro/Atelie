@@ -1,4 +1,5 @@
 import { escapeHTML as esc, icon as renderIcon } from './icons.js';
+import { matches } from './keymap.js';
 import { tape, card } from './primitives.js';
 import { emptyDeskIllustration } from './illustrations.js';
 import { notify } from './notify.js';
@@ -294,44 +295,42 @@ export function createShell(root, { onAction } = {}) {
       document.activeElement?.isContentEditable;
     if (isEditing) return;
 
-    if (e.ctrlKey || e.metaKey || e.altKey) return;
-
-    if (e.key === '?') {
+    if (matches(e, 'help')) {
       e.preventDefault();
       toggleDrawer('help');
       notifyAction('help', e);
       return;
     }
 
-    if (e.key === '1') {
+    if (matches(e, 'desk')) {
       e.preventDefault();
       closeDrawer();
       notifyAction('desk', e);
       return;
     }
 
-    if (e.key.toLowerCase() === 'd') {
+    if (matches(e, 'documents')) {
       e.preventDefault();
       toggleDrawer('documents');
       notifyAction('documents', e);
       return;
     }
 
-    if (e.key.toLowerCase() === 'b') {
+    if (matches(e, 'library')) {
       e.preventDefault();
       toggleDrawer('library');
       notifyAction('library', e);
       return;
     }
 
-    if (e.key.toLowerCase() === 'm') {
+    if (matches(e, 'templates')) {
       e.preventDefault();
       toggleDrawer('templates');
       notifyAction('templates', e);
       return;
     }
 
-    if (e.key === ',') {
+    if (matches(e, 'settings')) {
       e.preventDefault();
       openSettingsModal();
       notifyAction('settings', e);
@@ -409,7 +408,7 @@ export function createShell(root, { onAction } = {}) {
       subtitle: 'Voltar à visualização principal da bancada',
       icon: 'room',
       key: '1',
-      run: () => { closeDrawer(); onAction?.('desk'); }
+      run: () => { closeDrawer(); notifyAction('desk'); }
     },
     {
       id: 'action-docs',
@@ -417,7 +416,7 @@ export function createShell(root, { onAction } = {}) {
       subtitle: 'Abrir gaveta de documentos e trabalhos',
       icon: 'folder',
       key: 'D',
-      run: () => { openDrawer('documents'); onAction?.('documents'); }
+      run: () => { openDrawer('documents'); notifyAction('documents'); }
     },
     {
       id: 'action-library',
@@ -425,7 +424,7 @@ export function createShell(root, { onAction } = {}) {
       subtitle: 'Explorar papéis, texturas e carimbos',
       icon: 'layers',
       key: 'B',
-      run: () => { openDrawer('library'); onAction?.('library'); }
+      run: () => { openDrawer('library'); notifyAction('library'); }
     },
     {
       id: 'action-templates',
@@ -433,7 +432,7 @@ export function createShell(root, { onAction } = {}) {
       subtitle: 'Catálogo de modelos prontos para preencher',
       icon: 'frame',
       key: 'M',
-      run: () => { openDrawer('templates'); onAction?.('templates'); }
+      run: () => { openDrawer('templates'); notifyAction('templates'); }
     },
     {
       id: 'action-settings',
@@ -441,7 +440,7 @@ export function createShell(root, { onAction } = {}) {
       subtitle: 'Alterar superfície de trabalho e iluminação',
       icon: 'gear',
       key: ',',
-      run: () => { openSettingsModal(); onAction?.('settings'); }
+      run: () => { openSettingsModal(); notifyAction('settings'); }
     },
     {
       id: 'action-help',
@@ -449,7 +448,7 @@ export function createShell(root, { onAction } = {}) {
       subtitle: 'Guia de uso e comandos rápidos',
       icon: 'help',
       key: '?',
-      run: () => { openDrawer('help'); onAction?.('help'); }
+      run: () => { openDrawer('help'); notifyAction('help'); }
     },
   ]);
 
@@ -484,6 +483,7 @@ export function createShell(root, { onAction } = {}) {
       close: closeDrawer,
       toggle: toggleDrawer,
       isOpen: () => activeDrawer !== null,
+      current: () => activeDrawer,
       panel(name, elementOrRenderer) {
         drawerPanels.set(name, elementOrRenderer);
         if (activeDrawer === name) {

@@ -135,6 +135,8 @@ test('responsive e2e: 1600x950, 1024x768, 390x844, drawer, simplified editor, to
   // Test Escape key closes inspector drawer
   await page1024.click('.desk-inspector-toggle-btn');
   await page1024.waitForSelector('.app-inspector.open');
+  // Esc peels one thing at a time: the selection first, then the drawer
+  await page1024.keyboard.press('Escape');
   await page1024.keyboard.press('Escape');
   await page1024.waitForFunction(() => !document.querySelector('.app-inspector.open'));
 

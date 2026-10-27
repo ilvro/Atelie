@@ -119,3 +119,30 @@ export function defaultsFor(item, { defaultInkColor = null } = {}) {
     position: 'top',
   };
 }
+
+const TILTED_CATEGORIES = new Set(['carimbos', 'selos', 'lacres']);
+
+/**
+ * Stamps, seals and wax are never pressed perfectly straight: a small turn, at most ±3°.
+ * `rand` returns [0, 1) (injected for tests); 0 for everything else.
+ */
+export function stampTilt(item, rand = Math.random) {
+  if (!TILTED_CATEGORIES.has((item?.category || '').toLowerCase())) return 0;
+  return Math.round((rand() * 6 - 3) * 10) / 10;
+}
+
+/**
+ * Size (in page units) a library item gets when placed on a page: the whole page for
+ * covering items, otherwise at most half the page width keeping the item's proportion.
+ * One source of truth for the drag ghost, the drop and the click.
+ */
+export function libraryDropSize(item, page) {
+  if (defaultsFor(item).cover) {
+    return { width: page.width, height: page.height, cover: true };
+  }
+  const maxW = Math.round(page.width * 0.5);
+  const itemW = item?.width || 400;
+  const itemH = item?.height || 400;
+  const width = Math.min(itemW, maxW);
+  return { width, height: Math.round(width * (itemH / itemW)), cover: false };
+}

@@ -126,9 +126,10 @@ test('motion e2e: visual transitions, landing, FLIP, undo, slider bubble, and re
       dataTransfer: new DataTransfer(),
     });
     desk.dispatchEvent(event);
-    const ghost = document.querySelector('.stage-drag-ghost');
-    const ok = Boolean(ghost && ghost.style.opacity);
-    desk.dispatchEvent(new DragEvent('dragleave', { bubbles: true }));
+    document.dispatchEvent(new DragEvent('dragover', { bubbles: true, clientX: rect.left + 100, clientY: rect.top + 100 }));
+    const ghost = document.querySelector('body > .stage-drag-ghost');
+    const ok = Boolean(ghost && ghost.style.width && getComputedStyle(ghost).opacity === '1');
+    window.dispatchEvent(new Event('dragend'));
     window.__atelieActiveDragItem = null;
     return ok;
   });

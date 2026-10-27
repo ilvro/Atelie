@@ -539,3 +539,182 @@
 }
 
 
+
+/* ── Barra de filtros (src/ui/filter-bar.js): chips que quebram linha ─────── */
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--eco-space-2, 8px);
+  min-width: 0;
+}
+
+.filter-group {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'label label' 'chips more';
+  align-items: start;
+  gap: 4px 6px;
+  min-width: 0;
+}
+
+.filter-group-label {
+  grid-area: label;
+  font-family: var(--at-font-type);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--at-muted);
+}
+
+.filter-chips {
+  grid-area: chips;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 64px;
+  overflow: hidden;
+  min-width: 0;
+  transition: max-height var(--eco-mid) var(--eco-ease);
+}
+
+.filter-group.is-expanded .filter-chips {
+  max-height: none;
+}
+
+.filter-chip {
+  max-width: 100%;
+  white-space: normal;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.filter-chip-count {
+  opacity: 0.7;
+  font-size: 11px;
+}
+
+.filter-more-btn {
+  grid-area: more;
+  align-self: end;
+  background: none;
+  border: 0;
+  padding: 4px 6px;
+  color: var(--at-uv);
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.filter-more-btn:hover {
+  text-decoration: underline;
+}
+
+.filter-segmented {
+  grid-column: 1 / -1;
+  display: flex;
+  border: 1px solid var(--at-line-strong);
+  border-radius: var(--eco-radius-s, 4px);
+  overflow: hidden;
+}
+
+.filter-group.is-segmented {
+  grid-template-areas: 'label' 'chips';
+  grid-template-columns: 1fr;
+}
+
+.filter-segmented .filter-chip {
+  flex: 1 1 0;
+  border: 0;
+  border-radius: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.filter-active-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--at-muted);
+}
+
+.filter-active-tag {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--at-uv) 16%, transparent);
+  color: var(--at-text);
+}
+
+.filter-clear-btn {
+  margin-left: auto;
+  background: none;
+  border: 0;
+  color: var(--at-uv);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+body.reduce-motion .filter-chips { transition: none; }
+@media (prefers-reduced-motion: reduce) { .filter-chips { transition: none; } }
+
+/* ── Esqueletos de carregamento e estados vazios (Fase 13) ─────────────────── */
+.skeleton-line,
+.skeleton-card {
+  background: color-mix(in srgb, var(--at-paper, #e9dfc8) 14%, var(--at-desk-3, #24201c));
+  border-radius: 4px;
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+.skeleton-line { height: 12px; margin: 6px 0; }
+.skeleton-card { aspect-ratio: 3 / 4; }
+.skeleton-card.is-tall { aspect-ratio: 3 / 4.2; }
+.templates-skeleton { padding: 4px 2px; }
+.library-skeleton .library-card-grid,
+.templates-skeleton .templates-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 22px 14px;
+  text-align: center;
+  color: var(--at-muted);
+}
+
+.empty-state p { margin: 0; color: var(--at-text-2, var(--at-text)); }
+.empty-state small { font-size: 11px; max-width: 220px; }
+.empty-state .empty-state-svg { opacity: 0.9; }
+
+body.reduce-motion .skeleton-line,
+body.reduce-motion .skeleton-card { animation: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-line, .skeleton-card { animation: none; }
+}
+
+/* Selos e carimbos legíveis sob a luz UV: a tinta escura clareia e ganha um halo */
+html[data-light="uv"] .at-stamp.is-ink,
+html[data-light="uv"] .at-stamp.is-default {
+  color: #d9ccff;
+  border-color: #d9ccff;
+  text-shadow: 0 0 6px rgba(160, 138, 255, 0.55);
+}
+
+html[data-light="uv"] .at-stamp.is-wax {
+  color: #ff9a8f;
+  border-color: #ff9a8f;
+  text-shadow: 0 0 6px rgba(255, 120, 100, 0.45);
+}
+
+html[data-light="uv"] .at-stamp.is-accent {
+  color: #ffd9a3;
+  border-color: #ffd9a3;
+}

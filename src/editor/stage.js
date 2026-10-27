@@ -7,16 +7,29 @@ import {
   moveBox,
   resizeBox,
   rotateBox,
+  rotateBoxBy,
+  boxCenter,
   snapBox,
   layerAtPoint,
+  layersAtPoint,
+  nextStackedLayer,
 } from './geometry.js';
-import { updateLayer, canvasOperation } from '../domain/handouts.js';
+import { updateLayer, canvasOperation, isPaperLayer } from '../domain/handouts.js';
 import { createRulers } from './rulers.js';
 import { createSelectionBar } from './selection-bar.js';
+import { createDrawTools } from './draw-tools.js';
 import { play, isSoundEnabled } from '../ui/sound.js';
 
 const MIN_ZOOM = 0.1;
 const MAX_ZOOM = 4.0;
+
+/** CSS cursor with a curved arrow turned to point along the arc the corner would sweep. */
+function getRotateCursor(corner, rotation = 0) {
+  const base = { ne: 0, se: 90, sw: 180, nw: 270 }[corner] ?? 0;
+  const angle = (((base + rotation) % 360) + 360) % 360;
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><g transform='rotate(${angle} 12 12)'><path d='M5 17a9 9 0 0 1 0-10M5 7l-1 4 4-1M19 17a9 9 0 0 0 0-10' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/><path d='M5 17a9 9 0 0 1 0-10M5 7l-1 4 4-1' fill='none' stroke='black' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/></g></svg>`;
+  return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}") 12 12, crosshair`;
+}
 
 function getHandleCursor(handle, rotation = 0) {
   const baseAngles = {
@@ -51,7 +64,7 @@ function getHandleCursor(handle, rotation = 0) {
   }
 }
 
-export function createStage(container, { images, fonts, onSelect = () => {}, onEdit = () => {} } = {}) {
+export function createStage(container, { images, fonts, api, onSelect = () => {}, onEdit = () => {}, onMore = () => {}, onCreateTextAt = () => {}, onDraw = () => {}, onToolChange = () => {}, shortcutLabel = () => '' } = {}) {
   let currentHandout = null;
   let currentLight = 'normal';
   let currentZoom = 0.6;
@@ -71,6 +84,10 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
           <canvas class="stage-canvas"></canvas>
           <div class="stage-guides-overlay" aria-hidden="true"></div>
           <div class="stage-selection-outline" aria-hidden="true">
+            <div class="stage-rotate-zone" data-corner="nw"></div>
+            <div class="stage-rotate-zone" data-corner="ne"></div>
+            <div class="stage-rotate-zone" data-corner="se"></div>
+            <div class="stage-rotate-zone" data-corner="sw"></div>
             <div class="stage-rotate-stem"></div>
             <div class="stage-rotate-handle" data-handle="rot" title="Girar (Shift: 15°)"></div>
             <div class="stage-handle" data-handle="nw"></div>
@@ -123,6 +140,24 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
       edit: (next, meta) => onEdit(next, meta),
     },
     getZoom: () => currentZoom,
+    api,
+    fonts,
+    onMore,
+  });
+
+  const drawTools = createDrawTools(container, {
+    viewport,
+    pageWrap,
+    getZoom: () => currentZoom,
+    getHandout: () => currentHandout,
+    getSelectedLayer: () => currentHandout?.layers.find(l => l.id === selectedLayerId) || null,
+    onDraw,
+    onToolChange: (tool) => {
+      activeToolId = tool;
+      updateSelectionOutline();
+      onToolChange(tool);
+    },
+    shortcutLabel,
   });
 
   const loupe = document.createElement('div');
@@ -132,6 +167,8 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
 
   function updateZoomLabel() {
     zoomLevelEl.textContent = `${Math.round(currentZoom * 100)} %`;
+    // The sheet lifts off the desk a little more the closer you look: its shadow grows with the zoom.
+    pageWrap.style.setProperty('--page-lift', Math.min(1.2, currentZoom).toFixed(2));
   }
 
   function renderGuides(guides = []) {
@@ -151,8 +188,10 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
     }
   }
 
+  let activeToolId = 'select';
+
   function updateSelectionOutline() {
-    if (!currentHandout || !selectedLayerId || editingLayerId) {
+    if (!currentHandout || !selectedLayerId || editingLayerId || activeToolId !== 'select') {
       outline.style.display = 'none';
       selectionBar.hide();
       return;
@@ -184,6 +223,9 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
         const handle = hEl.dataset.handle;
         hEl.style.cursor = getHandleCursor(handle, rot);
       });
+      outline.querySelectorAll('.stage-rotate-zone').forEach(zEl => {
+        zEl.style.cursor = getRotateCursor(zEl.dataset.corner, rot);
+      });
     }
 
     selectionBar.update();
@@ -205,6 +247,8 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
   let dragCache = null;
   let isFastDrag = false;
   let highResDebounceTimer = null;
+  // Images already decoded by the last full render; the synchronous drag renders reuse them.
+  const lastLoadedImages = new Map();
 
   async function performRender(handout, options = {}) {
     if (!handout) return;
@@ -212,7 +256,7 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
     const isHalf = Boolean(options.halfRes);
     const scale = currentZoom * dpr * (isHalf ? 0.5 : 1);
 
-    if (!isHalf && canvas && canvas.parentNode) {
+    if (!isHalf && !activeGesture && canvas && canvas.parentNode) {
       const freshCanvas = document.createElement('canvas');
       freshCanvas.className = 'stage-canvas';
       canvas.replaceWith(freshCanvas);
@@ -238,6 +282,7 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
       light: options.light || currentLight,
       loadImage: images?.load,
       loadFont: fonts?.load,
+      loadedImages: lastLoadedImages,
     });
 
     updateSelectionOutline();
@@ -269,6 +314,54 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
     });
   }
 
+  function prefersReducedMotion() {
+    if (typeof document !== 'undefined' && document.body?.classList.contains('reduce-motion')) return true;
+    return typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  /** Keeps a snapshot of the old light over the page and fades it out once the new light is drawn. */
+  async function crossfadeLight(handout, options) {
+    const snapshot = document.createElement('canvas');
+    snapshot.width = canvas.width;
+    snapshot.height = canvas.height;
+    snapshot.getContext('2d').drawImage(canvas, 0, 0);
+    snapshot.className = 'stage-light-fade';
+    snapshot.style.width = canvas.style.width;
+    snapshot.style.height = canvas.style.height;
+    pageWrap.querySelectorAll('.stage-light-fade').forEach(el => el.remove());
+    pageWrap.appendChild(snapshot);
+
+    currentHandout = handout;
+    currentLight = options.light;
+    try {
+      await performRender(handout, options);
+    } finally {
+      requestAnimationFrame(() => {
+        snapshot.classList.add('is-fading');
+        setTimeout(() => snapshot.remove(), 600);
+      });
+    }
+  }
+
+  /** Resizes the page box now and scrolls so the page point under (clientX, clientY) stays put. */
+  function anchorZoomAt(newZoom, clientX, clientY) {
+    if (!currentHandout) return;
+    const rect = pageWrap.getBoundingClientRect();
+    const px = (clientX - rect.left) / currentZoom;
+    const py = (clientY - rect.top) / currentZoom;
+    currentZoom = newZoom;
+    pageWrap.style.width = `${Math.round(currentHandout.page.width * currentZoom)}px`;
+    pageWrap.style.height = `${Math.round(currentHandout.page.height * currentZoom)}px`;
+    const next = pageWrap.getBoundingClientRect();
+    viewport.scrollLeft += next.left + px * currentZoom - clientX;
+    viewport.scrollTop += next.top + py * currentZoom - clientY;
+  }
+
+  function viewportCenter() {
+    const r = viewport.getBoundingClientRect();
+    return [r.left + r.width / 2, r.top + r.height / 2];
+  }
+
   function setZoom(factor, options = {}) {
     if (factor === 'fit') {
       if (!currentHandout) return;
@@ -278,7 +371,8 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
       const scaleY = vh / currentHandout.page.height;
       currentZoom = Math.max(MIN_ZOOM, Math.min(1.5, Math.min(scaleX, scaleY)));
     } else if (typeof factor === 'number') {
-      currentZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, factor));
+      const [cx, cy] = options.anchor || viewportCenter();
+      anchorZoomAt(Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, factor)), cx, cy);
     }
     updateZoomLabel();
     if (currentHandout && !options.skipRender) {
@@ -366,8 +460,28 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
 
     const rotateHandle = event.target.closest('.stage-rotate-handle');
     const resizeHandle = event.target.closest('.stage-handle');
+    const rotateZone = event.target.closest('.stage-rotate-zone');
 
     selectionBar.hide();
+
+    // Zones outside the corners rotate from where the pointer started, not from a fixed handle direction.
+    if (rotateZone && !resizeHandle && !rotateHandle) {
+      event.preventDefault();
+      event.stopPropagation();
+      rotateZone.setPointerCapture(event.pointerId);
+      const pageRect = pageWrap.getBoundingClientRect();
+      activeGesture = {
+        type: 'rotate-corner',
+        gestureId: 'rotate-' + Math.random().toString(36).slice(2, 9),
+        layerId: layer.id,
+        startBox: { ...layer },
+        center: boxCenter(layer),
+        startPointer: [(event.clientX - pageRect.left) / currentZoom, (event.clientY - pageRect.top) / currentZoom],
+        handleEl: rotateZone,
+        pointerId: event.pointerId,
+      };
+      return;
+    }
 
     if (rotateHandle) {
       event.preventDefault();
@@ -456,21 +570,24 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
         return null;
       }
 
-      const belowCanvas = createBufferCanvas(pw, ph);
-      const aboveCanvas = canCacheAbove && layersAbove.length > 0 ? createBufferCanvas(pw, ph) : null;
+      // Under non-normal light the visibility/order of layers differs, so slicing by index is wrong:
+      // the drag then redraws the whole document each frame instead of using the cache.
+      const useCache = currentLight === 'normal';
+      const belowCanvas = useCache ? createBufferCanvas(pw, ph) : null;
+      const aboveCanvas = useCache && canCacheAbove && layersAbove.length > 0 ? createBufferCanvas(pw, ph) : null;
 
       if (belowCanvas) {
         renderHandoutSync(belowCanvas, { ...currentHandout, layers: currentHandout.layers.slice(0, kIdx) }, {
           scale,
           light: currentLight,
-          loadedImages: new Map(),
+          loadedImages: lastLoadedImages,
         });
       }
       if (aboveCanvas) {
         renderHandoutSync(aboveCanvas, { ...currentHandout, page: { ...currentHandout.page, background: null }, layers: layersAbove }, {
           scale,
           light: currentLight,
-          loadedImages: new Map(),
+          loadedImages: lastLoadedImages,
         });
       }
 
@@ -531,7 +648,7 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
         ctx.save();
         ctx.globalAlpha = movingLayer.opacity ?? 1;
         ctx.globalCompositeOperation = canvasOperation(movingLayer.blend);
-        drawLayer(ctx, movingLayer, scale, new Map(), [], []);
+        drawLayer(ctx, movingLayer, scale, lastLoadedImages, [], []);
         ctx.restore();
 
         // 3. Above k
@@ -544,7 +661,7 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
             ctx.save();
             ctx.globalAlpha = l.opacity ?? 1;
             ctx.globalCompositeOperation = canvasOperation(l.blend);
-            drawLayer(ctx, l, scale, new Map(), [], []);
+            drawLayer(ctx, l, scale, lastLoadedImages, [], []);
             ctx.restore();
           }
         }
@@ -553,6 +670,12 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
       }
 
       currentHandout = updateLayer(currentHandout, activeGesture.layerId, finalBox);
+
+      if (!dragCache?.belowCanvas && isFastDrag) {
+        const dpr = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1;
+        renderHandoutSync(canvas, currentHandout, { scale: currentZoom * dpr, light: currentLight, loadedImages: lastLoadedImages });
+        updateSelectionOutlineForBox(finalBox);
+      }
 
       // Debounce high-res refresh 150ms after movement settles
       clearTimeout(highResDebounceTimer);
@@ -576,6 +699,20 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
       });
 
       currentHandout = updateLayer(currentHandout, activeGesture.layerId, resized);
+      scheduleRender(currentHandout, { halfRes: true });
+
+      clearTimeout(highResDebounceTimer);
+      highResDebounceTimer = setTimeout(() => {
+        scheduleRender(currentHandout, { fullRes: true, forceFull: true });
+      }, 150);
+    } else if (activeGesture.type === 'rotate-corner') {
+      const pageRect = pageWrap.getBoundingClientRect();
+      const pointerPage = [
+        (event.clientX - pageRect.left) / currentZoom,
+        (event.clientY - pageRect.top) / currentZoom,
+      ];
+      const newRot = rotateBoxBy(activeGesture.startBox.rotation || 0, activeGesture.center, activeGesture.startPointer, pointerPage, { snap: event.shiftKey });
+      currentHandout = updateLayer(currentHandout, activeGesture.layerId, { rotation: newRot });
       scheduleRender(currentHandout, { halfRes: true });
 
       clearTimeout(highResDebounceTimer);
@@ -751,7 +888,7 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
       if (!event.ctrlKey) return;
       event.preventDefault();
       const factor = event.deltaY < 0 ? 1.15 : 0.85;
-      currentZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, currentZoom * factor));
+      anchorZoomAt(Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, currentZoom * factor)), event.clientX, event.clientY);
       updateZoomLabel();
       scheduleRender(currentHandout, { halfRes: true });
 
@@ -954,9 +1091,9 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
 
   // Click on stage for layer hit testing
   pageWrap.addEventListener('click', event => {
-    if (!currentHandout || activeGesture || isEyedropperActive) return;
+    if (!currentHandout || activeGesture || isEyedropperActive || drawTools.tool !== 'select') return;
     if (
-      event.target.closest('.stage-selection-outline') ||
+      (event.target.closest('.stage-selection-outline') && !event.altKey) ||
       event.target.closest('.stage-inline-text-editor') ||
       event.target.closest('.stage-selection-bar') ||
       event.target.closest('.stage-doc-guide-x') ||
@@ -970,10 +1107,31 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
     const pageX = clickX / currentZoom;
     const pageY = clickY / currentZoom;
 
-    const hit = layerAtPoint(currentHandout, [pageX, pageY]);
+    // Alt+click walks down the stack of layers under the cursor.
+    const hit = event.altKey
+      ? nextStackedLayer(layersAtPoint(currentHandout, [pageX, pageY]), selectedLayerId)
+      : layerAtPoint(currentHandout, [pageX, pageY]);
     selectedLayerId = hit ? hit.id : null;
     updateSelectionOutline();
     onSelect(selectedLayerId);
+  });
+
+  // Double click on an empty part of the page (nothing but the paper under it) writes a text there.
+  pageWrap.addEventListener('dblclick', event => {
+    if (!currentHandout || activeGesture || isEyedropperActive || editingLayerId) return;
+    if (
+      event.target.closest('.stage-inline-text-editor') ||
+      event.target.closest('.stage-selection-bar')
+    ) return;
+    const rect = pageWrap.getBoundingClientRect();
+    const point = [(event.clientX - rect.left) / currentZoom, (event.clientY - rect.top) / currentZoom];
+    const pageArea = currentHandout.page.width * currentHandout.page.height;
+    const covering = layer => isPaperLayer(layer) || (layer.width * layer.height >= pageArea * 0.9 && layer.kind !== 'text');
+    // The first click of the double click may have selected the paper: its outline then lies over the page.
+    const hits = layersAtPoint(currentHandout, point).filter(l => !covering(l));
+    if (hits.length) return;
+    event.preventDefault();
+    onCreateTextAt(point);
   });
 
   // Clicking on background outside page deselects
@@ -988,6 +1146,10 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
 
   return {
     show(handout, options = {}) {
+      if (options.light && options.light !== currentLight && canvas?.width && !prefersReducedMotion()) {
+        crossfadeLight(handout, options);
+        return;
+      }
       scheduleRender(handout, options);
     },
     async renderNow(handout, options = {}) {
@@ -1002,6 +1164,32 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
     },
     getZoom() {
       return currentZoom;
+    },
+    setTool(tool) {
+      drawTools.setTool(tool);
+    },
+    getTool() {
+      return drawTools.tool;
+    },
+    refreshToolLabels() {
+      drawTools.refreshLabels();
+    },
+    getView() {
+      return { zoom: currentZoom, scrollLeft: viewport.scrollLeft, scrollTop: viewport.scrollTop };
+    },
+    /** Restores zoom and scroll of a tab; call before the render so the page box is already sized. */
+    setView(view) {
+      if (!view) return;
+      currentZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, view.zoom || currentZoom));
+      updateZoomLabel();
+      if (currentHandout) {
+        pageWrap.style.width = `${Math.round(currentHandout.page.width * currentZoom)}px`;
+        pageWrap.style.height = `${Math.round(currentHandout.page.height * currentZoom)}px`;
+      }
+      requestAnimationFrame(() => {
+        viewport.scrollLeft = view.scrollLeft || 0;
+        viewport.scrollTop = view.scrollTop || 0;
+      });
     },
     select(layerId) {
       selectedLayerId = layerId;
@@ -1055,6 +1243,33 @@ export function createStage(container, { images, fonts, onSelect = () => {}, onE
         };
         pageWrap.addEventListener('animationend', doMidpoint, { once: true });
         setTimeout(doMidpoint, 200);
+      });
+    },
+    /** Turns the page over on its vertical axis: the first half hides the old face, `onMidpoint` swaps it, the second shows the new one. */
+    animateFlip(onMidpoint) {
+      return new Promise(resolve => {
+        if (prefersReducedMotion() || typeof pageWrap?.addEventListener !== 'function') {
+          Promise.resolve(onMidpoint?.()).then(resolve);
+          return;
+        }
+        pageWrap.classList.remove('is-flipping-in', 'is-flipping-out');
+        void pageWrap.offsetWidth;
+        pageWrap.classList.add('is-flipping-out');
+        let done = false;
+        const mid = async () => {
+          if (done) return;
+          done = true;
+          pageWrap.classList.remove('is-flipping-out');
+          await onMidpoint?.();
+          void pageWrap.offsetWidth;
+          pageWrap.classList.add('is-flipping-in');
+          const end = () => pageWrap.classList.remove('is-flipping-in');
+          pageWrap.addEventListener('animationend', end, { once: true });
+          setTimeout(end, 400);
+          resolve();
+        };
+        pageWrap.addEventListener('animationend', mid, { once: true });
+        setTimeout(mid, 300);
       });
     },
     startInlineTextEdit(layerId) {

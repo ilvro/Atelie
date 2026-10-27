@@ -12,10 +12,9 @@
 }
 
 .stage-scroll-canvas {
-  flex: 1;
+  flex: 1 0 auto;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  width: max-content;
   min-width: 100%;
   min-height: 100%;
   padding: 48px;
@@ -23,6 +22,7 @@
 }
 
 .stage-page-wrap {
+  margin: auto;
   position: relative;
   background: var(--at-paper);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.25);
@@ -77,16 +77,38 @@
   animation: sheet-enter-right var(--eco-mid) var(--eco-ease) forwards;
 }
 
+/* Virar frente e verso: duas metades de rotateY, a face troca no meio */
+.stage-scroll-canvas { perspective: 1800px; }
+
+@keyframes sheet-flip-out {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(90deg); }
+}
+
+@keyframes sheet-flip-in {
+  from { transform: rotateY(-90deg); }
+  to { transform: rotateY(0deg); }
+}
+
+.stage-page-wrap.is-flipping-out {
+  animation: sheet-flip-out var(--eco-mid) cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.stage-page-wrap.is-flipping-in {
+  animation: sheet-flip-in var(--eco-mid) cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+body.reduce-motion .stage-page-wrap.is-flipping-out,
+body.reduce-motion .stage-page-wrap.is-flipping-in { animation: none; }
+
 /* --- Fantasma de Arraste da Biblioteca --- */
 .stage-drag-ghost {
-  position: absolute;
+  position: fixed;
   pointer-events: none;
-  z-index: 25;
-  box-sizing: border-box;
-  border: 1.5px dashed var(--at-uv, #9e84ff);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
-  transition: opacity var(--eco-fast) var(--eco-ease);
-  overflow: hidden;
+  z-index: 600;
+  display: block;
+  opacity: 1;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45));
 }
 
 .drag-ghost-placeholder {
@@ -188,7 +210,23 @@
   transform: translateX(-50%);
 }
 
+.stage-rotate-zone {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  z-index: 9;
+  touch-action: none;
+}
+
+.stage-rotate-zone[data-corner="nw"] { left: -24px; top: -24px; }
+.stage-rotate-zone[data-corner="ne"] { right: -24px; top: -24px; }
+.stage-rotate-zone[data-corner="se"] { right: -24px; bottom: -24px; }
+.stage-rotate-zone[data-corner="sw"] { left: -24px; bottom: -24px; }
+
+.stage-selection-outline.is-locked .stage-rotate-zone { display: none; }
+
 .stage-rotate-handle {
+  position: absolute;
   top: -28px;
   left: 50%;
   width: 12px;
@@ -283,7 +321,7 @@
 /* Barra do documento no topo da mesa */
 .desk-doc-bar {
   position: absolute;
-  top: 0;
+  top: 36px;
   left: 0;
   right: 0;
   height: 52px;
@@ -766,8 +804,8 @@
 }
 
 .layer-thumb {
-  width: 22px;
-  height: 22px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1294,18 +1332,57 @@
 /* Mini-barra sobre a seleção */
 .stage-selection-bar {
   position: absolute;
-  height: 34px;
+  min-height: 34px;
   background: var(--at-desk-2);
   border: 1px solid var(--at-line-strong);
   border-radius: var(--eco-radius-m);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 4px;
-  padding: 0 6px;
+  padding: 4px 6px;
   z-index: 15;
   white-space: nowrap;
 }
+
+.sel-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sel-bar-font-mount { width: 150px; }
+.sel-bar-font-mount .font-select-trigger { height: 26px; padding: 0 6px; font-size: var(--eco-fs-xs); }
+
+.sel-bar-size {
+  width: 48px;
+  height: 24px;
+  background: var(--at-desk-3);
+  border: 1px solid var(--at-line);
+  border-radius: var(--eco-radius-sm);
+  color: var(--at-text);
+  font-size: var(--eco-fs-xs);
+  padding: 0 4px;
+}
+
+.sel-bar-toggle.active { background: var(--at-uv); color: var(--at-uv-ink); }
+
+.sel-bar-color {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--eco-radius-sm);
+  cursor: pointer;
+}
+
+.sel-bar-color:hover { background: var(--at-line); }
+.sel-bar-color-label { font-weight: 700; pointer-events: none; padding: 0 3px; border-radius: 2px; }
+.sel-bar-color input[type="color"] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.sel-bar-more { width: auto; padding: 0 8px; }
 
 .sel-bar-btn {
   width: 26px;
@@ -2190,6 +2267,11 @@
   flex-direction: column;
   gap: 8px;
   flex-shrink: 0;
+  max-height: 55%;
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 .library-search-input {
@@ -2379,6 +2461,7 @@
 }
 
 .library-hover-preview {
+  animation: library-preview-in var(--eco-fast) var(--eco-ease);
   position: fixed;
   width: 240px;
   background: var(--at-desk-2);
@@ -2641,11 +2724,31 @@
   animation: selection-pulse 0.5s ease-out;
 }
 
-/* --- Luz UV: Mudança de clima da interface --- */
-html[data-light="uv"] .at-desk {
-  background-color: #0b0914 !important;
-  background-image: none !important;
-  transition: background-color var(--eco-mid) var(--eco-ease);
+/* --- Luz UV: Mudança de clima da interface (entra e sai com animação) --- */
+.at-desk {
+  isolation: isolate;
+}
+
+.at-desk::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 40%, #14102a 0%, #0b0914 80%);
+  opacity: 0;
+  transition: opacity var(--eco-slow, 400ms) var(--eco-ease);
+}
+
+html[data-light="uv"] .at-desk::after {
+  opacity: 1;
+}
+
+.at-btn.is-primary,
+.inspector-tab.active,
+.rail-btn.active,
+.desk-doc-bar {
+  transition: box-shadow var(--eco-mid) var(--eco-ease), background-color var(--eco-mid) var(--eco-ease);
 }
 
 html[data-light="uv"] .at-btn.is-primary,
@@ -2653,7 +2756,24 @@ html[data-light="uv"] .inspector-tab.active,
 html[data-light="uv"] .rail-btn.active,
 html[data-light="uv"] .desk-doc-bar {
   box-shadow: 0 0 12px var(--at-uv-glow);
-  transition: box-shadow var(--eco-mid) var(--eco-ease);
+}
+
+.desk-doc-actions button[data-action="toggle-uv"] {
+  transition: background-color var(--eco-mid) var(--eco-ease), color var(--eco-mid) var(--eco-ease), box-shadow var(--eco-mid) var(--eco-ease);
+}
+
+.stage-light-fade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 1;
+  transition: opacity var(--eco-slow, 400ms) var(--eco-ease);
+}
+
+.stage-light-fade.is-fading {
+  opacity: 0;
 }
 
 .desk-doc-actions button[data-action="toggle-uv"][aria-pressed="true"] {
@@ -2665,6 +2785,25 @@ html[data-light="uv"] .desk-doc-bar {
 
 .desk-uv-stamp {
   margin-left: 4px;
+  opacity: 0;
+  transform: scale(1.35);
+  pointer-events: none;
+  transition: opacity var(--eco-mid) var(--eco-ease), transform var(--eco-mid) var(--eco-ease);
+}
+
+html[data-light="uv"] .desk-uv-stamp {
+  opacity: 1;
+  transform: none;
+}
+
+body.reduce-motion .at-desk::after,
+body.reduce-motion .stage-light-fade,
+body.reduce-motion .desk-uv-stamp {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .at-desk::after, .stage-light-fade, .desk-uv-stamp { transition: none; }
 }
 
 /* Selos de luz UV nas camadas */
@@ -2739,3 +2878,218 @@ html[data-light="uv"] .desk-doc-bar {
 }
 
 
+
+/* --- Biblioteca: abrir grupos e prévia com movimento (Fase 6) --- */
+.category-arrow {
+  display: inline-flex;
+  transition: transform var(--eco-fast) var(--eco-ease);
+}
+
+.category-arrow.is-open {
+  transform: rotate(90deg);
+}
+
+.library-category-header.is-static {
+  cursor: default;
+}
+
+.library-category-group.is-opening .library-card-grid {
+  animation: library-expand var(--eco-mid) var(--eco-ease);
+}
+
+@keyframes library-expand {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes library-preview-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+
+body.reduce-motion .category-arrow,
+body.reduce-motion .library-category-group.is-opening .library-card-grid,
+body.reduce-motion .library-hover-preview { animation: none; transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .category-arrow,
+  .library-category-group.is-opening .library-card-grid,
+  .library-hover-preview { animation: none; transition: none; }
+}
+
+/* --- Abas de documentos (Fase 7) --- */
+.desk-tab-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  display: flex;
+  align-items: stretch;
+  background: color-mix(in srgb, var(--at-desk-2) 92%, black);
+  border-bottom: 1px solid var(--eco-border);
+  z-index: 31;
+}
+
+.desk-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  max-width: 200px;
+  padding: 0 10px;
+  color: var(--at-muted);
+  background: transparent;
+  border: 0;
+  border-right: 1px solid var(--at-line);
+  font-family: var(--eco-font-ui);
+  font-size: var(--eco-fs-12);
+  cursor: pointer;
+  transition: background var(--eco-fast) var(--eco-ease), color var(--eco-fast) var(--eco-ease);
+  flex: 0 0 auto;
+}
+
+.desk-tab:hover { background: var(--at-desk-3); color: var(--at-text); }
+.desk-tab.is-active { background: var(--at-desk); color: var(--at-text); box-shadow: inset 0 -2px 0 var(--at-uv); }
+.desk-tab.is-mesa { padding: 0 14px; font-weight: 700; }
+.desk-tab.is-dragging { opacity: 0.45; }
+
+.desk-tab-list {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.desk-tab-list::-webkit-scrollbar { display: none; }
+
+.desk-tab-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.desk-tab-dirty {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--at-lamp, #f2c58a);
+  flex: 0 0 auto;
+}
+
+.desk-tab-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  color: inherit;
+  opacity: 0.6;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.desk-tab-close:hover { opacity: 1; background: color-mix(in srgb, var(--at-text) 14%, transparent); }
+
+.desk-tab-scroll {
+  flex: 0 0 24px;
+  border: 0;
+  background: var(--at-desk-3);
+  color: var(--at-muted);
+  cursor: pointer;
+}
+
+.desk-tab-scroll[hidden] { display: none; }
+.desk-tab-scroll.is-left svg { transform: rotate(180deg); }
+
+@media (max-width: 719px) {
+  .desk-tab { max-width: 130px; padding: 0 8px; }
+}
+
+/* --- Ferramentas de desenho (Fase 11) --- */
+.stage-tools {
+  position: absolute;
+  top: 56px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
+  background: var(--at-desk-2);
+  border: 1px solid var(--at-line-strong);
+  border-radius: var(--eco-radius-m);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  z-index: 20;
+}
+
+.stage-tool-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--eco-radius-sm, 4px);
+  color: var(--at-text);
+  cursor: pointer;
+  transition: background var(--eco-fast) var(--eco-ease), color var(--eco-fast) var(--eco-ease);
+}
+
+.stage-tool-btn:hover { background: var(--at-line); }
+.stage-tool-btn.is-active { background: var(--at-uv); color: var(--at-uv-ink); }
+
+.stage-tool-options {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+  gap: 14px;
+  padding: 6px 12px;
+  background: var(--at-desk-2);
+  border: 1px solid var(--at-line-strong);
+  border-radius: var(--eco-radius-m);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  z-index: 21;
+  font-size: var(--eco-fs-12);
+  color: var(--at-muted);
+}
+
+.stage-tool-field { display: inline-flex; align-items: center; gap: 6px; }
+.stage-tool-field input[type="number"] { width: 54px; }
+.stage-tool-field input[type="range"] { width: 90px; }
+.stage-tool-field output { min-width: 34px; color: var(--at-text); }
+
+.stage-draw-preview {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 8;
+}
+
+.stage-viewport.is-drawing-tool .stage-page-wrap,
+.stage-viewport.is-drawing-tool .stage-canvas { cursor: crosshair; }
+
+@media (max-width: 719px) {
+  .stage-tools { top: auto; bottom: 64px; flex-direction: row; left: 50%; transform: translateX(-50%); }
+  .stage-tool-options { top: 4px; flex-wrap: wrap; justify-content: center; max-width: calc(100vw - 24px); gap: 8px; }
+}
+
+/* --- Miniatura real na linha da camada (Fase 13) --- */
+.layer-thumb { position: relative; overflow: hidden; }
+.layer-thumb-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background:
+    repeating-conic-gradient(rgba(255, 255, 255, 0.1) 0% 25%, rgba(0, 0, 0, 0.18) 0% 50%) 0 0 / 8px 8px,
+    var(--at-desk-3);
+}

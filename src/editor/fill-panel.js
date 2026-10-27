@@ -3,6 +3,7 @@ import { tape } from '../ui/primitives.js';
 import { fillFields } from '../domain/handouts.js';
 import { getSampleText } from './sample-text.js';
 import { play, isSoundEnabled } from '../ui/sound.js';
+import { wireModal } from '../ui/modal.js';
 
 export function createFillPanel(shell, { state, api, images } = {}) {
   const container = document.createElement('div');
@@ -229,11 +230,9 @@ export function createFillPanel(shell, { state, api, images } = {}) {
 
     document.body.appendChild(modal);
 
-    const close = () => modal.remove();
+    const close = () => { modal.remove(); dispose(); };
+    const dispose = wireModal(modal, { onCancel: close, primary: '.chooser-upload-label' });
     modal.querySelector('.modal-close-btn').addEventListener('click', close);
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) close();
-    });
 
     const grid = modal.querySelector('.image-chooser-grid');
     let currentTab = 'uploads';

@@ -10,6 +10,7 @@ import {
   getExpansionItems,
 } from './expansion-installer.js';
 import { registerJitBundle } from './bundle-scanner.js';
+import { addUserFont, removeUserFont, listUserFonts, restoreUserFont, isUserFontId } from './user-fonts.js';
 
 export { ApiError };
 
@@ -501,6 +502,53 @@ export function createApi({
 
     async openDB() {
       return await getExpansionsDB();
+    },
+
+    /** Fonts sent from this computer: stored as the "usuario" expansion. */
+    async addUserFont(meta, file) {
+      const db = await getExpansionsDB();
+      try {
+        const item = await addUserFont(db, meta, file);
+        browserManifestPromise = null;
+        return item;
+      } finally {
+        db.close();
+      }
+    },
+
+    async removeUserFont(itemId) {
+      const db = await getExpansionsDB();
+      try {
+        const removed = await removeUserFont(db, itemId);
+        browserManifestPromise = null;
+        browserItemsMap.delete(itemId);
+        return removed;
+      } finally {
+        db.close();
+      }
+    },
+
+    async listUserFonts() {
+      try {
+        const db = await getExpansionsDB();
+        try {
+          return await listUserFonts(db);
+        } finally {
+          db.close();
+        }
+      } catch {
+        return [];
+      }
+    },
+
+    async restoreUserFont(item, blob) {
+      const db = await getExpansionsDB();
+      try {
+        await restoreUserFont(db, item, blob);
+        browserManifestPromise = null;
+      } finally {
+        db.close();
+      }
     },
 
     async registerJitBundle(bundle, options) {
@@ -1051,7 +1099,7 @@ export function createApi({
     fileURL(item) {
       const id = typeof item === 'object' && item ? item.id : item;
       const isFromServer = serverItemIds.has(id);
-      if (!isFromServer && typeof item === 'object' && item?.source && item.source !== 'casa') {
+      if (!isFromServer && (isUserFontId(id) || (typeof item === 'object' && item?.source && item.source !== 'casa'))) {
         return browserLibrary.fileURL(item);
       }
       return new URL(`api/atelie/library/${encodeURIComponent(id)}/file`, baseURI).href;
@@ -1060,7 +1108,8 @@ export function createApi({
     async resolveFileURL(item) {
       const id = typeof item === 'object' && item ? item.id : item;
       const isFromServer = serverItemIds.has(id);
-      if (!isFromServer && typeof item === 'object' && item?.source && item.source !== 'casa') {
+      // Fonts the person sent live in the browser, even when the library comes from the server.
+      if (!isFromServer && (isUserFontId(id) || (typeof item === 'object' && item?.source && item.source !== 'casa'))) {
         return await browserLibrary.resolveFileURL(item);
       }
       return this.fileURL(item);

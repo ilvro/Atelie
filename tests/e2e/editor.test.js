@@ -208,7 +208,13 @@ test('editor e2e: presets, text editing, undo/redo, blend/opacity, archive, visi
 
   await page.click('.inspector-tab[data-tab="properties"]');
   await page.click('button[data-action="open-image-picker"]');
-  await page.waitForSelector('.at-modal', { timeout: 5000 });
+  await page.waitForSelector('.at-modal', { state: 'visible', timeout: 5000 });
+  const modalBox = await page.evaluate(() => {
+    const r = document.querySelector('.at-modal').getBoundingClientRect();
+    return { top: r.top, left: r.left, bottom: r.bottom, right: r.right, w: innerWidth, h: innerHeight };
+  });
+  assert.ok(modalBox.top >= 0 && modalBox.left >= 0 && modalBox.bottom <= modalBox.h && modalBox.right <= modalBox.w,
+    'Modal must be visible inside the viewport');
 
   const png3x2 = Buffer.from([
     0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a,
@@ -462,7 +468,7 @@ test('editor manipulation e2e: drag, resize, rotate, snap, inline text, keyboard
 
   // 14. Font selector displays "Special Elite" in its own font and choosing handwritten changes canvas
   await page.click('.inspector-tab[data-tab="properties"]');
-  const fontTrigger = page.locator('.font-select-trigger');
+  const fontTrigger = page.locator('.font-selector-mount .font-select-trigger');
   await fontTrigger.waitFor({ state: 'visible' });
   await fontTrigger.click();
 
@@ -560,7 +566,7 @@ test('editor manipulation e2e: drag, resize, rotate, snap, inline text, keyboard
     const uvBtn = document.querySelector('[data-action="toggle-uv"]');
     const uvStamp = document.querySelector('.desk-uv-stamp');
     const isBtnPressed = uvBtn?.getAttribute('aria-pressed') === 'true';
-    const isStampVisible = uvStamp && getComputedStyle(uvStamp).display !== 'none';
+    const isStampVisible = uvStamp && Number(getComputedStyle(uvStamp).opacity) > 0.5;
     const canvas = document.querySelector('.stage-canvas');
     const ctx = canvas.getContext('2d');
     const pixel = ctx.getImageData(20, 20, 1, 1).data;

@@ -448,3 +448,71 @@ test('page.uv validates tint and strength, allows absent uv, and rejects invalid
   });
 });
 
+
+
+test('text.highlight: optional, null by default, validated when present', async () => {
+  const { createHandout, textLayer, addLayer, validateHandout } = await import('../src/domain/handouts.js');
+  const base = createHandout({ name: 'H' });
+  const layer = textLayer({ name: 'T' });
+  assert.equal(layer.text.highlight, null);
+  assert.doesNotThrow(() => validateHandout(addLayer(base, layer, 1)));
+
+  // Old documents have no highlight key at all and stay valid
+  const old = structuredClone(layer);
+  delete old.text.highlight;
+  assert.doesNotThrow(() => validateHandout(addLayer(base, old, 1)));
+
+  const good = structuredClone(layer);
+  good.text.highlight = { color: '#fff176', opacity: 0.6, padding: 2 };
+  assert.doesNotThrow(() => validateHandout(addLayer(base, good, 1)));
+
+  const bad = structuredClone(layer);
+  bad.text.highlight = { color: 'amarelo', opacity: 2, padding: -1 };
+  assert.throws(() => validateHandout(addLayer(base, bad, 1)), /highlight/);
+});
+
+test('inheritedTextStyle: recorded style wins, else the topmost text layer, else nothing', async () => {
+  const { createHandout, textLayer, addLayer, textStyleFrom, inheritedTextStyle } = await import('../src/domain/handouts.js');
+  let doc = createHandout({ name: 'H' });
+  assert.equal(inheritedTextStyle(doc), null);
+  const a = textLayer({ text: { color: '#111111', size: 20, font: { family: 'A', library: null, weight: 400, italic: false } } });
+  const b = textLayer({ text: { color: '#222222', size: 30, font: { family: 'B', library: null, weight: 700, italic: true } } });
+  doc = addLayer(addLayer(doc, a, 1), b, 2);
+  assert.deepEqual(inheritedTextStyle(doc), { font: { family: 'B', library: null, weight: 700, italic: true }, color: '#222222', size: 30 });
+  const recorded = textStyleFrom(a);
+  assert.equal(inheritedTextStyle(doc, recorded), recorded);
+  assert.equal(textStyleFrom({ kind: 'shape' }), null);
+});
+
+test('varyLayer: offset, small turn either way and a new seed for effects and worn ink', async () => {
+  const { varyLayer } = await import('../src/domain/handouts.js');
+  const values = [0.1, 0.9, 0.5, 0.5];
+  const rand = () => values.shift() ?? 0.5;
+  const effect = varyLayer({ kind: 'effect', x: 10, y: 20, rotation: 0, effect: { type: 'grain', seed: 7, amount: 0.3 } }, rand);
+  assert.equal(effect.x, 34);
+  assert.equal(effect.y, 44);
+  assert.ok(effect.rotation >= 2 && effect.rotation <= 4 || effect.rotation >= 356 && effect.rotation <= 358);
+  assert.notEqual(effect.effect.seed, 7);
+  assert.equal(effect.effect.amount, 0.3, 'the rest of the effect is kept');
+  const text = varyLayer({ kind: 'text', x: 0, y: 0, rotation: 90, text: { content: 'a', ink: { style: 'typewriter', wear: 0.2, seed: 1 } } }, () => 0.7);
+  assert.ok(Math.abs(text.rotation - 90) >= 2 && Math.abs(text.rotation - 90) <= 4);
+  assert.equal(text.text.ink.wear, 0.2);
+  assert.equal(text.text.content, 'a');
+  const shape = varyLayer({ kind: 'shape', x: 0, y: 0 }, () => 0.5);
+  assert.equal(shape.effect, undefined);
+});
+
+test('thumbKey: changes with the look of a layer, not with its name, place or lock', async () => {
+  const { thumbKey, thumbDocument } = await import('../src/editor/layer-thumbs.js');
+  const { textLayer } = await import('../src/domain/handouts.js');
+  const a = textLayer({ name: 'A', x: 10, y: 10 });
+  const moved = { ...a, name: 'Outro nome', x: 500, y: 700, locked: true };
+  assert.equal(thumbKey(a), thumbKey(moved));
+  const recolored = { ...a, text: { ...a.text, color: '#ff0000' } };
+  assert.notEqual(thumbKey(a), thumbKey(recolored));
+  const doc = thumbDocument({ ...a, rotation: 30, visible: false, light: 'uv' });
+  assert.equal(doc.page.width, a.width);
+  assert.equal(doc.layers[0].x, 0);
+  assert.equal(doc.layers[0].visible, true);
+  assert.equal(doc.layers[0].light, 'both');
+});

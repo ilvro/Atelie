@@ -15,6 +15,8 @@ import {
 } from '../domain/handouts.js';
 import { EFFECTS, drawEffect, drawCutMask } from '../render/handout-effects.js';
 import { play } from '../ui/sound.js';
+import { thumbKey } from './layer-thumbs.js';
+import { emptyStateIllustration } from '../ui/illustrations.js';
 
 const thumbnailCache = new Map();
 
@@ -137,7 +139,7 @@ function getEffectThumbnail(typeKey, defaultParams, defaultBlend) {
   }
 }
 
-export function createLayersPanel(container, { state, onAction = () => {}, getLight = () => 'normal', shell } = {}) {
+export function createLayersPanel(container, { state, onAction = () => {}, getLight = () => 'normal', getTextStyle = () => null, getThumbs = () => null, shell } = {}) {
   let isPlusMenuOpen = false;
   let isEffectsMenuOpen = false;
   let activeFilter = 'all'; // 'all' | 'text' | 'image' | 'effect'
@@ -158,6 +160,26 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
     }
     pendingFlashId = layerId;
     render();
+  }
+
+  function thumbKeyOf(layer) {
+    return layer.kind === 'adjust' ? '' : thumbKey(layer);
+  }
+
+  /** The real thumbnail when it is ready; the kind icon shows underneath until then. */
+  function thumbImg(layer) {
+    const url = getThumbs()?.get(layer);
+    return url ? `<img class="layer-thumb-img" src="${url}" alt="" />` : '';
+  }
+
+  /** A thumbnail finished drawing: fill every row that shows that look, without a full render. */
+  function thumbReady(key, url) {
+    if (!url) return;
+    container.querySelectorAll('.layer-thumb').forEach(el => {
+      if (el.dataset.thumbKey === key && !el.querySelector('.layer-thumb-img')) {
+        el.insertAdjacentHTML('afterbegin', `<img class="layer-thumb-img" src="${url}" alt="" />`);
+      }
+    });
   }
 
   function renderLayerRow(layer, index, isGroupChild = false) {
@@ -188,8 +210,8 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
 
         <button type="button" class="layer-color-dot" data-action="toggle-color-picker" title="Etiqueta de cor (${esc(layer.color || 'padrão')})" style="background-color: ${layerColor};"></button>
 
-        <div class="layer-thumb" aria-hidden="true" style="color: ${layerColor}; border-color: ${layerColor}44; background: ${layerColor}14;">
-          ${layer.kind === 'text' ? renderIcon('doc', 15) : layer.kind === 'image' ? renderIcon('image', 15) : layer.kind === 'shape' ? renderIcon('crop', 15) : layer.kind === 'effect' ? renderIcon('sparkles', 15) : renderIcon('sun', 15)}
+        <div class="layer-thumb" aria-hidden="true" data-thumb-key="${esc(thumbKeyOf(layer))}" style="color: ${layerColor}; border-color: ${layerColor}44; background: ${layerColor}14;">
+          ${thumbImg(layer)}${layer.kind === 'text' ? renderIcon('doc', 15) : layer.kind === 'image' ? renderIcon('image', 15) : layer.kind === 'shape' ? renderIcon('crop', 15) : layer.kind === 'effect' ? renderIcon('sparkles', 15) : renderIcon('sun', 15)}
         </div>
 
         <div class="layer-title-col">
@@ -389,7 +411,8 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
         </div>
 
         <div class="layers-list" role="listbox" aria-label="Lista de camadas">
-          ${listContent || '<div class="layers-empty-msg">Nenhuma camada correspondente.</div>'}
+          ${listContent || '<div class="layers-empty-msg empty-state">' + emptyStateIllustration('layers') + '<p>Nenhuma camada correspondente.</p></div>'}
+          ${activeFilter === 'all' && (state.handout?.layers || []).length <= 1 ? '<div class="layers-empty-msg empty-state is-hint">' + emptyStateIllustration('layers') + '<p>Só o papel por enquanto.</p><small>Arraste algo da Biblioteca ou use “+” para escrever, desenhar ou pôr um carimbo.</small></div>' : ''}
         </div>
       </div>
     `;
@@ -624,7 +647,7 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
           width: 600,
           height: 200,
           light: defaultLight,
-          text: { content: 'Escreva aqui' },
+          text: { content: 'Escreva aqui', ...(getTextStyle() || {}) },
         });
       } else if (type === 'image') {
         newLayer = imageLayer({
@@ -837,6 +860,7 @@ export function createLayersPanel(container, { state, onAction = () => {}, getLi
   return {
     render,
     flash,
+    thumbReady,
     destroy() {
       container.innerHTML = '';
     },

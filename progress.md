@@ -169,7 +169,36 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 - `npm run build`: bundle de produção compilado com sucesso.
 
 ### Pendências reais
-- Nenhuma pendência na Fase 3. Próxima fase: **Fase 4 · Biblioteca imediata**.
+- Nenhuma pendência na Fase 3. As Fases 4 a 14 estão em "Qualidade de vida · Fases 4 a 14" logo abaixo.
+
+---
+
+## Qualidade de vida · Fases 4 a 14 (plano revisto em 26/10, `docs/plano/plano-qualidade-de-vida.md`)
+
+### Feito
+- **Fase 4 · Telas estreitas e toque**: já estava commitada (61772af): inspetor em gaveta abaixo de 1100 px, pinça, toque longo, alças de 24 px e container queries.
+- **Fase 5 · Correções urgentes**: modal de confirmação com CSS e `wireModal` (Esc, fundo, foco) em `src/ui/modal.js`; Ajustes com rolagem; Esc sai da Leitura quando o navegador sai da tela cheia; o arraste mantém o papel (`loadedImages` guardado pelo palco, sem trocar o canvas no gesto, UV renderiza completo); pan com zoom alto e zoom ancorado no cursor; alça de rotação; ícone `arrow-left` e aviso de ícone inexistente em dev; contagem da lixeira; ação `desk` da paleta; luz UV entra e sai com animação (`.at-desk::after`, crossfade do canvas, carimbo UV com fade).
+- **Fase 6 · Biblioteca e Modelos**: `preserveScroll` (`src/ui/scroll.js`); chevron que gira e grupo que abre com animação; `src/ui/filter-bar.js` (chips que quebram linha, contagens, "+N mais", filtros ativos e "Limpar filtros") usado nas duas gavetas, com filtro de categoria também em Fontes; `libraryDropSize` único para fantasma, drop e clique; fantasma real (`<img>` fixo no body, tamanho real, opacidade 1, `setDragImage` transparente); "Usados recentemente" (12 itens).
+- **Fase 7 · Abas de documentos e a Mesa**: `src/editor/tabs.js` (barra de abas, reordenar, setas de rolagem, funções puras) e sessões por documento em `editor.js` (`openInTab`, `activateTab`, `closeTab`, restauração ao recarregar). A Mesa mostra a tela inicial sem fechar nada; "Abrir em nova aba", botão do meio e Ctrl+clique abrem abas; "Usar este modelo" abre aba nova sem perguntar; Ctrl+W e Ctrl+Tab; "Continuar" lista as abas abertas primeiro. Um documento recuperado de rascunho já nasce "não arquivado" (`createEditorState(…, { unsaved })`).
+- **Fase 8 · Texto, mini-barra e rotação**: mini-barra com fonte, tamanho, negrito, itálico, alinhamento, cor, destaque e "Mais…"; `text.highlight` (modelo, validação, desenho atrás de cada linha, Propriedades); zonas de rotação nos quatro cantos com cursor próprio e `rotateBoxBy`; texto novo herda o estilo do último; duplo clique em área vazia cria texto; Alt+clique anda pela pilha. Correção junto: editar `text.font.weight` ou `text.ink.*` em Propriedades já não apaga as outras chaves do objeto.
+- **Fase 9 · Frente e verso**: Virar (botão e tecla F, meia-volta em `rotateY`), Criar verso e Desvincular; o par vive numa só aba; aviso com "Desvincular" quando o verso foi apagado.
+- **Fase 10 · Atalhos configuráveis**: `src/ui/keymap.js` (registro, `matches`, `label`, `set`, `reset`, `conflicts`, escopos); `shell.js`, `editor.js`, `reading.js` e `palette.js` migrados; Ajuda com "Alterar", aviso de conflito e "Restaurar padrão"; Esc em cascata (ferramenta, seleção, gaveta); Ctrl+Shift+D duplica com variação (`varyLayer`); carimbos, selos e lacres entram tortos (±3°, desligável em Ajustes).
+- **Fase 11 · Ferramentas de desenho**: barra V, Shift+B, R, O, L e faixa de opções; retângulo, elipse e linha por arraste (Shift trava em 1:1 e 45°); pincel com `shape.type: 'path'` (pontos normalizados, pressão, até 20 000 pontos, Shift acrescenta o traço à camada).
+- **Fase 12 · Enviar fontes próprias**: `src/data/user-fonts.js` e `src/editor/font-upload.js`; a fonte vira a expansão "usuario" do banco do navegador ("Minhas fontes"), funciona no modo servidor, tem "Remover fonte" no menu de contexto e entra no backup.
+- **Fase 13 · Acabamento, superfícies e luz**: `src/ui/surfaces.css` (madeira envernizada, feltro, couro, concreto, **cortiça** e preto, 100 % procedurais); `src/ui/ambient.js` e `ambient.css` (luminária, velas, lanterna que segue o cursor com Shift+roda, UV ligada ao UV do documento, estúdio; crossfade nos dois sentidos; atalho Shift+U; som `light-switch`); sombra da folha que responde ao zoom e à luz; miniaturas reais nas camadas (`layer-thumbs.js`, em cache e fora do caminho de abrir o documento); esqueletos, estados vazios com ilustração e selos legíveis sob UV.
+- **Fase 14 · Tutoriais interativos**: motor em `src/tutorial/` (`tutor.js`, `conditions.js`, `lessons.js`, `host.js`) copiado e adaptado do Tabletop, com treino numa aba à parte, ajuda em degraus (20 s e 35 s), passos "agora sozinho", "quase lá" e "?" nas tarefas (Iluminação e Mesclagem). 11 lições (7 do plano mais abas e Mesa, frente e verso, pincel e fonte própria) e 2 dicas; entradas na Ajuda ("Aprender na prática"), no cartão "Aprender o básico" da tela inicial e no Ctrl+K. Relatório de cobertura em `test-results/tutorial-coverage.txt`.
+
+### Validação
+- `npm test`: 206 testes unitários passando.
+- `npm run build` e `npm run build:pages` sem erros.
+- `npm run test:e2e`: novos arquivos `urgent-fixes`, `library-templates`, `document-tabs`, `text-tools`, `front-back`, `keymap`, `draw-tools`, `user-fonts`, `ambient`, `polish` e `tutorials` (cada lição percorrida até o fim, mais entradas e cobertura).
+- `tests/e2e/perf.test.js`: abrir o A4 de 15 camadas em ~314 ms, arraste a 0,65 ms por quadro, 0 pixels de diferença ao soltar.
+- Testes antigos ajustados ao comportamento novo: Esc em cascata (`responsive`, `start`), recuperação de rascunho ao recarregar (`navigator`: a aba volta com o rascunho, sem perguntar), fantasma de arraste (`motion`), seletores dos chips (`library`, `start`), espera do registro de troca (`exchange`).
+
+### Pendências reais
+- Nenhum arquivo `.woff2` de teste existe no repositório: o teste de envio de fonte usa `.ttf`; `.woff`, `.woff2` e `.otf` passam pelo mesmo caminho (`FontFace`), mas só foram cobertos por teste unitário de nome e tipo.
+- Os tutoriais não ensinam ainda o botão "Imprimir em tamanho real" (a janela de impressão do navegador não é automatizável) nem as ferramentas de ajuste de camada pouco usadas; o relatório de cobertura lista os controles sem lição.
+- A lição "Imprimir e levar à mesa" explica a entrega ao Tabletop, mas não a executa dentro do Tabletop (outro app).
 
 ---
 

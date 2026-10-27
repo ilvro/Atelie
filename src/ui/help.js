@@ -2,6 +2,7 @@ import { SHORTCUTS, getShortcutsByCategory } from './shortcuts.js';
 import { tape } from './primitives.js';
 import { escapeHTML as esc, icon as renderIcon } from './icons.js';
 import { showWelcomeNotes } from './welcome.js';
+import { label as keyLabel, byId, isCustomized, conflicts, set as setKey, reset as resetKey, normalizeCombo, comboFor } from './keymap.js';
 
 export function createHelpDrawer({ onShowWelcome, shell } = {}) {
   const root = document.createElement('div');
@@ -16,11 +17,18 @@ export function createHelpDrawer({ onShowWelcome, shell } = {}) {
         <table class="help-shortcuts-table">
           <tbody>
             ${list.map(s => `
-              <tr>
-                <td class="help-col-key"><kbd class="help-kbd">${esc(s.key)}</kbd></td>
+              <tr data-shortcut-id="${esc(s.id)}">
+                <td class="help-col-key"><kbd class="help-kbd">${esc(keyLabel(s.id))}</kbd></td>
                 <td class="help-col-desc">
                   <strong>${esc(s.label)}</strong>
                   <span class="help-desc-text">${esc(s.description)}</span>
+                  ${s.configurable === false ? '' : `
+                    <span class="help-key-actions">
+                      <button type="button" class="help-key-btn" data-key-change="${esc(s.id)}">Alterar</button>
+                      ${isCustomized(s.id) ? `<button type="button" class="help-key-btn" data-key-reset="${esc(s.id)}" title="Voltar para ${esc(s.key)}">Restaurar padrão</button>` : ''}
+                    </span>
+                  `}
+                  <span class="help-key-note" data-key-note="${esc(s.id)}" role="status"></span>
                 </td>
               </tr>
             `).join('')}
@@ -82,6 +90,21 @@ export function createHelpDrawer({ onShowWelcome, shell } = {}) {
         <div class="help-shortcuts-wrapper">
           ${renderShortcutTable()}
         </div>
+        <div class="help-action-row">
+          <button type="button" class="at-btn" data-action="reset-all-shortcuts">Restaurar todos os atalhos</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Aprender na prática: tutoriais interativos -->
+    <section class="help-section" data-section="tutoriais" data-keywords="tutorial tutoriais aprender pratica licao dica passo a passo carta modelo uv">
+      <div class="help-section-header">
+        ${tape('APRENDER NA PRÁTICA')}
+      </div>
+      <div class="help-section-body">
+        <p class="help-intro">Cada tutorial acontece no próprio Ateliê: ele aponta, você faz, e o passo avança quando o resultado aparece. Você treina num documento à parte; os seus ficam como estão.</p>
+        <div data-tutorial-list>${typeof window !== 'undefined' && window.__atelieTutorialList ? window.__atelieTutorialList() : ''}</div>
+        <p class="help-tip-box"><button type="button" class="help-key-btn" data-action="tutorial-report">Exportar relatório dos tutoriais</button> (onde você travou ou pulou, guardado só neste navegador).</p>
       </div>
     </section>
 
@@ -228,6 +251,65 @@ export function createHelpDrawer({ onShowWelcome, shell } = {}) {
 
   searchInput?.addEventListener('input', (e) => {
     filterHelp(e.target.value);
+  });
+
+  // --- Change a shortcut: the next key combination pressed becomes the new one ---
+  const shortcutsWrap = root.querySelector('.help-shortcuts-wrapper');
+
+  function refreshShortcutTable() {
+    shortcutsWrap.innerHTML = renderShortcutTable();
+  }
+
+  function noteFor(id, text) {
+    const note = shortcutsWrap.querySelector(`[data-key-note="${CSS.escape(id)}"]`);
+    if (note) note.textContent = text;
+  }
+
+  function captureNextCombo(id, button) {
+    const entry = byId(id);
+    button.textContent = 'Pressione a nova combinação… (Esc cancela)';
+    button.classList.add('is-capturing');
+    noteFor(id, '');
+
+    const onKey = (e) => {
+      if (['Control', 'Shift', 'Alt', 'Meta'].includes(e.key)) return; // wait for the real key
+      e.preventDefault();
+      e.stopPropagation();
+      document.removeEventListener('keydown', onKey, true);
+      if (e.key === 'Escape') {
+        refreshShortcutTable();
+        return;
+      }
+      const combo = normalizeCombo(e);
+      const clash = conflicts(combo, entry.scope || 'editor', id);
+      if (clash.length) {
+        refreshShortcutTable();
+        noteFor(id, `${combo} já é usado por “${clash[0].label}”. Escolha outra combinação.`);
+        return;
+      }
+      setKey(id, combo);
+      refreshShortcutTable();
+      noteFor(id, `Agora é ${comboFor(id)}.`);
+    };
+    document.addEventListener('keydown', onKey, true);
+  }
+
+  shortcutsWrap.addEventListener('click', (e) => {
+    const change = e.target.closest('[data-key-change]');
+    if (change) {
+      captureNextCombo(change.dataset.keyChange, change);
+      return;
+    }
+    const reset = e.target.closest('[data-key-reset]');
+    if (reset) {
+      resetKey(reset.dataset.keyReset);
+      refreshShortcutTable();
+    }
+  });
+
+  root.querySelector('[data-action="reset-all-shortcuts"]')?.addEventListener('click', () => {
+    resetKey(null);
+    refreshShortcutTable();
   });
 
   // Re-open welcome notes

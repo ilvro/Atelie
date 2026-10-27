@@ -115,6 +115,27 @@ export function drawTextLayer(ctx, layer, scale = 1) {
     drawCtx.clip();
   }
   drawCtx.font = getFontString(txt.font, canvasFontSize, ink.style);
+
+  // Highlight: one band behind each line of text, before the ink.
+  if (txt.highlight) {
+    const pad = (txt.highlight.padding || 0) * scale;
+    drawCtx.save();
+    drawCtx.globalAlpha = drawCtx.globalAlpha * (txt.highlight.opacity ?? 0.6);
+    drawCtx.fillStyle = txt.highlight.color;
+    for (const line of layout.lines) {
+      if (!line.text || !line.text.trim()) continue;
+      const lineY = startY + line.y * scale;
+      const lineW = (line.width ?? 0) * scale;
+      drawCtx.fillRect(
+        startX + line.x * scale - pad,
+        lineY - canvasFontSize * 0.85 - pad,
+        lineW + pad * 2,
+        canvasFontSize * 1.1 + pad * 2
+      );
+    }
+    drawCtx.restore();
+  }
+
   drawCtx.fillStyle = txt.color || '#1d1b24';
   drawCtx.textBaseline = 'alphabetic';
   drawCtx.textAlign = 'left';

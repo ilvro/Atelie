@@ -170,14 +170,14 @@ test('library drawer and fill mode e2e', { timeout: 90_000 }, async (t) => {
   assert.equal(stampText.trim(), 'teste');
 
   // Click "Coleção do Ateliê" source chip -> expansion item is hidden
-  const casaChip = page.locator('.library-source-chips button[data-source="casa"]');
+  const casaChip = page.locator('.filter-chip[data-filter-group="source"][data-filter-value="casa"]');
   await casaChip.click();
   await page.waitForTimeout(50);
   const countAfterCasa = await page.locator('.library-item-card').count();
   assert.equal(countAfterCasa, 4, 'Filtering by house collection should hide expansion item');
 
   // Click "Tudo" source chip -> expansion item appears again
-  const allChip = page.locator('.library-source-chips button[data-source="all"]');
+  const allChip = page.locator('.filter-chip[data-filter-group="source"][data-filter-value="all"]');
   await allChip.click();
   await page.waitForTimeout(50);
   assert.equal(await page.locator('.library-item-card').count(), 5);
@@ -282,7 +282,7 @@ test('library drawer and fill mode e2e', { timeout: 90_000 }, async (t) => {
   // Turn off favorite filter
   await favFilterChip.click();
   await page.waitForTimeout(50);
-  assert.equal(await page.locator('.library-item-card').count(), 5);
+  assert.equal(await page.locator('.library-category-group:not(.library-recents) .library-item-card').count(), 5);
 
   // 5. Font applied to text layer updates text.font.library
   // First, add text layer

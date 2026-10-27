@@ -7,7 +7,7 @@ import { createFillPanel } from './fill-panel.js';
 import { createLibraryPanel } from './library-panel.js';
 import { createTemplatesDrawer } from './templates-drawer.js';
 import { createStartScreen } from './start.js';
-import { defaultsFor } from './library-defaults.js';
+import { defaultsFor, libraryDropSize, stampTilt } from './library-defaults.js';
 import { createNavigator, recordRecent, getRecentIds } from './navigator.js';
 import { saveDraft, loadDraft, removeDraft, draftDecision } from './draft.js';
 import { folderPath } from '../domain/folders.js';
@@ -23,6 +23,11 @@ import {
   addLayer,
   insertionIndex,
   textLayer,
+  textStyleFrom,
+  inheritedTextStyle,
+  isPaperLayer,
+  newLayerId,
+  varyLayer,
   imageLayer,
   shapeLayer,
 } from '../domain/handouts.js';
@@ -34,6 +39,13 @@ import { openExchange, publish, channel, savedMessage, unpublishBySource, readPu
 import { getSettings } from '../ui/settings.js';
 import { createExportDrawer } from './export-drawer.js';
 import { play } from '../ui/sound.js';
+import { wireModal } from '../ui/modal.js';
+import { recordRecentLibraryId } from './library-search.js';
+import { matches, normalizeCombo, label as keyLabel } from '../ui/keymap.js';
+import { createAmbient, loadAmbient } from '../ui/ambient.js';
+import { createLayerThumbs } from './layer-thumbs.js';
+import { normalizeStroke, appendStroke } from '../domain/brush.js';
+import { createTabBar, reorderIds, nextAfterClose, cycleTab, loadTabs, saveTabs } from './tabs.js';
 import { downloadHandoutPng, printHandout, exportScale, printLayout } from './export.js';
 
 export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
@@ -43,6 +55,15 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   const handoff = typeof window !== 'undefined'
     ? handoffRequest(window.location, window.opener)
     : null;
+
+  // Each open document is a session; `state`, `hasDraft`, ... below mirror the active one.
+  // `activeId === null` means the Mesa (start screen) is showing, with every session still open.
+  const TAB_BAR_HEIGHT = 36;
+  const sessions = new Map();
+  let tabOrder = [];
+  let activeId = null;
+  let activeSession = null;
+  const lastFace = new Map(); // tab id -> the session (front or back) that was last on stage
 
   let state = null;
   let stage = null;
@@ -62,7 +83,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     <div class="desk-doc-title-area">
       <input type="text" class="at-doc-name-input" aria-label="Nome do documento" value="" />
       <span class="at-stamp is-default desk-size-stamp"></span>
-      <span class="at-stamp is-uv desk-uv-stamp" style="display: none;">UV</span>
+      <span class="at-stamp is-uv desk-uv-stamp">UV</span>
       ${handoff && (handoff.mode === 'edit' || handoff.mode === 'new') ? `<span class="at-stamp is-accent at-handoff-stamp" title="Ligado ao Tabletop">Ligado ao Tabletop</span>` : ''}
     </div>
     <div class="desk-doc-actions">
@@ -71,6 +92,12 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       </button>
       <button type="button" class="at-icon-btn" data-action="redo" title="Refazer (Ctrl+Y)" aria-label="Refazer">
         ${renderIcon('redo', 16)}
+      </button>
+      <button type="button" class="at-btn" data-action="flip-sheet" title="Virar a folha (F)">
+        Criar verso
+      </button>
+      <button type="button" class="at-icon-btn" data-action="unlink-back" title="Desvincular verso" aria-label="Desvincular verso" style="display:none;">
+        ${renderIcon('close', 14)}
       </button>
       <button type="button" class="at-btn" data-action="toggle-uv" aria-pressed="false" title="Luz UV (U)">
         Luz UV
@@ -119,7 +146,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   // Stage container
   const stageContainer = document.createElement('div');
   stageContainer.style.position = 'absolute';
-  stageContainer.style.top = '52px';
+  stageContainer.style.top = `${TAB_BAR_HEIGHT + 52}px`;
   stageContainer.style.left = '0';
   stageContainer.style.right = '0';
   stageContainer.style.bottom = '0';
@@ -127,17 +154,44 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   let templatesDrawer = null;
   let startScreen = null;
 
+  // The stage fills its own host; the room light (layers and menu) sits next to it in the same container.
+  const stageHost = document.createElement('div');
+  stageHost.style.position = 'absolute';
+  stageHost.style.inset = '0';
+  stageContainer.appendChild(stageHost);
+
+  // Room light around the document (lamp, candle, flashlight, UV, studio)
+  const ambient = createAmbient(stageContainer, {
+    shortcutLabel: () => keyLabel('ambient-cycle'),
+    onSelect: (mode) => setAmbient(mode),
+  });
+
+  /** UV is also the document's UV light; every other mode turns it off. */
+  function setAmbient(mode) {
+    if (mode === ambient.mode) return;
+    const wantsUv = mode === 'uv';
+    if (wantsUv !== (currentLight === 'uv') && state) {
+      toggleUvLight({ silent: true });
+    }
+    ambient.apply(wantsUv ? 'uv' : mode);
+    play('light-switch', { mode });
+  }
+
   // Start screen container
   const startScreenContainer = document.createElement('div');
   startScreenContainer.className = 'desk-start-wrapper';
   startScreenContainer.style.position = 'absolute';
-  startScreenContainer.style.top = '0';
+  startScreenContainer.style.top = `${TAB_BAR_HEIGHT}px`;
   startScreenContainer.style.left = '0';
   startScreenContainer.style.right = '0';
   startScreenContainer.style.bottom = '0';
   startScreenContainer.style.display = 'none';
 
+  /** The Mesa is the home tab: it shows the start screen and keeps every open document where it was. */
   function showStartScreen() {
+    suspendActive();
+    activeSession = null;
+    activeId = null;
     state = null;
     docBar.style.display = 'none';
     readonlyBanner.style.display = 'none';
@@ -145,8 +199,11 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     stageContainer.style.display = 'none';
     stampOverlay.style.display = 'none';
     startScreenContainer.style.display = 'block';
+    delete document.documentElement.dataset.light;
     startScreen?.refresh();
     shell.rail.setActive('desk');
+    refreshTabs();
+    persistTabs();
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href);
       url.searchParams.delete('handout');
@@ -164,30 +221,20 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
 
   startScreen = createStartScreen(startScreenContainer, {
     api,
+    getOpenIds: () => tabOrder.slice(),
     onCreatePreset: (presetId) => {
-      confirmUnsavedChanges(() => {
-        loadHandout(createHandout({ preset: presetId }));
-      });
+      loadHandout(createHandout({ preset: presetId }), { newTab: true });
     },
     onOpenHandout: async (docId) => {
-      confirmUnsavedChanges(async () => {
-        try {
-          const doc = await api.handouts.read(docId);
-          if (doc) await loadHandout(doc);
-        } catch (err) {
-          shell.notify(`Erro ao abrir documento: ${err.message}`, { tone: 'error' });
-        }
-      });
+      openDocumentById(docId);
     },
     onOpenTemplate: async (templateId) => {
-      confirmUnsavedChanges(async () => {
-        try {
-          await instantiateTemplate(templateId);
-          shell.inspector.tab('fill');
-        } catch (err) {
-          shell.notify(`Erro ao carregar modelo: ${err.message}`, { tone: 'error' });
-        }
-      });
+      try {
+        await instantiateTemplate(templateId, { newTab: true });
+        shell.inspector.tab('fill');
+      } catch (err) {
+        shell.notify(`Erro ao carregar modelo: ${err.message}`, { tone: 'error' });
+      }
     },
     onOpenTemplatesDrawer: () => {
       shell.drawer.open('templates');
@@ -198,7 +245,18 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     },
   });
 
+  const tabBar = createTabBar({
+    onActivate: (id) => (id ? activateTab(id) : showStartScreen()),
+    onClose: (id) => closeTab(id),
+    onReorder: (id, toIndex) => {
+      tabOrder = reorderIds(tabOrder, id, toIndex);
+      refreshTabs();
+      persistTabs();
+    },
+  });
+
   deskStage.innerHTML = '';
+  deskStage.appendChild(tabBar.element);
   deskStage.appendChild(docBar);
   deskStage.appendChild(readonlyBanner);
   deskStage.appendChild(draftBar);
@@ -213,6 +271,8 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   const archiveBtn = docBar.querySelector('[data-action="archive"]');
   const uvBtn = docBar.querySelector('[data-action="toggle-uv"]');
   const uvStamp = docBar.querySelector('.desk-uv-stamp');
+  const flipBtn = docBar.querySelector('[data-action="flip-sheet"]');
+  const unlinkBtn = docBar.querySelector('[data-action="unlink-back"]');
   const inspectorToggleBtn = docBar.querySelector('[data-action="toggle-inspector"]');
 
   if (inspectorToggleBtn) {
@@ -223,17 +283,16 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
 
   let currentLight = 'normal';
 
-  function toggleUvLight() {
+  function toggleUvLight({ silent = false } = {}) {
     currentLight = currentLight === 'uv' ? 'normal' : 'uv';
     const isUv = currentLight === 'uv';
-    play('uv-toggle', { on: isUv });
+    if (!silent) play('uv-toggle', { on: isUv });
+    if (isUv !== (ambient.mode === 'uv')) ambient.apply(isUv ? 'uv' : loadAmbient());
     if (uvBtn) uvBtn.setAttribute('aria-pressed', isUv ? 'true' : 'false');
     if (isUv) {
       document.documentElement.dataset.light = 'uv';
-      if (uvStamp) uvStamp.style.display = 'inline-block';
     } else {
       delete document.documentElement.dataset.light;
-      if (uvStamp) uvStamp.style.display = 'none';
     }
     if (state?.handout && stage) {
       stage.show(state.handout, { light: currentLight });
@@ -255,7 +314,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   let broadcastChannel = null;
 
   function updateStageLayout() {
-    let top = 52;
+    let top = TAB_BAR_HEIGHT + 52;
     if (isReadOnly) {
       readonlyBanner.style.display = 'flex';
       readonlyBanner.style.top = `${top}px`;
@@ -275,6 +334,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
 
   function setReadOnly(ro) {
     isReadOnly = ro;
+    if (activeSession) activeSession.isReadOnly = ro;
     archiveBtn.disabled = isReadOnly;
     nameInput.disabled = isReadOnly;
     undoBtn.disabled = isReadOnly || !state?.canUndo;
@@ -286,19 +346,24 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     broadcastChannel = new BroadcastChannel('atelie');
     broadcastChannel.onmessage = (event) => {
       const msg = event.data;
-      if (!msg || !state?.handout?.id) return;
-      if (msg.handoutId !== state.handout.id) return;
+      if (!msg) return;
+      const session = sessions.get(msg.handoutId);
+      if (!session) return;
 
-      if (msg.type === 'check-open' && msg.tabId !== tabId && !isReadOnly) {
+      const setRo = (ro) => {
+        if (session === activeSession) setReadOnly(ro); else session.isReadOnly = ro;
+      };
+
+      if (msg.type === 'check-open' && msg.tabId !== tabId && !session.isReadOnly) {
         broadcastChannel.postMessage({
           type: 'claim-active',
-          handoutId: state.handout.id,
+          handoutId: session.id,
           ownerTabId: tabId,
         });
       } else if (msg.type === 'claim-active' && msg.ownerTabId !== tabId) {
-        setReadOnly(true);
+        setRo(true);
       } else if (msg.type === 'claim-edit' && msg.tabId !== tabId) {
-        setReadOnly(true);
+        setRo(true);
       }
     };
   }
@@ -342,6 +407,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       nameInput.value = doc.name;
     }
     sizeStamp.textContent = `${doc.page.width} × ${doc.page.height}`;
+    updateFlipUi();
     undoBtn.disabled = !state.canUndo;
     redoBtn.disabled = !state.canRedo;
   }
@@ -401,6 +467,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       }
 
       state.markSaved(saved);
+      refreshTabs();
 
       // Clear draft on archive
       await removeDraft(saved.id);
@@ -532,13 +599,15 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
 
     document.body.appendChild(backdrop);
 
-    backdrop.querySelector('.modal-cancel-btn').addEventListener('click', () => backdrop.remove());
+    const close = () => { backdrop.remove(); dispose(); };
+    const dispose = wireModal(backdrop, { onCancel: close, primary: '.modal-save-btn' });
+    backdrop.querySelector('.modal-cancel-btn').addEventListener('click', close);
     backdrop.querySelector('.modal-discard-btn').addEventListener('click', () => {
-      backdrop.remove();
+      close();
       onDiscard();
     });
     backdrop.querySelector('.modal-save-btn').addEventListener('click', async () => {
-      backdrop.remove();
+      close();
       await archiveDocument();
       onDiscard();
     });
@@ -565,20 +634,27 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
 
       document.body.appendChild(backdrop);
 
+      // Sem cancelar por Esc ou fundo: as duas saídas decidem o destino do rascunho.
+      const dispose = wireModal(backdrop, { primary: '.draft-recover-btn' });
+
       backdrop.querySelector('.draft-discard-prompt-btn').addEventListener('click', () => {
         backdrop.remove();
+        dispose();
         resolve(false);
       });
 
       backdrop.querySelector('.draft-recover-btn').addEventListener('click', () => {
         backdrop.remove();
+        dispose();
         resolve(true);
       });
     });
   }
 
+  /** Returns the document to open and the draft flags for its session. */
   async function checkDraftRecovery(handout) {
-    if (!handout || !handout.id) return handout;
+    const plain = { handout, hasDraft: false, draftSaved: true };
+    if (!handout || !handout.id) return plain;
     try {
       const draft = await loadDraft(handout.id);
       const decision = draftDecision({ draft, serverHandout: handout });
@@ -593,15 +669,10 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
         });
 
         if (shouldRecover) {
-          hasDraft = true;
-          draftSaved = true;
-          return draft.handout;
-        } else {
-          await removeDraft(handout.id);
-          hasDraft = false;
-          draftSaved = true;
-          return handout;
+          return { handout: draft.handout, hasDraft: true, draftSaved: true };
         }
+        await removeDraft(handout.id);
+        return plain;
       } else if (decision === 'conflict') {
         const shouldCopy = await showDraftPrompt({
           title: 'Conflito de rascunho',
@@ -610,107 +681,251 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
           secondaryText: 'Descartar',
         });
 
+        await removeDraft(handout.id);
         if (shouldCopy) {
           const copy = structuredClone(draft.handout);
           copy.id = 'h-' + Math.random().toString(36).slice(2, 10);
           copy.name = `${copy.name} (Rascunho)`;
           copy.revision = 0;
-          await removeDraft(handout.id);
-          hasDraft = true;
-          draftSaved = false;
-          return copy;
-        } else {
-          await removeDraft(handout.id);
-          hasDraft = false;
-          draftSaved = true;
-          return handout;
+          return { handout: copy, hasDraft: true, draftSaved: false };
         }
+        return plain;
       }
     } catch (err) {
       console.warn('[atelie] Erro ao verificar rascunho:', err);
     }
-    return handout;
+    return plain;
   }
 
-  async function loadHandout(inputHandout, { skipDraftCheck = false } = {}) {
-    let handout = inputHandout;
-    if (!skipDraftCheck) {
-      handout = await checkDraftRecovery(inputHandout);
+  // --- Sessions and tabs -------------------------------------------------------
+
+  function persistTabs() {
+    const own = tabOrder.filter(id => !sessions.get(id)?.practice);
+    saveTabs(own, own.includes(activeId) ? activeId : null);
+  }
+
+  function refreshTabs() {
+    tabBar.render(
+      tabOrder.map(id => {
+        const sess = sessions.get(id);
+        const back = backSessionOf(id);
+        const onBack = id === activeId && activeSession?.owner === id;
+        const base = (onBack ? back : sess)?.state?.handout?.name || sess?.state?.handout?.name || 'Sem nome';
+        return {
+          id,
+          title: onBack ? `${base} · verso` : base,
+          dirty: Boolean(sess?.state?.dirty || back?.state?.dirty),
+        };
+      }),
+      activeId
+    );
+  }
+
+  /** Writes the mirrored editor variables back to the session that is leaving the stage. */
+  function suspendActive() {
+    const sess = activeSession;
+    if (!sess) return;
+    sess.hasDraft = hasDraft;
+    sess.draftSaved = draftSaved;
+    sess.isReadOnly = isReadOnly;
+    sess.light = currentLight;
+    if (stage) sess.view = stage.getView();
+  }
+
+  function disposeSession(sess) {
+    if (sess.draftTimer) clearTimeout(sess.draftTimer);
+    sess.draftTimer = null;
+    sess.disposed = true;
+    sessions.delete(sess.id);
+  }
+
+  /** The back face loaded next to a tab (a separate document linked by `handout.back`), if any. */
+  function backSessionOf(tabId) {
+    for (const sess of sessions.values()) {
+      if (sess.owner === tabId && !sess.disposed) return sess;
     }
-    play('paper-slide');
+    return null;
+  }
 
-    currentLight = 'normal';
-    if (uvBtn) uvBtn.setAttribute('aria-pressed', 'false');
-    delete document.documentElement.dataset.light;
-    if (uvStamp) uvStamp.style.display = 'none';
+  function disposePair(front) {
+    const back = backSessionOf(front.id);
+    if (back) disposeSession(back);
+    disposeSession(front);
+    lastFace.delete(front.id);
+  }
 
-    const hadPreviousHandout = Boolean(state?.handout);
-    const isSwitching = hadPreviousHandout && stageContainer.style.display !== 'none';
+  function updateFlipUi() {
+    if (!flipBtn || !state) return;
+    const hasBack = Boolean(state.handout.back?.handoutId);
+    flipBtn.textContent = !hasBack ? 'Criar verso' : activeSession?.owner ? 'Virar para a frente' : 'Virar para o verso';
+    flipBtn.title = hasBack ? 'Virar a folha (F)' : 'Criar um verso para este documento (F)';
+    unlinkBtn.style.display = hasBack ? '' : 'none';
+  }
 
-    state = createEditorState(handout);
-    state.land = (id) => stage?.land(id);
-    hideStartScreen();
-
-    // Warn if document references an uninstalled expansion
-    if (api?.library && shell?.notify) {
-      api.library.list().then(libData => {
-        if (!libData) return;
-        const availableItemIds = new Set((libData.items || []).map(i => i.id));
-        for (const page of handout.pages || []) {
-          for (const layer of page.layers || []) {
-            const libId = layer.image?.src?.library;
-            if (libId && !availableItemIds.has(libId)) {
-              let expName = 'externa';
-              if (libId.startsWith('ac-')) {
-                expName = 'Arquivos Confidenciais';
-              } else {
-                const prefix = libId.split('-')[0];
-                expName = prefix ? `"${prefix}"` : 'desconhecida';
-              }
-              shell.notify(`Este documento usa a expansão ${expName}, que não está instalada neste navegador.`, { tone: 'warning' });
-              return;
-            }
-          }
-        }
-      }).catch(() => {});
+  /** Loads the other face of the active tab as a hidden session (not a tab of its own). */
+  async function loadFaceSession(linkedId) {
+    const tabId = activeSession.owner || activeSession.id;
+    let target = sessions.get(linkedId);
+    if (target) return target;
+    let doc;
+    try {
+      doc = await api.handouts.read(linkedId);
+    } catch {
+      doc = null;
     }
+    if (!doc) return null;
+    const draft = await loadDraft(doc.id).catch(() => null);
+    let flags = { hasDraft: false, draftSaved: true };
+    if (draft?.handout && draftDecision({ draft, serverHandout: doc }) === 'offer') {
+      doc = draft.handout;
+      flags = { hasDraft: true, draftSaved: true };
+    }
+    target = createSession(doc, flags);
+    if (target.id !== tabId) target.owner = tabId;
+    return target;
+  }
 
-    if (!stage) {
-      stage = createStage(stageContainer, {
-        images,
-        fonts,
-        onSelect: layerId => state?.select(layerId),
-        onEdit: (nextHandout, meta) => state?.edit(nextHandout, meta),
-      });
+  async function flipDocument() {
+    if (!activeSession || !state) return;
+    const linkedId = state.handout.back?.handoutId;
+    if (!linkedId) {
+      await createBackForActive();
+      return;
+    }
+    const target = await loadFaceSession(linkedId);
+    if (!target) {
+      offerUnlinkMissingBack();
+      return;
+    }
+    if (tabOrder.includes(target.id) && target.owner == null && target.id !== (activeSession.owner || activeSession.id)) {
+      // The other face is open as a tab of its own: go there instead of pairing it.
+      await activateTab(target.id, { exact: true });
+      return;
+    }
+    await activateTab(target.id, { exact: true, flip: true });
+  }
+
+  function offerUnlinkMissingBack() {
+    const frontId = activeSession?.owner || activeSession?.id;
+    shell.notify('O verso deste documento não existe mais.', {
+      tone: 'warning',
+      duration: 8000,
+      action: { label: 'Desvincular', run: () => unlinkBack({ missing: true, tabId: frontId }) },
+    });
+  }
+
+  /** On opening a document, warns if its back was deleted. */
+  async function verifyBackLink(sess) {
+    const linkedId = sess.state.handout.back?.handoutId;
+    if (!linkedId || sess.backChecked || sessions.has(linkedId)) return;
+    sess.backChecked = true;
+    try {
+      const doc = await api.handouts.read(linkedId);
+      if (doc) return;
+    } catch {}
+    if (sess === activeSession) offerUnlinkMissingBack();
+  }
+
+  async function createBackForActive() {
+    if (!state || isReadOnly) return;
+    const front = state.handout;
+    const backDoc = createHandout({ name: `${front.name} (verso)` });
+    backDoc.page = structuredClone(front.page);
+    const papers = front.layers.filter(isPaperLayer).map(layer => ({ ...structuredClone(layer), id: newLayerId() }));
+    backDoc.layers = papers.length
+      ? papers
+      : backDoc.layers.map(layer => ({ ...layer, width: backDoc.page.width, height: backDoc.page.height }));
+    backDoc.back = { handoutId: front.id };
+    try {
+      const savedBack = await api.handouts.create(backDoc);
+      state.edit({ ...state.handout, back: { handoutId: savedBack.id } }, { label: 'Criar verso' });
+      await archiveDocument();
+      const target = createSession(savedBack);
+      target.owner = activeSession.owner || activeSession.id;
+      await activateTab(target.id, { exact: true, flip: true });
+      shell.notify('Verso criado e ligado à frente.', { tone: 'info' });
+    } catch (err) {
+      shell.notify(`Não foi possível criar o verso: ${err.message}`, { tone: 'error' });
+    }
+  }
+
+  /** Saves a face that is not on stage, without the delivery steps of a normal archive. */
+  async function savePlain(sess) {
+    const doc = sess.state.handout;
+    const saved = doc.revision === 0 ? await api.handouts.create(doc) : await api.handouts.save(doc);
+    sess.state.markSaved(saved);
+    await removeDraft(saved.id).catch(() => {});
+    if (sess === activeSession) {
+      hasDraft = false;
+      draftSaved = true;
+      updateStageLayout();
     } else {
-      stage.select(null);
+      sess.hasDraft = false;
+      sess.draftSaved = true;
     }
+  }
 
-    // Inspector panels
-    const layersWrap = document.createElement('div');
-    layersPanel = createLayersPanel(layersWrap, { state, getLight: () => currentLight, shell });
-    shell.inspector.panel('layers', layersWrap);
+  async function unlinkBack({ missing = false, tabId = activeSession?.owner || activeSession?.id } = {}) {
+    const front = sessions.get(tabId);
+    if (!front) return;
+    const back = backSessionOf(tabId);
+    const backId = front.state.handout.back?.handoutId || back?.id;
+    try {
+      // Leave the back first so the face on stage is the front, then cut the link on both documents.
+      if (activeSession === back) await activateTab(front.id, { exact: true, flip: true });
+      front.state.edit({ ...front.state.handout, back: null }, { label: 'Desvincular verso' });
+      if (front === activeSession) await archiveDocument(); else await savePlain(front);
 
-    const propertiesWrap = document.createElement('div');
-    propertiesPanel = createPropertiesPanel(propertiesWrap, { state, api, fonts });
-    shell.inspector.panel('properties', propertiesWrap);
-
-    const historyWrap = document.createElement('div');
-    historyPanel = createHistoryPanel(historyWrap, { state, api, images, fonts, shell });
-    shell.inspector.panel('history', historyWrap);
-
-    const fillWrap = document.createElement('div');
-    fillPanel = createFillPanel(shell, { state, api, images });
-    shell.inspector.panel('fill', fillPanel.element);
-
-    updateFillTabVisibility(state.handout);
-    if (state.handout.fields && state.handout.fields.length > 0) {
-      shell.inspector.tab('fill');
+      if (!missing && backId) {
+        let backSess = back || sessions.get(backId);
+        if (backSess) {
+          backSess.state.edit({ ...backSess.state.handout, back: null }, { label: 'Desvincular verso' });
+          await savePlain(backSess);
+        } else {
+          const doc = await api.handouts.read(backId).catch(() => null);
+          if (doc) await api.handouts.save({ ...doc, back: null });
+        }
+      }
+      if (back) {
+        disposeSession(back);
+        lastFace.delete(tabId);
+      }
+      updateFlipUi();
+      refreshTabs();
+      shell.notify('Verso desvinculado.', { tone: 'info' });
+    } catch (err) {
+      shell.notify(`Não foi possível desvincular: ${err.message}`, { tone: 'error' });
     }
+  }
 
-    state.subscribe(change => {
+  // Tutorials run on practice tabs: they leave no draft, are not restored with the tabs and never touch the person's documents.
+  let practiceMode = false;
+
+  function createSession(handout, { hasDraft: draftFlag = false, draftSaved: savedFlag = true } = {}) {
+    const sessionState = createEditorState(handout, { unsaved: draftFlag });
+    sessionState.land = (id) => stage?.land(id);
+    const sess = {
+      id: handout.id,
+      state: sessionState,
+      hasDraft: draftFlag,
+      draftSaved: savedFlag,
+      draftTimer: null,
+      isReadOnly: false,
+      light: 'normal',
+      view: null,
+      disposed: false,
+      practice: practiceMode,
+    };
+
+    sessionState.subscribe(change => {
+      if (sess.disposed) return;
+      if (sess !== activeSession) {
+        refreshTabs();
+        return;
+      }
       updateDocBar();
       updateFillTabVisibility(state.handout);
+      refreshTabs();
       if (
         change.type === 'edit' ||
         change.type === 'undo' ||
@@ -723,16 +938,22 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
         historyPanel.render();
         fillPanel.render();
 
-        if (change.type === 'edit' && !isReadOnly) {
+        if (change.type === 'edit') {
+        const selected = state.handout.layers.find(l => l.id === state.selection);
+        const style = textStyleFrom(selected);
+        if (style) sess.lastTextStyle = style;
+      }
+
+      if (change.type === 'edit' && !isReadOnly && !sess.practice) {
           hasDraft = true;
           draftSaved = false;
           updateStageLayout();
 
-          if (draftTimer) clearTimeout(draftTimer);
-          draftTimer = setTimeout(async () => {
+          if (sess.draftTimer) clearTimeout(sess.draftTimer);
+          sess.draftTimer = setTimeout(async () => {
             try {
-              await saveDraft(state.handout, state.handout.revision || 1);
-              draftSaved = true;
+              await saveDraft(sess.state.handout, sess.state.handout.revision || 1);
+              if (sess === activeSession) draftSaved = true; else sess.draftSaved = true;
             } catch (err) {
               console.warn('[atelie] Erro ao salvar rascunho:', err);
             }
@@ -745,40 +966,359 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       }
     });
 
-    if (isSwitching) {
-      await stage.animateSwitch(async () => {
-        stage.zoom('fit', { skipRender: true });
-        await stage.renderNow(state.handout, { light: currentLight });
+    sessions.set(sess.id, sess);
+    if (broadcastChannel && handout.id) {
+      broadcastChannel.postMessage({ type: 'check-open', handoutId: handout.id, tabId });
+    }
+    return sess;
+  }
+
+  function warnMissingExpansion(handout) {
+    if (!api?.library || !shell?.notify) return;
+    api.library.list().then(libData => {
+      if (!libData) return;
+      const availableItemIds = new Set((libData.items || []).map(i => i.id));
+      for (const page of handout.pages || []) {
+        for (const layer of page.layers || []) {
+          const libId = layer.image?.src?.library;
+          if (libId && !availableItemIds.has(libId)) {
+            let expName = 'externa';
+            if (libId.startsWith('ac-')) {
+              expName = 'Arquivos Confidenciais';
+            } else {
+              const prefix = libId.split('-')[0];
+              expName = prefix ? `"${prefix}"` : 'desconhecida';
+            }
+            shell.notify(`Este documento usa a expansão ${expName}, que não está instalada neste navegador.`, { tone: 'warning' });
+            return;
+          }
+        }
+      }
+    }).catch(() => {});
+  }
+
+  const layerThumbs = createLayerThumbs({
+    images,
+    fonts,
+    onReady: (key, url) => layersPanel?.thumbReady?.(key, url),
+  });
+
+  /** Rebuilds the inspector panels for the session that is on stage. */
+  function mountPanels() {
+    const layersWrap = document.createElement('div');
+    layersPanel = createLayersPanel(layersWrap, {
+      state,
+      getThumbs: () => layerThumbs,
+      getLight: () => currentLight,
+      getTextStyle: () => inheritedTextStyle(state.handout, activeSession?.lastTextStyle),
+      shell,
+    });
+    shell.inspector.panel('layers', layersWrap);
+
+    const propertiesWrap = document.createElement('div');
+    propertiesPanel = createPropertiesPanel(propertiesWrap, { state, api, fonts });
+    shell.inspector.panel('properties', propertiesWrap);
+
+    const historyWrap = document.createElement('div');
+    historyPanel = createHistoryPanel(historyWrap, { state, api, images, fonts, shell });
+    shell.inspector.panel('history', historyWrap);
+
+    fillPanel = createFillPanel(shell, { state, api, images });
+    shell.inspector.panel('fill', fillPanel.element);
+
+    updateFillTabVisibility(state.handout);
+  }
+
+  /** Puts a session on stage: Id `null` is the Mesa. */
+  async function activateTab(id, { replacing = false, first = false, exact = false, flip = false } = {}) {
+    if (id == null) {
+      showStartScreen();
+      return;
+    }
+    let sess = sessions.get(id);
+    if (!sess) return;
+    // Coming back to a tab shows the face it was left on.
+    if (!exact && !sess.owner) {
+      const back = backSessionOf(sess.id);
+      if (back && lastFace.get(sess.id) === back) sess = back;
+    }
+    if (sess === activeSession) return;
+
+    const isSwitching = (Boolean(activeSession) || replacing) && stageContainer.style.display !== 'none';
+    suspendActive();
+    activeSession = sess;
+    activeId = sess.owner || sess.id;
+    lastFace.set(activeId, sess);
+    state = sess.state;
+    hasDraft = sess.hasDraft;
+    draftSaved = sess.draftSaved;
+    isReadOnly = sess.isReadOnly;
+    currentLight = sess.light;
+    play('paper-slide');
+
+    if (uvBtn) uvBtn.setAttribute('aria-pressed', currentLight === 'uv' ? 'true' : 'false');
+    if (currentLight === 'uv') document.documentElement.dataset.light = 'uv';
+    else delete document.documentElement.dataset.light;
+    ambient.apply(currentLight === 'uv' ? 'uv' : loadAmbient());
+
+    hideStartScreen();
+
+    if (!stage) {
+      stage = createStage(stageHost, {
+        images,
+        fonts,
+        api,
+        onSelect: layerId => state?.select(layerId),
+        onEdit: (nextHandout, meta) => state?.edit(nextHandout, meta),
+        onMore: () => shell.inspector.tab('properties'),
+        onCreateTextAt: (point) => addTextAt(point, { edit: true }),
+        onDraw: (description) => addDrawing(description),
+        shortcutLabel: (id) => keyLabel(id),
       });
     } else {
-      stage.zoom('fit', { skipRender: true });
+      stage.select(null);
+    }
+
+    mountPanels();
+    if (first && state.handout.fields && state.handout.fields.length > 0) {
+      shell.inspector.tab('fill');
+    }
+
+    const view = sess.view;
+    const draw = async () => {
+      if (view) stage.zoom(view.zoom, { skipRender: true }); else stage.zoom('fit', { skipRender: true });
       await stage.renderNow(state.handout, { light: currentLight });
+      if (view) stage.setView(view);
+      stage.select(state.selection);
+    };
+    if (flip) {
+      await stage.animateFlip(draw);
+    } else if (isSwitching) {
+      await stage.animateSwitch(draw);
+    } else {
+      await draw();
       stage.animateOpen();
     }
     updateDocBar();
-
-    setReadOnly(false);
+    setReadOnly(sess.isReadOnly);
     updateStageLayout();
+    refreshTabs();
+    persistTabs();
 
-    if (broadcastChannel && handout.id) {
-      broadcastChannel.postMessage({
-        type: 'check-open',
-        handoutId: handout.id,
-        tabId,
-      });
-    }
-
-    recordRecent(handout.id);
+    recordRecent(sess.id);
     navigatorInstance?.render();
     refreshPaletteCache();
+    verifyBackLink(sess);
 
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       params.delete('new');
-      params.set('handout', handout.id);
+      params.set('handout', sess.id);
       window.history.replaceState(null, '', `?${params.toString()}`);
-      localStorage.setItem('atelie-last', handout.id);
+      try { localStorage.setItem('atelie-last', sess.id); } catch {}
     }
+  }
+
+  /**
+   * Opens a document in a tab. Already open → that tab is activated. Otherwise it replaces the active tab
+   * (the caller has handled unsaved changes), or goes into a new tab when `newTab` is set or the Mesa is showing.
+   * A document whose id is already open replaces that tab's session (draft discarded, version restored).
+   */
+  async function openInTab(inputHandout, { skipDraftCheck = false, newTab = false, background = false, draftFlags = null } = {}) {
+    const existing = inputHandout?.id ? sessions.get(inputHandout.id) : null;
+    // Opening by id (openDocumentById) activates a tab that is already open; loading a document object replaces it.
+    if (existing && background) return;
+
+    let opened = { handout: inputHandout, hasDraft: false, draftSaved: true };
+    if (draftFlags) {
+      opened = { handout: inputHandout, ...draftFlags };
+    } else if (!skipDraftCheck) {
+      opened = await checkDraftRecovery(inputHandout);
+    }
+
+    let replaced = existing
+      ? existing
+      : (!newTab && !background && activeSession ? activeSession : null);
+    // Replacing while the back is showing replaces the whole tab.
+    if (replaced?.owner) replaced = sessions.get(replaced.owner) || replaced;
+
+    const sess = createSession(opened.handout, opened);
+    if (replaced && replaced.id !== sess.id) {
+      const idx = tabOrder.indexOf(replaced.id);
+      disposePair(replaced);
+      sessions.set(sess.id, sess);
+      tabOrder.splice(idx === -1 ? tabOrder.length : idx, 1, sess.id);
+    } else if (replaced) {
+      // Same id: createSession already overwrote the map entry; stop the old session's timer.
+      if (replaced.draftTimer) clearTimeout(replaced.draftTimer);
+      replaced.disposed = true;
+      const oldBack = backSessionOf(replaced.id);
+      if (oldBack) disposeSession(oldBack);
+      if (!tabOrder.includes(sess.id)) tabOrder.push(sess.id);
+    } else {
+      tabOrder.push(sess.id);
+    }
+    if (activeSession && (activeSession === replaced || activeSession.owner === replaced?.id)) activeSession = null;
+
+    warnMissingExpansion(opened.handout);
+
+    if (background) {
+      refreshTabs();
+      persistTabs();
+      return sess;
+    }
+    await activateTab(sess.id, { replacing: Boolean(replaced), first: true });
+    return sess;
+  }
+
+  async function loadHandout(inputHandout, options = {}) {
+    return openInTab(inputHandout, options);
+  }
+
+  /** Opens by id: activates the tab if open, otherwise replaces the active tab (asking first if it has unsaved changes). */
+  async function openDocumentById(id, { newTab = false } = {}) {
+    if (sessions.has(id)) {
+      await activateTab(id);
+      return;
+    }
+    const open = async () => {
+      try {
+        const doc = await api.handouts.read(id);
+        if (doc) await loadHandout(doc, { newTab });
+      } catch (err) {
+        shell.notify(`Erro ao abrir documento: ${err.message}`, { tone: 'error' });
+      }
+    };
+    if (!newTab && activeSession) confirmUnsavedChanges(open); else await open();
+  }
+
+  async function closeTab(id) {
+    const sess = sessions.get(id);
+    if (!sess) return;
+    const back = backSessionOf(id);
+    const finish = async () => {
+      const wasActive = activeId === id;
+      const target = nextAfterClose(tabOrder, id, activeId);
+      tabOrder = tabOrder.filter(x => x !== id);
+      if (wasActive) {
+        suspendActive();
+        activeSession = null;
+      }
+      disposePair(sess);
+      if (wasActive) {
+        if (target) await activateTab(target); else showStartScreen();
+      } else {
+        refreshTabs();
+        persistTabs();
+      }
+      navigatorInstance?.render();
+    };
+    const dirtyFace = [sess, back].find(face => face?.state?.dirty);
+    if (dirtyFace) {
+      // The confirmation (and "Arquivar e continuar") act on the face on stage: bring the unsaved one forward first.
+      if (dirtyFace !== activeSession) await activateTab(dirtyFace.id, { exact: true });
+      confirmUnsavedChanges(finish);
+    } else {
+      await finish();
+    }
+  }
+
+  /** Opens a practice document for a tutorial: 'blank', 'text', 'rect' or a template id. */
+  async function openPractice(kind, name = 'Treino', { secret = false } = {}) {
+    practiceMode = true;
+    if (['blank', 'text', 'rect'].includes(kind)) {
+      let doc = createHandout({ name, preset: 'a4' });
+      let extra = null;
+      if (kind === 'text') {
+        extra = textLayer({ name: 'Texto', x: 200, y: 300, width: 700, height: 160, text: { content: 'Querida Lia, não procure por mim.' } });
+      } else if (kind === 'rect') {
+        extra = shapeLayer({ name: 'Mancha', x: 200, y: 300, width: 400, height: 300, shape: { type: 'rect', fill: '#8a6a3a', stroke: null, strokeWidth: 0 } });
+      }
+      if (extra) doc = addLayer(doc, extra, doc.layers.length);
+      await openInTab(doc, { newTab: true });
+      if (extra) state.select(extra.id);
+    } else {
+      await instantiateTemplate(kind, { newTab: true });
+    }
+    // A text only the UV light reveals, for lessons that read documents the way the players do
+    if (secret && state) {
+      const hidden = textLayer({ name: 'Segredo', light: 'uv', x: 120, y: 120, width: 600, height: 120, text: { content: 'A chave está sob o relógio' } });
+      state.edit(addLayer(state.handout, hidden, state.handout.layers.length), { label: 'Adicionar segredo' });
+    }
+  }
+
+  /** Practice documents already archived (they exist in storage), including the hidden back faces. */
+  function practiceDocuments() {
+    return [...sessions.values()].filter(sess => sess.practice && !sess.disposed && sess.state.handout.revision > 0).map(sess => sess.state.handout.id);
+  }
+
+  /** Ends the practice: its tabs close without questions; with `trash` the documents it archived go to the trash. */
+  async function closePractice({ trash = false } = {}) {
+    const saved = practiceDocuments();
+    practiceMode = false;
+    const practiceTabs = tabOrder.filter(id => sessions.get(id)?.practice);
+    const leavingStage = Boolean(activeSession?.practice);
+    for (const id of practiceTabs) {
+      const sess = sessions.get(id);
+      tabOrder = tabOrder.filter(x => x !== id);
+      if (sess) disposePair(sess);
+    }
+    for (const sess of [...sessions.values()]) if (sess.practice) disposeSession(sess);
+    if (trash) {
+      for (const id of saved) {
+        try { await api.handouts.remove(id); } catch {}
+      }
+    }
+    if (leavingStage) {
+      activeSession = null;
+      const back = tabOrder[tabOrder.length - 1];
+      if (back) await activateTab(back); else showStartScreen();
+    } else {
+      refreshTabs();
+    }
+    persistTabs();
+    navigatorInstance?.render();
+    refreshPaletteCache();
+  }
+
+  /** Everything a tutorial's conditions read from the editor. */
+  function tutorialSnapshot() {
+    const selected = state ? state.handout.layers.find(l => l.id === state.selection) ?? null : null;
+    return {
+      handout: state?.handout ?? null,
+      dirty: Boolean(state?.dirty),
+      light: currentLight,
+      tool: stage?.getTool?.() ?? 'select',
+      selection: selected,
+      tabs: tabOrder.slice(),
+      practiceTabs: tabOrder.filter(id => sessions.get(id)?.practice).length,
+      activeTabId: activeId,
+      onMesa: activeId == null,
+      face: activeSession?.owner ? 'back' : 'front',
+      hasBack: Boolean(state?.handout?.back?.handoutId),
+    };
+  }
+
+  /** Brings back the tabs of the last visit (documents never archived come back from their drafts). */
+  async function restoreTabs(extraActiveId = null) {
+    const saved = loadTabs();
+    const ids = saved.order.filter(id => !sessions.has(id));
+    for (const id of ids) {
+      try {
+        let doc = null;
+        try { doc = await api.handouts.read(id); } catch {}
+        const draft = await loadDraft(id).catch(() => null);
+        let flags = { hasDraft: false, draftSaved: true };
+        if (draft?.handout && (!doc || draftDecision({ draft, serverHandout: doc }) === 'offer')) {
+          doc = draft.handout;
+          flags = { hasDraft: true, draftSaved: true };
+        }
+        if (doc) await openInTab(doc, { background: true, draftFlags: flags });
+      } catch (err) {
+        console.warn('[atelie] Erro ao restaurar aba:', err);
+      }
+    }
+    return saved;
   }
 
   // Document Name editing
@@ -792,6 +1332,8 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   undoBtn.addEventListener('click', () => state?.undo());
   redoBtn.addEventListener('click', () => state?.redo());
   archiveBtn.addEventListener('click', () => archiveDocument());
+  flipBtn.addEventListener('click', () => flipDocument());
+  unlinkBtn.addEventListener('click', () => unlinkBack());
 
   // Navigator Drawer panel
   const navigatorWrap = document.createElement('div');
@@ -810,37 +1352,16 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       onOpenReader?.(id);
     },
     onOpenExport: async (id) => {
-      if (state?.handout?.id !== id) {
-        confirmUnsavedChanges(async () => {
-          try {
-            const doc = await api.handouts.read(id);
-            await loadHandout(doc);
-            shell.drawer.open('export');
-          } catch (err) {
-            shell.notify(`Erro ao abrir documento: ${err.message}`, { tone: 'error' });
-          }
-        });
-      } else {
-        shell.drawer.open('export');
-      }
+      if (state?.handout?.id !== id) await openDocumentById(id);
+      shell.drawer.open('export');
     },
-    onOpenDocument: async (id) => {
-      confirmUnsavedChanges(async () => {
-        try {
-          const doc = await api.handouts.read(id);
-          await loadHandout(doc);
-          shell.drawer.close();
-        } catch (err) {
-          shell.notify(`Erro ao abrir documento: ${err.message}`, { tone: 'error' });
-        }
-      });
+    onOpenDocument: async (id, { newTab = false } = {}) => {
+      await openDocumentById(id, { newTab });
+      shell.drawer.close();
     },
     onCreateDocument: () => {
-      confirmUnsavedChanges(() => {
-        const doc = createHandout({ preset: 'a4' });
-        loadHandout(doc);
-        shell.drawer.close();
-      });
+      loadHandout(createHandout({ preset: 'a4' }), { newTab: true });
+      shell.drawer.close();
     },
     getCurrentHandoutId: () => state?.handout?.id,
   });
@@ -863,15 +1384,13 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   templatesDrawer = createTemplatesDrawer(shell, {
     api,
     onUseTemplate: async (templateItem) => {
-      confirmUnsavedChanges(async () => {
-        try {
-          await instantiateTemplate(templateItem);
-          shell.inspector.tab('fill');
-          shell.drawer.close();
-        } catch (err) {
-          shell.notify(`Erro ao usar modelo: ${err.message}`, { tone: 'error' });
-        }
-      });
+      try {
+        await instantiateTemplate(templateItem, { newTab: true });
+        shell.inspector.tab('fill');
+        shell.drawer.close();
+      } catch (err) {
+        shell.notify(`Erro ao usar modelo: ${err.message}`, { tone: 'error' });
+      }
     },
   });
   shell.drawer.panel('templates', templatesDrawer.element);
@@ -897,13 +1416,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
 
   // Rail action listener
   shell.onAction?.((action, event) => {
-    if (action === 'desk') {
-      if (event?.ctrlKey || event?.metaKey || !state) {
-        confirmUnsavedChanges(() => {
-          showStartScreen();
-        });
-      }
-    }
+    if (action === 'desk') showStartScreen();
   });
 
   // Ctrl+K Palette Document Provider
@@ -978,12 +1491,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
           subtitle: sub,
           group: 'Documentos',
           icon: 'doc',
-          run: () => {
-            confirmUnsavedChanges(async () => {
-              const doc = await api.handouts.read(h.id);
-              await loadHandout(doc);
-            });
-          },
+          run: () => openDocumentById(h.id),
         });
       }
 
@@ -994,12 +1502,15 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   shell.palette.register(() => paletteDocumentsCache);
 
   // Helper actions for layers
-  function duplicateSelected() {
+  function duplicateSelected({ varied = false } = {}) {
     if (!state?.selection) return;
     const oldLayers = state.handout.layers;
-    const next = duplicateLayer(state.handout, state.selection);
-    state.edit(next, { label: 'Duplicar camada' });
+    let next = duplicateLayer(state.handout, state.selection);
     const duplicated = next.layers.find(l => !oldLayers.some(oldL => oldL.id === l.id));
+    if (varied && duplicated) {
+      next = updateLayer(next, duplicated.id, varyLayer(duplicated));
+    }
+    state.edit(next, { label: varied ? 'Duplicar com variação' : 'Duplicar camada' });
     if (duplicated) {
       state.select(duplicated.id);
       layersPanel?.flash?.(duplicated.id);
@@ -1090,8 +1601,9 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     stage?.land(cloned.id);
   }
 
-  function addTextAt(pos) {
+  function addTextAt(pos, { edit = false } = {}) {
     if (!state) return;
+    const style = inheritedTextStyle(state.handout, activeSession?.lastTextStyle);
     const newL = textLayer({
       name: 'Texto',
       x: Math.round(pos[0] - 300),
@@ -1099,6 +1611,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       width: 600,
       height: 200,
       light: currentLight === 'uv' ? 'uv' : 'both',
+      ...(style ? { text: style } : {}),
     });
     const insertIdx = insertionIndex(state.handout, newL, { selectedId: state.selection });
     const next = addLayer(state.handout, newL, insertIdx);
@@ -1106,6 +1619,52 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     state.select(newL.id);
     layersPanel?.flash?.(newL.id);
     stage?.land(newL.id);
+    if (edit) stage?.startInlineTextEdit(newL.id);
+  }
+
+  /** A finished gesture of the drawing tools becomes a layer (or a stroke added to a brush layer). */
+  function addDrawing(desc) {
+    if (!state || isReadOnly) return;
+    const o = desc.options;
+    const light = currentLight === 'uv' ? 'uv' : 'both';
+    const opacity = Math.max(0.05, Math.min(1, o.opacity / 100));
+
+    if (desc.type === 'stroke' && desc.appendTo) {
+      const target = state.handout.layers.find(l => l.id === desc.appendTo);
+      if (target) {
+        const merged = appendStroke(target, desc.points, target.shape.strokeWidth);
+        state.edit(updateLayer(state.handout, target.id, { ...merged.box, shape: { ...target.shape, points: merged.points } }), { label: 'Acrescentar traço' });
+        state.select(target.id);
+        return;
+      }
+    }
+
+    let newL;
+    if (desc.type === 'stroke') {
+      const normalized = normalizeStroke(desc.points, o.width);
+      if (!normalized) return;
+      newL = shapeLayer({
+        name: 'Pincel', ...normalized.box, opacity, light,
+        shape: { type: 'path', fill: null, stroke: o.color, strokeWidth: o.width, points: normalized.points },
+      });
+    } else if (desc.type === 'line') {
+      newL = shapeLayer({
+        name: 'Linha', ...desc.box, opacity, light,
+        shape: { type: 'line', fill: null, stroke: o.color, strokeWidth: o.width },
+      });
+    } else {
+      const isRect = desc.type === 'rect';
+      newL = shapeLayer({
+        name: isRect ? 'Retângulo' : 'Elipse', ...desc.box, opacity, light,
+        shape: o.fill
+          ? { type: desc.type, fill: o.color, stroke: null, strokeWidth: 0 }
+          : { type: desc.type, fill: null, stroke: o.color, strokeWidth: o.width },
+      });
+    }
+    const insertIdx = insertionIndex(state.handout, newL, { selectedId: state.selection });
+    state.edit(addLayer(state.handout, newL, insertIdx), { label: `Adicionar ${newL.name}` });
+    state.select(newL.id);
+    layersPanel?.flash?.(newL.id);
   }
 
   function addImageAt(pos) {
@@ -1159,11 +1718,13 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
   // --- External Image Drag-and-Drop, Library Drag Ghost & Paste ---
   let dragGhost = null;
 
-  function ensureDragGhost(pageWrap) {
+  function ensureDragGhost() {
     if (!dragGhost) {
-      dragGhost = document.createElement('div');
+      dragGhost = document.createElement('img');
       dragGhost.className = 'stage-drag-ghost';
-      pageWrap.appendChild(dragGhost);
+      dragGhost.alt = '';
+      dragGhost.draggable = false;
+      document.body.appendChild(dragGhost);
     }
     return dragGhost;
   }
@@ -1175,71 +1736,57 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     }
   }
 
+  // The ghost is the real element at its real size, following the cursor from the drawer to the page.
+  function moveDragGhost(event) {
+    const item = typeof window !== 'undefined' ? window.__atelieActiveDragItem : null;
+    if (!item || !state?.handout || !stage) {
+      removeDragGhost();
+      return;
+    }
+    if (!event.clientX && !event.clientY) return;
+    const ghost = ensureDragGhost();
+    const defaults = defaultsFor(item);
+    const size = libraryDropSize(item, state.handout.page);
+    const zoom = stage.getZoom();
+    const w = Math.round(size.width * zoom);
+    const h = Math.round(size.height * zoom);
+    const pageWrap = deskStage.querySelector('.stage-page-wrap');
+
+    let left = event.clientX - w / 2;
+    let top = event.clientY - h / 2;
+    if (size.cover && pageWrap) {
+      const r = pageWrap.getBoundingClientRect();
+      left = r.left;
+      top = r.top;
+    }
+
+    ghost.style.left = `${Math.round(left)}px`;
+    ghost.style.top = `${Math.round(top)}px`;
+    ghost.style.width = `${w}px`;
+    ghost.style.height = `${h}px`;
+    ghost.style.mixBlendMode = defaults.blend || 'normal';
+    ghost.style.objectFit = size.cover ? 'cover' : 'contain';
+
+    if (ghost.dataset.renderedId !== item.id) {
+      ghost.dataset.renderedId = item.id;
+      ghost.src = api?.library?.previewURL ? api.library.previewURL(item) : (item.preview || '');
+    }
+  }
+
   deskStage.addEventListener('dragover', event => {
     event.preventDefault();
     if (event.dataTransfer) {
       event.dataTransfer.dropEffect = 'copy';
     }
-
-    const item = typeof window !== 'undefined' ? window.__atelieActiveDragItem : null;
-    const pageWrap = deskStage.querySelector('.stage-page-wrap');
-    if (item && pageWrap && state?.handout && stage) {
-      const ghost = ensureDragGhost(pageWrap);
-      const defaults = defaultsFor(item);
-      const pageWidth = state.handout.page.width;
-      const pageHeight = state.handout.page.height;
-      const zoom = stage.getZoom();
-
-      let w, h;
-      if (defaults.cover) {
-        w = pageWidth;
-        h = pageHeight;
-      } else {
-        const aspect = (item.width && item.height) ? (item.width / item.height) : 1;
-        const targetDim = Math.min(pageWidth, pageHeight) * 0.45;
-        if (aspect >= 1) {
-          w = Math.round(targetDim);
-          h = Math.round(targetDim / aspect);
-        } else {
-          h = Math.round(targetDim);
-          w = Math.round(targetDim * aspect);
-        }
-      }
-
-      const pRect = pageWrap.getBoundingClientRect();
-      const dropX = (event.clientX - pRect.left) / zoom;
-      const dropY = (event.clientY - pRect.top) / zoom;
-
-      const left = defaults.cover ? 0 : Math.round((dropX - w / 2) * zoom);
-      const top = defaults.cover ? 0 : Math.round((dropY - h / 2) * zoom);
-
-      ghost.style.left = `${left}px`;
-      ghost.style.top = `${top}px`;
-      ghost.style.width = `${Math.round(w * zoom)}px`;
-      ghost.style.height = `${Math.round(h * zoom)}px`;
-      ghost.style.mixBlendMode = defaults.blend || 'normal';
-      ghost.style.opacity = '0.55';
-
-      if (ghost.dataset.renderedId !== item.id) {
-        ghost.dataset.renderedId = item.id;
-        const thumbSrc = item.thumbUrl || item.thumbnail;
-        if (thumbSrc) {
-          ghost.innerHTML = `<img src="${thumbSrc}" alt="" style="width:100%;height:100%;object-fit:${defaults.cover ? 'cover' : 'contain'};display:block;pointer-events:none;" />`;
-        } else {
-          ghost.innerHTML = `<div class="drag-ghost-placeholder">${item.name || 'Camada'}</div>`;
-        }
-      }
-    }
   });
 
-  deskStage.addEventListener('dragleave', event => {
-    if (!deskStage.contains(event.relatedTarget)) {
-      removeDragGhost();
-    }
-  });
+  if (typeof document !== 'undefined') {
+    document.addEventListener('dragover', moveDragGhost);
+  }
 
   if (typeof window !== 'undefined') {
     window.addEventListener('dragend', () => removeDragGhost());
+    window.addEventListener('drop', () => removeDragGhost());
   }
 
   deskStage.addEventListener('drop', async event => {
@@ -1273,14 +1820,11 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
           }
 
           const defaults = defaultsFor(item);
-          const pageWidth = state.handout.page.width;
-          const maxW = pageWidth * 0.5;
-          const itemW = item.width || maxW;
-          const itemH = item.height || maxW;
-          const w = Math.min(itemW, maxW);
-          const h = Math.round(w * (itemH / itemW));
-          const posX = Math.round(dropX - w / 2);
-          const posY = Math.round(dropY - h / 2);
+          const dropSize = libraryDropSize(item, state.handout.page);
+          const w = dropSize.width;
+          const h = dropSize.height;
+          const posX = dropSize.cover ? 0 : Math.round(dropX - w / 2);
+          const posY = dropSize.cover ? 0 : Math.round(dropY - h / 2);
 
           const newL = imageLayer({
             name: item.name || 'Elemento',
@@ -1288,6 +1832,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
             y: posY,
             width: Math.round(w),
             height: Math.round(h),
+            rotation: getSettings().tiltStamps === false ? 0 : stampTilt(item),
             blend: defaults.blend,
             opacity: defaults.opacity ?? 1,
             light: currentLight === 'uv' ? 'uv' : 'both',
@@ -1304,6 +1849,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
           const insertIdx = insertionIndex(state.handout, newL, { selectedId: state.selection, role });
           const next = addLayer(state.handout, newL, insertIdx);
           state.edit(next, { label: `Adicionar ${newL.name}` });
+          recordRecentLibraryId(item.id);
           state.select(newL.id);
           layersPanel?.flash?.(newL.id);
           stage?.land(newL.id);
@@ -1536,7 +2082,22 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) ||
       document.activeElement?.isContentEditable;
 
-    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') {
+    if (matches(event, 'close-tab')) {
+      if (activeId) {
+        event.preventDefault();
+        closeTab(activeId);
+      }
+      return;
+    }
+
+    if (matches(event, 'next-tab') || matches(event, 'prev-tab')) {
+      event.preventDefault();
+      const target = cycleTab(tabOrder, activeId, matches(event, 'prev-tab') ? -1 : 1);
+      if (target) activateTab(target); else showStartScreen();
+      return;
+    }
+
+    if (matches(event, 'archive')) {
       event.preventDefault();
       archiveDocument();
       return;
@@ -1544,55 +2105,57 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
 
     if (isEditingField) return;
 
-    if (
-      event.key.toLowerCase() === 'p' &&
-      !event.ctrlKey &&
-      !event.metaKey &&
-      !event.altKey &&
-      !event.shiftKey
-    ) {
+    for (const [shortcut, tool] of [['tool-select', 'select'], ['tool-brush', 'brush'], ['tool-rect', 'rect'], ['tool-ellipse', 'ellipse'], ['tool-line', 'line']]) {
+      if (matches(event, shortcut) && state) {
+        event.preventDefault();
+        stage?.setTool(tool);
+        return;
+      }
+    }
+
+    if (matches(event, 'ambient-cycle')) {
+      event.preventDefault();
+      ambient.cycle(1);
+      return;
+    }
+
+    if (matches(event, 'reader')) {
       event.preventDefault();
       onOpenReader?.(state?.handout?.id);
       return;
     }
 
-    if (
-      event.key.toLowerCase() === 'e' &&
-      !event.ctrlKey &&
-      !event.metaKey &&
-      !event.altKey &&
-      !event.shiftKey
-    ) {
+    if (matches(event, 'flip-sheet')) {
+      event.preventDefault();
+      flipDocument();
+      return;
+    }
+
+    if (matches(event, 'export')) {
       event.preventDefault();
       shell.drawer.toggle('export');
       return;
     }
 
-    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') {
+    if (matches(event, 'undo')) {
       event.preventDefault();
-      if (event.shiftKey) {
-        state?.redo();
-      } else {
-        state?.undo();
-      }
+      state?.undo();
       return;
     }
-
-    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'y') {
+    if (matches(event, 'redo') || normalizeCombo(event) === 'Ctrl+Shift+Z') {
       event.preventDefault();
       state?.redo();
       return;
     }
 
-    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'c') {
+    if (matches(event, 'copy')) {
       if (state?.selection) {
         event.preventDefault();
         copySelected();
       }
       return;
     }
-
-    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'v') {
+    if (matches(event, 'paste')) {
       const memory =
         copiedLayerMemory || (typeof window !== 'undefined' ? window.__atelieCopiedLayer : null);
       if (memory) {
@@ -1601,61 +2164,49 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
         return;
       }
     }
-
-    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'd') {
+    if (matches(event, 'duplicate-varied')) {
+      if (state?.selection) {
+        event.preventDefault();
+        duplicateSelected({ varied: true });
+      }
+      return;
+    }
+    if (matches(event, 'duplicate')) {
       if (state?.selection) {
         event.preventDefault();
         duplicateSelected();
       }
       return;
     }
-
-    if ((event.ctrlKey || event.metaKey) && event.key === ']') {
+    if (matches(event, 'layer-up')) {
       if (state?.selection) {
         event.preventDefault();
         moveSelected(+1);
       }
       return;
     }
-
-    if ((event.ctrlKey || event.metaKey) && event.key === '[') {
+    if (matches(event, 'layer-down')) {
       if (state?.selection) {
         event.preventDefault();
         moveSelected(-1);
       }
       return;
     }
-
-    if (event.shiftKey && event.key.toLowerCase() === 'r' && !event.ctrlKey && !event.metaKey) {
+    if (matches(event, 'rulers')) {
       event.preventDefault();
       stage?.toggleRulers();
       return;
     }
-
-    if (
-      event.key.toLowerCase() === 'i' &&
-      !event.ctrlKey &&
-      !event.metaKey &&
-      !event.altKey &&
-      !event.shiftKey
-    ) {
+    if (matches(event, 'eyedropper')) {
       event.preventDefault();
       triggerEyedropper();
       return;
     }
-
-    if (
-      event.key.toLowerCase() === 'u' &&
-      !event.ctrlKey &&
-      !event.metaKey &&
-      !event.altKey &&
-      !event.shiftKey
-    ) {
+    if (matches(event, 'uv-light')) {
       event.preventDefault();
       toggleUvLight();
       return;
     }
-
     if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
       if (state?.selection) {
         const layer = state.handout.layers.find(l => l.id === state.selection);
@@ -1691,14 +2242,31 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
         event.preventDefault();
         removeSelected();
       }
-    } else if (event.key === 'Escape') {
-      state?.select(null);
     }
   });
 
+  // Esc peels one thing at a time: text editing (handled by the text box itself), then the selection,
+  // then, if nothing is selected, the shell closes the drawer. Running in the capture phase lets
+  // the selection go first and tells the shell the key is already used.
+  window.addEventListener('keydown', event => {
+    if (event.key !== 'Escape' || document.body.classList.contains('is-reading')) return;
+    if (document.querySelector('.at-modal-backdrop, .at-settings-modal, .at-palette-modal')) return;
+    const active = document.activeElement;
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(active?.tagName) || active?.isContentEditable) return;
+    if (stage && stage.getTool() !== 'select') {
+      event.preventDefault();
+      stage.setTool('select');
+      return;
+    }
+    if (state?.selection) {
+      event.preventDefault();
+      state.select(null);
+    }
+  }, true);
+
   // Warn before unload if dirty and draft was not saved
   window.addEventListener('beforeunload', event => {
-    if (state?.dirty && !draftSaved) {
+    if (state?.dirty && !draftSaved && !activeSession?.practice) {
       event.preventDefault();
       event.returnValue = '';
     }
@@ -1813,11 +2381,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       label: 'Ir para o início',
       hint: 'Mesa',
       category: 'Navegação',
-      run: () => {
-        confirmUnsavedChanges(() => {
-          showStartScreen();
-        });
-      },
+      run: () => showStartScreen(),
     },
     {
       id: 'app:templates',
@@ -1835,18 +2399,14 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       id: `doc:new-${id}`,
       label: `Novo documento: ${name}`,
       category: 'Documento',
-      run: () => {
-        confirmUnsavedChanges(() => {
-          loadHandout(createHandout({ preset: id }));
-        });
-      },
+      run: () => loadHandout(createHandout({ preset: id }), { newTab: true }),
     });
   });
 
   shell.palette.register(paletteCommands);
 
   // Initial load
-  async function instantiateTemplate(templateIdOrItem) {
+  async function instantiateTemplate(templateIdOrItem, options = {}) {
     let tplItem = null;
     let tplId = typeof templateIdOrItem === 'string' ? templateIdOrItem : templateIdOrItem?.id;
     if (typeof templateIdOrItem === 'object' && templateIdOrItem?.handout) {
@@ -1890,7 +2450,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       }
     }
 
-    await loadHandout(doc);
+    await loadHandout(doc, options);
     return doc;
   }
 
@@ -1903,63 +2463,76 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       return;
     }
 
+    const hasWindow = typeof window !== 'undefined';
+    const urlParams = hasWindow ? new URLSearchParams(window.location.search) : new URLSearchParams();
+    const templateId = urlParams.get('template');
+    const handoutId = urlParams.get('handout');
+    const newPreset = urlParams.get('new');
+    const isStart = urlParams.has('start');
+    const isDiagnostics = urlParams.has('diagnostics');
+
+    // Tabs of the last visit come back first, in the background.
+    const saved = hasWindow ? await restoreTabs() : { order: [], active: null };
+
+    if (isStart) {
+      showStartScreen();
+      return;
+    }
+
+    if (templateId) {
+      try {
+        await instantiateTemplate(templateId, { newTab: true });
+        shell.inspector.tab('fill');
+        return;
+      } catch (err) {
+        console.warn('[atelie] Erro ao carregar modelo da URL:', err);
+      }
+    }
+
     let initialDoc = null;
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search);
-      const templateId = urlParams.get('template');
-      const handoutId = urlParams.get('handout');
-      const newPreset = urlParams.get('new');
-      const isStart = urlParams.has('start');
-      const isDiagnostics = urlParams.has('diagnostics');
-
-      if (isStart) {
-        showStartScreen();
+    if (handoutId) {
+      if (sessions.has(handoutId)) {
+        await activateTab(handoutId, { first: true });
         return;
       }
-
-      if (templateId) {
-        try {
-          initialDoc = await instantiateTemplate(templateId);
-          shell.inspector.tab('fill');
+      try {
+        initialDoc = await api.handouts.read(handoutId);
+      } catch {
+        // not found, fall back
+      }
+    } else if (newPreset) {
+      initialDoc = createHandout({ preset: newPreset });
+    } else if (saved.active && sessions.has(saved.active)) {
+      await activateTab(saved.active, { first: true });
+      return;
+    } else if (!isDiagnostics) {
+      // Normal user opening Ateliê with no document requested -> Start Screen (Mesa)
+      showStartScreen();
+      return;
+    } else {
+      const lastId = hasWindow ? localStorage.getItem('atelie-last') : null;
+      if (lastId) {
+        if (sessions.has(lastId)) {
+          await activateTab(lastId, { first: true });
           return;
-        } catch (err) {
-          console.warn('[atelie] Erro ao carregar modelo da URL:', err);
         }
-      }
-
-      if (handoutId) {
         try {
-          initialDoc = await api.handouts.read(handoutId);
+          initialDoc = await api.handouts.read(lastId);
         } catch {
-          // not found, fall back
-        }
-      } else if (newPreset) {
-        initialDoc = createHandout({ preset: newPreset });
-      } else if (!isDiagnostics) {
-        // Normal user opening Ateliê with no document requested -> Start Screen
-        showStartScreen();
-        return;
-      } else {
-        const lastId = localStorage.getItem('atelie-last');
-        if (lastId) {
-          try {
-            initialDoc = await api.handouts.read(lastId);
-          } catch {
-            // ignore
-          }
+          // ignore
         }
       }
     }
 
     if (!initialDoc) {
-      if (typeof window !== 'undefined' && !window.location.search.includes('diagnostics')) {
+      if (hasWindow && !isDiagnostics) {
         showStartScreen();
         return;
       }
       initialDoc = createHandout({ preset: 'a4' });
     }
 
-    await loadHandout(initialDoc);
+    await loadHandout(initialDoc, { newTab: true });
   }
 
   if (typeof window !== 'undefined') {
@@ -2020,10 +2593,32 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     },
     open: loadHandout,
     loadHandout,
+    openInTab,
+    openPractice,
+    closePractice,
+    practiceDocuments,
+    tutorialSnapshot,
+    get hasPractice() {
+      return practiceMode || [...sessions.values()].some(sess => sess.practice);
+    },
+    openDocumentById,
+    activateTab,
+    closeTab,
+    get tabs() {
+      return tabOrder.map(id => ({
+        id,
+        name: sessions.get(id)?.state?.handout?.name,
+        dirty: Boolean(sessions.get(id)?.state?.dirty),
+        active: id === activeId,
+      }));
+    },
+    get activeTabId() {
+      return activeId;
+    },
     openTemplate: instantiateTemplate,
     instantiateTemplate,
     createHandout,
-    createDocument: options => loadHandout(createHandout(options)),
+    createDocument: options => loadHandout(createHandout(options), { newTab: true }),
     archive: archiveDocument,
     duplicateSelected,
     copySelected,

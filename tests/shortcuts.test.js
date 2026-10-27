@@ -4,6 +4,9 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SHORTCUTS, getShortcutsByCategory } from '../src/ui/shortcuts.js';
+import { comboFor } from '../src/ui/keymap.js';
+
+globalThis.localStorage ??= { getItem: () => null, setItem() {} };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '..');
@@ -12,7 +15,7 @@ test('shortcuts: estrutura e propriedades obrigatórias', () => {
   assert.ok(Array.isArray(SHORTCUTS) && SHORTCUTS.length > 0, 'SHORTCUTS deve ser um array não vazio');
 
   const ids = new Set();
-  const validCategories = ['Navegação', 'Documento', 'Edição', 'Leitura'];
+  const validCategories = ['Navegação', 'Documento', 'Edição', 'Leitura', 'Ferramentas'];
 
   for (const s of SHORTCUTS) {
     assert.ok(s.id && typeof s.id === 'string', `atalho sem id válido: ${JSON.stringify(s)}`);
@@ -33,13 +36,12 @@ test('shortcuts: estrutura e propriedades obrigatórias', () => {
   }
 });
 
-test('shortcuts: cada atalho listado aparece num manipulador de teclado nos arquivos indicados', async () => {
+test('shortcuts: cada atalho é tratado pelo registro (keymap.matches) ou, se fixo, por um token de tecla', async () => {
   const fileCache = new Map();
 
   async function getFileContent(relPath) {
     if (fileCache.has(relPath)) return fileCache.get(relPath);
-    const fullPath = path.join(projectRoot, relPath);
-    const content = await fs.readFile(fullPath, 'utf8');
+    const content = await fs.readFile(path.join(projectRoot, relPath), 'utf8');
     fileCache.set(relPath, content);
     return content;
   }
@@ -49,15 +51,34 @@ test('shortcuts: cada atalho listado aparece num manipulador de teclado nos arqu
       const content = await getFileContent(fileRelPath);
       assert.ok(content, `arquivo ${fileRelPath} vazio ou inacessível`);
 
-      // Verifica se algum token do atalho é verificado no manipulador de teclado do arquivo
-      const tokens = shortcut.tokens || [shortcut.key];
-      const foundToken = tokens.some(token => content.includes(token));
-
-      assert.ok(
-        foundToken,
-        `atalho "${shortcut.id}" (${shortcut.key}) não encontrado no arquivo ${fileRelPath}. Tokens procurados: ${JSON.stringify(tokens)}`
-      );
+      if (shortcut.configurable === false) {
+        // Fixed keys (Enter, Delete, arrows, Esc) stay in the handler as plain key names.
+        const tokens = shortcut.tokens || [shortcut.key];
+        assert.ok(
+          tokens.some(token => content.includes(token)),
+          `atalho fixo "${shortcut.id}" (${shortcut.key}) não encontrado em ${fileRelPath}. Tokens: ${JSON.stringify(tokens)}`
+        );
+      } else {
+        assert.ok(
+          content.includes(`'${shortcut.id}'`) && /\bmatches\(/.test(content),
+          `atalho "${shortcut.id}" deve ser tratado pelo registro (keymap.matches com o id '${shortcut.id}') em ${fileRelPath}`
+        );
+      }
     }
+  }
+});
+
+test('shortcuts: nenhum par de atalhos usa a mesma combinação em escopos que se sobrepõem', () => {
+  const seen = [];
+  for (const s of SHORTCUTS) {
+    if (s.configurable === false) continue;
+    const combo = comboFor(s.id);
+    assert.ok(combo, `atalho ${s.id} sem combinação`);
+    for (const other of seen) {
+      const overlap = (s.scope || 'editor') === (other.scope || 'editor') || s.scope === 'global' || other.scope === 'global';
+      assert.ok(!(overlap && comboFor(other.id) === combo), `"${s.id}" e "${other.id}" usam ${combo} no mesmo escopo`);
+    }
+    seen.push(s);
   }
 });
 

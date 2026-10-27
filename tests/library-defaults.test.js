@@ -90,3 +90,25 @@ test('library defaults: Outros itens usam normal e posição padrão', () => {
   assert.equal(d.position, 'top');
 });
 
+
+test('libraryDropSize: papéis cobrem a página; o resto fica em no máximo metade da largura', async () => {
+  const { libraryDropSize } = await import('../src/editor/library-defaults.js');
+  const page = { width: 1000, height: 1400 };
+  assert.deepEqual(libraryDropSize({ category: 'Papéis', width: 300, height: 400 }, page), { width: 1000, height: 1400, cover: true });
+  assert.deepEqual(libraryDropSize({ category: 'Carimbos', width: 300, height: 150 }, page), { width: 300, height: 150, cover: false });
+  assert.deepEqual(libraryDropSize({ category: 'Carimbos', width: 2000, height: 1000 }, page), { width: 500, height: 250, cover: false });
+  assert.deepEqual(libraryDropSize({ category: 'Carimbos' }, page), { width: 400, height: 400, cover: false });
+});
+
+test('stampTilt: only stamps, seals and wax, within ±3°', async () => {
+  const { stampTilt } = await import('../src/editor/library-defaults.js');
+  assert.equal(stampTilt({ category: 'Carimbos' }, () => 0), -3);
+  assert.equal(stampTilt({ category: 'Selos' }, () => 0.5), 0);
+  assert.equal(stampTilt({ category: 'Lacres' }, () => 0.999), 3);
+  assert.equal(stampTilt({ category: 'Papéis' }, () => 0), 0);
+  assert.equal(stampTilt({}, () => 0), 0);
+  for (let i = 0; i < 50; i++) {
+    const t = stampTilt({ category: 'Carimbos' });
+    assert.ok(t >= -3 && t <= 3);
+  }
+});

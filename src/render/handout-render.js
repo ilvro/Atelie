@@ -2,6 +2,7 @@ import { canvasOperation, DEFAULT_PAGE_UV } from '../domain/handouts.js';
 import { cssFilter, applyAdjustPixels } from '../domain/handout-pixels.js';
 import { drawTextLayer } from './handout-text.js';
 import { drawEffect, drawCutMask, getEffectCanvas } from './handout-effects.js';
+import { drawPathShape } from './handout-path.js';
 
 export const visibleIn = (layer, light) => layer.visible && (layer.light === 'both' || layer.light === light);
 
@@ -272,6 +273,8 @@ export function drawLayer(ctx, layer, scale, loadedImages = new Map(), missing =
         ctx.strokeStyle = layer.shape.stroke;
         ctx.stroke();
       }
+    } else if (type === 'path') {
+      drawPathShape(ctx, layer.shape, w, h, scale);
     }
     ctx.restore();
   } else if (layer.kind === 'image') {
@@ -522,13 +525,14 @@ export function renderHandoutSync(
 export async function renderHandout(
   canvas,
   handout,
-  { scale = 1, light = 'normal', loadImage, loadFont = async () => {} } = {}
+  { scale = 1, light = 'normal', loadImage, loadFont = async () => {}, loadedImages = new Map() } = {}
 ) {
   const missing = [];
   const warnings = [];
 
-  // Preload visible images and fonts in parallel
-  const loadedImages = new Map();
+  // Preload visible images and fonts in parallel. `loadedImages` may come from the
+  // caller, which keeps it to redraw synchronously later (e.g. the stage drag cache).
+  const requested = new Set();
   const imagePromises = [];
   const fontPromises = [];
 
@@ -537,8 +541,8 @@ export async function renderHandout(
     if (layer.kind === 'image' && layer.image?.src && loadImage) {
       const src = layer.image.src;
       const key = src.library ? `library:${src.library}` : src.upload ? `upload:${src.upload}` : null;
-      if (key && !loadedImages.has(key)) {
-        loadedImages.set(key, null);
+      if (key && !requested.has(key) && !loadedImages.get(key)) {
+        requested.add(key);
         imagePromises.push(
           Promise.resolve(loadImage(src)).then(img => {
             if (img) loadedImages.set(key, img);
