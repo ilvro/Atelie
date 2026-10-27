@@ -45,12 +45,15 @@ export function saveRecentFont(family) {
 const CATEGORY_ORDER = [
   'Máquina de escrever',
   'Letra à mão',
+  'Caligrafia formal',
   'Marcador',
   'Impressão antiga',
   'Jornal e cartaz',
   'Gótica',
   'Estêncil e militar',
   'Tela de computador',
+  'Interface moderna',
+  'Código de barras',
 ];
 
 /**

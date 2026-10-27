@@ -12,10 +12,10 @@ A **coleção da casa** reside em \`public/colecao/\` e é distribuída junto co
 \`\`\`text
 public/colecao/
 ├── library.json         # Manifesto consolidado (schema 1) de todos os itens públicos
-├── papeis/              # 48 papéis em WebP gerados por ruído procedural (3 idades)
+├── papeis/              # 75 papéis em WebP (25 receitas × 3 idades, sobre escaneamentos CC0)
 ├── texturas/            # 53 sobreposições de acabamento em WebP com canal alfa
 ├── elementos/           # 140 ilustrações vetoriais em SVG (carimbos, selos, grampos)
-├── fontes/              # 26 famílias de fontes livres auto-hospedadas (OFL-1.1 e Apache-2.0)
+├── fontes/              # 40 famílias de fontes livres auto-hospedadas (OFL-1.1 e Apache-2.0)
 │   ├── LICENCAS.md      # Catálogo de licenças e commits do google/fonts
 │   ├── ofl/
 │   └── apache/
@@ -37,7 +37,7 @@ O teto estrito para a pasta \`public/colecao/\` é de **60 MB** para garantir ca
    \`\`\`bash
    npm run colecao:texturas
    \`\`\`
-   Executa \`scripts/colecao/build.js\`, que sintetiza os 48 papéis (\`scripts/colecao/papers.js\`) e as 53 sobreposições (\`scripts/colecao/overlays.js\`) utilizando ruídos matemáticos determinísticos (\`src/domain/noise.js\`) e exportação via biblioteca \`sharp\`.
+   Executa \`scripts/colecao/build.js\`, que sintetiza os 75 papéis (\`scripts/colecao/papers.js\`) e as 53 sobreposições (\`scripts/colecao/overlays.js\`) utilizando ruídos matemáticos determinísticos (\`src/domain/noise.js\`) e exportação via biblioteca \`sharp\`.
 
 2. **Reconstruir modelos e prévias da casa**:
    \`\`\`bash

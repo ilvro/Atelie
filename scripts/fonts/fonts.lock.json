@@ -180,5 +180,82 @@
     "ShareTechMono-Regular.ttf"
   ],
   "ofl/sharetechmono/OFL.txt": "9d96f445b6e9c701428811d0177f894874f8d6f07ecc30d568c506542368f3ff",
-  "ofl/sharetechmono/ShareTechMono-Regular.ttf": "9ceab1f87414829af259c0f537573ae03ef7dd3147c0b27a36a1a0beb6732677"
+  "ofl/sharetechmono/ShareTechMono-Regular.ttf": "9ceab1f87414829af259c0f537573ae03ef7dd3147c0b27a36a1a0beb6732677",
+  "_dir:ofl/shadowsintolight": [
+    "OFL.txt",
+    "ShadowsIntoLight.ttf"
+  ],
+  "ofl/shadowsintolight/OFL.txt": "0e441ae9f18ad0c294cc5b6ae3974c2db1614cab220598578b1b58c4cc334485",
+  "ofl/shadowsintolight/ShadowsIntoLight.ttf": "1347863151acdc00fa281daaba1a3543dbce5870b55f9cf7479a15bb84007681",
+  "_dir:ofl/indieflower": [
+    "IndieFlower-Regular.ttf",
+    "OFL.txt"
+  ],
+  "ofl/indieflower/IndieFlower-Regular.ttf": "ccc94b22b156e9c5dfe50fd051f01b097600b252c24473e624bb43a143140a94",
+  "ofl/indieflower/OFL.txt": "d9cdb075679d15a99bab2a8541b9c4fdc71347502111fbe9affd1d462219d96b",
+  "_dir:ofl/gloriahallelujah": [
+    "GloriaHallelujah.ttf",
+    "OFL.txt"
+  ],
+  "ofl/gloriahallelujah/GloriaHallelujah.ttf": "eb59f2762ce8785a292bebb2af3b3e6aa21454913d791f5f25441d1d57ead9fc",
+  "ofl/gloriahallelujah/OFL.txt": "0e441ae9f18ad0c294cc5b6ae3974c2db1614cab220598578b1b58c4cc334485",
+  "_dir:ofl/labelleaurore": [
+    "LaBelleAurore.ttf",
+    "OFL.txt"
+  ],
+  "ofl/labelleaurore/LaBelleAurore.ttf": "ed67462999e05f0cdac92f686374661e4d68c56fdcd7d05725c6df7b41eabd2a",
+  "ofl/labelleaurore/OFL.txt": "0e441ae9f18ad0c294cc5b6ae3974c2db1614cab220598578b1b58c4cc334485",
+  "_dir:ofl/mrssaintdelafield": [
+    "MrsSaintDelafield-Regular.ttf",
+    "OFL.txt"
+  ],
+  "ofl/mrssaintdelafield/MrsSaintDelafield-Regular.ttf": "67a7abc298ce9d368b2c00fcbff52ec54be948889b8a59032ae80ca3322e5b34",
+  "ofl/mrssaintdelafield/OFL.txt": "f354ef1e7256644b320c5e1d9a07a819c2e2b930166003c96680894f9fba81be",
+  "_dir:ofl/pinyonscript": [
+    "OFL.txt",
+    "PinyonScript-Regular.ttf"
+  ],
+  "ofl/pinyonscript/OFL.txt": "61d07cb0eaa943943648df2b11d0c2210e772053c192871e13f680b53fe0b77e",
+  "ofl/pinyonscript/PinyonScript-Regular.ttf": "4aab130a6ed27f8b8117738c84a5602edf9300cdcc0651a9a65bf96f451ac29a",
+  "_dir:ofl/greatvibes": [
+    "GreatVibes-Regular.ttf",
+    "OFL.txt"
+  ],
+  "ofl/greatvibes/GreatVibes-Regular.ttf": "8d509802186f1b51572531ecf313e8098f9a5bfdfaca93f0c9b34467f9982d15",
+  "ofl/greatvibes/OFL.txt": "61093a21f5e63dedf54222b3c09997e54c0fe43e3851d21386e02ddcbc246d49",
+  "ofl/ebgaramond/EBGaramond[wght].ttf": "ef9512f92f6d579e5dc75af59a5a4b1b8b47d2eda89e00b954d44520e5369027",
+  "ofl/ebgaramond/EBGaramond-Italic[wght].ttf": "bba2c4499c93c9612b90b9825d32b07da52fce2fe57562a1eb6b833553f93c4e",
+  "ofl/ebgaramond/OFL.txt": "0985066662eb755ed3683ae5482a81a9195b49ce3f7e165cc2388b3dbece7dd7",
+  "_dir:ofl/cinzel": [
+    "Cinzel[wght].ttf",
+    "OFL.txt"
+  ],
+  "ofl/cinzel/Cinzel[wght].ttf": "f4d83d34d1f6c741193e4acf4b3dff9531e5a67b6aa65228d00a7db72a4e0f34",
+  "ofl/cinzel/OFL.txt": "f2b3029aba64c378bf0963b62945eee15e564fe4330b934c8f2eb058282b5e83",
+  "_dir:ofl/uncialantiqua": [
+    "OFL.txt",
+    "UncialAntiqua-Regular.ttf"
+  ],
+  "ofl/uncialantiqua/OFL.txt": "244ca4ef7b106d8c660e9a00cecf5d581b6a222f447d7d59a8f61711b2ad3400",
+  "ofl/uncialantiqua/UncialAntiqua-Regular.ttf": "33a5128b59d1c95d4f3788164f4ab3a1196f0a982263cb2cd278c47418366766",
+  "_dir:ofl/grenzegotisch": [
+    "GrenzeGotisch[wght].ttf",
+    "OFL.txt"
+  ],
+  "ofl/grenzegotisch/GrenzeGotisch[wght].ttf": "701b299d8dc002a2b4bea2ff0f1272c0e4081a2835914354804565c410d0c637",
+  "ofl/grenzegotisch/OFL.txt": "bca29af2c3c9e142d11f523f414902ab8fb9ab8ffa3c34c63b6b72aa4e7d6acc",
+  "_dir:ofl/rye": [
+    "OFL.txt",
+    "Rye-Regular.ttf"
+  ],
+  "ofl/rye/OFL.txt": "399b33eb38cdfc76b8665defa5f81d52e8193d630ad5858c893db6bc20031bc9",
+  "ofl/rye/Rye-Regular.ttf": "b7edee5e615ae1b6b07e9d030c1309152bf3672a0e8a2a46293e273730f5adba",
+  "ofl/inter/Inter[opsz,wght].ttf": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+  "ofl/inter/OFL.txt": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+  "_dir:ofl/librebarcode39text": [
+    "LibreBarcode39Text-Regular.ttf",
+    "OFL.txt"
+  ],
+  "ofl/librebarcode39text/LibreBarcode39Text-Regular.ttf": "06ffe0f72409b2912673e2d00b488e4a874bda5d7845ecb5713bbc9d091483af",
+  "ofl/librebarcode39text/OFL.txt": "a4b7ccd1bda3269afba7d6d9293a7161e699d2f4f1f280dd8a8535c569388de9"
 }

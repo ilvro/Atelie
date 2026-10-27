@@ -25,7 +25,7 @@ test('licenses: toda fonte tem licença válida e conhecida', async () => {
   const library = JSON.parse(raw);
   const fontItems = library.items.filter(i => i.kind === 'font');
 
-  assert.ok(fontItems.length >= 26, `deve haver ao menos 26 fontes na coleção (encontrados: ${fontItems.length})`);
+  assert.ok(fontItems.length >= 40, `deve haver ao menos 40 fontes na coleção (encontrados: ${fontItems.length})`);
 
   for (const font of fontItems) {
     assert.ok(font.family, `fonte ${font.id} sem família`);

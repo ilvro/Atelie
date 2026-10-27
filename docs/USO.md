@@ -62,7 +62,7 @@ O modo de mesclagem define a física de como a camada interage com o papel abaix
 
 ## 4. Tipografia e Estilos de Tinta
 
-O Ateliê conta com **26 famílias de fontes livres** selecionadas para recriar documentos históricos com precisão:
+O Ateliê conta com **40 famílias de fontes livres** selecionadas para recriar documentos históricos com precisão:
 
 ### Estilos de Tinta Físicos
 Na aba **Propriedades** de uma camada de texto, você pode escolher o estilo de aplicação da tinta:

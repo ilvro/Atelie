@@ -11,6 +11,9 @@ const manifestPath = path.join(colecaoDir, 'library.json');
 const licencasMdPath = path.join(colecaoDir, 'fontes/LICENCAS.md');
 
 const EXPECTED_FAMILIES = [
+  // C6: 14 famílias novas
+  'Shadows Into Light', 'Indie Flower', 'Gloria Hallelujah', 'La Belle Aurore', 'Mrs Saint Delafield',
+  'Pinyon Script', 'Great Vibes', 'EB Garamond', 'Cinzel', 'Uncial Antiqua', 'Grenze Gotisch', 'Rye', 'Inter', 'Libre Barcode 39 Text',
   'Courier Prime',
   'Special Elite',
   'Cutive Mono',
@@ -39,13 +42,13 @@ const EXPECTED_FAMILIES = [
   'Share Tech Mono',
 ];
 
-test('colecao-fonts: todas as 26 famílias estão no manifesto com licença válida e arquivo ao lado', async () => {
+test('colecao-fonts: todas as 40 famílias estão no manifesto com licença válida e arquivo ao lado', async () => {
   const raw = await fs.readFile(manifestPath, 'utf8');
   const manifest = JSON.parse(raw);
   const items = manifest.items || [];
   const fontItems = items.filter(it => it.kind === 'font');
 
-  assert.ok(fontItems.length >= 26, `deve haver ao menos 26 estilos/fontes (encontrados: ${fontItems.length})`);
+  assert.ok(fontItems.length >= 40, `deve haver ao menos 40 estilos/fontes (encontrados: ${fontItems.length})`);
 
   const familiesFound = new Set();
 
@@ -77,7 +80,7 @@ test('colecao-fonts: todas as 26 famílias estão no manifesto com licença vál
     familiesFound.add(item.family);
   }
 
-  // 6. Todas as 26 famílias esperadas estão presentes
+  // 6. Todas as famílias esperadas estão presentes
   for (const expFam of EXPECTED_FAMILIES) {
     assert.ok(
       familiesFound.has(expFam),
@@ -86,7 +89,7 @@ test('colecao-fonts: todas as 26 famílias estão no manifesto com licença vál
   }
 });
 
-test('colecao-fonts: LICENCAS.md existe e lista todas as 26 famílias', async () => {
+test('colecao-fonts: LICENCAS.md existe e lista todas as 40 famílias', async () => {
   const content = await fs.readFile(licencasMdPath, 'utf8');
   assert.ok(content.length > 0, 'LICENCAS.md não deve estar vazio');
 
@@ -98,3 +101,15 @@ test('colecao-fonts: LICENCAS.md existe e lista todas as 26 famílias', async ()
   }
 });
 
+
+test('colecao-c6: toda família da coleção está na tabela fonte → épocas e numa categoria do seletor', async () => {
+  const fonts = JSON.parse(await fs.readFile(path.join(projectRoot, 'scripts/fonts/fonts.json'), 'utf8')).filter(f => f.use === 'colecao');
+  const { FONT_ERAS } = await import('../scripts/colecao/universo.js');
+  const selector = await fs.readFile(path.join(projectRoot, 'src/editor/font-selector.js'), 'utf8');
+  const families = new Set(fonts.map(f => f.family));
+  assert.ok(families.size >= 40, `${families.size} famílias`);
+  for (const f of fonts) {
+    assert.ok(FONT_ERAS[f.family], `${f.family} falta em FONT_ERAS`);
+    assert.ok(selector.includes(`'${f.category}'`), `categoria "${f.category}" de ${f.family} falta em CATEGORY_ORDER`);
+  }
+});

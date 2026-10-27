@@ -198,7 +198,7 @@ export function createHelpDrawer({ onShowWelcome, shell } = {}) {
         <p class="help-intro">O acervo do Ateliê é dividido entre a coleção pública e pacotes de expansões privadas:</p>
         <ul class="help-bullet-list">
           <li>
-            <strong>Coleção da casa:</strong> Acompanha o aplicativo no Git e é 100% livre: 48 papéis procedurais em 3 idades, 53 texturas de sobreposição em WebP, 140 elementos vetoriais em SVG, 26 famílias de fontes livres e 39 modelos prontos para jogar.
+            <strong>Coleção da casa:</strong> Acompanha o aplicativo no Git e é 100% livre: 75 papéis em 3 idades, 53 texturas de sobreposição em WebP, 294 elementos vetoriais em SVG, 40 famílias de fontes livres e 39 modelos prontos para jogar.
           </li>
           <li>
             <strong>Expansões privadas:</strong> Pacotes adicionais de terceiros (como o acervo <em>Arquivos Confidenciais</em>) ficam isolados na pasta <code>data-private/expansoes/</code> e nunca sobem para o Git ou versão pública no Pages.

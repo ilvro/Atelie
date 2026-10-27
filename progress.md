@@ -324,6 +324,24 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ---
 
+## Coleção ampliada · Fase C6 (fontes, +14 famílias)
+
+### Feito
+- **14 famílias** do `google/fonts` (commit já fixado no lock), todas OFL-1.1, pelo mesmo `scripts/fonts/fetch.js` com SHA-256 no `fonts.lock.json`: letra à mão (Shadows Into Light, Indie Flower, Gloria Hallelujah, La Belle Aurore, Mrs Saint Delafield), Caligrafia formal (Pinyon Script, Great Vibes), Impressão antiga (EB Garamond com itálico, Cinzel), Gótica (Uncial Antiqua, Grenze Gotisch), Jornal e cartaz (Rye), Interface moderna (Inter) e Código de barras (Libre Barcode 39 Text). A coleção tem agora 40 famílias.
+- **Categorias do seletor:** 11 das 14 famílias couberam nas categorias que já existiam; entraram 3 novas (Caligrafia formal, Interface moderna, Código de barras) em `CATEGORY_ORDER` e no amostrário.
+- `FONT_ERAS` (`universo.js`) cobre as 14, e um teste exige que toda família da coleção tenha época e categoria.
+- Fontes variáveis (EB Garamond, Cinzel, Grenze Gotisch, Inter) entram como estilos com eixos pelo parser sfnt da etapa 14.
+- `LICENCAS.md` (fontes e geral) regerados; amostrário `docs/referencias/colecao-fontes.png` com contagem de famílias e categorias calculada. Textos de contagem do README, Ajuda, USO e MANUTENÇÃO atualizados (75 papéis, 294 elementos, 40 famílias).
+
+### Validação
+- `npm test`: 239 passando. Coleção: 35,9 MB (limite 60 MB).
+
+### Pendências reais
+- Inter e EB Garamond entraram só nos arquivos variáveis (e o itálico do Garamond), sem o itálico do Inter, para caber no orçamento (as 14 famílias somam cerca de 4,6 MB, um pouco acima dos 4 MB do plano).
+- Libre Barcode 39 Text só desenha código de barras com asteriscos de início e fim (`*TEXTO*`); isso fica para os modelos que o usarem.
+
+---
+
 ## Refinamento Visual e Ergonomia de UI
 
 ### Feito

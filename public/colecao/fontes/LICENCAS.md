@@ -31,3 +31,17 @@ Origem: repositório oficial [google/fonts](https://github.com/google/fonts) no 
 | Black Ops One | Estêncil e militar | OFL-1.1 | [`ofl/blackopsone`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/blackopsone) |
 | VT323 | Tela de computador | OFL-1.1 | [`ofl/vt323`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/vt323) |
 | Share Tech Mono | Tela de computador | OFL-1.1 | [`ofl/sharetechmono`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/sharetechmono) |
+| Shadows Into Light | Letra à mão | OFL-1.1 | [`ofl/shadowsintolight`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/shadowsintolight) |
+| Indie Flower | Letra à mão | OFL-1.1 | [`ofl/indieflower`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/indieflower) |
+| Gloria Hallelujah | Letra à mão | OFL-1.1 | [`ofl/gloriahallelujah`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/gloriahallelujah) |
+| La Belle Aurore | Letra à mão | OFL-1.1 | [`ofl/labelleaurore`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/labelleaurore) |
+| Mrs Saint Delafield | Letra à mão | OFL-1.1 | [`ofl/mrssaintdelafield`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/mrssaintdelafield) |
+| Pinyon Script | Caligrafia formal | OFL-1.1 | [`ofl/pinyonscript`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/pinyonscript) |
+| Great Vibes | Caligrafia formal | OFL-1.1 | [`ofl/greatvibes`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/greatvibes) |
+| EB Garamond | Impressão antiga | OFL-1.1 | [`ofl/ebgaramond`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/ebgaramond) |
+| Cinzel | Impressão antiga | OFL-1.1 | [`ofl/cinzel`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/cinzel) |
+| Uncial Antiqua | Gótica | OFL-1.1 | [`ofl/uncialantiqua`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/uncialantiqua) |
+| Grenze Gotisch | Gótica | OFL-1.1 | [`ofl/grenzegotisch`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/grenzegotisch) |
+| Rye | Jornal e cartaz | OFL-1.1 | [`ofl/rye`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/rye) |
+| Inter | Interface moderna | OFL-1.1 | [`ofl/inter`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/inter) |
+| Libre Barcode 39 Text | Código de barras | OFL-1.1 | [`ofl/librebarcode39text`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/librebarcode39text) |

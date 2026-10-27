@@ -19,6 +19,10 @@ const CATEGORIES = [
     sample: 'Não confie nas sombras do corredor; encontre-me na biblioteca antes do amanhecer.',
   },
   {
+    name: 'Caligrafia formal',
+    sample: 'Minha querida Helena, conto os dias até o seu regresso a Vila Aurora.',
+  },
+  {
     name: 'Marcador',
     sample: 'URGENTE: EVACUAR O PERÍMETRO IMEDIATAMENTE! CÓDIGO VERMELHO!',
   },
@@ -41,6 +45,14 @@ const CATEGORIES = [
   {
     name: 'Tela de computador',
     sample: 'SYSTEM READY > LOAD "ARCHIVE.DAT",8,1 : INITIATING BUFFER TRANSFER... [OK]',
+  },
+  {
+    name: 'Interface moderna',
+    sample: 'Nova mensagem de Helena · 23:47 — "Você viu o que deixaram na porta?"',
+  },
+  {
+    name: 'Código de barras',
+    sample: '*ARQ 104 7731*',
   },
 ];
 
@@ -250,9 +262,9 @@ async function main() {
         <header class="header">
           <div class="header-title">
             <h1>Ateliê de Documentos · Coleção da Casa</h1>
-            <p>Amostrário tipográfico das 26 famílias de fontes livres (OFL e Apache 2.0)</p>
+            <p>Amostrário tipográfico das ${familyMap.size} famílias de fontes livres (OFL e Apache 2.0)</p>
           </div>
-          <div class="header-badge">26 Famílias · 8 Categorias</div>
+          <div class="header-badge">${familyMap.size} Famílias · ${CATEGORIES.length} Categorias</div>
         </header>
 
         ${sectionsHTML}

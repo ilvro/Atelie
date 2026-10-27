@@ -2,14 +2,20 @@
   {
     "family": "IM Fell English",
     "path": "ofl/imfellenglish",
-    "files": ["IMFeENrm28P.ttf", "IMFeENit28P.ttf"],
+    "files": [
+      "IMFeENrm28P.ttf",
+      "IMFeENit28P.ttf"
+    ],
     "license": "OFL.txt",
     "use": "ui"
   },
   {
     "family": "Courier Prime",
     "path": "ofl/courierprime",
-    "files": ["CourierPrime-Regular.ttf", "CourierPrime-Bold.ttf"],
+    "files": [
+      "CourierPrime-Regular.ttf",
+      "CourierPrime-Bold.ttf"
+    ],
     "license": "OFL.txt",
     "use": "ui"
   },
@@ -217,6 +223,123 @@
     "family": "Share Tech Mono",
     "category": "Tela de computador",
     "path": "ofl/sharetechmono",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Shadows Into Light",
+    "category": "Letra à mão",
+    "path": "ofl/shadowsintolight",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Indie Flower",
+    "category": "Letra à mão",
+    "path": "ofl/indieflower",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Gloria Hallelujah",
+    "category": "Letra à mão",
+    "path": "ofl/gloriahallelujah",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "La Belle Aurore",
+    "category": "Letra à mão",
+    "path": "ofl/labelleaurore",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Mrs Saint Delafield",
+    "category": "Letra à mão",
+    "path": "ofl/mrssaintdelafield",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Pinyon Script",
+    "category": "Caligrafia formal",
+    "path": "ofl/pinyonscript",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Great Vibes",
+    "category": "Caligrafia formal",
+    "path": "ofl/greatvibes",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "EB Garamond",
+    "category": "Impressão antiga",
+    "path": "ofl/ebgaramond",
+    "files": [
+      "EBGaramond[wght].ttf",
+      "EBGaramond-Italic[wght].ttf"
+    ],
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Cinzel",
+    "category": "Impressão antiga",
+    "path": "ofl/cinzel",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Uncial Antiqua",
+    "category": "Gótica",
+    "path": "ofl/uncialantiqua",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Grenze Gotisch",
+    "category": "Gótica",
+    "path": "ofl/grenzegotisch",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Rye",
+    "category": "Jornal e cartaz",
+    "path": "ofl/rye",
+    "files": "*",
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Inter",
+    "category": "Interface moderna",
+    "path": "ofl/inter",
+    "files": [
+      "Inter[opsz,wght].ttf"
+    ],
+    "license": "OFL.txt",
+    "use": "colecao"
+  },
+  {
+    "family": "Libre Barcode 39 Text",
+    "category": "Código de barras",
+    "path": "ofl/librebarcode39text",
     "files": "*",
     "license": "OFL.txt",
     "use": "colecao"

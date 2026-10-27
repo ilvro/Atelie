@@ -48,7 +48,7 @@ As fontes tipográficas incorporadas na casca e na interface visual do Ateliê e
 
 ## 3. Fontes da Coleção da Casa
 
-A coleção da casa disponibiliza **26 famílias de fontes tipográficas livres**, auto-hospedadas e catalogadas em `public/colecao/fontes/`. Todas as famílias são provenientes do repositório oficial [google/fonts](https://github.com/google/fonts) no commit `e7db6ca603fd4862010383ff17ffd6cc4ffac1c0`, acompanhadas de seus respectivos arquivos de licença (`OFL.txt` ou `LICENSE.txt`) na pasta correspondente.
+A coleção da casa disponibiliza **40 famílias de fontes tipográficas livres**, auto-hospedadas e catalogadas em `public/colecao/fontes/`. Todas as famílias são provenientes do repositório oficial [google/fonts](https://github.com/google/fonts) no commit `e7db6ca603fd4862010383ff17ffd6cc4ffac1c0`, acompanhadas de seus respectivos arquivos de licença (`OFL.txt` ou `LICENSE.txt`) na pasta correspondente.
 
 | Família | Categoria | Licença | Arquivo / Repositório Oficial |
 |---|---|---|---|
@@ -56,26 +56,40 @@ A coleção da casa disponibiliza **26 famílias de fontes tipográficas livres*
 | **Bebas Neue** | Jornal e cartaz | OFL-1.1 | [`fontes/ofl/bebasneue/BebasNeue-Regular.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/bebasneue) |
 | **Black Ops One** | Estêncil e militar | OFL-1.1 | [`fontes/ofl/blackopsone/BlackOpsOne-Regular.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/blackopsone) |
 | **Caveat** | Letra à mão | OFL-1.1 | [`fontes/ofl/caveat/Caveat[wght].ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/caveat) |
+| **Cinzel** | Impressão antiga | OFL-1.1 | [`fontes/ofl/cinzel/Cinzel[wght].ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/cinzel) |
 | **Cormorant Garamond** | Impressão antiga | OFL-1.1 | [`fontes/ofl/cormorantgaramond/CormorantGaramond-Italic[wght].ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/cormorantgaramond) |
 | **Courier Prime** | Máquina de escrever | OFL-1.1 | [`fontes/ofl/courierprime/CourierPrime-Bold.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/courierprime) |
 | **Cutive Mono** | Máquina de escrever | OFL-1.1 | [`fontes/ofl/cutivemono/CutiveMono-Regular.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/cutivemono) |
 | **Dawning of a New Day** | Letra à mão | OFL-1.1 | [`fontes/ofl/dawningofanewday/DawningofaNewDay.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/dawningofanewday) |
+| **EB Garamond** | Impressão antiga | OFL-1.1 | [`fontes/ofl/ebgaramond/EBGaramond-Italic[wght].ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/ebgaramond) |
+| **Gloria Hallelujah** | Letra à mão | OFL-1.1 | [`fontes/ofl/gloriahallelujah/GloriaHallelujah.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/gloriahallelujah) |
+| **Great Vibes** | Caligrafia formal | OFL-1.1 | [`fontes/ofl/greatvibes/GreatVibes-Regular.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/greatvibes) |
+| **Grenze Gotisch** | Gótica | OFL-1.1 | [`fontes/ofl/grenzegotisch/GrenzeGotisch[wght].ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/grenzegotisch) |
 | **Homemade Apple** | Letra à mão | Apache-2.0 | [`fontes/apache/homemadeapple/HomemadeApple-Regular.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/apache/homemadeapple) |
 | **IM Fell DW Pica** | Impressão antiga | OFL-1.1 | [`fontes/ofl/imfelldwpica/IMFePIit28P.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/imfelldwpica) |
 | **IM Fell English** | Impressão antiga | OFL-1.1 | [`fontes/ofl/imfellenglish/IMFeENit28P.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/imfellenglish) |
+| **Indie Flower** | Letra à mão | OFL-1.1 | [`fontes/ofl/indieflower/IndieFlower-Regular.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/indieflower) |
+| **Inter** | Interface moderna | OFL-1.1 | [`fontes/ofl/inter/Inter[opsz,wght].ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/inter) |
 | **Kalam** | Letra à mão | OFL-1.1 | [`fontes/ofl/kalam/Kalam-Bold.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/kalam) |
+| **La Belle Aurore** | Letra à mão | OFL-1.1 | [`fontes/ofl/labelleaurore/LaBelleAurore.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/labelleaurore) |
+| **Libre Barcode 39 Text** | Código de barras | OFL-1.1 | [`fontes/ofl/librebarcode39text/LibreBarcode39Text-Regular.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/librebarcode39text) |
 | **Libre Baskerville** | Impressão antiga | OFL-1.1 | [`fontes/ofl/librebaskerville/LibreBaskerville-Italic[wght].ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/librebaskerville) |
+| **Mrs Saint Delafield** | Letra à mão | OFL-1.1 | [`fontes/ofl/mrssaintdelafield/MrsSaintDelafield-Regular.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/mrssaintdelafield) |
 | **Nothing You Could Do** | Letra à mão | OFL-1.1 | [`fontes/ofl/nothingyoucoulddo/NothingYouCouldDo.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/nothingyoucoulddo) |
 | **Old Standard TT** | Impressão antiga | OFL-1.1 | [`fontes/ofl/oldstandardtt/OldStandard-Bold.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/oldstandardtt) |
 | **Oswald** | Jornal e cartaz | OFL-1.1 | [`fontes/ofl/oswald/Oswald[wght].ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/oswald) |
 | **Permanent Marker** | Marcador | Apache-2.0 | [`fontes/apache/permanentmarker/PermanentMarker-Regular.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/apache/permanentmarker) |
+| **Pinyon Script** | Caligrafia formal | OFL-1.1 | [`fontes/ofl/pinyonscript/PinyonScript-Regular.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/pinyonscript) |
 | **Pirata One** | Gótica | OFL-1.1 | [`fontes/ofl/pirataone/PirataOne-Regular.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/pirataone) |
 | **Playfair Display** | Impressão antiga | OFL-1.1 | [`fontes/ofl/playfairdisplay/PlayfairDisplay-Italic[wght].ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/playfairdisplay) |
 | **Reenie Beanie** | Letra à mão | OFL-1.1 | [`fontes/ofl/reeniebeanie/ReenieBeanie.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/reeniebeanie) |
 | **Rock Salt** | Letra à mão | Apache-2.0 | [`fontes/apache/rocksalt/RockSalt-Regular.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/apache/rocksalt) |
+| **Rye** | Jornal e cartaz | OFL-1.1 | [`fontes/ofl/rye/Rye-Regular.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/rye) |
+| **Shadows Into Light** | Letra à mão | OFL-1.1 | [`fontes/ofl/shadowsintolight/ShadowsIntoLight.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/shadowsintolight) |
 | **Share Tech Mono** | Tela de computador | OFL-1.1 | [`fontes/ofl/sharetechmono/ShareTechMono-Regular.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/sharetechmono) |
 | **Special Elite** | Máquina de escrever | Apache-2.0 | [`fontes/apache/specialelite/SpecialElite-Regular.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/apache/specialelite) |
 | **Stardos Stencil** | Estêncil e militar | OFL-1.1 | [`fontes/ofl/stardosstencil/StardosStencil-Bold.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/stardosstencil) |
+| **Uncial Antiqua** | Gótica | OFL-1.1 | [`fontes/ofl/uncialantiqua/UncialAntiqua-Regular.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/uncialantiqua) |
 | **UnifrakturMaguntia** | Gótica | OFL-1.1 | [`fontes/ofl/unifrakturmaguntia/UnifrakturMaguntia-Book.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/unifrakturmaguntia) |
 | **VT323** | Tela de computador | OFL-1.1 | [`fontes/ofl/vt323/VT323-Regular.ttf`](https://github.com/google/fonts/tree/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/vt323) |
 
