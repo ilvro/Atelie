@@ -63,7 +63,7 @@ export function createHelpDrawer({ onShowWelcome, shell } = {}) {
         <p class="help-intro">O Ateliê de documentos funciona como uma bancada artesanal para criar e forjar documentos de RPG em três passos simples:</p>
         <ol class="help-steps-list">
           <li>
-            <strong>1. Ponto de partida:</strong> Escolha um dos 125 modelos prontos no catálogo ou comece com uma folha em branco com dimensões reais (A4, carta, telegrama, polaroid, etc.).
+            <strong>1. Ponto de partida:</strong> Escolha um dos 151 modelos prontos no catálogo ou comece com uma folha em branco com dimensões reais (A4, carta, telegrama, polaroid, etc.).
           </li>
           <li>
             <strong>2. Preencha e personalize:</strong> Use a aba <em>Preencher</em> à direita para editar rapidamente os textos e dados do modelo. Para uma criação profunda, use as abas <em>Camadas</em> e <em>Propriedades</em> para reposicionar, girar, alterar modos de mesclagem, aplicar texturas, papéis envelhecidos e fontes de época.
@@ -198,7 +198,7 @@ export function createHelpDrawer({ onShowWelcome, shell } = {}) {
         <p class="help-intro">O acervo do Ateliê é dividido entre a coleção pública e pacotes de expansões privadas:</p>
         <ul class="help-bullet-list">
           <li>
-            <strong>Coleção da casa:</strong> Acompanha o aplicativo no Git e é 100% livre: 75 papéis em 3 idades, 53 texturas de sobreposição em WebP, 294 elementos vetoriais em SVG, 40 famílias de fontes livres e 125 modelos prontos para jogar (106 documentos e 19 variações).
+            <strong>Coleção da casa:</strong> Acompanha o aplicativo no Git e é 100% livre: 75 papéis em 3 idades, 53 texturas de sobreposição em WebP, 294 elementos vetoriais em SVG, 40 famílias de fontes livres e 151 modelos prontos para jogar (132 documentos e 19 variações).
           </li>
           <li>
             <strong>Expansões privadas:</strong> Pacotes adicionais de terceiros (como o acervo <em>Arquivos Confidenciais</em>) ficam isolados na pasta <code>data-private/expansoes/</code> e nunca sobem para o Git ou versão pública no Pages.

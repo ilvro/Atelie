@@ -1,0 +1,442 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-cardapio-restaurante",
+  "revision": 0,
+  "name": "Cardápio de restaurante",
+  "category": "Cotidiano",
+  "tags": [
+    "cotidiano"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1100,
+    "height": 1500,
+    "background": "#d7c9a6"
+  },
+  "layers": [
+    {
+      "id": "l-1-cardapio-restaurante",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-creme-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-cardapio-restaurante",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.44,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 34751,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-cardapio-restaurante",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 34768,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-cardapio-restaurante",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.08,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-4"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-cardapio-restaurante",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 34802,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-cardapio-restaurante",
+      "name": "Moldura art déco",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 40,
+      "y": 40,
+      "width": 1020,
+      "height": 1420,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-moldura-art-deco-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-cardapio-restaurante",
+      "name": "Restaurante",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 150,
+      "y": 140,
+      "width": 800,
+      "height": 190,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "RESTAURANTE\nO GALO DOURADO",
+        "font": {
+          "family": "Cinzel",
+          "library": "casa-font-cinzel-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 66,
+        "color": "#5a3a14",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.1,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 9
+        }
+      }
+    },
+    {
+      "id": "l-8-cardapio-restaurante",
+      "name": "Divisória",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 300,
+      "y": 340,
+      "width": 500,
+      "height": 56,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-ornamento-divisoria-losangos"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-9-cardapio-restaurante",
+      "name": "Pratos",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 170,
+      "y": 440,
+      "width": 560,
+      "height": 780,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Consommé de galinha\nFilé à Parmegiana com batatas\nBacalhau à Gomes de Sá\nFrango com quiabo\nPudim de leite\nSorvete de creme\nCafé expresso\nVinho tinto da casa (a taça)",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#2a1f14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.7,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-10-cardapio-restaurante",
+      "name": "Preços",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 760,
+      "y": 440,
+      "width": 200,
+      "height": 780,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Cr$ 18,00\nCr$ 42,00\nCr$ 56,00\nCr$ 38,00\nCr$ 14,00\nCr$ 12,00\nCr$ 6,00\nCr$ 15,00",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#7a1f14",
+        "align": "right",
+        "valign": "top",
+        "lineHeight": 1.7,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-11-cardapio-restaurante",
+      "name": "Rodapé",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 150,
+      "y": 1290,
+      "width": 800,
+      "height": 100,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Rua Direita, 218 · Vila Aurora · Fone 22-4107\nAberto das 11h às 23h · Aos domingos, almoço em família",
+        "font": {
+          "family": "Playfair Display",
+          "library": "casa-font-playfairdisplay-italic",
+          "weight": 400,
+          "italic": true
+        },
+        "size": 24,
+        "color": "#5a3a14",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.05,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-12-cardapio-restaurante",
+      "name": "Mancha de vinho",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.5,
+      "blend": "multiply",
+      "x": 640,
+      "y": 1100,
+      "width": 260,
+      "height": 260,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-manchas-cafe-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-7-cardapio-restaurante",
+      "label": "Restaurante"
+    },
+    {
+      "layerId": "l-9-cardapio-restaurante",
+      "label": "Pratos"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

@@ -8,7 +8,7 @@ O aplicativo opera tanto em conjunto com um servidor local Node.js quanto de man
 
 ## 1. Começar por um Modelo
 
-Ao abrir o Ateliê pela primeira vez ou acessar a gaveta **Modelos** (atalho **M** ou botão no trilho lateral), você encontrará um catálogo completo com **125 modelos prontos da coleção da casa** (106 documentos e 19 variações), organizados em 14 categorias:
+Ao abrir o Ateliê pela primeira vez ou acessar a gaveta **Modelos** (atalho **M** ou botão no trilho lateral), você encontrará um catálogo completo com **151 modelos prontos da coleção da casa** (132 documentos e 19 variações), organizados em 16 categorias:
 
 - **Cartas e bilhetes**: cartas datilografadas anos 50, envelopes com frente e verso, bilhetes rasgados de caderno e notas de geladeira.
 - **Jornal**: capas de jornal de época, artigos de classificados, colunas de obituário e recortes dos anos 20.

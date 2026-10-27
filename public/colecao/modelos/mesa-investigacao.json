@@ -1,0 +1,735 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-mesa-investigacao",
+  "revision": 0,
+  "name": "Mesa de investigação",
+  "category": "Destruídos e composições",
+  "tags": [
+    "destruídos e composições"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1700,
+    "height": 1200,
+    "background": "#4a3a2a"
+  },
+  "layers": [
+    {
+      "id": "l-1-mesa-investigacao",
+      "name": "Madeira da mesa",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1700,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-superficie-wood026"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-mesa-investigacao",
+      "name": "Documento 1",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 110,
+      "y": 90,
+      "width": 560,
+      "height": 760,
+      "rotation": -4,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-branco-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-3-mesa-investigacao",
+      "name": "Documento 2",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 200,
+      "y": 120,
+      "width": 560,
+      "height": 760,
+      "rotation": 3,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-creme-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-mesa-investigacao",
+      "name": "Documento 3",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 260,
+      "y": 150,
+      "width": 560,
+      "height": 760,
+      "rotation": -1,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-papel-maquina-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-mesa-investigacao",
+      "name": "Texto do documento de cima",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 300,
+      "y": 200,
+      "width": 440,
+      "height": 560,
+      "rotation": -1,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "RELATÓRIO DE OCORRÊNCIA\nSolar dos Pinhais\n\nA equipe entrou às 22h. O porão estava aberto. Não havia ninguém. Havia, porém, uma cadeira no centro da sala, virada para a parede norte, e quatro velas ainda quentes.",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 25,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.4,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-6-mesa-investigacao",
+      "name": "Moldura polaroide 1",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1010,
+      "y": 110,
+      "width": 300,
+      "height": 360,
+      "rotation": 6,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-moldura-polaroide"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-mesa-investigacao",
+      "name": "Polaroide 1",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1032,
+      "y": 132,
+      "width": 256,
+      "height": 256,
+      "rotation": 6,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-homem-bigode-oculos"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-8-mesa-investigacao",
+      "name": "Moldura polaroide 2",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1280,
+      "y": 190,
+      "width": 300,
+      "height": 360,
+      "rotation": -5,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-moldura-polaroide"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-9-mesa-investigacao",
+      "name": "Polaroide 2",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1302,
+      "y": 212,
+      "width": 256,
+      "height": 256,
+      "rotation": -5,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-mulher-sanfona"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-10-mesa-investigacao",
+      "name": "Moldura polaroide 3",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1050,
+      "y": 520,
+      "width": 300,
+      "height": 360,
+      "rotation": -3,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-moldura-polaroide"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-11-mesa-investigacao",
+      "name": "Polaroide 3",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1072,
+      "y": 542,
+      "width": 256,
+      "height": 256,
+      "rotation": -3,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-oficial-sabre"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-12-mesa-investigacao",
+      "name": "Pires da xícara",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1280,
+      "y": 660,
+      "width": 260,
+      "height": 260,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": "#e8e4d8",
+        "stroke": "#9a958a",
+        "strokeWidth": 4,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-13-mesa-investigacao",
+      "name": "Xícara",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1315,
+      "y": 695,
+      "width": 190,
+      "height": 190,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": "#f4f1ea",
+        "stroke": "#9a958a",
+        "strokeWidth": 4,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-14-mesa-investigacao",
+      "name": "Café",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1340,
+      "y": 720,
+      "width": 140,
+      "height": 140,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": "#3a2010",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-15-mesa-investigacao",
+      "name": "Asa da xícara",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1500,
+      "y": 770,
+      "width": 70,
+      "height": 50,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": null,
+        "stroke": "#9a958a",
+        "strokeWidth": 10,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-16-mesa-investigacao",
+      "name": "Lupa · lente",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 780,
+      "y": 820,
+      "width": 250,
+      "height": 250,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": "#cfe3f01a",
+        "stroke": "#3a2a1a",
+        "strokeWidth": 14,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-17-mesa-investigacao",
+      "name": "Lupa · cabo",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1010,
+      "y": 1040,
+      "width": 200,
+      "height": 34,
+      "rotation": 40,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#3a2a1a",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 16,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-18-mesa-investigacao",
+      "name": "Lupa · brilho",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.4,
+      "blend": "normal",
+      "x": 820,
+      "y": 860,
+      "width": 90,
+      "height": 50,
+      "rotation": -30,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": "#ffffff",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-19-mesa-investigacao",
+      "name": "Barbante",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 760,
+      "y": 340,
+      "width": 360,
+      "height": 130,
+      "rotation": 4,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-investigacao-barbante-curvo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-20-mesa-investigacao",
+      "name": "Post-it",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 640,
+      "y": 900,
+      "width": 180,
+      "height": 180,
+      "rotation": -6,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-investigacao-postit-azul"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-21-mesa-investigacao",
+      "name": "Luz de abajur",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.12,
+      "blend": "screen",
+      "x": 0,
+      "y": 0,
+      "width": 1700,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fade",
+        "seed": 1151,
+        "amount": 0.6,
+        "params": {
+          "color": "#ffdca0"
+        }
+      }
+    },
+    {
+      "id": "l-22-mesa-investigacao",
+      "name": "Sombra da mesa",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1700,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 1152,
+        "amount": 0.5,
+        "params": {
+          "color": "#1a0f06"
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-4-mesa-investigacao",
+      "label": "Documentos"
+    },
+    {
+      "layerId": "l-5-mesa-investigacao",
+      "label": "Texto"
+    },
+    {
+      "layerId": "l-7-mesa-investigacao",
+      "label": "Fotos"
+    },
+    {
+      "layerId": "l-9-mesa-investigacao",
+      "label": "Polaroide 2"
+    },
+    {
+      "layerId": "l-11-mesa-investigacao",
+      "label": "Polaroide 3"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

@@ -11861,6 +11861,590 @@
       ],
       "org": "halden",
       "family": "ficha-cobaia"
+    },
+    {
+      "id": "casa-tpl-conversa-celular-claro",
+      "kind": "template",
+      "name": "Conversa de celular · claro",
+      "category": "Tecnologia",
+      "license": "CC0-1.0",
+      "file": "modelos/conversa-celular-claro.json",
+      "preview": "previews/casa-tpl-conversa-celular-claro.webp",
+      "fields": [
+        "Contato",
+        "Mensagens"
+      ],
+      "era": "hoje",
+      "tom": "cotidiano",
+      "tags": [
+        "celular",
+        "mensagens",
+        "conversa",
+        "tela"
+      ]
+    },
+    {
+      "id": "casa-tpl-conversa-celular-escuro",
+      "kind": "template",
+      "name": "Conversa de celular · escuro",
+      "category": "Tecnologia",
+      "license": "CC0-1.0",
+      "file": "modelos/conversa-celular-escuro.json",
+      "preview": "previews/casa-tpl-conversa-celular-escuro.webp",
+      "fields": [
+        "Contato",
+        "Mensagens"
+      ],
+      "era": "hoje",
+      "tom": "horror",
+      "tags": [
+        "celular",
+        "mensagens",
+        "conversa",
+        "tela",
+        "modo escuro"
+      ]
+    },
+    {
+      "id": "casa-tpl-email-celular",
+      "kind": "template",
+      "name": "E-mail no celular",
+      "category": "Tecnologia",
+      "license": "CC0-1.0",
+      "file": "modelos/email-celular.json",
+      "preview": "previews/casa-tpl-email-celular.webp",
+      "fields": [
+        "De",
+        "Assunto",
+        "Corpo",
+        "Anexo"
+      ],
+      "era": "hoje",
+      "tom": "investigação",
+      "tags": [
+        "celular",
+        "e-mail",
+        "tela",
+        "formulário"
+      ]
+    },
+    {
+      "id": "casa-tpl-tela-computador-anos-90",
+      "kind": "template",
+      "name": "Tela de computador · anos 90",
+      "category": "Tecnologia",
+      "license": "CC0-1.0",
+      "file": "modelos/tela-computador-anos-90.json",
+      "preview": "previews/casa-tpl-tela-computador-anos-90.webp",
+      "fields": [
+        "Título",
+        "Texto"
+      ],
+      "era": "1980",
+      "tom": "cotidiano",
+      "tags": [
+        "computador",
+        "tela",
+        "retrô",
+        "anos 90"
+      ]
+    },
+    {
+      "id": "casa-tpl-monitor-moderno-mesa",
+      "kind": "template",
+      "name": "Monitor moderno",
+      "category": "Tecnologia",
+      "license": "CC0-1.0",
+      "file": "modelos/monitor-moderno-mesa.json",
+      "preview": "previews/casa-tpl-monitor-moderno-mesa.webp",
+      "fields": [
+        "Página",
+        "Texto"
+      ],
+      "era": "hoje",
+      "tom": "investigação",
+      "tags": [
+        "computador",
+        "monitor",
+        "mesa",
+        "navegador",
+        "composição"
+      ]
+    },
+    {
+      "id": "casa-tpl-log-servidor",
+      "kind": "template",
+      "name": "Log de servidor",
+      "category": "Tecnologia",
+      "license": "CC0-1.0",
+      "file": "modelos/log-servidor.json",
+      "preview": "previews/casa-tpl-log-servidor.webp",
+      "fields": [
+        "Linhas",
+        "Erro"
+      ],
+      "era": "hoje",
+      "tom": "sci-fi",
+      "tags": [
+        "servidor",
+        "log",
+        "terminal",
+        "erro"
+      ]
+    },
+    {
+      "id": "casa-tpl-transcricao-ligacao",
+      "kind": "template",
+      "name": "Transcrição de ligação",
+      "category": "Tecnologia",
+      "license": "CC0-1.0",
+      "file": "modelos/transcricao-ligacao.json",
+      "preview": "previews/casa-tpl-transcricao-ligacao.webp",
+      "fields": [
+        "Interlocutores",
+        "Data",
+        "Linha",
+        "Hora",
+        "Interlocutor",
+        "Fala"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "polícia",
+        "ligação",
+        "transcrição",
+        "formulário"
+      ],
+      "org": "delegacia"
+    },
+    {
+      "id": "casa-tpl-fax-recebido",
+      "kind": "template",
+      "name": "Fax recebido",
+      "category": "Tecnologia",
+      "license": "CC0-1.0",
+      "file": "modelos/fax-recebido.json",
+      "preview": "previews/casa-tpl-fax-recebido.webp",
+      "fields": [
+        "Remetente",
+        "Texto"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "fax",
+        "térmico",
+        "comunicação"
+      ]
+    },
+    {
+      "id": "casa-tpl-postagem-rede-social",
+      "kind": "template",
+      "name": "Postagem de rede social fictícia",
+      "category": "Tecnologia",
+      "license": "CC0-1.0",
+      "file": "modelos/postagem-rede-social.json",
+      "preview": "previews/casa-tpl-postagem-rede-social.webp",
+      "fields": [
+        "Perfil",
+        "Usuário",
+        "Foto",
+        "Texto"
+      ],
+      "era": "hoje",
+      "tom": "cotidiano",
+      "tags": [
+        "rede social",
+        "postagem",
+        "foto",
+        "celular",
+        "formulário"
+      ]
+    },
+    {
+      "id": "casa-tpl-foto-colada-fita",
+      "kind": "template",
+      "name": "Foto colada com fita",
+      "category": "Fotografias e objetos",
+      "license": "CC0-1.0",
+      "file": "modelos/foto-colada-fita.json",
+      "preview": "previews/casa-tpl-foto-colada-fita.webp",
+      "fields": [
+        "Foto",
+        "Legenda"
+      ],
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "foto",
+        "fita",
+        "legenda",
+        "composição"
+      ]
+    },
+    {
+      "id": "casa-tpl-porta-retrato",
+      "kind": "template",
+      "name": "Porta-retrato",
+      "category": "Fotografias e objetos",
+      "license": "CC0-1.0",
+      "file": "modelos/porta-retrato.json",
+      "preview": "previews/casa-tpl-porta-retrato.webp",
+      "fields": [
+        "Foto"
+      ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "foto",
+        "moldura",
+        "objeto",
+        "vidro"
+      ]
+    },
+    {
+      "id": "casa-tpl-tira-fotos-cabine",
+      "kind": "template",
+      "name": "Tira de fotos de cabine",
+      "category": "Fotografias e objetos",
+      "license": "CC0-1.0",
+      "file": "modelos/tira-fotos-cabine.json",
+      "preview": "previews/casa-tpl-tira-fotos-cabine.webp",
+      "fields": [
+        "Fotos",
+        "Foto 2",
+        "Foto 3",
+        "Foto 4"
+      ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "foto",
+        "cabine",
+        "tira",
+        "fotomatic"
+      ]
+    },
+    {
+      "id": "casa-tpl-negativo-filme",
+      "kind": "template",
+      "name": "Negativo de filme",
+      "category": "Fotografias e objetos",
+      "license": "CC0-1.0",
+      "file": "modelos/negativo-filme.json",
+      "preview": "previews/casa-tpl-negativo-filme.webp",
+      "fields": [
+        "Fotos",
+        "Quadro 2",
+        "Quadro 3"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "foto",
+        "negativo",
+        "filme",
+        "laranja"
+      ]
+    },
+    {
+      "id": "casa-tpl-etiqueta-fita-vhs",
+      "kind": "template",
+      "name": "Etiqueta de fita VHS",
+      "category": "Fotografias e objetos",
+      "license": "CC0-1.0",
+      "file": "modelos/etiqueta-fita-vhs.json",
+      "preview": "previews/casa-tpl-etiqueta-fita-vhs.webp",
+      "fields": [
+        "Título",
+        "Data"
+      ],
+      "era": "1980",
+      "tom": "horror",
+      "tags": [
+        "vhs",
+        "fita",
+        "etiqueta",
+        "objeto",
+        "vídeo"
+      ]
+    },
+    {
+      "id": "casa-tpl-carteira-investigador",
+      "kind": "template",
+      "name": "Carteira de investigador",
+      "category": "Fotografias e objetos",
+      "license": "CC0-1.0",
+      "file": "modelos/carteira-investigador.json",
+      "preview": "previews/casa-tpl-carteira-investigador.webp",
+      "fields": [
+        "Foto",
+        "Nome",
+        "Matrícula"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "carteira",
+        "distintivo",
+        "identificação",
+        "objeto"
+      ],
+      "org": "delegacia"
+    },
+    {
+      "id": "casa-tpl-cardapio-restaurante",
+      "kind": "template",
+      "name": "Cardápio de restaurante",
+      "category": "Cotidiano",
+      "license": "CC0-1.0",
+      "file": "modelos/cardapio-restaurante.json",
+      "preview": "previews/casa-tpl-cardapio-restaurante.webp",
+      "fields": [
+        "Restaurante",
+        "Pratos"
+      ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "cardápio",
+        "restaurante",
+        "art déco",
+        "preços"
+      ]
+    },
+    {
+      "id": "casa-tpl-lista-compras",
+      "kind": "template",
+      "name": "Lista de compras",
+      "category": "Cotidiano",
+      "license": "CC0-1.0",
+      "file": "modelos/lista-compras.json",
+      "preview": "previews/casa-tpl-lista-compras.webp",
+      "fields": [
+        "Itens"
+      ],
+      "era": "hoje",
+      "tom": "cotidiano",
+      "tags": [
+        "lista",
+        "compras",
+        "post-it",
+        "manuscrito"
+      ]
+    },
+    {
+      "id": "casa-tpl-conta-de-luz",
+      "kind": "template",
+      "name": "Conta de luz",
+      "category": "Cotidiano",
+      "license": "CC0-1.0",
+      "file": "modelos/conta-de-luz.json",
+      "preview": "previews/casa-tpl-conta-de-luz.webp",
+      "fields": [
+        "Titular",
+        "Endereço",
+        "Valor",
+        "Vencimento",
+        "Consumo"
+      ],
+      "era": "1980",
+      "tom": "cotidiano",
+      "tags": [
+        "conta",
+        "luz",
+        "formulário",
+        "consumo"
+      ]
+    },
+    {
+      "id": "casa-tpl-extrato-bancario",
+      "kind": "template",
+      "name": "Extrato bancário",
+      "category": "Cotidiano",
+      "license": "CC0-1.0",
+      "file": "modelos/extrato-bancario.json",
+      "preview": "previews/casa-tpl-extrato-bancario.webp",
+      "fields": [
+        "Titular",
+        "Agência",
+        "Conta",
+        "Data",
+        "Histórico",
+        "Valor (Cr$)",
+        "Saldo"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "banco",
+        "extrato",
+        "lançamentos",
+        "formulário"
+      ],
+      "org": "banco"
+    },
+    {
+      "id": "casa-tpl-cheque-bancario",
+      "kind": "template",
+      "name": "Cheque",
+      "category": "Cotidiano",
+      "license": "CC0-1.0",
+      "file": "modelos/cheque-bancario.json",
+      "preview": "previews/casa-tpl-cheque-bancario.webp",
+      "fields": [
+        "Valor",
+        "Por extenso",
+        "Favorecido",
+        "Data",
+        "Assinatura"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "banco",
+        "cheque",
+        "guilhochê",
+        "assinatura",
+        "formulário"
+      ],
+      "org": "banco"
+    },
+    {
+      "id": "casa-tpl-bilhete-cinema",
+      "kind": "template",
+      "name": "Bilhete de cinema",
+      "category": "Cotidiano",
+      "license": "CC0-1.0",
+      "file": "modelos/bilhete-cinema.json",
+      "preview": "previews/casa-tpl-bilhete-cinema.webp",
+      "fields": [
+        "Filme",
+        "Sessão"
+      ],
+      "era": "1950",
+      "tom": "cotidiano",
+      "tags": [
+        "ingresso",
+        "cinema",
+        "picote",
+        "sessão"
+      ]
+    },
+    {
+      "id": "casa-tpl-carta-queimada",
+      "kind": "template",
+      "name": "Carta queimada",
+      "category": "Destruídos e composições",
+      "license": "CC0-1.0",
+      "file": "modelos/carta-queimada.json",
+      "preview": "previews/casa-tpl-carta-queimada.webp",
+      "fields": [
+        "Data",
+        "Destinatário",
+        "Texto",
+        "Assinatura"
+      ],
+      "era": "1920",
+      "tom": "horror",
+      "tags": [
+        "carta",
+        "queimada",
+        "destruído",
+        "manuscrito"
+      ],
+      "org": "solar"
+    },
+    {
+      "id": "casa-tpl-documento-molhado",
+      "kind": "template",
+      "name": "Documento molhado",
+      "category": "Destruídos e composições",
+      "license": "CC0-1.0",
+      "file": "modelos/documento-molhado.json",
+      "preview": "previews/casa-tpl-documento-molhado.webp",
+      "fields": [
+        "Texto"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "documento",
+        "molhado",
+        "destruído",
+        "tinta escorrida"
+      ]
+    },
+    {
+      "id": "casa-tpl-pagina-rasgada-pedacos",
+      "kind": "template",
+      "name": "Página rasgada em pedaços",
+      "category": "Destruídos e composições",
+      "license": "CC0-1.0",
+      "file": "modelos/pagina-rasgada-pedacos.json",
+      "preview": "previews/casa-tpl-pagina-rasgada-pedacos.webp",
+      "fields": [
+        "Pedaço 1",
+        "Pedaço 2",
+        "Pedaço 3",
+        "Pedaço 4"
+      ],
+      "era": "1950",
+      "tom": "horror",
+      "tags": [
+        "página",
+        "rasgada",
+        "pedaços",
+        "fita",
+        "composição"
+      ]
+    },
+    {
+      "id": "casa-tpl-mesa-investigacao",
+      "kind": "template",
+      "name": "Mesa de investigação",
+      "category": "Destruídos e composições",
+      "license": "CC0-1.0",
+      "file": "modelos/mesa-investigacao.json",
+      "preview": "previews/casa-tpl-mesa-investigacao.webp",
+      "fields": [
+        "Documentos",
+        "Texto",
+        "Fotos",
+        "Polaroide 2",
+        "Polaroide 3"
+      ],
+      "era": "hoje",
+      "tom": "investigação",
+      "tags": [
+        "mesa",
+        "composição",
+        "documentos",
+        "polaroides",
+        "investigação"
+      ]
+    },
+    {
+      "id": "casa-tpl-envelope-evidencias",
+      "kind": "template",
+      "name": "Envelope de evidências",
+      "category": "Destruídos e composições",
+      "license": "CC0-1.0",
+      "file": "modelos/envelope-evidencias.json",
+      "preview": "previews/casa-tpl-envelope-evidencias.webp",
+      "fields": [
+        "Número",
+        "Conteúdo"
+      ],
+      "era": "1980",
+      "tom": "investigação",
+      "tags": [
+        "evidência",
+        "envelope",
+        "lacre"
+      ],
+      "org": "delegacia"
     }
   ]
 }

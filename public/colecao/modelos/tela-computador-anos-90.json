@@ -1,0 +1,497 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-tela-computador-anos-90",
+  "revision": 0,
+  "name": "Tela de computador · anos 90",
+  "category": "Tecnologia",
+  "tags": [
+    "tecnologia"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1400,
+    "height": 1000,
+    "background": "#008080"
+  },
+  "layers": [
+    {
+      "id": "l-1-tela-computador-anos-90",
+      "name": "Área de trabalho",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1400,
+      "height": 1000,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#008080",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-2-tela-computador-anos-90",
+      "name": "Ícone 1",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 60,
+      "y": 60,
+      "width": 64,
+      "height": 56,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#c0c0c0",
+        "stroke": "#000000",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-3-tela-computador-anos-90",
+      "name": "Nome do ícone 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 30,
+      "y": 124,
+      "width": 130,
+      "height": 96,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Meu Computador",
+        "font": {
+          "family": "VT323",
+          "library": "casa-font-vt323-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 23,
+        "color": "#ffffff",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-4-tela-computador-anos-90",
+      "name": "Ícone 2",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 60,
+      "y": 200,
+      "width": 64,
+      "height": 56,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#c0c0c0",
+        "stroke": "#000000",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-5-tela-computador-anos-90",
+      "name": "Nome do ícone 2",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 30,
+      "y": 264,
+      "width": 130,
+      "height": 56,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Lixeira",
+        "font": {
+          "family": "VT323",
+          "library": "casa-font-vt323-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 28,
+        "color": "#ffffff",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-6-tela-computador-anos-90",
+      "name": "Ícone 3",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 60,
+      "y": 340,
+      "width": 64,
+      "height": 56,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#c0c0c0",
+        "stroke": "#000000",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-7-tela-computador-anos-90",
+      "name": "Nome do ícone 3",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 30,
+      "y": 404,
+      "width": 130,
+      "height": 66,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Documentos",
+        "font": {
+          "family": "VT323",
+          "library": "casa-font-vt323-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 23,
+        "color": "#ffffff",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-8-tela-computador-anos-90",
+      "name": "Janela",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 190,
+      "y": 90,
+      "width": 1140,
+      "height": 780,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-interface-janela-retro-90"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-9-tela-computador-anos-90",
+      "name": "Barra de título",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 214,
+      "y": 118,
+      "width": 800,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Sem título - Bloco de Notas",
+        "font": {
+          "family": "VT323",
+          "library": "casa-font-vt323-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#ffffff",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-10-tela-computador-anos-90",
+      "name": "Menu",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 214,
+      "y": 178,
+      "width": 800,
+      "height": 36,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Arquivo   Editar   Localizar   Ajuda",
+        "font": {
+          "family": "VT323",
+          "library": "casa-font-vt323-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 28,
+        "color": "#000000",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-11-tela-computador-anos-90",
+      "name": "Texto",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 224,
+      "y": 250,
+      "width": 1080,
+      "height": 560,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Relatório 14/03/97\n\nO servidor da prefeitura travou de novo às 03:00.\nBackup restaurado do disquete 7.\nCorrupção em: C:\\\\ARQUIVO\\\\PORAO.DAT\n\nQuem esteve no prédio depois das 22h?\nA câmera do corredor gravou 14 minutos\nde uma sala que não existe na planta.\n\n— Marcos",
+        "font": {
+          "family": "VT323",
+          "library": "casa-font-vt323-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 37,
+        "color": "#000000",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-12-tela-computador-anos-90",
+      "name": "Barra de tarefas",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 950,
+      "width": 1400,
+      "height": 50,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#c0c0c0",
+        "stroke": "#000000",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-13-tela-computador-anos-90",
+      "name": "Iniciar",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 20,
+      "y": 958,
+      "width": 150,
+      "height": 34,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Iniciar",
+        "font": {
+          "family": "VT323",
+          "library": "casa-font-vt323-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 27,
+        "color": "#000000",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-14-tela-computador-anos-90",
+      "name": "Relógio",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1260,
+      "y": 958,
+      "width": 120,
+      "height": 34,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "03:07",
+        "font": {
+          "family": "VT323",
+          "library": "casa-font-vt323-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 27,
+        "color": "#000000",
+        "align": "right",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-9-tela-computador-anos-90",
+      "label": "Título"
+    },
+    {
+      "layerId": "l-11-tela-computador-anos-90",
+      "label": "Texto"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

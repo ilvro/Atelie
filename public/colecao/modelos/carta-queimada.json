@@ -1,0 +1,450 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-carta-queimada",
+  "revision": 0,
+  "name": "Carta queimada",
+  "category": "Destruídos e composições",
+  "tags": [
+    "destruídos e composições"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-carta-queimada",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-creme-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-carta-queimada",
+      "name": "Fuligem",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-queimado-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-3-carta-queimada",
+      "name": "Papel tostado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "burn",
+        "seed": 35078,
+        "amount": 0.6,
+        "params": {
+          "depth": 0.1
+        }
+      }
+    },
+    {
+      "id": "l-4-carta-queimada",
+      "name": "Queimado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "cut",
+        "seed": 1133,
+        "amount": 1,
+        "params": {},
+        "edge": "queimado",
+        "remove": [],
+        "holes": [
+          [
+            [
+              0.9943,
+              0.9943,
+              39
+            ],
+            [
+              0.9778,
+              0.9816,
+              66
+            ],
+            [
+              0.9626,
+              0.9701,
+              81
+            ],
+            [
+              0.9607,
+              0.9719,
+              105
+            ],
+            [
+              0.9365,
+              0.9515,
+              112
+            ],
+            [
+              0.9239,
+              0.9427,
+              94
+            ],
+            [
+              0.8982,
+              0.9207,
+              80
+            ],
+            [
+              0.8896,
+              0.9159,
+              65
+            ],
+            [
+              0.8743,
+              0.9043,
+              55
+            ]
+          ]
+        ],
+        "char": 0.55,
+        "fiber": 0.5
+      }
+    },
+    {
+      "id": "l-5-carta-queimada",
+      "name": "Data",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 170,
+      "width": 1000,
+      "height": 87,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Vila Aurora, 2 de agosto de 1921",
+        "font": {
+          "family": "Mrs Saint Delafield",
+          "library": "casa-font-mrssaintdelafield-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 58,
+        "color": "#2a1f14",
+        "align": "right",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-6-carta-queimada",
+      "name": "Saudação",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 268.6,
+      "width": 1000,
+      "height": 87,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Minha querida Helena,",
+        "font": {
+          "family": "Mrs Saint Delafield",
+          "library": "casa-font-mrssaintdelafield-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 58,
+        "color": "#2a1f14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-7-carta-queimada",
+      "name": "Texto",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 373,
+      "width": 1000,
+      "height": 836,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "se você está lendo esta carta é porque o fogo não chegou até ela, e então ainda há tempo. O que está no porão não deve ser acordado. Eu fiz o que pude: queimei os livros, selei a porta, enterrei a chave no jardim, mas ele sabe onde estou. Quando a luz da vela tremer duas vezes seguidas, não responda ao que ouvir. Vá embora da casa antes do amanhecer e leve consigo apenas",
+        "font": {
+          "family": "Mrs Saint Delafield",
+          "library": "casa-font-mrssaintdelafield-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 58,
+        "color": "#2a1f14",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.3,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-8-carta-queimada",
+      "name": "Assinatura",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 620,
+      "y": 1229,
+      "width": 500,
+      "height": 116,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Cornélio",
+        "font": {
+          "family": "Homemade Apple",
+          "library": "casa-font-homemadeapple-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 62,
+        "color": "#2a1f14",
+        "align": "right",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-9-carta-queimada",
+      "name": "Cinzas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "grain",
+        "seed": 1134,
+        "amount": 0.6,
+        "params": {}
+      }
+    },
+    {
+      "id": "l-10-carta-queimada",
+      "name": "Fumaça nas bordas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.4,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 1135,
+        "amount": 0.7,
+        "params": {
+          "color": "#2a1a0a"
+        }
+      }
+    },
+    {
+      "id": "l-11-carta-queimada",
+      "name": "Fuligem",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.6,
+      "blend": "multiply",
+      "x": 500,
+      "y": 1100,
+      "width": 640,
+      "height": 640,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-queimado-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-5-carta-queimada",
+      "label": "Data"
+    },
+    {
+      "layerId": "l-6-carta-queimada",
+      "label": "Destinatário"
+    },
+    {
+      "layerId": "l-7-carta-queimada",
+      "label": "Texto"
+    },
+    {
+      "layerId": "l-8-carta-queimada",
+      "label": "Assinatura"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

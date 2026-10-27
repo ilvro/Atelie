@@ -1,0 +1,480 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-tira-fotos-cabine",
+  "revision": 0,
+  "name": "Tira de fotos de cabine",
+  "category": "Fotografias e objetos",
+  "tags": [
+    "fotografias e objetos"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 560,
+    "height": 1700,
+    "background": "#6a6a70"
+  },
+  "layers": [
+    {
+      "id": "l-1-tira-fotos-cabine",
+      "name": "Mesa",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 560,
+      "height": 1700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#6a6a70",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-2-tira-fotos-cabine",
+      "name": "Sombra da tira",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "normal",
+      "x": 70,
+      "y": 70,
+      "width": 440,
+      "height": 1580,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#000000",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-3-tira-fotos-cabine",
+      "name": "Papel fotográfico",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 50,
+      "y": 40,
+      "width": 440,
+      "height": 1580,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-papel-fotografico-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-tira-fotos-cabine",
+      "name": "Foto 1",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 80,
+      "width": 380,
+      "height": 350,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-rapaz-cdv"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 1,
+          "sepia": 0,
+          "brightness": -0.03,
+          "contrast": 0.2,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-tira-fotos-cabine",
+      "name": "Borda 1",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 80,
+      "width": 380,
+      "height": 350,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#f6f4ee",
+        "strokeWidth": 6,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-6-tira-fotos-cabine",
+      "name": "Foto 2",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 460,
+      "width": 380,
+      "height": 350,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-mulher-sanfona"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 1,
+          "sepia": 0,
+          "brightness": 0.05,
+          "contrast": 0.25,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-tira-fotos-cabine",
+      "name": "Borda 2",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 460,
+      "width": 380,
+      "height": 350,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#f6f4ee",
+        "strokeWidth": 6,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-8-tira-fotos-cabine",
+      "name": "Foto 3",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 840,
+      "width": 380,
+      "height": 350,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-rapaz-cdv"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 1,
+          "sepia": 0,
+          "brightness": -0.03,
+          "contrast": 0.30000000000000004,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-9-tira-fotos-cabine",
+      "name": "Borda 3",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 840,
+      "width": 380,
+      "height": 350,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#f6f4ee",
+        "strokeWidth": 6,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-10-tira-fotos-cabine",
+      "name": "Foto 4",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 1220,
+      "width": 380,
+      "height": 350,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-mulher-sanfona"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 1,
+          "sepia": 0,
+          "brightness": 0.05,
+          "contrast": 0.35000000000000003,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-11-tira-fotos-cabine",
+      "name": "Borda 4",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 1220,
+      "width": 380,
+      "height": 350,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#f6f4ee",
+        "strokeWidth": 6,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-12-tira-fotos-cabine",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.44,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 560,
+      "height": 1700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 34534,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-13-tira-fotos-cabine",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 560,
+      "height": 1700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 34551,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-14-tira-fotos-cabine",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 560,
+      "height": 1700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 34585,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-15-tira-fotos-cabine",
+      "name": "Data da cabine",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 1580,
+      "width": 380,
+      "height": 30,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "FOTO-EXPRESSA · 14/03/1964",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 16,
+        "color": "#444444",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.2,
+          "seed": 12
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-4-tira-fotos-cabine",
+      "label": "Fotos"
+    },
+    {
+      "layerId": "l-6-tira-fotos-cabine",
+      "label": "Foto 2"
+    },
+    {
+      "layerId": "l-8-tira-fotos-cabine",
+      "label": "Foto 3"
+    },
+    {
+      "layerId": "l-10-tira-fotos-cabine",
+      "label": "Foto 4"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

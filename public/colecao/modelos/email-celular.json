@@ -1,0 +1,465 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-email-celular",
+  "revision": 0,
+  "name": "E-mail no celular",
+  "category": "Tecnologia",
+  "tags": [
+    "tecnologia"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 800,
+    "height": 1500,
+    "background": "#6a6a70"
+  },
+  "layers": [
+    {
+      "id": "l-1-email-celular",
+      "name": "Fundo",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 800,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#6a6a70",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-2-email-celular",
+      "name": "Tela",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 97,
+      "y": 90,
+      "width": 605,
+      "height": 1325,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#ffffff",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 50,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-3-email-celular",
+      "name": "Barra de status",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 97,
+      "y": 100,
+      "width": 605,
+      "height": 65,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-interface-barra-status-claro"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-email-celular",
+      "name": "Cabeçalho do app",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 190,
+      "width": 560,
+      "height": 50,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "‹ Caixa de entrada",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 30,
+        "color": "#2f7cf6",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-5-email-celular",
+      "name": "Remetente",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 270,
+      "width": 560,
+      "height": 44,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Dra. Ingrid Vasconcelos",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 30,
+        "color": "#1c1c1e",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-6-email-celular",
+      "name": "Para",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 316,
+      "width": 560,
+      "height": 34,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "para mim · 14 de março, 22:07",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#8e8e93",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-7-email-celular",
+      "name": "Linha",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 366,
+      "width": 560,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#d8d8dc",
+        "strokeWidth": 1.5,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-8-email-celular",
+      "name": "Assunto",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 388,
+      "width": 560,
+      "height": 90,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Re: Subsolo — NÃO ENCAMINHAR",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#1c1c1e",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-9-email-celular",
+      "name": "Corpo",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 500,
+      "width": 560,
+      "height": 720,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Oi,\n\nconfirmei os dados do sensor. A leitura de ontem não é erro de calibração: houve variação de 0,8 °C a cada três minutos, sempre às 3h. Não comente com a diretoria.\n\nVou ao Solar amanhã cedo. Leve a lanterna.\n\nIngrid",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 27,
+        "color": "#1c1c1e",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-10-email-celular",
+      "name": "Anexo",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 1260,
+      "width": 560,
+      "height": 44,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "📎 leituras_subsolo.pdf (212 KB)",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#2f7cf6",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-11-email-celular",
+      "name": "Moldura do celular",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 50,
+      "y": 40,
+      "width": 700,
+      "height": 1425,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-interface-celular-iphone-claro"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-12-email-celular",
+      "name": "Reflexo da tela",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.05,
+      "blend": "screen",
+      "x": 97,
+      "y": 90,
+      "width": 605,
+      "height": 1325,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#ffffff",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 50,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-13-email-celular",
+      "name": "Brilho do vidro",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.08,
+      "blend": "screen",
+      "x": 0,
+      "y": 0,
+      "width": 800,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fade",
+        "seed": 1101,
+        "amount": 0.5,
+        "params": {
+          "color": "#ffffff"
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-5-email-celular",
+      "label": "De"
+    },
+    {
+      "layerId": "l-8-email-celular",
+      "label": "Assunto"
+    },
+    {
+      "layerId": "l-9-email-celular",
+      "label": "Corpo"
+    },
+    {
+      "layerId": "l-10-email-celular",
+      "label": "Anexo"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

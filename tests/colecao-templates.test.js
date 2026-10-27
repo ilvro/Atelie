@@ -371,3 +371,28 @@ test('colecao-c8-c10: lotes novos (investigação e Estado, escrita e imprensa, 
     assert.ok(soma / a.length > 1.2, `${v.id}: variação quase igual à base (diferença média ${(soma / a.length).toFixed(2)})`);
   }
 });
+
+test('colecao-c11: tecnologia, fotografias e objetos, cotidiano e destruídos completos; composições com recorte preso à camada', async () => {
+  const lib = JSON.parse(await fs.readFile(libraryPath, 'utf8'));
+  const templates = lib.items.filter(i => i.kind === 'template');
+  const bases = c => templates.filter(i => i.category === c && !i.family).length;
+  assert.equal(bases('Fotografias e objetos'), 6);
+  assert.equal(bases('Destruídos e composições'), 5);
+  assert.ok(bases('Tecnologia') >= 3 + 9 && bases('Cotidiano') >= 6 + 6);
+  assert.equal(templates.length, 151, 'manifesto com 151 modelos');
+  assert.equal(new Set(templates.map(i => i.category)).size, 16, '16 categorias');
+  // A página rasgada em pedaços: cada pedaço tem papel + corte rasgado preso a ele (grupo de recorte)
+  const doc = JSON.parse(await fs.readFile(path.join(colecaoDir, 'modelos/pagina-rasgada-pedacos.json'), 'utf8'));
+  const cortes = doc.layers.filter(l => l.effect?.type === 'cut');
+  assert.equal(cortes.length, 4);
+  for (const c of cortes) {
+    assert.equal(c.clip, true, `${c.name}: preso à camada de baixo`);
+    const abaixo = doc.layers[doc.layers.indexOf(c) - 1];
+    assert.equal(abaixo.kind, 'image', `${c.name}: o papel do pedaço fica logo abaixo`);
+  }
+  // O celular: moldura por cima da tela, balões e texto dentro dela
+  const chat = JSON.parse(await fs.readFile(path.join(colecaoDir, 'modelos/conversa-celular-claro.json'), 'utf8'));
+  const iMoldura = chat.layers.findIndex(l => l.name === 'Moldura do celular');
+  assert.ok(iMoldura > chat.layers.findIndex(l => l.name === 'Tela') && iMoldura > chat.layers.findIndex(l => l.name === 'Balão 1'), 'a moldura cobre a borda da tela');
+  assert.ok(chat.fields.some(f => f.label === 'Contato') && chat.fields.some(f => f.label === 'Mensagens'));
+});

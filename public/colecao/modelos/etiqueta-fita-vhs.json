@@ -1,0 +1,269 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-etiqueta-fita-vhs",
+  "revision": 0,
+  "name": "Etiqueta de fita VHS",
+  "category": "Fotografias e objetos",
+  "tags": [
+    "fotografias e objetos"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1100,
+    "height": 700,
+    "background": "#4a4a50"
+  },
+  "layers": [
+    {
+      "id": "l-1-etiqueta-fita-vhs",
+      "name": "Mesa",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#4a4a50",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-2-etiqueta-fita-vhs",
+      "name": "Fita VHS",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 60,
+      "width": 940,
+      "height": 520,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-objeto-fita-vhs"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-3-etiqueta-fita-vhs",
+      "name": "Etiqueta",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 150,
+      "y": 110,
+      "width": 800,
+      "height": 160,
+      "rotation": -0.5,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-objeto-etiqueta-vhs"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-etiqueta-fita-vhs",
+      "name": "Título",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 190,
+      "y": 160,
+      "width": 720,
+      "height": 60,
+      "rotation": -0.5,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "NÃO ASSISTIR SOZINHO",
+        "font": {
+          "family": "Permanent Marker",
+          "library": "casa-font-permanentmarker-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 44,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.25,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-5-etiqueta-fita-vhs",
+      "name": "Data",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 700,
+      "y": 222,
+      "width": 220,
+      "height": 36,
+      "rotation": -0.5,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "14/03/1993",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 28,
+        "color": "#a3182b",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-6-etiqueta-fita-vhs",
+      "name": "Nota da lombada",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 150,
+      "y": 600,
+      "width": 800,
+      "height": 40,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "FITA 417 · SOLAR",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#e8e4d6",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.2,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-7-etiqueta-fita-vhs",
+      "name": "Poeira da fita",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "grain",
+        "seed": 1117,
+        "amount": 0.5,
+        "params": {}
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-4-etiqueta-fita-vhs",
+      "label": "Título"
+    },
+    {
+      "layerId": "l-5-etiqueta-fita-vhs",
+      "label": "Data"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

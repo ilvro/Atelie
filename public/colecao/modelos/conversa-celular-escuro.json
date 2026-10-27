@@ -1,0 +1,779 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-conversa-celular-escuro",
+  "revision": 0,
+  "name": "Conversa de celular · escuro",
+  "category": "Tecnologia",
+  "tags": [
+    "tecnologia"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 800,
+    "height": 1500,
+    "background": "#2a2a30"
+  },
+  "layers": [
+    {
+      "id": "l-1-conversa-celular-escuro",
+      "name": "Fundo",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 800,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#2a2a30",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-2-conversa-celular-escuro",
+      "name": "Tela",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 97.5,
+      "y": 90,
+      "width": 605,
+      "height": 1325,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#111114",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 40,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-3-conversa-celular-escuro",
+      "name": "Barra de status",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 97.5,
+      "y": 100,
+      "width": 605,
+      "height": 65,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-interface-barra-status-escuro"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-conversa-celular-escuro",
+      "name": "Cabeçalho da conversa",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 97.5,
+      "y": 160,
+      "width": 605,
+      "height": 100,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#1c1c20",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-5-conversa-celular-escuro",
+      "name": "Avatar do contato",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 121.5,
+      "y": 178,
+      "width": 64,
+      "height": 64,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "ellipse",
+        "fill": "#9aa0a6",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-6-conversa-celular-escuro",
+      "name": "Contato",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 203.5,
+      "y": 190,
+      "width": 465,
+      "height": 44,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Número desconhecido",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 30,
+        "color": "#f2f2f5",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-7-conversa-celular-escuro",
+      "name": "Balão 1",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 125.5,
+      "y": 290,
+      "width": 436,
+      "height": 73,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#2a2a30",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 30,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-8-conversa-celular-escuro",
+      "name": "Mensagens",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 145.5,
+      "y": 304,
+      "width": 396,
+      "height": 53,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "sei o que voce viu na casa",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#f2f2f5",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-9-conversa-celular-escuro",
+      "name": "Hora 1",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 131.5,
+      "y": 365,
+      "width": 436,
+      "height": 26,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "03:12",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 18,
+        "color": "#8a8a90",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-10-conversa-celular-escuro",
+      "name": "Balão 2",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 414.5,
+      "y": 407,
+      "width": 260,
+      "height": 73,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#2b6ad0",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 30,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-11-conversa-celular-escuro",
+      "name": "Mensagem 2",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 434.5,
+      "y": 421,
+      "width": 220,
+      "height": 53,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "quem e voce?",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#ffffff",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-12-conversa-celular-escuro",
+      "name": "Hora 2",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 414.5,
+      "y": 482,
+      "width": 260,
+      "height": 26,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "03:12",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 18,
+        "color": "#8a8a90",
+        "align": "right",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-13-conversa-celular-escuro",
+      "name": "Balão 3",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 125.5,
+      "y": 524,
+      "width": 328,
+      "height": 73,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#2a2a30",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 30,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-14-conversa-celular-escuro",
+      "name": "Mensagem 3",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 145.5,
+      "y": 538,
+      "width": 288,
+      "height": 53,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "olha pela janela",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#f2f2f5",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-15-conversa-celular-escuro",
+      "name": "Hora 3",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 131.5,
+      "y": 599,
+      "width": 328,
+      "height": 26,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "03:13",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 18,
+        "color": "#8a8a90",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-16-conversa-celular-escuro",
+      "name": "Balão 4",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 494.5,
+      "y": 641,
+      "width": 180,
+      "height": 73,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#2b6ad0",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 30,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-17-conversa-celular-escuro",
+      "name": "Mensagem 4",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 514.5,
+      "y": 655,
+      "width": 140,
+      "height": 53,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "???",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#ffffff",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-18-conversa-celular-escuro",
+      "name": "Hora 4",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 494.5,
+      "y": 716,
+      "width": 180,
+      "height": 26,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "03:13",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 18,
+        "color": "#8a8a90",
+        "align": "right",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-19-conversa-celular-escuro",
+      "name": "Balão 5",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 125.5,
+      "y": 758,
+      "width": 311,
+      "height": 73,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#2a2a30",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 30,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-20-conversa-celular-escuro",
+      "name": "Mensagem 5",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 145.5,
+      "y": 772,
+      "width": 271,
+      "height": 53,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "nao. a de tras.",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#f2f2f5",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-21-conversa-celular-escuro",
+      "name": "Hora 5",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 131.5,
+      "y": 833,
+      "width": 311,
+      "height": 26,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "03:14",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 18,
+        "color": "#8a8a90",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-22-conversa-celular-escuro",
+      "name": "Digitando…",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 125.5,
+      "y": 879,
+      "width": 150,
+      "height": 71,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-interface-digitando-escuro"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-23-conversa-celular-escuro",
+      "name": "Moldura do celular",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 50,
+      "y": 40,
+      "width": 700,
+      "height": 1425,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-interface-celular-iphone-escuro"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-6-conversa-celular-escuro",
+      "label": "Contato"
+    },
+    {
+      "layerId": "l-8-conversa-celular-escuro",
+      "label": "Mensagens"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

@@ -384,6 +384,27 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ---
 
+## Coleção ampliada · Lote C11 (26 modelos novos)
+
+### Feito
+- **Tecnologia (9):** conversa de celular em claro e em escuro (moldura de celular por cima da tela, balões que crescem com o texto, "digitando…"), e-mail no celular, tela de computador dos anos 90, monitor moderno sobre a mesa de madeira com janela de navegador, log de servidor com erro em vermelho, transcrição de ligação (formulário policial com falas por horário), fax recebido (papel térmico, linhas falhadas) e postagem de rede social fictícia.
+- **Fotografias e objetos (6):** foto colada com fita, porta-retrato com vidro e reflexo, tira de fotos de cabine, negativo de filme (fotos invertidas por filtro sobre base laranja), etiqueta de fita VHS e carteira de investigador (distintivo, couro e cartão).
+- **Cotidiano (6):** cardápio art déco, lista de compras em post-it, conta de luz com gráfico de consumo e código de barras, extrato do Banco Comercial do Planalto com valor circulado, cheque com guilhochê e valor por extenso, bilhete de cinema com picote.
+- **Destruídos e composições (5):** carta queimada, documento molhado, **página rasgada em pedaços** (4 pedaços de papel, cada um com um corte `rasgado` preso a ele pelo grupo de recorte, remontados com fita), mesa de investigação (composição) e envelope de evidências.
+- `templates.js` passou a levar `clip` das camadas da especificação; o celular, o monitor e a mesa são composições de camadas (caixas, elipses, imagens da casa) sem arquivo novo.
+- Manifesto: **151 modelos** (132 documentos + 19 variações) em 16 categorias. Ajuda, README e USO atualizados.
+
+### Validação
+- `npm test`: 242 passando (categorias do lote, 151 modelos, 16 categorias, recortes presos ao papel, moldura do celular acima da tela). Auditoria: 0 erros, 28 avisos de fonte fora da época. E2E de modelos, biblioteca, início, Ajuda e desempenho passaram: os modelos mais pesados dos quatro lotes abrem em 220 a 340 ms (limite 400). Coleção: 40,2 MB.
+
+### Pendências reais
+- Os rostos continuam sendo os 6 retratos da C0 (com filtros diferentes); faltam fotos de ambientes e objetos para mais variedade.
+- O celular, o monitor e a mesa são desenhados com formas simples; o resultado agrada em miniatura, mas vale conferir em tamanho real.
+- Da lista de variações do plano, foram feitas 19 das cerca de 25 (faltam ensanguentado de um diário e de outras fichas, e UV do relatório do IML).
+- **Próxima fase:** C12 (filtros, famílias, conjuntos e tela inicial); a C11 também pede revisão das folhas de contato com o usuário.
+
+---
+
 ## Refinamento Visual e Ergonomia de UI
 
 ### Feito

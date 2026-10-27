@@ -1,0 +1,511 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-carteira-investigador",
+  "revision": 0,
+  "name": "Carteira de investigador",
+  "category": "Fotografias e objetos",
+  "tags": [
+    "fotografias e objetos"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1500,
+    "height": 900,
+    "background": "#3a2f25"
+  },
+  "layers": [
+    {
+      "id": "l-1-carteira-investigador",
+      "name": "Mesa",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1500,
+      "height": 900,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-superficie-wood060"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-carteira-investigador",
+      "name": "Sombra",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.45,
+      "blend": "normal",
+      "x": 90,
+      "y": 110,
+      "width": 1340,
+      "height": 720,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#000000",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 30,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-3-carteira-investigador",
+      "name": "Couro (esquerda)",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 70,
+      "y": 80,
+      "width": 660,
+      "height": 720,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-superficie-leather026"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-carteira-investigador",
+      "name": "Couro (direita)",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 740,
+      "y": 80,
+      "width": 690,
+      "height": 720,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-superficie-leather026"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-carteira-investigador",
+      "name": "Costura esquerda",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 100,
+      "y": 110,
+      "width": 600,
+      "height": 660,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#8a7a5a",
+        "strokeWidth": 2,
+        "radius": 10,
+        "dash": [
+          10,
+          8
+        ]
+      }
+    },
+    {
+      "id": "l-6-carteira-investigador",
+      "name": "Costura direita",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 770,
+      "y": 110,
+      "width": 630,
+      "height": 660,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#8a7a5a",
+        "strokeWidth": 2,
+        "radius": 10,
+        "dash": [
+          10,
+          8
+        ]
+      }
+    },
+    {
+      "id": "l-7-carteira-investigador",
+      "name": "Distintivo",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.95,
+      "blend": "normal",
+      "x": 190,
+      "y": 220,
+      "width": 440,
+      "height": 440,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-emblema-policia-estrela"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-8-carteira-investigador",
+      "name": "Inscrição do distintivo",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 690,
+      "width": 580,
+      "height": 50,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "POLÍCIA CIVIL · INVESTIGADOR",
+        "font": {
+          "family": "Oswald",
+          "library": "casa-font-oswald-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 30,
+        "color": "#d8b66a",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-9-carteira-investigador",
+      "name": "Cartão de identidade",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 830,
+      "y": 150,
+      "width": 520,
+      "height": 560,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#f1ecde",
+        "stroke": "#cbc3a8",
+        "strokeWidth": 2,
+        "radius": 14,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-10-carteira-investigador",
+      "name": "Foto",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 860,
+      "y": 190,
+      "width": 200,
+      "height": 260,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-jovem-hussardo"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-11-carteira-investigador",
+      "name": "Nome",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1080,
+      "y": 190,
+      "width": 250,
+      "height": 150,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Cássio Prado\nInvestigador de 1ª classe",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-12-carteira-investigador",
+      "name": "Matrícula",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1080,
+      "y": 360,
+      "width": 250,
+      "height": 90,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Matrícula\n2218",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#1d1b24",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 7
+        }
+      }
+    },
+    {
+      "id": "l-13-carteira-investigador",
+      "name": "Texto legal",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 860,
+      "y": 480,
+      "width": 470,
+      "height": 130,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Válida em todo o território nacional. Porte de arma sujeito a portaria. Em caso de perda, comunicar à Corregedoria.",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 19,
+        "color": "#444444",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.1,
+          "seed": 9
+        }
+      }
+    },
+    {
+      "id": "l-14-carteira-investigador",
+      "name": "Carimbo",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "multiply",
+      "x": 1150,
+      "y": 560,
+      "width": 170,
+      "height": 170,
+      "rotation": 8,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-carimbo-br-autenticado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-10-carteira-investigador",
+      "label": "Foto"
+    },
+    {
+      "layerId": "l-11-carteira-investigador",
+      "label": "Nome"
+    },
+    {
+      "layerId": "l-12-carteira-investigador",
+      "label": "Matrícula"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

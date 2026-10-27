@@ -1,0 +1,355 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-postagem-rede-social",
+  "revision": 0,
+  "name": "Postagem de rede social fictícia",
+  "category": "Tecnologia",
+  "tags": [
+    "tecnologia"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 900,
+    "height": 1500,
+    "background": "#e6e8eb"
+  },
+  "layers": [
+    {
+      "id": "l-1-postagem-rede-social",
+      "name": "Fundo",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 900,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#e6e8eb",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-2-postagem-rede-social",
+      "name": "Cartão da postagem",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 40,
+      "y": 60,
+      "width": 820,
+      "height": 1380,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#ffffff",
+        "stroke": "#d8dbe0",
+        "strokeWidth": 2,
+        "radius": 28,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-3-postagem-rede-social",
+      "name": "Foto de perfil",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 100,
+      "width": 100,
+      "height": 100,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-retrato-mulher-sanfona"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-postagem-rede-social",
+      "name": "Usuário",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 200,
+      "y": 108,
+      "width": 560,
+      "height": 44,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "duda.alencar",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#1a1a1a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 14
+        }
+      }
+    },
+    {
+      "id": "l-5-postagem-rede-social",
+      "name": "Local",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 200,
+      "y": 154,
+      "width": 560,
+      "height": 34,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Vila Aurora, SP · há 2 horas",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#8e8e93",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-6-postagem-rede-social",
+      "name": "Foto",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 40,
+      "y": 230,
+      "width": 820,
+      "height": 700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-foto-lugar-casarao-1895"
+        },
+        "fit": "cover",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0.1,
+          "saturation": -0.2,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-postagem-rede-social",
+      "name": "Curtidas",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 960,
+      "width": 740,
+      "height": 44,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "♥  1.284 curtidas",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 28,
+        "color": "#1a1a1a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-8-postagem-rede-social",
+      "name": "Texto",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 1020,
+      "width": 740,
+      "height": 160,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "a casa mais assustadora da cidade 👻 alguém aí já entrou? juro que vi uma luz na janela do porão #solardospinhais #vilaaurora #urbex",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#1a1a1a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-9-postagem-rede-social",
+      "name": "Comentários",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 1190,
+      "width": 740,
+      "height": 220,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "beto.s  não vai lá, a Dona Odete disse que ninguém mora\nnath_p  eu fui em 2019 e nunca mais dormi direito\nsolar.pinhais  quem entrou, voltou. quem voltou, ficou.",
+        "font": {
+          "family": "Inter",
+          "library": "casa-font-inter-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 22,
+        "color": "#3c4043",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.5,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0,
+          "seed": 9
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-3-postagem-rede-social",
+      "label": "Perfil"
+    },
+    {
+      "layerId": "l-4-postagem-rede-social",
+      "label": "Usuário"
+    },
+    {
+      "layerId": "l-6-postagem-rede-social",
+      "label": "Foto"
+    },
+    {
+      "layerId": "l-8-postagem-rede-social",
+      "label": "Texto"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

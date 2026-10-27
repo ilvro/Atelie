@@ -9,7 +9,7 @@ import { createApp } from '../../server/app.js';
 import { projectDir } from '../../server/paths.js';
 
 // O modelo mais pesado de cada lote novo precisa abrir em menos de 400 ms (plano da coleção ampliada)
-const PESADOS = ['auto-apreensao', 'analise-digitais', 'laudo-necropsia-uv', 'boletim-escolar', 'ficha-triagem-sanatorio', 'quadro-investigacao'];
+const PESADOS = ['pagina-rasgada-pedacos', 'mesa-investigacao', 'conversa-celular-claro', 'auto-apreensao', 'analise-digitais', 'laudo-necropsia-uv', 'boletim-escolar', 'ficha-triagem-sanatorio', 'quadro-investigacao'];
 
 test('colecao perf e2e: o modelo mais pesado de cada lote abre em menos de 400 ms', { timeout: 180_000 }, async (t) => {
   const dataDir = await mkdtemp(path.join(os.tmpdir(), 'atelie-colecao-perf-'));

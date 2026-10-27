@@ -1,0 +1,411 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-envelope-evidencias",
+  "revision": 0,
+  "name": "Envelope de evidências",
+  "category": "Destruídos e composições",
+  "tags": [
+    "destruídos e composições"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1300,
+    "height": 1100,
+    "background": "#4a4540"
+  },
+  "layers": [
+    {
+      "id": "l-1-envelope-evidencias",
+      "name": "Mesa",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 1100,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-superficie-metal032"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-envelope-evidencias",
+      "name": "Sombra",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.4,
+      "blend": "normal",
+      "x": 150,
+      "y": 160,
+      "width": 1000,
+      "height": 800,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#000000",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 8,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-3-envelope-evidencias",
+      "name": "Envelope",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 120,
+      "width": 1000,
+      "height": 711,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-objeto-envelope-pardo-cordao"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-envelope-evidencias",
+      "name": "Etiqueta de evidência",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 560,
+      "y": 380,
+      "width": 400,
+      "height": 240,
+      "rotation": -3,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-etiqueta-evidencia"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-envelope-evidencias",
+      "name": "Número",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 600,
+      "y": 440,
+      "width": 320,
+      "height": 50,
+      "rotation": -3,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "EV-1993-0417",
+        "font": {
+          "family": "Courier Prime",
+          "library": "casa-font-courierprime-bold",
+          "weight": 700,
+          "italic": false
+        },
+        "size": 30,
+        "color": "#a3182b",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "typewriter",
+          "wear": 0.12,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-6-envelope-evidencias",
+      "name": "Conteúdo",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 150,
+      "y": 640,
+      "width": 700,
+      "height": 120,
+      "rotation": -1.5,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Conteúdo: 1 chave de ferro, 1 fita VHS, fotografias (6)",
+        "font": {
+          "family": "Caveat",
+          "library": "casa-font-caveat-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 42,
+        "color": "#1c2a5a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-7-envelope-evidencias",
+      "name": "Fita de evidência",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 90,
+      "y": 150,
+      "width": 360,
+      "height": 100,
+      "rotation": -20,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-fita-isolante-diagonal"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-8-envelope-evidencias",
+      "name": "Fita de evidência 2",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 790,
+      "y": 650,
+      "width": 360,
+      "height": 100,
+      "rotation": -20,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-fita-isolante-diagonal"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-9-envelope-evidencias",
+      "name": "Carimbo",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.8,
+      "blend": "multiply",
+      "x": 180,
+      "y": 480,
+      "width": 330,
+      "height": 130,
+      "rotation": 6,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-carimbo-evidencia"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-10-envelope-evidencias",
+      "name": "Assinatura de custódia",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1000,
+      "y": 150,
+      "width": 60,
+      "height": 140,
+      "rotation": 8,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-prendedor-clipe-prata-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-11-envelope-evidencias",
+      "name": "Poeira do plástico",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.25,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1300,
+      "height": 1100,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "grain",
+        "seed": 1153,
+        "amount": 0.5,
+        "params": {}
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-5-envelope-evidencias",
+      "label": "Número"
+    },
+    {
+      "layerId": "l-6-envelope-evidencias",
+      "label": "Conteúdo"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

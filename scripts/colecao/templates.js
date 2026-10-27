@@ -47,7 +47,7 @@ export function buildHandoutFromSpec(spec) {
       width: Math.max(1, layerSpec.width ?? spec.page.width),
       height: Math.max(1, layerSpec.height ?? spec.page.height),
       rotation: layerSpec.rotation ?? 0,
-      clip: false,
+      clip: layerSpec.clip === true,
       light: layerSpec.light || 'both',
     };
 
