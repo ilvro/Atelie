@@ -1,871 +1,7 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-25T01:01:09.457Z",
+  "generatedAt": "2026-10-27T22:03:46.410Z",
   "items": [
-    {
-      "id": "casa-papel-oficio-branco-novo",
-      "kind": "element",
-      "name": "Ofício branco (Novo)",
-      "category": "Papéis",
-      "tags": [
-        "ofício",
-        "branco",
-        "liso",
-        "escritório",
-        "novo"
-      ],
-      "file": "papeis/oficio-branco-novo.webp",
-      "preview": "previews/casa-papel-oficio-branco-novo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-oficio-branco-usado",
-      "kind": "element",
-      "name": "Ofício branco (Usado)",
-      "category": "Papéis",
-      "tags": [
-        "ofício",
-        "branco",
-        "liso",
-        "escritório",
-        "usado"
-      ],
-      "file": "papeis/oficio-branco-usado.webp",
-      "preview": "previews/casa-papel-oficio-branco-usado.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-oficio-branco-antigo",
-      "kind": "element",
-      "name": "Ofício branco (Antigo)",
-      "category": "Papéis",
-      "tags": [
-        "ofício",
-        "branco",
-        "liso",
-        "escritório",
-        "antigo"
-      ],
-      "file": "papeis/oficio-branco-antigo.webp",
-      "preview": "previews/casa-papel-oficio-branco-antigo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-oficio-creme-novo",
-      "kind": "element",
-      "name": "Ofício creme (Novo)",
-      "category": "Papéis",
-      "tags": [
-        "ofício",
-        "creme",
-        "elegante",
-        "escritório",
-        "novo"
-      ],
-      "file": "papeis/oficio-creme-novo.webp",
-      "preview": "previews/casa-papel-oficio-creme-novo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-oficio-creme-usado",
-      "kind": "element",
-      "name": "Ofício creme (Usado)",
-      "category": "Papéis",
-      "tags": [
-        "ofício",
-        "creme",
-        "elegante",
-        "escritório",
-        "usado"
-      ],
-      "file": "papeis/oficio-creme-usado.webp",
-      "preview": "previews/casa-papel-oficio-creme-usado.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-oficio-creme-antigo",
-      "kind": "element",
-      "name": "Ofício creme (Antigo)",
-      "category": "Papéis",
-      "tags": [
-        "ofício",
-        "creme",
-        "elegante",
-        "escritório",
-        "antigo"
-      ],
-      "file": "papeis/oficio-creme-antigo.webp",
-      "preview": "previews/casa-papel-oficio-creme-antigo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-papel-jornal-novo",
-      "kind": "element",
-      "name": "Papel jornal (Novo)",
-      "category": "Papéis",
-      "tags": [
-        "jornal",
-        "periódico",
-        "imprensa",
-        "antigo",
-        "novo"
-      ],
-      "file": "papeis/papel-jornal-novo.webp",
-      "preview": "previews/casa-papel-papel-jornal-novo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-papel-jornal-usado",
-      "kind": "element",
-      "name": "Papel jornal (Usado)",
-      "category": "Papéis",
-      "tags": [
-        "jornal",
-        "periódico",
-        "imprensa",
-        "antigo",
-        "usado"
-      ],
-      "file": "papeis/papel-jornal-usado.webp",
-      "preview": "previews/casa-papel-papel-jornal-usado.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-papel-jornal-antigo",
-      "kind": "element",
-      "name": "Papel jornal (Antigo)",
-      "category": "Papéis",
-      "tags": [
-        "jornal",
-        "periódico",
-        "imprensa",
-        "antigo",
-        "antigo"
-      ],
-      "file": "papeis/papel-jornal-antigo.webp",
-      "preview": "previews/casa-papel-papel-jornal-antigo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-kraft-novo",
-      "kind": "element",
-      "name": "Kraft (Novo)",
-      "category": "Papéis",
-      "tags": [
-        "kraft",
-        "pardo",
-        "embrulho",
-        "envelope",
-        "novo"
-      ],
-      "file": "papeis/kraft-novo.webp",
-      "preview": "previews/casa-papel-kraft-novo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-kraft-usado",
-      "kind": "element",
-      "name": "Kraft (Usado)",
-      "category": "Papéis",
-      "tags": [
-        "kraft",
-        "pardo",
-        "embrulho",
-        "envelope",
-        "usado"
-      ],
-      "file": "papeis/kraft-usado.webp",
-      "preview": "previews/casa-papel-kraft-usado.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-kraft-antigo",
-      "kind": "element",
-      "name": "Kraft (Antigo)",
-      "category": "Papéis",
-      "tags": [
-        "kraft",
-        "pardo",
-        "embrulho",
-        "envelope",
-        "antigo"
-      ],
-      "file": "papeis/kraft-antigo.webp",
-      "preview": "previews/casa-papel-kraft-antigo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-pergaminho-novo",
-      "kind": "element",
-      "name": "Pergaminho (Novo)",
-      "category": "Papéis",
-      "tags": [
-        "pergaminho",
-        "medieval",
-        "pele",
-        "manuscrito",
-        "novo"
-      ],
-      "file": "papeis/pergaminho-novo.webp",
-      "preview": "previews/casa-papel-pergaminho-novo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-pergaminho-usado",
-      "kind": "element",
-      "name": "Pergaminho (Usado)",
-      "category": "Papéis",
-      "tags": [
-        "pergaminho",
-        "medieval",
-        "pele",
-        "manuscrito",
-        "usado"
-      ],
-      "file": "papeis/pergaminho-usado.webp",
-      "preview": "previews/casa-papel-pergaminho-usado.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-pergaminho-antigo",
-      "kind": "element",
-      "name": "Pergaminho (Antigo)",
-      "category": "Papéis",
-      "tags": [
-        "pergaminho",
-        "medieval",
-        "pele",
-        "manuscrito",
-        "antigo"
-      ],
-      "file": "papeis/pergaminho-antigo.webp",
-      "preview": "previews/casa-papel-pergaminho-antigo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-carta-pautada-novo",
-      "kind": "element",
-      "name": "Carta pautada (Novo)",
-      "category": "Papéis",
-      "tags": [
-        "carta",
-        "pauta",
-        "correspondência",
-        "linhas",
-        "novo"
-      ],
-      "file": "papeis/carta-pautada-novo.webp",
-      "preview": "previews/casa-papel-carta-pautada-novo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-carta-pautada-usado",
-      "kind": "element",
-      "name": "Carta pautada (Usado)",
-      "category": "Papéis",
-      "tags": [
-        "carta",
-        "pauta",
-        "correspondência",
-        "linhas",
-        "usado"
-      ],
-      "file": "papeis/carta-pautada-usado.webp",
-      "preview": "previews/casa-papel-carta-pautada-usado.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-carta-pautada-antigo",
-      "kind": "element",
-      "name": "Carta pautada (Antigo)",
-      "category": "Papéis",
-      "tags": [
-        "carta",
-        "pauta",
-        "correspondência",
-        "linhas",
-        "antigo"
-      ],
-      "file": "papeis/carta-pautada-antigo.webp",
-      "preview": "previews/casa-papel-carta-pautada-antigo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-caderno-novo",
-      "kind": "element",
-      "name": "Caderno (Novo)",
-      "category": "Papéis",
-      "tags": [
-        "caderno",
-        "escola",
-        "anotações",
-        "espiral",
-        "novo"
-      ],
-      "file": "papeis/caderno-novo.webp",
-      "preview": "previews/casa-papel-caderno-novo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-caderno-usado",
-      "kind": "element",
-      "name": "Caderno (Usado)",
-      "category": "Papéis",
-      "tags": [
-        "caderno",
-        "escola",
-        "anotações",
-        "espiral",
-        "usado"
-      ],
-      "file": "papeis/caderno-usado.webp",
-      "preview": "previews/casa-papel-caderno-usado.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-caderno-antigo",
-      "kind": "element",
-      "name": "Caderno (Antigo)",
-      "category": "Papéis",
-      "tags": [
-        "caderno",
-        "escola",
-        "anotações",
-        "espiral",
-        "antigo"
-      ],
-      "file": "papeis/caderno-antigo.webp",
-      "preview": "previews/casa-papel-caderno-antigo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-quadriculado-novo",
-      "kind": "element",
-      "name": "Quadriculado (Novo)",
-      "category": "Papéis",
-      "tags": [
-        "grade",
-        "quadriculado",
-        "matemática",
-        "técnico",
-        "novo"
-      ],
-      "file": "papeis/quadriculado-novo.webp",
-      "preview": "previews/casa-papel-quadriculado-novo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-quadriculado-usado",
-      "kind": "element",
-      "name": "Quadriculado (Usado)",
-      "category": "Papéis",
-      "tags": [
-        "grade",
-        "quadriculado",
-        "matemática",
-        "técnico",
-        "usado"
-      ],
-      "file": "papeis/quadriculado-usado.webp",
-      "preview": "previews/casa-papel-quadriculado-usado.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-quadriculado-antigo",
-      "kind": "element",
-      "name": "Quadriculado (Antigo)",
-      "category": "Papéis",
-      "tags": [
-        "grade",
-        "quadriculado",
-        "matemática",
-        "técnico",
-        "antigo"
-      ],
-      "file": "papeis/quadriculado-antigo.webp",
-      "preview": "previews/casa-papel-quadriculado-antigo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-milimetrado-novo",
-      "kind": "element",
-      "name": "Milimetrado (Novo)",
-      "category": "Papéis",
-      "tags": [
-        "milimetrado",
-        "engenharia",
-        "gráfico",
-        "técnico",
-        "novo"
-      ],
-      "file": "papeis/milimetrado-novo.webp",
-      "preview": "previews/casa-papel-milimetrado-novo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-milimetrado-usado",
-      "kind": "element",
-      "name": "Milimetrado (Usado)",
-      "category": "Papéis",
-      "tags": [
-        "milimetrado",
-        "engenharia",
-        "gráfico",
-        "técnico",
-        "usado"
-      ],
-      "file": "papeis/milimetrado-usado.webp",
-      "preview": "previews/casa-papel-milimetrado-usado.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-milimetrado-antigo",
-      "kind": "element",
-      "name": "Milimetrado (Antigo)",
-      "category": "Papéis",
-      "tags": [
-        "milimetrado",
-        "engenharia",
-        "gráfico",
-        "técnico",
-        "antigo"
-      ],
-      "file": "papeis/milimetrado-antigo.webp",
-      "preview": "previews/casa-papel-milimetrado-antigo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-almaco-novo",
-      "kind": "element",
-      "name": "Almaço (Novo)",
-      "category": "Papéis",
-      "tags": [
-        "almaço",
-        "prova",
-        "dupla-margem",
-        "redação",
-        "novo"
-      ],
-      "file": "papeis/almaco-novo.webp",
-      "preview": "previews/casa-papel-almaco-novo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-almaco-usado",
-      "kind": "element",
-      "name": "Almaço (Usado)",
-      "category": "Papéis",
-      "tags": [
-        "almaço",
-        "prova",
-        "dupla-margem",
-        "redação",
-        "usado"
-      ],
-      "file": "papeis/almaco-usado.webp",
-      "preview": "previews/casa-papel-almaco-usado.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-almaco-antigo",
-      "kind": "element",
-      "name": "Almaço (Antigo)",
-      "category": "Papéis",
-      "tags": [
-        "almaço",
-        "prova",
-        "dupla-margem",
-        "redação",
-        "antigo"
-      ],
-      "file": "papeis/almaco-antigo.webp",
-      "preview": "previews/casa-papel-almaco-antigo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-telegrama-novo",
-      "kind": "element",
-      "name": "Telegrama (Novo)",
-      "category": "Papéis",
-      "tags": [
-        "telegrama",
-        "amarelo",
-        "urgente",
-        "comunicação",
-        "novo"
-      ],
-      "file": "papeis/telegrama-novo.webp",
-      "preview": "previews/casa-papel-telegrama-novo.webp",
-      "width": 2400,
-      "height": 1714,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-telegrama-usado",
-      "kind": "element",
-      "name": "Telegrama (Usado)",
-      "category": "Papéis",
-      "tags": [
-        "telegrama",
-        "amarelo",
-        "urgente",
-        "comunicação",
-        "usado"
-      ],
-      "file": "papeis/telegrama-usado.webp",
-      "preview": "previews/casa-papel-telegrama-usado.webp",
-      "width": 2400,
-      "height": 1714,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-telegrama-antigo",
-      "kind": "element",
-      "name": "Telegrama (Antigo)",
-      "category": "Papéis",
-      "tags": [
-        "telegrama",
-        "amarelo",
-        "urgente",
-        "comunicação",
-        "antigo"
-      ],
-      "file": "papeis/telegrama-antigo.webp",
-      "preview": "previews/casa-papel-telegrama-antigo.webp",
-      "width": 2400,
-      "height": 1714,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-cartolina-novo",
-      "kind": "element",
-      "name": "Cartolina (Novo)",
-      "category": "Papéis",
-      "tags": [
-        "cartolina",
-        "cinza",
-        "azulada",
-        "espessa",
-        "novo"
-      ],
-      "file": "papeis/cartolina-novo.webp",
-      "preview": "previews/casa-papel-cartolina-novo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-cartolina-usado",
-      "kind": "element",
-      "name": "Cartolina (Usado)",
-      "category": "Papéis",
-      "tags": [
-        "cartolina",
-        "cinza",
-        "azulada",
-        "espessa",
-        "usado"
-      ],
-      "file": "papeis/cartolina-usado.webp",
-      "preview": "previews/casa-papel-cartolina-usado.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-cartolina-antigo",
-      "kind": "element",
-      "name": "Cartolina (Antigo)",
-      "category": "Papéis",
-      "tags": [
-        "cartolina",
-        "cinza",
-        "azulada",
-        "espessa",
-        "antigo"
-      ],
-      "file": "papeis/cartolina-antigo.webp",
-      "preview": "previews/casa-papel-cartolina-antigo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-papel-de-seda-novo",
-      "kind": "element",
-      "name": "Papel de seda (Novo)",
-      "category": "Papéis",
-      "tags": [
-        "seda",
-        "translúcido",
-        "fino",
-        "delicado",
-        "novo"
-      ],
-      "file": "papeis/papel-de-seda-novo.webp",
-      "preview": "previews/casa-papel-papel-de-seda-novo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-papel-de-seda-usado",
-      "kind": "element",
-      "name": "Papel de seda (Usado)",
-      "category": "Papéis",
-      "tags": [
-        "seda",
-        "translúcido",
-        "fino",
-        "delicado",
-        "usado"
-      ],
-      "file": "papeis/papel-de-seda-usado.webp",
-      "preview": "previews/casa-papel-papel-de-seda-usado.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-papel-de-seda-antigo",
-      "kind": "element",
-      "name": "Papel de seda (Antigo)",
-      "category": "Papéis",
-      "tags": [
-        "seda",
-        "translúcido",
-        "fino",
-        "delicado",
-        "antigo"
-      ],
-      "file": "papeis/papel-de-seda-antigo.webp",
-      "preview": "previews/casa-papel-papel-de-seda-antigo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-papel-fotografico-novo",
-      "kind": "element",
-      "name": "Papel fotográfico (verso) (Novo)",
-      "category": "Papéis",
-      "tags": [
-        "fotográfico",
-        "verso",
-        "marca d'água",
-        "foto",
-        "novo"
-      ],
-      "file": "papeis/papel-fotografico-novo.webp",
-      "preview": "previews/casa-papel-papel-fotografico-novo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-papel-fotografico-usado",
-      "kind": "element",
-      "name": "Papel fotográfico (verso) (Usado)",
-      "category": "Papéis",
-      "tags": [
-        "fotográfico",
-        "verso",
-        "marca d'água",
-        "foto",
-        "usado"
-      ],
-      "file": "papeis/papel-fotografico-usado.webp",
-      "preview": "previews/casa-papel-papel-fotografico-usado.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-papel-fotografico-antigo",
-      "kind": "element",
-      "name": "Papel fotográfico (verso) (Antigo)",
-      "category": "Papéis",
-      "tags": [
-        "fotográfico",
-        "verso",
-        "marca d'água",
-        "foto",
-        "antigo"
-      ],
-      "file": "papeis/papel-fotografico-antigo.webp",
-      "preview": "previews/casa-papel-papel-fotografico-antigo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-papel-maquina-novo",
-      "kind": "element",
-      "name": "Papel de máquina (Novo)",
-      "category": "Papéis",
-      "tags": [
-        "onionskin",
-        "fino",
-        "datilografia",
-        "cópia",
-        "novo"
-      ],
-      "file": "papeis/papel-maquina-novo.webp",
-      "preview": "previews/casa-papel-papel-maquina-novo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-papel-maquina-usado",
-      "kind": "element",
-      "name": "Papel de máquina (Usado)",
-      "category": "Papéis",
-      "tags": [
-        "onionskin",
-        "fino",
-        "datilografia",
-        "cópia",
-        "usado"
-      ],
-      "file": "papeis/papel-maquina-usado.webp",
-      "preview": "previews/casa-papel-papel-maquina-usado.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-papel-maquina-antigo",
-      "kind": "element",
-      "name": "Papel de máquina (Antigo)",
-      "category": "Papéis",
-      "tags": [
-        "onionskin",
-        "fino",
-        "datilografia",
-        "cópia",
-        "antigo"
-      ],
-      "file": "papeis/papel-maquina-antigo.webp",
-      "preview": "previews/casa-papel-papel-maquina-antigo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-papel-carbono-novo",
-      "kind": "element",
-      "name": "Papel carbono (Novo)",
-      "category": "Papéis",
-      "tags": [
-        "carbono",
-        "azul",
-        "cópia",
-        "manchado",
-        "novo"
-      ],
-      "file": "papeis/papel-carbono-novo.webp",
-      "preview": "previews/casa-papel-papel-carbono-novo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-papel-carbono-usado",
-      "kind": "element",
-      "name": "Papel carbono (Usado)",
-      "category": "Papéis",
-      "tags": [
-        "carbono",
-        "azul",
-        "cópia",
-        "manchado",
-        "usado"
-      ],
-      "file": "papeis/papel-carbono-usado.webp",
-      "preview": "previews/casa-papel-papel-carbono-usado.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
-    {
-      "id": "casa-papel-papel-carbono-antigo",
-      "kind": "element",
-      "name": "Papel carbono (Antigo)",
-      "category": "Papéis",
-      "tags": [
-        "carbono",
-        "azul",
-        "cópia",
-        "manchado",
-        "antigo"
-      ],
-      "file": "papeis/papel-carbono-antigo.webp",
-      "preview": "previews/casa-papel-papel-carbono-antigo.webp",
-      "width": 1697,
-      "height": 2400,
-      "license": "própria"
-    },
     {
       "id": "casa-manchas-cafe-1",
       "kind": "element",
@@ -6332,6 +5468,1350 @@
       "width": 1024,
       "height": 1024,
       "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-papel-oficio-branco-novo",
+      "kind": "element",
+      "name": "Ofício branco (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "ofício",
+        "branco",
+        "liso",
+        "escritório",
+        "novo"
+      ],
+      "file": "papeis/oficio-branco-novo.webp",
+      "preview": "previews/casa-papel-oficio-branco-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-oficio-branco-usado",
+      "kind": "element",
+      "name": "Ofício branco (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "ofício",
+        "branco",
+        "liso",
+        "escritório",
+        "usado"
+      ],
+      "file": "papeis/oficio-branco-usado.webp",
+      "preview": "previews/casa-papel-oficio-branco-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-oficio-branco-antigo",
+      "kind": "element",
+      "name": "Ofício branco (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "ofício",
+        "branco",
+        "liso",
+        "escritório",
+        "antigo"
+      ],
+      "file": "papeis/oficio-branco-antigo.webp",
+      "preview": "previews/casa-papel-oficio-branco-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-oficio-creme-novo",
+      "kind": "element",
+      "name": "Ofício creme (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "ofício",
+        "creme",
+        "elegante",
+        "escritório",
+        "novo"
+      ],
+      "file": "papeis/oficio-creme-novo.webp",
+      "preview": "previews/casa-papel-oficio-creme-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-oficio-creme-usado",
+      "kind": "element",
+      "name": "Ofício creme (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "ofício",
+        "creme",
+        "elegante",
+        "escritório",
+        "usado"
+      ],
+      "file": "papeis/oficio-creme-usado.webp",
+      "preview": "previews/casa-papel-oficio-creme-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-oficio-creme-antigo",
+      "kind": "element",
+      "name": "Ofício creme (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "ofício",
+        "creme",
+        "elegante",
+        "escritório",
+        "antigo"
+      ],
+      "file": "papeis/oficio-creme-antigo.webp",
+      "preview": "previews/casa-papel-oficio-creme-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-jornal-novo",
+      "kind": "element",
+      "name": "Papel jornal (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "jornal",
+        "periódico",
+        "imprensa",
+        "antigo",
+        "novo"
+      ],
+      "file": "papeis/papel-jornal-novo.webp",
+      "preview": "previews/casa-papel-papel-jornal-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-jornal-usado",
+      "kind": "element",
+      "name": "Papel jornal (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "jornal",
+        "periódico",
+        "imprensa",
+        "antigo",
+        "usado"
+      ],
+      "file": "papeis/papel-jornal-usado.webp",
+      "preview": "previews/casa-papel-papel-jornal-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-jornal-antigo",
+      "kind": "element",
+      "name": "Papel jornal (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "jornal",
+        "periódico",
+        "imprensa",
+        "antigo",
+        "antigo"
+      ],
+      "file": "papeis/papel-jornal-antigo.webp",
+      "preview": "previews/casa-papel-papel-jornal-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-kraft-novo",
+      "kind": "element",
+      "name": "Kraft (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "kraft",
+        "pardo",
+        "embrulho",
+        "envelope",
+        "novo"
+      ],
+      "file": "papeis/kraft-novo.webp",
+      "preview": "previews/casa-papel-kraft-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-kraft-usado",
+      "kind": "element",
+      "name": "Kraft (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "kraft",
+        "pardo",
+        "embrulho",
+        "envelope",
+        "usado"
+      ],
+      "file": "papeis/kraft-usado.webp",
+      "preview": "previews/casa-papel-kraft-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-kraft-antigo",
+      "kind": "element",
+      "name": "Kraft (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "kraft",
+        "pardo",
+        "embrulho",
+        "envelope",
+        "antigo"
+      ],
+      "file": "papeis/kraft-antigo.webp",
+      "preview": "previews/casa-papel-kraft-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-pergaminho-novo",
+      "kind": "element",
+      "name": "Pergaminho (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "pergaminho",
+        "medieval",
+        "pele",
+        "manuscrito",
+        "novo"
+      ],
+      "file": "papeis/pergaminho-novo.webp",
+      "preview": "previews/casa-papel-pergaminho-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-pergaminho-usado",
+      "kind": "element",
+      "name": "Pergaminho (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "pergaminho",
+        "medieval",
+        "pele",
+        "manuscrito",
+        "usado"
+      ],
+      "file": "papeis/pergaminho-usado.webp",
+      "preview": "previews/casa-papel-pergaminho-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-pergaminho-antigo",
+      "kind": "element",
+      "name": "Pergaminho (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "pergaminho",
+        "medieval",
+        "pele",
+        "manuscrito",
+        "antigo"
+      ],
+      "file": "papeis/pergaminho-antigo.webp",
+      "preview": "previews/casa-papel-pergaminho-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-carta-pautada-novo",
+      "kind": "element",
+      "name": "Carta pautada (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "carta",
+        "pauta",
+        "correspondência",
+        "linhas",
+        "novo"
+      ],
+      "file": "papeis/carta-pautada-novo.webp",
+      "preview": "previews/casa-papel-carta-pautada-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-carta-pautada-usado",
+      "kind": "element",
+      "name": "Carta pautada (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "carta",
+        "pauta",
+        "correspondência",
+        "linhas",
+        "usado"
+      ],
+      "file": "papeis/carta-pautada-usado.webp",
+      "preview": "previews/casa-papel-carta-pautada-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-carta-pautada-antigo",
+      "kind": "element",
+      "name": "Carta pautada (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "carta",
+        "pauta",
+        "correspondência",
+        "linhas",
+        "antigo"
+      ],
+      "file": "papeis/carta-pautada-antigo.webp",
+      "preview": "previews/casa-papel-carta-pautada-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-caderno-novo",
+      "kind": "element",
+      "name": "Caderno (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "caderno",
+        "escola",
+        "anotações",
+        "espiral",
+        "novo"
+      ],
+      "file": "papeis/caderno-novo.webp",
+      "preview": "previews/casa-papel-caderno-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-caderno-usado",
+      "kind": "element",
+      "name": "Caderno (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "caderno",
+        "escola",
+        "anotações",
+        "espiral",
+        "usado"
+      ],
+      "file": "papeis/caderno-usado.webp",
+      "preview": "previews/casa-papel-caderno-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-caderno-antigo",
+      "kind": "element",
+      "name": "Caderno (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "caderno",
+        "escola",
+        "anotações",
+        "espiral",
+        "antigo"
+      ],
+      "file": "papeis/caderno-antigo.webp",
+      "preview": "previews/casa-papel-caderno-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-quadriculado-novo",
+      "kind": "element",
+      "name": "Quadriculado (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "grade",
+        "quadriculado",
+        "matemática",
+        "técnico",
+        "novo"
+      ],
+      "file": "papeis/quadriculado-novo.webp",
+      "preview": "previews/casa-papel-quadriculado-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-quadriculado-usado",
+      "kind": "element",
+      "name": "Quadriculado (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "grade",
+        "quadriculado",
+        "matemática",
+        "técnico",
+        "usado"
+      ],
+      "file": "papeis/quadriculado-usado.webp",
+      "preview": "previews/casa-papel-quadriculado-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-quadriculado-antigo",
+      "kind": "element",
+      "name": "Quadriculado (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "grade",
+        "quadriculado",
+        "matemática",
+        "técnico",
+        "antigo"
+      ],
+      "file": "papeis/quadriculado-antigo.webp",
+      "preview": "previews/casa-papel-quadriculado-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-milimetrado-novo",
+      "kind": "element",
+      "name": "Milimetrado (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "milimetrado",
+        "engenharia",
+        "gráfico",
+        "técnico",
+        "novo"
+      ],
+      "file": "papeis/milimetrado-novo.webp",
+      "preview": "previews/casa-papel-milimetrado-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-milimetrado-usado",
+      "kind": "element",
+      "name": "Milimetrado (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "milimetrado",
+        "engenharia",
+        "gráfico",
+        "técnico",
+        "usado"
+      ],
+      "file": "papeis/milimetrado-usado.webp",
+      "preview": "previews/casa-papel-milimetrado-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-milimetrado-antigo",
+      "kind": "element",
+      "name": "Milimetrado (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "milimetrado",
+        "engenharia",
+        "gráfico",
+        "técnico",
+        "antigo"
+      ],
+      "file": "papeis/milimetrado-antigo.webp",
+      "preview": "previews/casa-papel-milimetrado-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-almaco-novo",
+      "kind": "element",
+      "name": "Almaço (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "almaço",
+        "prova",
+        "dupla-margem",
+        "redação",
+        "novo"
+      ],
+      "file": "papeis/almaco-novo.webp",
+      "preview": "previews/casa-papel-almaco-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-almaco-usado",
+      "kind": "element",
+      "name": "Almaço (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "almaço",
+        "prova",
+        "dupla-margem",
+        "redação",
+        "usado"
+      ],
+      "file": "papeis/almaco-usado.webp",
+      "preview": "previews/casa-papel-almaco-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-almaco-antigo",
+      "kind": "element",
+      "name": "Almaço (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "almaço",
+        "prova",
+        "dupla-margem",
+        "redação",
+        "antigo"
+      ],
+      "file": "papeis/almaco-antigo.webp",
+      "preview": "previews/casa-papel-almaco-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-telegrama-novo",
+      "kind": "element",
+      "name": "Telegrama (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "telegrama",
+        "amarelo",
+        "urgente",
+        "comunicação",
+        "novo"
+      ],
+      "file": "papeis/telegrama-novo.webp",
+      "preview": "previews/casa-papel-telegrama-novo.webp",
+      "width": 2400,
+      "height": 1714,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-telegrama-usado",
+      "kind": "element",
+      "name": "Telegrama (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "telegrama",
+        "amarelo",
+        "urgente",
+        "comunicação",
+        "usado"
+      ],
+      "file": "papeis/telegrama-usado.webp",
+      "preview": "previews/casa-papel-telegrama-usado.webp",
+      "width": 2400,
+      "height": 1714,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-telegrama-antigo",
+      "kind": "element",
+      "name": "Telegrama (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "telegrama",
+        "amarelo",
+        "urgente",
+        "comunicação",
+        "antigo"
+      ],
+      "file": "papeis/telegrama-antigo.webp",
+      "preview": "previews/casa-papel-telegrama-antigo.webp",
+      "width": 2400,
+      "height": 1714,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-cartolina-novo",
+      "kind": "element",
+      "name": "Cartolina (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "cartolina",
+        "cinza",
+        "azulada",
+        "espessa",
+        "novo"
+      ],
+      "file": "papeis/cartolina-novo.webp",
+      "preview": "previews/casa-papel-cartolina-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-cartolina-usado",
+      "kind": "element",
+      "name": "Cartolina (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "cartolina",
+        "cinza",
+        "azulada",
+        "espessa",
+        "usado"
+      ],
+      "file": "papeis/cartolina-usado.webp",
+      "preview": "previews/casa-papel-cartolina-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-cartolina-antigo",
+      "kind": "element",
+      "name": "Cartolina (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "cartolina",
+        "cinza",
+        "azulada",
+        "espessa",
+        "antigo"
+      ],
+      "file": "papeis/cartolina-antigo.webp",
+      "preview": "previews/casa-papel-cartolina-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-de-seda-novo",
+      "kind": "element",
+      "name": "Papel de seda (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "seda",
+        "translúcido",
+        "fino",
+        "delicado",
+        "novo"
+      ],
+      "file": "papeis/papel-de-seda-novo.webp",
+      "preview": "previews/casa-papel-papel-de-seda-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-de-seda-usado",
+      "kind": "element",
+      "name": "Papel de seda (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "seda",
+        "translúcido",
+        "fino",
+        "delicado",
+        "usado"
+      ],
+      "file": "papeis/papel-de-seda-usado.webp",
+      "preview": "previews/casa-papel-papel-de-seda-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-de-seda-antigo",
+      "kind": "element",
+      "name": "Papel de seda (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "seda",
+        "translúcido",
+        "fino",
+        "delicado",
+        "antigo"
+      ],
+      "file": "papeis/papel-de-seda-antigo.webp",
+      "preview": "previews/casa-papel-papel-de-seda-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-fotografico-novo",
+      "kind": "element",
+      "name": "Papel fotográfico (verso) (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "fotográfico",
+        "verso",
+        "marca d'água",
+        "foto",
+        "novo"
+      ],
+      "file": "papeis/papel-fotografico-novo.webp",
+      "preview": "previews/casa-papel-papel-fotografico-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-fotografico-usado",
+      "kind": "element",
+      "name": "Papel fotográfico (verso) (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "fotográfico",
+        "verso",
+        "marca d'água",
+        "foto",
+        "usado"
+      ],
+      "file": "papeis/papel-fotografico-usado.webp",
+      "preview": "previews/casa-papel-papel-fotografico-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-fotografico-antigo",
+      "kind": "element",
+      "name": "Papel fotográfico (verso) (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "fotográfico",
+        "verso",
+        "marca d'água",
+        "foto",
+        "antigo"
+      ],
+      "file": "papeis/papel-fotografico-antigo.webp",
+      "preview": "previews/casa-papel-papel-fotografico-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-maquina-novo",
+      "kind": "element",
+      "name": "Papel de máquina (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "onionskin",
+        "fino",
+        "datilografia",
+        "cópia",
+        "novo"
+      ],
+      "file": "papeis/papel-maquina-novo.webp",
+      "preview": "previews/casa-papel-papel-maquina-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-maquina-usado",
+      "kind": "element",
+      "name": "Papel de máquina (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "onionskin",
+        "fino",
+        "datilografia",
+        "cópia",
+        "usado"
+      ],
+      "file": "papeis/papel-maquina-usado.webp",
+      "preview": "previews/casa-papel-papel-maquina-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-maquina-antigo",
+      "kind": "element",
+      "name": "Papel de máquina (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "onionskin",
+        "fino",
+        "datilografia",
+        "cópia",
+        "antigo"
+      ],
+      "file": "papeis/papel-maquina-antigo.webp",
+      "preview": "previews/casa-papel-papel-maquina-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-carbono-novo",
+      "kind": "element",
+      "name": "Papel carbono (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "carbono",
+        "azul",
+        "cópia",
+        "manchado",
+        "novo"
+      ],
+      "file": "papeis/papel-carbono-novo.webp",
+      "preview": "previews/casa-papel-papel-carbono-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-carbono-usado",
+      "kind": "element",
+      "name": "Papel carbono (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "carbono",
+        "azul",
+        "cópia",
+        "manchado",
+        "usado"
+      ],
+      "file": "papeis/papel-carbono-usado.webp",
+      "preview": "previews/casa-papel-papel-carbono-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-carbono-antigo",
+      "kind": "element",
+      "name": "Papel carbono (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "carbono",
+        "azul",
+        "cópia",
+        "manchado",
+        "antigo"
+      ],
+      "file": "papeis/papel-carbono-antigo.webp",
+      "preview": "previews/casa-papel-papel-carbono-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-planta-azul-novo",
+      "kind": "element",
+      "name": "Planta azul (cianotipia) (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "planta",
+        "azul",
+        "cianotipia",
+        "projeto",
+        "novo"
+      ],
+      "file": "papeis/planta-azul-novo.webp",
+      "preview": "previews/casa-papel-planta-azul-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-planta-azul-usado",
+      "kind": "element",
+      "name": "Planta azul (cianotipia) (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "planta",
+        "azul",
+        "cianotipia",
+        "projeto",
+        "usado"
+      ],
+      "file": "papeis/planta-azul-usado.webp",
+      "preview": "previews/casa-papel-planta-azul-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-planta-azul-antigo",
+      "kind": "element",
+      "name": "Planta azul (cianotipia) (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "planta",
+        "azul",
+        "cianotipia",
+        "projeto",
+        "antigo"
+      ],
+      "file": "papeis/planta-azul-antigo.webp",
+      "preview": "previews/casa-papel-planta-azul-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-de-arroz-novo",
+      "kind": "element",
+      "name": "Papel de arroz (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "arroz",
+        "oriental",
+        "fino",
+        "fibroso",
+        "novo"
+      ],
+      "file": "papeis/papel-de-arroz-novo.webp",
+      "preview": "previews/casa-papel-papel-de-arroz-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-de-arroz-usado",
+      "kind": "element",
+      "name": "Papel de arroz (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "arroz",
+        "oriental",
+        "fino",
+        "fibroso",
+        "usado"
+      ],
+      "file": "papeis/papel-de-arroz-usado.webp",
+      "preview": "previews/casa-papel-papel-de-arroz-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-de-arroz-antigo",
+      "kind": "element",
+      "name": "Papel de arroz (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "arroz",
+        "oriental",
+        "fino",
+        "fibroso",
+        "antigo"
+      ],
+      "file": "papeis/papel-de-arroz-antigo.webp",
+      "preview": "previews/casa-papel-papel-de-arroz-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papelao-novo",
+      "kind": "element",
+      "name": "Papelão (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "papelão",
+        "pardo",
+        "embalagem",
+        "novo"
+      ],
+      "file": "papeis/papelao-novo.webp",
+      "preview": "previews/casa-papel-papelao-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papelao-usado",
+      "kind": "element",
+      "name": "Papelão (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "papelão",
+        "pardo",
+        "embalagem",
+        "usado"
+      ],
+      "file": "papeis/papelao-usado.webp",
+      "preview": "previews/casa-papel-papelao-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papelao-antigo",
+      "kind": "element",
+      "name": "Papelão (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "papelão",
+        "pardo",
+        "embalagem",
+        "antigo"
+      ],
+      "file": "papeis/papelao-antigo.webp",
+      "preview": "previews/casa-papel-papelao-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-de-fax-novo",
+      "kind": "element",
+      "name": "Papel de fax (térmico) (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "fax",
+        "térmico",
+        "desbotado",
+        "escritório",
+        "novo"
+      ],
+      "file": "papeis/papel-de-fax-novo.webp",
+      "preview": "previews/casa-papel-papel-de-fax-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-de-fax-usado",
+      "kind": "element",
+      "name": "Papel de fax (térmico) (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "fax",
+        "térmico",
+        "desbotado",
+        "escritório",
+        "usado"
+      ],
+      "file": "papeis/papel-de-fax-usado.webp",
+      "preview": "previews/casa-papel-papel-de-fax-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-de-fax-antigo",
+      "kind": "element",
+      "name": "Papel de fax (térmico) (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "fax",
+        "térmico",
+        "desbotado",
+        "escritório",
+        "antigo"
+      ],
+      "file": "papeis/papel-de-fax-antigo.webp",
+      "preview": "previews/casa-papel-papel-de-fax-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-formulario-continuo-novo",
+      "kind": "element",
+      "name": "Formulário contínuo (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "formulário",
+        "contínuo",
+        "furos",
+        "computador",
+        "novo"
+      ],
+      "file": "papeis/formulario-continuo-novo.webp",
+      "preview": "previews/casa-papel-formulario-continuo-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-formulario-continuo-usado",
+      "kind": "element",
+      "name": "Formulário contínuo (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "formulário",
+        "contínuo",
+        "furos",
+        "computador",
+        "usado"
+      ],
+      "file": "papeis/formulario-continuo-usado.webp",
+      "preview": "previews/casa-papel-formulario-continuo-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-formulario-continuo-antigo",
+      "kind": "element",
+      "name": "Formulário contínuo (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "formulário",
+        "contínuo",
+        "furos",
+        "computador",
+        "antigo"
+      ],
+      "file": "papeis/formulario-continuo-antigo.webp",
+      "preview": "previews/casa-papel-formulario-continuo-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-almaco-de-prova-novo",
+      "kind": "element",
+      "name": "Almaço de prova (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "almaço",
+        "prova",
+        "escola",
+        "pautado",
+        "novo"
+      ],
+      "file": "papeis/almaco-de-prova-novo.webp",
+      "preview": "previews/casa-papel-almaco-de-prova-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-almaco-de-prova-usado",
+      "kind": "element",
+      "name": "Almaço de prova (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "almaço",
+        "prova",
+        "escola",
+        "pautado",
+        "usado"
+      ],
+      "file": "papeis/almaco-de-prova-usado.webp",
+      "preview": "previews/casa-papel-almaco-de-prova-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-almaco-de-prova-antigo",
+      "kind": "element",
+      "name": "Almaço de prova (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "almaço",
+        "prova",
+        "escola",
+        "pautado",
+        "antigo"
+      ],
+      "file": "papeis/almaco-de-prova-antigo.webp",
+      "preview": "previews/casa-papel-almaco-de-prova-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-de-embrulho-novo",
+      "kind": "element",
+      "name": "Papel de embrulho (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "embrulho",
+        "pardo",
+        "liso",
+        "novo"
+      ],
+      "file": "papeis/papel-de-embrulho-novo.webp",
+      "preview": "previews/casa-papel-papel-de-embrulho-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-de-embrulho-usado",
+      "kind": "element",
+      "name": "Papel de embrulho (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "embrulho",
+        "pardo",
+        "liso",
+        "usado"
+      ],
+      "file": "papeis/papel-de-embrulho-usado.webp",
+      "preview": "previews/casa-papel-papel-de-embrulho-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-de-embrulho-antigo",
+      "kind": "element",
+      "name": "Papel de embrulho (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "embrulho",
+        "pardo",
+        "liso",
+        "antigo"
+      ],
+      "file": "papeis/papel-de-embrulho-antigo.webp",
+      "preview": "previews/casa-papel-papel-de-embrulho-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-timbrado-bancario-novo",
+      "kind": "element",
+      "name": "Papel timbrado bancário (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "banco",
+        "guilhochê",
+        "segurança",
+        "timbrado",
+        "novo"
+      ],
+      "file": "papeis/papel-timbrado-bancario-novo.webp",
+      "preview": "previews/casa-papel-papel-timbrado-bancario-novo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-timbrado-bancario-usado",
+      "kind": "element",
+      "name": "Papel timbrado bancário (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "banco",
+        "guilhochê",
+        "segurança",
+        "timbrado",
+        "usado"
+      ],
+      "file": "papeis/papel-timbrado-bancario-usado.webp",
+      "preview": "previews/casa-papel-papel-timbrado-bancario-usado.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-timbrado-bancario-antigo",
+      "kind": "element",
+      "name": "Papel timbrado bancário (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "banco",
+        "guilhochê",
+        "segurança",
+        "timbrado",
+        "antigo"
+      ],
+      "file": "papeis/papel-timbrado-bancario-antigo.webp",
+      "preview": "previews/casa-papel-papel-timbrado-bancario-antigo.webp",
+      "width": 1697,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-de-recibo-novo",
+      "kind": "element",
+      "name": "Papel de recibo térmico (Novo)",
+      "category": "Papéis",
+      "tags": [
+        "recibo",
+        "térmico",
+        "caixa",
+        "estreito",
+        "novo"
+      ],
+      "file": "papeis/papel-de-recibo-novo.webp",
+      "preview": "previews/casa-papel-papel-de-recibo-novo.webp",
+      "width": 900,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-de-recibo-usado",
+      "kind": "element",
+      "name": "Papel de recibo térmico (Usado)",
+      "category": "Papéis",
+      "tags": [
+        "recibo",
+        "térmico",
+        "caixa",
+        "estreito",
+        "usado"
+      ],
+      "file": "papeis/papel-de-recibo-usado.webp",
+      "preview": "previews/casa-papel-papel-de-recibo-usado.webp",
+      "width": 900,
+      "height": 2400,
+      "license": "própria"
+    },
+    {
+      "id": "casa-papel-papel-de-recibo-antigo",
+      "kind": "element",
+      "name": "Papel de recibo térmico (Antigo)",
+      "category": "Papéis",
+      "tags": [
+        "recibo",
+        "térmico",
+        "caixa",
+        "estreito",
+        "antigo"
+      ],
+      "file": "papeis/papel-de-recibo-antigo.webp",
+      "preview": "previews/casa-papel-papel-de-recibo-antigo.webp",
+      "width": 900,
+      "height": 2400,
+      "license": "própria"
     }
   ]
 }

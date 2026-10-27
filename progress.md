@@ -286,6 +286,25 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ---
 
+## Coleção ampliada · Fase C4 (receitas de envelhecimento e silhuetas)
+
+### Feito
+- **Papéis fotográficos:** `papers.js` compõe o papel procedural sobre o escaneamento CC0 da C3 (`loadScanDetail`: o escaneamento cobre a página, a deriva lenta de cor é dividida por um desfoque e só a fibra e o amassado ficam, mais fortes nos papéis usados e antigos). As 16 receitas antigas mantêm os ids e ganharam `scan`.
+- **9 papéis novos** (27 arquivos, 3 idades cada): planta azul (cianotipia), papel de arroz, papelão, fax térmico (faixas de impressão), formulário contínuo (faixas verdes, furos laterais e picote), almaço de prova, papel de embrulho, papel timbrado bancário (guilhochê por código) e recibo térmico (estreito, 900 px). Novos recursos de receita: `scan`, `scanStrength`, `ageTint`, `edgeColor`, `banding`, `lines.type` `continuous` e `guilloche`. `build.js` passou a preservar o material de terceiros ao regenerar os papéis.
+- **Silhuetas** (`scripts/colecao/silhouettes.js`, reexportadas pelo `kit.js`): `rasgado-topo`, `rasgado-bordas`, `queimado`, `recorte-tesoura`, `picote`, `deckle`, `canto-arrancado` e `meia-folha`. Cada uma é uma camada `cut` da C1 com contornos sorteados pela semente, editável como um corte feito à mão. A montagem de modelos (`buildHandoutFromSpec`) agora leva os campos do corte.
+- **Receitas** `aging(preset, { seed, intensity })`: `novo`, `usado`, `antigo`, `arquivo-morto`, `queimado`, `molhado`, `ensanguentado`, `destruido`, com os efeitos da etapa 11, texturas da casa e cortes. O corte vai sempre por último (só apaga o que está abaixo). `AGING_HINTS` guarda o que a receita pede ao texto (por exemplo `textWear` no molhado).
+- `scripts/colecao/amostra-envelhecimento.js` gera `docs/referencias/colecao-envelhecimento.png` (cada receita e cada silhueta sobre o mesmo papel e texto). Prévias e folhas de contato dos 39 modelos regeradas sobre os papéis novos.
+
+### Validação
+- `npm test`: 234 passando (silhuetas válidas e determinísticas, receitas só com itens `casa-`, corte por último, 25 receitas × 3 idades, detalhe de escaneamento). Auditoria: 0 erros fora do legado. Coleção: 30,7 MB.
+
+### Pendências reais
+- Os modelos antigos ainda não usam as receitas nem as silhuetas (isso é a C7); a faixa branca do "Bilhete de caderno rasgado" continua até lá.
+- Papéis de pautado, arroz e cartolina ainda são procedurais sobre escaneamento genérico (não há escaneamento CC0 específico).
+- Não rodei os e2e depois da C4.
+
+---
+
 ## Refinamento Visual e Ergonomia de UI
 
 ### Feito

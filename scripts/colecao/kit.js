@@ -13,11 +13,61 @@ export function paper(id, page) {
   return { kind: 'image', name: 'Papel', image: lib(id), width: page.width, height: page.height };
 }
 
+export { silhouette, SILHOUETTES } from './silhouettes.js';
+import { silhouette } from './silhouettes.js';
+
+/**
+ * Receitas de envelhecimento: `aging(preset, { seed, intensity })` devolve uma pilha de camadas com nome,
+ * mesclagem e opacidade já calibradas. Usa as texturas da casa, os efeitos da etapa 11 e o corte da C1.
+ * Cada passo é [tipo, nome, ...]: 'img' (textura da casa, variação sorteada), 'fx' (efeito procedural)
+ * ou 'cut' (silhueta; vai por último, porque o corte só apaga o que está abaixo dele). `intensity` (0–1,5) escala a opacidade.
+ */
 export const AGING_PRESETS = {
-  leve: [['casa-dobras-1', 0.35, 'multiply'], ['casa-sujeira-1', 0.25, 'multiply']],
-  usado: [['casa-dobras-2', 0.45, 'multiply'], ['casa-sujeira-3', 0.4, 'multiply'], ['casa-manchas-cafe-2', 0.3, 'multiply']],
-  antigo: [['casa-dobras-3', 0.55, 'multiply'], ['casa-sujeira-5', 0.55, 'multiply'], ['casa-agua-umidade-2', 0.4, 'multiply'], ['casa-manchas-cafe-4', 0.4, 'multiply']],
+  novo: [['fx', 'Grão fino', 'grain', { blend: 'soft-light', opacity: 0.15, amount: 0.5 }]],
+  usado: [
+    ['fx', 'Amassado leve', 'crumple', { blend: 'soft-light', opacity: 0.55, amount: 0.35, params: { creases: 10 } }],
+    ['fx', 'Dobra', 'fold', { blend: 'multiply', opacity: 0.3, amount: 0.4, params: { horizontal: 1, vertical: 0 } }],
+    ['img', 'Poeira', 'casa-sujeira-3', { blend: 'multiply', opacity: 0.2 }],
+    ['fx', 'Bordas escurecidas', 'damp', { blend: 'multiply', opacity: 0.3, amount: 0.4, params: { color: '#a58f63' } }],
+  ],
+  antigo: [
+    ['fx', 'Amassado', 'crumple', { blend: 'soft-light', opacity: 0.7, amount: 0.55, params: { creases: 16 } }],
+    ['fx', 'Dobras', 'fold', { blend: 'multiply', opacity: 0.35, amount: 0.5, params: { horizontal: 1, vertical: 1 } }],
+    ['fx', 'Manchas de idade', 'stain', { blend: 'linear-burn', opacity: 0.3, amount: 0.45, params: { count: 4, color: '#8a6a34' } }],
+    ['fx', 'Bordas amareladas', 'damp', { blend: 'multiply', opacity: 0.45, amount: 0.6, params: { color: '#b0904f' } }],
+    ['img', 'Sujeira', 'casa-sujeira-5', { blend: 'multiply', opacity: 0.4 }],
+  ],
+  'arquivo-morto': [
+    ['preset', 'antigo'],
+    ['fx', 'Umidade no canto', 'damp', { blend: 'multiply', opacity: 0.3, amount: 0.6, params: { color: '#8a8460' } }],
+    ['img', 'Carimbo de arquivo', 'casa-carimbo-arquivo-morto', { blend: 'multiply', opacity: 0.75, box: { x: 0.52, y: 0.06, w: 0.38, h: 0.2 } }],
+    ['img', 'Furos de grampo', 'casa-prendedor-dois-grampos', { blend: 'multiply', opacity: 0.8, box: { x: 0.04, y: 0.02, w: 0.2, h: 0.07 } }],
+  ],
+  queimado: [
+    ['img', 'Fuligem', 'casa-queimado-1', { blend: 'multiply', opacity: 0.7 }],
+    ['fx', 'Papel tostado', 'burn', { blend: 'multiply', opacity: 0.55, amount: 0.6, params: { depth: 0.1 } }],
+    ['cut', 'queimado'],
+  ],
+  molhado: [
+    ['fx', 'Umidade', 'damp', { blend: 'multiply', opacity: 0.5, amount: 0.85, params: { color: '#8a8670' } }],
+    ['fx', 'Ondulação', 'crumple', { blend: 'soft-light', opacity: 0.5, amount: 0.3, params: { creases: 8 } }],
+  ],
+  ensanguentado: [
+    ['fx', 'Respingos', 'blood', { blend: 'multiply', opacity: 0.85, amount: 0.7, params: { drops: 10, smear: false, color: '#6e0b0b' } }],
+    ['fx', 'Arrasto', 'blood', { blend: 'multiply', opacity: 0.7, amount: 0.5, seedShift: 31, params: { drops: 3, smear: true, color: '#5a0808' } }],
+    ['img', 'Digital', 'casa-digitais-2', { blend: 'multiply', opacity: 0.55 }],
+  ],
+  destruido: [
+    ['fx', 'Amassado forte', 'crumple', { blend: 'soft-light', opacity: 0.9, amount: 0.8, params: { creases: 26 } }],
+    ['fx', 'Dobras', 'fold', { blend: 'multiply', opacity: 0.4, amount: 0.6, params: { horizontal: 2, vertical: 2 } }],
+    ['tape', 'topo-esquerda'],
+    ['tape', 'topo-direita'],
+    ['cut', 'rasgado-bordas'],
+  ],
 };
+
+/** O que a receita pede ao texto do modelo (a pilha só cuida do papel). */
+export const AGING_HINTS = { molhado: { textWear: 0.7 }, queimado: { textWear: 0.35 }, destruido: { textWear: 0.4 } };
 
 /** Troca o sufixo numérico do id por outra variação da mesma família (1–4), sorteada pela semente. */
 function variant(id, seed, i) {
@@ -25,18 +75,34 @@ function variant(id, seed, i) {
   return m ? `${m[1]}${1 + Math.floor(prng(seed, i) * 4)}` : id;
 }
 
-/** Envelhecimento: camadas multiply de sujeira, dobras e manchas. A semente escolhe a variação. */
-export function aging(preset, { seed = 1, page } = {}) {
+const level = (opacity, intensity) => Math.round(Math.min(1, opacity * intensity) * 1000) / 1000;
+
+/** Envelhecimento por receita. A semente escolhe as variações e decide onde caem manchas e respingos. */
+export function aging(preset, { seed = 1, intensity = 1, page = { width: 1240, height: 1754 } } = {}) {
   const defs = AGING_PRESETS[preset];
   if (!defs) throw new Error(`Envelhecimento desconhecido: ${preset}`);
-  return defs.map(([id, opacity, blend], i) => ({
-    kind: 'image',
-    name: `Envelhecimento ${i + 1}`,
-    image: lib(variant(id, seed, i)),
-    blend,
-    opacity,
-    ...(page ? { width: page.width, height: page.height } : {}),
-  }));
+  const out = [];
+  defs.forEach((def, i) => {
+    const [type] = def;
+    if (type === 'preset') {
+      out.push(...aging(def[1], { seed, intensity, page }));
+    } else if (type === 'cut') {
+      out.push(silhouette(def[1], { seed: seed + i, page }));
+    } else if (type === 'tape') {
+      out.push(tape(def[1], { x: 60, y: 70, width: page.width - 120, height: page.height - 140 }));
+    } else if (type === 'fx') {
+      const [, name, fx, o] = def;
+      out.push({
+        kind: 'effect', name, blend: o.blend, opacity: level(o.opacity, intensity),
+        effect: { type: fx, seed: seed * 31 + i * 17 + (o.seedShift || 0), amount: o.amount, params: o.params || {} },
+      });
+    } else {
+      const [, name, id, o] = def;
+      const box = o.box ? { x: Math.round(o.box.x * page.width), y: Math.round(o.box.y * page.height), width: Math.round(o.box.w * page.width), height: Math.round(o.box.h * page.height) } : { width: page.width, height: page.height };
+      out.push({ kind: 'image', name, image: lib(variant(id, seed, i)), blend: o.blend, opacity: level(o.opacity, intensity), ...box });
+    }
+  });
+  return out;
 }
 
 /** Cabeçalho de instituição: nome em caixa alta, linha abaixo e endereço. `org` vem de universo.js. */

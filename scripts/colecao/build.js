@@ -3,7 +3,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
-import { loadRecipes, generatePaper } from './papers.js';
+import { EXTERNAL_PREFIXES } from './externos/fetch.js';
+import { loadRecipes, generatePaper, loadScanDetail } from './papers.js';
 import { OVERLAYS, generateOverlay } from './overlays.js';
 import { readFontNames } from '../lib/font-names.js';
 
@@ -78,12 +79,12 @@ async function main() {
   const generatedCategories = new Set();
   const generatedKinds = new Set();
 
-  // 1. Generate Papers (16 papers x 3 ages = 48 papers)
+  // 1. Generate Papers (recipes x 3 ages), composed over the CC0 scans of the C3
   if (doAll || onlyPapers) {
     generatedCategories.add('Papéis');
     const recipes = await loadRecipes();
     const ages = ['novo', 'usado', 'antigo'];
-    console.log(`[colecao] Gerando ${recipes.length * ages.length} papéis (48 arquivos)...`);
+    console.log(`[colecao] Gerando ${recipes.length * ages.length} papéis (${recipes.length} receitas x 3 idades)...`);
 
     for (const recipe of recipes) {
       for (const age of ages) {
@@ -96,7 +97,8 @@ async function main() {
         const previewPath = path.join(previewsDir, previewFileName);
 
         process.stdout.write(`  -> Gerando ${id}... `);
-        const raster = generatePaper(recipe, age);
+        const detail = recipe.scan ? await loadScanDetail(recipe.scan, recipe.width, recipe.height) : null;
+        const raster = generatePaper(recipe, age, { detail });
         await raster.saveWebP(filePath, { quality: 80 });
         await raster.savePreview(previewPath, { maxSize: 320, quality: 76 });
         console.log('✓');
@@ -266,6 +268,7 @@ async function main() {
   } catch {}
 
   const preservedItems = (existingManifest.items || []).filter(item => {
+    if (EXTERNAL_PREFIXES.some(prefix => item.id.startsWith(prefix))) return true; // material de terceiros: quem o regenera é externos/fetch.js
     if (generatedKinds.has(item.kind)) return false;
     if (generatedCategories.has(item.category)) return false;
     return true;

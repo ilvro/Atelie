@@ -5,7 +5,7 @@ import { loadRecipes, generatePaper } from '../scripts/colecao/papers.js';
 
 test('colecao-papers: cada receita de papers.json é válida', async () => {
   const recipes = await loadRecipes();
-  assert.equal(recipes.length, 16, 'deve haver exatamente 16 receitas de papel');
+  assert.equal(recipes.length, 25, 'devem haver 25 receitas de papel (16 originais + 9 da C4)');
 
   const slugs = new Set();
   for (const r of recipes) {
@@ -14,7 +14,7 @@ test('colecao-papers: cada receita de papers.json é válida', async () => {
     slugs.add(r.slug);
 
     assert.ok(r.name && typeof r.name === 'string', `receita ${r.slug} sem nome`);
-    assert.ok(r.width >= 1000 && r.height >= 1000, `dimensões inválidas em ${r.slug}`);
+    assert.ok(r.width >= 800 && r.height >= 1000, `dimensões inválidas em ${r.slug}`);
     assert.ok(typeof r.seed === 'number', `seed inválida em ${r.slug}`);
     assert.ok(/^#[0-9a-fA-F]{6}$/.test(r.base), `cor base inválida em ${r.slug}: ${r.base}`);
     assert.ok(Array.isArray(r.tags) && r.tags.length > 0, `tags vazias em ${r.slug}`);
@@ -104,3 +104,13 @@ test('colecao-papers: papel antigo é mais amarelo e mais escuro nas bordas que 
   );
 });
 
+
+test('colecao-papers: o detalhe de um escaneamento muda o papel e continua determinístico', () => {
+  const recipe = { slug: 'x', name: 'X', width: 64, height: 64, seed: 3, base: '#f0e8d0', tags: ['x'] };
+  const detail = Float32Array.from({ length: 64 * 64 }, (_, i) => 0.8 + 0.4 * ((i % 7) / 6));
+  const hash = r => crypto.createHash('sha256').update(r.toBuffer()).digest('hex');
+  const plain = hash(generatePaper(recipe, 'novo'));
+  const scanned = hash(generatePaper(recipe, 'novo', { detail }));
+  assert.notEqual(plain, scanned, 'a fibra do escaneamento aparece');
+  assert.equal(scanned, hash(generatePaper(recipe, 'novo', { detail })), 'mesmo detalhe, mesmos pixels');
+});

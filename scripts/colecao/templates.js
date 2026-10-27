@@ -119,6 +119,10 @@ export function buildHandoutFromSpec(spec) {
         amount: layerSpec.effect?.amount ?? 0.5,
         params: layerSpec.effect?.params ?? {},
       };
+      if (layerSpec.effect?.type === 'cut') {
+        const { edge, remove, holes, char, fiber } = layerSpec.effect;
+        Object.assign(base.effect, { edge, remove: remove ?? [], holes: holes ?? [], char: char ?? 0.5, fiber: fiber ?? 0.5 });
+      }
     }
 
     return base;

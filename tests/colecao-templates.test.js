@@ -220,3 +220,63 @@ test('colecao-c2: compare-private recusa gravar fora da pasta privada de compara
     assert.throws(() => assertPrivateOutput(bad), /só grava/);
   }
 });
+
+test('colecao-c4: silhuetas são camadas cut válidas, determinísticas pela semente', async () => {
+  const { silhouette, SILHOUETTES } = await import('../scripts/colecao/kit.js');
+  const { cutError } = await import('../src/domain/cut.js');
+  assert.equal(SILHOUETTES.length, 8);
+  for (const kind of SILHOUETTES) {
+    const a = silhouette(kind, { seed: 5 });
+    assert.deepEqual(a, silhouette(kind, { seed: 5 }), `${kind}: mesma semente, mesmo corte`);
+    assert.notDeepEqual(a.effect, silhouette(kind, { seed: 6 }).effect, `${kind}: outra semente, outro corte`);
+    assert.equal(a.kind, 'effect');
+    assert.equal(a.effect.type, 'cut');
+    assert.equal(cutError(a.effect, 1240, 1754), null, `${kind}: corte válido`);
+    assert.ok(a.effect.remove.length || a.effect.holes.length, `${kind}: remove ou queima algo`);
+  }
+  assert.throws(() => silhouette('inexistente'), /desconhecida/);
+});
+
+test('colecao-c4: receitas de envelhecimento só usam itens da casa, são determinísticas e o corte vai por último', async () => {
+  const { aging, AGING_PRESETS } = await import('../scripts/colecao/kit.js');
+  const lib = JSON.parse(await fs.readFile(libraryPath, 'utf8'));
+  const ids = new Set(lib.items.map(i => i.id));
+  assert.deepEqual(Object.keys(AGING_PRESETS).sort(), ['antigo', 'arquivo-morto', 'destruido', 'ensanguentado', 'molhado', 'novo', 'queimado', 'usado']);
+  for (const preset of Object.keys(AGING_PRESETS)) {
+    const layers = aging(preset, { seed: 7 });
+    assert.deepEqual(layers, aging(preset, { seed: 7 }), `${preset}: determinístico`);
+    assert.ok(layers.length >= 1);
+    for (const l of layers) {
+      if (l.image?.src?.library) assert.ok(ids.has(l.image.src.library) && l.image.src.library.startsWith('casa-'), `${preset}: ${l.image.src.library} existe na coleção`);
+      assert.ok(l.name, `${preset}: camada com nome`);
+    }
+    const cuts = layers.map((l, i) => (l.effect?.type === 'cut' ? i : -1)).filter(i => i >= 0);
+    for (const i of cuts) assert.equal(i, layers.length - 1, `${preset}: o corte é a última camada`);
+  }
+  const light = aging('usado', { seed: 1, intensity: 0.5 });
+  const strong = aging('usado', { seed: 1, intensity: 1 });
+  assert.ok(light[0].opacity < strong[0].opacity, 'intensity escala a opacidade');
+});
+
+test('colecao-c4: papéis fotográficos (25 receitas × 3 idades) e papéis novos estão na biblioteca', async () => {
+  const recipes = JSON.parse(await fs.readFile(path.join(projectRoot, 'scripts/colecao/papers.json'), 'utf8'));
+  const lib = JSON.parse(await fs.readFile(libraryPath, 'utf8'));
+  assert.equal(recipes.length, 25);
+  for (const slug of ['planta-azul', 'papel-de-arroz', 'papelao', 'papel-de-fax', 'formulario-continuo', 'almaco-de-prova', 'papel-de-embrulho', 'papel-timbrado-bancario', 'papel-de-recibo']) {
+    for (const age of ['novo', 'usado', 'antigo']) assert.ok(lib.items.some(i => i.id === `casa-papel-${slug}-${age}`), `${slug} ${age}`);
+  }
+  for (const r of recipes) {
+    assert.ok(r.scan, `${r.slug}: receita ligada a um escaneamento`);
+    assert.ok(lib.items.some(i => i.id === r.scan), `${r.slug}: escaneamento ${r.scan} existe`);
+  }
+  assert.ok(lib.items.some(i => i.id.startsWith('casa-scan-')), 'a reconstrução dos papéis não apagou o material de terceiros');
+});
+
+test('colecao-c4: a montagem de modelos carrega os campos de um corte', async () => {
+  const { buildHandoutFromSpec } = await import('../scripts/colecao/templates.js');
+  const { silhouette } = await import('../scripts/colecao/kit.js');
+  const doc = buildHandoutFromSpec({ slug: 'x', name: 'X', category: 'Teste', page: { width: 100, height: 100 }, layers: [silhouette('canto-arrancado', { seed: 2, page: { width: 100, height: 100 } })], fields: [] });
+  assert.equal(doc.layers[0].effect.type, 'cut');
+  assert.ok(doc.layers[0].effect.remove.length > 0);
+  assert.equal(doc.layers[0].effect.edge, 'rasgado');
+});

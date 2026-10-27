@@ -1,6 +1,7 @@
 import { Raster, parseColor } from './raster.js';
 import { mulberry32, valueNoise2D, fbm } from './noise.js';
 import fs from 'node:fs/promises';
+import sharp from 'sharp';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -12,11 +13,31 @@ export async function loadRecipes() {
   return JSON.parse(raw);
 }
 
+const SCANS_DIR = path.join(__dirname, '../../public/colecao/papeis/escaneados');
+const detailCache = new Map();
+
+/**
+ * The fibre and crumple of a CC0 scan as a multiplier map (about 1 = no change), ready for `generatePaper`:
+ * the scan covers the page, its slow colour/light drift is divided out (blur), and only the detail stays.
+ */
+export async function loadScanDetail(scanId, W, H) {
+  const key = `${scanId}:${W}x${H}`;
+  if (detailCache.has(key)) return detailCache.get(key);
+  const file = path.join(SCANS_DIR, `${scanId}.webp`);
+  const cover = sharp(file).resize(W, H, { fit: 'cover', position: 'centre' }).grayscale();
+  const fine = await cover.clone().raw().toBuffer();
+  const slow = await cover.clone().blur(Math.max(8, W / 30)).raw().toBuffer();
+  const out = new Float32Array(W * H);
+  for (let i = 0; i < out.length; i++) out[i] = Math.max(0.6, Math.min(1.4, (fine[i] + 4) / (slow[i] + 4)));
+  detailCache.set(key, out);
+  return out;
+}
+
 /**
  * Deterministically generates a paper raster based on recipe and age.
  * age: 'novo' | 'usado' | 'antigo'
  */
-export function generatePaper(recipe, age = 'novo', { width, height } = {}) {
+export function generatePaper(recipe, age = 'novo', { width, height, detail = null } = {}) {
   const W = width || recipe.width;
   const H = height || recipe.height;
   const scale = W / recipe.width;
@@ -72,6 +93,30 @@ export function generatePaper(recipe, age = 'novo', { width, height } = {}) {
         data[pIdx] = Math.max(0, Math.min(1, data[pIdx] + m));
         data[pIdx + 1] = Math.max(0, Math.min(1, data[pIdx + 1] + m));
         data[pIdx + 2] = Math.max(0, Math.min(1, data[pIdx + 2] + m));
+      }
+    }
+  }
+
+  // 1b. Scan detail: the fibre and crumple of a real sheet, stronger on older paper
+  if (detail && detail.length === totalPixels) {
+    const k = (recipe.scanStrength ?? 0.85) * (age === 'antigo' ? 1.25 : age === 'usado' ? 1.1 : 1);
+    for (let i = 0, p = 0; i < totalPixels; i++, p += 4) {
+      const m = 1 + (detail[i] - 1) * k;
+      data[p] = Math.max(0, Math.min(1, data[p] * m));
+      data[p + 1] = Math.max(0, Math.min(1, data[p + 1] * m));
+      data[p + 2] = Math.max(0, Math.min(1, data[p + 2] * m));
+    }
+  }
+
+  // 1c. Thermal banding: faint horizontal bands where the print head drifted (fax and receipt paper)
+  if (recipe.banding) {
+    const { strength, period } = recipe.banding;
+    for (let y = 0; y < H; y++) {
+      const band = (Math.sin(y / (period * scale)) * 0.5 + 0.5) * strength * (0.6 + 0.8 * noise(y * 0.07, 77));
+      for (let x = 0, idx = y * W * 4; x < W; x++, idx += 4) {
+        data[idx] -= band;
+        data[idx + 1] -= band;
+        data[idx + 2] -= band;
       }
     }
   }
@@ -183,6 +228,71 @@ export function generatePaper(recipe, age = 'novo', { width, height } = {}) {
       for (let y = 60 * scale; y < H - 60 * scale; y += sz) {
         raster.drawLine(60 * scale, y, W - 60 * scale, y, [lr, lg, lb, 0.35 * fadeFactor], Math.max(1, 1 * scale), 1, 0.2, rand);
       }
+    } else if (lConf.type === 'continuous') {
+      // Continuous form: pale green bands, a strip of sprocket holes on each side and the tear-off perforation
+      const [br, bg, bb] = parseColor(lConf.bandColor);
+      const band = Math.round(lConf.band * scale);
+      const strip = Math.round(lConf.strip * scale);
+      for (let y = 0, n = 0; y < H; y += band, n++) {
+        if (n % 2) continue;
+        for (let yy = y; yy < Math.min(H, y + band); yy++) {
+          for (let x = strip; x < W - strip; x++) {
+            const idx = (yy * W + x) * 4;
+            data[idx] = data[idx] * (1 - 0.35 * fadeFactor) + br * 0.35 * fadeFactor;
+            data[idx + 1] = data[idx + 1] * (1 - 0.35 * fadeFactor) + bg * 0.35 * fadeFactor;
+            data[idx + 2] = data[idx + 2] * (1 - 0.35 * fadeFactor) + bb * 0.35 * fadeFactor;
+          }
+        }
+      }
+      const holeR = Math.max(3, 9 * scale);
+      for (let y = Math.round(strip * 0.6); y < H - holeR; y += Math.round(strip * 0.55)) {
+        for (const hx of [strip * 0.5, W - strip * 0.5]) {
+          raster.drawCircle(hx, y, holeR, [0.18, 0.17, 0.16, 1]);
+          raster.drawCircle(hx, y, holeR * 0.78, [0.06, 0.06, 0.06, 1]);
+        }
+      }
+      for (const px of [strip, W - strip]) {
+        for (let y = 0; y < H; y += Math.round(10 * scale)) raster.drawCircle(px, y, Math.max(1, 1.3 * scale), [0.35, 0.35, 0.33, 0.7]);
+      }
+    } else if (lConf.type === 'guilloche') {
+      // Banknote-style security pattern: two interlaced waves around the border and a faint rosette in the middle
+      const [gr, gg, gb] = parseColor(lConf.color);
+      const inset = Math.round(lConf.inset * scale);
+      const amp = Math.round(lConf.amplitude * scale);
+      const wave = (x0, y0, x1, y1, phase) => {
+        const len = Math.hypot(x1 - x0, y1 - y0);
+        const steps = Math.max(2, Math.round(len / 3));
+        let px = x0;
+        let py = y0;
+        for (let i = 1; i <= steps; i++) {
+          const t = i / steps;
+          const off = Math.sin(t * len / (14 * scale) + phase) * amp;
+          const nx = x0 + (x1 - x0) * t + (-(y1 - y0) / len) * off;
+          const ny = y0 + (y1 - y0) * t + ((x1 - x0) / len) * off;
+          raster.drawLine(px, py, nx, ny, [gr, gg, gb, 0.85 * fadeFactor], Math.max(1.5, 1.6 * scale), 1, 0, rand);
+          px = nx;
+          py = ny;
+        }
+      };
+      for (const phase of [0, Math.PI]) {
+        wave(inset, inset, W - inset, inset, phase);
+        wave(inset, H - inset, W - inset, H - inset, phase);
+        wave(inset, inset, inset, H - inset, phase);
+        wave(W - inset, inset, W - inset, H - inset, phase);
+      }
+      const cx = W / 2;
+      const cy = H / 2;
+      const R = Math.min(W, H) * 0.34;
+      let lx = null;
+      let ly = null;
+      for (let a = 0; a <= Math.PI * 2 * 12; a += 0.02) {
+        const r = R * (0.62 + 0.38 * Math.cos(a * 5 / 12));
+        const x = cx + r * Math.cos(a);
+        const y = cy + r * Math.sin(a * 11 / 12);
+        if (lx !== null) raster.drawLine(lx, ly, x, y, [gr, gg, gb, 0.3 * fadeFactor], Math.max(1, 0.9 * scale), 1, 0, rand);
+        lx = x;
+        ly = y;
+      }
     } else if (lConf.type === 'millimeter') {
       const [sr, sg, sb] = parseColor(lConf.subColor);
       const [mr, mg, mb] = parseColor(lConf.majorColor);
@@ -250,9 +360,7 @@ export function generatePaper(recipe, age = 'novo', { width, height } = {}) {
 
   // Yellowing towards #d8b77a ([0.847, 0.718, 0.478])
   if (yellowStrength > 0) {
-    const yr = 0.847;
-    const yg = 0.718;
-    const yb = 0.478;
+    const [yr, yg, yb] = recipe.ageTint ? parseColor(recipe.ageTint) : [0.847, 0.718, 0.478];
 
     for (let i = 0; i < totalPixels * 4; i += 4) {
       data[i] = data[i] * (1 - yellowStrength) + yr * yellowStrength;
@@ -265,7 +373,7 @@ export function generatePaper(recipe, age = 'novo', { width, height } = {}) {
   if (edgeStrength > 0) {
     const insetX = W * 0.22;
     const insetY = H * 0.22;
-    const [vr, vg, vb] = [0.38, 0.26, 0.12]; // aged brown border
+    const [vr, vg, vb] = recipe.edgeColor ? parseColor(recipe.edgeColor) : [0.38, 0.26, 0.12]; // aged brown border
 
     for (let y = 0; y < H; y++) {
       const dy = Math.min(y, H - 1 - y);

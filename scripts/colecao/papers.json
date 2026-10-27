@@ -6,12 +6,28 @@
     "height": 2400,
     "seed": 101,
     "base": "#f4f1ea",
-    "mottle": { "scale": 0.0015, "strength": 0.04 },
-    "fibers": { "density": 0.00003, "length": 18, "darkColor": "#7a7670", "lightColor": "#ffffff" },
-    "grain": { "strength": 0.025 },
+    "mottle": {
+      "scale": 0.0015,
+      "strength": 0.04
+    },
+    "fibers": {
+      "density": 3e-05,
+      "length": 18,
+      "darkColor": "#7a7670",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.025
+    },
     "lines": null,
     "edge": "reta",
-    "tags": ["ofício", "branco", "liso", "escritório"]
+    "tags": [
+      "ofício",
+      "branco",
+      "liso",
+      "escritório"
+    ],
+    "scan": "casa-scan-paper001"
   },
   {
     "slug": "oficio-creme",
@@ -20,12 +36,28 @@
     "height": 2400,
     "seed": 102,
     "base": "#efe6d2",
-    "mottle": { "scale": 0.0012, "strength": 0.08 },
-    "fibers": { "density": 0.00005, "length": 22, "darkColor": "#6f6758", "lightColor": "#ffffff" },
-    "grain": { "strength": 0.035 },
+    "mottle": {
+      "scale": 0.0012,
+      "strength": 0.08
+    },
+    "fibers": {
+      "density": 5e-05,
+      "length": 22,
+      "darkColor": "#6f6758",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.035
+    },
     "lines": null,
     "edge": "reta",
-    "tags": ["ofício", "creme", "elegante", "escritório"]
+    "tags": [
+      "ofício",
+      "creme",
+      "elegante",
+      "escritório"
+    ],
+    "scan": "casa-scan-paper001"
   },
   {
     "slug": "papel-jornal",
@@ -34,12 +66,28 @@
     "height": 2400,
     "seed": 103,
     "base": "#e3dccb",
-    "mottle": { "scale": 0.002, "strength": 0.12 },
-    "fibers": { "density": 0.00022, "length": 30, "darkColor": "#4a4235", "lightColor": "#f8f5ee" },
-    "grain": { "strength": 0.07 },
+    "mottle": {
+      "scale": 0.002,
+      "strength": 0.12
+    },
+    "fibers": {
+      "density": 0.00022,
+      "length": 30,
+      "darkColor": "#4a4235",
+      "lightColor": "#f8f5ee"
+    },
+    "grain": {
+      "strength": 0.07
+    },
     "lines": null,
     "edge": "reta",
-    "tags": ["jornal", "periódico", "imprensa", "antigo"]
+    "tags": [
+      "jornal",
+      "periódico",
+      "imprensa",
+      "antigo"
+    ],
+    "scan": "casa-scan-paper003"
   },
   {
     "slug": "kraft",
@@ -48,12 +96,28 @@
     "height": 2400,
     "seed": 104,
     "base": "#b8916a",
-    "mottle": { "scale": 0.0018, "strength": 0.2 },
-    "fibers": { "density": 0.00035, "length": 45, "darkColor": "#3d2b1a", "lightColor": "#d5b89a" },
-    "grain": { "strength": 0.08 },
+    "mottle": {
+      "scale": 0.0018,
+      "strength": 0.2
+    },
+    "fibers": {
+      "density": 0.00035,
+      "length": 45,
+      "darkColor": "#3d2b1a",
+      "lightColor": "#d5b89a"
+    },
+    "grain": {
+      "strength": 0.08
+    },
     "lines": null,
     "edge": "reta",
-    "tags": ["kraft", "pardo", "embrulho", "envelope"]
+    "tags": [
+      "kraft",
+      "pardo",
+      "embrulho",
+      "envelope"
+    ],
+    "scan": "casa-scan-paper004"
   },
   {
     "slug": "pergaminho",
@@ -62,12 +126,28 @@
     "height": 2400,
     "seed": 105,
     "base": "#e6d3a8",
-    "mottle": { "scale": 0.0009, "strength": 0.24 },
-    "fibers": { "density": 0.00008, "length": 25, "darkColor": "#5d4420", "lightColor": "#fef9e8" },
-    "grain": { "strength": 0.045 },
+    "mottle": {
+      "scale": 0.0009,
+      "strength": 0.24
+    },
+    "fibers": {
+      "density": 8e-05,
+      "length": 25,
+      "darkColor": "#5d4420",
+      "lightColor": "#fef9e8"
+    },
+    "grain": {
+      "strength": 0.045
+    },
     "lines": null,
     "edge": "deckle",
-    "tags": ["pergaminho", "medieval", "pele", "manuscrito"]
+    "tags": [
+      "pergaminho",
+      "medieval",
+      "pele",
+      "manuscrito"
+    ],
+    "scan": "casa-scan-paper006"
   },
   {
     "slug": "carta-pautada",
@@ -76,12 +156,34 @@
     "height": 2400,
     "seed": 106,
     "base": "#f3eee2",
-    "mottle": { "scale": 0.0012, "strength": 0.06 },
-    "fibers": { "density": 0.00004, "length": 20, "darkColor": "#70695e", "lightColor": "#ffffff" },
-    "grain": { "strength": 0.03 },
-    "lines": { "type": "ruled", "spacing": 56, "color": "#7b8ea3", "marginTop": 280, "marginBottom": 200 },
+    "mottle": {
+      "scale": 0.0012,
+      "strength": 0.06
+    },
+    "fibers": {
+      "density": 4e-05,
+      "length": 20,
+      "darkColor": "#70695e",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.03
+    },
+    "lines": {
+      "type": "ruled",
+      "spacing": 56,
+      "color": "#7b8ea3",
+      "marginTop": 280,
+      "marginBottom": 200
+    },
     "edge": "reta",
-    "tags": ["carta", "pauta", "correspondência", "linhas"]
+    "tags": [
+      "carta",
+      "pauta",
+      "correspondência",
+      "linhas"
+    ],
+    "scan": "casa-scan-paper001"
   },
   {
     "slug": "caderno",
@@ -90,12 +192,35 @@
     "height": 2400,
     "seed": 107,
     "base": "#f7f4ea",
-    "mottle": { "scale": 0.0014, "strength": 0.05 },
-    "fibers": { "density": 0.00004, "length": 18, "darkColor": "#787265", "lightColor": "#ffffff" },
-    "grain": { "strength": 0.03 },
-    "lines": { "type": "notebook", "spacing": 54, "lineColor": "#5a7da8", "marginColor": "#bf4343", "marginLeft": 220, "holes": true },
+    "mottle": {
+      "scale": 0.0014,
+      "strength": 0.05
+    },
+    "fibers": {
+      "density": 4e-05,
+      "length": 18,
+      "darkColor": "#787265",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.03
+    },
+    "lines": {
+      "type": "notebook",
+      "spacing": 54,
+      "lineColor": "#5a7da8",
+      "marginColor": "#bf4343",
+      "marginLeft": 220,
+      "holes": true
+    },
     "edge": "reta",
-    "tags": ["caderno", "escola", "anotações", "espiral"]
+    "tags": [
+      "caderno",
+      "escola",
+      "anotações",
+      "espiral"
+    ],
+    "scan": "casa-scan-paper001"
   },
   {
     "slug": "quadriculado",
@@ -104,12 +229,32 @@
     "height": 2400,
     "seed": 108,
     "base": "#f6f3ea",
-    "mottle": { "scale": 0.0015, "strength": 0.04 },
-    "fibers": { "density": 0.00003, "length": 16, "darkColor": "#757062", "lightColor": "#ffffff" },
-    "grain": { "strength": 0.025 },
-    "lines": { "type": "grid", "size": 38, "color": "#6f88a8" },
+    "mottle": {
+      "scale": 0.0015,
+      "strength": 0.04
+    },
+    "fibers": {
+      "density": 3e-05,
+      "length": 16,
+      "darkColor": "#757062",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.025
+    },
+    "lines": {
+      "type": "grid",
+      "size": 38,
+      "color": "#6f88a8"
+    },
     "edge": "reta",
-    "tags": ["grade", "quadriculado", "matemática", "técnico"]
+    "tags": [
+      "grade",
+      "quadriculado",
+      "matemática",
+      "técnico"
+    ],
+    "scan": "casa-scan-paper001"
   },
   {
     "slug": "milimetrado",
@@ -118,12 +263,34 @@
     "height": 2400,
     "seed": 109,
     "base": "#f3f1e6",
-    "mottle": { "scale": 0.0015, "strength": 0.04 },
-    "fibers": { "density": 0.00003, "length": 16, "darkColor": "#6d7065", "lightColor": "#ffffff" },
-    "grain": { "strength": 0.025 },
-    "lines": { "type": "millimeter", "subdiv": 12, "major": 60, "subColor": "#a5c4ab", "majorColor": "#4d8059" },
+    "mottle": {
+      "scale": 0.0015,
+      "strength": 0.04
+    },
+    "fibers": {
+      "density": 3e-05,
+      "length": 16,
+      "darkColor": "#6d7065",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.025
+    },
+    "lines": {
+      "type": "millimeter",
+      "subdiv": 12,
+      "major": 60,
+      "subColor": "#a5c4ab",
+      "majorColor": "#4d8059"
+    },
     "edge": "reta",
-    "tags": ["milimetrado", "engenharia", "gráfico", "técnico"]
+    "tags": [
+      "milimetrado",
+      "engenharia",
+      "gráfico",
+      "técnico"
+    ],
+    "scan": "casa-scan-paper001"
   },
   {
     "slug": "almaco",
@@ -132,12 +299,35 @@
     "height": 2400,
     "seed": 110,
     "base": "#f2ecdc",
-    "mottle": { "scale": 0.0013, "strength": 0.06 },
-    "fibers": { "density": 0.00005, "length": 20, "darkColor": "#696356", "lightColor": "#ffffff" },
-    "grain": { "strength": 0.035 },
-    "lines": { "type": "double-margin", "spacing": 55, "lineColor": "#6a829e", "marginColor": "#b83b3b", "marginLeft": 200, "marginGap": 12 },
+    "mottle": {
+      "scale": 0.0013,
+      "strength": 0.06
+    },
+    "fibers": {
+      "density": 5e-05,
+      "length": 20,
+      "darkColor": "#696356",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.035
+    },
+    "lines": {
+      "type": "double-margin",
+      "spacing": 55,
+      "lineColor": "#6a829e",
+      "marginColor": "#b83b3b",
+      "marginLeft": 200,
+      "marginGap": 12
+    },
     "edge": "reta",
-    "tags": ["almaço", "prova", "dupla-margem", "redação"]
+    "tags": [
+      "almaço",
+      "prova",
+      "dupla-margem",
+      "redação"
+    ],
+    "scan": "casa-scan-paper001"
   },
   {
     "slug": "telegrama",
@@ -146,12 +336,28 @@
     "height": 1714,
     "seed": 111,
     "base": "#efe4bf",
-    "mottle": { "scale": 0.0016, "strength": 0.09 },
-    "fibers": { "density": 0.00008, "length": 24, "darkColor": "#5a503a", "lightColor": "#fcf6e2" },
-    "grain": { "strength": 0.05 },
+    "mottle": {
+      "scale": 0.0016,
+      "strength": 0.09
+    },
+    "fibers": {
+      "density": 8e-05,
+      "length": 24,
+      "darkColor": "#5a503a",
+      "lightColor": "#fcf6e2"
+    },
+    "grain": {
+      "strength": 0.05
+    },
     "lines": null,
     "edge": "reta",
-    "tags": ["telegrama", "amarelo", "urgente", "comunicação"]
+    "tags": [
+      "telegrama",
+      "amarelo",
+      "urgente",
+      "comunicação"
+    ],
+    "scan": "casa-scan-paper003"
   },
   {
     "slug": "cartolina",
@@ -160,12 +366,28 @@
     "height": 2400,
     "seed": 112,
     "base": "#c9cfd3",
-    "mottle": { "scale": 0.0014, "strength": 0.07 },
-    "fibers": { "density": 0.00012, "length": 28, "darkColor": "#444b52", "lightColor": "#f0f4f7" },
-    "grain": { "strength": 0.04 },
+    "mottle": {
+      "scale": 0.0014,
+      "strength": 0.07
+    },
+    "fibers": {
+      "density": 0.00012,
+      "length": 28,
+      "darkColor": "#444b52",
+      "lightColor": "#f0f4f7"
+    },
+    "grain": {
+      "strength": 0.04
+    },
     "lines": null,
     "edge": "reta",
-    "tags": ["cartolina", "cinza", "azulada", "espessa"]
+    "tags": [
+      "cartolina",
+      "cinza",
+      "azulada",
+      "espessa"
+    ],
+    "scan": "casa-scan-cardboard004"
   },
   {
     "slug": "papel-de-seda",
@@ -175,12 +397,28 @@
     "seed": 113,
     "base": "#f2efe8",
     "baseAlpha": 0.85,
-    "mottle": { "scale": 0.0025, "strength": 0.06 },
-    "fibers": { "density": 0.00007, "length": 35, "darkColor": "#85817a", "lightColor": "#ffffff" },
-    "grain": { "strength": 0.02 },
+    "mottle": {
+      "scale": 0.0025,
+      "strength": 0.06
+    },
+    "fibers": {
+      "density": 7e-05,
+      "length": 35,
+      "darkColor": "#85817a",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.02
+    },
     "lines": null,
     "edge": "serrilhada",
-    "tags": ["seda", "translúcido", "fino", "delicado"]
+    "tags": [
+      "seda",
+      "translúcido",
+      "fino",
+      "delicado"
+    ],
+    "scan": "casa-scan-paper003"
   },
   {
     "slug": "papel-fotografico",
@@ -189,12 +427,35 @@
     "height": 2400,
     "seed": 114,
     "base": "#f6f5f0",
-    "mottle": { "scale": 0.001, "strength": 0.02 },
-    "fibers": { "density": 0.00001, "length": 12, "darkColor": "#a09c95", "lightColor": "#ffffff" },
-    "grain": { "strength": 0.015 },
-    "lines": { "type": "watermark", "text": "PAPEL FOTOGRÁFICO", "spacing": 260, "angle": -35, "color": "#dedbd2", "alpha": 0.4 },
+    "mottle": {
+      "scale": 0.001,
+      "strength": 0.02
+    },
+    "fibers": {
+      "density": 1e-05,
+      "length": 12,
+      "darkColor": "#a09c95",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.015
+    },
+    "lines": {
+      "type": "watermark",
+      "text": "PAPEL FOTOGRÁFICO",
+      "spacing": 260,
+      "angle": -35,
+      "color": "#dedbd2",
+      "alpha": 0.4
+    },
     "edge": "reta",
-    "tags": ["fotográfico", "verso", "marca d'água", "foto"]
+    "tags": [
+      "fotográfico",
+      "verso",
+      "marca d'água",
+      "foto"
+    ],
+    "scan": "casa-scan-paper001"
   },
   {
     "slug": "papel-maquina",
@@ -204,12 +465,28 @@
     "seed": 115,
     "base": "#f1eee4",
     "baseAlpha": 0.92,
-    "mottle": { "scale": 0.002, "strength": 0.03 },
-    "fibers": { "density": 0.00002, "length": 15, "darkColor": "#8d897f", "lightColor": "#ffffff" },
-    "grain": { "strength": 0.012 },
+    "mottle": {
+      "scale": 0.002,
+      "strength": 0.03
+    },
+    "fibers": {
+      "density": 2e-05,
+      "length": 15,
+      "darkColor": "#8d897f",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.012
+    },
     "lines": null,
     "edge": "reta",
-    "tags": ["onionskin", "fino", "datilografia", "cópia"]
+    "tags": [
+      "onionskin",
+      "fino",
+      "datilografia",
+      "cópia"
+    ],
+    "scan": "casa-scan-paper001"
   },
   {
     "slug": "papel-carbono",
@@ -218,12 +495,337 @@
     "height": 2400,
     "seed": 116,
     "base": "#1f2a5a",
-    "mottle": { "scale": 0.003, "strength": 0.28 },
-    "fibers": { "density": 0.00004, "length": 20, "darkColor": "#0d132b", "lightColor": "#394d9a" },
-    "grain": { "strength": 0.06 },
+    "mottle": {
+      "scale": 0.003,
+      "strength": 0.28
+    },
+    "fibers": {
+      "density": 4e-05,
+      "length": 20,
+      "darkColor": "#0d132b",
+      "lightColor": "#394d9a"
+    },
+    "grain": {
+      "strength": 0.06
+    },
     "lines": null,
     "edge": "reta",
-    "tags": ["carbono", "azul", "cópia", "manchado"]
+    "tags": [
+      "carbono",
+      "azul",
+      "cópia",
+      "manchado"
+    ],
+    "scan": "casa-scan-paper003"
+  },
+  {
+    "slug": "planta-azul",
+    "name": "Planta azul (cianotipia)",
+    "width": 1697,
+    "height": 2400,
+    "seed": 201,
+    "base": "#1f4f8a",
+    "mottle": {
+      "scale": 0.0013,
+      "strength": 0.05
+    },
+    "fibers": {
+      "density": 4e-05,
+      "length": 16,
+      "darkColor": "#0b2a52",
+      "lightColor": "#9ec2e6"
+    },
+    "grain": {
+      "strength": 0.03
+    },
+    "lines": {
+      "type": "grid",
+      "color": "#d7e8f7",
+      "size": 60
+    },
+    "edge": "reta",
+    "scan": "casa-scan-paper001",
+    "tags": [
+      "planta",
+      "azul",
+      "cianotipia",
+      "projeto"
+    ],
+    "scanStrength": 0.7,
+    "ageTint": "#7f9bb0",
+    "edgeColor": "#0d2a4a"
+  },
+  {
+    "slug": "papel-de-arroz",
+    "name": "Papel de arroz",
+    "width": 1697,
+    "height": 2400,
+    "seed": 202,
+    "base": "#efeadb",
+    "mottle": {
+      "scale": 0.002,
+      "strength": 0.06
+    },
+    "fibers": {
+      "density": 0.00016,
+      "length": 34,
+      "darkColor": "#a89f86",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.03
+    },
+    "lines": null,
+    "edge": "reta",
+    "scan": "casa-scan-paper003",
+    "tags": [
+      "arroz",
+      "oriental",
+      "fino",
+      "fibroso"
+    ],
+    "scanStrength": 1.1
+  },
+  {
+    "slug": "papelao",
+    "name": "Papelão",
+    "width": 1697,
+    "height": 2400,
+    "seed": 203,
+    "base": "#b88d57",
+    "mottle": {
+      "scale": 0.001,
+      "strength": 0.1
+    },
+    "fibers": {
+      "density": 3e-05,
+      "length": 18,
+      "darkColor": "#6a655c",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.05
+    },
+    "lines": null,
+    "edge": "reta",
+    "scan": "casa-scan-cardboard002",
+    "tags": [
+      "papelão",
+      "pardo",
+      "embalagem"
+    ],
+    "scanStrength": 0.9
+  },
+  {
+    "slug": "papel-de-fax",
+    "name": "Papel de fax (térmico)",
+    "width": 1697,
+    "height": 2400,
+    "seed": 204,
+    "base": "#eceae4",
+    "mottle": {
+      "scale": 0.0013,
+      "strength": 0.05
+    },
+    "fibers": {
+      "density": 3e-05,
+      "length": 18,
+      "darkColor": "#6a655c",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.045
+    },
+    "lines": null,
+    "edge": "reta",
+    "scan": "casa-scan-paper001",
+    "tags": [
+      "fax",
+      "térmico",
+      "desbotado",
+      "escritório"
+    ],
+    "scanStrength": 0.5,
+    "banding": {
+      "strength": 0.02,
+      "period": 9
+    },
+    "ageTint": "#c9c3ad"
+  },
+  {
+    "slug": "formulario-continuo",
+    "name": "Formulário contínuo",
+    "width": 1697,
+    "height": 2400,
+    "seed": 205,
+    "base": "#f2f1ea",
+    "mottle": {
+      "scale": 0.0013,
+      "strength": 0.05
+    },
+    "fibers": {
+      "density": 3e-05,
+      "length": 18,
+      "darkColor": "#6a655c",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.03
+    },
+    "lines": {
+      "type": "continuous",
+      "bandColor": "#bfe3c4",
+      "band": 96,
+      "strip": 96
+    },
+    "edge": "reta",
+    "scan": "casa-scan-paper001",
+    "tags": [
+      "formulário",
+      "contínuo",
+      "furos",
+      "computador"
+    ],
+    "scanStrength": 0.6
+  },
+  {
+    "slug": "almaco-de-prova",
+    "name": "Almaço de prova",
+    "width": 1697,
+    "height": 2400,
+    "seed": 206,
+    "base": "#f3efe3",
+    "mottle": {
+      "scale": 0.0013,
+      "strength": 0.05
+    },
+    "fibers": {
+      "density": 3e-05,
+      "length": 18,
+      "darkColor": "#6a655c",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.03
+    },
+    "lines": {
+      "type": "notebook",
+      "lineColor": "#8fa8c9",
+      "marginColor": "#c0392b",
+      "spacing": 52,
+      "marginLeft": 170,
+      "holes": false
+    },
+    "edge": "reta",
+    "scan": "casa-scan-paper001",
+    "tags": [
+      "almaço",
+      "prova",
+      "escola",
+      "pautado"
+    ],
+    "scanStrength": 0.8
+  },
+  {
+    "slug": "papel-de-embrulho",
+    "name": "Papel de embrulho",
+    "width": 1697,
+    "height": 2400,
+    "seed": 207,
+    "base": "#c4a272",
+    "mottle": {
+      "scale": 0.0011,
+      "strength": 0.09
+    },
+    "fibers": {
+      "density": 3e-05,
+      "length": 18,
+      "darkColor": "#6a655c",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.03
+    },
+    "lines": null,
+    "edge": "reta",
+    "scan": "casa-scan-paper002",
+    "tags": [
+      "embrulho",
+      "pardo",
+      "liso"
+    ],
+    "scanStrength": 0.95
+  },
+  {
+    "slug": "papel-timbrado-bancario",
+    "name": "Papel timbrado bancário",
+    "width": 1697,
+    "height": 2400,
+    "seed": 208,
+    "base": "#eef2e6",
+    "mottle": {
+      "scale": 0.0013,
+      "strength": 0.05
+    },
+    "fibers": {
+      "density": 3e-05,
+      "length": 18,
+      "darkColor": "#6a655c",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.03
+    },
+    "lines": {
+      "type": "guilloche",
+      "color": "#4f7a63",
+      "inset": 70,
+      "amplitude": 14
+    },
+    "edge": "reta",
+    "scan": "casa-scan-paper001",
+    "tags": [
+      "banco",
+      "guilhochê",
+      "segurança",
+      "timbrado"
+    ],
+    "scanStrength": 0.6
+  },
+  {
+    "slug": "papel-de-recibo",
+    "name": "Papel de recibo térmico",
+    "width": 900,
+    "height": 2400,
+    "seed": 209,
+    "base": "#f1efe9",
+    "mottle": {
+      "scale": 0.0013,
+      "strength": 0.05
+    },
+    "fibers": {
+      "density": 3e-05,
+      "length": 18,
+      "darkColor": "#6a655c",
+      "lightColor": "#ffffff"
+    },
+    "grain": {
+      "strength": 0.03
+    },
+    "lines": null,
+    "edge": "reta",
+    "scan": "casa-scan-paper001",
+    "tags": [
+      "recibo",
+      "térmico",
+      "caixa",
+      "estreito"
+    ],
+    "scanStrength": 0.45,
+    "banding": {
+      "strength": 0.015,
+      "period": 7
+    },
+    "ageTint": "#cfc9b4"
   }
 ]
-
