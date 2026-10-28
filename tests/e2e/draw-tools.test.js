@@ -173,5 +173,97 @@ test('draw tools e2e: shapes by dragging, brush stroke paints pixels, Shift appe
   assert.equal(await page.evaluate(() => window.__atelie.editor.stage.getTool()), 'select');
   assert.ok(await page.evaluate(() => window.__atelie.editor.state.canUndo));
 
+  // Brush tips: six buttons in the strip; Giz makes a textured stroke whose pixels are partly transparent
+  await page.keyboard.press('b');
+  assert.equal(await page.locator('.stage-brush-tip').count(), 6);
+  assert.equal(await page.locator('.stage-brush-tip[aria-pressed="true"]').getAttribute('data-tip'), 'pen');
+  await page.click('.stage-brush-tip[data-tip="chalk"]');
+  assert.equal(await page.locator('.stage-brush-tip[aria-pressed="true"]').getAttribute('data-tip'), 'chalk');
+  assert.equal(await page.locator('[data-option="width"]').inputValue(), '14', 'Giz starts at its own width');
+  assert.equal(await page.locator('[data-option="grain"]').count(), 1, 'Grão appears for a grainy tip');
+  await page.fill('[data-option="width"]', '30');
+  await page.click('.stage-brush-tip[data-tip="pencil"]');
+  assert.equal(await page.locator('[data-option="width"]').inputValue(), '3');
+  await page.click('.stage-brush-tip[data-tip="chalk"]');
+  assert.equal(await page.locator('[data-option="width"]').inputValue(), '30', 'going back to Giz returns it as it was left');
+  const chalkBefore = (await layers()).length;
+  const c1 = await toScreen(300, 1500);
+  const c2 = await toScreen(900, 1500);
+  await page.mouse.move(c1.x, c1.y);
+  await page.mouse.down();
+  await page.mouse.move(c2.x, c2.y, { steps: 12 });
+  await page.mouse.up();
+  const chalk = (await layers()).at(-1);
+  assert.equal((await layers()).length, chalkBefore + 1);
+  assert.equal(chalk.name, 'Giz');
+  assert.equal(chalk.shape.brush.kind, 'chalk');
+  assert.ok(Number.isInteger(chalk.shape.brush.seed));
+  const alphas = await page.evaluate(async (layer) => {
+    const doc = window.__atelie.editor.state.handout;
+    const mid = [layer.x + layer.width / 2, layer.y + layer.height / 2];
+    const at = [];
+    for (let dx = -60; dx <= 60; dx += 4) at.push([mid[0] + dx, mid[1]]);
+    const res = await window.__atelie.renderHandout(doc, { scale: 1, at });
+    return res.pixels;
+  }, chalk);
+  assert.ok(alphas.length > 10);
+  const channelSpread = new Set(alphas.map(p => p.join(','))).size;
+  assert.ok(channelSpread > 3, 'the chalk leaves paper showing through the stroke (pixels differ along it)');
+
+  // Properties of a stroke: "Traço", no Tipo/Preenchimento, tip change writes brush.kind, width up to 200 kept
+  assert.equal(await page.locator('.prop-legend', { hasText: 'Traço' }).count(), 1);
+  assert.equal(await page.locator('[data-field="h:shape.type"]').count(), 0, 'a stroke is not offered as a rectangle');
+  assert.equal(await page.locator('[data-field="h:shape.fill"]').count(), 0);
+  assert.equal(await page.locator('[data-field="h:shape.radius"]').count(), 0);
+  await page.click('[data-field="h:shape.brush.kind"] ~ [role="radiogroup"] [data-choice="drybrush"]');
+  assert.equal((await layers()).at(-1).shape.brush.kind, 'drybrush');
+  assert.equal(await page.locator('[data-field="h:shape.strokeWidth"]').getAttribute('max'), '200');
+  await page.fill('[data-field="h:shape.strokeWidth"]', '120');
+  await page.keyboard.press('Tab');
+  const wide = (await layers()).at(-1);
+  assert.equal(wide.shape.strokeWidth, 120);
+  assert.ok(wide.shape.points.every(p => p === null || p.every(n => n >= 0 && n <= 1)));
+  assert.equal(await page.locator('[data-field="h:shape.strokeWidth"]').inputValue(), '120', 'the panel does not cut the width');
+  const seedBefore = wide.shape.brush.seed;
+  await page.click('[data-action="reroll-brush"]');
+  const rerolled = (await layers()).at(-1);
+  assert.notEqual(rerolled.shape.brush.seed, seedBefore);
+  assert.equal(await page.evaluate(() => window.__atelie.editor.state.steps.at(-1).label), 'Variar traço');
+  await page.keyboard.press('Escape');
+
+  // Stabilizer: "Suavizar" turns a trembling zigzag into a calmer stroke that still reaches the release point
+  await page.keyboard.press('b');
+  await page.click('.stage-brush-tip[data-tip="pen"]');
+  const zigzag = async (smooth) => {
+    await page.evaluate((v) => {
+      const el = document.querySelector('[data-option="smooth"]');
+      el.value = String(v);
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    }, smooth);
+    const before = (await layers()).length;
+    const origin = await toScreen(300, 1600);
+    await page.mouse.move(origin.x, origin.y);
+    await page.mouse.down();
+    for (let i = 1; i <= 40; i++) await page.mouse.move(origin.x + i * 6, origin.y + (i % 2 ? 10 : -10));
+    await page.mouse.up();
+    const layersNow = await layers();
+    assert.equal(layersNow.length, before + 1);
+    const l = layersNow.at(-1);
+    // without the closing point, which is the cursor itself by design
+    const ys = l.shape.points.filter(Boolean).slice(0, smooth > 0 ? -1 : undefined).map(p => p[1] * l.height + l.y);
+    return { amplitude: Math.max(...ys) - Math.min(...ys), layer: l };
+  };
+  assert.equal(await page.locator('[data-option="smooth"]').count(), 1);
+  const raw = await zigzag(0);
+  const smooth = await zigzag(100);
+  assert.ok(raw.amplitude > 15, `raw zigzag ${raw.amplitude.toFixed(1)}`);
+  assert.ok(smooth.amplitude < raw.amplitude * 0.5, `smoothed ${smooth.amplitude.toFixed(1)} vs raw ${raw.amplitude.toFixed(1)}`);
+  await page.evaluate(() => {
+    const el = document.querySelector('[data-option="smooth"]');
+    el.value = '0';
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await page.keyboard.press('Escape');
+
   assert.deepEqual(errors, []);
 });

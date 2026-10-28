@@ -3061,6 +3061,23 @@ body.reduce-motion .library-hover-preview { animation: none; transition: none; }
   color: var(--at-muted);
 }
 
+.stage-brush-tips { display: inline-flex; gap: 2px; }
+.stage-brush-tip {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--eco-radius-sm, 4px);
+  color: var(--at-text);
+  cursor: pointer;
+  transition: background var(--eco-fast) var(--eco-ease), color var(--eco-fast) var(--eco-ease);
+}
+.stage-brush-tip:hover { background: var(--at-line); }
+.stage-brush-tip[aria-pressed="true"] { background: var(--at-uv); color: var(--at-uv-ink); }
+
 .stage-tool-field { display: inline-flex; align-items: center; gap: 6px; }
 .stage-tool-field input[type="number"] { width: 54px; }
 .stage-tool-field input[type="range"] { width: 90px; }

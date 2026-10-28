@@ -1,6 +1,6 @@
 import { renderIcon } from '../ui/icons.js';
 import { drawPathShape } from '../render/handout-path.js';
-import { thinPoints } from '../domain/brush.js';
+import { thinPoints, normalizeStroke, BRUSH_KINDS, brushInfo, newBrushSeed, stabilize, stabilizerRadius } from '../domain/brush.js';
 
 export const TOOLS = [
   { id: 'select', label: 'Selecionar', icon: 'cursor', shortcut: 'tool-select' },
@@ -17,14 +17,17 @@ export const TOOLS = [
 const CUT_IDS = new Set(['scissors', 'tear', 'lighter']);
 
 const OPTIONS_KEY = 'atelie-tool-options';
-const DEFAULT_OPTIONS = { color: '#1d1b24', width: 6, opacity: 100, fill: false, picote: false, rough: 50, flame: 14, speed: 100, char: 50 };
+const DEFAULT_OPTIONS = { color: '#1d1b24', width: 6, opacity: 100, fill: false, picote: false, rough: 50, flame: 14, speed: 100, char: 50, brush: 'pen', grain: 50, brushes: {}, smooth: 0 };
 
 function loadOptions() {
   try {
     const parsed = JSON.parse(localStorage.getItem(OPTIONS_KEY) || 'null');
-    return { ...DEFAULT_OPTIONS, ...(parsed || {}) };
+    const merged = { ...DEFAULT_OPTIONS, ...(parsed || {}) };
+    if (!BRUSH_KINDS.some(k => k.id === merged.brush)) merged.brush = 'pen';
+    if (!merged.brushes || typeof merged.brushes !== 'object') merged.brushes = {};
+    return merged;
   } catch {
-    return { ...DEFAULT_OPTIONS };
+    return { ...DEFAULT_OPTIONS, brushes: {} };
   }
 }
 
@@ -73,6 +76,7 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
   const options = loadOptions();
   let gesture = null;
   let targetLabel = 'a folha';
+  let previewFrame = 0;
 
   const bar = document.createElement('div');
   bar.className = 'stage-tools';
@@ -116,7 +120,12 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
       }[tool]);
       return;
     }
-    strip.innerHTML = `
+    const tips = tool === 'brush' ? `
+      <span class="stage-brush-tips" role="group" aria-label="Ponta do pincel">${BRUSH_KINDS.map(k => `<button type="button" class="stage-brush-tip" data-tip="${k.id}" aria-pressed="${k.id === options.brush}" title="${k.label}" aria-label="${k.label}">${renderIcon(k.icon, 16)}</button>`).join('')}</span>
+      <label class="stage-tool-field" title="Estabilizador: o traço segue o cursor por uma corda, e a mão trêmula some"><span>Suavizar</span><input type="range" data-option="smooth" min="0" max="100" step="5" value="${options.smooth}" /><output data-for="smooth">${options.smooth}</output></label>
+      ${brushInfo(options.brush).hasGrain ? `<label class="stage-tool-field" title="Grão"><span>Grão</span><input type="range" data-option="grain" min="0" max="100" step="5" value="${options.grain}" /><output data-for="grain">${options.grain}</output></label>` : ''}
+    ` : '';
+    strip.innerHTML = `${tips}
       <label class="stage-tool-field" title="Cor"><span>Cor</span><input type="color" data-option="color" value="${options.color}" /></label>
       <label class="stage-tool-field" title="Espessura"><span>Espessura</span><input type="number" data-option="width" min="1" max="200" step="1" value="${options.width}" /></label>
       <label class="stage-tool-field" title="Opacidade"><span>Opacidade</span><input type="range" data-option="opacity" min="5" max="100" step="5" value="${options.opacity}" /><output>${options.opacity}%</output></label>
@@ -140,8 +149,31 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
       const value = parseFloat(el.value);
       options[key] = Math.max(min, Math.min(max, Number.isFinite(value) ? value : min));
     }
-    if (key === 'opacity') strip.querySelector('output').textContent = `${options.opacity}%`;
+    if (key === 'opacity') strip.querySelector('output:not([data-for])').textContent = `${options.opacity}%`;
+    if (key === 'grain' || key === 'smooth') strip.querySelector(`output[data-for="${key}"]`).textContent = options[key];
     persist();
+  });
+
+  /**
+   * Picks a brush tip. The colour, width and opacity of the tip being left are kept in `options.brushes`,
+   * so coming back to it returns it as the person left it; a tip seen for the first time starts from its
+   * own defaults over whatever is set now.
+   */
+  function chooseTip(kind) {
+    if (!BRUSH_KINDS.some(k => k.id === kind) || kind === options.brush) return;
+    options.brushes[options.brush] = { color: options.color, width: options.width, opacity: options.opacity };
+    const next = options.brushes[kind] || { color: options.color, width: options.width, opacity: options.opacity, ...brushInfo(kind).defaults };
+    options.brush = kind;
+    options.color = next.color;
+    options.width = next.width;
+    options.opacity = next.opacity;
+    persist();
+    renderStrip();
+  }
+
+  strip.addEventListener('click', (e) => {
+    const tip = e.target.closest('[data-tip]');
+    if (tip) chooseTip(tip.dataset.tip);
   });
 
   bar.addEventListener('click', (e) => {
@@ -170,6 +202,8 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
     ctx.clearRect(0, 0, preview.width, preview.height);
   }
 
+  const brushShapeOf = (seed = gesture?.seed) => (options.brush === 'pen' ? undefined : { kind: options.brush, grain: options.grain / 100, seed });
+
   function drawPreview() {
     const handout = getHandout();
     if (!handout || !gesture) return;
@@ -192,14 +226,21 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
     const { start, current, shift } = gesture;
 
     if (gesture.tool === 'brush') {
-      const w = handout.page.width;
-      const h = handout.page.height;
-      ctx.translate(pw / 2, ph / 2);
+      // Same geometry as the layer that will be created: the box of the stroke, so a textured tip
+      // is rasterized only there and looks identical to the result.
+      const n = normalizeStroke(thinPoints(gesture.points), options.width);
+      ctx.translate((n.box.x + n.box.width / 2) * scale, (n.box.y + n.box.height / 2) * scale);
+      // When a textured tip is too slow to follow the pointer (long, wide strokes), the rest of the drag
+      // shows a translucent smooth line and the texture appears on release.
+      if (gesture.light) ctx.globalAlpha *= 0.7;
+      const started = performance.now();
       drawPathShape(ctx, {
         stroke: options.color,
         strokeWidth: options.width,
-        points: gesture.points.map(p => [p[0] / w, p[1] / h, p[2]]),
-      }, pw, ph, scale);
+        brush: gesture.light ? undefined : brushShapeOf(),
+        points: n.points,
+      }, n.box.width * scale, n.box.height * scale, scale);
+      if (options.brush !== 'pen' && performance.now() - started > 40) gesture.light = true;
     } else if (gesture.tool === 'line') {
       const lb = lineBox(start, current, { snap: shift, thickness: options.width });
       ctx.translate((lb.x + lb.width / 2) * scale, (lb.y + lb.height / 2) * scale);
@@ -234,6 +275,20 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
       }
     }
     ctx.restore();
+    if (gesture.tool === 'brush' && options.smooth > 0) {
+      // the rope: a thin dashed line from the brush to the cursor
+      ctx.save();
+      ctx.setLineDash([4 * dpr, 4 * dpr]);
+      ctx.lineWidth = dpr;
+      ctx.strokeStyle = '#f7f3e6';
+      ctx.shadowColor = 'rgba(0,0,0,0.6)';
+      ctx.shadowBlur = 2 * dpr;
+      ctx.beginPath();
+      ctx.moveTo(gesture.rope[0] * scale, gesture.rope[1] * scale);
+      ctx.lineTo(current[0] * scale, current[1] * scale);
+      ctx.stroke();
+      ctx.restore();
+    }
   }
 
   pageWrap.addEventListener('pointerdown', (event) => {
@@ -251,6 +306,8 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
       current: start,
       shift: event.shiftKey,
       points: [[start[0], start[1], event.pressure || 0.5]],
+      rope: [start[0], start[1]], // where the stabilized brush is
+      seed: newBrushSeed(),
       appendTo: tool === 'brush' && event.shiftKey && selected?.kind === 'shape' && selected.shape?.type === 'path' && !selected.locked ? selected.id : null,
     };
     drawPreview();
@@ -261,7 +318,15 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
     const point = pagePoint(event);
     gesture.current = point;
     gesture.shift = event.shiftKey;
-    if (gesture.tool === 'brush') gesture.points.push([point[0], point[1], event.pressure || 0.5]);
+    if (gesture.tool === 'brush') {
+      const radius = stabilizerRadius(options.smooth, getZoom());
+      const rope = stabilize(gesture.rope, point, radius);
+      if (rope[0] !== gesture.rope[0] || rope[1] !== gesture.rope[1]) gesture.points.push([rope[0], rope[1], event.pressure || 0.5]);
+      gesture.rope = rope;
+      // a textured tip is rasterized in software: at most once per frame
+      if (!previewFrame) previewFrame = requestAnimationFrame(() => { previewFrame = 0; drawPreview(); });
+      return;
+    }
     drawPreview();
   });
 
@@ -269,12 +334,17 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
     if (!gesture || (event && event.pointerId !== gesture.pointerId)) return;
     const done = gesture;
     gesture = null;
+    if (previewFrame) { cancelAnimationFrame(previewFrame); previewFrame = 0; }
     clearPreview();
     try { pageWrap.releasePointerCapture(done.pointerId); } catch {}
     if (cancelled) return;
     const opts = { ...options };
     if (done.tool === 'brush') {
-      onDraw?.({ type: 'stroke', points: thinPoints(done.points), options: opts, appendTo: done.appendTo });
+      // the rope ends where the cursor is: without this, a smoothed stroke would stop short of the release point
+      const end = event ? pagePoint(event) : done.current;
+      const last = done.points[done.points.length - 1];
+      if (options.smooth > 0 && (end[0] !== last[0] || end[1] !== last[1])) done.points.push([end[0], end[1], last[2]]);
+      onDraw?.({ type: 'stroke', points: thinPoints(done.points), options: opts, brush: brushShapeOf(done.seed), appendTo: done.appendTo });
     } else if (done.tool === 'line') {
       const length = Math.hypot(done.current[0] - done.start[0], done.current[1] - done.start[1]);
       if (length >= 3) onDraw?.({ type: 'line', box: lineBox(done.start, done.current, { snap: done.shift, thickness: opts.width }), options: opts });

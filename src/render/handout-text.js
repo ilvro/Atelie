@@ -1,3 +1,4 @@
+import { createOffscreenCanvas } from './offscreen.js';
 import { layoutText, inkJitter, prng } from '../domain/handout-text-layout.js';
 
 function getFontFallback(inkStyle) {
@@ -12,19 +13,6 @@ function getFontString(font, px, inkStyle) {
   const family = font?.family || 'IM Fell English';
   const fallback = getFontFallback(inkStyle);
   return `${italic}${weight} ${px}px "${family}", ${fallback}`;
-}
-
-function createOffscreenCanvas(width, height) {
-  if (typeof OffscreenCanvas !== 'undefined') {
-    return new OffscreenCanvas(width, height);
-  }
-  if (typeof document !== 'undefined' && typeof document.createElement === 'function') {
-    const c = document.createElement('canvas');
-    c.width = width;
-    c.height = height;
-    return c;
-  }
-  return null;
 }
 
 const textLayoutCache = new Map();

@@ -45,7 +45,7 @@ import { recordRecentLibraryId } from './library-search.js';
 import { matches, normalizeCombo, isTypingTarget, label as keyLabel } from '../ui/keymap.js';
 import { createAmbient, loadAmbient } from '../ui/ambient.js';
 import { createLayerThumbs } from './layer-thumbs.js';
-import { normalizeStroke, appendStroke } from '../domain/brush.js';
+import { normalizeStroke, appendStroke, brushInfo } from '../domain/brush.js';
 import { cutEffect } from '../domain/cut.js';
 import { createTabBar, reorderIds, nextAfterClose, cycleTab, loadTabs, saveTabs } from './tabs.js';
 import { downloadHandoutPng, printHandout, exportScale, printLayout } from './export.js';
@@ -1694,6 +1694,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     const light = currentLight === 'uv' ? 'uv' : 'both';
     const opacity = Math.max(0.05, Math.min(1, o.opacity / 100));
 
+    // Shift+brush: the new stroke takes the tip of the target layer, not the tool's (the layer keeps one tip).
     if (desc.type === 'stroke' && desc.appendTo) {
       const target = state.handout.layers.find(l => l.id === desc.appendTo);
       if (target) {
@@ -1709,8 +1710,9 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       const normalized = normalizeStroke(desc.points, o.width);
       if (!normalized) return;
       newL = shapeLayer({
-        name: 'Pincel', ...normalized.box, opacity, light,
-        shape: { type: 'path', fill: null, stroke: o.color, strokeWidth: o.width, points: normalized.points },
+        name: desc.brush ? brushInfo(desc.brush.kind).layerName : 'Pincel', ...normalized.box, opacity, light,
+        ...(desc.brush?.kind === 'marker' ? { blend: 'multiply' } : {}),
+        shape: { type: 'path', fill: null, stroke: o.color, strokeWidth: o.width, points: normalized.points, ...(desc.brush ? { brush: desc.brush } : {}) },
       });
     } else if (desc.type === 'line') {
       newL = shapeLayer({

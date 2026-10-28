@@ -1937,3 +1937,55 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ### Pendências reais
 - Nenhuma pendência na Etapa 1.
+
+---
+
+## Pincel e desenho · Fase 1 (pontas do pincel, `docs/plano/plano-pincel-e-desenho.md`)
+
+### Feito
+- `BRUSH_KINDS` (caneta, lápis, giz, pena, pincel seco, marca-texto), `brushError` e `newBrushSeed` em `src/domain/brush.js`. `shape.brush = { kind, grain, seed }` é opcional: sem ele o traço é caneta e nenhum documento antigo muda. Validado em `handouts.js`; `varyLayer` sorteia semente nova.
+- `src/render/brush-raster.js`: rasterizador por software, puro e determinístico (só `mulberry32`/`valueNoise2D`/`fbm`), que devolve a cobertura em 8 bits. Grão medido em px de página a partir do primeiro ponto do traço (zoom e exportação mudam a nitidez, não o tamanho do grão; a caixa crescendo durante o arraste não move o grão). Cobertura por máximo: sobreposições na mesma camada não escurecem (marca-texto). A pena é um carimbo chato a −40° com espessura mínima de 12% da largura.
+- `handout-path.js`: `drawPathShape` escolhe a ponta; texturadas passam por canvas fora da tela (`src/render/offscreen.js`, função movida de `handout-text.js`, sem duplicar), com cache de 64 entradas e teto de 48 Mpx. Sem canvas (Node/ctx falso) ou caixa acima de 24 Mpx, cai na linha lisa.
+- Faixa do pincel: 6 botões de ponta (`aria-pressed`, ícones novos em `icons.js`), controle "Grão", cor/espessura/opacidade guardadas por ponta em `options.brushes[kind]`. Camada nomeada pela ponta; marca-texto nasce com `blend: 'multiply'`, `#f2d23c`, 45%. Shift+pincel mantém a ponta da camada (comentado no código).
+- Prévia ao vivo usa a mesma geometria da camada final (caixa do traço + `seed` sorteado no `pointerdown`), por isso sai idêntica; se a ponta texturada passar de 40 ms por quadro, o resto do arraste mostra linha lisa translúcida e a textura aparece ao soltar. Desenho limitado a um por quadro.
+- Folha de contato: `scripts/brush-contact-sheet.js` → `docs/referencias/pincel-pontas.png` (6 pontas × 3 pressões sobre Ofício creme · usado). A primeira versão do lápis parecia "linha pontilhada" e a da pena tinha emendas; ajustados (grão suave no lápis, pena por carimbos sobrepostos) e revistos na imagem.
+
+### Validação
+- `npm test`: 253 passando (novos em `tests/brush.test.js`: validação, `varyLayer`, `appendStroke`, mesma semente = mesmos pixels, lápis cobre menos que caneta, pressão clareia o lápis, marca-texto não escurece o cruzamento, pena larga/fina, grão em px de página, fallback sem canvas).
+- `tests/e2e/draw-tools.test.js` (após `npm run build`): escolhe Giz, ponta devolvida como estava, camada "Giz" com `brush.kind === 'chalk'` e pixels variando ao longo do traço.
+
+### Pendências reais
+- O "Grão" do marca-texto atua só como textura leve de feltro (40% do valor), e a pena não tem grão (como no plano).
+- Custo do raster: giz de 40 px num traço de 1200×1200 leva ~0,8 s; o fallback da prévia cobre o arraste, mas o assado final desse tamanho fica lento. Não medi ainda no worker de assar.
+- Sem commit. Sugestão: `feat(brush): textured brush tips (pencil, chalk, nib, dry brush, marker) with seeded grain`
+
+## Pincel e desenho · Fase 2 (propriedades de um traço de pincel)
+
+### Feito
+- Bug 1: com um traço selecionado, o painel mostrava o select "Tipo" (Retângulo/Elipse/Linha) e, se tocado, transformava o `path` em retângulo deixando os pontos órfãos. Agora `shape.type === 'path'` tem o grupo **Traço** (`properties-panel.js`): ponta (6 opções, as mesmas de `BRUSH_KINDS`), Grão (só nas pontas com grão), Cor, Espessura de 1 a 200 e o botão "↻ Nova variação" (rótulo de desfazer "Variar traço"). Sem Tipo, Preenchimento nem Arredondamento.
+- Bug 2: a espessura das outras formas passou de 50 para 200 no painel (igual à ferramenta e à validação).
+- Trocar a ponta grava `shape.brush` mantendo grão e semente; "Trocar ponta do traço" e "Alterar grão" são passos de desfazer (o grão coalesce).
+- Achado extra: a caixa da camada só tem folga para a espessura com que foi desenhada, e a ponta texturada é recortada pela caixa. Aumentar a espessura no painel agora cresce a caixa em torno do próprio centro (`growBoxForWidth` em `brush.js`; camada girada não se desloca) e reexpressa os pontos.
+
+### Validação
+- `npm test`: `growBoxForWidth` (mesmo centro, pontos no mesmo lugar da página, pontos em 0–1, nada a fazer ao afinar).
+- `tests/e2e/draw-tools.test.js`: com o traço selecionado não há Tipo/Preenchimento/Arredondamento; trocar para Pincel seco grava `brush.kind`; espessura 120 persiste e o painel mostra 120; "Nova variação" muda a semente e o último passo é "Variar traço".
+
+### Pendências reais
+- Reduzir a espessura não encolhe a caixa (fica folga, sem efeito visual).
+- Sem commit. Sugestão: `feat(brush): stroke properties group, fix path shown as rectangle and width cap`
+
+## Pincel e desenho · Fase 3 (estabilizador de traço)
+
+### Feito
+- `stabilize(prev, target, radius)` e `stabilizerRadius(smooth, zoom)` em `brush.js` (puras): corda "lazy brush"; raio 0 = identidade, dentro da corda o pincel não anda, fora dela anda só o excesso. Raio = `smooth × 0,3` px de tela ÷ zoom (px de página).
+- Opção `smooth` (0–100, padrão 0: o comportamento antigo não muda) em `DEFAULT_OPTIONS`, controle "Suavizar" na faixa do pincel. Com valor acima de 0, a prévia desenha uma linha tracejada fina entre a ponta do pincel e o cursor.
+- No `pointerup` o traço recebe o ponto final do cursor, para não ficar curto (por isso o traço fecha com um segmento reto até o cursor, até um raio de corda de comprimento).
+
+### Validação
+- `npm test`: 256 passando (`stabilize` identidade, parado dentro do raio, anda o excesso, fica sempre a um raio do cursor, zigue-zague com amplitude < 6 contra 24; raio muda com o zoom).
+- `tests/e2e/draw-tools.test.js`: zigue-zague com Suavizar 0 e 100 pelo mouse: a amplitude suavizada fica abaixo de metade da bruta.
+
+### Pendências reais
+- O estabilizador também vale para as pontas texturizadas e para Shift+traço; não há ainda atalho para ligar/desligar, só o controle da faixa.
+- Fases 4 e 5 do plano continuam a fazer. Sem commit. Sugestão: `feat(brush): lazy-brush stabilizer with rope preview`

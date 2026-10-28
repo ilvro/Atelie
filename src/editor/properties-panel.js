@@ -9,6 +9,7 @@ import {
 } from '../ui/controls.js';
 import { BLEND_MODES, updateLayer, setField } from '../domain/handouts.js';
 import { boxCorners } from './geometry.js';
+import { BRUSH_KINDS, DEFAULT_GRAIN, brushInfo, brushKindOf, growBoxForWidth, newBrushSeed } from '../domain/brush.js';
 import { EFFECTS } from '../render/handout-effects.js';
 import { mountFontSelector, getCachedFont } from './font-selector.js';
 import { play } from '../ui/sound.js';
@@ -175,6 +176,27 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
     if (!field.startsWith('h:')) return;
     const path = field.slice(2);
     const pathParts = path.split('.');
+
+    if (path === 'shape.brush.kind' && layer.shape?.type === 'path') {
+      const prev = layer.shape.brush;
+      const brush = { kind: String(rawValue), grain: prev?.grain ?? DEFAULT_GRAIN, seed: prev?.seed ?? newBrushSeed() };
+      state.edit(updateLayer(state.handout, layer.id, { shape: { brush } }), { label: 'Trocar ponta do traço' });
+      render();
+      return;
+    }
+    if (path === 'shape.brush.grain' && layer.shape?.type === 'path') {
+      const grain = Math.max(0, Math.min(100, Number(rawValue) || 0)) / 100;
+      const brush = { kind: brushKindOf(layer.shape), grain, seed: layer.shape.brush?.seed ?? newBrushSeed() };
+      state.edit(updateLayer(state.handout, layer.id, { shape: { brush } }), { label: 'Alterar grão', coalesce: `${layer.id}-grain` });
+      return;
+    }
+    if (path === 'shape.strokeWidth' && layer.shape?.type === 'path') {
+      const width = Math.max(1, Math.min(200, Number(rawValue) || 1));
+      const grown = growBoxForWidth(layer, width);
+      const { points, ...box } = grown || {};
+      state.edit(updateLayer(state.handout, layer.id, { ...box, shape: { strokeWidth: width, ...(grown ? { points } : {}) } }), { label: 'Alterar espessura do traço', coalesce: `${layer.id}-strokeWidth` });
+      return;
+    }
 
     if (path === 'text.highlight.enabled') {
       const next = updateLayer(state.handout, layer.id, {
@@ -636,6 +658,21 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
 
         ${fieldMarkup}
       `;
+    } else if (layer.kind === 'shape' && layer.shape.type === 'path') {
+      // A brush stroke is not a rectangle: no Tipo, Preenchimento or Arredondamento, only its own tip, ink and width.
+      const shp = layer.shape;
+      const kind = brushKindOf(shp);
+      html += `
+        <fieldset class="prop-group" ${stateAttr}>
+          <legend class="prop-legend">Traço</legend>
+          ${choiceField('h:shape.brush.kind', 'Ponta', kind, BRUSH_KINDS.map(k => [k.id, k.label]), { disabled: isLocked })}
+          ${brushInfo(kind).hasGrain ? numberField('h:shape.brush.grain', 'Grão · %', Math.round((shp.brush?.grain ?? DEFAULT_GRAIN) * 100), { min: 0, max: 100, step: 5, disabled: isLocked }) : ''}
+          ${colorField('h:shape.stroke', 'Cor', shp.stroke || '#000000')}
+          ${renderColorSwatchesHTML('h:shape.stroke')}
+          ${numberField('h:shape.strokeWidth', 'Espessura · px', shp.strokeWidth || 1, { min: 1, max: 200, step: 1, disabled: isLocked })}
+          ${kind !== 'pen' && kind !== 'nib' ? `<button type="button" class="at-btn" data-action="reroll-brush" title="Sorteia outro grão para este traço" ${stateAttr}>↻ Nova variação</button>` : ''}
+        </fieldset>
+      `;
     } else if (layer.kind === 'shape') {
       const shp = layer.shape;
       html += `
@@ -650,7 +687,7 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
           ${colorField('h:shape.stroke', 'Contorno', shp.stroke || '#000000')}
           ${renderColorSwatchesHTML('h:shape.stroke')}
           <div class="prop-advanced">
-            ${numberField('h:shape.strokeWidth', 'Espessura · px', shp.strokeWidth || 0, { min: 0, max: 50, step: 1, disabled: isLocked })}
+            ${numberField('h:shape.strokeWidth', 'Espessura · px', shp.strokeWidth || 0, { min: 0, max: 200, step: 1, disabled: isLocked })}
             ${numberField('h:shape.radius', 'Arredondamento · px', shp.radius || 0, { min: 0, max: 200, step: 1, disabled: isLocked })}
           </div>
         </fieldset>
@@ -829,6 +866,17 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
         render();
       });
     });
+
+    const brushRerollBtn = container.querySelector('[data-action="reroll-brush"]');
+    if (brushRerollBtn) {
+      brushRerollBtn.addEventListener('click', () => {
+        const curLayer = getSelectedLayer();
+        if (!curLayer || curLayer.locked || curLayer.shape?.type !== 'path' || !curLayer.shape.brush) return;
+        const brush = { ...curLayer.shape.brush, seed: newBrushSeed() };
+        state.edit(updateLayer(state.handout, curLayer.id, { shape: { brush } }), { label: 'Variar traço' });
+        render();
+      });
+    }
 
     const rerollBtn = container.querySelector('[data-action="reroll-seed"]');
     if (rerollBtn) {

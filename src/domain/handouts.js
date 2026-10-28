@@ -1,5 +1,5 @@
 import { ValidationError } from './errors.js';
-import { pointsError } from './brush.js';
+import { pointsError, brushError } from './brush.js';
 import { cutError } from './cut.js';
 
 export const HANDOUT_LIMITS = {
@@ -146,6 +146,8 @@ export function varyLayer(layer, rand = Math.random) {
     patch.effect = { ...layer.effect, seed: nextSeed() };
   } else if (layer.kind === 'text' && layer.text?.ink) {
     patch.text = { ...layer.text, ink: { ...layer.text.ink, seed: nextSeed() } };
+  } else if (layer.shape?.brush) {
+    patch.shape = { ...layer.shape, brush: { ...layer.shape.brush, seed: nextSeed() } };
   }
   return patch;
 }
@@ -687,6 +689,8 @@ export function validateHandout(value) {
       if (shp.type === 'path') {
         const problem = pointsError(shp.points);
         if (problem) fail(`${path}.shape.points`, problem);
+        const brushProblem = brushError(shp.brush);
+        if (brushProblem) fail(`${path}.shape.brush`, brushProblem);
       }
       if (shp.fill !== null && (typeof shp.fill !== 'string' || !HEX_COLOR_RE.test(shp.fill))) {
         fail(`${path}.shape.fill`, 'fill deve ser null ou cor hex.');

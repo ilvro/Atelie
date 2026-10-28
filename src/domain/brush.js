@@ -103,3 +103,74 @@ export function pointsError(points) {
   if (real === 0) return 'points precisa de ao menos um ponto.';
   return null;
 }
+
+/**
+ * The tips a brush stroke can have. `pen` is the plain smooth line and what a path without `brush` is.
+ * `defaults` are only offered when the tip is chosen in the strip; they never overwrite what the person set.
+ */
+export const BRUSH_KINDS = [
+  { id: 'pen', label: 'Caneta', layerName: 'Pincel', icon: 'brush-pen', hasGrain: false, defaults: {} },
+  { id: 'pencil', label: 'Lápis', layerName: 'Lápis', icon: 'brush-pencil', hasGrain: true, defaults: { color: '#4a4a4f', width: 3 } },
+  { id: 'chalk', label: 'Giz / carvão', layerName: 'Giz', icon: 'brush-chalk', hasGrain: true, defaults: { width: 14 } },
+  { id: 'nib', label: 'Pena (nanquim)', layerName: 'Pena', icon: 'brush-nib', hasGrain: false, defaults: { color: '#15131a' } },
+  { id: 'drybrush', label: 'Pincel seco', layerName: 'Pincel seco', icon: 'brush-dry', hasGrain: true, defaults: { width: 18 } },
+  { id: 'marker', label: 'Marca-texto', layerName: 'Marca-texto', icon: 'brush-marker', hasGrain: true, defaults: { color: '#f2d23c', opacity: 45, width: 18 } },
+];
+
+export const DEFAULT_GRAIN = 0.5;
+
+export const brushKindOf = shape => shape?.brush?.kind ?? 'pen';
+export const brushInfo = kind => BRUSH_KINDS.find(k => k.id === kind) || BRUSH_KINDS[0];
+
+/** Whether `brush` is a valid `shape.brush`. Returns an error message or null. */
+export function brushError(brush) {
+  if (brush === undefined) return null;
+  if (!brush || typeof brush !== 'object' || Array.isArray(brush)) return 'brush deve ser um objeto.';
+  if (!BRUSH_KINDS.some(k => k.id === brush.kind)) return 'brush.kind desconhecido.';
+  if (typeof brush.grain !== 'number' || !(brush.grain >= 0 && brush.grain <= 1)) return 'brush.grain deve estar entre 0 e 1.';
+  if (!Number.isInteger(brush.seed)) return 'brush.seed deve ser um inteiro.';
+  return null;
+}
+
+export const newBrushSeed = (rand = Math.random) => 1 + Math.floor(rand() * 99998);
+
+/**
+ * A brush layer's box only has room for the width it was drawn with. When the stroke is made wider
+ * afterwards, the box grows around its own centre (so a turned layer does not move) and the normalized
+ * points are re-expressed in it. Returns the layer patch, or null when there is room already.
+ */
+export function growBoxForWidth(layer, strokeWidth) {
+  const old = layer.shape?.strokeWidth ?? 0;
+  const d = Math.round((strokeWidth - old) * 100) / 100;
+  if (!(d > 0) || layer.shape?.type !== 'path') return null;
+  const width = layer.width + 2 * d;
+  const height = layer.height + 2 * d;
+  const round4 = v => Math.round(v * 10000) / 10000;
+  return {
+    x: Math.round((layer.x - d) * 100) / 100,
+    y: Math.round((layer.y - d) * 100) / 100,
+    width: Math.round(width * 100) / 100,
+    height: Math.round(height * 100) / 100,
+    points: layer.shape.points.map(p => (p === null
+      ? null
+      : [round4((p[0] * layer.width + d) / width), round4((p[1] * layer.height + d) / height), p[2] ?? 0.5])),
+  };
+}
+
+/**
+ * Lazy-brush stabilizer: the brush is tied to the cursor by a rope of `radius`. While the cursor stays
+ * inside the rope the brush does not move; beyond it, the brush walks only the excess towards the cursor,
+ * so hand tremor smaller than the rope never reaches the stroke. Radius 0 follows the cursor exactly.
+ */
+export function stabilize(prev, target, radius) {
+  if (!(radius > 0)) return [target[0], target[1]];
+  const dx = target[0] - prev[0];
+  const dy = target[1] - prev[1];
+  const d = Math.hypot(dx, dy);
+  if (d <= radius) return [prev[0], prev[1]];
+  const k = (d - radius) / d;
+  return [prev[0] + dx * k, prev[1] + dy * k];
+}
+
+/** Rope length in page px for the strip's "Suavizar" (0–100) at a zoom: 0.3 screen px per step. */
+export const stabilizerRadius = (smooth, zoom = 1) => (Math.max(0, Math.min(100, smooth || 0)) * 0.3) / (zoom || 1);
