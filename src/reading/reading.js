@@ -129,6 +129,8 @@ export function createReading(shell, { api, images, fonts, editor, onExit = () =
   readerBar.addEventListener('mouseenter', () => { isHoveringBar = true; });
   readerBar.addEventListener('mouseleave', () => { isHoveringBar = false; wakeBar(); });
 
+  const hasCutLayer = handout => Boolean(handout?.layers?.some(l => l.kind === 'effect' && l.visible && l.effect?.type === 'cut'));
+
   function getActiveFaceDoc() {
     return isFlipped && backHandout ? backHandout : currentHandout;
   }
@@ -360,12 +362,14 @@ export function createReading(shell, { api, images, fonts, editor, onExit = () =
     play('paper-slide');
     isFlipped = !isFlipped;
     sheetEl.classList.toggle('is-flipped', isFlipped);
+    sheetEl.classList.toggle('has-cut', hasCutLayer(getActiveFaceDoc()));
 
     // If back handout was not loaded yet
     if (isFlipped && !backHandout) {
       try {
         backHandout = await fetchHandout(currentHandout.back.handoutId);
         if (backHandout) {
+          sheetEl.classList.toggle('has-cut', isFlipped && hasCutLayer(backHandout));
           await renderHandout(backCanvas, backHandout, {
             scale: currentScale,
             light: 'normal',
@@ -483,6 +487,8 @@ export function createReading(shell, { api, images, fonts, editor, onExit = () =
 
     sheetEl.style.width = `${currentFit.width}px`;
     sheetEl.style.height = `${currentFit.height}px`;
+    // A folha recortada (rasgada, queimada) tem sombra que segue o contorno, não a caixa
+    sheetEl.classList.toggle('has-cut', hasCutLayer(doc));
 
     frontCanvas.width = currentFit.width;
     frontCanvas.height = currentFit.height;

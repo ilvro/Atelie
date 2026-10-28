@@ -1,0 +1,452 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-caderno-espiral-pagina-molhado",
+  "revision": 0,
+  "name": "Caderno espiral · página · molhado",
+  "category": "Cadernos, diários e livros",
+  "tags": [
+    "cadernos, diários e livros"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#d8d2c0"
+  },
+  "layers": [
+    {
+      "id": "l-1-caderno-espiral-pagina-molhado",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-caderno-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-caderno-espiral-pagina-molhado",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.44,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 6231,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-caderno-espiral-pagina-molhado",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 6248,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-caderno-espiral-pagina-molhado",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.08,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-caderno-espiral-pagina-molhado",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.24,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 6282,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-caderno-espiral-pagina-molhado",
+      "name": "Data",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 190,
+      "y": 150,
+      "width": 860,
+      "height": 57,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "terça, 14/05/1996",
+        "font": {
+          "family": "Shadows Into Light",
+          "library": "casa-font-shadowsintolight",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 38,
+        "color": "#1c3a8a",
+        "align": "right",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-7-caderno-espiral-pagina-molhado",
+      "name": "Texto",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 190,
+      "y": 214.6,
+      "width": 860,
+      "height": 576,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Hoje a Carol não foi na aula e eu fiquei sozinha no recreio de novo. A professora de história passou trabalho em dupla e eu fiz com o Beto, que só copiou do livro. Na volta passei na casa velha da Rua dos Pinhais e juro que tinha luz no porão. A Dona Odete disse que ninguém mora lá desde que a família sumiu. Amanhã vou levar a lanterna do meu pai e a máquina de foto. Se eu não voltar, a culpa é da Carol.",
+        "font": {
+          "family": "Shadows Into Light",
+          "library": "casa-font-shadowsintolight",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 38,
+        "color": "#1c3a8a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.5,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-8-caderno-espiral-pagina-molhado",
+      "name": "Espiral",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 40,
+      "y": 20,
+      "width": 90,
+      "height": 1700,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-objeto-espiral-lateral"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-9-caderno-espiral-pagina-molhado",
+      "name": "Rabisco · estrela",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "multiply",
+      "x": 980,
+      "y": 1330,
+      "width": 170,
+      "height": 170,
+      "rotation": 10,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-rabisco-estrela-margem"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-10-caderno-espiral-pagina-molhado",
+      "name": "Rabisco · seta",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "multiply",
+      "x": 760,
+      "y": 1500,
+      "width": 300,
+      "height": 130,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-rabisco-seta-curva"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-11-caderno-espiral-pagina-molhado",
+      "name": "Anotação do canto",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 700,
+      "y": 1620,
+      "width": 450,
+      "height": 60,
+      "rotation": -3,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "não esquecer: PILHAS!!",
+        "font": {
+          "family": "Shadows Into Light",
+          "library": "casa-font-shadowsintolight",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 36,
+        "color": "#b3261e",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.2,
+          "seed": 15
+        }
+      }
+    },
+    {
+      "id": "l-12-caderno-espiral-pagina-molhado",
+      "name": "Umidade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.5,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 13175,
+        "amount": 0.85,
+        "params": {
+          "color": "#8a8670"
+        }
+      }
+    },
+    {
+      "id": "l-13-caderno-espiral-pagina-molhado",
+      "name": "Ondulação",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.5,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 13192,
+        "amount": 0.3,
+        "params": {
+          "creases": 8
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-6-caderno-espiral-pagina-molhado",
+      "label": "Data"
+    },
+    {
+      "layerId": "l-7-caderno-espiral-pagina-molhado",
+      "label": "Texto"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

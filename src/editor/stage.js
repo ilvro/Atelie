@@ -172,6 +172,7 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
 
   const cutTools = createCutTools({
     pageWrap,
+    viewport,
     getZoom: () => currentZoom,
     getHandout: () => currentHandout,
     getTool: () => drawTools.tool,

@@ -361,7 +361,7 @@ test('colecao-c8-c10: lotes novos (investigação e Estado, escrita e imprensa, 
   // Variações: família igual a uma base existente e prévia visivelmente diferente (exceto luz negra, que só aparece sob UV)
   const sharp = (await import('sharp')).default;
   const variantes = templates.filter(i => i.family);
-  assert.ok(variantes.length >= 15, `${variantes.length} variações`);
+  assert.ok(variantes.length >= 25, `${variantes.length} variações`);
   for (const v of variantes) {
     const base = templates.find(i => i.id === `casa-tpl-${v.family}`);
     assert.ok(base, `${v.id}: base ${v.family} existe`);
@@ -379,7 +379,7 @@ test('colecao-c11: tecnologia, fotografias e objetos, cotidiano e destruídos co
   assert.equal(bases('Fotografias e objetos'), 6);
   assert.equal(bases('Destruídos e composições'), 5);
   assert.ok(bases('Tecnologia') >= 3 + 9 && bases('Cotidiano') >= 6 + 6);
-  assert.equal(templates.length, 151, 'manifesto com 151 modelos');
+  assert.equal(templates.length, 157, 'manifesto com 157 modelos (132 documentos e 25 variações)');
   assert.equal(new Set(templates.map(i => i.category)).size, 16, '16 categorias');
   // A página rasgada em pedaços: cada pedaço tem papel + corte rasgado preso a ele (grupo de recorte)
   const doc = JSON.parse(await fs.readFile(path.join(colecaoDir, 'modelos/pagina-rasgada-pedacos.json'), 'utf8'));

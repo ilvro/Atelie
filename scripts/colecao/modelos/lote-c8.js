@@ -154,6 +154,8 @@ export default [
         signatures: [{ nome: 'Gaspar Lemos', cargo: 'Perito criminal' }], signY: 1580,
         extras: [BOX('Diagrama do projétil', { x: 150, y: 1140, w: 300, h: 70 }, { stroke: '#222', weight: 2.5, radius: 34, fill: '#b8895a30' }), BOX('Ponta do projétil', { x: 120, y: 1140, w: 100, h: 70 }, { stroke: '#222', weight: 2.5, type: 'ellipse', fill: '#b8895a40' }),
           RULE(150, 1235, 300, { color: '#222', name: 'Cota do comprimento' }), T('Cota', '38,1 mm', { x: 230, y: 1242, w: 150, h: 30 }, { size: 18, family: 'Courier Prime', style: 'clean', wear: 0, align: 'center' }),
+          BOX('Estojo · corpo', { x: 150, y: 1305, w: 250, h: 62 }, { fill: '#c9a24a', stroke: '#6a5320', weight: 2.5, radius: 8 }), BOX('Estojo · gola', { x: 380, y: 1311, w: 30, h: 50 }, { fill: '#b88f38', stroke: '#6a5320', weight: 2.5, radius: 6 }), BOX('Estojo · espoleta', { x: 126, y: 1318, w: 38, h: 38 }, { type: 'ellipse', fill: '#8a6a2a', stroke: '#4a3a14', weight: 2.5 }), BOX('Estojo · percussão', { x: 138, y: 1330, w: 14, h: 14 }, { type: 'ellipse', fill: '#2a2a2a' }),
+          T('Legenda do estojo', 'Estojo calibre .38: marca de percussão deslocada', { x: 440, y: 1318, w: 700, h: 40 }, { size: 20, family: 'Courier Prime' }),
           RULE(500, 1175, 0, { name: 'Eixo' }), T('Medida do diâmetro', 'Ø 9,0 mm   ·   massa 10,2 g   ·   6 raias, sentido à direita', { x: 500, y: 1150, w: 640, h: 70 }, { size: 21, family: 'Courier Prime' })] }),
     ],
   }),

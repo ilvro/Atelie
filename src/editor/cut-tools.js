@@ -45,7 +45,7 @@ export function paperAt(map, [x, y]) {
   return map.data[(py * map.width + px) * 4 + 3] > 24;
 }
 
-export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOptions, getTarget, onCut, onSound = () => {}, reducedMotion = () => false, getAlphaMap = () => null } = {}) {
+export function createCutTools({ pageWrap, viewport = null, getZoom, getHandout, getTool, getOptions, getTarget, onCut, onSound = () => {}, reducedMotion = () => false, getAlphaMap = () => null } = {}) {
   const overlay = document.createElement('canvas');
   overlay.className = 'stage-tool-overlay';
   overlay.style.display = 'none';
@@ -433,6 +433,12 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
     }
   }
 
+  /** Is this page point off the sheet (on the desk around it)? */
+  function offSheet([x, y]) {
+    const { page } = getHandout();
+    return x < 0 || y < 0 || x > page.width || y > page.height;
+  }
+
   function down(event) {
     const tool = getTool();
     if (!CUT_TOOLS.has(tool) || event.button !== 0 || !getHandout()) return;
@@ -451,8 +457,9 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
     const start = pagePoint(event);
     if (tool === 'lighter') {
       // The flame has nothing to burn on the desk or on paper that is already gone
+      // Starting on the desk is fine: the fire enters the sheet by its edge. On the sheet itself, no paper means no flame.
       alphaMap = getAlphaMap();
-      if (!paperAt(alphaMap, start)) return;
+      if (!offSheet(start) && !paperAt(alphaMap, start)) return;
     }
     try { pageWrap.setPointerCapture(event.pointerId); } catch {}
     const now = performance.now();
@@ -464,7 +471,7 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
     if (tool === 'lighter') {
       const target = targetBox();
       const [ux, uy] = pointToUnit(start, target);
-      gesture.trail.push([clamp01(ux), clamp01(uy), getOptions().flame]);
+      if (!offSheet(start)) gesture.trail.push([clamp01(ux), clamp01(uy), getOptions().flame]);
       gesture.appendTo = event.shiftKey ? 'selected' : null;
       const view = setup();
       gesture.view = { ...view, target, layers: burnLayers(overlay.width, overlay.height) };
@@ -486,7 +493,7 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
       const lastUnit = g.trail[g.trail.length - 1];
       const target = targetBox();
       const [ux, uy] = pointToUnit(point, target);
-      const dist = Math.hypot((ux - lastUnit[0]) * target.width, (uy - lastUnit[1]) * target.height);
+      const dist = lastUnit ? Math.hypot((ux - lastUnit[0]) * target.width, (uy - lastUnit[1]) * target.height) : Infinity;
       // Moving the hand at all stops the fire from spreading; only paper receives a burn point
       if (Math.hypot(point[0] - (g.lastPointer?.[0] ?? g.start[0]), point[1] - (g.lastPointer?.[1] ?? g.start[1])) >= 2) {
         g.lastMove = performance.now();
@@ -549,6 +556,12 @@ export function createCutTools({ pageWrap, getZoom, getHandout, getTool, getOpti
   }
 
   pageWrap.addEventListener('pointerdown', down, true);
+  // The lighter may also start on the desk around the sheet and burn it from the edge
+  viewport?.addEventListener('pointerdown', event => {
+    if (getTool() !== 'lighter' || pageWrap.contains(event.target)) return;
+    if (event.target.closest('.stage-tools, .stage-tool-options, .stage-selection-bar, .stage-zoom, button, input')) return;
+    down(event);
+  }, true);
   pageWrap.addEventListener('pointermove', move);
   pageWrap.addEventListener('pointerup', up);
   pageWrap.addEventListener('pointercancel', up);

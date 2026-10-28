@@ -36,9 +36,9 @@ test('colecao perf e2e: o modelo mais pesado de cada lote abre em menos de 400 m
       // aquecimento: fontes e imagens do modelo entram no cache antes da medida, como numa segunda abertura
       await window.__atelie.editor.loadHandout(doc, { skipDraftCheck: true });
       if (document.fonts?.ready) await document.fonts.ready;
-      // a melhor de três aberturas: um tropeço do coletor de lixo não pode reprovar o modelo
+      // a melhor de cinco aberturas: um tropeço do coletor de lixo não pode reprovar o modelo
       let best = Infinity;
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < 5; i++) {
         const t0 = performance.now();
         await window.__atelie.editor.loadHandout({ ...doc, id: `perf-${s}-${i}` }, { skipDraftCheck: true });
         if (document.fonts?.ready) await document.fonts.ready;

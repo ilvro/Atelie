@@ -13240,6 +13240,171 @@
       "license": "PD-US-expired"
     },
     {
+      "id": "casa-tpl-recorte-jornal-anos-20-queimado",
+      "kind": "template",
+      "name": "Recorte de jornal · anos 20 · queimado",
+      "category": "Jornal",
+      "license": "CC0-1.0",
+      "file": "modelos/recorte-jornal-anos-20-queimado.json",
+      "preview": "previews/casa-tpl-recorte-jornal-anos-20-queimado.webp",
+      "fields": [
+        "Manchete",
+        "Linha fina",
+        "Texto",
+        "Foto",
+        "Legenda"
+      ],
+      "texto": "MISTERIOSO DESAPARECIMENTO NO VALE DO TIETÊ · Moradores relatam luzes estranhas sobre a colina na madrugada de terça-feira; autoridades policiais abrem inquérito sigiloso. · A delegacia local deslocou três agentes armados para a propriedade ainda nas primeiras horas do dia. O delegado responsável preferiu não emitir comunicado oficial até que a perícia técnica conclua os levantamentos de praxe. Fontes anônimas ligadas ao hospital da comarca afirmam que um viajante foi atendido em estado de choqu",
+      "era": "1920",
+      "tom": "investigação",
+      "tags": [
+        "jornal",
+        "recorte",
+        "queimado"
+      ],
+      "org": "gazeta",
+      "orgNome": "A Gazeta Metropolitana",
+      "addedIn": "2026-10-27",
+      "family": "recorte-jornal-anos-20"
+    },
+    {
+      "id": "casa-tpl-prontuario-arquivo-morto",
+      "kind": "template",
+      "name": "Prontuário médico · arquivo morto",
+      "category": "Médico",
+      "license": "CC0-1.0",
+      "file": "modelos/prontuario-arquivo-morto.json",
+      "preview": "previews/casa-tpl-prontuario-arquivo-morto.webp",
+      "fields": [
+        "Paciente",
+        "Data",
+        "Anotações",
+        "Diagnóstico",
+        "Médico responsável"
+      ],
+      "texto": "PACIENTE: Elias Fagundes da Rocha | IDADE: 47 anos | LEITO: 18-B · ADMISSÃO: 11 de Novembro de 1934 · Paciente deu entrada apresentando confusão mental severa, delírios persecutórios e tremores nas extremidades. Relata ouvir vozes vindas dos espelhos e recusa-se a permanecer no escuro. Temperatura oscilando entre 38.5 e 39.2 graus. Prescrito repouso absoluto, hidratação intravenosa e administração de cloral para sedação noturna. Manter vigilância constante. · Diagnóstico: neurastenia aguda com d",
+      "era": "1950",
+      "tom": "horror",
+      "tags": [
+        "médico",
+        "prontuário",
+        "formulário",
+        "arquivo morto"
+      ],
+      "org": "sanatorio",
+      "orgNome": "Sanatório da Serra do Mar",
+      "addedIn": "2026-10-27",
+      "family": "prontuario"
+    },
+    {
+      "id": "casa-tpl-diario-culto-uv-molhado",
+      "kind": "template",
+      "name": "Diário de culto · com UV · molhado",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/diario-culto-uv-molhado.json",
+      "preview": "previews/casa-tpl-diario-culto-uv-molhado.webp",
+      "fields": [
+        "Data",
+        "Texto",
+        "Mensagem oculta"
+      ],
+      "texto": "14 de Novembro — Entrada XVII · As reuniões na cripta sob o convento estão cada vez mais concorridas. Ontem compareceram mais de vinte irmãos, todos encapuzados e em silêncio absoluto. O padre Bento liderou as preces em latim arcaico enquanto o cálice de bronze passava de mão em mão. Todos bebemos. O gosto era amargo e ferroso, como água colhida de poço profundo. Depois que as tochas foram apagadas, ouvimos os sussurros novamente vindos do fundo da nave. Não eram vozes humanas. Sei que não posso",
+      "era": "1920",
+      "tom": "horror",
+      "tags": [
+        "culto",
+        "diário",
+        "luz negra",
+        "molhado"
+      ],
+      "org": "irmandade",
+      "orgNome": "Irmandade da Lua Tríplice",
+      "addedIn": "2026-10-27",
+      "family": "diario-culto-uv"
+    },
+    {
+      "id": "casa-tpl-termo-depoimento-ensanguentado",
+      "kind": "template",
+      "name": "Termo de depoimento · ensanguentado",
+      "category": "Polícia e investigação",
+      "license": "CC0-1.0",
+      "file": "modelos/termo-depoimento-ensanguentado.json",
+      "preview": "previews/casa-tpl-termo-depoimento-ensanguentado.webp",
+      "fields": [
+        "Depoente",
+        "Data",
+        "Escrivão",
+        "Local",
+        "Depoimento"
+      ],
+      "texto": "Joaquim Pereira Dutra, 52 anos, vigia noturno · 03 de abril de 1954 · Marta Quintanilha · Sala de oitivas da Delegacia, Praça Velha, 120 · Aos três dias do mês de abril de mil novecentos e cinquenta e quatro, perante a autoridade policial, compareceu o depoente acima qualificado, que, devidamente compromissado, declarou o seguinte: que trabalha como vigia no Solar dos Pinhais há onze anos; que na noite de 14 de março, por volta das vinte e três horas, ouviu passos no porão, embora a porta estive",
+      "era": "1950",
+      "tom": "investigação",
+      "tags": [
+        "polícia",
+        "depoimento",
+        "formulário",
+        "ensanguentado"
+      ],
+      "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais",
+      "addedIn": "2026-10-27",
+      "family": "termo-depoimento"
+    },
+    {
+      "id": "casa-tpl-testamento-queimado",
+      "kind": "template",
+      "name": "Testamento · queimado",
+      "category": "Oficial e jurídico",
+      "license": "CC0-1.0",
+      "file": "modelos/testamento-queimado.json",
+      "preview": "previews/casa-tpl-testamento-queimado.webp",
+      "fields": [
+        "Testador",
+        "Texto",
+        "Assinatura",
+        "Testemunhas"
+      ],
+      "texto": "Eu, Cornélio de Albuquerque Pinhais, · em pleno gozo de minhas faculdades, ainda que enfermo do corpo, faço este meu testamento. Deixo o Solar dos Pinhais, com todas as suas terras e o que nele se achar, a minha sobrinha Helena, com a condição de que jamais abra o porão da ala velha. Aos meus criados deixo seis meses de ordenado. Ao Sr. vigário, cem mil réis para missas. Quem violar a vontade aqui escrita responderá por tudo o que dali sair. · Cornélio de A. Pinhais · Testemunhas: Dr. Teodoro Br",
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "testamento",
+        "manuscrito",
+        "formulário",
+        "queimado"
+      ],
+      "org": "solar",
+      "orgNome": "Solar dos Pinhais",
+      "addedIn": "2026-10-27",
+      "family": "testamento"
+    },
+    {
+      "id": "casa-tpl-caderno-espiral-pagina-molhado",
+      "kind": "template",
+      "name": "Caderno espiral · página · molhado",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/caderno-espiral-pagina-molhado.json",
+      "preview": "previews/casa-tpl-caderno-espiral-pagina-molhado.webp",
+      "fields": [
+        "Data",
+        "Texto"
+      ],
+      "texto": "terça, 14/05/1996 · Hoje a Carol não foi na aula e eu fiquei sozinha no recreio de novo. A professora de história passou trabalho em dupla e eu fiz com o Beto, que só copiou do livro. Na volta passei na casa velha da Rua dos Pinhais e juro que tinha luz no porão. A Dona Odete disse que ninguém mora lá desde que a família sumiu. Amanhã vou levar a lanterna do meu pai e a máquina de foto. Se eu não voltar, a culpa é da Carol.",
+      "era": "1980",
+      "tom": "cotidiano",
+      "tags": [
+        "caderno",
+        "espiral",
+        "manuscrito",
+        "molhado"
+      ],
+      "addedIn": "2026-10-27",
+      "family": "caderno-espiral-pagina"
+    },
+    {
       "id": "casa-set-caso-sanatorio-serra-do-mar",
       "kind": "set",
       "name": "Caso do Sanatório da Serra do Mar",

@@ -438,6 +438,20 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ---
 
+## Pendências menores fechadas
+
+### Feito
+- **Isqueiro a partir da borda (C1):** o gesto agora pode começar na mesa, fora da folha (`pointerdown` também no palco, só com o isqueiro): a chama acende, o fogo entra pela borda e a trilha começa onde o papel começa. Dentro da folha sobre alfa 0 continua sem acender (regra da C1b), e uma chama que só atravessa a mesa não cria camada.
+- **Sombra pelo recorte na Leitura:** a folha da Leitura (e o verso) com camada de corte visível ganha `has-cut`: sem `box-shadow` na caixa, a sombra vem de `drop-shadow` no canvas e acompanha o contorno rasgado ou queimado; folhas inteiras mantêm a sombra de antes.
+- **Variações:** de 19 para **25** (testamento queimado, recorte de jornal queimado, termo de depoimento ensanguentado, diário de culto molhado, prontuário em arquivo morto, caderno espiral molhado); o manifesto tem 157 modelos (132 documentos e 25 variações). A fuligem da receita `queimado` ficou mais leve (0,5) para não esconder o título.
+- **Laudo de balística:** o estojo do calibre .38 (corpo, gola, espoleta e marca de percussão deslocada) foi desenhado junto do projétil, no lugar da foto da cápsula, que não existe com licença livre.
+- Testes: `cut-tools` (começar na mesa queima pela borda; mesa a mesa não cria camada), `reading-cut` (sombra pelo contorno e caixa preservada).
+
+### Ainda aberto
+- Tabletop (folha recortada com fundo): depende do usuário. Tutoriais existentes não foram trocados por modelos novos (nenhum ensinaria melhor do que o que já usam).
+
+---
+
 ## Refinamento Visual e Ergonomia de UI
 
 ### Feito

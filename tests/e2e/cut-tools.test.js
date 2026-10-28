@@ -207,6 +207,28 @@ test('cut tools e2e: tear the sheet, lasso one layer, hold the lighter, undo, hi
   assert.equal(overlap[0][3], 0, 'the cut-away centre stays transparent');
   assert.ok(overlap[2][3] > 250, 'the untouched paper stays');
 
+  // Starting on the desk: the fire enters the sheet by its edge, and the trail starts where the paper does
+  const deskCount = (await layers()).length;
+  const outside = await screen(-70, 400);
+  const inside = await screen(60, 400);
+  await page.mouse.move(outside.x, outside.y);
+  await page.mouse.down();
+  await page.mouse.move(inside.x, inside.y, { steps: 8 });
+  await page.waitForTimeout(150);
+  await page.mouse.up();
+  const edgeBurn = await layers();
+  assert.equal(edgeBurn.length, deskCount + 1, 'a gesture that starts on the desk still burns the sheet');
+  const first = edgeBurn.at(-1).effect.holes[0][0];
+  assert.ok(first[0] < 0.08, `the trail starts at the left edge (${first[0].toFixed(3)})`);
+  // Never from the desk to the desk: nothing to burn, no layer
+  const away = await screen(-90, 100);
+  await page.mouse.move(away.x, away.y);
+  await page.mouse.down();
+  await page.mouse.move(away.x, away.y + 60, { steps: 4 });
+  await page.mouse.up();
+  assert.equal((await layers()).length, deskCount + 1, 'a flame that only crossed the desk makes no layer');
+  await page.evaluate(() => window.__atelie.editor.state.select(null));
+
   // --- Reduced motion: no flame glow, the cut is applied the same
   await page.evaluate(() => document.body.classList.add('reduce-motion'));
   const p = await screen(500, 1500);

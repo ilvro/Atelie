@@ -70,6 +70,21 @@ body.is-reading .desk-draft-bar {
   overflow: hidden;
 }
 
+.reader-sheet.has-cut {
+  box-shadow: none;
+  background: transparent;
+}
+
+/* A sombra segue o alfa do desenho; a face deixa de recortar a sombra e de pintar o papel por baixo */
+.reader-sheet.has-cut .reader-face {
+  background: transparent;
+  overflow: visible;
+}
+
+.reader-sheet.has-cut .reader-canvas {
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.6)) drop-shadow(0 3px 7px rgba(0, 0, 0, 0.4));
+}
+
 .reader-face.is-front {
   z-index: 2;
   transform: rotateY(0deg);

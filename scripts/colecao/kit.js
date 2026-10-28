@@ -44,7 +44,7 @@ export const AGING_PRESETS = {
     ['img', 'Furos de grampo', 'casa-prendedor-dois-grampos', { blend: 'multiply', opacity: 0.8, box: { x: 0.04, y: 0.02, w: 0.2, h: 0.07 } }],
   ],
   queimado: [
-    ['img', 'Fuligem', 'casa-queimado-1', { blend: 'multiply', opacity: 0.7 }],
+    ['img', 'Fuligem', 'casa-queimado-1', { blend: 'multiply', opacity: 0.5 }],
     ['fx', 'Papel tostado', 'burn', { blend: 'multiply', opacity: 0.55, amount: 0.6, params: { depth: 0.1 } }],
     ['cut', 'queimado'],
   ],

@@ -22,7 +22,7 @@ public/colecao/
 │   └── apache/
 ├── papeis/escaneados/   # 10 papéis escaneados CC0 (ambientCG) usados como base dos papéis
 ├── texturas/superficies # 8 superfícies (madeira, couro, cortiça, metal, feltro) e texturas/micro (riscos, borrões)
-├── modelos/             # 151 modelos em JSON (132 documentos e 19 variações) em 16 categorias
+├── modelos/             # 157 modelos em JSON (132 documentos e 25 variações) em 16 categorias
 └── previews/            # Miniaturas otimizadas em WebP (320 px) para a gaveta Biblioteca
 \`\`\`
 

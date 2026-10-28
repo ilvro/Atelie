@@ -29,6 +29,12 @@ export const VARIACOES = {
   'certidao-nascimento': [{ suffix: 'arquivo-morto', label: 'arquivo morto', preset: 'arquivo-morto', seed: 417 }],
   'certidao-casamento': [{ suffix: 'arquivo-morto', label: 'arquivo morto', preset: 'arquivo-morto', seed: 418 }],
   'dossie-agente': [{ suffix: 'arquivo-morto', label: 'arquivo morto', preset: 'arquivo-morto', seed: 419 }],
+  'testamento': [{ suffix: 'queimado', label: 'queimado', preset: 'queimado', seed: 427 }],
+  'recorte-jornal-anos-20': [{ suffix: 'queimado', label: 'queimado', preset: 'queimado', seed: 421 }],
+  'termo-depoimento': [{ suffix: 'ensanguentado', label: 'ensanguentado', preset: 'ensanguentado', seed: 422 }],
+  'diario-culto-uv': [{ suffix: 'molhado', label: 'molhado', preset: 'molhado', seed: 423 }],
+  'prontuario': [{ suffix: 'arquivo-morto', label: 'arquivo morto', preset: 'arquivo-morto', seed: 424 }],
+  'caderno-espiral-pagina': [{ suffix: 'molhado', label: 'molhado', preset: 'molhado', seed: 425 }],
 };
 
 export function expandir(specs) {
