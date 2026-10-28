@@ -4,6 +4,7 @@ import { thinPoints } from '../domain/brush.js';
 
 export const TOOLS = [
   { id: 'select', label: 'Selecionar', icon: 'cursor', shortcut: 'tool-select' },
+  { id: 'text', label: 'Texto', icon: 'text', shortcut: 'tool-text' },
   { id: 'brush', label: 'Pincel', icon: 'brush', shortcut: 'tool-brush' },
   { id: 'rect', label: 'Retângulo', icon: 'rect', shortcut: 'tool-rect' },
   { id: 'ellipse', label: 'Elipse', icon: 'ellipse', shortcut: 'tool-ellipse' },
@@ -101,6 +102,10 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
     }
     const canFill = tool === 'rect' || tool === 'ellipse';
     strip.style.display = 'flex';
+    if (tool === 'text') {
+      strip.innerHTML = '<span class="stage-tool-hint">Clique na folha para escrever ali · arraste para desenhar a caixa do texto · T cria uma caixa no meio da folha</span>';
+      return;
+    }
     if (CUT_IDS.has(tool)) {
       const target = `<span class="stage-tool-target" data-cut-target>Cortando: ${targetLabel}</span>`;
       const range = (key, label, min, max, step) => `<label class="stage-tool-field" title="${label}"><span>${label}</span><input type="range" data-option="${key}" min="${min}" max="${max}" step="${step}" value="${options[key]}" /></label>`;
@@ -206,6 +211,14 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
       ctx.lineCap = 'butt';
       ctx.strokeStyle = options.color;
       ctx.stroke();
+    } else if (gesture.tool === 'text') {
+      const box = dragBox(start, current);
+      ctx.setLineDash([10 * scale, 7 * scale]);
+      ctx.lineWidth = 2 * scale;
+      ctx.strokeStyle = '#f7f3e6';
+      ctx.shadowColor = 'rgba(0,0,0,0.6)';
+      ctx.shadowBlur = 3 * scale;
+      ctx.strokeRect(box.x * scale, box.y * scale, box.width * scale, box.height * scale);
     } else {
       const box = dragBox(start, current, { square: shift });
       ctx.beginPath();
@@ -265,6 +278,10 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
     } else if (done.tool === 'line') {
       const length = Math.hypot(done.current[0] - done.start[0], done.current[1] - done.start[1]);
       if (length >= 3) onDraw?.({ type: 'line', box: lineBox(done.start, done.current, { snap: done.shift, thickness: opts.width }), options: opts });
+    } else if (done.tool === 'text') {
+      // Um clique escreve ali; um arraste desenha a caixa do texto
+      const box = dragBox(done.start, done.current);
+      onDraw?.(box.width >= 40 && box.height >= 24 ? { type: 'text', box, options: opts } : { type: 'text', point: done.start, options: opts });
     } else {
       const box = dragBox(done.start, done.current, { square: done.shift });
       if (box.width >= 3 && box.height >= 3) onDraw?.({ type: done.tool, box, options: opts });

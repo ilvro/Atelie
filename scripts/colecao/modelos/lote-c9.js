@@ -281,10 +281,10 @@ export default [
     layers: [
       ...base({ paper: 'papel-fotografico', age: 'usado', aging: 'usado', seed: 220, intensity: 0.8 }),
       T('Título', 'TURMA 8ª B · 1974', { x: 110, y: 80, w: 1020, h: 90 }, { family: 'Cinzel', size: 64, bold: true, align: 'center', color: '#1f3f7a', style: 'clean', wear: 0.05 }),
-      ...[RET.rapaz, RET.mulher, RET.bigode, RET.senhora, RET.hussardo, RET.oficial, RET.mulher, RET.rapaz, RET.bigode].flatMap((id, i) => {
+      ...['casa-foto-retrato-homem-bigode-fino', 'casa-foto-retrato-mulher-coque-alto', 'casa-foto-retrato-homem-gravata-borboleta', 'casa-foto-retrato-mulher-gola-alta', 'casa-foto-retrato-homem-colarinho-alto', 'casa-foto-retrato-mulher-jovem-franja', 'casa-foto-retrato-homem-chapeu-coco', 'casa-foto-retrato-mulher-vestido-escuro', 'casa-foto-retrato-homem-bigode-grosso'].flatMap((id, i) => {
         const x = 110 + (i % 3) * 350; const y = 220 + Math.floor(i / 3) * 400;
         const nomes = ['Rodrigo L.', 'Helena P.', 'Beto S.', 'Odete M.', 'Arnaldo C.', 'Paulo R.', 'Lúcia T.', 'Edmundo V.', 'Dalva N.'];
-        return [FOTO(`Foto ${i + 1}`, id, { x, y, w: 320, h: 330 }, { field: i === 0 ? 'Fotos' : undefined, filter: { grayscale: 1, contrast: 0.12 + (i % 3) * 0.05 } }), T(`Nome ${i + 1}`, nomes[i], { x, y: y + 336, w: 320, h: 40 }, { family: 'Playfair Display', size: 26, italic: true, align: 'center', color: '#1d1b24', style: 'clean', wear: 0.05, field: i === 0 ? 'Nomes' : undefined })];
+        return [FOTO(`Foto ${i + 1}`, id, { x, y, w: 320, h: 330 }, { field: i === 0 ? 'Fotos' : undefined, filter: { grayscale: 1, contrast: 0.08 + (i % 3) * 0.04 } }), T(`Nome ${i + 1}`, nomes[i], { x, y: y + 336, w: 320, h: 40 }, { family: 'Playfair Display', size: 26, italic: true, align: 'center', color: '#1d1b24', style: 'clean', wear: 0.05, field: i === 0 ? 'Nomes' : undefined })];
       }),
       T('Dedicatória', '"Aos que ficam, a saudade; aos que vão, a esperança."\n— Turma de 74', { x: 130, y: 1470, w: 980, h: 110 }, { family: 'Great Vibes', size: 48, align: 'center', color: '#1f3f7a', style: 'handwriting', wear: 0.1, field: 'Dedicatória' }),
       IMG('Ornamento', 'casa-ornamento-divisoria-florete', { x: 340, y: 1400, w: 560, h: 60 }, { blend: 'multiply', opacity: 0.6 }),

@@ -372,7 +372,7 @@ export const SHORTCUTS = [
     scope: 'editor',
     key: 'T',
     label: 'Texto',
-    description: 'Criar uma caixa de texto no meio da página e já escrever (duplo clique também cria no ponto clicado)',
+    description: 'Criar uma caixa de texto no meio da página e já escrever (duplo clique também cria no ponto clicado; o botão Texto da barra de ferramentas escreve onde você clicar ou arrastar)',
     category: 'Ferramentas',
     handledIn: ['src/editor/editor.js'],
     tokens: ["'tool-text'"],

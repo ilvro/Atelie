@@ -25,7 +25,15 @@ export const CORRESPONDENCIA = {
   'Ocultismo': ['Marcas e Rituais', 'Grimórios e Páginas Estilizadas com Elementos'],
   'Fantasia': ['Documentos Medievais', 'Documentos Milenares'],
   'Cotidiano': ['Documentos de Transporte', 'Documentos Comerciais', 'Polaroides e Porta-Retratos'],
-  'Tecnologia': ['Registros de Conversas (Celular)', 'E-mails de Computador', 'Computadores Antigos'],
+  'Tecnologia': ['Registros de Conversas (Celular)', 'E-mails de Computador', 'Computadores Antigos', 'E-mails de Celular'],
+  'Forense e perícia': ['Documentos Forense', 'Documentos Policiais com Luz UV'],
+  'Oficial e jurídico': ['Documentos Oficiais', 'Documentos Jurídicos', 'Documentos Bancários'],
+  'Militar e governo': ['Documentos Militares', 'Carteira e Identidade de Investigador'],
+  'Cadernos, diários e livros': ['Cadernos, Diários e Livros', 'Cadernos e Livros', 'Capas de Livros'],
+  'Escola e juventude': ['Documentos Escolares'],
+  'Ciência e laboratório': ['Documentos Científicos', 'Registros de Pesquisa Científica com Luz UV', 'Modelos de Blueprints'],
+  'Fotografias e objetos': ['Polaroides e Fotografias', 'Pranchetas'],
+  'Destruídos e composições': ['Documentos Destruídos', 'Documentos Molhados', 'Documentos Ensanguentados', 'Composições'],
 };
 
 /** Recusa qualquer caminho de saída fora da pasta privada de comparação. */

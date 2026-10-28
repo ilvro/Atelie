@@ -405,6 +405,39 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 
 ---
 
+## Coleção ampliada · Fase C12 (encontrar o que há na coleção) e fechamento do plano
+
+### Feito
+- **Gaveta Modelos:** três grupos de filtro novos, **Época**, **Tom** e **Instituição**, vindos de `era`, `tom` e `org`, com contagem que segue os outros filtros e "+N mais" como os demais. A grade mostra só as bases; uma variação que combina com a busca leva a sua base. **Busca** por nome, categoria, campos, etiquetas, época, instituição, texto de exemplo dos campos (`texto` no manifesto) e descrição dos conjuntos.
+- **Famílias:** o card da base mostra "+N variações"; o detalhe mostra a família em miniaturas clicáveis (a troca usa o mesmo `.tab-crossfade`) e as categorias novas entram na ordem dos chips.
+- **Conjuntos:** `modelos/conjuntos.js` e itens `kind: 'set'` no manifesto (4 conjuntos: Caso do Sanatório da Serra do Mar, Arquivos do Instituto Halden, Dossiê da Lua Tríplice, Caso do Solar dos Pinhais). O conjunto é um card próprio; "Usar conjunto" abre cada modelo com `instantiateTemplate` (o primeiro em aba nova e ativa, os outros em segundo plano). A biblioteca de elementos não mostra conjuntos.
+- **Tela inicial:** "Modelos em destaque" alterna por semana (`pickFeatured`, semente = número da semana, sem variações) e ganhou a fileira **Novidades** (`addedIn` mais recente, uma por categoria).
+- **Tutorial:** lição nova "Encontrar um modelo e usar um conjunto" (`templateFilter` e `templateFilterNone` em `conditions.js`); as lições que abrem modelo da casa continuam com os que já ensinam bem. O relatório de cobertura roda junto com o teste de tutoriais.
+- **Fotos (pendência da C0 fechada):** 18 retratos de estúdio de pessoas não identificadas (Smithsonian Open Access, CC0) e 9 lugares (Detroit Publishing Company, domínio público, via Wikimedia Commons): agora são **44 fotos** (24 retratos, 16 lugares, 4 mapas), todas no lock com SHA-256. O universo ganhou os retratos novos e o anuário usa nove rostos diferentes.
+- **Comparação particular** (`compare-private.js`) cobre as 16 categorias; as folhas ficam só em `data-private/…/reports/comparacao/`.
+- **Testes:** o teste de renderização de imagem faltante foi atualizado ao fim do xadrez da C0 (vira vazio, não mais xadrez); `colecao-perf` abre os modelos mais pesados em ~220 a 270 ms.
+- Documentação: `MANUTENCAO.md` (estrutura, comandos de terceiros, geradores, lotes, auditoria) e `USO.md` (filtros, busca, variações, conjuntos, novidades).
+
+### Validação
+- `npm test`: 244 passando. `npm run test:e2e`: 55 testes (os 2 que falhavam na primeira rodada, o desempenho da mesa de investigação sob carga e o xadrez do teste antigo, foram corrigidos e rodam limpos). Auditoria: 0 erros. Coleção: ~42 MB (limite 60 MB).
+
+### Pendências reais (do plano inteiro)
+- **Tabletop (parar e perguntar, como manda o plano):** a folha recortada (PNG com alfa) chega com fundo, porque o papel `design` do Tabletop não usa `alphaTest`; a correção mexe nos dois lados do contrato e depende do usuário.
+- C1: o isqueiro ainda não captura o gesto que começa **fora** da folha (queimar a partir da borda), e a sombra pelo alfa só vale no editor (a Leitura ainda usa a caixa).
+- Revisão do usuário: folhas de contato dos lotes C8 a C11 e a comparação com o acervo privado, que o plano reserva ao usuário.
+- Variações: 19 das cerca de 25; os rostos ainda repetem (24 retratos para 150 modelos); o celular, o monitor e a mesa são desenhados com formas simples.
+
+---
+
+## Ferramenta Texto na barra de ferramentas
+
+### Feito
+- **Botão "Texto"** (ícone de T) na barra de ferramentas do palco, logo depois de Selecionar e antes do Pincel, junto com tesoura, rasgar e isqueiro (`TOOLS` em `draw-tools.js`, ícone novo `text` em `icons.js`).
+- **Como funciona:** com a ferramenta ativa, **um clique** cria uma caixa de texto ali e já abre a edição; **arrastar** desenha a caixa com o tamanho do arrasto (contorno tracejado durante o gesto). Ao criar, a ferramenta volta a **Selecionar**, para as letras digitadas não virarem atalhos (a mesma regra da escrita segura da C1b). A faixa de opções traz a dica, e o atalho **T** continua criando uma caixa no meio da folha.
+- `tests/e2e/draw-tools.test.js`: 9 botões, o Texto entre eles, clique cria texto e abre edição, arrastar cria a caixa do tamanho certo, a ferramenta volta a Selecionar e "Rtqx" digitado não aciona nenhuma ferramenta.
+
+---
+
 ## Refinamento Visual e Ergonomia de UI
 
 ### Feito

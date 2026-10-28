@@ -40,9 +40,40 @@ test('draw tools e2e: shapes by dragging, brush stroke paints pixels, Shift appe
     return { x: r.left + x * z, y: r.top + y * z };
   }, [px, py]);
 
-  // Tool bar: eight tools, select active
-  assert.equal(await page.locator('.stage-tool-btn').count(), 8);
+  // Tool bar: nine tools (Texto among them, next to the cutting tools), select active
+  assert.equal(await page.locator('.stage-tool-btn').count(), 9);
+  assert.equal(await page.locator('.stage-tool-btn[data-tool="text"]').count(), 1, 'the Texto tool is in the bar');
   assert.equal(await page.evaluate(() => window.__atelie.editor.stage.getTool()), 'select');
+
+  // Texto tool: a click writes there, a drag draws the box, and the tool goes back to Selecionar
+  await page.click('.stage-tool-btn[data-tool="text"]');
+  assert.equal(await page.evaluate(() => window.__atelie.editor.stage.getTool()), 'text');
+  const t0 = (await layers()).length;
+  const tp = await toScreen(300, 1200);
+  await page.mouse.click(tp.x, tp.y);
+  await page.waitForFunction(() => document.activeElement?.classList.contains('stage-inline-text-editor'));
+  let tl = await layers();
+  assert.equal(tl.length, t0 + 1, 'a click creates a text layer');
+  assert.equal(tl.at(-1).kind, 'text');
+  assert.equal(await page.evaluate(() => window.__atelie.editor.stage.getTool()), 'select', 'the tool goes back to select, so letters are not shortcuts');
+  await page.keyboard.type('Rtqx');
+  assert.equal(await page.evaluate(() => document.querySelector('.stage-inline-text-editor').value), 'Rtqx');
+  await page.keyboard.press('Escape');
+  await page.evaluate(() => document.activeElement?.blur());
+  await page.click('.stage-tool-btn[data-tool="text"]');
+  const d1 = await toScreen(200, 1300);
+  const d2 = await toScreen(700, 1450);
+  await page.mouse.move(d1.x, d1.y);
+  await page.mouse.down();
+  await page.mouse.move(d2.x, d2.y, { steps: 6 });
+  await page.mouse.up();
+  await page.waitForFunction(() => document.activeElement?.classList.contains('stage-inline-text-editor'));
+  tl = await layers();
+  assert.equal(tl.length, t0 + 2, 'a drag creates another text layer');
+  const boxed = tl.at(-1);
+  assert.ok(Math.abs(boxed.width - 500) <= 4 && Math.abs(boxed.height - 150) <= 4, `the dragged box sets the size (${boxed.width}×${boxed.height})`);
+  await page.keyboard.press('Escape');
+  await page.evaluate(() => document.activeElement?.blur());
 
   // Options strip appears with a tool; set a red colour and width 8
   await page.keyboard.press('r');

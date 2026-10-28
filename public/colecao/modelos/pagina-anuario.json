@@ -219,7 +219,7 @@
       "light": "both",
       "image": {
         "src": {
-          "library": "casa-foto-retrato-rapaz-cdv"
+          "library": "casa-foto-retrato-homem-bigode-fino"
         },
         "fit": "cover",
         "crop": null,
@@ -229,7 +229,7 @@
           "grayscale": 1,
           "sepia": 0,
           "brightness": 0,
-          "contrast": 0.12,
+          "contrast": 0.08,
           "saturation": 0,
           "hue": 0,
           "blur": 0,
@@ -293,7 +293,7 @@
       "light": "both",
       "image": {
         "src": {
-          "library": "casa-foto-retrato-mulher-sanfona"
+          "library": "casa-foto-retrato-mulher-coque-alto"
         },
         "fit": "cover",
         "crop": null,
@@ -303,7 +303,7 @@
           "grayscale": 1,
           "sepia": 0,
           "brightness": 0,
-          "contrast": 0.16999999999999998,
+          "contrast": 0.12,
           "saturation": 0,
           "hue": 0,
           "blur": 0,
@@ -367,7 +367,7 @@
       "light": "both",
       "image": {
         "src": {
-          "library": "casa-foto-retrato-homem-bigode-oculos"
+          "library": "casa-foto-retrato-homem-gravata-borboleta"
         },
         "fit": "cover",
         "crop": null,
@@ -377,7 +377,7 @@
           "grayscale": 1,
           "sepia": 0,
           "brightness": 0,
-          "contrast": 0.22,
+          "contrast": 0.16,
           "saturation": 0,
           "hue": 0,
           "blur": 0,
@@ -441,7 +441,7 @@
       "light": "both",
       "image": {
         "src": {
-          "library": "casa-foto-retrato-senhora-capa"
+          "library": "casa-foto-retrato-mulher-gola-alta"
         },
         "fit": "cover",
         "crop": null,
@@ -451,7 +451,7 @@
           "grayscale": 1,
           "sepia": 0,
           "brightness": 0,
-          "contrast": 0.12,
+          "contrast": 0.08,
           "saturation": 0,
           "hue": 0,
           "blur": 0,
@@ -515,7 +515,7 @@
       "light": "both",
       "image": {
         "src": {
-          "library": "casa-foto-retrato-jovem-hussardo"
+          "library": "casa-foto-retrato-homem-colarinho-alto"
         },
         "fit": "cover",
         "crop": null,
@@ -525,7 +525,7 @@
           "grayscale": 1,
           "sepia": 0,
           "brightness": 0,
-          "contrast": 0.16999999999999998,
+          "contrast": 0.12,
           "saturation": 0,
           "hue": 0,
           "blur": 0,
@@ -589,7 +589,7 @@
       "light": "both",
       "image": {
         "src": {
-          "library": "casa-foto-retrato-oficial-sabre"
+          "library": "casa-foto-retrato-mulher-jovem-franja"
         },
         "fit": "cover",
         "crop": null,
@@ -599,7 +599,7 @@
           "grayscale": 1,
           "sepia": 0,
           "brightness": 0,
-          "contrast": 0.22,
+          "contrast": 0.16,
           "saturation": 0,
           "hue": 0,
           "blur": 0,
@@ -663,7 +663,7 @@
       "light": "both",
       "image": {
         "src": {
-          "library": "casa-foto-retrato-mulher-sanfona"
+          "library": "casa-foto-retrato-homem-chapeu-coco"
         },
         "fit": "cover",
         "crop": null,
@@ -673,7 +673,7 @@
           "grayscale": 1,
           "sepia": 0,
           "brightness": 0,
-          "contrast": 0.12,
+          "contrast": 0.08,
           "saturation": 0,
           "hue": 0,
           "blur": 0,
@@ -737,7 +737,7 @@
       "light": "both",
       "image": {
         "src": {
-          "library": "casa-foto-retrato-rapaz-cdv"
+          "library": "casa-foto-retrato-mulher-vestido-escuro"
         },
         "fit": "cover",
         "crop": null,
@@ -747,7 +747,7 @@
           "grayscale": 1,
           "sepia": 0,
           "brightness": 0,
-          "contrast": 0.16999999999999998,
+          "contrast": 0.12,
           "saturation": 0,
           "hue": 0,
           "blur": 0,
@@ -811,7 +811,7 @@
       "light": "both",
       "image": {
         "src": {
-          "library": "casa-foto-retrato-homem-bigode-oculos"
+          "library": "casa-foto-retrato-homem-bigode-grosso"
         },
         "fit": "cover",
         "crop": null,
@@ -821,7 +821,7 @@
           "grayscale": 1,
           "sepia": 0,
           "brightness": 0,
-          "contrast": 0.22,
+          "contrast": 0.16,
           "saturation": 0,
           "hue": 0,
           "blur": 0,

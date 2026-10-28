@@ -864,13 +864,15 @@
         "Corpo",
         "Assinatura"
       ],
+      "texto": "São Paulo, 14 de outubro de 1932 · Prezado Dr. Alencar, · Escrevo-lhe em caráter de extrema urgência a respeito dos documentos encontrados no porão do casarão da família Ramos. Conforme suspeitávamos, os registros da década de 1890 confirmam a transferência clandestina das caixas para o litoral antes do confisco judicial. As anotações marginais indicam um ponto de encontro marcado junto ao antigo farol na noite de lua nova. Peço que destrua este aviso logo após a leitura e mantenha a discrição n",
       "era": "1890",
       "tom": "horror",
       "tags": [
         "carta",
         "manuscrito"
       ],
-      "org": "solar"
+      "org": "solar",
+      "orgNome": "Solar dos Pinhais"
     },
     {
       "id": "casa-tpl-carta-datilografada-anos-50",
@@ -887,6 +889,7 @@
         "Corpo",
         "Assinatura"
       ],
+      "texto": "Ref.: Cargas Especiais — Manifesto Nº 4.819/54 · Santos, 18 de agosto de 1954 · Ao Ilmo. Sr. Delegado Fiscal da Alfândega Edifício da Inspetoria — Praça da República · Temos a honra de comunicar a V. Sa. que o vapor \"Santa Maria\", procedente do porto de Lisboa, atracou no cais 12 às primeiras horas da manhã de hoje. Constam no respectivo manifesto três volumes contendo instrumentos científicos de precisão destinados ao laboratório de pesquisas geológicas desta capital. Solicitamos a gentileza de",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -905,6 +908,7 @@
       "fields": [
         "Texto"
       ],
+      "texto": "Eles já sabem que você pegou a chave. Não volte para o quarto 14 sob nenhuma circunstância. Deixei o pacote com o homem do jornal na esquina da Augusta. Ele sabe o que fazer. Queime isto agora.",
       "era": "hoje",
       "tom": "cotidiano",
       "tags": [
@@ -923,6 +927,7 @@
       "fields": [
         "Texto"
       ],
+      "texto": "Fui até a oficina resolver o problema do freio. Almoço tá no forno (não esquece de desligar!). Volto antes das 17h. Te amo!",
       "era": "hoje",
       "tom": "cotidiano",
       "tags": [
@@ -942,6 +947,7 @@
         "Imagem",
         "Saudação"
       ],
+      "texto": "Lembranças de Paranapiacaba — 1928",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
@@ -962,6 +968,7 @@
         "Destinatário",
         "Endereço"
       ],
+      "texto": "Querida Clara, A neblina aqui não dá trégua nem ao meio-dia. A velha estação parece congelada no tempo. Consegui a pista que buscávamos nos arquivos do telégrafo. Volto no trem das 19h com novidades. · À Sra. Clara Meireles · Rua das Palmeiras, 142 — Apto 4 Bairro Higienópolis — São Paulo / SP",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
@@ -984,12 +991,14 @@
         "Destinatário",
         "Mensagem"
       ],
+      "texto": "ORIGEM: CURITIBA PR · DATA: 24 NOV 1926 — 14:35 HS · DESTINATÁRIO: DR OSWALDO CRUZ FILHO — RUA DO OUVIDOR 88 RIO DE JANEIRO · EXPEDIÇÃO RETORNOU DO VALE STOP ENCONTRARAM ENTRADA DA CAVERNA DESCRITA NO MAPA STOP TRÊS INTEGRANTES HOSPITALIZADOS COM FEBRE DESCONHECIDA STOP ENVIE MEDICAMENTOS E INSTRUÇÕES COM MÁXIMA URGÊNCIA STOP AGUARDO RESPOSTA NO POSTO CENTRAL STOP",
       "era": "1920",
       "tom": "investigação",
       "tags": [
         "telegrama"
       ],
-      "org": "companhia"
+      "org": "companhia",
+      "orgNome": "Companhia Marítima e Comercial do Atlântico"
     },
     {
       "id": "casa-tpl-carta-envelope-frente",
@@ -1004,6 +1013,7 @@
         "Corpo",
         "Assinatura"
       ],
+      "texto": "Meu caro amigo, · Se esta carta chegou às suas mãos, é sinal de que meu pressentimento se confirmou e fui obrigado a me ausentar às pressas. Sob o soalho do meu gabinete, na terceira tábua a contar da estante de carvalho, você encontrará uma caixa de ferro zincado. A chave pequena que lhe entreguei no último outono é a única capaz de abri-la. Guarde os cadernos consigo e não confie em ninguém da congregação. Eles já sabem da discrepância nos registros financeiros e tentarão reaver as anotações a",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
@@ -1023,6 +1033,7 @@
         "Destinatário",
         "Endereço"
       ],
+      "texto": "Ao Excelentíssimo Senhor Dr. Henrique Vasconcellos · Solar dos Pinhais — Estrada Velha de Petrópolis, km 12 Estado do Rio de Janeiro",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
@@ -1045,13 +1056,15 @@
         "Foto",
         "Legenda"
       ],
+      "texto": "MISTERIOSO DESAPARECIMENTO NO VALE DO TIETÊ · Moradores relatam luzes estranhas sobre a colina na madrugada de terça-feira; autoridades policiais abrem inquérito sigiloso. · A delegacia local deslocou três agentes armados para a propriedade ainda nas primeiras horas do dia. O delegado responsável preferiu não emitir comunicado oficial até que a perícia técnica conclua os levantamentos de praxe. Fontes anônimas ligadas ao hospital da comarca afirmam que um viajante foi atendido em estado de choqu",
       "era": "1920",
       "tom": "investigação",
       "tags": [
         "jornal",
         "recorte"
       ],
-      "org": "gazeta"
+      "org": "gazeta",
+      "orgNome": "A Gazeta Metropolitana"
     },
     {
       "id": "casa-tpl-capa-jornal",
@@ -1068,13 +1081,15 @@
         "Texto",
         "Foto"
       ],
+      "texto": "A Gazeta Metropolitana · ANO XXXVIII — Nº 14.205 | SÃO PAULO, QUARTA-FEIRA, 12 DE MAIO DE 1937 | PREÇO: 300 RÉIS · GOVERNO DECRETA ESTADO DE ALERTA APÓS INCÊNDIO NO PORTO · Chamas de proporções gigantescas consumiram na madrugada três armazéns da alfândega no cais do porto. Equipes de bombeiros trabalharam por mais de nove horas ininterruptas para conter as labaredas que ameaçavam depósitos de combustível vizinhos. O prejuízo estimado ultrapassa centenas de contos de réis, e indícios de sabotage",
       "era": "1920",
       "tom": "investigação",
       "tags": [
         "jornal",
         "capa"
       ],
-      "org": "gazeta"
+      "org": "gazeta",
+      "orgNome": "A Gazeta Metropolitana"
     },
     {
       "id": "casa-tpl-obituario",
@@ -1089,13 +1104,15 @@
         "Datas",
         "Texto"
       ],
+      "texto": "Comendador Francisco de Albuquerque e Castro · ★ 18 de Março de 1864 — ✝ 04 de Novembro de 1929 · Sua viúva D. Leonor, seus filhos, genros, noras e netos cumprem o doloroso dever de participar aos parentes e amigos o passamento de seu estremecido esposo, pai, sogro e avô. O féretro sairá da residência da família, na Rua das Laranjeiras nº 88, às 16 horas do dia de hoje, para o Cemitério da Consolação, onde jazem seus antepassados. A família antecipa sinceros agradecimentos a todos quantos compar",
       "era": "1920",
       "tom": "cotidiano",
       "tags": [
         "jornal",
         "obituário"
       ],
-      "org": "gazeta"
+      "org": "gazeta",
+      "orgNome": "A Gazeta Metropolitana"
     },
     {
       "id": "casa-tpl-classificados",
@@ -1108,13 +1125,15 @@
       "fields": [
         "Anúncio em destaque"
       ],
+      "texto": "COMPRA-SE COM URGÊNCIA — Colecionador particular adquire manuscritos e tomos em latim anteriores ao século XVII sobre história oculta e genealogia europeia. Sigilo absoluto garantido. Paga-se qualquer valor em moeda corrente ou ouro. Enviar carta com descrição para Caixa Postal 447 — Agência Central.",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
         "jornal",
         "classificados"
       ],
-      "org": "gazeta"
+      "org": "gazeta",
+      "orgNome": "A Gazeta Metropolitana"
     },
     {
       "id": "casa-tpl-relatorio-policial",
@@ -1131,6 +1150,7 @@
         "Ocorrência",
         "Relato"
       ],
+      "texto": "RELATÓRIO DE INQUÉRITO Nº: 1.042/38 · DATA: 17 DE SETEMBRO DE 1938 · AGENTE RESPONSÁVEL: Inspetor Octávio Bittencourt (Matrícula 4.882) · NATUREZA: Violação de domicílio seguida de homicídio qualificado · Às 23h45 da data de ontem, esta delegacia foi acionada pelos vigias noturnos da estação ferroviária, que informaram ter ouvido disparos e gritos provenientes do depósito da companhia. Ao chegarmos ao local acompanhados de dois soldados da guarnição, encontramos a porta de correr arrombada por m",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -1138,7 +1158,8 @@
         "relatório",
         "formulário"
       ],
-      "org": "delegacia"
+      "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais"
     },
     {
       "id": "casa-tpl-boletim-ocorrencia",
@@ -1154,6 +1175,7 @@
         "Data",
         "Fato"
       ],
+      "texto": "NOTIFICANTE: Gabriel Monteiro de Barros — RG 142.809 NOTIFICADO: Indivíduo desconhecido (alcunha \"O Cicatriz\") · LOCAL DO FATO: Armazém Central, Doca 4, Bairro Portuário · DATA/HORA: 03/06/1942 às 22:30 horas · HISTÓRICO DA OCORRÊNCIA: Comparece a esta delegacia o comunicante supra afirmando que no dia e horário mencionados, ao realizar a conferência dos fardos armazenados no armazém quatro, deparou-se com o portão lateral com o cadeado cerrado por serra manual. No interior do galpão surpreendeu",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -1161,7 +1183,8 @@
         "boletim",
         "formulário"
       ],
-      "org": "delegacia"
+      "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais"
     },
     {
       "id": "casa-tpl-ficha-criminal",
@@ -1178,6 +1201,7 @@
         "Crimes",
         "Observações"
       ],
+      "texto": "NOME: Sebastião Ferreira de Souza · ALCUNHA: \"Tião Navalha\" / \"O Corvo\" · ANTECEDENTES & DELITOS: - 1931: Furto qualificado de valores em agência postal. - 1935: Lesão corporal de natureza grave em motim portuário. - 1939: Suspeito principal no desaparecimento do corretor E. Prado. · OBSERVAÇÕES DO INVESTIGADOR: Indivíduo de alta periculosidade, adepto do uso de disfarces e documentos falsificados. Apresenta comportamento agressivo quando abordado por patrulhas isoladas. Mandado de recaptura exp",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -1185,7 +1209,8 @@
         "ficha",
         "formulário"
       ],
-      "org": "delegacia"
+      "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais"
     },
     {
       "id": "casa-tpl-mandado",
@@ -1201,6 +1226,7 @@
         "Data",
         "Juiz"
       ],
+      "texto": "A QUALQUER OFICIAL DE JUSTIÇA OU AUTORIDADE POLICIAL: MANDA o Meritíssimo Juiz de Direito que, em cumprimento ao presente, dirija-se ao domicílio de Bento de Camargo Bueno, sito à Estrada das Lágrimas nº 305. · MOTIVO DO PROVIMENTO: Proceder à imediata busca e apreensão de todos os livros contábeis, caixas de documentação manuscrita e quaisquer substâncias químicas ou compostos não catalogados que se encontrem ocultos nas dependências do referido imóvel, procedendo à custódia cautelar do citado ",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -1208,7 +1234,8 @@
         "mandado",
         "formulário"
       ],
-      "org": "delegacia"
+      "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais"
     },
     {
       "id": "casa-tpl-laudo-pericial",
@@ -1225,6 +1252,7 @@
         "Data do exame",
         "Perito responsável"
       ],
+      "texto": "LAUDO DE EXAME CADAVÉRICO Nº 874/1935 · EXAMINADO: Indivíduo não identificado (sexo masculino, aprox. 40 anos) · IV — CONCLUSÃO: O perito signatário conclui que a morte decorreu de traumatismo cranioencefálico provocado por ação mecânica de terceiro (homicídio), tendo ocorrido entre 24 e 36 horas antes do início da necropsia. Perito Relator: Dr. Jonas Guimarães (CRM 1.942) · Data do exame: 14/11/1951 · Perito: Dr. Jonas Hernandes",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -1232,7 +1260,8 @@
         "laudo",
         "formulário"
       ],
-      "org": "iml"
+      "org": "iml",
+      "orgNome": "Instituto Médico Legal do Estado"
     },
     {
       "id": "casa-tpl-cartao-evidencia",
@@ -1248,13 +1277,15 @@
         "Local",
         "Responsável"
       ],
+      "texto": "EVIDÊNCIA Nº: EV-1941-088 · DESCRIÇÃO DO ITEM: Adaga cerimonial de empunhadura entalhada em osso, com lâmina oxidada e resíduos orgânicos incrustados. · LOCAL DA COLETA: Porão sob o altar da capela desativada — Vale das Pedras · COLETADO POR: Perito Criminal D. Brandão (Matrícula 7.102)",
       "era": "1980",
       "tom": "investigação",
       "tags": [
         "evidência",
         "formulário"
       ],
-      "org": "delegacia"
+      "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais"
     },
     {
       "id": "casa-tpl-prontuario",
@@ -1271,6 +1302,7 @@
         "Diagnóstico",
         "Médico responsável"
       ],
+      "texto": "PACIENTE: Elias Fagundes da Rocha | IDADE: 47 anos | LEITO: 18-B · ADMISSÃO: 11 de Novembro de 1934 · Paciente deu entrada apresentando confusão mental severa, delírios persecutórios e tremores nas extremidades. Relata ouvir vozes vindas dos espelhos e recusa-se a permanecer no escuro. Temperatura oscilando entre 38.5 e 39.2 graus. Prescrito repouso absoluto, hidratação intravenosa e administração de cloral para sedação noturna. Manter vigilância constante. · Diagnóstico: neurastenia aguda com d",
       "era": "1950",
       "tom": "horror",
       "tags": [
@@ -1278,7 +1310,8 @@
         "prontuário",
         "formulário"
       ],
-      "org": "sanatorio"
+      "org": "sanatorio",
+      "orgNome": "Sanatório da Serra do Mar"
     },
     {
       "id": "casa-tpl-receita-medica",
@@ -1295,6 +1328,7 @@
         "Posologia",
         "Validade"
       ],
+      "texto": "DR. MARCELO NOGUEIRA PINTO MÉDICO CLINISTA & ESPECIALISTA EM MOLÉSTIAS NERVOSAS Consultório: Rua Barão de Itapetininga, 92 — 2º andar · Para o Sr.: Álvaro Diniz · 1) Brometo de potássio ................. 20 g Xarope simples q.s.p. .............. 150 ml Tomar uma colher das de sopa às refeições e ao deitar. 2) Tintura de valeriana ................ 30 ml Diluir 20 gotas em meio copo de água fervida ao menor sinal de agitação ou angústia. · Tomar uma colher após as refeições, por dez dias. · Válida",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
@@ -1317,6 +1351,7 @@
         "Causa",
         "Médico"
       ],
+      "texto": "CERTIFICO que, no Livro C-14 de Registro de Óbitos, às folhas 88, consta o assento do falecimento de: SEBASTIÃO CORRÊA DE AZEVEDO · Ocorrido no dia 07 de Julho de 1923, às 14 horas e 30 minutos, na Santa Casa de Misericórdia, com a idade de 52 anos, do sexo masculino, casado, de profissão comerciante. · CAUSA DA MORTE: Colapso cardiorrespiratório fulminante decorrente de choque séptico e ferimento pérfuro-contuso infectado no membro superior direito. · MÉDICO ATESTANTE: Dr. Alberto Fontoura (CRM",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -1324,7 +1359,8 @@
         "cartório",
         "formulário"
       ],
-      "org": "cartorio"
+      "org": "cartorio",
+      "orgNome": "Cartório do 2º Ofício de Notas de Vila Aurora"
     },
     {
       "id": "casa-tpl-internacao-sanatorio",
@@ -1340,6 +1376,7 @@
         "Diagnóstico",
         "Observações"
       ],
+      "texto": "PACIENTE: Bernardo de Vasconcelos Prado IDADE: 39 anos | SEXO: Masculino ESTADO CIVIL: Solteiro | PROFISSÃO: Antiquário DATA DA ADMISSÃO: 14 de Novembro de 1928 · DIAGNÓSTICO PRELIMINAR: Quadro agudo de mania com alucinações auditivas e visuais persistentes. O paciente insiste que \"as estrelas estão alinhadas fora do eixo da abóbada\" e apresenta fotofobia extrema, além de comportamento autoflagelante quando impedido de desenhar símbolos repetitivos nas paredes. · OBSERVAÇÕES E REGIME DE ISOLAMEN",
       "era": "1920",
       "tom": "horror",
       "tags": [
@@ -1347,7 +1384,8 @@
         "internação",
         "formulário"
       ],
-      "org": "sanatorio"
+      "org": "sanatorio",
+      "orgNome": "Sanatório da Serra do Mar"
     },
     {
       "id": "casa-tpl-pagina-grimorio",
@@ -1362,6 +1400,7 @@
         "Texto",
         "Nota na margem"
       ],
+      "texto": "CAPITULUM VII — DE VINCULIS UMBRARUM · Quando as constelações septentrionais declinarem além do horizonte setentrional, traça-se o tríplice anel de sal e cinza consagrada sobre a laje de pedra nua. Nenhuma voz mortal poderá proferir os nove nomes inomináveis antes que o incenso de mirra e absinto queime até a última brasa. O círculo não tolera hesitação: qualquer fenda na barreira permitirá que o sopro abissal transpasse a carne do conjurador e devore suas lembranças terrestres. · Cuidado! A ter",
       "era": "medieval",
       "tom": "horror",
       "tags": [
@@ -1380,6 +1419,7 @@
       "fields": [
         "Instruções"
       ],
+      "texto": "1. Acenda quatro velas negras nos pontos cardeais antes da meia-noite. 2. Derrame três gotas de vinho tinto sobre o símbolo central entoando o cântico. 3. Não cruze as linhas sob nenhuma hipótese antes do primeiro cantar do galo. 4. Para dissipar a presença, extinga as velas em sentido anti-horário com os dedos úmidos.",
       "era": "medieval",
       "tom": "horror",
       "tags": [
@@ -1400,6 +1440,7 @@
         "Texto",
         "Mensagem oculta"
       ],
+      "texto": "14 de Novembro — Entrada XVII · As reuniões na cripta sob o convento estão cada vez mais concorridas. Ontem compareceram mais de vinte irmãos, todos encapuzados e em silêncio absoluto. O padre Bento liderou as preces em latim arcaico enquanto o cálice de bronze passava de mão em mão. Todos bebemos. O gosto era amargo e ferroso, como água colhida de poço profundo. Depois que as tochas foram apagadas, ouvimos os sussurros novamente vindos do fundo da nave. Não eram vozes humanas. Sei que não posso",
       "era": "1920",
       "tom": "horror",
       "tags": [
@@ -1407,7 +1448,8 @@
         "diário",
         "luz negra"
       ],
-      "org": "irmandade"
+      "org": "irmandade",
+      "orgNome": "Irmandade da Lua Tríplice"
     },
     {
       "id": "casa-tpl-pergaminho-selo",
@@ -1421,6 +1463,7 @@
         "Título",
         "Texto"
       ],
+      "texto": "PACTUM SECRETUM · Pelo presente instrumento solene, os abaixo assinados comprometem-se por honra e sangue a guardar segredo perpétuo a respeito dos acontecimentos transcorridos na Abadia de São Gabriel no solstício de inverno. Nenhum relato, diário ou desenho poderá ser transmitido a olhos profanos. A quebra deste juramento acarretará a maldição perpétua sobre a estirpe do transgressor, que será banido da ordem e considerado indigno perante os irmãos.",
       "era": "medieval",
       "tom": "fantasia",
       "tags": [
@@ -1441,6 +1484,7 @@
         "Texto",
         "Assinatura"
       ],
+      "texto": "Por Ordem de Sua Majestade o Rei · FAZEMOS SABER a todos os nobres vassalos, magistrados, alcaides e habitantes deste reino que, em vista das contínuas hostilidades nas fronteiras orientais, fica instituído toque de recolher obrigatório a partir do toque das sinetas ao pôr do sol. Toda e qualquer pessoa encontrada portando armas ou artefatos arcanos não autorizados nas vias públicas será recolhida às masmorras da cidadela até posterior julgamento pela corte real. · Carlos IV — Pela Graça de Deus",
       "era": "medieval",
       "tom": "fantasia",
       "tags": [
@@ -1460,6 +1504,7 @@
         "Mapa",
         "Legenda"
       ],
+      "texto": "CARTA NÁUTICA DAS ILHAS SOMBRIAS — ROTA PROIBIDA (1644)",
       "era": "medieval",
       "tom": "fantasia",
       "tags": [
@@ -1480,6 +1525,7 @@
         "Crime",
         "Recompensa"
       ],
+      "texto": "VALENTIN \"OLHO DE VIDRO\" MORAES · Acusado de assalto armado à diligência pagadora da mineradora, homicídio qualificado de dois patrulheiros e quebra de custódia na cadeia da comarca. Indivíduo perigoso, anda armado de pistola dupla. · RECOMPENSA: 5.000$000 RÉIS",
       "era": "1890",
       "tom": "fantasia",
       "tags": [
@@ -1501,6 +1547,7 @@
         "Total",
         "Data"
       ],
+      "texto": "CASA DAS MÁQUINAS & FERRAGENS S.A. Rua Florêncio de Abreu, 114 — Tel.: 2-4419 · QTDE DISCRIMINAÇÃO VALOR --------------------------------------- 01 Corrente de ferro zincada 45$000 02 Cadeados de latão 40mm 30$000 01 Alavanca pé de cabra 25$000 01 Lanterna a querosene 18$000 05 Metros de corda de cânhamo 12$500 · TOTAL A PAGAR: ........... Cr$ 130$500 FORMA DE PAGAMENTO: ........... DINHEIRO · DATA: 28/09/1946 HORA: 11:24 CUPOM: 04.912",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
@@ -1522,6 +1569,7 @@
         "Data",
         "Assento"
       ],
+      "texto": "DE: ESTAÇÃO DA LUZ (SÃO PAULO) · PARA: ESTAÇÃO CENTRAL (RIO DE JANEIRO) · DATA: 12 OUT 1933 — TREM NOTURNO (21:15h) · VAGÃO LEITO: 04 POLTRONA / CAMA: 12",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
@@ -1542,6 +1590,7 @@
         "Ofício",
         "Endereço"
       ],
+      "texto": "Dr. Arthur de Menezes Canto · ADVOGADO & CONSULTOR JURÍDICO Especialista em Sucessões e Direito Marítimo · Edifício Triângulo, 5º andar — Salas 51/52 Largo de São Bento — São Paulo | Tel.: 2-1988",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
@@ -1561,6 +1610,7 @@
         "Data",
         "Poltrona"
       ],
+      "texto": "A ÓPERA DOS ESPECTROS Grande Companhia Lírica Italiana · SÁBADO, 18 DE NOVEMBRO DE 1928 — ÀS 20:30 HORAS · SETOR: PLATEIA NOBRE | FILA: D | POLTRONA: 14",
       "era": "1920",
       "tom": "cotidiano",
       "tags": [
@@ -1580,6 +1630,7 @@
         "Foto",
         "Legenda"
       ],
+      "texto": "Férias na casa do lago — Janeiro de 1974",
       "era": "1980",
       "tom": "cotidiano",
       "tags": [
@@ -1599,6 +1650,7 @@
       "fields": [
         "Dedicatória"
       ],
+      "texto": "Para que você nunca se esqueça dos dias ensolarados antes de tudo mudar. Com todo o meu amor, Marina 15/01/1974",
       "era": "1980",
       "tom": "cotidiano",
       "tags": [
@@ -1619,6 +1671,7 @@
         "Contato",
         "Mensagens"
       ],
+      "texto": "Marcos Vasconcelos online · Sim, fiz o dump completo da base num pendrive encriptado. Eles sabem que houve vazamento interno e chamaram a auditoria.",
       "era": "hoje",
       "tom": "cotidiano",
       "tags": [
@@ -1640,6 +1693,7 @@
         "Assunto",
         "Corpo"
       ],
+      "texto": "De: carlos.mendonca@nucleo-pesquisa.org · Para: beatriz.lima@laboratorios-bio.com.br · Assunto: URGENTE: Anomalia nos testes de sequenciamento — Amostra B-12 · Beatriz, Concluímos a terceira rodada de análise espectral na amostra recolhida no poço da fazenda. Os resultados são impossíveis sob o modelo biológico padrão. A cadeia de nucleotídeos replica-se em temperatura ambiente sem necessidade de polimerase externa, e observamos emissão de luminescência coerente no comprimento de onda de 520 nm.",
       "era": "hoje",
       "tom": "investigação",
       "tags": [
@@ -1658,713 +1712,13 @@
       "fields": [
         "Texto"
       ],
+      "texto": "SYSTEM BOOT SEQUENCE — VAX/VMS V4.7 (NODE ABN-01) COPYRIGHT (C) 1986 DIGITAL EQUIPMENT CORPORATION %SYS-I-LOAD, LOADING KERNEL MODULES... [OK] %NET-I-UP, DECNET INTERFACE ONLINE AT IP 10.14.88.2 LOGIN: SEC_ADMIN PASSWORD: ********** ACCESS GRANTED — CLEARANCE LEVEL: OMEGA DATABASE QUERY: SELECT * FROM PROJECT_CHRONOS WHERE STATUS=\"ACTIVE\" ------------------------------------------------------------------------- SUBJECT ID: CHR-8812 STATUS: CONTAINMENT BREACH DETECTED AT 02:41:09 LAST KNOWN COORD",
       "era": "1980",
       "tom": "sci-fi",
       "tags": [
         "terminal",
         "tela"
       ]
-    },
-    {
-      "id": "casa-foto-retrato-homem-bigode-oculos",
-      "kind": "element",
-      "name": "Retrato · homem de bigode e óculos",
-      "category": "Fotografias",
-      "subcategory": "Retratos",
-      "tags": [
-        "foto",
-        "retrato",
-        "pessoa"
-      ],
-      "file": "fotos/casa-foto-retrato-homem-bigode-oculos.webp",
-      "preview": "previews/casa-foto-retrato-homem-bigode-oculos.webp",
-      "width": 697,
-      "height": 900,
-      "license": "PD-1923, PD-US-expired"
-    },
-    {
-      "id": "casa-foto-retrato-rapaz-cdv",
-      "kind": "element",
-      "name": "Retrato · rapaz de cartão de visita",
-      "category": "Fotografias",
-      "subcategory": "Retratos",
-      "tags": [
-        "foto",
-        "retrato",
-        "pessoa"
-      ],
-      "file": "fotos/casa-foto-retrato-rapaz-cdv.webp",
-      "preview": "previews/casa-foto-retrato-rapaz-cdv.webp",
-      "width": 488,
-      "height": 900,
-      "license": "CC0"
-    },
-    {
-      "id": "casa-foto-retrato-senhora-capa",
-      "kind": "element",
-      "name": "Retrato · senhora idosa de capa",
-      "category": "Fotografias",
-      "subcategory": "Retratos",
-      "tags": [
-        "foto",
-        "retrato",
-        "pessoa"
-      ],
-      "file": "fotos/casa-foto-retrato-senhora-capa.webp",
-      "preview": "previews/casa-foto-retrato-senhora-capa.webp",
-      "width": 584,
-      "height": 900,
-      "license": "PD-old-70"
-    },
-    {
-      "id": "casa-foto-retrato-jovem-hussardo",
-      "kind": "element",
-      "name": "Retrato · jovem de uniforme",
-      "category": "Fotografias",
-      "subcategory": "Retratos",
-      "tags": [
-        "foto",
-        "retrato",
-        "pessoa"
-      ],
-      "file": "fotos/casa-foto-retrato-jovem-hussardo.webp",
-      "preview": "previews/casa-foto-retrato-jovem-hussardo.webp",
-      "width": 812,
-      "height": 900,
-      "license": "PD-1923, PD-US-expired"
-    },
-    {
-      "id": "casa-foto-retrato-oficial-sabre",
-      "kind": "element",
-      "name": "Retrato · oficial de sabre",
-      "category": "Fotografias",
-      "subcategory": "Retratos",
-      "tags": [
-        "foto",
-        "retrato",
-        "pessoa"
-      ],
-      "file": "fotos/casa-foto-retrato-oficial-sabre.webp",
-      "preview": "previews/casa-foto-retrato-oficial-sabre.webp",
-      "width": 831,
-      "height": 900,
-      "license": "PD-1923, PD-US-expired"
-    },
-    {
-      "id": "casa-foto-retrato-mulher-sanfona",
-      "kind": "element",
-      "name": "Retrato · mulher com sanfona",
-      "category": "Fotografias",
-      "subcategory": "Retratos",
-      "tags": [
-        "foto",
-        "retrato",
-        "pessoa"
-      ],
-      "file": "fotos/casa-foto-retrato-mulher-sanfona.webp",
-      "preview": "previews/casa-foto-retrato-mulher-sanfona.webp",
-      "width": 900,
-      "height": 851,
-      "license": "CC0"
-    },
-    {
-      "id": "casa-foto-lugar-rua-torre",
-      "kind": "element",
-      "name": "Lugar · rua com torre de igreja",
-      "category": "Fotografias",
-      "subcategory": "Lugares",
-      "tags": [
-        "foto",
-        "lugar",
-        "cena"
-      ],
-      "file": "fotos/casa-foto-lugar-rua-torre.webp",
-      "preview": "previews/casa-foto-lugar-rua-torre.webp",
-      "width": 900,
-      "height": 582,
-      "license": "PD-1923, PD-US-expired"
-    },
-    {
-      "id": "casa-foto-lugar-fabrica-obra",
-      "kind": "element",
-      "name": "Lugar · fábrica em construção",
-      "category": "Fotografias",
-      "subcategory": "Lugares",
-      "tags": [
-        "foto",
-        "lugar",
-        "cena"
-      ],
-      "file": "fotos/casa-foto-lugar-fabrica-obra.webp",
-      "preview": "previews/casa-foto-lugar-fabrica-obra.webp",
-      "width": 900,
-      "height": 770,
-      "license": "PD-1923, PD-US-expired"
-    },
-    {
-      "id": "casa-foto-lugar-usina-acucar",
-      "kind": "element",
-      "name": "Lugar · usina de açúcar",
-      "category": "Fotografias",
-      "subcategory": "Lugares",
-      "tags": [
-        "foto",
-        "lugar",
-        "cena"
-      ],
-      "file": "fotos/casa-foto-lugar-usina-acucar.webp",
-      "preview": "previews/casa-foto-lugar-usina-acucar.webp",
-      "width": 900,
-      "height": 623,
-      "license": "PD-1923, PD-US-expired"
-    },
-    {
-      "id": "casa-foto-lugar-rio-obra",
-      "kind": "element",
-      "name": "Lugar · rio e obra de fábrica",
-      "category": "Fotografias",
-      "subcategory": "Lugares",
-      "tags": [
-        "foto",
-        "lugar",
-        "cena"
-      ],
-      "file": "fotos/casa-foto-lugar-rio-obra.webp",
-      "preview": "previews/casa-foto-lugar-rio-obra.webp",
-      "width": 667,
-      "height": 900,
-      "license": "PD-1923, PD-US-expired"
-    },
-    {
-      "id": "casa-foto-lugar-casarao-1895",
-      "kind": "element",
-      "name": "Lugar · casarão de fazenda (1895)",
-      "category": "Fotografias",
-      "subcategory": "Lugares",
-      "tags": [
-        "foto",
-        "lugar",
-        "cena"
-      ],
-      "file": "fotos/casa-foto-lugar-casarao-1895.webp",
-      "preview": "previews/casa-foto-lugar-casarao-1895.webp",
-      "width": 900,
-      "height": 499,
-      "license": "PD-1923, PD-US-expired"
-    },
-    {
-      "id": "casa-foto-lugar-aldeia-igreja",
-      "kind": "element",
-      "name": "Lugar · aldeia com igreja",
-      "category": "Fotografias",
-      "subcategory": "Lugares",
-      "tags": [
-        "foto",
-        "lugar",
-        "cena"
-      ],
-      "file": "fotos/casa-foto-lugar-aldeia-igreja.webp",
-      "preview": "previews/casa-foto-lugar-aldeia-igreja.webp",
-      "width": 900,
-      "height": 705,
-      "license": "PD-1923, PD-US-expired"
-    },
-    {
-      "id": "casa-foto-lugar-matriz-coluna",
-      "kind": "element",
-      "name": "Lugar · igreja matriz e coluna",
-      "category": "Fotografias",
-      "subcategory": "Lugares",
-      "tags": [
-        "foto",
-        "lugar",
-        "cena"
-      ],
-      "file": "fotos/casa-foto-lugar-matriz-coluna.webp",
-      "preview": "previews/casa-foto-lugar-matriz-coluna.webp",
-      "width": 863,
-      "height": 900,
-      "license": "PD-1923, PD-US-expired"
-    },
-    {
-      "id": "casa-foto-mapa-londres-1890",
-      "kind": "element",
-      "name": "Mapa · Londres (1890)",
-      "category": "Fotografias",
-      "subcategory": "Mapas",
-      "tags": [
-        "foto",
-        "mapa",
-        "antigo"
-      ],
-      "file": "fotos/casa-foto-mapa-londres-1890.webp",
-      "preview": "previews/casa-foto-mapa-londres-1890.webp",
-      "width": 900,
-      "height": 690,
-      "license": "PD-old-auto-expired"
-    },
-    {
-      "id": "casa-foto-mapa-fortificacoes-1816",
-      "kind": "element",
-      "name": "Mapa · cidade e fortificações (1816)",
-      "category": "Fotografias",
-      "subcategory": "Mapas",
-      "tags": [
-        "foto",
-        "mapa",
-        "antigo"
-      ],
-      "file": "fotos/casa-foto-mapa-fortificacoes-1816.webp",
-      "preview": "previews/casa-foto-mapa-fortificacoes-1816.webp",
-      "width": 900,
-      "height": 724,
-      "license": "PD-old-100"
-    },
-    {
-      "id": "casa-foto-mapa-amsterda-1835",
-      "kind": "element",
-      "name": "Mapa · Amsterdã (1835)",
-      "category": "Fotografias",
-      "subcategory": "Mapas",
-      "tags": [
-        "foto",
-        "mapa",
-        "antigo"
-      ],
-      "file": "fotos/casa-foto-mapa-amsterda-1835.webp",
-      "preview": "previews/casa-foto-mapa-amsterda-1835.webp",
-      "width": 900,
-      "height": 731,
-      "license": "PD-Art, PD-old"
-    },
-    {
-      "id": "casa-foto-mapa-singapura-1893",
-      "kind": "element",
-      "name": "Mapa · porto colonial (1893)",
-      "category": "Fotografias",
-      "subcategory": "Mapas",
-      "tags": [
-        "foto",
-        "mapa",
-        "antigo"
-      ],
-      "file": "fotos/casa-foto-mapa-singapura-1893.webp",
-      "preview": "previews/casa-foto-mapa-singapura-1893.webp",
-      "width": 900,
-      "height": 698,
-      "license": "PD-old-70"
-    },
-    {
-      "id": "casa-scan-paper001",
-      "kind": "element",
-      "name": "Escaneado · Papel branco liso",
-      "category": "Papéis",
-      "subcategory": "Escaneados",
-      "tags": [
-        "papel",
-        "escaneado",
-        "fibra",
-        "branco"
-      ],
-      "file": "papeis/escaneados/casa-scan-paper001.webp",
-      "preview": "previews/casa-scan-paper001.webp",
-      "width": 2048,
-      "height": 1201,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-scan-paper002",
-      "kind": "element",
-      "name": "Escaneado · Papel pardo de embrulho",
-      "category": "Papéis",
-      "subcategory": "Escaneados",
-      "tags": [
-        "papel",
-        "escaneado",
-        "fibra",
-        "pardo"
-      ],
-      "file": "papeis/escaneados/casa-scan-paper002.webp",
-      "preview": "previews/casa-scan-paper002.webp",
-      "width": 1588,
-      "height": 2048,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-scan-paper003",
-      "kind": "element",
-      "name": "Escaneado · Papel branco vincado",
-      "category": "Papéis",
-      "subcategory": "Escaneados",
-      "tags": [
-        "papel",
-        "escaneado",
-        "fibra",
-        "vincado"
-      ],
-      "file": "papeis/escaneados/casa-scan-paper003.webp",
-      "preview": "previews/casa-scan-paper003.webp",
-      "width": 2048,
-      "height": 2048,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-scan-paper004",
-      "kind": "element",
-      "name": "Escaneado · Papel pardo de pacote",
-      "category": "Papéis",
-      "subcategory": "Escaneados",
-      "tags": [
-        "papel",
-        "escaneado",
-        "fibra",
-        "pardo"
-      ],
-      "file": "papeis/escaneados/casa-scan-paper004.webp",
-      "preview": "previews/casa-scan-paper004.webp",
-      "width": 2048,
-      "height": 2048,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-scan-paper005",
-      "kind": "element",
-      "name": "Escaneado · Papel pardo ondulado",
-      "category": "Papéis",
-      "subcategory": "Escaneados",
-      "tags": [
-        "papel",
-        "escaneado",
-        "fibra",
-        "pardo"
-      ],
-      "file": "papeis/escaneados/casa-scan-paper005.webp",
-      "preview": "previews/casa-scan-paper005.webp",
-      "width": 2048,
-      "height": 2048,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-scan-paper006",
-      "kind": "element",
-      "name": "Escaneado · Papel bege",
-      "category": "Papéis",
-      "subcategory": "Escaneados",
-      "tags": [
-        "papel",
-        "escaneado",
-        "fibra",
-        "bege"
-      ],
-      "file": "papeis/escaneados/casa-scan-paper006.webp",
-      "preview": "previews/casa-scan-paper006.webp",
-      "width": 2048,
-      "height": 2048,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-scan-cardboard001",
-      "kind": "element",
-      "name": "Escaneado · Papelão rasgado",
-      "category": "Papéis",
-      "subcategory": "Escaneados",
-      "tags": [
-        "papel",
-        "escaneado",
-        "fibra",
-        "papelão"
-      ],
-      "file": "papeis/escaneados/casa-scan-cardboard001.webp",
-      "preview": "previews/casa-scan-cardboard001.webp",
-      "width": 2048,
-      "height": 2048,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-scan-cardboard002",
-      "kind": "element",
-      "name": "Escaneado · Papelão limpo",
-      "category": "Papéis",
-      "subcategory": "Escaneados",
-      "tags": [
-        "papel",
-        "escaneado",
-        "fibra",
-        "papelão"
-      ],
-      "file": "papeis/escaneados/casa-scan-cardboard002.webp",
-      "preview": "previews/casa-scan-cardboard002.webp",
-      "width": 2048,
-      "height": 2048,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-scan-cardboard003",
-      "kind": "element",
-      "name": "Escaneado · Papelão rompido",
-      "category": "Papéis",
-      "subcategory": "Escaneados",
-      "tags": [
-        "papel",
-        "escaneado",
-        "fibra",
-        "papelão"
-      ],
-      "file": "papeis/escaneados/casa-scan-cardboard003.webp",
-      "preview": "previews/casa-scan-cardboard003.webp",
-      "width": 2048,
-      "height": 2048,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-scan-cardboard004",
-      "kind": "element",
-      "name": "Escaneado · Papelão liso",
-      "category": "Papéis",
-      "subcategory": "Escaneados",
-      "tags": [
-        "papel",
-        "escaneado",
-        "fibra",
-        "papelão"
-      ],
-      "file": "papeis/escaneados/casa-scan-cardboard004.webp",
-      "preview": "previews/casa-scan-cardboard004.webp",
-      "width": 2048,
-      "height": 2048,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-superficie-cork001",
-      "kind": "element",
-      "name": "Superfície · Cortiça fina",
-      "category": "Texturas",
-      "subcategory": "Superfícies",
-      "tags": [
-        "superfície",
-        "material",
-        "cortiça"
-      ],
-      "file": "texturas/superficies/casa-superficie-cork001.webp",
-      "preview": "previews/casa-superficie-cork001.webp",
-      "width": 1024,
-      "height": 1024,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-superficie-cork002",
-      "kind": "element",
-      "name": "Superfície · Cortiça grossa",
-      "category": "Texturas",
-      "subcategory": "Superfícies",
-      "tags": [
-        "superfície",
-        "material",
-        "cortiça"
-      ],
-      "file": "texturas/superficies/casa-superficie-cork002.webp",
-      "preview": "previews/casa-superficie-cork002.webp",
-      "width": 1024,
-      "height": 1024,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-superficie-leather004",
-      "kind": "element",
-      "name": "Superfície · Couro marrom",
-      "category": "Texturas",
-      "subcategory": "Superfícies",
-      "tags": [
-        "superfície",
-        "material",
-        "couro"
-      ],
-      "file": "texturas/superficies/casa-superficie-leather004.webp",
-      "preview": "previews/casa-superficie-leather004.webp",
-      "width": 1024,
-      "height": 1024,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-superficie-leather026",
-      "kind": "element",
-      "name": "Superfície · Couro escuro",
-      "category": "Texturas",
-      "subcategory": "Superfícies",
-      "tags": [
-        "superfície",
-        "material",
-        "couro"
-      ],
-      "file": "texturas/superficies/casa-superficie-leather026.webp",
-      "preview": "previews/casa-superficie-leather026.webp",
-      "width": 1024,
-      "height": 1024,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-superficie-wood026",
-      "kind": "element",
-      "name": "Superfície · Madeira clara",
-      "category": "Texturas",
-      "subcategory": "Superfícies",
-      "tags": [
-        "superfície",
-        "material",
-        "madeira"
-      ],
-      "file": "texturas/superficies/casa-superficie-wood026.webp",
-      "preview": "previews/casa-superficie-wood026.webp",
-      "width": 1024,
-      "height": 1024,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-superficie-wood060",
-      "kind": "element",
-      "name": "Superfície · Madeira escura",
-      "category": "Texturas",
-      "subcategory": "Superfícies",
-      "tags": [
-        "superfície",
-        "material",
-        "madeira"
-      ],
-      "file": "texturas/superficies/casa-superficie-wood060.webp",
-      "preview": "previews/casa-superficie-wood060.webp",
-      "width": 1024,
-      "height": 1024,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-superficie-fabric034",
-      "kind": "element",
-      "name": "Superfície · Feltro",
-      "category": "Texturas",
-      "subcategory": "Superfícies",
-      "tags": [
-        "superfície",
-        "material",
-        "feltro"
-      ],
-      "file": "texturas/superficies/casa-superficie-fabric034.webp",
-      "preview": "previews/casa-superficie-fabric034.webp",
-      "width": 1024,
-      "height": 1024,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-superficie-metal032",
-      "kind": "element",
-      "name": "Superfície · Metal riscado",
-      "category": "Texturas",
-      "subcategory": "Superfícies",
-      "tags": [
-        "superfície",
-        "material",
-        "metal"
-      ],
-      "file": "texturas/superficies/casa-superficie-metal032.webp",
-      "preview": "previews/casa-superficie-metal032.webp",
-      "width": 1024,
-      "height": 1024,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-micro-smear001",
-      "kind": "element",
-      "name": "Microtextura · Borrões de dedo",
-      "category": "Texturas",
-      "subcategory": "Microtexturas",
-      "tags": [
-        "microtextura",
-        "sobreposição"
-      ],
-      "file": "texturas/micro/casa-micro-smear001.webp",
-      "preview": "previews/casa-micro-smear001.webp",
-      "width": 1024,
-      "height": 941,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-micro-scratches001",
-      "kind": "element",
-      "name": "Microtextura · Riscos A",
-      "category": "Texturas",
-      "subcategory": "Microtexturas",
-      "tags": [
-        "microtextura",
-        "sobreposição"
-      ],
-      "file": "texturas/micro/casa-micro-scratches001.webp",
-      "preview": "previews/casa-micro-scratches001.webp",
-      "width": 1024,
-      "height": 1024,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-micro-scratches002",
-      "kind": "element",
-      "name": "Microtextura · Riscos B",
-      "category": "Texturas",
-      "subcategory": "Microtexturas",
-      "tags": [
-        "microtextura",
-        "sobreposição"
-      ],
-      "file": "texturas/micro/casa-micro-scratches002.webp",
-      "preview": "previews/casa-micro-scratches002.webp",
-      "width": 1024,
-      "height": 1024,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-micro-scratches003",
-      "kind": "element",
-      "name": "Microtextura · Riscos C",
-      "category": "Texturas",
-      "subcategory": "Microtexturas",
-      "tags": [
-        "microtextura",
-        "sobreposição"
-      ],
-      "file": "texturas/micro/casa-micro-scratches003.webp",
-      "preview": "previews/casa-micro-scratches003.webp",
-      "width": 1024,
-      "height": 1024,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-micro-scratches004",
-      "kind": "element",
-      "name": "Microtextura · Riscos D",
-      "category": "Texturas",
-      "subcategory": "Microtexturas",
-      "tags": [
-        "microtextura",
-        "sobreposição"
-      ],
-      "file": "texturas/micro/casa-micro-scratches004.webp",
-      "preview": "previews/casa-micro-scratches004.webp",
-      "width": 1024,
-      "height": 1024,
-      "license": "CC0-1.0"
-    },
-    {
-      "id": "casa-micro-scratches005",
-      "kind": "element",
-      "name": "Microtextura · Riscos E",
-      "category": "Texturas",
-      "subcategory": "Microtexturas",
-      "tags": [
-        "microtextura",
-        "sobreposição"
-      ],
-      "file": "texturas/micro/casa-micro-scratches005.webp",
-      "preview": "previews/casa-micro-scratches005.webp",
-      "width": 1024,
-      "height": 1024,
-      "license": "CC0-1.0"
     },
     {
       "id": "casa-papel-oficio-branco-novo",
@@ -9863,6 +9217,7 @@
         "Local",
         "Depoimento"
       ],
+      "texto": "Joaquim Pereira Dutra, 52 anos, vigia noturno · 03 de abril de 1954 · Marta Quintanilha · Sala de oitivas da Delegacia, Praça Velha, 120 · Aos três dias do mês de abril de mil novecentos e cinquenta e quatro, perante a autoridade policial, compareceu o depoente acima qualificado, que, devidamente compromissado, declarou o seguinte: que trabalha como vigia no Solar dos Pinhais há onze anos; que na noite de 14 de março, por volta das vinte e três horas, ouviu passos no porão, embora a porta estive",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -9870,7 +9225,9 @@
         "depoimento",
         "formulário"
       ],
-      "org": "delegacia"
+      "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-auto-apreensao",
@@ -9891,6 +9248,7 @@
         "Qtd.",
         "Estado"
       ],
+      "texto": "AA-0417/72 · 09 de agosto de 1972 · Solar dos Pinhais, porão, Vila Aurora · Inspetor Heitor Barroso · Dalva Nunes · 01 02 03 04 05 · Caderno de capa preta, 48 folhas, com anotações Chave de ferro, cabo em argola, etiqueta \"Porão\" Fotografias em preto e branco, 12 por 9 cm Vela de sebo, parcialmente consumida Envelope pardo lacrado, sem remetente · 1 1 6 3 1 · Regular Bom Amareladas Usada Lacre intacto",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -9898,7 +9256,9 @@
         "apreensão",
         "formulário"
       ],
-      "org": "delegacia"
+      "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-ficha-desaparecido",
@@ -9914,6 +9274,7 @@
         "Idade",
         "Visto por último"
       ],
+      "texto": "HELENA MARQUES DE ALENCAR · 24 anos · 1,62 m · cabelos castanhos · olhos verdes Cicatriz pequena no queixo. Usava casaco verde e brincos de pérola. · Vista pela última vez em 14 de março, às 22h, na saída do Teatro Municipal de Vila Aurora.",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -9921,7 +9282,9 @@
         "desaparecido",
         "cartaz"
       ],
-      "org": "delegacia"
+      "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-relatorio-vigilancia",
@@ -9941,6 +9304,7 @@
         "Fotos",
         "Foto 2"
       ],
+      "texto": "Cássio Prado, matrícula 2218 · Sr. R. T. M. (codinome \"Maleta\") · 12 e 13 de junho de 1984 · 21:05 21:22 21:48 22:31 23:10 · Rua das Acácias, 88 Ponto de ônibus, linha 4 Armazém da Rua do Porto Armazém da Rua do Porto Armazém da Rua do Porto · Alvo sai de casa com maleta escura Aguarda 10 min; olha o relógio Entra pela porta lateral Duas pessoas chegam de carro Luz do segundo andar apaga",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -9948,7 +9312,9 @@
         "vigilância",
         "formulário"
       ],
-      "org": "delegacia"
+      "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-quadro-investigacao",
@@ -9966,13 +9332,15 @@
         "Foto 4",
         "Notas"
       ],
+      "texto": "CASO SOLAR DOS PINHAIS · quem tinha a chave do porão?",
       "era": "hoje",
       "tom": "investigação",
       "tags": [
         "investigação",
         "composição",
         "quadro"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-laudo-necropsia",
@@ -9989,6 +9357,7 @@
         "Achados",
         "Causa"
       ],
+      "texto": "NEC-1.386/63 · 22 de setembro de 1963 · Homem, cerca de 40 anos, não identificado · Cadáver em decúbito dorsal, rigidez cadavérica generalizada. Equimose circular de 3 cm na região cervical anterior. Ausência de lesões perfurantes. Pulmões congestos e edemaciados; coração sem alterações macroscópicas. Estômago contendo líquido escuro e fragmentos vegetais não identificados. · Asfixia mecânica, a esclarecer quanto ao instrumento. Remessa de vísceras para exame toxicológico.",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -9996,7 +9365,9 @@
         "necropsia",
         "formulário"
       ],
-      "org": "iml"
+      "org": "iml",
+      "orgNome": "Instituto Médico Legal do Estado",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-cadeia-custodia",
@@ -10015,6 +9386,7 @@
         "Para",
         "Assinatura"
       ],
+      "texto": "Frasco de vidro âmbar, 100 ml · EV-1991-0388 · Porão do Solar dos Pinhais, bancada de madeira · 14/03/91 15/03/91 02/04/91 09/04/91 · Perito Gaspar Lemos Almoxarifado IML Lab. Toxicologia Almoxarifado IML · Almoxarifado IML Lab. Toxicologia Almoxarifado IML Fórum Criminal · ____________ ____________ ____________ ____________",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -10022,7 +9394,9 @@
         "evidência",
         "formulário"
       ],
-      "org": "iml"
+      "org": "iml",
+      "orgNome": "Instituto Médico Legal do Estado",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-etiqueta-corpo",
@@ -10038,6 +9412,7 @@
         "Número",
         "Gaveta"
       ],
+      "texto": "Nome: desconhecido (homem, adulto) · Entrada: 22/09/1973, 06h40 · Nº 386 · Gaveta 7-B",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -10046,7 +9421,9 @@
         "cartolina",
         "formulário"
       ],
-      "org": "iml"
+      "org": "iml",
+      "orgNome": "Instituto Médico Legal do Estado",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-laudo-balistica",
@@ -10062,6 +9439,7 @@
         "Material",
         "Conclusão"
       ],
+      "texto": "Revólver Taurus, 6 tiros, nº de série raspado · .38 Special · Um projétil deformado e um estojo · O projétil recolhido na parede do corredor foi disparado pela arma examinada, conforme comparação das microestrias no microscópio de comparação. O estojo, porém, apresenta marcas de percussão incompatíveis, o que indica outra arma. Sugere-se nova perícia no local.",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -10069,7 +9447,9 @@
         "balística",
         "formulário"
       ],
-      "org": "iml"
+      "org": "iml",
+      "orgNome": "Instituto Médico Legal do Estado",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-analise-digitais",
@@ -10085,6 +9465,7 @@
         "Observações",
         "Perito"
       ],
+      "texto": "Valentin Moraes, vulgo \"Olho de Vidro\" · V-3243 / I-3342 · Cicatriz transversal no polegar direito; digital do indicador esquerdo incompleta. · Gaspar Lemos",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -10093,7 +9474,9 @@
         "ficha",
         "formulário"
       ],
-      "org": "delegacia"
+      "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-relatorio-cena-crime",
@@ -10109,6 +9492,7 @@
         "Legenda",
         "Perito"
       ],
+      "texto": "Sala de estar, Solar dos Pinhais, Vila Aurora · 03/05/2023, 02h15 · 1 Corpo · 2 Cápsula · 3 Vidro quebrado · 4 Pegadas · Marcos Reis",
       "era": "hoje",
       "tom": "investigação",
       "tags": [
@@ -10117,7 +9501,9 @@
         "planta",
         "formulário"
       ],
-      "org": "delegacia"
+      "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-certidao-nascimento",
@@ -10134,6 +9520,7 @@
         "Data",
         "Local"
       ],
+      "texto": "Certifico que, ao folhas 112 do Livro B-14 de Registro de Nascimentos, foi lavrado o assento de ELIAS MARQUES DE ALENCAR, do sexo masculino, nascido aos nove dias do mês de março de mil novecentos e vinte e dois, às cinco horas da manhã, na casa de sua residência, filho legítimo de ANTÔNIO MARQUES DE ALENCAR, lavrador, e de dona CARLOTA DE ALENCAR, de prendas domésticas, naturais deste município. Foram avós paternos Joaquim e Rosa; maternos, Cristóvão e Maria. Foi declarante o próprio pai. · Ofi",
       "era": "1920",
       "tom": "investigação",
       "tags": [
@@ -10141,7 +9528,9 @@
         "cartório",
         "formulário"
       ],
-      "org": "cartorio"
+      "org": "cartorio",
+      "orgNome": "Cartório do 2º Ofício de Notas de Vila Aurora",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-certidao-casamento",
@@ -10157,6 +9546,7 @@
         "Data",
         "Cartório"
       ],
+      "texto": "Testemunhas: Abílio Cunha e Dalva Nunes · LUÍS CARLOS DE ALMEIDA e HELENA MARIA PIRES · Celebrado em 22 de novembro de 1952 · Registro Civil das Pessoas Naturais · 2º Ofício de Vila Aurora",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
@@ -10165,7 +9555,9 @@
         "casamento",
         "formulário"
       ],
-      "org": "cartorio"
+      "org": "cartorio",
+      "orgNome": "Cartório do 2º Ofício de Notas de Vila Aurora",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-carteira-identidade-antiga",
@@ -10181,6 +9573,7 @@
         "Filiação",
         "Número"
       ],
+      "texto": "NOME Edmundo Vaz Cavalcanti · FILIAÇÃO João Vaz Cavalcanti e Dalila Vaz Cavalcanti · REGISTRO GERAL 3.482.119-SP",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -10188,7 +9581,8 @@
         "cartão",
         "objeto",
         "formulário"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-passaporte-dados",
@@ -10204,13 +9598,15 @@
         "Número",
         "Carimbos"
       ],
+      "texto": "SOBRENOME / NOME TEIXEIRA, ÁLVARO MENDES · Nº CY 417883",
       "era": "1980",
       "tom": "investigação",
       "tags": [
         "passaporte",
         "viagem",
         "formulário"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-testamento",
@@ -10226,6 +9622,7 @@
         "Assinatura",
         "Testemunhas"
       ],
+      "texto": "Eu, Cornélio de Albuquerque Pinhais, · em pleno gozo de minhas faculdades, ainda que enfermo do corpo, faço este meu testamento. Deixo o Solar dos Pinhais, com todas as suas terras e o que nele se achar, a minha sobrinha Helena, com a condição de que jamais abra o porão da ala velha. Aos meus criados deixo seis meses de ordenado. Ao Sr. vigário, cem mil réis para missas. Quem violar a vontade aqui escrita responderá por tudo o que dali sair. · Cornélio de A. Pinhais · Testemunhas: Dr. Teodoro Br",
       "era": "1890",
       "tom": "horror",
       "tags": [
@@ -10233,7 +9630,9 @@
         "manuscrito",
         "formulário"
       ],
-      "org": "solar"
+      "org": "solar",
+      "orgNome": "Solar dos Pinhais",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-escritura-imovel",
@@ -10249,6 +9648,7 @@
         "Valor",
         "Cláusulas"
       ],
+      "texto": "Solar dos Pinhais, Estrada Velha, km 7 · Cornélio de A. Pinhais, vendedor, e Banco Comercial do Planalto, comprador · 180:000$000 (cento e oitenta contos de réis) · 1. O imóvel é vendido livre e desembaraçado de quaisquer ônus. 2. O pagamento será feito em três parcelas iguais, a primeira neste ato. 3. O vendedor reserva-se o uso do porão da ala velha até o fim da vida. 4. As custas e os impostos correm por conta do comprador. 5. Assim o disseram e outorgaram, do que dou fé.",
       "era": "1920",
       "tom": "investigação",
       "tags": [
@@ -10256,7 +9656,9 @@
         "cartório",
         "formulário"
       ],
-      "org": "cartorio"
+      "org": "cartorio",
+      "orgNome": "Cartório do 2º Ofício de Notas de Vila Aurora",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-procuracao",
@@ -10272,6 +9674,7 @@
         "Poderes",
         "Assinatura"
       ],
+      "texto": "Helena Marques de Alencar, solteira, professora · Dr. Teodoro Brandão, advogado, OAB/SP 41.920 · Representá-la perante repartições públicas, bancos e juízos; receber e dar quitação; vender o imóvel da Rua das Acácias, 88; assinar escrituras e requerimentos. · Helena M. Alencar",
       "era": "1980",
       "tom": "cotidiano",
       "tags": [
@@ -10279,7 +9682,9 @@
         "cartório",
         "formulário"
       ],
-      "org": "cartorio"
+      "org": "cartorio",
+      "orgNome": "Cartório do 2º Ofício de Notas de Vila Aurora",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-ordem-missao-ultrassecreta",
@@ -10295,6 +9700,7 @@
         "Objetivo",
         "Instruções"
       ],
+      "texto": "LUA-TRÍPLICE / FASE 2 · A-4 (comando), A-7, A-9 · Averiguar a atividade no subsolo do Solar dos Pinhais e recolher o material encontrado, sem contato com a imprensa. · Os agentes seguirão em veículo sem identificação até Vila Aurora. Ao chegar, estabelecerão contato apenas com o vigia, cuja versão deve ser conferida. Qualquer indício de culto organizado será comunicado por rádio ao Comando. Nada será levado por escrito. Esta ordem deve ser destruída após a leitura.",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -10303,7 +9709,9 @@
         "sigilo",
         "formulário"
       ],
-      "org": "doe"
+      "org": "doe",
+      "orgNome": "Departamento de Ocorrências Extraordinárias",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-dossie-agente",
@@ -10319,6 +9727,7 @@
         "Codinome",
         "Histórico"
       ],
+      "texto": "NOME: Rodrigo Fernandes Lessa · CODINOME: \"Corvo\" · HISTÓRICO DE SERVIÇO 1958 — ingressa no Departamento 1961 — missão em Paranapiacaba 1964 — afastado por motivo de saúde 1967 — retorna; designado ao caso \"Lua Tríplice\" 1970 — último relatório recebido",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -10327,7 +9736,9 @@
         "agente",
         "formulário"
       ],
-      "org": "doe"
+      "org": "doe",
+      "orgNome": "Departamento de Ocorrências Extraordinárias",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-telegrama-militar",
@@ -10343,6 +9754,7 @@
         "Prioridade",
         "Mensagem"
       ],
+      "texto": "ORIGEM: Comando da 2ª Região · DESTINO: Posto Avançado de Paranapiacaba · PRIORIDADE: A-1 · HORA: 03H42 · SEGUIMOS INSTRUÇÕES STOP DESLOCAR TROPA À",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -10350,7 +9762,8 @@
         "militar",
         "censura",
         "formulário"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-mapa-tatico",
@@ -10366,6 +9779,7 @@
         "Escala",
         "Data"
       ],
+      "texto": "LEGENDA ▲ Posto avançado ● Ponto de encontro ━ Estrada principal ┅ Trilha a pé ✕ Obstáculo ⇢ Linha de avanço Escala 1:25.000 Quadrícula de 1 km · Escala 1:25.000 · Levantamento de 1943",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -10373,7 +9787,8 @@
         "militar",
         "tático",
         "formulário"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-relatorio-redigido",
@@ -10390,6 +9805,7 @@
         "Texto",
         "Trechos tarjados"
       ],
+      "texto": "14 de março de 1983 · Vila Aurora (SP) · Fenômeno luminoso e ruídos subterrâneos no Solar dos Pinhais · Em 14 de março, a equipe chegou ao local às 22h. O vigia confirmou os relatos anteriores. No porão foram encontrados símbolos desenhados com giz e restos de velas. Às 23h40, o agente A-7 relatou uma luz azulada vinda da parede norte, seguida de um som grave contínuo, que cessou às 00h05. O agente A-9 recusou-se a descer pela segunda vez. Recomenda-se o isolamento da propriedade e a retirada im",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -10398,7 +9814,9 @@
         "tarjas",
         "formulário"
       ],
-      "org": "doe"
+      "org": "doe",
+      "orgNome": "Departamento de Ocorrências Extraordinárias",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-cracha-acesso",
@@ -10414,6 +9832,7 @@
         "Nível",
         "Matrícula"
       ],
+      "texto": "MARCOS REIS · NÍVEL DE ACESSO: 4-B · MATRÍCULA 00417804",
       "era": "hoje",
       "tom": "investigação",
       "tags": [
@@ -10422,7 +9841,9 @@
         "objeto",
         "formulário"
       ],
-      "org": "doe"
+      "org": "doe",
+      "orgNome": "Departamento de Ocorrências Extraordinárias",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-caderno-espiral-pagina",
@@ -10436,13 +9857,15 @@
         "Data",
         "Texto"
       ],
+      "texto": "terça, 14/05/1996 · Hoje a Carol não foi na aula e eu fiquei sozinha no recreio de novo. A professora de história passou trabalho em dupla e eu fiz com o Beto, que só copiou do livro. Na volta passei na casa velha da Rua dos Pinhais e juro que tinha luz no porão. A Dona Odete disse que ninguém mora lá desde que a família sumiu. Amanhã vou levar a lanterna do meu pai e a máquina de foto. Se eu não voltar, a culpa é da Carol.",
       "era": "1980",
       "tom": "cotidiano",
       "tags": [
         "caderno",
         "espiral",
         "manuscrito"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-diario-aberto-dupla",
@@ -10457,6 +9880,7 @@
         "Página esquerda",
         "Página direita"
       ],
+      "texto": "14 de novembro de 1893 · Hoje o pai voltou a descer ao porão. Ouvi a chave girar às dez e meia e os passos desceram devagar, como quem conta os degraus. Quando subiu, trazia nas botas a terra vermelha que só existe lá embaixo. A mãe não quis jantar. Eu fingi dormir, mas escutei: ele falava baixo com alguém, e ninguém respondia. · Quinta-feira. Perguntei à Maria o que há no porão. Ela benzeu-se e disse que eu não pergunte, que a casa escuta. Esta noite as velas da sala apagaram sozinhas, todas ao",
       "era": "1890",
       "tom": "horror",
       "tags": [
@@ -10464,7 +9888,9 @@
         "livro aberto",
         "manuscrito"
       ],
-      "org": "solar"
+      "org": "solar",
+      "orgNome": "Solar dos Pinhais",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-caderneta-bolso",
@@ -10477,13 +9903,15 @@
       "fields": [
         "Anotações"
       ],
+      "texto": "Seg 10/3 — pagar o aluguel Ter — dentista 15h Qua — falar c/ Arnaldo sobre o carro Telefones: Arnaldo ....... 32-4471 Padaria ......... 28-1190 Dra. Lúcia ....... 41-0072 Comprar: café, fósforos, sabão Levar casaco p/ Vila Aurora (frio!)",
       "era": "1950",
       "tom": "investigação",
       "tags": [
         "caderneta",
         "anotações",
         "bolso"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-livro-antigo-pagina",
@@ -10498,13 +9926,15 @@
         "Texto",
         "Notas"
       ],
+      "texto": "DE REBUS ARCANIS · LIBER SECUNDUS · o cabo de muitos anos de estudo, concluiu o autor que certas portas não se abrem com chave, mas com nome. E quem conhece o nome da porta conhece, por consequência, o de quem a guarda. Assim se lê nas antigas crônicas dos monges de São Gabriel, que viram, numa noite de inverno, descer da serra uma luz que não era de fogo nem de lua, e ouviram debaixo da terra um canto de muitas vozes, tão lento que parecia o próprio silêncio a respirar. Dizem que desse dia em d",
       "era": "1890",
       "tom": "horror",
       "tags": [
         "livro",
         "impresso",
         "anotações"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-agenda-compromissos",
@@ -10518,13 +9948,15 @@
         "Semana",
         "Compromissos"
       ],
+      "texto": "SEMANA 11 · 10 a 16 de março de 1986 · 8h — Reunião com o Dr. Brandão (cartório) 14h — Buscar fotos reveladas 10h — Dentista 19h — Jantar na casa da Tia Dalva 9h — Ligar para o IML 16h — Visita ao Solar dos Pinhais 12h — Almoço com Arnaldo 20h — Teatro (poltrona 14) Chácara — levar lanterna Missa 10h",
       "era": "1980",
       "tom": "cotidiano",
       "tags": [
         "agenda",
         "semana",
         "manuscrito"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-capa-diario-couro",
@@ -10538,6 +9970,7 @@
         "Título",
         "Dono"
       ],
+      "texto": "DIÁRIO · Pertence a Helena M. Pires",
       "era": "1890",
       "tom": "horror",
       "tags": [
@@ -10545,7 +9978,8 @@
         "capa",
         "couro",
         "objeto"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-carta-amor-perfumada",
@@ -10561,6 +9995,7 @@
         "Texto",
         "Assinatura"
       ],
+      "texto": "Santos, 3 de junho de 1943 · Meu querido Henrique, · Escrevo-te à luz da vela, porque a luz elétrica faltou outra vez e achei que assim as palavras ficam mais perto de ti. Não passa uma hora sem que eu repare no teu lugar vazio à mesa. Guardei o lenço que me deixaste e o perfume dele já quase se foi, mas ainda o respiro antes de dormir. Volta logo, e volta inteiro, que eu não sei amar-te de outro modo senão à espera. · Lúcia",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
@@ -10568,7 +10003,8 @@
         "amor",
         "perfumada",
         "manuscrito"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-carta-despedida",
@@ -10584,13 +10020,15 @@
         "Texto",
         "Assinatura"
       ],
+      "texto": "12/03 · Mãe, · não me procura. Eu tentei explicar mil vezes e você nunca escutou, então vou escrever. Peguei a mala do pai e o dinheiro da gaveta, desculpa por isso. Vou pra casa da Bia, depois não sei. O que eu vi naquela casa velha eu não consigo contar. Só não deixa ninguém ir lá, por favor. Eu te amo, mesmo que você ache que não. · Duda",
       "era": "hoje",
       "tom": "cotidiano",
       "tags": [
         "carta",
         "despedida",
         "manuscrito"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-bilhete-ameaca-recortes",
@@ -10609,6 +10047,7 @@
         "Palavra 6",
         "Palavra 7"
       ],
+      "texto": "SAIA · DA · CASA · ANTES · QUE · ELES · ACORDEM",
       "era": "1980",
       "tom": "horror",
       "tags": [
@@ -10616,7 +10055,8 @@
         "ameaça",
         "recortes",
         "jornal"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-carta-em-codigo",
@@ -10630,6 +10070,7 @@
         "Texto cifrado",
         "Pista"
       ],
+      "texto": "LUJVU AYLHJ OHCLZ VIHWL KYHKV WVJVL SLPHV ALYJL PYVSP CYVHU ALZKH TLPHU VPALV CPNPH ZHILT HPZKV XBLKP GJBPK LKLOL SLUH · chave: cada letra avança sete casas no alfabeto (A→H, B→I…) — mas o Z volta ao A",
       "era": "1920",
       "tom": "investigação",
       "tags": [
@@ -10637,7 +10078,8 @@
         "código",
         "cifra",
         "enigma"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-cartao-natal",
@@ -10651,13 +10093,15 @@
         "Ilustração",
         "Dedicatória"
       ],
+      "texto": "Para a querida Tia Dalva, com os votos de um Natal feliz e um Ano Novo cheio de paz. De Arnaldo, Odete e as crianças",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
         "cartão",
         "natal",
         "festa"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-pagina-revista",
@@ -10672,6 +10116,7 @@
         "Foto",
         "Texto"
       ],
+      "texto": "O MISTÉRIO DO SOLAR · Quem passa pela estrada velha de Vila Aurora ainda vê, ao longe, a silhueta do Solar dos Pinhais: duas torres, um telhado vencido, e um jardim que a hera engoliu. Os moradores evitam falar dele. \"Em casa de gente séria não se fala disso\", resume a dona de um armazém.",
       "era": "1980",
       "tom": "cotidiano",
       "tags": [
@@ -10679,7 +10124,8 @@
         "impresso",
         "foto",
         "colunas"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-panfleto-culto",
@@ -10694,6 +10140,7 @@
         "Convite",
         "Endereço"
       ],
+      "texto": "A LUA TRÍPLICE OLHA POR VOCÊ · Cansado de esperar respostas? Venha conhecer a Irmandade. Reuniões abertas toda lua cheia, sem compromisso. Traga apenas o seu nome verdadeiro. · Estrada Velha, km 7 — Vila Aurora Portão dos fundos, 23h",
       "era": "1980",
       "tom": "horror",
       "tags": [
@@ -10702,7 +10149,9 @@
         "xerox",
         "convite"
       ],
-      "org": "irmandade"
+      "org": "irmandade",
+      "orgNome": "Irmandade da Lua Tríplice",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-cartaz-desaparecido",
@@ -10717,6 +10166,7 @@
         "Nome",
         "Contato"
       ],
+      "texto": "Rodrigo Fernandes Lessa · LIGUE: (011) 5555-0184",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -10724,7 +10174,8 @@
         "desaparecido",
         "foto",
         "destacável"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-edicao-extra",
@@ -10738,6 +10189,7 @@
         "Manchete",
         "Texto"
       ],
+      "texto": "DESABA O PORÃO DO SOLAR DOS PINHAIS! · Às primeiras horas desta madrugada, parte do antigo porão do Solar dos Pinhais veio abaixo, soterrando seis operários que trabalhavam na reforma do casarão. Segundo o delegado Antônio Salgueiro, o desabamento deixou à mostra uma câmara de pedra, até então desconhecida, de cujo interior vieram \"ruídos que não quero repetir\". Os bombeiros trabalham desde as cinco horas, mas a entrada foi interditada por ordem superior. A reportagem de A Gazeta apurou que o pr",
       "era": "1920",
       "tom": "investigação",
       "tags": [
@@ -10745,7 +10197,9 @@
         "extra",
         "manchete"
       ],
-      "org": "gazeta"
+      "org": "gazeta",
+      "orgNome": "A Gazeta Metropolitana",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-anuncio-funebre",
@@ -10760,6 +10214,7 @@
         "Datas",
         "Convite"
       ],
+      "texto": "Dona Carlota Marques de Alencar · * 11 de março de 1881 † 20 de abril de 1958 · Seus filhos, netos e demais parentes convidam para a missa de sétimo dia, a realizar-se na Igreja Matriz de Vila Aurora, às 8 horas, e para o sepultamento no Cemitério da Consolação.",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
@@ -10768,7 +10223,9 @@
         "obituário",
         "convite"
       ],
-      "org": "gazeta"
+      "org": "gazeta",
+      "orgNome": "A Gazeta Metropolitana",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-boletim-escolar",
@@ -10788,6 +10245,7 @@
         "3º bim.",
         "Faltas"
       ],
+      "texto": "Rodrigo Fernandes Lessa · 8ª série B · turno da manhã · Aluno distraído nas aulas de Matemática; participativo em História. Recomenda-se acompanhamento dos pais. · Português Matemática História Geografia Ciências Educação Física · 7,5 5,0 9,0 8,0 6,5 10,0 · 8,0 4,5 9,5 7,0 7,0 10,0 · 6,5 6,0 10,0 7,5 8,5 9,5 · 3 5 1 2 4 0",
       "era": "1980",
       "tom": "cotidiano",
       "tags": [
@@ -10796,7 +10254,9 @@
         "notas",
         "formulário"
       ],
-      "org": "colegio"
+      "org": "colegio",
+      "orgNome": "Colégio Estadual Visconde de Mauá",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-prova-corrigida",
@@ -10812,6 +10272,7 @@
         "Professor",
         "Nota"
       ],
+      "texto": "Nome: Rodrigo F. Lessa Série: 8ª B Data: 12/06/91 · 1) A Proclamação da República aconteceu em 15 de novembro de 1889, quando o Marechal Deodoro derrubou o Império. 2) A Lei Áurea foi assinada pela Princesa Isabel em 1888 e libertou os escravos, mas não deu terra nem trabalho pra eles. 3) Os bandeirantes eram paulistas que entravam no sertão atrás de ouro e de índios pra escravizar. 4) Não lembro direito, mas acho que foi o Getúlio. · Prof. Teodoro Brandão · 7,0",
       "era": "1980",
       "tom": "cotidiano",
       "tags": [
@@ -10820,7 +10281,9 @@
         "correção",
         "formulário"
       ],
-      "org": "colegio"
+      "org": "colegio",
+      "orgNome": "Colégio Estadual Visconde de Mauá",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-bilhetinho-sala",
@@ -10833,6 +10296,7 @@
       "fields": [
         "Texto"
       ],
+      "texto": "Nathália!! vc viu o Beto olhando pra vc na aula de ed. física??? ele tá MUITO a fim responde aqui embaixo e passa pra Carol se a prof pegar eu morro bjs, Duda ♥",
       "era": "1980",
       "tom": "cotidiano",
       "tags": [
@@ -10840,7 +10304,8 @@
         "escola",
         "dobrado",
         "adolescente"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-carteirinha-estudante",
@@ -10856,6 +10321,7 @@
         "Série",
         "Número"
       ],
+      "texto": "NOME Rodrigo Fernandes Lessa · SÉRIE 8ª B · Matutino · Nº 84-0317",
       "era": "1980",
       "tom": "cotidiano",
       "tags": [
@@ -10865,7 +10331,9 @@
         "objeto",
         "formulário"
       ],
-      "org": "colegio"
+      "org": "colegio",
+      "orgNome": "Colégio Estadual Visconde de Mauá",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-pagina-anuario",
@@ -10888,6 +10356,7 @@
         "Foto 9",
         "Dedicatória"
       ],
+      "texto": "Rodrigo L. · \"Aos que ficam, a saudade; aos que vão, a esperança.\" — Turma de 74",
       "era": "1980",
       "tom": "cotidiano",
       "tags": [
@@ -10896,7 +10365,9 @@
         "fotos",
         "turma"
       ],
-      "org": "colegio"
+      "org": "colegio",
+      "orgNome": "Colégio Estadual Visconde de Mauá",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-atestado-medico",
@@ -10913,6 +10384,7 @@
         "Médico",
         "Atestado"
       ],
+      "texto": "Edmundo Vaz Cavalcanti · 5 (cinco) dias de repouso · 08 de maio de 1974 · Dr. Marcelo Nogueira Pinto · Atesto, para os devidos fins, que o Sr. acima nomeado esteve sob meus cuidados por esgotamento nervoso agudo, necessitando de afastamento de suas atividades habituais por cinco dias, a contar desta data. CID: F43.",
       "era": "1980",
       "tom": "cotidiano",
       "tags": [
@@ -10920,7 +10392,8 @@
         "atestado",
         "receituário",
         "formulário"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-ficha-triagem-sanatorio",
@@ -10941,6 +10414,7 @@
         "Grave",
         "Foto"
       ],
+      "texto": "Helena Marques de Alencar, 24 anos · 19 de abril de 1931 · Vila Aurora, a pedido da família · Dr. Augusto Vilela · Agitação psicomotora Delírios e alucinações Recusa de alimentos Insônia Ideias de perseguição · X · X X · X X",
       "era": "1920",
       "tom": "horror",
       "tags": [
@@ -10949,7 +10423,9 @@
         "triagem",
         "formulário"
       ],
-      "org": "sanatorio"
+      "org": "sanatorio",
+      "orgNome": "Sanatório da Serra do Mar",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-desenho-paciente",
@@ -10963,6 +10439,7 @@
         "Desenho",
         "Anotação"
       ],
+      "texto": "Paciente nº 212 (H. M. A.). Desenho espontâneo, feito durante a noite do dia 3. Persistência do motivo ocular; a paciente afirma que \"o desenho mexe quando ninguém olha\". Dr. A. Vilela",
       "era": "1950",
       "tom": "horror",
       "tags": [
@@ -10971,7 +10448,9 @@
         "sanatório",
         "rabiscos"
       ],
-      "org": "sanatorio"
+      "org": "sanatorio",
+      "orgNome": "Sanatório da Serra do Mar",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-prontuario-cirurgia",
@@ -10988,6 +10467,7 @@
         "Início",
         "Término"
       ],
+      "texto": "Edmundo Vaz Cavalcanti, 52 anos · Apendicectomia de urgência · Dr. A. Vilela (cirurgião) · Dra. M. Reis (anestesia) · Enf. D. Nunes · 03h12 · 04h05",
       "era": "1980",
       "tom": "cotidiano",
       "tags": [
@@ -10995,7 +10475,8 @@
         "cirurgia",
         "prontuário",
         "formulário"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-rotulo-remedio",
@@ -11009,13 +10490,15 @@
         "Remédio",
         "Posologia"
       ],
+      "texto": "XAROPE DE PEITORAL · Adultos: uma colher das de sopa três vezes ao dia, antes das refeições. Crianças: metade da dose.",
       "era": "1920",
       "tom": "cotidiano",
       "tags": [
         "remédio",
         "rótulo",
         "farmácia"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-exame-sangue",
@@ -11034,6 +10517,7 @@
         "Unidade",
         "Referência"
       ],
+      "texto": "Duda Alencar Lessa · 12/03/2023 · Dra. Mariana Reis (CRM-SP 220.381) · Hemoglobina Leucócitos Plaquetas Glicose em jejum Ferro sérico Creatinina · 12,9 18.400 212.000 88 41 0,9 · g/dL /mm³ /mm³ mg/dL µg/dL mg/dL · 12,0 a 16,0 4.000 a 11.000 150.000 a 450.000 70 a 99 60 a 170 0,6 a 1,1",
       "era": "hoje",
       "tom": "cotidiano",
       "tags": [
@@ -11041,7 +10525,8 @@
         "exame",
         "laboratório",
         "formulário"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-relatorio-experimento",
@@ -11059,6 +10544,7 @@
         "Resultado",
         "Foto do laboratório"
       ],
+      "texto": "Resposta de culturas de Mycena a estímulo sonoro grave · Dr. Karl Halden · 08 de agosto de 1962 · Dez placas de cultura foram expostas a um tom de 38 Hz durante 30 minutos, a 18 °C e 90 % de umidade. Um grupo de controle permaneceu em silêncio. · As placas expostas cresceram 4,2 vezes mais que as de controle e formaram filamentos em direção à fonte. Na placa 7 observou-se movimento visível a olho nu.",
       "era": "1950",
       "tom": "sci-fi",
       "tags": [
@@ -11067,7 +10553,9 @@
         "relatório",
         "formulário"
       ],
-      "org": "halden"
+      "org": "halden",
+      "orgNome": "Instituto Halden de Biologia Experimental",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-ficha-cobaia",
@@ -11086,6 +10574,7 @@
         "Peso",
         "Observação"
       ],
+      "texto": "Rattus norvegicus (macho adulto) · H-0417 · T. Moreira · 1 3 5 7 9 · 212 g 208 g 197 g 180 g — · Comportamento normal. Apetite regular. Inquietude após o estímulo. Recusa parcial da ração. Não dorme; fica imóvel diante da parede norte da gaiola. Ataca o próprio reflexo. Pelagem escurecida na região dorsal. O animal olhou para o observador e repetiu o som do estímulo.",
       "era": "1980",
       "tom": "horror",
       "tags": [
@@ -11094,7 +10583,9 @@
         "registro",
         "formulário"
       ],
-      "org": "halden"
+      "org": "halden",
+      "orgNome": "Instituto Halden de Biologia Experimental",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-planta-laboratorio",
@@ -11109,6 +10600,7 @@
         "Legenda",
         "Planta"
       ],
+      "texto": "PLANTA BAIXA · PAVIMENTO SUBTERRÂNEO · LEGENDA 1 Sala principal 2 Câmara de cultivo 3 Depósito de amostras 4 Corredor técnico Escala 1:50 Projeto IHBE-114 · Subsolo do Pavilhão B",
       "era": "1950",
       "tom": "sci-fi",
       "tags": [
@@ -11117,7 +10609,9 @@
         "azul",
         "laboratório"
       ],
-      "org": "halden"
+      "org": "halden",
+      "orgNome": "Instituto Halden de Biologia Experimental",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-caderno-pesquisa-uv",
@@ -11131,6 +10625,7 @@
         "Anotações",
         "Segredo UV"
       ],
+      "texto": "14/03 — taxa de crescimento: 4,2 cm/dia ΔT = 18 °C → 22 °C: sem alteração f = 38 Hz → λ = v / f E = m·c² (??) — não tem nada a ver, mas anotei pH 6,4 · umidade 91 % · luz: nenhuma A cultura reage à voz. Testar de novo amanhã. · ELA RESPONDE EM LUZ. NÃO CONTAR AO DR. HALDEN. Porão B, parede norte, às 3h.",
       "era": "1980",
       "tom": "sci-fi",
       "tags": [
@@ -11139,7 +10634,9 @@
         "luz negra",
         "segredo"
       ],
-      "org": "halden"
+      "org": "halden",
+      "orgNome": "Instituto Halden de Biologia Experimental",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-grafico-sismografo",
@@ -11154,13 +10651,15 @@
         "Leitura",
         "Nota"
       ],
+      "texto": "Data: 14/03/1983 · Leitura: estação 3, componente vertical · abalo local, 00h26 — não registrado em outra estação! epicentro: Solar dos Pinhais?",
       "era": "1980",
       "tom": "sci-fi",
       "tags": [
         "ciência",
         "sismógrafo",
         "gráfico"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-memorando-interno",
@@ -11177,6 +10676,7 @@
         "Data",
         "Texto"
       ],
+      "texto": "Dr. Karl Halden · Dra. Ingrid Vasconcelos · Alteração no comportamento das culturas após o dia 14 · 17 de março de 1971 · Venho por meio deste informar que as culturas do Pavilhão B apresentam, desde segunda-feira, atividade incompatível com o padrão esperado: movimento em resposta à presença humana e emissão de luz fraca durante a noite. Solicito autorização para suspender os trabalhos no subsolo até que a causa seja esclarecida. Peço ainda que este memorando não circule fora da diretoria.",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -11185,7 +10685,9 @@
         "interno",
         "formulário"
       ],
-      "org": "halden"
+      "org": "halden",
+      "orgNome": "Instituto Halden de Biologia Experimental",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-grimorio-pagina-dupla",
@@ -11200,6 +10702,7 @@
         "Ilustração",
         "Texto"
       ],
+      "texto": "DE VINCULIS UMBRARUM · Aquele que desejar prender uma sombra a um lugar deve primeiro conhecer-lhe o nome e o dia em que o lugar foi fundado. Desenhe-se o sigilo com sal e cinza, e sobre ele se acendam três velas de sebo, uma ao norte, outra ao sul, a terceira no centro, de modo que as chamas não se toquem.",
       "era": "medieval",
       "tom": "horror",
       "tags": [
@@ -11207,7 +10710,8 @@
         "ocultismo",
         "livro aberto",
         "ilustração"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-pacto-sangue",
@@ -11221,6 +10725,7 @@
         "Termos",
         "Assinatura"
       ],
+      "texto": "Eu, abaixo assinado, em plena posse de minha vontade, entrego à Casa que habita sob estas terras o que me resta de dias, de sono e de nome, em troca de que o que dela se ouviu não seja jamais dito. Obrigo-me a descer ao porão a cada lua nova e a nada trazer de lá senão o silêncio. Se faltar a este pacto, a Casa tomará de mim o que lhe devo, e de meus filhos, se os tiver. · Cornélio de A. Pinhais",
       "era": "1890",
       "tom": "horror",
       "tags": [
@@ -11228,7 +10733,8 @@
         "pacto",
         "pergaminho",
         "assinatura"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-recorte-livro-proibido",
@@ -11241,6 +10747,7 @@
       "fields": [
         "Texto"
       ],
+      "texto": "Quarto. Que ninguém ouse ler em voz alta o que se segue, sob pena de ser ouvido por quem não deve. A palavra dita no escuro tem peso, e o peso vai ao fundo, onde espera. Os que sobreviveram a esta leitura relataram um frio nos pés e a certeza de que a página seguinte já fora lida por outro antes deles. Convém queimar o livro, mas o fogo, dizem, apenas o abre.",
       "era": "1890",
       "tom": "horror",
       "tags": [
@@ -11248,7 +10755,8 @@
         "livro",
         "queimado",
         "proibido"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-mapa-astral",
@@ -11263,13 +10771,15 @@
         "Data",
         "Leitura"
       ],
+      "texto": "Nome: Helena Maria Pires · Nascida em 9 de março de 1900, às 5h, Vila Aurora · Lua cheia em Escorpião: casa oito marcada. Grande tendência a lidar com o que está sob a terra.",
       "era": "1920",
       "tom": "horror",
       "tags": [
         "ocultismo",
         "astrologia",
         "mapa"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-invocacao-uv",
@@ -11283,6 +10793,7 @@
         "Texto visível",
         "Texto UV"
       ],
+      "texto": "1. Aprovação das contas do mês anterior. 2. Reforma do telhado do bloco B. 3. Barulho vindo do subsolo, segundo moradores do térreo — adiado para a próxima reunião. 4. Assuntos gerais. Nada mais havendo a tratar, encerrou-se a reunião às 21h30. · Eu te chamo pelo nome que não tem nome, Tu que dormes sob o concreto e sob o sal. Abre a porta que o tempo fechou. Vem pela escada que ninguém desce. Vem, e fica.",
       "era": "hoje",
       "tom": "horror",
       "tags": [
@@ -11290,7 +10801,8 @@
         "invocação",
         "luz negra",
         "segredo"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-carta-nautica",
@@ -11304,13 +10816,15 @@
         "Mapa",
         "Legenda"
       ],
+      "texto": "LEGENDA Rumos de vento em 16 partes. Perigo: águas rasas ao sul. Hic sunt dracones.",
       "era": "medieval",
       "tom": "fantasia",
       "tags": [
         "mapa",
         "náutica",
         "pergaminho"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-contrato-guilda",
@@ -11325,13 +10839,15 @@
         "Contratado",
         "Cláusulas"
       ],
+      "texto": "GUILDA DOS FERREIROS DE ALDEMAR · Contrata-se o mestre Tomás de Arles, armeiro, por três anos · I. O mestre servirá à guilda de sol a sol, exceto aos dias santos. II. Receberá doze moedas de prata ao mês e o pão da casa. III. Não revelará a ninguém de fora o segredo da têmpera do aço negro. IV. Quem romper este contrato perderá a mão com que o assinou. V. Feito perante testemunhas, no dia de São Miguel.",
       "era": "medieval",
       "tom": "fantasia",
       "tags": [
         "guilda",
         "contrato",
         "pergaminho"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-bestiario-pagina",
@@ -11346,6 +10862,7 @@
         "Ilustração",
         "Descrição"
       ],
+      "texto": "DE BASILISCO · O basilisco é serpente de cabeça coroada, nascida de ovo de galo velho chocado por sapo. Seu olhar mata, e seu hálito seca a erva. Só o afugenta o espelho, que lhe devolve o próprio rigor, e o canto do galo, que o faz fugir às tocas. Os viajantes que passam por Aldemar levam sempre um espelho de mão e um galo na carroça.",
       "era": "medieval",
       "tom": "fantasia",
       "tags": [
@@ -11353,7 +10870,8 @@
         "criatura",
         "pergaminho",
         "ilustração"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-recompensa-reino",
@@ -11367,6 +10885,7 @@
         "Procurado",
         "Recompensa"
       ],
+      "texto": "PROCURA-SE GARRETT, O CORVO · RECOMPENSA: 500 COROAS DE OURO",
       "era": "medieval",
       "tom": "fantasia",
       "tags": [
@@ -11374,7 +10893,8 @@
         "procurado",
         "reino",
         "cartaz"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-carta-taverna",
@@ -11388,6 +10908,7 @@
         "Pratos",
         "Preços"
       ],
+      "texto": "Sopa de cebola e osso Guisado do dia, com pão preto Coelho assado com ervas Torta de maçã e canela Queijo curado e nozes Cerveja escura (a caneca) Hidromel da casa (o cálice) · 2 cobres 5 cobres 9 cobres 4 cobres 3 cobres 1 cobre 2 cobres",
       "era": "medieval",
       "tom": "fantasia",
       "tags": [
@@ -11395,7 +10916,8 @@
         "cardápio",
         "madeira",
         "giz"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-carta-envelhecida-ensanguentado",
@@ -11411,6 +10933,7 @@
         "Corpo",
         "Assinatura"
       ],
+      "texto": "São Paulo, 14 de outubro de 1932 · Prezado Dr. Alencar, · Escrevo-lhe em caráter de extrema urgência a respeito dos documentos encontrados no porão do casarão da família Ramos. Conforme suspeitávamos, os registros da década de 1890 confirmam a transferência clandestina das caixas para o litoral antes do confisco judicial. As anotações marginais indicam um ponto de encontro marcado junto ao antigo farol na noite de lua nova. Peço que destrua este aviso logo após a leitura e mantenha a discrição n",
       "era": "1890",
       "tom": "horror",
       "tags": [
@@ -11419,6 +10942,8 @@
         "ensanguentada"
       ],
       "org": "solar",
+      "orgNome": "Solar dos Pinhais",
+      "addedIn": "2026-10-27",
       "family": "carta-envelhecida"
     },
     {
@@ -11435,6 +10960,7 @@
         "Corpo",
         "Assinatura"
       ],
+      "texto": "São Paulo, 14 de outubro de 1932 · Prezado Dr. Alencar, · Escrevo-lhe em caráter de extrema urgência a respeito dos documentos encontrados no porão do casarão da família Ramos. Conforme suspeitávamos, os registros da década de 1890 confirmam a transferência clandestina das caixas para o litoral antes do confisco judicial. As anotações marginais indicam um ponto de encontro marcado junto ao antigo farol na noite de lua nova. Peço que destrua este aviso logo após a leitura e mantenha a discrição n",
       "era": "1890",
       "tom": "horror",
       "tags": [
@@ -11443,6 +10969,8 @@
         "queimada"
       ],
       "org": "solar",
+      "orgNome": "Solar dos Pinhais",
+      "addedIn": "2026-10-27",
       "family": "carta-envelhecida"
     },
     {
@@ -11456,6 +10984,7 @@
       "fields": [
         "Texto"
       ],
+      "texto": "Eles já sabem que você pegou a chave. Não volte para o quarto 14 sob nenhuma circunstância. Deixei o pacote com o homem do jornal na esquina da Augusta. Ele sabe o que fazer. Queime isto agora.",
       "era": "hoje",
       "tom": "cotidiano",
       "tags": [
@@ -11463,6 +10992,7 @@
         "manuscrito",
         "ensanguentado"
       ],
+      "addedIn": "2026-10-27",
       "family": "bilhete-caderno-rasgado"
     },
     {
@@ -11476,6 +11006,7 @@
       "fields": [
         "Texto"
       ],
+      "texto": "Eles já sabem que você pegou a chave. Não volte para o quarto 14 sob nenhuma circunstância. Deixei o pacote com o homem do jornal na esquina da Augusta. Ele sabe o que fazer. Queime isto agora.",
       "era": "hoje",
       "tom": "cotidiano",
       "tags": [
@@ -11483,6 +11014,7 @@
         "manuscrito",
         "molhado"
       ],
+      "addedIn": "2026-10-27",
       "family": "bilhete-caderno-rasgado"
     },
     {
@@ -11500,6 +11032,7 @@
         "Ocorrência",
         "Relato"
       ],
+      "texto": "RELATÓRIO DE INQUÉRITO Nº: 1.042/38 · DATA: 17 DE SETEMBRO DE 1938 · AGENTE RESPONSÁVEL: Inspetor Octávio Bittencourt (Matrícula 4.882) · NATUREZA: Violação de domicílio seguida de homicídio qualificado · Às 23h45 da data de ontem, esta delegacia foi acionada pelos vigias noturnos da estação ferroviária, que informaram ter ouvido disparos e gritos provenientes do depósito da companhia. Ao chegarmos ao local acompanhados de dois soldados da guarnição, encontramos a porta de correr arrombada por m",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -11509,6 +11042,8 @@
         "ensanguentado"
       ],
       "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais",
+      "addedIn": "2026-10-27",
       "family": "relatorio-policial"
     },
     {
@@ -11526,6 +11061,7 @@
         "Ocorrência",
         "Relato"
       ],
+      "texto": "RELATÓRIO DE INQUÉRITO Nº: 1.042/38 · DATA: 17 DE SETEMBRO DE 1938 · AGENTE RESPONSÁVEL: Inspetor Octávio Bittencourt (Matrícula 4.882) · NATUREZA: Violação de domicílio seguida de homicídio qualificado · Às 23h45 da data de ontem, esta delegacia foi acionada pelos vigias noturnos da estação ferroviária, que informaram ter ouvido disparos e gritos provenientes do depósito da companhia. Ao chegarmos ao local acompanhados de dois soldados da guarnição, encontramos a porta de correr arrombada por m",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -11535,6 +11071,8 @@
         "luz negra"
       ],
       "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais",
+      "addedIn": "2026-10-27",
       "family": "relatorio-policial"
     },
     {
@@ -11552,6 +11090,7 @@
         "Crimes",
         "Observações"
       ],
+      "texto": "NOME: Sebastião Ferreira de Souza · ALCUNHA: \"Tião Navalha\" / \"O Corvo\" · ANTECEDENTES & DELITOS: - 1931: Furto qualificado de valores em agência postal. - 1935: Lesão corporal de natureza grave em motim portuário. - 1939: Suspeito principal no desaparecimento do corretor E. Prado. · OBSERVAÇÕES DO INVESTIGADOR: Indivíduo de alta periculosidade, adepto do uso de disfarces e documentos falsificados. Apresenta comportamento agressivo quando abordado por patrulhas isoladas. Mandado de recaptura exp",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -11561,6 +11100,8 @@
         "ensanguentada"
       ],
       "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais",
+      "addedIn": "2026-10-27",
       "family": "ficha-criminal"
     },
     {
@@ -11577,6 +11118,7 @@
         "Data",
         "Juiz"
       ],
+      "texto": "A QUALQUER OFICIAL DE JUSTIÇA OU AUTORIDADE POLICIAL: MANDA o Meritíssimo Juiz de Direito que, em cumprimento ao presente, dirija-se ao domicílio de Bento de Camargo Bueno, sito à Estrada das Lágrimas nº 305. · MOTIVO DO PROVIMENTO: Proceder à imediata busca e apreensão de todos os livros contábeis, caixas de documentação manuscrita e quaisquer substâncias químicas ou compostos não catalogados que se encontrem ocultos nas dependências do referido imóvel, procedendo à custódia cautelar do citado ",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -11586,6 +11128,8 @@
         "ensanguentado"
       ],
       "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais",
+      "addedIn": "2026-10-27",
       "family": "mandado"
     },
     {
@@ -11603,6 +11147,7 @@
         "Data do exame",
         "Perito responsável"
       ],
+      "texto": "LAUDO DE EXAME CADAVÉRICO Nº 874/1935 · EXAMINADO: Indivíduo não identificado (sexo masculino, aprox. 40 anos) · IV — CONCLUSÃO: O perito signatário conclui que a morte decorreu de traumatismo cranioencefálico provocado por ação mecânica de terceiro (homicídio), tendo ocorrido entre 24 e 36 horas antes do início da necropsia. Perito Relator: Dr. Jonas Guimarães (CRM 1.942) · Data do exame: 14/11/1951 · Perito: Dr. Jonas Hernandes",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -11612,6 +11157,8 @@
         "ensanguentado"
       ],
       "org": "iml",
+      "orgNome": "Instituto Médico Legal do Estado",
+      "addedIn": "2026-10-27",
       "family": "laudo-pericial"
     },
     {
@@ -11628,6 +11175,7 @@
         "Causa",
         "Médico"
       ],
+      "texto": "CERTIFICO que, no Livro C-14 de Registro de Óbitos, às folhas 88, consta o assento do falecimento de: SEBASTIÃO CORRÊA DE AZEVEDO · Ocorrido no dia 07 de Julho de 1923, às 14 horas e 30 minutos, na Santa Casa de Misericórdia, com a idade de 52 anos, do sexo masculino, casado, de profissão comerciante. · CAUSA DA MORTE: Colapso cardiorrespiratório fulminante decorrente de choque séptico e ferimento pérfuro-contuso infectado no membro superior direito. · MÉDICO ATESTANTE: Dr. Alberto Fontoura (CRM",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -11637,6 +11185,8 @@
         "arquivo morto"
       ],
       "org": "cartorio",
+      "orgNome": "Cartório do 2º Ofício de Notas de Vila Aurora",
+      "addedIn": "2026-10-27",
       "family": "certidao-obito"
     },
     {
@@ -11652,6 +11202,7 @@
         "Texto",
         "Nota na margem"
       ],
+      "texto": "CAPITULUM VII — DE VINCULIS UMBRARUM · Quando as constelações septentrionais declinarem além do horizonte setentrional, traça-se o tríplice anel de sal e cinza consagrada sobre a laje de pedra nua. Nenhuma voz mortal poderá proferir os nove nomes inomináveis antes que o incenso de mirra e absinto queime até a última brasa. O círculo não tolera hesitação: qualquer fenda na barreira permitirá que o sopro abissal transpasse a carne do conjurador e devore suas lembranças terrestres. · Cuidado! A ter",
       "era": "medieval",
       "tom": "horror",
       "tags": [
@@ -11659,6 +11210,7 @@
         "ocultismo",
         "queimada"
       ],
+      "addedIn": "2026-10-27",
       "family": "pagina-grimorio"
     },
     {
@@ -11673,12 +11225,14 @@
         "Mapa",
         "Legenda"
       ],
+      "texto": "CARTA NÁUTICA DAS ILHAS SOMBRIAS — ROTA PROIBIDA (1644)",
       "era": "medieval",
       "tom": "fantasia",
       "tags": [
         "mapa",
         "queimado"
       ],
+      "addedIn": "2026-10-27",
       "family": "mapa-rasgado"
     },
     {
@@ -11696,6 +11250,7 @@
         "Achados",
         "Causa"
       ],
+      "texto": "NEC-1.386/63 · 22 de setembro de 1963 · Homem, cerca de 40 anos, não identificado · Cadáver em decúbito dorsal, rigidez cadavérica generalizada. Equimose circular de 3 cm na região cervical anterior. Ausência de lesões perfurantes. Pulmões congestos e edemaciados; coração sem alterações macroscópicas. Estômago contendo líquido escuro e fragmentos vegetais não identificados. · Asfixia mecânica, a esclarecer quanto ao instrumento. Remessa de vísceras para exame toxicológico.",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -11705,6 +11260,8 @@
         "luz negra"
       ],
       "org": "iml",
+      "orgNome": "Instituto Médico Legal do Estado",
+      "addedIn": "2026-10-27",
       "family": "laudo-necropsia"
     },
     {
@@ -11722,6 +11279,7 @@
         "Data",
         "Local"
       ],
+      "texto": "Certifico que, ao folhas 112 do Livro B-14 de Registro de Nascimentos, foi lavrado o assento de ELIAS MARQUES DE ALENCAR, do sexo masculino, nascido aos nove dias do mês de março de mil novecentos e vinte e dois, às cinco horas da manhã, na casa de sua residência, filho legítimo de ANTÔNIO MARQUES DE ALENCAR, lavrador, e de dona CARLOTA DE ALENCAR, de prendas domésticas, naturais deste município. Foram avós paternos Joaquim e Rosa; maternos, Cristóvão e Maria. Foi declarante o próprio pai. · Ofi",
       "era": "1920",
       "tom": "investigação",
       "tags": [
@@ -11731,6 +11289,8 @@
         "arquivo morto"
       ],
       "org": "cartorio",
+      "orgNome": "Cartório do 2º Ofício de Notas de Vila Aurora",
+      "addedIn": "2026-10-27",
       "family": "certidao-nascimento"
     },
     {
@@ -11747,6 +11307,7 @@
         "Data",
         "Cartório"
       ],
+      "texto": "Testemunhas: Abílio Cunha e Dalva Nunes · LUÍS CARLOS DE ALMEIDA e HELENA MARIA PIRES · Celebrado em 22 de novembro de 1952 · Registro Civil das Pessoas Naturais · 2º Ofício de Vila Aurora",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
@@ -11757,6 +11318,8 @@
         "arquivo morto"
       ],
       "org": "cartorio",
+      "orgNome": "Cartório do 2º Ofício de Notas de Vila Aurora",
+      "addedIn": "2026-10-27",
       "family": "certidao-casamento"
     },
     {
@@ -11773,6 +11336,7 @@
         "Codinome",
         "Histórico"
       ],
+      "texto": "NOME: Rodrigo Fernandes Lessa · CODINOME: \"Corvo\" · HISTÓRICO DE SERVIÇO 1958 — ingressa no Departamento 1961 — missão em Paranapiacaba 1964 — afastado por motivo de saúde 1967 — retorna; designado ao caso \"Lua Tríplice\" 1970 — último relatório recebido",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -11783,6 +11347,8 @@
         "arquivo morto"
       ],
       "org": "doe",
+      "orgNome": "Departamento de Ocorrências Extraordinárias",
+      "addedIn": "2026-10-27",
       "family": "dossie-agente"
     },
     {
@@ -11798,6 +11364,7 @@
         "Página esquerda",
         "Página direita"
       ],
+      "texto": "14 de novembro de 1893 · Hoje o pai voltou a descer ao porão. Ouvi a chave girar às dez e meia e os passos desceram devagar, como quem conta os degraus. Quando subiu, trazia nas botas a terra vermelha que só existe lá embaixo. A mãe não quis jantar. Eu fingi dormir, mas escutei: ele falava baixo com alguém, e ninguém respondia. · Quinta-feira. Perguntei à Maria o que há no porão. Ela benzeu-se e disse que eu não pergunte, que a casa escuta. Esta noite as velas da sala apagaram sozinhas, todas ao",
       "era": "1890",
       "tom": "horror",
       "tags": [
@@ -11807,6 +11374,8 @@
         "ensanguentado"
       ],
       "org": "solar",
+      "orgNome": "Solar dos Pinhais",
+      "addedIn": "2026-10-27",
       "family": "diario-aberto-dupla"
     },
     {
@@ -11822,6 +11391,7 @@
         "Página esquerda",
         "Página direita"
       ],
+      "texto": "14 de novembro de 1893 · Hoje o pai voltou a descer ao porão. Ouvi a chave girar às dez e meia e os passos desceram devagar, como quem conta os degraus. Quando subiu, trazia nas botas a terra vermelha que só existe lá embaixo. A mãe não quis jantar. Eu fingi dormir, mas escutei: ele falava baixo com alguém, e ninguém respondia. · Quinta-feira. Perguntei à Maria o que há no porão. Ela benzeu-se e disse que eu não pergunte, que a casa escuta. Esta noite as velas da sala apagaram sozinhas, todas ao",
       "era": "1890",
       "tom": "horror",
       "tags": [
@@ -11831,6 +11401,8 @@
         "molhado"
       ],
       "org": "solar",
+      "orgNome": "Solar dos Pinhais",
+      "addedIn": "2026-10-27",
       "family": "diario-aberto-dupla"
     },
     {
@@ -11850,6 +11422,7 @@
         "Peso",
         "Observação"
       ],
+      "texto": "Rattus norvegicus (macho adulto) · H-0417 · T. Moreira · 1 3 5 7 9 · 212 g 208 g 197 g 180 g — · Comportamento normal. Apetite regular. Inquietude após o estímulo. Recusa parcial da ração. Não dorme; fica imóvel diante da parede norte da gaiola. Ataca o próprio reflexo. Pelagem escurecida na região dorsal. O animal olhou para o observador e repetiu o som do estímulo.",
       "era": "1980",
       "tom": "horror",
       "tags": [
@@ -11860,6 +11433,8 @@
         "luz negra"
       ],
       "org": "halden",
+      "orgNome": "Instituto Halden de Biologia Experimental",
+      "addedIn": "2026-10-27",
       "family": "ficha-cobaia"
     },
     {
@@ -11874,6 +11449,7 @@
         "Contato",
         "Mensagens"
       ],
+      "texto": "Duda · vc ta acordada??",
       "era": "hoje",
       "tom": "cotidiano",
       "tags": [
@@ -11881,7 +11457,8 @@
         "mensagens",
         "conversa",
         "tela"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-conversa-celular-escuro",
@@ -11895,6 +11472,7 @@
         "Contato",
         "Mensagens"
       ],
+      "texto": "Número desconhecido · sei o que voce viu na casa",
       "era": "hoje",
       "tom": "horror",
       "tags": [
@@ -11903,7 +11481,8 @@
         "conversa",
         "tela",
         "modo escuro"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-email-celular",
@@ -11919,6 +11498,7 @@
         "Corpo",
         "Anexo"
       ],
+      "texto": "Dra. Ingrid Vasconcelos · Re: Subsolo — NÃO ENCAMINHAR · Oi, confirmei os dados do sensor. A leitura de ontem não é erro de calibração: houve variação de 0,8 °C a cada três minutos, sempre às 3h. Não comente com a diretoria. Vou ao Solar amanhã cedo. Leve a lanterna. Ingrid · 📎 leituras_subsolo.pdf (212 KB)",
       "era": "hoje",
       "tom": "investigação",
       "tags": [
@@ -11926,7 +11506,8 @@
         "e-mail",
         "tela",
         "formulário"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-tela-computador-anos-90",
@@ -11940,6 +11521,7 @@
         "Título",
         "Texto"
       ],
+      "texto": "Sem título - Bloco de Notas · Relatório 14/03/97 O servidor da prefeitura travou de novo às 03:00. Backup restaurado do disquete 7. Corrupção em: C:\\\\ARQUIVO\\\\PORAO.DAT Quem esteve no prédio depois das 22h? A câmera do corredor gravou 14 minutos de uma sala que não existe na planta. — Marcos",
       "era": "1980",
       "tom": "cotidiano",
       "tags": [
@@ -11947,7 +11529,8 @@
         "tela",
         "retrô",
         "anos 90"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-monitor-moderno-mesa",
@@ -11961,6 +11544,7 @@
         "Página",
         "Texto"
       ],
+      "texto": "PORÃO DO SOLAR É REABERTO APÓS 90 ANOS · A prefeitura de Vila Aurora autorizou ontem a abertura do porão do Solar dos Pinhais para vistoria técnica. Moradores dizem ter ouvido sons durante a madrugada. Os engenheiros não quiseram dar entrevista. A área está isolada.",
       "era": "hoje",
       "tom": "investigação",
       "tags": [
@@ -11969,7 +11553,8 @@
         "mesa",
         "navegador",
         "composição"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-log-servidor",
@@ -11983,6 +11568,7 @@
         "Linhas",
         "Erro"
       ],
+      "texto": "[2023-03-14 02:58:11] INFO sensor-b/temperatura ok 18.2C [2023-03-14 02:59:40] INFO sensor-b/umidade ok 91% [2023-03-14 03:00:00] INFO cron/backup iniciado [2023-03-14 03:00:03] WARN sensor-b/temperatura 18.2C -> 19.0C [2023-03-14 03:03:00] WARN sensor-b/temperatura 19.0C -> 19.8C [2023-03-14 03:06:00] WARN sensor-b/temperatura 19.8C -> 20.6C [2023-03-14 03:06:41] INFO porta-b/trinco fechado [2023-03-14 03:07:02] WARN porta-b/trinco ABERTO (sem comando) [2023-03-14 03:07:03] INFO camera-2/movime",
       "era": "hoje",
       "tom": "sci-fi",
       "tags": [
@@ -11990,7 +11576,8 @@
         "log",
         "terminal",
         "erro"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-transcricao-ligacao",
@@ -12008,6 +11595,7 @@
         "Interlocutor",
         "Fala"
       ],
+      "texto": "Homem não identificado e Delegado de plantão · 02/09/1993 · fita nº 417 · (011) 3250-4471 · linha de denúncias · 02:14:07 02:14:11 02:14:15 02:14:23 02:14:31 02:14:44 · Homem (voz grave) Delegado Homem Delegado Homem — · Você sabe o que tem debaixo da casa. Quem fala? Identifique-se. Já abriram o porão. Eles já estão acordados. Que porão? Onde o senhor está? [ruído de estática] ...sob a escada... não deixem a Helena... [ligação interrompida]",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -12016,7 +11604,9 @@
         "transcrição",
         "formulário"
       ],
-      "org": "delegacia"
+      "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-fax-recebido",
@@ -12030,13 +11620,15 @@
         "Remetente",
         "Texto"
       ],
+      "texto": "DE: Delegado A. Salgueiro DIE · Seção Especial · URGENTE. O homem da ligação desta madrugada foi localizado: trata-se do ex-vigia do Solar, internado no sanatório desde 1954. Ele afirma não ter telefone nem saber de ligação alguma. A fita 417 será periciada pelo IML. Aguardo instruções antes de qualquer diligência no local. Favor confirmar o recebimento.",
       "era": "1980",
       "tom": "investigação",
       "tags": [
         "fax",
         "térmico",
         "comunicação"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-postagem-rede-social",
@@ -12052,6 +11644,7 @@
         "Foto",
         "Texto"
       ],
+      "texto": "duda.alencar · a casa mais assustadora da cidade 👻 alguém aí já entrou? juro que vi uma luz na janela do porão #solardospinhais #vilaaurora #urbex",
       "era": "hoje",
       "tom": "cotidiano",
       "tags": [
@@ -12060,7 +11653,8 @@
         "foto",
         "celular",
         "formulário"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-foto-colada-fita",
@@ -12074,6 +11668,7 @@
         "Foto",
         "Legenda"
       ],
+      "texto": "Tenente Orlando, Vila Aurora, 1952 (verso: \"nunca confiem nele\")",
       "era": "1950",
       "tom": "investigação",
       "tags": [
@@ -12081,7 +11676,8 @@
         "fita",
         "legenda",
         "composição"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-porta-retrato",
@@ -12094,6 +11690,7 @@
       "fields": [
         "Foto"
       ],
+      "texto": "",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
@@ -12101,7 +11698,8 @@
         "moldura",
         "objeto",
         "vidro"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-tira-fotos-cabine",
@@ -12117,6 +11715,7 @@
         "Foto 3",
         "Foto 4"
       ],
+      "texto": "",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
@@ -12124,7 +11723,8 @@
         "cabine",
         "tira",
         "fotomatic"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-negativo-filme",
@@ -12139,6 +11739,7 @@
         "Quadro 2",
         "Quadro 3"
       ],
+      "texto": "",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -12146,7 +11747,8 @@
         "negativo",
         "filme",
         "laranja"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-etiqueta-fita-vhs",
@@ -12160,6 +11762,7 @@
         "Título",
         "Data"
       ],
+      "texto": "NÃO ASSISTIR SOZINHO · 14/03/1993",
       "era": "1980",
       "tom": "horror",
       "tags": [
@@ -12168,7 +11771,8 @@
         "etiqueta",
         "objeto",
         "vídeo"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-carteira-investigador",
@@ -12183,6 +11787,7 @@
         "Nome",
         "Matrícula"
       ],
+      "texto": "Cássio Prado Investigador de 1ª classe · Matrícula 2218",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -12191,7 +11796,9 @@
         "identificação",
         "objeto"
       ],
-      "org": "delegacia"
+      "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-cardapio-restaurante",
@@ -12205,6 +11812,7 @@
         "Restaurante",
         "Pratos"
       ],
+      "texto": "RESTAURANTE O GALO DOURADO · Consommé de galinha Filé à Parmegiana com batatas Bacalhau à Gomes de Sá Frango com quiabo Pudim de leite Sorvete de creme Café expresso Vinho tinto da casa (a taça)",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
@@ -12212,7 +11820,8 @@
         "restaurante",
         "art déco",
         "preços"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-lista-compras",
@@ -12225,6 +11834,7 @@
       "fields": [
         "Itens"
       ],
+      "texto": "pão leite café fósforos pilhas (!!) velas sal grosso lanterna",
       "era": "hoje",
       "tom": "cotidiano",
       "tags": [
@@ -12232,7 +11842,8 @@
         "compras",
         "post-it",
         "manuscrito"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-conta-de-luz",
@@ -12249,6 +11860,7 @@
         "Vencimento",
         "Consumo"
       ],
+      "texto": "Cornélio de A. Pinhais · Estrada Velha, km 7 — Vila Aurora · Cr$ 18.420,00 · 10/04/1987 · Leitura anterior: 41.002 · Leitura atual: 41.388 · Consumo do mês: 386 kWh (média dos últimos seis meses: 118 kWh)",
       "era": "1980",
       "tom": "cotidiano",
       "tags": [
@@ -12256,7 +11868,8 @@
         "luz",
         "formulário",
         "consumo"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-extrato-bancario",
@@ -12275,6 +11888,7 @@
         "Valor (Cr$)",
         "Saldo"
       ],
+      "texto": "Edmundo Vaz Cavalcanti · 0417-3 · Vila Aurora · 112.388-0 · 02/03 04/03 09/03 11/03 14/03 15/03 · SALDO ANTERIOR COMPRA CARTÃO · FARMÁCIA SÃO GABRIEL DEPÓSITO · ESPÉCIE SAQUE · CAIXA ELETRÔNICO 3 TRANSFERÊNCIA · CORNÉLIO A PINHAIS TARIFA DE MANUTENÇÃO · -186,40 2.000,00 -500,00 -38.000,00 -42,00 · 41.200,00 41.013,60 43.013,60 42.513,60 4.513,60 4.471,60",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -12283,7 +11897,9 @@
         "lançamentos",
         "formulário"
       ],
-      "org": "banco"
+      "org": "banco",
+      "orgNome": "Banco Comercial do Planalto",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-cheque-bancario",
@@ -12300,6 +11916,7 @@
         "Data",
         "Assinatura"
       ],
+      "texto": "Cr$ 38.000,00 · trinta e oito mil cruzeiros ************ · ao portador: Cornélio de Albuquerque Pinhais · Vila Aurora, 14 de março de 1976 · E. Vaz Cavalcanti",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -12309,7 +11926,9 @@
         "assinatura",
         "formulário"
       ],
-      "org": "banco"
+      "org": "banco",
+      "orgNome": "Banco Comercial do Planalto",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-bilhete-cinema",
@@ -12323,6 +11942,7 @@
         "Filme",
         "Sessão"
       ],
+      "texto": "A SOMBRA NO PORÃO · Sessão das 20h · Poltrona 14-F · Cr$ 12,00",
       "era": "1950",
       "tom": "cotidiano",
       "tags": [
@@ -12330,7 +11950,8 @@
         "cinema",
         "picote",
         "sessão"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-carta-queimada",
@@ -12346,6 +11967,7 @@
         "Texto",
         "Assinatura"
       ],
+      "texto": "Vila Aurora, 2 de agosto de 1921 · Minha querida Helena, · se você está lendo esta carta é porque o fogo não chegou até ela, e então ainda há tempo. O que está no porão não deve ser acordado. Eu fiz o que pude: queimei os livros, selei a porta, enterrei a chave no jardim, mas ele sabe onde estou. Quando a luz da vela tremer duas vezes seguidas, não responda ao que ouvir. Vá embora da casa antes do amanhecer e leve consigo apenas · Cornélio",
       "era": "1920",
       "tom": "horror",
       "tags": [
@@ -12354,7 +11976,9 @@
         "destruído",
         "manuscrito"
       ],
-      "org": "solar"
+      "org": "solar",
+      "orgNome": "Solar dos Pinhais",
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-documento-molhado",
@@ -12367,6 +11991,7 @@
       "fields": [
         "Texto"
       ],
+      "texto": "O poço foi esvaziado em 11/05/1982. No fundo, a 18 metros, foram encontrados: um relógio de bolso parado às 3h07; três chaves de ferro; ossos de pequenos animais; e uma caixa de madeira lacrada, que não foi aberta. A água subiu novamente em menos de seis horas, sem chuva nem nascente conhecida. O nível não baixa quando se retira água. Recomenda-se interditar o terreno e não beber da fonte da propriedade.",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -12374,7 +11999,8 @@
         "molhado",
         "destruído",
         "tinta escorrida"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-pagina-rasgada-pedacos",
@@ -12390,6 +12016,7 @@
         "Pedaço 3",
         "Pedaço 4"
       ],
+      "texto": "Se alguém ler isto, a casa já terá me levado. · Os três sinais são: o cheiro de terra, a vela que treme duas vezes, e a porta que se abre sem vento. · Nunca desça sozinho. Nunca diga o nome dela em voz alta. Nunca, · em hipótese alguma, responda quando ela chamar pelo seu nome. Eu respondi.",
       "era": "1950",
       "tom": "horror",
       "tags": [
@@ -12398,7 +12025,8 @@
         "pedaços",
         "fita",
         "composição"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-mesa-investigacao",
@@ -12415,6 +12043,7 @@
         "Polaroide 2",
         "Polaroide 3"
       ],
+      "texto": "RELATÓRIO DE OCORRÊNCIA Solar dos Pinhais A equipe entrou às 22h. O porão estava aberto. Não havia ninguém. Havia, porém, uma cadeira no centro da sala, virada para a parede norte, e quatro velas ainda quentes.",
       "era": "hoje",
       "tom": "investigação",
       "tags": [
@@ -12423,7 +12052,8 @@
         "documentos",
         "polaroides",
         "investigação"
-      ]
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-tpl-envelope-evidencias",
@@ -12437,6 +12067,7 @@
         "Número",
         "Conteúdo"
       ],
+      "texto": "EV-1993-0417 · Conteúdo: 1 chave de ferro, 1 fita VHS, fotografias (6)",
       "era": "1980",
       "tom": "investigação",
       "tags": [
@@ -12444,7 +12075,1279 @@
         "envelope",
         "lacre"
       ],
-      "org": "delegacia"
+      "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais",
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-foto-retrato-homem-bigode-oculos",
+      "kind": "element",
+      "name": "Retrato · homem de bigode e óculos",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-homem-bigode-oculos.webp",
+      "preview": "previews/casa-foto-retrato-homem-bigode-oculos.webp",
+      "width": 697,
+      "height": 900,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-retrato-rapaz-cdv",
+      "kind": "element",
+      "name": "Retrato · rapaz de cartão de visita",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-rapaz-cdv.webp",
+      "preview": "previews/casa-foto-retrato-rapaz-cdv.webp",
+      "width": 488,
+      "height": 900,
+      "license": "CC0"
+    },
+    {
+      "id": "casa-foto-retrato-senhora-capa",
+      "kind": "element",
+      "name": "Retrato · senhora idosa de capa",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-senhora-capa.webp",
+      "preview": "previews/casa-foto-retrato-senhora-capa.webp",
+      "width": 584,
+      "height": 900,
+      "license": "PD-old-70"
+    },
+    {
+      "id": "casa-foto-retrato-jovem-hussardo",
+      "kind": "element",
+      "name": "Retrato · jovem de uniforme",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-jovem-hussardo.webp",
+      "preview": "previews/casa-foto-retrato-jovem-hussardo.webp",
+      "width": 812,
+      "height": 900,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-retrato-oficial-sabre",
+      "kind": "element",
+      "name": "Retrato · oficial de sabre",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-oficial-sabre.webp",
+      "preview": "previews/casa-foto-retrato-oficial-sabre.webp",
+      "width": 831,
+      "height": 900,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-retrato-mulher-sanfona",
+      "kind": "element",
+      "name": "Retrato · mulher com sanfona",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-mulher-sanfona.webp",
+      "preview": "previews/casa-foto-retrato-mulher-sanfona.webp",
+      "width": 900,
+      "height": 851,
+      "license": "CC0"
+    },
+    {
+      "id": "casa-foto-lugar-rua-torre",
+      "kind": "element",
+      "name": "Lugar · rua com torre de igreja",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-rua-torre.webp",
+      "preview": "previews/casa-foto-lugar-rua-torre.webp",
+      "width": 900,
+      "height": 582,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-fabrica-obra",
+      "kind": "element",
+      "name": "Lugar · fábrica em construção",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-fabrica-obra.webp",
+      "preview": "previews/casa-foto-lugar-fabrica-obra.webp",
+      "width": 900,
+      "height": 770,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-usina-acucar",
+      "kind": "element",
+      "name": "Lugar · usina de açúcar",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-usina-acucar.webp",
+      "preview": "previews/casa-foto-lugar-usina-acucar.webp",
+      "width": 900,
+      "height": 623,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-rio-obra",
+      "kind": "element",
+      "name": "Lugar · rio e obra de fábrica",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-rio-obra.webp",
+      "preview": "previews/casa-foto-lugar-rio-obra.webp",
+      "width": 667,
+      "height": 900,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-casarao-1895",
+      "kind": "element",
+      "name": "Lugar · casarão de fazenda (1895)",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-casarao-1895.webp",
+      "preview": "previews/casa-foto-lugar-casarao-1895.webp",
+      "width": 900,
+      "height": 499,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-aldeia-igreja",
+      "kind": "element",
+      "name": "Lugar · aldeia com igreja",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-aldeia-igreja.webp",
+      "preview": "previews/casa-foto-lugar-aldeia-igreja.webp",
+      "width": 900,
+      "height": 705,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-matriz-coluna",
+      "kind": "element",
+      "name": "Lugar · igreja matriz e coluna",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-matriz-coluna.webp",
+      "preview": "previews/casa-foto-lugar-matriz-coluna.webp",
+      "width": 863,
+      "height": 900,
+      "license": "PD-1923, PD-US-expired"
+    },
+    {
+      "id": "casa-foto-mapa-londres-1890",
+      "kind": "element",
+      "name": "Mapa · Londres (1890)",
+      "category": "Fotografias",
+      "subcategory": "Mapas",
+      "tags": [
+        "foto",
+        "mapa",
+        "antigo"
+      ],
+      "file": "fotos/casa-foto-mapa-londres-1890.webp",
+      "preview": "previews/casa-foto-mapa-londres-1890.webp",
+      "width": 900,
+      "height": 690,
+      "license": "PD-old-auto-expired"
+    },
+    {
+      "id": "casa-foto-mapa-fortificacoes-1816",
+      "kind": "element",
+      "name": "Mapa · cidade e fortificações (1816)",
+      "category": "Fotografias",
+      "subcategory": "Mapas",
+      "tags": [
+        "foto",
+        "mapa",
+        "antigo"
+      ],
+      "file": "fotos/casa-foto-mapa-fortificacoes-1816.webp",
+      "preview": "previews/casa-foto-mapa-fortificacoes-1816.webp",
+      "width": 900,
+      "height": 724,
+      "license": "PD-old-100"
+    },
+    {
+      "id": "casa-foto-mapa-amsterda-1835",
+      "kind": "element",
+      "name": "Mapa · Amsterdã (1835)",
+      "category": "Fotografias",
+      "subcategory": "Mapas",
+      "tags": [
+        "foto",
+        "mapa",
+        "antigo"
+      ],
+      "file": "fotos/casa-foto-mapa-amsterda-1835.webp",
+      "preview": "previews/casa-foto-mapa-amsterda-1835.webp",
+      "width": 900,
+      "height": 731,
+      "license": "PD-Art, PD-old"
+    },
+    {
+      "id": "casa-foto-mapa-singapura-1893",
+      "kind": "element",
+      "name": "Mapa · porto colonial (1893)",
+      "category": "Fotografias",
+      "subcategory": "Mapas",
+      "tags": [
+        "foto",
+        "mapa",
+        "antigo"
+      ],
+      "file": "fotos/casa-foto-mapa-singapura-1893.webp",
+      "preview": "previews/casa-foto-mapa-singapura-1893.webp",
+      "width": 900,
+      "height": 698,
+      "license": "PD-old-70"
+    },
+    {
+      "id": "casa-scan-paper001",
+      "kind": "element",
+      "name": "Escaneado · Papel branco liso",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "branco"
+      ],
+      "file": "papeis/escaneados/casa-scan-paper001.webp",
+      "preview": "previews/casa-scan-paper001.webp",
+      "width": 2048,
+      "height": 1201,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-paper002",
+      "kind": "element",
+      "name": "Escaneado · Papel pardo de embrulho",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "pardo"
+      ],
+      "file": "papeis/escaneados/casa-scan-paper002.webp",
+      "preview": "previews/casa-scan-paper002.webp",
+      "width": 1588,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-paper003",
+      "kind": "element",
+      "name": "Escaneado · Papel branco vincado",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "vincado"
+      ],
+      "file": "papeis/escaneados/casa-scan-paper003.webp",
+      "preview": "previews/casa-scan-paper003.webp",
+      "width": 2048,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-paper004",
+      "kind": "element",
+      "name": "Escaneado · Papel pardo de pacote",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "pardo"
+      ],
+      "file": "papeis/escaneados/casa-scan-paper004.webp",
+      "preview": "previews/casa-scan-paper004.webp",
+      "width": 2048,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-paper005",
+      "kind": "element",
+      "name": "Escaneado · Papel pardo ondulado",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "pardo"
+      ],
+      "file": "papeis/escaneados/casa-scan-paper005.webp",
+      "preview": "previews/casa-scan-paper005.webp",
+      "width": 2048,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-paper006",
+      "kind": "element",
+      "name": "Escaneado · Papel bege",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "bege"
+      ],
+      "file": "papeis/escaneados/casa-scan-paper006.webp",
+      "preview": "previews/casa-scan-paper006.webp",
+      "width": 2048,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-cardboard001",
+      "kind": "element",
+      "name": "Escaneado · Papelão rasgado",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "papelão"
+      ],
+      "file": "papeis/escaneados/casa-scan-cardboard001.webp",
+      "preview": "previews/casa-scan-cardboard001.webp",
+      "width": 2048,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-cardboard002",
+      "kind": "element",
+      "name": "Escaneado · Papelão limpo",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "papelão"
+      ],
+      "file": "papeis/escaneados/casa-scan-cardboard002.webp",
+      "preview": "previews/casa-scan-cardboard002.webp",
+      "width": 2048,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-cardboard003",
+      "kind": "element",
+      "name": "Escaneado · Papelão rompido",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "papelão"
+      ],
+      "file": "papeis/escaneados/casa-scan-cardboard003.webp",
+      "preview": "previews/casa-scan-cardboard003.webp",
+      "width": 2048,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-scan-cardboard004",
+      "kind": "element",
+      "name": "Escaneado · Papelão liso",
+      "category": "Papéis",
+      "subcategory": "Escaneados",
+      "tags": [
+        "papel",
+        "escaneado",
+        "fibra",
+        "papelão"
+      ],
+      "file": "papeis/escaneados/casa-scan-cardboard004.webp",
+      "preview": "previews/casa-scan-cardboard004.webp",
+      "width": 2048,
+      "height": 2048,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-superficie-cork001",
+      "kind": "element",
+      "name": "Superfície · Cortiça fina",
+      "category": "Texturas",
+      "subcategory": "Superfícies",
+      "tags": [
+        "superfície",
+        "material",
+        "cortiça"
+      ],
+      "file": "texturas/superficies/casa-superficie-cork001.webp",
+      "preview": "previews/casa-superficie-cork001.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-superficie-cork002",
+      "kind": "element",
+      "name": "Superfície · Cortiça grossa",
+      "category": "Texturas",
+      "subcategory": "Superfícies",
+      "tags": [
+        "superfície",
+        "material",
+        "cortiça"
+      ],
+      "file": "texturas/superficies/casa-superficie-cork002.webp",
+      "preview": "previews/casa-superficie-cork002.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-superficie-leather004",
+      "kind": "element",
+      "name": "Superfície · Couro marrom",
+      "category": "Texturas",
+      "subcategory": "Superfícies",
+      "tags": [
+        "superfície",
+        "material",
+        "couro"
+      ],
+      "file": "texturas/superficies/casa-superficie-leather004.webp",
+      "preview": "previews/casa-superficie-leather004.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-superficie-leather026",
+      "kind": "element",
+      "name": "Superfície · Couro escuro",
+      "category": "Texturas",
+      "subcategory": "Superfícies",
+      "tags": [
+        "superfície",
+        "material",
+        "couro"
+      ],
+      "file": "texturas/superficies/casa-superficie-leather026.webp",
+      "preview": "previews/casa-superficie-leather026.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-superficie-wood026",
+      "kind": "element",
+      "name": "Superfície · Madeira clara",
+      "category": "Texturas",
+      "subcategory": "Superfícies",
+      "tags": [
+        "superfície",
+        "material",
+        "madeira"
+      ],
+      "file": "texturas/superficies/casa-superficie-wood026.webp",
+      "preview": "previews/casa-superficie-wood026.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-superficie-wood060",
+      "kind": "element",
+      "name": "Superfície · Madeira escura",
+      "category": "Texturas",
+      "subcategory": "Superfícies",
+      "tags": [
+        "superfície",
+        "material",
+        "madeira"
+      ],
+      "file": "texturas/superficies/casa-superficie-wood060.webp",
+      "preview": "previews/casa-superficie-wood060.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-superficie-fabric034",
+      "kind": "element",
+      "name": "Superfície · Feltro",
+      "category": "Texturas",
+      "subcategory": "Superfícies",
+      "tags": [
+        "superfície",
+        "material",
+        "feltro"
+      ],
+      "file": "texturas/superficies/casa-superficie-fabric034.webp",
+      "preview": "previews/casa-superficie-fabric034.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-superficie-metal032",
+      "kind": "element",
+      "name": "Superfície · Metal riscado",
+      "category": "Texturas",
+      "subcategory": "Superfícies",
+      "tags": [
+        "superfície",
+        "material",
+        "metal"
+      ],
+      "file": "texturas/superficies/casa-superficie-metal032.webp",
+      "preview": "previews/casa-superficie-metal032.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-micro-smear001",
+      "kind": "element",
+      "name": "Microtextura · Borrões de dedo",
+      "category": "Texturas",
+      "subcategory": "Microtexturas",
+      "tags": [
+        "microtextura",
+        "sobreposição"
+      ],
+      "file": "texturas/micro/casa-micro-smear001.webp",
+      "preview": "previews/casa-micro-smear001.webp",
+      "width": 1024,
+      "height": 941,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-micro-scratches001",
+      "kind": "element",
+      "name": "Microtextura · Riscos A",
+      "category": "Texturas",
+      "subcategory": "Microtexturas",
+      "tags": [
+        "microtextura",
+        "sobreposição"
+      ],
+      "file": "texturas/micro/casa-micro-scratches001.webp",
+      "preview": "previews/casa-micro-scratches001.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-micro-scratches002",
+      "kind": "element",
+      "name": "Microtextura · Riscos B",
+      "category": "Texturas",
+      "subcategory": "Microtexturas",
+      "tags": [
+        "microtextura",
+        "sobreposição"
+      ],
+      "file": "texturas/micro/casa-micro-scratches002.webp",
+      "preview": "previews/casa-micro-scratches002.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-micro-scratches003",
+      "kind": "element",
+      "name": "Microtextura · Riscos C",
+      "category": "Texturas",
+      "subcategory": "Microtexturas",
+      "tags": [
+        "microtextura",
+        "sobreposição"
+      ],
+      "file": "texturas/micro/casa-micro-scratches003.webp",
+      "preview": "previews/casa-micro-scratches003.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-micro-scratches004",
+      "kind": "element",
+      "name": "Microtextura · Riscos D",
+      "category": "Texturas",
+      "subcategory": "Microtexturas",
+      "tags": [
+        "microtextura",
+        "sobreposição"
+      ],
+      "file": "texturas/micro/casa-micro-scratches004.webp",
+      "preview": "previews/casa-micro-scratches004.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-micro-scratches005",
+      "kind": "element",
+      "name": "Microtextura · Riscos E",
+      "category": "Texturas",
+      "subcategory": "Microtexturas",
+      "tags": [
+        "microtextura",
+        "sobreposição"
+      ],
+      "file": "texturas/micro/casa-micro-scratches005.webp",
+      "preview": "previews/casa-micro-scratches005.webp",
+      "width": 1024,
+      "height": 1024,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-homem-careca-bigode",
+      "kind": "element",
+      "name": "Retrato · homem careca bigode",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-homem-careca-bigode.webp",
+      "preview": "previews/casa-foto-retrato-homem-careca-bigode.webp",
+      "width": 595,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-homem-gravata-borboleta",
+      "kind": "element",
+      "name": "Retrato · homem gravata borboleta",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-homem-gravata-borboleta.webp",
+      "preview": "previews/casa-foto-retrato-homem-gravata-borboleta.webp",
+      "width": 606,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-homem-barba-calvo",
+      "kind": "element",
+      "name": "Retrato · homem barba calvo",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-homem-barba-calvo.webp",
+      "preview": "previews/casa-foto-retrato-homem-barba-calvo.webp",
+      "width": 588,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-homem-bigode-grosso",
+      "kind": "element",
+      "name": "Retrato · homem bigode grosso",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-homem-bigode-grosso.webp",
+      "preview": "previews/casa-foto-retrato-homem-bigode-grosso.webp",
+      "width": 659,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-homem-chapeu-coco",
+      "kind": "element",
+      "name": "Retrato · homem chapeu coco",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-homem-chapeu-coco.webp",
+      "preview": "previews/casa-foto-retrato-homem-chapeu-coco.webp",
+      "width": 604,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-homem-bigode-fino",
+      "kind": "element",
+      "name": "Retrato · homem bigode fino",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-homem-bigode-fino.webp",
+      "preview": "previews/casa-foto-retrato-homem-bigode-fino.webp",
+      "width": 608,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-homem-barba-grisalha",
+      "kind": "element",
+      "name": "Retrato · homem barba grisalha",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-homem-barba-grisalha.webp",
+      "preview": "previews/casa-foto-retrato-homem-barba-grisalha.webp",
+      "width": 646,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-homem-colarinho-alto",
+      "kind": "element",
+      "name": "Retrato · homem colarinho alto",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-homem-colarinho-alto.webp",
+      "preview": "previews/casa-foto-retrato-homem-colarinho-alto.webp",
+      "width": 602,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-mulher-babado-xadrez",
+      "kind": "element",
+      "name": "Retrato · mulher babado xadrez",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-mulher-babado-xadrez.webp",
+      "preview": "previews/casa-foto-retrato-mulher-babado-xadrez.webp",
+      "width": 603,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-mulher-coque-alto",
+      "kind": "element",
+      "name": "Retrato · mulher coque alto",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-mulher-coque-alto.webp",
+      "preview": "previews/casa-foto-retrato-mulher-coque-alto.webp",
+      "width": 607,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-mulher-colarinho-renda",
+      "kind": "element",
+      "name": "Retrato · mulher colarinho renda",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-mulher-colarinho-renda.webp",
+      "preview": "previews/casa-foto-retrato-mulher-colarinho-renda.webp",
+      "width": 606,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-mulher-perfil-cachos",
+      "kind": "element",
+      "name": "Retrato · mulher perfil cachos",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-mulher-perfil-cachos.webp",
+      "preview": "previews/casa-foto-retrato-mulher-perfil-cachos.webp",
+      "width": 608,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-mulher-mangas-bufantes",
+      "kind": "element",
+      "name": "Retrato · mulher mangas bufantes",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-mulher-mangas-bufantes.webp",
+      "preview": "previews/casa-foto-retrato-mulher-mangas-bufantes.webp",
+      "width": 605,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-mulher-gola-alta",
+      "kind": "element",
+      "name": "Retrato · mulher gola alta",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-mulher-gola-alta.webp",
+      "preview": "previews/casa-foto-retrato-mulher-gola-alta.webp",
+      "width": 602,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-mulher-vestido-escuro",
+      "kind": "element",
+      "name": "Retrato · mulher vestido escuro",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-mulher-vestido-escuro.webp",
+      "preview": "previews/casa-foto-retrato-mulher-vestido-escuro.webp",
+      "width": 596,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-mulher-sentada-braco",
+      "kind": "element",
+      "name": "Retrato · mulher sentada braco",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-mulher-sentada-braco.webp",
+      "preview": "previews/casa-foto-retrato-mulher-sentada-braco.webp",
+      "width": 601,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-mulher-jovem-franja",
+      "kind": "element",
+      "name": "Retrato · mulher jovem franja",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-mulher-jovem-franja.webp",
+      "preview": "previews/casa-foto-retrato-mulher-jovem-franja.webp",
+      "width": 611,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-retrato-mulher-coque-trancado",
+      "kind": "element",
+      "name": "Retrato · mulher coque trancado",
+      "category": "Fotografias",
+      "subcategory": "Retratos",
+      "tags": [
+        "foto",
+        "retrato",
+        "pessoa"
+      ],
+      "file": "fotos/casa-foto-retrato-mulher-coque-trancado.webp",
+      "preview": "previews/casa-foto-retrato-mulher-coque-trancado.webp",
+      "width": 646,
+      "height": 900,
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "casa-foto-lugar-rua-central-bondes",
+      "kind": "element",
+      "name": "Lugar · rua central com bondes",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-rua-central-bondes.webp",
+      "preview": "previews/casa-foto-lugar-rua-central-bondes.webp",
+      "width": 900,
+      "height": 718,
+      "license": "PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-estacao-trilhos",
+      "kind": "element",
+      "name": "Lugar · estação e trilhos",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-estacao-trilhos.webp",
+      "preview": "previews/casa-foto-lugar-estacao-trilhos.webp",
+      "width": 900,
+      "height": 668,
+      "license": "PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-mansao-colunas",
+      "kind": "element",
+      "name": "Lugar · mansão de colunas",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-mansao-colunas.webp",
+      "preview": "previews/casa-foto-lugar-mansao-colunas.webp",
+      "width": 900,
+      "height": 699,
+      "license": "PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-casa-branca-inverno",
+      "kind": "element",
+      "name": "Lugar · casa branca no inverno",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-casa-branca-inverno.webp",
+      "preview": "previews/casa-foto-lugar-casa-branca-inverno.webp",
+      "width": 900,
+      "height": 699,
+      "license": "PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-porto-industrial",
+      "kind": "element",
+      "name": "Lugar · porto industrial",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-porto-industrial.webp",
+      "preview": "previews/casa-foto-lugar-porto-industrial.webp",
+      "width": 900,
+      "height": 704,
+      "license": "PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-fabrica-tijolos",
+      "kind": "element",
+      "name": "Lugar · fábrica de tijolos",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-fabrica-tijolos.webp",
+      "preview": "previews/casa-foto-lugar-fabrica-tijolos.webp",
+      "width": 900,
+      "height": 713,
+      "license": "PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-catedral-praca",
+      "kind": "element",
+      "name": "Lugar · catedral e praça",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-catedral-praca.webp",
+      "preview": "previews/casa-foto-lugar-catedral-praca.webp",
+      "width": 900,
+      "height": 682,
+      "license": "PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-igreja-interior",
+      "kind": "element",
+      "name": "Lugar · interior de igreja",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-igreja-interior.webp",
+      "preview": "previews/casa-foto-lugar-igreja-interior.webp",
+      "width": 900,
+      "height": 701,
+      "license": "PD-US-expired"
+    },
+    {
+      "id": "casa-foto-lugar-estrada-arvores",
+      "kind": "element",
+      "name": "Lugar · estrada entre árvores",
+      "category": "Fotografias",
+      "subcategory": "Lugares",
+      "tags": [
+        "foto",
+        "lugar",
+        "cena"
+      ],
+      "file": "fotos/casa-foto-lugar-estrada-arvores.webp",
+      "preview": "previews/casa-foto-lugar-estrada-arvores.webp",
+      "width": 900,
+      "height": 705,
+      "license": "PD-US-expired"
+    },
+    {
+      "id": "casa-set-caso-sanatorio-serra-do-mar",
+      "kind": "set",
+      "name": "Caso do Sanatório da Serra do Mar",
+      "category": "Conjuntos",
+      "license": "CC0-1.0",
+      "description": "A internação de Helena Marques de Alencar: triagem, ficha de internação, prontuário, um desenho e a certidão de óbito.",
+      "templates": [
+        "casa-tpl-ficha-triagem-sanatorio",
+        "casa-tpl-internacao-sanatorio",
+        "casa-tpl-prontuario",
+        "casa-tpl-desenho-paciente",
+        "casa-tpl-certidao-obito"
+      ],
+      "preview": "previews/casa-tpl-ficha-triagem-sanatorio.webp",
+      "era": "1920",
+      "tom": "horror",
+      "org": "sanatorio",
+      "orgNome": "Sanatório da Serra do Mar",
+      "tags": [
+        "conjunto",
+        "sanatório",
+        "internação",
+        "Helena"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-set-arquivos-instituto-halden",
+      "kind": "set",
+      "name": "Arquivos do Instituto Halden",
+      "category": "Conjuntos",
+      "license": "CC0-1.0",
+      "description": "Os experimentos do subsolo do Instituto Halden: relatório, cobaia, planta, memorando, caderno com segredo UV e o sismógrafo.",
+      "templates": [
+        "casa-tpl-relatorio-experimento",
+        "casa-tpl-ficha-cobaia",
+        "casa-tpl-planta-laboratorio",
+        "casa-tpl-memorando-interno",
+        "casa-tpl-caderno-pesquisa-uv",
+        "casa-tpl-grafico-sismografo"
+      ],
+      "preview": "previews/casa-tpl-relatorio-experimento.webp",
+      "era": "1980",
+      "tom": "sci-fi",
+      "org": "halden",
+      "orgNome": "Instituto Halden de Biologia Experimental",
+      "tags": [
+        "conjunto",
+        "ciência",
+        "Halden",
+        "subsolo"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-set-dossie-lua-triplice",
+      "kind": "set",
+      "name": "Dossiê da Lua Tríplice",
+      "category": "Conjuntos",
+      "license": "CC0-1.0",
+      "description": "O culto da Lua Tríplice visto por dentro e por fora: panfleto, diário, ordem de missão, relatório redigido e uma invocação sob luz negra.",
+      "templates": [
+        "casa-tpl-panfleto-culto",
+        "casa-tpl-diario-culto-uv",
+        "casa-tpl-ordem-missao-ultrassecreta",
+        "casa-tpl-relatorio-redigido",
+        "casa-tpl-invocacao-uv"
+      ],
+      "preview": "previews/casa-tpl-panfleto-culto.webp",
+      "era": "1980",
+      "tom": "horror",
+      "org": "irmandade",
+      "orgNome": "Irmandade da Lua Tríplice",
+      "tags": [
+        "conjunto",
+        "culto",
+        "Lua Tríplice",
+        "ocultismo"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-set-caso-solar-dos-pinhais",
+      "kind": "set",
+      "name": "Caso do Solar dos Pinhais",
+      "category": "Conjuntos",
+      "license": "CC0-1.0",
+      "description": "A investigação do porão do Solar: depoimento, apreensão, laudo, cadeia de custódia, desaparecimento e o quadro do caso.",
+      "templates": [
+        "casa-tpl-termo-depoimento",
+        "casa-tpl-auto-apreensao",
+        "casa-tpl-laudo-pericial",
+        "casa-tpl-cadeia-custodia",
+        "casa-tpl-ficha-desaparecido",
+        "casa-tpl-quadro-investigacao"
+      ],
+      "preview": "previews/casa-tpl-termo-depoimento.webp",
+      "era": "1950",
+      "tom": "investigação",
+      "org": "delegacia",
+      "orgNome": "Delegacia de Investigações Especiais",
+      "tags": [
+        "conjunto",
+        "polícia",
+        "Solar dos Pinhais",
+        "investigação"
+      ],
+      "addedIn": "2026-10-27"
     }
   ]
 }

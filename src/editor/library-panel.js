@@ -117,7 +117,7 @@ export function createLibraryPanel(shell, { api, state, fonts } = {}) {
   async function loadLibraryData() {
     try {
       const res = await api?.library?.list();
-      rawItems = (res?.items || []).filter(i => i.kind !== 'layer' && i.kind !== 'template');
+      rawItems = (res?.items || []).filter(i => i.kind !== 'layer' && i.kind !== 'template' && i.kind !== 'set');
       sources = res?.sources || [{ id: 'casa', name: 'Coleção do Ateliê' }];
       render();
     } catch (err) {

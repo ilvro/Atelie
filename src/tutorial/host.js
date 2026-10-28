@@ -34,6 +34,7 @@ export function mountTutorials({ root, shell, editor, reading, api, diagnostics 
       inspectorTab: tabButton?.dataset.tab ?? null,
       drawer: shell.drawer.current?.() ?? null,
       templateDetail: Boolean(document.querySelector('.template-detail-view')),
+      templateFilters: [...document.querySelectorAll('.templates-filter-slot .filter-chip.is-active')].filter(c => c.dataset.filterValue !== 'all').map(c => `${c.dataset.filterGroup}:${c.dataset.filterValue}`),
       librarySearch: document.querySelector('.library-search-input')?.value ?? '',
       libraryTab: libraryChip?.dataset.type ?? null,
       fontDialog: Boolean(document.querySelector('.font-upload-modal')),

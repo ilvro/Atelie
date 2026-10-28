@@ -28,6 +28,7 @@ const paths = {
   ruler: '<path d="m3 16 13-13 5 5L8 21zM7 12l2 2m1-5 3 3m0-6 2 2m1-5 3 3"/>',
   trash: '<path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7"/>',
   camera: '<path d="M3 7h5l2-3h4l2 3h5v14H3z"/><circle cx="12" cy="13" r="4"/>',
+  text: '<path d="M5 7V4h14v3M12 4v16m-3.5 0h7"/>',
   rect: '<rect x="4" y="6" width="16" height="12" rx="1"/>',
   ellipse: '<ellipse cx="12" cy="12" rx="9" ry="6"/>',
   line: '<path d="M5 19 19 5"/>',

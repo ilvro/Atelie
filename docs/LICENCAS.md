@@ -101,7 +101,7 @@ O acervo artístico público do Ateliê distribuído em `public/colecao/` é com
 
 - **Papéis procedurais (48 arquivos WebP em 3 idades)**: gerados por algoritmos puros em código (`src/domain/noise.js` e `scripts/colecao/papers.js`).
 - **Texturas de sobreposição (53 arquivos WebP com canal alfa)**: manchas de café, umidade, sangue oxidado, poeira, marcas queimadas, relevos de amassados, dobras e impressões digitais.
-- **Elementos vetoriais (463 itens em SVG)**: carimbos burocráticos, marcas periciais, selos consulares, grampos, clipes, fitas adesivas transparentes e fita crepe.
+- **Elementos vetoriais (490 itens em SVG)**: carimbos burocráticos, marcas periciais, selos consulares, grampos, clipes, fitas adesivas transparentes e fita crepe.
 - **Modelos de documentos (151 modelos estruturados em JSON)**: cartas de época, telegramas, certidões, boletins de ocorrência, fichas de investigação, recortes de jornal, polaroides e laudos.
 
 ### Licença dos Ativos da Coleção da Casa
@@ -251,3 +251,35 @@ Fotografias, mapas, papéis escaneados, superfícies e microtexturas da coleçã
 | `casa-micro-scratches003` | Microtextura · Riscos C | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Scratches003) | `6c7dbaabc15e` |
 | `casa-micro-scratches004` | Microtextura · Riscos D | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Scratches004) | `f6869bcadc20` |
 | `casa-micro-scratches005` | Microtextura · Riscos E | ambientCG (Lennart Demes) | CC0-1.0 | [página](https://ambientcg.com/a/Scratches005) | `22dee57dad7d` |
+| `casa-foto-retrato-homem-careca-bigode` | Retrato · homem careca bigode | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2009.31.31) | `b91a888fca10` |
+| `casa-foto-retrato-homem-gravata-borboleta` | Retrato · homem gravata borboleta | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2009.31.21) | `6876d4ec8d95` |
+| `casa-foto-retrato-homem-barba-calvo` | Retrato · homem barba calvo | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2013.244.14) | `4b27195dcef0` |
+| `casa-foto-retrato-homem-bigode-grosso` | Retrato · homem bigode grosso | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2014.37.28.32) | `2f11e985f465` |
+| `casa-foto-retrato-homem-chapeu-coco` | Retrato · homem chapeu coco | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2014.37.28.35) | `87cb7dd04b0a` |
+| `casa-foto-retrato-homem-bigode-fino` | Retrato · homem bigode fino | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2014.37.28.56) | `bce30bfae737` |
+| `casa-foto-retrato-homem-barba-grisalha` | Retrato · homem barba grisalha | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2014.37.28.22) | `c3038766b3b3` |
+| `casa-foto-retrato-homem-colarinho-alto` | Retrato · homem colarinho alto | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2013.244.27) | `a9477d039b38` |
+| `casa-foto-retrato-mulher-babado-xadrez` | Retrato · mulher babado xadrez | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2011.36.105) | `ff335c74f5b5` |
+| `casa-foto-retrato-mulher-coque-alto` | Retrato · mulher coque alto | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2009.31.19) | `e0c026557d76` |
+| `casa-foto-retrato-mulher-colarinho-renda` | Retrato · mulher colarinho renda | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2014.37.28.63) | `da2ac782d38e` |
+| `casa-foto-retrato-mulher-perfil-cachos` | Retrato · mulher perfil cachos | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2014.37.28.51) | `efc99f928321` |
+| `casa-foto-retrato-mulher-mangas-bufantes` | Retrato · mulher mangas bufantes | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2014.37.28.48) | `8d66756fb264` |
+| `casa-foto-retrato-mulher-gola-alta` | Retrato · mulher gola alta | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2014.37.28.65) | `2884fbffa323` |
+| `casa-foto-retrato-mulher-vestido-escuro` | Retrato · mulher vestido escuro | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2013.244.30) | `a249a96ee836` |
+| `casa-foto-retrato-mulher-sentada-braco` | Retrato · mulher sentada braco | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2011.155.76.5) | `d11b7785653b` |
+| `casa-foto-retrato-mulher-jovem-franja` | Retrato · mulher jovem franja | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2008.9.48) | `a31166763ca0` |
+| `casa-foto-retrato-mulher-coque-trancado` | Retrato · mulher coque trancado | Fotógrafo desconhecido · National Museum of African American History and Culture | CC0-1.0 | [página](https://nmaahc.si.edu/object/nmaahc_2020.10.10.7) | `7d0077614d49` |
+| `casa-foto-lugar-rua-central-bondes` | Lugar · rua central com bondes | Related names
+
+copyright claimant
+Detroit Publishing Co.
+publisher
+Detroit Publi | PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:4a22931u.tif) | `b818496a9f33` |
+| `casa-foto-lugar-estacao-trilhos` | Lugar · estação e trilhos | Detroit Publishing Co. , publisher | PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:New_York_Central_Railroad_depot,_Syracuse,_N.Y..jpg) | `e7125946844e` |
+| `casa-foto-lugar-mansao-colunas` | Lugar · mansão de colunas | Unknown authorUnknown author | PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:Detroit_Photographic_Company_(0674).jpg) | `eae9c67200f2` |
+| `casa-foto-lugar-casa-branca-inverno` | Lugar · casa branca no inverno | Detroit Publishing Co. | PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:Governor_mansion_richmond_1905.jpg) | `4ae63b61f16d` |
+| `casa-foto-lugar-porto-industrial` | Lugar · porto industrial | Unknown authorUnknown author | PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:Detroit_Photographic_Company_(0727).jpg) | `85c38d0475a1` |
+| `casa-foto-lugar-fabrica-tijolos` | Lugar · fábrica de tijolos | Detroit Publishing Company | PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:Smith_%26_Wesson_Factory_Springfield_Mass_1908.jpg) | `ad4062b2dd17` |
+| `casa-foto-lugar-catedral-praca` | Lugar · catedral e praça | Unknown authorUnknown author | PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:Jackson_Square_New_Orleans_-_Photochrome_by_Detroit_Photographic_Company_(0349).jpg) | `05d0ea751c68` |
+| `casa-foto-lugar-igreja-interior` | Lugar · interior de igreja | Unknown authorUnknown author | PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:Detroit_Photographic_Company_(0841).jpg) | `afab27973ac0` |
+| `casa-foto-lugar-estrada-arvores` | Lugar · estrada entre árvores | Detroit Publishing Company | PD-US-expired | [página](https://commons.wikimedia.org/wiki/File:Forest_Park_Springfield_Mass_1910-1920_01.jpg) | `e7a512dd9cf1` |

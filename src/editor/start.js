@@ -15,6 +15,35 @@ const FEATURED_CATEGORIES = [
   'Tecnologia',
 ];
 
+/** O número da semana do ano (semente da rotação dos modelos em destaque). */
+export function weekNumber(date = new Date()) {
+  const start = Date.UTC(date.getUTCFullYear(), 0, 1);
+  return Math.floor((Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) - start) / (7 * 86400000));
+}
+
+/** Modelos em destaque: um por categoria, e o escolhido muda a cada semana. As variações não entram. */
+export function pickFeatured(items, week = weekNumber()) {
+  const bases = items.filter(i => i.kind === 'template' && !i.family && (!i.source || i.source === 'casa'));
+  const featured = [];
+  FEATURED_CATEGORIES.forEach((cat, k) => {
+    const inCat = bases.filter(i => i.category === cat).sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+    if (inCat.length > 0) featured.push(inCat[(week + k) % inCat.length]);
+  });
+  return featured;
+}
+
+/** Novidades: os modelos com `addedIn` mais recente, um por categoria para variar. */
+export function pickNews(items, limit = 8) {
+  const bases = items.filter(i => i.kind === 'template' && !i.family && i.addedIn && (!i.source || i.source === 'casa'));
+  if (!bases.length) return [];
+  const latest = bases.map(i => i.addedIn).sort().at(-1);
+  const recent = bases.filter(i => i.addedIn === latest).sort((a, b) => a.category.localeCompare(b.category, 'pt-BR') || a.name.localeCompare(b.name, 'pt-BR'));
+  const seen = new Set();
+  const out = [];
+  for (const i of recent) if (!seen.has(i.category)) { seen.add(i.category); out.push(i); }
+  return out.slice(0, limit);
+}
+
 export function createStartScreen(container, {
   api,
   onCreatePreset,
@@ -76,19 +105,11 @@ export function createStartScreen(container, {
   }
 
   function getFeaturedTemplates() {
-    const items = (libraryData?.items || []).filter(i => i.kind === 'template' && (!i.source || i.source === 'casa'));
-    const featured = [];
+    return pickFeatured(libraryData?.items || []);
+  }
 
-    for (const cat of FEATURED_CATEGORIES) {
-      const inCat = items
-        .filter(i => i.category === cat)
-        .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
-      if (inCat.length > 0) {
-        featured.push(inCat[0]);
-      }
-    }
-
-    return featured;
+  function getNews() {
+    return pickNews(libraryData?.items || []);
   }
 
   function getExpansions() {
@@ -170,7 +191,7 @@ export function createStartScreen(container, {
     }).join('');
 
     // 3. Featured templates section
-    const featuredMarkup = featuredTemplates.map(tpl => {
+    const cardMarkup = tpl => {
       const tilt = tiltOf(tpl.id);
       const previewUrl = api?.library?.previewURL ? api.library.previewURL(tpl) : (tpl.preview || '');
       return `
@@ -188,7 +209,9 @@ export function createStartScreen(container, {
           </div>
         </div>
       `;
-    }).join('');
+    };
+    const featuredMarkup = featuredTemplates.map(cardMarkup).join('');
+    const newsMarkup = getNews().map(cardMarkup).join('');
 
     // 4. Expansions section
     const expansionsMarkup = expansions.map(exp => {
@@ -254,6 +277,18 @@ export function createStartScreen(container, {
           ${featuredMarkup}
         </div>
       </section>
+
+      <!-- Seção NOVIDADES -->
+      ${newsMarkup ? `
+        <section class="start-section" aria-label="Novidades da coleção">
+          <div class="start-section-header">
+            ${tape('NOVIDADES')}
+          </div>
+          <div class="start-row start-news-row" role="region" aria-label="Novidades">
+            ${newsMarkup}
+          </div>
+        </section>
+      ` : ''}
 
       <!-- Seção EXPANSÕES (se houver) -->
       ${expansions.length > 0 ? `

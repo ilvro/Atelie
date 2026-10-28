@@ -17,7 +17,18 @@ Ao abrir o Ateliê pela primeira vez ou acessar a gaveta **Modelos** (atalho **M
 - **Ocultismo**: páginas de grimório ritualístico, diários de culto com segredos UV e círculos de invocação.
 - **Fantasia**: éditos reais com selo de cera e pergaminhos antigos.
 - **Cotidiano**: cartões de visita, recibos comerciais, ingressos de teatro e passagens de trem.
-- **Tecnologia**: telas de terminal retrô e conversas de celular impressas.
+- **Tecnologia**: telas de terminal retrô, conversas e e-mails de celular, logs, fax e postagens.
+- **Forense e perícia**, **Oficial e jurídico**, **Militar e governo**: laudos, certidões, passaporte, testamento, ordens de missão e dossiês.
+- **Cadernos, diários e livros**, **Escola e juventude**: páginas manuscritas, boletins, provas e anuários.
+- **Ciência e laboratório**, **Fotografias e objetos**, **Destruídos e composições**: experimentos, fitas, negativos, páginas queimadas e a mesa de investigação.
+
+### Encontrar o que você precisa
+
+- **Filtros**: Categoria, **Época** (medieval a hoje), **Tom** (investigação, horror, fantasia, cotidiano, ficção científica) e **Instituição** se somam; os números mostram quantos modelos sobram.
+- **Busca**: procura no nome, nas etiquetas, na época, na instituição e no texto de exemplo dos campos.
+- **Variações**: um modelo com variações (ensanguentado, queimado, molhado, luz negra, arquivo morto) mostra "+N variações"; no detalhe, as miniaturas trocam de uma para outra.
+- **Conjuntos**: em Categoria › Conjuntos há dossiês de 4 a 6 documentos da mesma instituição (Sanatório da Serra do Mar, Instituto Halden, Lua Tríplice, Solar dos Pinhais). **Usar conjunto** abre um documento por modelo, cada um na sua aba.
+- **Novidades**: a tela inicial mostra os modelos mais recentes e troca os destaques a cada semana.
 
 Para começar com uma página limpa, escolha um dos **9 formatos de folha em branco** disponíveis na tela de início ou clique em **Folha em branco** (A4 retrato/paisagem, Carta, Recorte de jornal, Telegrama, Foto polaroid, Cartão postal, Bilhete ou Quadrado).
 

@@ -60,7 +60,7 @@ export function filterLibraryItems(items = [], {
 
   return items.filter(item => {
     // Exclude internal layers or templates from library elements/fonts drawer
-    if (item.kind === 'layer' || item.kind === 'template') {
+    if (item.kind === 'layer' || item.kind === 'template' || item.kind === 'set') {
       return false;
     }
 

@@ -15,7 +15,20 @@ const TEMPLATE_CATEGORIES = [
   'Fantasia',
   'Cotidiano',
   'Tecnologia',
+  'Forense e perícia',
+  'Oficial e jurídico',
+  'Militar e governo',
+  'Cadernos, diários e livros',
+  'Escola e juventude',
+  'Ciência e laboratório',
+  'Fotografias e objetos',
+  'Destruídos e composições',
+  'Conjuntos',
 ];
+
+export const ERA_LABELS = { medieval: 'Medieval', 1890: 'Anos 1890', 1920: 'Anos 1920', 1950: 'Anos 1950', 1980: 'Anos 1980', hoje: 'Hoje' };
+export const TOM_LABELS = { 'investigação': 'Investigação', horror: 'Horror', fantasia: 'Fantasia', cotidiano: 'Cotidiano', 'sci-fi': 'Ficção científica' };
+const ERA_ORDER = ['medieval', '1890', '1920', '1950', '1980', 'hoje'];
 
 function normalize(str) {
   return (str || '')
@@ -43,7 +56,7 @@ function matchSource(tpl, sourceId) {
   return itemSource === sourceId;
 }
 
-export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
+export function createTemplatesDrawer(shell, { api, onUseTemplate, onUseSet } = {}) {
   const container = document.createElement('div');
   container.className = 'templates-drawer-view';
 
@@ -51,6 +64,9 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
   let sources = [{ id: 'casa', name: 'Coleção do Ateliê' }];
   let activeSource = 'all';
   let activeCategory = 'all';
+  let activeEra = 'all';
+  let activeTom = 'all';
+  let activeOrg = 'all';
   let searchQuery = '';
   let activeTemplateDetail = null;
   let gridScrollTop = 0;
@@ -59,12 +75,18 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
     onChange(key, value) {
       if (key === 'source') activeSource = value;
       if (key === 'category') activeCategory = value;
+      if (key === 'era') activeEra = value;
+      if (key === 'tom') activeTom = value;
+      if (key === 'org') activeOrg = value;
       gridScrollTop = 0;
       render();
     },
     onClear() {
       activeSource = 'all';
       activeCategory = 'all';
+      activeEra = 'all';
+      activeTom = 'all';
+      activeOrg = 'all';
       gridScrollTop = 0;
       render();
     },
@@ -73,7 +95,7 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
   async function loadData() {
     try {
       const res = await api?.library?.list();
-      rawTemplates = (res?.items || []).filter(i => i.kind === 'template');
+      rawTemplates = (res?.items || []).filter(i => i.kind === 'template' || i.kind === 'set');
       sources = res?.sources || [{ id: 'casa', name: 'Coleção do Ateliê' }];
       render();
     } catch (err) {
@@ -86,30 +108,37 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
     }
   }
 
+  /** Variações de um modelo (a grade mostra só a base; o detalhe mostra a família). */
+  function variantsOf(tpl) {
+    return rawTemplates.filter(t => t.family && `casa-tpl-${t.family}` === tpl.id);
+  }
+
+  function searchText(tpl) {
+    return normalize([
+      tpl.name, tpl.category, (Array.isArray(tpl.fields) ? tpl.fields : []).join(' '), (Array.isArray(tpl.tags) ? tpl.tags : []).join(' '), ERA_LABELS[tpl.era] || tpl.era,
+      TOM_LABELS[tpl.tom] || tpl.tom, tpl.orgNome, tpl.org, tpl.texto, tpl.description,
+    ].filter(Boolean).join(' '));
+  }
+
+  function matchesFilters(tpl, { era = activeEra, tom = activeTom, org = activeOrg, category = activeCategory, source = activeSource } = {}) {
+    if (!matchSource(tpl, source)) return false;
+    if (category !== 'all' && tpl.category !== category) return false;
+    if (era !== 'all' && tpl.era !== era) return false;
+    if (tom !== 'all' && tpl.tom !== tom) return false;
+    if (org !== 'all' && tpl.org !== org) return false;
+    return true;
+  }
+
+  /** A grade: bases e conjuntos. Uma variação que combina com a busca leva a sua base para a grade. */
   function filterTemplates() {
     const q = normalize(searchQuery);
-
-    return rawTemplates.filter(tpl => {
-      // 1. Source filter
-      if (!matchSource(tpl, activeSource)) return false;
-
-      // 2. Category filter
-      if (activeCategory !== 'all') {
-        if (tpl.category !== activeCategory) return false;
-      }
-
-      // 3. Search query
-      if (q) {
-        const nameNorm = normalize(tpl.name);
-        const catNorm = normalize(tpl.category);
-        const fieldsNorm = (tpl.fields || []).map(f => normalize(f)).join(' ');
-        if (!nameNorm.includes(q) && !catNorm.includes(q) && !fieldsNorm.includes(q)) {
-          return false;
-        }
-      }
-
-      return true;
-    });
+    const shown = new Set();
+    for (const tpl of rawTemplates) {
+      if (!matchesFilters(tpl)) continue;
+      if (q && !searchText(tpl).includes(q)) continue;
+      shown.add(tpl.family ? `casa-tpl-${tpl.family}` : tpl.id);
+    }
+    return rawTemplates.filter(t => !t.family && shown.has(t.id));
   }
 
   function renderDetailView(tpl) {
@@ -119,6 +148,10 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
 
     const isPending = tpl.status === 'pending';
     const btnLabel = isPending ? 'Preparar e usar este modelo' : 'Usar este modelo';
+    const isSet = tpl.kind === 'set';
+    const members = isSet ? (tpl.templates || []).map(id => rawTemplates.find(t => t.id === id)).filter(Boolean) : [];
+    const baseTpl = tpl.family ? (rawTemplates.find(t => t.id === `casa-tpl-${tpl.family}`) || tpl) : tpl;
+    const family = isSet ? [] : [baseTpl, ...variantsOf(baseTpl)];
 
     container.innerHTML = `
       <div class="template-detail-view tab-crossfade" tabindex="0">
@@ -142,12 +175,32 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
             <span class="template-badge">${esc(tpl.category)}</span>
             <span class="template-badge">${fieldsCount} ${fieldsCount === 1 ? 'campo' : 'campos'}</span>
             ${tpl.backTemplate ? '<span class="template-badge is-verso">frente e verso</span>' : ''}
+            ${tpl.era ? `<span class="template-badge">${esc(ERA_LABELS[tpl.era] || tpl.era)}</span>` : ''}
+            ${tpl.tom ? `<span class="template-badge">${esc(TOM_LABELS[tpl.tom] || tpl.tom)}</span>` : ''}
+            ${tpl.orgNome ? `<span class="template-badge">${esc(tpl.orgNome)}</span>` : ''}
           </div>
+          ${isSet ? `<p class="template-detail-description">${esc(tpl.description || '')}</p>` : ''}
         </div>
 
-        <button type="button" class="at-btn is-primary template-use-btn" data-action="use-template" style="width:100%; justify-content:center; padding:10px 16px; font-weight:700;">
-          ${btnLabel}
+        <button type="button" class="at-btn is-primary template-use-btn" data-action="${isSet ? 'use-set' : 'use-template'}" style="width:100%; justify-content:center; padding:10px 16px; font-weight:700;">
+          ${isSet ? `Usar conjunto (${members.length} documentos)` : btnLabel}
         </button>
+
+        ${isSet ? `
+        <div class="template-detail-fields-section template-set-members">
+          <h4>Neste conjunto (${members.length})</h4>
+          <div class="template-family-row">
+            ${members.map(m => `<button type="button" class="template-family-thumb" data-member-id="${esc(m.id)}" title="${esc(m.name)}"><img src="${esc(api?.library?.previewURL ? api.library.previewURL(m) : (m.preview || ''))}" alt="${esc(m.name)}" /><span>${esc(m.name)}</span></button>`).join('')}
+          </div>
+        </div>` : ''}
+
+        ${family.length > 1 ? `
+        <div class="template-detail-fields-section template-family">
+          <h4>Variações (${family.length - 1})</h4>
+          <div class="template-family-row">
+            ${family.map(m => `<button type="button" class="template-family-thumb ${m.id === tpl.id ? 'is-active' : ''}" data-family-id="${esc(m.id)}" title="${esc(m.name)}"><img src="${esc(api?.library?.previewURL ? api.library.previewURL(m) : (m.preview || ''))}" alt="${esc(m.name)}" /><span>${esc(m.family ? m.name.split(' · ').pop() : 'Original')}</span></button>`).join('')}
+          </div>
+        </div>` : ''}
 
         <div class="template-detail-fields-section">
           <h4>Campos editáveis (${fieldsCount})</h4>
@@ -179,6 +232,16 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
         }
       }).catch(() => {});
     }
+
+    container.querySelectorAll('[data-family-id]').forEach(btn => btn.addEventListener('click', () => {
+      const next = rawTemplates.find(t => t.id === btn.dataset.familyId);
+      if (next) { activeTemplateDetail = next; render(); }
+    }));
+    container.querySelectorAll('[data-member-id]').forEach(btn => btn.addEventListener('click', () => {
+      const next = rawTemplates.find(t => t.id === btn.dataset.memberId);
+      if (next) { activeTemplateDetail = next; render(); }
+    }));
+    container.querySelector('[data-action="use-set"]')?.addEventListener('click', () => onUseSet?.(members));
 
     // Events in detail view
     container.querySelector('[data-action="back-to-grid"]')?.addEventListener('click', () => {
@@ -247,10 +310,12 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
 
     const filtered = filterTemplates();
 
-    // Filter groups (chips wrap onto lines, with counts)
+    // Filter groups (chips wrap onto lines, with counts); the counts follow the other filters
+    const bases = rawTemplates.filter(t => !t.family);
     const sourceTemplates = activeSource === 'all'
-      ? rawTemplates
-      : rawTemplates.filter(t => matchSource(t, activeSource));
+      ? bases
+      : bases.filter(t => matchSource(t, activeSource));
+    const countWith = over => sourceTemplates.filter(t => matchesFilters(t, over)).length;
 
     const extraCategories = Array.from(
       new Set(sourceTemplates.map(t => t.category).filter(Boolean))
@@ -285,6 +350,14 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
       })),
     });
 
+    const distinct = key => Array.from(new Set(sourceTemplates.map(t => t[key]).filter(Boolean)));
+    const eras = ERA_ORDER.filter(e => distinct('era').includes(e));
+    const toms = Object.keys(TOM_LABELS).filter(e => distinct('tom').includes(e));
+    const orgs = distinct('org').map(id => ({ id, nome: sourceTemplates.find(t => t.org === id)?.orgNome || id })).sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+    if (eras.length) filterGroups.push({ key: 'era', label: 'Época', value: activeEra, allLabel: 'Todas', options: eras.map(e => ({ value: e, label: ERA_LABELS[e], count: countWith({ era: e }) })) });
+    if (toms.length) filterGroups.push({ key: 'tom', label: 'Tom', value: activeTom, allLabel: 'Todos', options: toms.map(e => ({ value: e, label: TOM_LABELS[e], count: countWith({ tom: e }) })) });
+    if (orgs.length) filterGroups.push({ key: 'org', label: 'Instituição', value: activeOrg, allLabel: 'Todas', options: orgs.map(o => ({ value: o.id, label: o.nome, count: countWith({ org: o.id }) })) });
+
     // Template grid items
     const gridItems = filtered.length > 0
       ? filtered.map(tpl => {
@@ -305,8 +378,11 @@ export function createTemplatesDrawer(shell, { api, onUseTemplate } = {}) {
                 <span class="template-card-cat">${esc(tpl.category)}</span>
                 <div class="template-badges-row">
                   ${tpl.status === 'pending' ? '<span class="template-badge is-jit" style="background: rgba(147, 84, 220, 0.2); color: var(--at-uv, #9354dc); font-weight: 700;">JIT</span>' : ''}
-                  <span class="template-badge">${fieldsCount} ${fieldsCount === 1 ? 'campo' : 'campos'}</span>
+                  ${tpl.kind === 'set'
+                    ? `<span class="template-badge is-set">Conjunto · ${(tpl.templates || []).length} modelos</span>`
+                    : `<span class="template-badge">${fieldsCount} ${fieldsCount === 1 ? 'campo' : 'campos'}</span>`}
                   ${tpl.backTemplate ? '<span class="template-badge is-verso">frente e verso</span>' : ''}
+                  ${variantsOf(tpl).length ? `<span class="template-badge is-family">+${variantsOf(tpl).length} variações</span>` : ''}
                 </div>
               </div>
             </div>

@@ -59,6 +59,9 @@ export const CONDITIONS = {
   drawer: (state, name) => state.drawer === name,
   drawerClosed: state => !state.drawer,
   templateDetail: state => state.templateDetail,
+  /** Um chip de filtro da gaveta Modelos está ativo (grupo e valor). */
+  templateFilter: (state, group, value) => (state.templateFilters ?? []).includes(`${group}:${value}`),
+  templateFilterNone: state => (state.templateFilters ?? []).length === 0,
   docNamed: (state, text) => String(state.handout?.name ?? '').includes(text),
   onMesa: state => state.onMesa,
   onDocument: state => !state.onMesa && Boolean(state.handout),

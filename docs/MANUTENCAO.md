@@ -14,12 +14,15 @@ public/colecao/
 ├── library.json         # Manifesto consolidado (schema 1) de todos os itens públicos
 ├── papeis/              # 75 papéis em WebP (25 receitas × 3 idades, sobre escaneamentos CC0)
 ├── texturas/            # 53 sobreposições de acabamento em WebP com canal alfa
-├── elementos/           # 140 ilustrações vetoriais em SVG (carimbos, selos, grampos)
+├── elementos/           # 294 ilustrações vetoriais em SVG (carimbos, selos, objetos, interfaces, códigos, postal, emblemas, rabiscos…)
+├── fotos/               # 44 fotografias e mapas CC0/domínio público em WebP (P&B, 900 px)
 ├── fontes/              # 40 famílias de fontes livres auto-hospedadas (OFL-1.1 e Apache-2.0)
 │   ├── LICENCAS.md      # Catálogo de licenças e commits do google/fonts
 │   ├── ofl/
 │   └── apache/
-├── modelos/             # 39 modelos de documentos canônicos em JSON
+├── papeis/escaneados/   # 10 papéis escaneados CC0 (ambientCG) usados como base dos papéis
+├── texturas/superficies # 8 superfícies (madeira, couro, cortiça, metal, feltro) e texturas/micro (riscos, borrões)
+├── modelos/             # 151 modelos em JSON (132 documentos e 19 variações) em 16 categorias
 └── previews/            # Miniaturas otimizadas em WebP (320 px) para a gaveta Biblioteca
 \`\`\`
 
@@ -29,7 +32,7 @@ O teto estrito para a pasta \`public/colecao/\` é de **60 MB** para garantir ca
 - **Fontes livres**: ~8,5 MB.
 - **Elementos vetoriais e modelos**: ~1,2 MB.
 - **Miniaturas (previews)**: ~3,5 MB.
-- **Tamanho total atual**: **~21 MB** (amplamente abaixo do limite de 60 MB).
+- **Tamanho total atual**: **~42 MB** (abaixo do limite de 60 MB). A auditoria (`node scripts/colecao/audit.js`) mede a cada execução.
 
 ### Comandos de Regeneração da Coleção
 
@@ -45,7 +48,23 @@ O teto estrito para a pasta \`public/colecao/\` é de **60 MB** para garantir ca
    \`\`\`
    Valida todos os modelos em \`public/colecao/modelos/\` via \`validateHandout\` e gera as miniaturas WebP em \`public/colecao/previews/\`.
 
-3. **Atualizar registro de licenças**:
+3. **Material de terceiros (CC0 e domínio público)**:
+   \`\`\`bash
+   node scripts/colecao/externos/fetch.js --lock    # baixa o que falta, confere e registra o SHA-256
+   node scripts/colecao/externos/fetch.js --verify  # só confere os hashes, sem rede
+   \`\`\`
+   Cada foto, papel escaneado, superfície ou microtextura está em \`scripts/colecao/externos/externos.lock.json\` com origem, autor, licença, página da licença e SHA-256. Só entra CC0 ou domínio público explícito; o build normal não baixa nada.
+
+4. **Elementos vetoriais, fontes e papéis**:
+   \`\`\`bash
+   node scripts/colecao/build.js --elements   # geradores em scripts/colecao/vectors/
+   node scripts/colecao/build.js --papers     # 25 receitas × 3 idades, sobre os escaneamentos
+   node scripts/fonts/fetch.js && node scripts/colecao/build.js --fonts
+   \`\`\`
+
+5. **Modelos, variações e conjuntos**: os modelos novos ficam em \`scripts/colecao/modelos/lote-*.js\`, montados com \`montagem.js\` e o kit (\`kit.js\`: receitas de envelhecimento e silhuetas de corte); as variações (ensanguentado, queimado, molhado, luz negra, arquivo morto) em \`variacoes.js\`; os conjuntos em \`conjuntos.js\`. \`node scripts/colecao/templates.js\` valida, grava os JSON, gera prévias, folhas de contato (\`docs/referencias/\`) e o manifesto. \`node scripts/colecao/audit.js\` confere camadas, envelhecimento, texto que cabe (mínimo 14 px), contraste, nomes proibidos e orçamento.
+
+6. **Atualizar registro de licenças**:
    \`\`\`bash
    node scripts/licenses.js
    \`\`\`

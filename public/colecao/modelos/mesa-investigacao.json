@@ -659,11 +659,11 @@
     },
     {
       "id": "l-21-mesa-investigacao",
-      "name": "Luz de abajur",
-      "kind": "effect",
+      "name": "Luz do abajur",
+      "kind": "shape",
       "visible": true,
       "locked": false,
-      "opacity": 0.12,
+      "opacity": 0.08,
       "blend": "screen",
       "x": 0,
       "y": 0,
@@ -672,19 +672,19 @@
       "rotation": 0,
       "clip": false,
       "light": "both",
-      "effect": {
-        "type": "fade",
-        "seed": 1151,
-        "amount": 0.6,
-        "params": {
-          "color": "#ffdca0"
-        }
+      "shape": {
+        "type": "rect",
+        "fill": "#ffdca0",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
       }
     },
     {
       "id": "l-22-mesa-investigacao",
-      "name": "Sombra da mesa",
-      "kind": "effect",
+      "name": "Poeira da mesa",
+      "kind": "image",
       "visible": true,
       "locked": false,
       "opacity": 0.3,
@@ -696,13 +696,49 @@
       "rotation": 0,
       "clip": false,
       "light": "both",
-      "effect": {
-        "type": "damp",
-        "seed": 1152,
-        "amount": 0.5,
-        "params": {
-          "color": "#1a0f06"
-        }
+      "image": {
+        "src": {
+          "library": "casa-sujeira-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-23-mesa-investigacao",
+      "name": "Sombra da borda da mesa",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 1100,
+      "width": 1700,
+      "height": 100,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#1a0f06",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
       }
     }
   ],

@@ -15,6 +15,8 @@ const previewsDir = path.join(colecaoDir, 'previews');
 const refDir = path.join(projectRoot, 'docs/referencias');
 
 import { TEMPLATES, CATEGORIES } from './modelos/index.js';
+import { CONJUNTOS } from './modelos/conjuntos.js';
+import { INSTITUICOES } from './universo.js';
 import { META } from './modelos/meta.js';
 
 export { TEMPLATES };
@@ -233,11 +235,24 @@ async function renderContactSheet(items, outPath) {
 }
 
 function metaOf(spec) {
-  if (spec.meta) return { era: spec.meta.era, tom: spec.meta.tom, tags: spec.meta.tags || [], ...(spec.meta.org ? { org: spec.meta.org } : {}), ...(spec.family ? { family: spec.family } : {}) };
-  const slug = spec.slug;
-  const m = META[slug];
-  if (!m) throw new Error(`Modelo sem metadados em modelos/meta.js: ${slug}`);
-  return { era: m.era, tom: m.tom, tags: m.tags || [], ...(m.org ? { org: m.org } : {}) };
+  const base = spec.meta || META[spec.slug];
+  if (!base) throw new Error(`Modelo sem metadados em modelos/meta.js: ${spec.slug}`);
+  return {
+    era: base.era, tom: base.tom, tags: base.tags || [],
+    ...(base.org ? { org: base.org, orgNome: INSTITUICOES[base.org]?.nome } : {}),
+    ...(base.addedIn ? { addedIn: base.addedIn } : {}),
+    ...(spec.family ? { family: spec.family } : {}),
+  };
+}
+
+/** O texto de exemplo dos campos (para a busca da gaveta Modelos). */
+function textoDosCampos(handout) {
+  const partes = [];
+  for (const f of handout.fields || []) {
+    const layer = handout.layers.find(l => l.id === f.layerId);
+    if (layer?.text?.content) partes.push(layer.text.content.replace(/\s+/g, ' ').trim());
+  }
+  return partes.join(' · ').slice(0, 500);
 }
 
 export async function generateAllTemplates() {
@@ -272,6 +287,7 @@ export async function generateAllTemplates() {
       file: modelFile,
       preview: previewFile,
       fields: handout.fields.map(f => f.label),
+      texto: textoDosCampos(handout),
       ...metaOf(spec),
       ...(spec.backTemplate ? { backTemplate: spec.backTemplate } : {}),
     };
@@ -285,6 +301,19 @@ export async function generateAllTemplates() {
     } else {
       lib.items.push(item);
     }
+  }
+
+  // Conjuntos: um card por conjunto, com a prévia do primeiro modelo
+  const porSlug = new Map(templateItems.map(i => [i.id, i]));
+  lib.items = lib.items.filter(i => i.kind !== 'set');
+  for (const c of CONJUNTOS) {
+    const ids = c.modelos.map(m => `casa-tpl-${m}`);
+    for (const id of ids) if (!porSlug.has(id)) throw new Error(`Conjunto "${c.name}" cita modelo inexistente: ${id}`);
+    lib.items.push({
+      id: `casa-set-${c.slug}`, kind: 'set', name: c.name, category: 'Conjuntos', license: 'CC0-1.0',
+      description: c.descricao, templates: ids, preview: porSlug.get(ids[0]).preview, era: c.era, tom: c.tom,
+      org: c.org, orgNome: INSTITUICOES[c.org].nome, tags: c.tags, addedIn: '2026-10-27',
+    });
   }
 
   await fs.writeFile(libraryPath, JSON.stringify(lib, null, 2), 'utf8');

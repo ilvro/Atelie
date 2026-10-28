@@ -40,7 +40,7 @@ export function expandir(specs) {
       const pilha = v.preset ? aging(v.preset, { seed: v.seed, page: { width: page.width, height: page.height } }) : [];
       out.push({
         ...base, slug: `${base.slug}-${v.suffix}`, name: `${base.name} · ${v.label}`, family: base.slug,
-        meta: { ...meta, tags: [...(meta.tags || []), v.suffix === 'uv' ? 'luz negra' : v.label] },
+        meta: { ...meta, addedIn: '2026-10-27', tags: [...(meta.tags || []), v.suffix === 'uv' ? 'luz negra' : v.label] },
         layers: [...base.layers, ...pilha, ...(v.extra ? v.extra(page) : [])],
         fields: base.fields, variants: undefined, backTemplate: undefined,
       });

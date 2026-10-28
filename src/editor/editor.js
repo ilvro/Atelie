@@ -1395,6 +1395,20 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
         shell.notify(`Erro ao usar modelo: ${err.message}`, { tone: 'error' });
       }
     },
+    // Um conjunto abre um documento por modelo: o primeiro numa aba nova e ativa, os outros em segundo plano
+    onUseSet: async (members) => {
+      try {
+        let first = true;
+        for (const member of members) {
+          await instantiateTemplate(member.id, first ? { newTab: true } : { newTab: true, background: true });
+          first = false;
+        }
+        shell.inspector.tab('fill');
+        shell.drawer.close();
+      } catch (err) {
+        shell.notify(`Erro ao usar o conjunto: ${err.message}`, { tone: 'error' });
+      }
+    },
   });
   shell.drawer.panel('templates', templatesDrawer.element);
 
@@ -1604,15 +1618,15 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     stage?.land(cloned.id);
   }
 
-  function addTextAt(pos, { edit = false } = {}) {
+  function addTextAt(pos, { edit = false, box = null } = {}) {
     if (!state) return;
     const style = inheritedTextStyle(state.handout, activeSession?.lastTextStyle);
     const newL = textLayer({
       name: 'Texto',
-      x: Math.round(pos[0] - 300),
-      y: Math.round(pos[1] - 100),
-      width: 600,
-      height: 200,
+      x: box ? box.x : Math.round(pos[0] - 300),
+      y: box ? box.y : Math.round(pos[1] - 100),
+      width: box ? box.width : 600,
+      height: box ? box.height : 200,
       light: currentLight === 'uv' ? 'uv' : 'both',
       ...(style ? { text: style } : {}),
     });
@@ -1666,6 +1680,12 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
 
   function addDrawing(desc) {
     if (!state || isReadOnly) return;
+    if (desc.type === 'text') {
+      // O texto nasce já em edição: a ferramenta volta a Selecionar, para as letras não virarem atalhos
+      stage?.setTool('select');
+      addTextAt(desc.point || [desc.box.x + desc.box.width / 2, desc.box.y + desc.box.height / 2], { edit: true, box: desc.box });
+      return;
+    }
     if (desc.type === 'cut' || desc.type === 'burn') {
       addCut(desc);
       return;

@@ -221,6 +221,21 @@ export const LESSONS = [
     ],
   },
 
+  {
+    id: 'find-collection', folder: 'news', kind: 'lesson', task: ['collection'], next: null, minutes: 4, since: '2026-10-27',
+    title: 'Encontrar um modelo e usar um conjunto',
+    summary: 'Filtre a coleção por época, ache um conjunto de documentos que combinam e abra todos de uma vez.',
+    start: 'blank',
+    steps: [
+      { say: 'A coleção tem mais de 150 modelos. Os filtros ajudam a achar o que combina com a sua mesa.', done: ['read'], act: 'continue' },
+      { say: 'Abra <b>Modelos</b> no trilho.', target: '.rail-btn[data-action="templates"]', done: ['drawer', 'templates'], act: ['click', '.rail-btn[data-action="templates"]'] },
+      { say: 'Em <b>Época</b>, clique em <b>Anos 1920</b>.', why: 'Os filtros de Época, Tom e Instituição se somam: a lista mostra só o que combina com todos.', target: '.filter-chip[data-filter-group="era"][data-filter-value="1920"]', drawer: 'templates', done: ['templateFilter', 'era', '1920'], act: ['click', '.filter-chip[data-filter-group="era"][data-filter-value="1920"]'] },
+      { say: 'Clique em <b>Limpar filtros</b>.', target: '.filter-clear-btn', drawer: 'templates', done: ['templateFilterNone'], act: ['click', '.filter-clear-btn'] },
+      { say: 'Em <b>Categoria</b>, clique em <b>Conjuntos</b>.', why: 'Um conjunto reúne de quatro a seis documentos da mesma instituição, com nomes, datas e rostos que combinam.', target: '.filter-chip[data-filter-group="category"][data-filter-value="Conjuntos"]', drawer: 'templates', done: ['templateFilter', 'category', 'Conjuntos'], act: ['click', '.filter-chip[data-filter-group="category"][data-filter-value="Conjuntos"]'] },
+      { say: 'Clique em <b>Dossiê da Lua Tríplice</b>.', target: '.template-card[data-id="casa-set-dossie-lua-triplice"]', drawer: 'templates', done: ['templateDetail'], act: ['click', '.template-card[data-id="casa-set-dossie-lua-triplice"]'] },
+      { say: 'Aqui, <b>Usar conjunto</b> abre um documento por modelo, cada um na sua aba, e deixa o primeiro à vista.', why: 'Neste treino não vamos abrir as abas: o botão faz isso quando você usar de verdade. Dá para clicar em qualquer miniatura da lista para ver o modelo antes.', done: ['read'], act: 'continue' },
+    ],
+  },
   // --- Dicas rápidas: o “?” de cada tarefa abre uma destas
   {
     id: 'tip-uv', folder: 'tips', kind: 'tip', task: ['light'], minutes: 1,

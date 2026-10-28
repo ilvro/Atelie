@@ -512,10 +512,9 @@ test('handout rendering: multiply blend, clipping masks, adjustments, UV light, 
 
   assert.equal(res5.missing.length, 1);
   assert.deepEqual(res5.missing[0], { library: 'nao-existe' });
-  const [checkerPixel] = res5.pixels;
-  assert.ok(checkerPixel[0] >= 100 && checkerPixel[0] <= 200, `checkerboard R between 100 and 200: ${checkerPixel[0]}`);
-  assert.ok(checkerPixel[1] >= 100 && checkerPixel[1] <= 200, `checkerboard G between 100 and 200: ${checkerPixel[1]}`);
-  assert.ok(checkerPixel[2] >= 100 && checkerPixel[2] <= 200, `checkerboard B between 100 and 200: ${checkerPixel[2]}`);
+  // Uma imagem que falta não desenha mais o xadrez cinza (C0): preview, assado e exportação deixam o lugar vazio
+  const [emptyPixel] = res5.pixels;
+  assert.deepEqual(emptyPixel.slice(0, 3), [255, 255, 255], `missing image leaves the page showing, not a checkerboard (${emptyPixel})`);
 
   // 6. Minimal text drawing
   const res6 = await page.evaluate(async () => {

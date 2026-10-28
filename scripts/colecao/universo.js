@@ -11,9 +11,9 @@ export const TONS = ['investigação', 'horror', 'fantasia', 'cotidiano', 'sci-f
 
 /** Retratos de estúdio da coleção (Fase C0) que dão rosto fixo ao elenco. */
 export const RETRATOS = {
-  homem: ['casa-foto-retrato-homem-bigode-oculos', 'casa-foto-retrato-rapaz-cdv', 'casa-foto-retrato-jovem-hussardo', 'casa-foto-retrato-oficial-sabre'],
-  mulher: ['casa-foto-retrato-mulher-sanfona'],
-  idoso: ['casa-foto-retrato-senhora-capa'],
+  homem: ['casa-foto-retrato-homem-bigode-oculos', 'casa-foto-retrato-rapaz-cdv', 'casa-foto-retrato-jovem-hussardo', 'casa-foto-retrato-oficial-sabre', 'casa-foto-retrato-homem-bigode-fino', 'casa-foto-retrato-homem-gravata-borboleta', 'casa-foto-retrato-homem-colarinho-alto', 'casa-foto-retrato-homem-chapeu-coco'],
+  mulher: ['casa-foto-retrato-mulher-sanfona', 'casa-foto-retrato-mulher-babado-xadrez', 'casa-foto-retrato-mulher-coque-alto', 'casa-foto-retrato-mulher-gola-alta', 'casa-foto-retrato-mulher-perfil-cachos', 'casa-foto-retrato-mulher-mangas-bufantes'],
+  idoso: ['casa-foto-retrato-senhora-capa', 'casa-foto-retrato-homem-barba-grisalha', 'casa-foto-retrato-homem-barba-calvo'],
 };
 
 const pessoa = (nome, cargo, retrato, extra = {}) => ({ nome, cargo, retrato, ...extra });

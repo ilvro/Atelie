@@ -334,7 +334,7 @@ export default [
       BOX('Pires da xícara', { x: 1280, y: 660, w: 260, h: 260 }, { type: 'ellipse', fill: '#e8e4d8', stroke: '#9a958a', weight: 4 }), BOX('Xícara', { x: 1315, y: 695, w: 190, h: 190 }, { type: 'ellipse', fill: '#f4f1ea', stroke: '#9a958a', weight: 4 }), BOX('Café', { x: 1340, y: 720, w: 140, h: 140 }, { type: 'ellipse', fill: '#3a2010' }), BOX('Asa da xícara', { x: 1500, y: 770, w: 70, h: 50 }, { type: 'ellipse', stroke: '#9a958a', weight: 10 }),
       BOX('Lupa · lente', { x: 780, y: 820, w: 250, h: 250 }, { type: 'ellipse', stroke: '#3a2a1a', weight: 14, fill: '#cfe3f01a' }), BOX('Lupa · cabo', { x: 1010, y: 1040, w: 200, h: 34 }, { fill: '#3a2a1a', radius: 16, rot: 40 }), BOX('Lupa · brilho', { x: 820, y: 860, w: 90, h: 50 }, { type: 'ellipse', fill: '#ffffff', opacity: 0.4, rot: -30 }),
       IMG('Barbante', 'casa-investigacao-barbante-curvo', { x: 760, y: 340, w: 360, h: 130 }, { rot: 4 }), IMG('Post-it', 'casa-investigacao-postit-azul', { x: 640, y: 900, w: 180, h: 180 }, { rot: -6 }),
-      fx('Luz de abajur', 'fade', { blend: 'screen', opacity: 0.12, amount: 0.6, params: { color: '#ffdca0' }, seed: 1151 }), fx('Sombra da mesa', 'damp', { opacity: 0.3, amount: 0.5, params: { color: '#1a0f06' }, seed: 1152 }),
+      BOX('Luz do abajur', { x: 0, y: 0, w: 1700, h: 1200 }, { fill: '#ffdca0', opacity: 0.08, blend: 'screen' }), IMG('Poeira da mesa', 'casa-sujeira-2', { x: 0, y: 0, w: 1700, h: 1200 }, { blend: 'multiply', opacity: 0.3 }), BOX('Sombra da borda da mesa', { x: 0, y: 1100, w: 1700, h: 100 }, { fill: '#1a0f06', opacity: 0.3, blend: 'multiply' }),
     ],
   }),
   modelo({

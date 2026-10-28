@@ -396,3 +396,42 @@ test('colecao-c11: tecnologia, fotografias e objetos, cotidiano e destruídos co
   assert.ok(iMoldura > chat.layers.findIndex(l => l.name === 'Tela') && iMoldura > chat.layers.findIndex(l => l.name === 'Balão 1'), 'a moldura cobre a borda da tela');
   assert.ok(chat.fields.some(f => f.label === 'Contato') && chat.fields.some(f => f.label === 'Mensagens'));
 });
+
+test('colecao-c12: conjuntos reúnem de 4 a 6 modelos da mesma instituição e o manifesto traz época, tom, instituição e texto de busca', async () => {
+  const lib = JSON.parse(await fs.readFile(libraryPath, 'utf8'));
+  const ids = new Map(lib.items.map(i => [i.id, i]));
+  const sets = lib.items.filter(i => i.kind === 'set');
+  assert.ok(sets.length >= 3, 'ao menos 3 conjuntos');
+  for (const set of sets) {
+    assert.ok(set.templates.length >= 4 && set.templates.length <= 6, `${set.id}: de 4 a 6 modelos`);
+    assert.ok(set.description && set.preview && set.orgNome, `${set.id}: descrição, prévia e instituição`);
+    await fs.access(path.join(colecaoDir, set.preview));
+    const orgs = new Set();
+    for (const tid of set.templates) {
+      const t = ids.get(tid);
+      assert.equal(t?.kind, 'template', `${set.id}: ${tid} existe`);
+      orgs.add(t.org);
+    }
+    // O conjunto é da instituição; os modelos vêm dela ou do órgão que a investigou (a seção do caso)
+    assert.ok(set.templates.some(tid => ids.get(tid).org === set.org), `${set.id}: ao menos um modelo da instituição ${set.org}`);
+  }
+  const templates = lib.items.filter(i => i.kind === 'template');
+  assert.ok(templates.filter(i => i.org).every(i => i.orgNome), 'orgNome em todo modelo com instituição');
+  assert.ok(templates.filter(i => !i.family).every(i => typeof i.texto === 'string'), 'texto de exemplo para a busca');
+  assert.ok(templates.some(i => i.addedIn), 'modelos novos marcados com addedIn');
+});
+
+test('colecao-c12: destaques mudam por semana e as novidades trazem os modelos mais recentes, sem variações', async () => {
+  const { pickFeatured, pickNews, weekNumber } = await import('../src/editor/start.js');
+  const lib = JSON.parse(await fs.readFile(libraryPath, 'utf8'));
+  const a = pickFeatured(lib.items, 3).map(i => i.id);
+  const b = pickFeatured(lib.items, 4).map(i => i.id);
+  assert.equal(a.length, 8);
+  assert.notDeepEqual(a, b, 'a semana seguinte traz outros modelos');
+  assert.deepEqual(a, pickFeatured(lib.items, 3).map(i => i.id), 'a mesma semana, os mesmos modelos');
+  assert.ok(!pickFeatured(lib.items, 7).some(i => i.family), 'variações não são destaque');
+  const news = pickNews(lib.items);
+  assert.ok(news.length >= 6 && news.every(i => i.addedIn === '2026-10-27' && !i.family));
+  assert.equal(new Set(news.map(i => i.category)).size, news.length, 'uma por categoria');
+  assert.equal(weekNumber(new Date(Date.UTC(2026, 0, 8))), 1);
+});

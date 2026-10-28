@@ -26,7 +26,13 @@ test('colecao-manifest: validação estrutural e integridade do acervo', async (
     // 2. Licença
     assert.ok(item.license && typeof item.license === 'string', `item ${item.id} sem licença`);
 
-    // 3. Arquivo principal
+    // 3. Arquivo principal (um conjunto não tem arquivo: aponta para modelos que existem)
+    if (item.kind === 'set') {
+      assert.ok(Array.isArray(item.templates) && item.templates.length >= 4, `conjunto ${item.id} sem modelos`);
+      for (const tid of item.templates) assert.ok(manifest.items.some(i => i.id === tid && i.kind === 'template'), `conjunto ${item.id} cita ${tid}, que não existe`);
+      citedFiles.add(path.normalize(item.preview));
+      continue;
+    }
     assert.ok(item.file, `item ${item.id} sem file`);
     const fullFilePath = path.join(colecaoDir, item.file);
     try {

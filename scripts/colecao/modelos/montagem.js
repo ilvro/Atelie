@@ -240,5 +240,5 @@ export function modelo({ slug, name, category, page = A4, background = '#f3efe6'
     campos.push({ layerId: rest.name, label: _field });
     return rest;
   });
-  return { slug, name, category, page: { ...page, background }, layers: layersOut, fields: campos, meta: { era: faixaEra(era), tom, ...(org ? { org } : {}), tags }, variants };
+  return { slug, name, category, page: { ...page, background }, layers: layersOut, fields: campos, meta: { addedIn: '2026-10-27', era: faixaEra(era), tom, ...(org ? { org } : {}), tags }, variants };
 }
