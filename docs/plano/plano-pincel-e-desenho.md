@@ -14,8 +14,8 @@ Escrito em 28/10/2026, depois da Fase 14 do `plano-qualidade-de-vida.md`. Segue 
 | 1 | Pontas do pincel: lápis, giz, pena, pincel seco e marca-texto | feita em 28/10/2026 |
 | 2 | Painel de Propriedades para traços de pincel (inclui 2 bugs) | feita em 28/10/2026 |
 | 3 | Estabilizador de traço | feita em 28/10/2026 |
-| 4 | Borracha de traço | a fazer |
-| 5 | Atalhos e tintas de época na faixa do pincel | a fazer |
+| 4 | Borracha de traço | feita em 28/10/2026 (atalho Shift+E: o E já é Exportar) |
+| 5 | Atalhos e tintas de época na faixa do pincel | feita em 28/10/2026 |
 
 ## O que o código tem hoje
 

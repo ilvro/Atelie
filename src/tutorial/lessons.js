@@ -180,12 +180,14 @@ export const LESSONS = [
   {
     id: 'draw-brush', folder: 'news', kind: 'lesson', task: ['tools'], next: null, minutes: 3, since: '2026-10-26',
     title: 'Desenhar com o pincel',
-    summary: 'Pinte um traço à mão livre e desenhe um retângulo arrastando.',
+    summary: 'Pinte um traço à mão livre, apague um pedaço dele e desenhe um retângulo arrastando.',
     start: 'blank',
     steps: [
       { say: 'A barra à esquerda da mesa tem as ferramentas de desenho.', done: ['read'], act: 'continue' },
       { say: 'Escolha o <b>Pincel</b> (tecla <b>B</b>).', target: '.stage-tool-btn[data-tool="brush"]', done: ['tool', 'brush'] },
       { say: 'Arraste sobre a página para fazer um traço.', target: '.stage-page-wrap', done: ['layerWhere', { kind: 'shape', 'shape.type': 'path' }], act: ['draw', [[300, 400], [420, 470], [540, 400], [660, 480]]] },
+      { say: 'Errou um pedaço? Escolha a <b>Borracha de traço</b> (tecla <b>Shift+E</b>). O traço continua selecionado.', why: 'Ela corta os pontos do traço em vez de pintar por cima, então o traço segue editável.', target: '.stage-tool-btn[data-tool="eraser"]', done: ['tool', 'eraser'], learn: ['Shift+E', 'borracha de traço'] },
+      { say: 'Passe a borracha pelo meio do traço, onde ele faz a primeira curva.', target: '.stage-page-wrap', done: ['brushStrokes', 2], act: ['draw', [[395, 450], [420, 475], [445, 500]]] },
       { say: 'Volte à ferramenta <b>Selecionar</b> (tecla <b>V</b> ou Esc).', target: '.stage-tool-btn[data-tool="select"]', done: ['tool', 'select'], learn: ['Esc', 'voltar a selecionar'] },
       { say: 'Agora sozinho: desenhe um <b>retângulo</b> arrastando na página.', try: true, target: '.stage-tool-btn[data-tool="rect"]', done: ['layerWhere', { kind: 'shape', 'shape.type': 'rect', name: 'Retângulo' }], act: [['click', '.stage-tool-btn[data-tool="rect"]'], ['draw', [[300, 700], [700, 900]]]] },
     ],

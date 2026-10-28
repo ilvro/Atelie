@@ -8,6 +8,7 @@ globalThis.localStorage = {
 };
 
 const keymap = await import('../src/ui/keymap.js');
+const { SHORTCUTS } = await import('../src/ui/shortcuts.js');
 const ev = (key, mods = {}) => ({ key, ctrlKey: false, metaKey: false, altKey: false, shiftKey: false, ...mods });
 
 test('normalizeCombo: letters upper-cased, Meta = Ctrl, Shift only for letters and named keys', () => {
@@ -83,4 +84,36 @@ test('isTypingTarget: fields, text areas, contenteditable and an open stage text
   assert.equal(keymap.isTypingTarget({ tagName: 'DIV', isContentEditable: true }), true);
   assert.equal(keymap.isTypingTarget({ tagName: 'DIV', getAttribute: n => (n === 'role' ? 'textbox' : null) }), true);
   assert.equal(keymap.isTypingTarget({ tagName: 'BODY', getAttribute: () => null }), false);
+});
+
+test('the stroke eraser is Shift+E: E stays Exportar, no conflict between them', () => {
+  keymap.reload();
+  keymap.reset(null);
+  assert.equal(keymap.matches(ev('E', { shiftKey: true }), 'tool-eraser'), true);
+  assert.equal(keymap.matches(ev('e'), 'tool-eraser'), false);
+  assert.equal(keymap.matches(ev('e'), 'export'), true);
+  assert.equal(keymap.matches(ev('E', { shiftKey: true }), 'export'), false);
+  assert.deepEqual(keymap.conflicts('Shift+E', 'editor').map(s => s.id), ['tool-eraser']);
+  assert.deepEqual(keymap.conflicts('E', 'editor').map(s => s.id), ['export']);
+});
+
+test('[ and ] change the tool size; Ctrl+[ and Ctrl+] keep moving the layer, with no conflict', () => {
+  keymap.reload();
+  keymap.reset(null);
+  assert.equal(keymap.matches(ev('[', {}), 'brush-smaller'), true);
+  assert.equal(keymap.matches(ev(']', {}), 'brush-bigger'), true);
+  assert.equal(keymap.matches(ev('[', { ctrlKey: true }), 'brush-smaller'), false);
+  assert.equal(keymap.matches(ev('[', { ctrlKey: true }), 'layer-down'), true);
+  assert.equal(keymap.matches(ev(']', { ctrlKey: true }), 'layer-up'), true);
+  assert.equal(keymap.matches(ev(']', {}), 'layer-up'), false);
+  assert.deepEqual(keymap.conflicts('[', 'editor').map(s => s.id), ['brush-smaller']);
+  assert.deepEqual(keymap.conflicts(']', 'editor').map(s => s.id), ['brush-bigger']);
+  assert.deepEqual(keymap.conflicts('Ctrl+[', 'editor').map(s => s.id), ['layer-down']);
+  const seen = new Map();
+  for (const s of SHORTCUTS) {
+    const combo = keymap.comboFor(s.id);
+    const clash = seen.get(`${s.scope || 'editor'}:${combo}`);
+    assert.ok(!clash || s.configurable === false, `${s.id} repeats the combo of ${clash}`);
+    seen.set(`${s.scope || 'editor'}:${combo}`, s.id);
+  }
 });

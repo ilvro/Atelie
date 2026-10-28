@@ -153,6 +153,7 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
     getZoom: () => currentZoom,
     getHandout: () => currentHandout,
     getSelectedLayer: () => currentHandout?.layers.find(l => l.id === selectedLayerId) || null,
+    sampleColorAt: (x, y) => sampleCanvasColor(x, y),
     onDraw,
     onToolChange: (tool) => {
       activeToolId = tool;
@@ -230,7 +231,7 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
   let activeToolId = 'select';
 
   function updateSelectionOutline() {
-    try { drawTools.setTargetLabel(cutTarget()?.name || 'a folha'); } catch { /* the tools are still being built */ }
+    try { drawTools.setTargetLabel(cutTarget()?.name || 'a folha'); drawTools.refreshStrip(); } catch { /* the tools are still being built */ }
     if (!currentHandout || !selectedLayerId || editingLayerId || activeToolId !== 'select') {
       outline.style.display = 'none';
       selectionBar.hide();
@@ -1334,6 +1335,10 @@ export function createStage(container, { images, fonts, api, onSelect = () => {}
     },
     activateEyedropper(onPick) {
       activateEyedropper(onPick);
+    },
+    /** `[` and `]` with a drawing tool: its width (or the eraser's size). */
+    adjustToolSize(direction) {
+      return drawTools.adjustSize(direction);
     },
     destroy() {
       rulers.destroy();

@@ -174,3 +174,118 @@ export function stabilize(prev, target, radius) {
 
 /** Rope length in page px for the strip's "Suavizar" (0–100) at a zoom: 0.3 screen px per step. */
 export const stabilizerRadius = (smooth, zoom = 1) => (Math.max(0, Math.min(100, smooth || 0)) * 0.3) / (zoom || 1);
+
+function segmentDistance(p, a, b) {
+  const dx = b[0] - a[0];
+  const dy = b[1] - a[1];
+  const len2 = dx * dx + dy * dy;
+  const t = len2 ? Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / len2)) : 0;
+  return Math.hypot(p[0] - (a[0] + dx * t), p[1] - (a[1] + dy * t));
+}
+
+/**
+ * The eraser works on the data: points inside the circle are dropped and the stroke is split where they were.
+ * `points` are page-space [x, y, pressure] with `null` between strokes. A segment that crosses the circle
+ * without a point inside it gets extra points first, so a fast stroke is cut where the eraser passed, not only
+ * at its vertices. Returns the new list, or null when nothing is left.
+ */
+export function erasePoints(points, center, radius) {
+  const out = [];
+  let open = false;
+  const close = () => {
+    if (open) out.push(null);
+    open = false;
+  };
+  for (const stroke of strokesOf(points)) {
+    const dense = [stroke[0]];
+    for (let i = 1; i < stroke.length; i++) {
+      const a = stroke[i - 1];
+      const b = stroke[i];
+      const length = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      const step = Math.max(radius / 2, 0.5);
+      if (length > step && segmentDistance(center, a, b) <= radius) {
+        const n = Math.ceil(length / step);
+        for (let k = 1; k < n; k++) {
+          const t = k / n;
+          dense.push([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, (a[2] ?? 0.5) + ((b[2] ?? 0.5) - (a[2] ?? 0.5)) * t]);
+        }
+      }
+      dense.push(b);
+    }
+    for (const p of dense) {
+      if (Math.hypot(p[0] - center[0], p[1] - center[1]) <= radius) {
+        close();
+      } else {
+        if (!open && out.length) out.push(null);
+        out.push(p);
+        open = true;
+      }
+    }
+    close();
+  }
+  // `close` leaves one separator after each stroke: tidy repeated and trailing ones
+  const tidy = [];
+  for (const p of out) {
+    if (p === null && (tidy.length === 0 || tidy[tidy.length - 1] === null)) continue;
+    tidy.push(p);
+  }
+  if (tidy[tidy.length - 1] === null) tidy.pop();
+  return tidy.length ? tidy : null;
+}
+
+/**
+ * Erases along a trail of page-space centres from a brush layer. The trail is page space; the layer's points
+ * live in its own (turned) box, so the centres are turned back first, and the new box keeps the layer where it was.
+ * Returns { box, points } for the layer patch, or null when the whole stroke is gone.
+ */
+export function eraseFromLayer(layer, trail, radius) {
+  const rotation = ((layer.rotation || 0) * Math.PI) / 180;
+  const cx = layer.x + layer.width / 2;
+  const cy = layer.y + layer.height / 2;
+  const cos = Math.cos(rotation);
+  const sin = Math.sin(rotation);
+  const toLocal = ([x, y]) => [cx + (x - cx) * cos + (y - cy) * sin, cy - (x - cx) * sin + (y - cy) * cos];
+  let points = denormalizeStroke(layer);
+  for (const spot of trail) {
+    points = erasePoints(points, toLocal(spot), radius);
+    if (!points) return null;
+  }
+  const next = normalizeStroke(points, layer.shape?.strokeWidth ?? 4);
+  if (!next) return null;
+  // the new box is measured in the old unturned frame: carry its centre through the turn
+  const dx = next.box.x + next.box.width / 2 - cx;
+  const dy = next.box.y + next.box.height / 2 - cy;
+  const centreX = cx + dx * cos - dy * sin;
+  const centreY = cy + dx * sin + dy * cos;
+  const round2 = v => Math.round(v * 100) / 100;
+  return {
+    box: { x: round2(centreX - next.box.width / 2), y: round2(centreY - next.box.height / 2), width: next.box.width, height: next.box.height },
+    points: next.points,
+  };
+}
+
+/** The inks of the period offered beside the colour in the brush strip. */
+export const PERIOD_INKS = [
+  { id: 'nanquim', label: 'Nanquim', color: '#15131a' },
+  { id: 'sepia', label: 'Sépia', color: '#5b3a1e' },
+  { id: 'tinteiro', label: 'Azul de caneta-tinteiro', color: '#1f3a6e' },
+  { id: 'correcao', label: 'Vermelho de correção', color: '#a3221c' },
+  { id: 'grafite', label: 'Grafite', color: '#4a4a4f' },
+  { id: 'escritorio', label: 'Verde de escritório', color: '#2f5a3a' },
+];
+
+/** The colours last used, newest first, without repeats, `max` of them. */
+export function rememberColor(recent, color, max = 4) {
+  const hex = String(color || '').toLowerCase();
+  if (!/^#[0-9a-f]{6}$/.test(hex)) return recent;
+  return [hex, ...recent.filter(c => c !== hex)].slice(0, max);
+}
+
+/** `[` and `]`: 1 px at a time up to 10, then 10 % a step; always at least one px, kept inside [min, max]. */
+export function stepSize(value, direction, { min = 1, max = 200 } = {}) {
+  const v = Number.isFinite(value) ? value : min;
+  let next;
+  if (direction > 0) next = v < 10 ? v + 1 : Math.max(v + 1, Math.round(v * 1.1));
+  else next = v <= 10 ? v - 1 : Math.min(v - 1, Math.round(v / 1.1));
+  return Math.max(min, Math.min(max, next));
+}

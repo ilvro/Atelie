@@ -40,8 +40,8 @@ test('draw tools e2e: shapes by dragging, brush stroke paints pixels, Shift appe
     return { x: r.left + x * z, y: r.top + y * z };
   }, [px, py]);
 
-  // Tool bar: nine tools (Texto among them, next to the cutting tools), select active
-  assert.equal(await page.locator('.stage-tool-btn').count(), 9);
+  // Tool bar: ten tools (Texto among them, next to the cutting tools), select active
+  assert.equal(await page.locator('.stage-tool-btn').count(), 10);
   assert.equal(await page.locator('.stage-tool-btn[data-tool="text"]').count(), 1, 'the Texto tool is in the bar');
   assert.equal(await page.evaluate(() => window.__atelie.editor.stage.getTool()), 'select');
 
@@ -202,7 +202,7 @@ test('draw tools e2e: shapes by dragging, brush stroke paints pixels, Shift appe
     const doc = window.__atelie.editor.state.handout;
     const mid = [layer.x + layer.width / 2, layer.y + layer.height / 2];
     const at = [];
-    for (let dx = -60; dx <= 60; dx += 4) at.push([mid[0] + dx, mid[1]]);
+    for (let dx = -80; dx <= 80; dx += 3) for (let dy = -10; dy <= 10; dy += 5) at.push([mid[0] + dx, mid[1] + dy]);
     const res = await window.__atelie.renderHandout(doc, { scale: 1, at });
     return res.pixels;
   }, chalk);
@@ -263,6 +263,119 @@ test('draw tools e2e: shapes by dragging, brush stroke paints pixels, Shift appe
     el.value = '0';
     el.dispatchEvent(new Event('input', { bubbles: true }));
   });
+  await page.keyboard.press('Escape');
+
+  // Stroke eraser: Shift+E (E is Exportar); works only on a selected brush layer; one gesture, one undo step
+  await page.keyboard.press('b');
+  const sx1 = await toScreen(300, 1680);
+  const sx2 = await toScreen(900, 1680);
+  await page.mouse.move(sx1.x, sx1.y);
+  await page.mouse.down();
+  await page.mouse.move(sx2.x, sx2.y, { steps: 20 });
+  await page.mouse.up();
+  await page.keyboard.press('Shift+E');
+  assert.equal(await page.evaluate(() => window.__atelie.editor.stage.getTool()), 'eraser');
+  assert.equal(await page.locator('[data-eraser-hint]').isVisible(), false, 'a brush layer is selected, so no warning');
+  const stepsBefore = await page.evaluate(() => window.__atelie.editor.state.steps.length);
+  const e1 = await toScreen(600, 1640);
+  const e2 = await toScreen(600, 1720);
+  await page.mouse.move(e1.x, e1.y);
+  await page.mouse.down();
+  await page.mouse.move(e2.x, e2.y, { steps: 6 });
+  await page.mouse.up();
+  const erased = (await layers()).at(-1);
+  assert.equal(erased.shape.points.filter(p => p === null).length, 1, 'the stroke was split in two');
+  assert.ok(erased.shape.points.every(p => p === null || p.every(n => n >= 0 && n <= 1)));
+  assert.equal(await page.evaluate(() => window.__atelie.editor.state.steps.length), stepsBefore + 1, 'one gesture is one step');
+  assert.equal(await page.evaluate(() => window.__atelie.editor.state.steps.at(-1).label), 'Apagar traço');
+  // erasing everything removes the layer in the same step
+  const countWith = (await layers()).length;
+  const f1 = await toScreen(250, 1680);
+  const f2 = await toScreen(950, 1680);
+  await page.evaluate(() => {
+    const el = document.querySelector('[data-option="eraser"]');
+    el.value = '200';
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await page.mouse.move(f1.x, f1.y);
+  await page.mouse.down();
+  await page.mouse.move(f2.x, f2.y, { steps: 20 });
+  await page.mouse.up();
+  assert.equal((await layers()).length, countWith - 1, 'an empty stroke layer is removed');
+  await page.evaluate(() => window.__atelie.editor.state.undo());
+  assert.equal((await layers()).length, countWith, 'one undo brings it back');
+  // with no brush layer selected the gesture does nothing and the strip warns
+  await page.evaluate(() => window.__atelie.editor.stage.select(null));
+  await page.waitForFunction(() => document.querySelector('[data-eraser-hint]')?.style.display !== 'none');
+  const stepsIdle = await page.evaluate(() => window.__atelie.editor.state.steps.length);
+  await page.mouse.move(f1.x, f1.y);
+  await page.mouse.down();
+  await page.mouse.move(f2.x, f2.y, { steps: 5 });
+  await page.mouse.up();
+  assert.equal(await page.evaluate(() => window.__atelie.editor.state.steps.length), stepsIdle, 'nothing changed');
+  await page.keyboard.press('Escape');
+
+  // [ and ] size the tool in use; period inks; Alt+click takes the colour of the page
+  const blur = () => page.evaluate(() => document.activeElement?.blur?.());
+  const setOption = (key, value) => page.evaluate(([k, v]) => {
+    const el = document.querySelector(`[data-option="${k}"]`);
+    el.value = String(v);
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+  }, [key, value]);
+  const width = () => page.locator('[data-option="width"]').inputValue();
+  await page.keyboard.press('b');
+  await blur();
+  await setOption('width', 6);
+  await page.keyboard.press(']');
+  assert.equal(await width(), '7');
+  await page.keyboard.press('[');
+  await page.keyboard.press('[');
+  assert.equal(await width(), '5');
+  await setOption('width', 10);
+  await page.keyboard.press(']');
+  assert.equal(await width(), '11', 'above 10 it grows by 10 %, never less than one');
+  await setOption('width', 1);
+  await page.keyboard.press('[');
+  assert.equal(await width(), '1', 'lower limit');
+  await setOption('width', 200);
+  await page.keyboard.press(']');
+  assert.equal(await width(), '200', 'upper limit');
+  await setOption('width', 6);
+  const layersBefore = (await layers()).length;
+  await page.keyboard.press('Control+]');
+  assert.equal(await width(), '6', 'Ctrl+] is still the layer shortcut, not the size');
+  assert.equal((await layers()).length, layersBefore);
+  await page.keyboard.press('Shift+E');
+  await setOption('eraser', 30);
+  await blur();
+  const eraserSize = await page.locator('[data-option="eraser"]').inputValue();
+  await page.keyboard.press(']');
+  assert.notEqual(await page.locator('[data-option="eraser"]').inputValue(), eraserSize, 'with the eraser, [ ] size the eraser');
+  assert.equal(await page.locator('[data-option="eraser"]').inputValue(), String(Number(eraserSize) + 3), '30 grows 10 % → 33');
+  await page.keyboard.press('b');
+
+  assert.equal(await page.locator('.stage-ink').count() >= 6, true);
+  await page.click('.stage-ink[data-ink="#a3221c"]');
+  assert.equal(await page.locator('[data-option="color"]').inputValue(), '#a3221c');
+  const inkStroke1 = await toScreen(300, 1560);
+  const inkStroke2 = await toScreen(500, 1560);
+  await page.mouse.move(inkStroke1.x, inkStroke1.y);
+  await page.mouse.down();
+  await page.mouse.move(inkStroke2.x, inkStroke2.y, { steps: 5 });
+  await page.mouse.up();
+  assert.equal((await layers()).at(-1).shape.stroke, '#a3221c');
+  assert.equal(await page.locator('.stage-ink').first().getAttribute('data-ink'), '#15131a');
+  assert.equal(await page.locator('.stage-ink').nth(6).getAttribute('data-ink'), '#a3221c', 'the colour just used is remembered after the period inks');
+  await page.click('.stage-ink[data-ink="#2f5a3a"]');
+  const countAlt = (await layers()).length;
+  const pick = await toScreen(40, 400);
+  await page.keyboard.down('Alt');
+  await page.mouse.click(pick.x, pick.y);
+  await page.keyboard.up('Alt');
+  const picked = await page.locator('[data-option="color"]').inputValue();
+  assert.match(picked, /^#[0-9a-f]{6}$/);
+  assert.notEqual(picked, '#2f5a3a', 'Alt+click took the colour of the page');
+  assert.equal((await layers()).length, countAlt, 'and drew nothing');
   await page.keyboard.press('Escape');
 
   assert.deepEqual(errors, []);

@@ -92,6 +92,8 @@ export const CONDITIONS = {
   layerFrom: (state, id) => layers(state).some(layer => layer.image?.src?.library === id),
   /** Some layer satisfies the pattern. */
   layerWhere: (state, pattern) => layers(state).some(layer => layerMatches(layer, pattern)),
+  /** Some brush layer holds at least `number` separate strokes (the eraser splits one in two). */
+  brushStrokes: (state, number) => layers(state).some(layer => layer.shape?.type === 'path' && (layer.shape.points || []).filter(p => p === null).length + 1 >= number),
   /** At least `number` layers satisfy the pattern. */
   layersWhere: (state, pattern, number) => layers(state).filter(layer => layerMatches(layer, pattern)).length >= number,
   /** The selected layer satisfies the pattern. */

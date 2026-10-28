@@ -249,3 +249,107 @@ test('stabilize: a zigzag comes out with a smaller amplitude and ends one rope f
   const last = run(30).at(-1);
   assert.ok(Math.hypot(cursor.at(-1)[0] - last[0], cursor.at(-1)[1] - last[1]) <= 30 + 1e-9);
 });
+
+// --- Stroke eraser (Phase 4) ---
+import { erasePoints, eraseFromLayer } from '../src/domain/brush.js';
+
+const line = (n = 21, step = 10) => Array.from({ length: n }, (_, i) => [i * step, 0, 0.5]);
+
+test('erasePoints: the middle of a stroke leaves two strokes; tidy separators', () => {
+  const out = erasePoints(line(), [100, 0], 15);
+  const strokes = strokesOf(out);
+  assert.equal(strokes.length, 2);
+  assert.deepEqual([strokes[0][0][0], strokes[0].at(-1)[0], strokes[1][0][0], strokes[1].at(-1)[0]], [0, 80, 120, 200]);
+  assert.notEqual(out[0], null);
+  assert.notEqual(out.at(-1), null);
+  assert.ok(!out.some((p, i) => p === null && out[i + 1] === null), 'no repeated null');
+  assert.equal(erasePoints(line(), [100, 0], 500), null, 'erasing everything gives null');
+  assert.equal(strokesOf(erasePoints(line(), [100, 300], 15)).length, 1, 'a miss changes nothing');
+});
+
+test('erasePoints: a segment that crosses the circle with no point inside is still cut', () => {
+  const out = erasePoints([[0, 0, 0.5], [400, 0, 0.5]], [200, 2], 10);
+  assert.equal(strokesOf(out).length, 2);
+  const [a, b] = strokesOf(out);
+  assert.ok(a.at(-1)[0] < 200 && b[0][0] > 200);
+});
+
+test('erasePoints: erases across an existing separator and keeps the other strokes', () => {
+  const pts = [...line(5), null, ...line(5).map(p => [p[0], 100, 0.5])];
+  const out = erasePoints(pts, [20, 0], 12);
+  assert.equal(strokesOf(out).length, 3, 'the first stroke lost its middle part (two ends), the second is intact');
+  assert.equal(strokesOf(out)[2].length, 5);
+});
+
+test('eraseFromLayer: points stay in 0–1, the layer validates, and an unrotated stroke does not move', () => {
+  const layer = strokeLayer(line(31, 8).map(p => [p[0] + 100, p[1] + 200, 0.5]), 6);
+  const before = denormalizeStroke(layer);
+  const result = eraseFromLayer(layer, [[220, 200], [224, 200]], 14);
+  assert.ok(result);
+  assert.equal(pointsError(result.points), null);
+  assert.equal(strokesOf(result.points).length, 2);
+  const after = denormalizeStroke({ ...layer, ...result.box, shape: { ...layer.shape, points: result.points } });
+  const kept = after.filter(Boolean)[0];
+  assert.ok(Math.abs(kept[0] - before[0][0]) < 0.1 && Math.abs(kept[1] - before[0][1]) < 0.1, 'first point did not move');
+  const base = createHandout({ name: 'E' });
+  const edited = { ...layer, ...result.box, shape: { ...layer.shape, points: result.points } };
+  assert.doesNotThrow(() => validateHandout(addLayer(base, edited, 1)));
+  assert.equal(eraseFromLayer(layer, [[240, 200]], 900), null, 'nothing left → null, the editor removes the layer');
+});
+
+test('eraseFromLayer: a turned layer is erased where the eraser really is and stays in place', () => {
+  const layer = strokeLayer(line(31, 8).map(p => [p[0] + 100, p[1] + 200, 0.5]), 6);
+  layer.rotation = 90;
+  const cx = layer.x + layer.width / 2;
+  const cy = layer.y + layer.height / 2;
+  // turned 90°, a point at local (cx + d, cy) shows up on the page at (cx, cy + d)
+  const result = eraseFromLayer(layer, [[cx, cy + 40]], 10);
+  assert.ok(result);
+  const parts = strokesOf(denormalizeStroke({ ...layer, ...result.box, shape: { ...layer.shape, points: result.points } }));
+  assert.equal(parts.length, 2);
+  const gapStart = parts[0].at(-1)[0];
+  const gapEnd = parts[1][0][0];
+  assert.ok(gapStart < cx + 40 && gapEnd > cx + 40, 'the cut is 40 px from the centre along the stroke');
+  const newCx = result.box.x + result.box.width / 2;
+  const newCy = result.box.y + result.box.height / 2;
+  const first = parts[0][0];
+  // the first remaining point, turned 90° about the new centre, is where it was on the page before
+  const page = (x, y, c0, c1) => [c0 - (y - c1), c1 + (x - c0)];
+  const was = page(...denormalizeStroke(layer)[0].slice(0, 2), cx, cy);
+  const now = page(first[0], first[1], newCx, newCy);
+  assert.ok(Math.hypot(was[0] - now[0], was[1] - now[1]) < 0.3, 'the stroke did not jump on the page');
+});
+
+// --- Shortcuts and period inks (Phase 5) ---
+import { stepSize, PERIOD_INKS, rememberColor } from '../src/domain/brush.js';
+
+test('stepSize: 1 px up to 10, then 10 % a step, always moving, always inside the limits', () => {
+  assert.equal(stepSize(5, 1), 6);
+  assert.equal(stepSize(5, -1), 4);
+  assert.equal(stepSize(9, 1), 10);
+  assert.equal(stepSize(10, 1), 11);
+  assert.equal(stepSize(11, -1), 10);
+  assert.equal(stepSize(20, 1), 22);
+  assert.equal(stepSize(22, -1), 20);
+  assert.equal(stepSize(100, 1), 110);
+  assert.equal(stepSize(12, 1), 13, 'at least one step even when 10 % rounds to nothing');
+  assert.equal(stepSize(1, -1), 1, 'lower limit');
+  assert.equal(stepSize(200, 1), 200, 'upper limit');
+  assert.equal(stepSize(190, 1), 200);
+  assert.equal(stepSize(4, -1, { min: 4 }), 4, 'the eraser has its own lower limit');
+  // from 1 to 200 and back always passes through monotonically
+  let v = 1;
+  for (let i = 0; i < 500 && v < 200; i++) { const n = stepSize(v, 1); assert.ok(n > v); v = n; }
+  assert.equal(v, 200);
+  for (let i = 0; i < 500 && v > 1; i++) { const n = stepSize(v, -1); assert.ok(n < v); v = n; }
+  assert.equal(v, 1);
+});
+
+test('period inks: the six colours of the plan; rememberColor keeps the last four without repeats', () => {
+  assert.deepEqual(PERIOD_INKS.map(i => i.color), ['#15131a', '#5b3a1e', '#1f3a6e', '#a3221c', '#4a4a4f', '#2f5a3a']);
+  let recent = [];
+  for (const c of ['#111111', '#222222', '#333333', '#444444', '#555555', '#222222']) recent = rememberColor(recent, c);
+  assert.deepEqual(recent, ['#222222', '#555555', '#444444', '#333333']);
+  assert.equal(rememberColor(recent, 'red'), recent, 'not a colour: unchanged');
+  assert.deepEqual(rememberColor(['#aaaaaa'], '#AAAAAA'), ['#aaaaaa']);
+});

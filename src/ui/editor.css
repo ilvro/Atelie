@@ -3059,6 +3059,10 @@ body.reduce-motion .library-hover-preview { animation: none; transition: none; }
   z-index: 21;
   font-size: var(--eco-fs-12);
   color: var(--at-muted);
+  flex-wrap: wrap;
+  row-gap: 6px;
+  width: max-content;
+  max-width: calc(100% - 200px);
 }
 
 .stage-brush-tips { display: inline-flex; gap: 2px; }
@@ -3077,6 +3081,22 @@ body.reduce-motion .library-hover-preview { animation: none; transition: none; }
 }
 .stage-brush-tip:hover { background: var(--at-line); }
 .stage-brush-tip[aria-pressed="true"] { background: var(--at-uv); color: var(--at-uv-ink); }
+
+.stage-inks { display: inline-flex; align-items: center; gap: 4px; }
+.stage-ink {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid var(--at-line-strong);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform var(--eco-fast) var(--eco-ease);
+}
+.stage-ink:hover { transform: scale(1.15); }
+.stage-ink[aria-pressed="true"] { outline: 2px solid var(--at-uv); outline-offset: 1px; }
+.stage-ink.is-first-recent { margin-left: 6px; }
+body.reduce-motion .stage-ink { transition: none; }
+@media (prefers-reduced-motion: reduce) { .stage-ink { transition: none; } }
 
 .stage-tool-field { display: inline-flex; align-items: center; gap: 6px; }
 .stage-tool-field input[type="number"] { width: 54px; }

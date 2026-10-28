@@ -1989,3 +1989,39 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 ### Pendências reais
 - O estabilizador também vale para as pontas texturizadas e para Shift+traço; não há ainda atalho para ligar/desligar, só o controle da faixa.
 - Fases 4 e 5 do plano continuam a fazer. Sem commit. Sugestão: `feat(brush): lazy-brush stabilizer with rope preview`
+
+## Pincel e desenho · Fase 4 (borracha de traço)
+
+### Feito
+- `erasePoints` e `eraseFromLayer` em `brush.js` (puras): apagam **os dados**, não pintam transparência. Segmentos que cruzam o círculo sem ter ponto dentro ganham pontos extras antes, para um traço rápido ser cortado onde a borracha passou. Separadores `null` repetidos e finais são limpos; nada sobrando devolve `null`. A conta é em espaço de página (`denormalizeStroke`/`normalizeStroke`), com o gesto girado de volta para a caixa da camada e a nova caixa mantendo a camada no lugar (camada girada não salta).
+- Ferramenta `eraser` (ícone novo) na barra, entre Pincel e Retângulo. **Atalho Shift+E**: o **E** já é Exportar (`export`), então o plano ("E") foi ajustado após conferir o keymap; registrado em `shortcuts.js` com teste de conflito.
+- Age só no traço de pincel selecionado e destravado; sem ele a faixa mostra "Selecione um traço de pincel para apagar" (atualiza ao mudar a seleção) e o gesto não faz nada. Opção "Tamanho" (4–200 px da folha, padrão 30); o cursor é um círculo do tamanho real e o arraste mostra a faixa por onde a borracha passou.
+- Um gesto = um passo de desfazer, rótulo "Apagar traço"; camada vazia é removida no mesmo passo.
+- Lição `draw-brush`: dois passos novos (escolher a borracha, passar pelo meio do traço), com condição nova `brushStrokes`.
+
+### Validação
+- `npm test`: 262 passando (apagar o meio gera 2 traços, corte em segmento sem ponto dentro, outros traços intactos, pontos em 0–1 e validação ok, tudo apagado = `null`, camada girada 90° apagada no lugar certo e sem salto, conflito E × Shift+E).
+- e2e `draw-tools` (10 botões na barra; Shift+E; 2 traços; um passo; camada vazia some e um desfazer a devolve; sem seleção nada muda) e `tutorials` (lição "Desenhar com o pincel" completa).
+- e2e completo das Fases 1–3 (antes da Fase 4): 56 passando, 0 falhas.
+
+### Pendências reais
+- O apagado só aparece ao soltar o gesto (a faixa translúcida mostra o caminho durante o arraste). Apagar ao vivo com um único passo exigiria passos coalescidos sem a janela de 600 ms do histórico.
+- Fragmentos de um ponto que sobram nas bordas do corte continuam como pontinhos (como no plano, só descartei traços com 0 pontos).
+- Sem commit. Sugestão: `feat(brush): stroke eraser that cuts stroke data (Shift+E)`
+
+## Pincel e desenho · Fase 5 (atalhos e tintas de época)
+
+### Feito
+- **`[` e `]`** (ids `brush-smaller` e `brush-bigger`, configuráveis, sem Ctrl) mudam a espessura da ferramenta de desenho ativa; com a borracha, o tamanho dela. `stepSize` (pura): 1 px até 10, depois 10 %, sempre ao menos 1 px, limites 1–200 (borracha 4–200). `Ctrl+[`/`Ctrl+]` seguem movendo a camada; teste de conflitos no `keymap.test.js`, mais uma checagem de combos repetidos em todo o registro.
+- **Alt+clique** com uma ferramenta de desenho (menos texto e borracha) pega a cor da página para a ferramenta, sem desenhar. Reaproveita `sampleCanvasColor` do palco (exposto como `sampleColorAt`) em vez de `activateEyedropper`, que é um modo de "próximo clique" e não serve para um gesto com Alt.
+- **Tintas de época:** 6 amostras ao lado de "Cor" (nanquim, sépia, azul de caneta-tinteiro, vermelho de correção, grafite, verde de escritório, `PERIOD_INKS`) e as 4 últimas cores usadas (`options.recent`, `rememberColor`), com `aria-pressed` na cor atual. `renderColorSwatchesHTML` é local do painel de propriedades, então a faixa tem as próprias amostras.
+- A faixa ficou larga demais com as pontas, o Suavizar e as tintas (cortava a opacidade a 1400 px); agora quebra em duas linhas (`flex-wrap`, `max-width`). Ela cobre um pouco mais do topo da folha.
+
+### Validação
+- `npm test`: 265 passando (`stepSize` ida e volta de 1 a 200, limites, `rememberColor`, atalhos).
+- e2e `draw-tools`: `]`/`[` (7, 5, 11, limites 1 e 200), Ctrl+] não mexe na espessura, `]` na borracha (30 → 33), clique numa tinta, cor usada guardada logo após as 6, Alt+clique toma a cor da página sem criar camada.
+
+### Pendências reais
+- As amostras não reconhecem cores "quase iguais"; uma cor já na lista de tintas ainda aparece também em "recentes".
+- Fim do plano: o que sobrou está em "Ideias para depois" (seleção múltipla, mancha/respingo, tinta UV, velocidade).
+- Sem commit. Sugestão: `feat(brush): [ ] size keys, Alt+click colour pick and period inks in the brush strip`

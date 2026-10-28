@@ -1,11 +1,12 @@
 import { renderIcon } from '../ui/icons.js';
 import { drawPathShape } from '../render/handout-path.js';
-import { thinPoints, normalizeStroke, BRUSH_KINDS, brushInfo, newBrushSeed, stabilize, stabilizerRadius } from '../domain/brush.js';
+import { thinPoints, normalizeStroke, BRUSH_KINDS, brushInfo, newBrushSeed, stabilize, stabilizerRadius, PERIOD_INKS, rememberColor, stepSize } from '../domain/brush.js';
 
 export const TOOLS = [
   { id: 'select', label: 'Selecionar', icon: 'cursor', shortcut: 'tool-select' },
   { id: 'text', label: 'Texto', icon: 'text', shortcut: 'tool-text' },
   { id: 'brush', label: 'Pincel', icon: 'brush', shortcut: 'tool-brush' },
+  { id: 'eraser', label: 'Borracha de traço', icon: 'eraser', shortcut: 'tool-eraser' },
   { id: 'rect', label: 'Retângulo', icon: 'rect', shortcut: 'tool-rect' },
   { id: 'ellipse', label: 'Elipse', icon: 'ellipse', shortcut: 'tool-ellipse' },
   { id: 'line', label: 'Linha', icon: 'line', shortcut: 'tool-line' },
@@ -17,7 +18,7 @@ export const TOOLS = [
 const CUT_IDS = new Set(['scissors', 'tear', 'lighter']);
 
 const OPTIONS_KEY = 'atelie-tool-options';
-const DEFAULT_OPTIONS = { color: '#1d1b24', width: 6, opacity: 100, fill: false, picote: false, rough: 50, flame: 14, speed: 100, char: 50, brush: 'pen', grain: 50, brushes: {}, smooth: 0 };
+const DEFAULT_OPTIONS = { color: '#1d1b24', width: 6, opacity: 100, fill: false, picote: false, rough: 50, flame: 14, speed: 100, char: 50, brush: 'pen', grain: 50, brushes: {}, smooth: 0, eraser: 30, recent: [] };
 
 function loadOptions() {
   try {
@@ -71,7 +72,7 @@ export function lineBox(a, b, { snap = false, thickness = 2 } = {}) {
  * The drawing tools of the stage: a vertical bar on the left, an options strip while a tool is active,
  * and the pointer gestures. Finished gestures go out through `onDraw` as plain descriptions.
  */
-export function createDrawTools(container, { viewport, pageWrap, getZoom, getHandout, getSelectedLayer, onDraw, onToolChange, shortcutLabel = () => '' } = {}) {
+export function createDrawTools(container, { viewport, pageWrap, getZoom, getHandout, getSelectedLayer, sampleColorAt, onDraw, onToolChange, shortcutLabel = () => '' } = {}) {
   let tool = 'select';
   const options = loadOptions();
   let gesture = null;
@@ -110,6 +111,13 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
       strip.innerHTML = '<span class="stage-tool-hint">Clique na folha para escrever ali · arraste para desenhar a caixa do texto · T cria uma caixa no meio da folha</span>';
       return;
     }
+    if (tool === 'eraser') {
+      strip.innerHTML = `<span class="stage-tool-target" data-eraser-hint>Selecione um traço de pincel para apagar</span>
+        <label class="stage-tool-field" title="Tamanho da borracha, em px da folha"><span>Tamanho</span><input type="range" data-option="eraser" min="4" max="200" step="1" value="${options.eraser}" /><output data-for="eraser">${options.eraser}</output></label>
+        <span class="stage-tool-hint">Arraste sobre o traço selecionado · um gesto, um passo de desfazer</span>`;
+      refreshEraserHint();
+      return;
+    }
     if (CUT_IDS.has(tool)) {
       const target = `<span class="stage-tool-target" data-cut-target>Cortando: ${targetLabel}</span>`;
       const range = (key, label, min, max, step) => `<label class="stage-tool-field" title="${label}"><span>${label}</span><input type="range" data-option="${key}" min="${min}" max="${max}" step="${step}" value="${options[key]}" /></label>`;
@@ -127,10 +135,22 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
     ` : '';
     strip.innerHTML = `${tips}
       <label class="stage-tool-field" title="Cor"><span>Cor</span><input type="color" data-option="color" value="${options.color}" /></label>
+      <span class="stage-inks" role="group" aria-label="Tintas de época">${[...PERIOD_INKS.map(i => [i.color, i.label]), ...options.recent.map(c => [c, `Usada há pouco · ${c}`])].map(([c, name], n) => `<button type="button" class="stage-ink${n === PERIOD_INKS.length ? ' is-first-recent' : ''}" data-ink="${c}" style="background:${c}" title="${name}" aria-label="${name}" aria-pressed="${c === options.color.toLowerCase()}"></button>`).join('')}</span>
       <label class="stage-tool-field" title="Espessura"><span>Espessura</span><input type="number" data-option="width" min="1" max="200" step="1" value="${options.width}" /></label>
       <label class="stage-tool-field" title="Opacidade"><span>Opacidade</span><input type="range" data-option="opacity" min="5" max="100" step="5" value="${options.opacity}" /><output>${options.opacity}%</output></label>
       ${canFill ? `<label class="stage-tool-field"><input type="checkbox" data-option="fill" ${options.fill ? 'checked' : ''} /><span>Preencher</span></label>` : ''}
     `;
+  }
+
+  /** The eraser only works on the selected, unlocked brush layer. */
+  function eraserTarget() {
+    const layer = getSelectedLayer();
+    return layer && layer.kind === 'shape' && layer.shape?.type === 'path' && !layer.locked ? layer : null;
+  }
+
+  function refreshEraserHint() {
+    const hint = strip.querySelector('[data-eraser-hint]');
+    if (hint) hint.style.display = eraserTarget() ? 'none' : '';
   }
 
   function persist() {
@@ -150,9 +170,28 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
       options[key] = Math.max(min, Math.min(max, Number.isFinite(value) ? value : min));
     }
     if (key === 'opacity') strip.querySelector('output:not([data-for])').textContent = `${options.opacity}%`;
-    if (key === 'grain' || key === 'smooth') strip.querySelector(`output[data-for="${key}"]`).textContent = options[key];
+    if (key === 'grain' || key === 'smooth' || key === 'eraser') strip.querySelector(`output[data-for="${key}"]`).textContent = options[key];
     persist();
   });
+
+  function setColor(color) {
+    options.color = color;
+    persist();
+    renderStrip();
+  }
+
+  /** `[` / `]`: the width of the tool in use (the eraser's size for the eraser). Returns whether a tool took it. */
+  function adjustSize(direction) {
+    if (tool === 'select' || tool === 'text' || CUT_IDS.has(tool)) return false;
+    const key = tool === 'eraser' ? 'eraser' : 'width';
+    options[key] = stepSize(options[key], direction, { min: key === 'eraser' ? 4 : 1, max: 200 });
+    persist();
+    const input = strip.querySelector(`[data-option="${key}"]`);
+    if (input) input.value = options[key];
+    const out = strip.querySelector(`output[data-for="${key}"]`);
+    if (out) out.textContent = options[key];
+    return true;
+  }
 
   /**
    * Picks a brush tip. The colour, width and opacity of the tip being left are kept in `options.brushes`,
@@ -174,6 +213,8 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
   strip.addEventListener('click', (e) => {
     const tip = e.target.closest('[data-tip]');
     if (tip) chooseTip(tip.dataset.tip);
+    const ink = e.target.closest('[data-ink]');
+    if (ink) setColor(ink.dataset.ink);
   });
 
   bar.addEventListener('click', (e) => {
@@ -204,6 +245,38 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
 
   const brushShapeOf = (seed = gesture?.seed) => (options.brush === 'pen' ? undefined : { kind: options.brush, grain: options.grain / 100, seed });
 
+  /** The eraser's cursor: a circle of its real size. */
+  function drawEraserCursor(point) {
+    const handout = getHandout();
+    if (!handout) return;
+    const zoom = getZoom();
+    const dpr = window.devicePixelRatio || 1;
+    const pw = Math.round(handout.page.width * zoom * dpr);
+    const ph = Math.round(handout.page.height * zoom * dpr);
+    if (preview.width !== pw || preview.height !== ph) {
+      preview.width = pw;
+      preview.height = ph;
+    }
+    preview.style.width = `${Math.round(handout.page.width * zoom)}px`;
+    preview.style.height = `${Math.round(handout.page.height * zoom)}px`;
+    preview.style.display = 'block';
+    const ctx = preview.getContext('2d');
+    if (!gesture) ctx.clearRect(0, 0, pw, ph);
+    const scale = zoom * dpr;
+    ctx.save();
+    ctx.lineWidth = dpr * 1.5;
+    ctx.setLineDash([]);
+    ctx.strokeStyle = '#f7f3e6';
+    ctx.shadowColor = 'rgba(0,0,0,0.7)';
+    ctx.shadowBlur = 2 * dpr;
+    ctx.beginPath();
+    ctx.arc(point[0] * scale, point[1] * scale, Math.max(1, (options.eraser / 2) * scale), 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  pageWrap.addEventListener('pointerleave', () => { if (tool === 'eraser' && !gesture) clearPreview(); });
+
   function drawPreview() {
     const handout = getHandout();
     if (!handout || !gesture) return;
@@ -225,6 +298,20 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
     const scale = zoom * dpr;
     const { start, current, shift } = gesture;
 
+    if (gesture.tool === 'eraser') {
+      // the path the eraser walked, as a translucent band, and the circle under the pointer
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.lineWidth = options.eraser * scale;
+      ctx.strokeStyle = 'rgba(247, 243, 230, 0.28)';
+      ctx.beginPath();
+      gesture.trail.forEach((p, i) => (i ? ctx.lineTo(p[0] * scale, p[1] * scale) : ctx.moveTo(p[0] * scale, p[1] * scale)));
+      ctx.lineTo(current[0] * scale, current[1] * scale);
+      ctx.stroke();
+      ctx.restore();
+      drawEraserCursor(current);
+      return;
+    }
     if (gesture.tool === 'brush') {
       // Same geometry as the layer that will be created: the box of the stroke, so a textured tip
       // is rasterized only there and looks identical to the result.
@@ -296,10 +383,19 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
     if (event.target.closest('.stage-selection-bar, .stage-inline-text-editor')) return;
     event.preventDefault();
     event.stopPropagation();
+    if (event.altKey && tool !== 'eraser' && tool !== 'text') {
+      // Alt+click: take the colour of the page, like an eyedropper, instead of drawing
+      const picked = sampleColorAt?.(event.clientX, event.clientY);
+      if (picked) setColor(picked);
+      return;
+    }
+    if (tool === 'eraser' && !eraserTarget()) return;
     try { pageWrap.setPointerCapture(event.pointerId); } catch {}
     const start = pagePoint(event);
     const selected = getSelectedLayer();
     gesture = {
+      layerId: tool === 'eraser' ? selected.id : null,
+      trail: [start],
       tool,
       pointerId: event.pointerId,
       start,
@@ -314,10 +410,20 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
   }, true);
 
   pageWrap.addEventListener('pointermove', (event) => {
+    if (tool === 'eraser' && !gesture) {
+      drawEraserCursor(pagePoint(event));
+      return;
+    }
     if (!gesture || event.pointerId !== gesture.pointerId) return;
     const point = pagePoint(event);
     gesture.current = point;
     gesture.shift = event.shiftKey;
+    if (gesture.tool === 'eraser') {
+      const last = gesture.trail[gesture.trail.length - 1];
+      if (Math.hypot(point[0] - last[0], point[1] - last[1]) >= Math.max(1, options.eraser / 8)) gesture.trail.push(point);
+      drawPreview();
+      return;
+    }
     if (gesture.tool === 'brush') {
       const radius = stabilizerRadius(options.smooth, getZoom());
       const rope = stabilize(gesture.rope, point, radius);
@@ -339,6 +445,20 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
     try { pageWrap.releasePointerCapture(done.pointerId); } catch {}
     if (cancelled) return;
     const opts = { ...options };
+    if (done.tool !== 'eraser') {
+      const recent = rememberColor(options.recent, options.color);
+      if (recent !== options.recent) {
+        options.recent = recent;
+        persist();
+        const row = strip.querySelector('.stage-inks');
+        if (row && !CUT_IDS.has(tool) && tool !== 'text' && tool !== 'eraser') renderStrip();
+      }
+    }
+    if (done.tool === 'eraser') {
+      const end = event ? pagePoint(event) : done.current;
+      onDraw?.({ type: 'erase', layerId: done.layerId, trail: [...done.trail, end], radius: options.eraser / 2 });
+      return;
+    }
     if (done.tool === 'brush') {
       // the rope ends where the cursor is: without this, a smoothed stroke would stop short of the release point
       const end = event ? pagePoint(event) : done.current;
@@ -368,6 +488,8 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
     get options() { return { ...options }; },
     setTool,
     refreshLabels: renderBar,
+    refreshStrip: refreshEraserHint,
+    adjustSize,
     isDrawing: () => Boolean(gesture),
     /** Names what the cutting tools will cut ("Foto 3x4" or "a folha"). */
     setTargetLabel(label) {

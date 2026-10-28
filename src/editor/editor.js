@@ -45,7 +45,7 @@ import { recordRecentLibraryId } from './library-search.js';
 import { matches, normalizeCombo, isTypingTarget, label as keyLabel } from '../ui/keymap.js';
 import { createAmbient, loadAmbient } from '../ui/ambient.js';
 import { createLayerThumbs } from './layer-thumbs.js';
-import { normalizeStroke, appendStroke, brushInfo } from '../domain/brush.js';
+import { normalizeStroke, appendStroke, brushInfo, eraseFromLayer } from '../domain/brush.js';
 import { cutEffect } from '../domain/cut.js';
 import { createTabBar, reorderIds, nextAfterClose, cycleTab, loadTabs, saveTabs } from './tabs.js';
 import { downloadHandoutPng, printHandout, exportScale, printLayout } from './export.js';
@@ -1690,6 +1690,10 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       addCut(desc);
       return;
     }
+    if (desc.type === 'erase') {
+      eraseStroke(desc);
+      return;
+    }
     const o = desc.options;
     const light = currentLight === 'uv' ? 'uv' : 'both';
     const opacity = Math.max(0.05, Math.min(1, o.opacity / 100));
@@ -1750,6 +1754,19 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
     state.select(newL.id);
     layersPanel?.flash?.(newL.id);
     stage?.land(newL.id);
+  }
+
+  /** One eraser gesture is one undo step; a layer with nothing left goes in the same step. */
+  function eraseStroke({ layerId, trail, radius }) {
+    const layer = state.handout.layers.find(l => l.id === layerId);
+    if (!layer || layer.locked || layer.shape?.type !== 'path') return;
+    const result = eraseFromLayer(layer, trail, radius);
+    if (!result) {
+      state.edit(removeLayer(state.handout, layer.id), { label: 'Apagar traço' });
+      return;
+    }
+    if (JSON.stringify(result.points) === JSON.stringify(layer.shape.points)) return;
+    state.edit(updateLayer(state.handout, layer.id, { ...result.box, shape: { points: result.points } }), { label: 'Apagar traço' });
   }
 
   function triggerEyedropper() {
@@ -2174,7 +2191,14 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       return;
     }
 
-    for (const [shortcut, tool] of [['tool-select', 'select'], ['tool-brush', 'brush'], ['tool-rect', 'rect'], ['tool-ellipse', 'ellipse'], ['tool-line', 'line'], ['tool-scissors', 'scissors'], ['tool-tear', 'tear'], ['tool-lighter', 'lighter']]) {
+    for (const [shortcut, direction] of [['brush-smaller', -1], ['brush-bigger', 1]]) {
+      if (matches(event, shortcut) && state && stage?.adjustToolSize(direction)) {
+        event.preventDefault();
+        return;
+      }
+    }
+
+    for (const [shortcut, tool] of [['tool-select', 'select'], ['tool-brush', 'brush'], ['tool-eraser', 'eraser'], ['tool-rect', 'rect'], ['tool-ellipse', 'ellipse'], ['tool-line', 'line'], ['tool-scissors', 'scissors'], ['tool-tear', 'tear'], ['tool-lighter', 'lighter']]) {
       if (matches(event, shortcut) && state) {
         event.preventDefault();
         stage?.setTool(tool);
