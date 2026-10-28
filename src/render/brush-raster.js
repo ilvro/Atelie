@@ -10,7 +10,7 @@ import { mulberry32, valueNoise2D, fbm } from '../domain/noise.js';
  */
 
 export const RASTER_PIXEL_LIMIT = 24e6;
-export const TEXTURED_KINDS = new Set(['pencil', 'chalk', 'nib', 'drybrush', 'marker']);
+export const TEXTURED_KINDS = new Set(['pencil', 'chalk', 'nib', 'drybrush', 'marker', 'splatter', 'stain']);
 
 const clamp01 = v => Math.max(0, Math.min(1, v));
 const smoothstep = (a, b, v) => {
@@ -185,6 +185,7 @@ export function brushCoverage(shape, w, h, scale) {
   const seed = shape.brush.seed ?? 1;
   const base = shape.strokeWidth * scale;
   const cov = new Uint8ClampedArray(W * H);
+  let inner = null;
   const noise = valueNoise2D(seed + 17);
   const first = shape.points.find(Boolean);
   const originX = first[0] * w;
@@ -194,7 +195,7 @@ export function brushCoverage(shape, w, h, scale) {
   strokesOf(shape.points).forEach((stroke, strokeIndex) => {
     const pts = stroke.map(p => [p[0] * w, p[1] * h, p[2]]);
     const nibThickness = kind === 'nib' ? Math.max(1, base * 0.12) : Math.max(1, base * 0.3);
-    const spacing = kind === 'nib' || kind === 'marker' ? Math.max(0.4, nibThickness / 2.5) : Math.max(0.75, base * 0.12);
+    const spacing = kind === 'nib' || kind === 'marker' ? Math.max(0.4, nibThickness / 2.5) : kind === 'splatter' ? Math.max(0.75, base * 0.08) : Math.max(0.75, base * 0.12);
     const sm = sampleStroke(pts, kind === 'drybrush' ? Math.max(0.5, (base / 12)) : spacing);
 
     if (kind === 'pencil' || kind === 'chalk') {
@@ -220,6 +221,46 @@ export function brushCoverage(shape, w, h, scale) {
         halfOf: () => Math.max(0.5, base / 2),
         thickness: nibThickness,
       });
+    } else if (kind === 'splatter') {
+      // a flicked line: a blobby core along the hand's path and drops thrown to both sides, some with a tail
+      const rand = mulberry32(seed * 3 + strokeIndex * 211);
+      const gate = valueNoise2D(seed + 29);
+      // drops are drawn per sample, and samples are close for a smooth core: scale to a drop every ~0.2 widths
+      const chance = (0.05 + grain * 0.75) * 0.4;
+      for (let i = 0; i < sm.x.length; i++) {
+        const pf = pressureFactor(sm.p[i]);
+        const sPage = toPage(sm.s[i]);
+        if (gate(sPage / 18, 0.5) > 0.25) stampDisc(cov, W, H, sm.x[i], sm.y[i], Math.max(0.5, base * pf * 0.2), 255);
+        const nx = -sm.ty[i];
+        const ny = sm.tx[i];
+        // the same number of draws at every sample keeps the stroke deterministic
+        const roll = rand();
+        const side = rand() < 0.5 ? -1 : 1;
+        const away = rand() ** 1.5;
+        const along = (rand() - 0.5) * base * 0.8;
+        const size = rand() ** 3;
+        const tail = rand() < 0.25;
+        if (roll > chance) continue;
+        const dist = base * pf * (0.25 + 1.5 * away) * side;
+        const x = sm.x[i] + nx * dist + sm.tx[i] * along;
+        const y = sm.y[i] + ny * dist + sm.ty[i] * along;
+        const r = Math.max(0.6, base * pf * (0.04 + (roll < chance * 0.05 ? 0.26 : 0.15) * size));
+        stampDisc(cov, W, H, x, y, r, 255);
+        if (tail) {
+          for (let t = 1; t <= 3; t++) {
+            stampDisc(cov, W, H, x + (nx * side) * r * 1.4 * t, y + (ny * side) * r * 1.4 * t, Math.max(0.5, r * (1 - t * 0.25)), 255);
+          }
+        }
+      }
+    } else if (kind === 'stain') {
+      // an irregular wet blot: darker at the rim than inside, like a coffee ring
+      inner ||= new Uint8ClampedArray(W * H);
+      for (let i = 0; i < sm.x.length; i++) {
+        const wobble = 1 + 0.3 * (fbm(noise, toPage(sm.s[i]) * 0.05 + strokeIndex * 17, 1.5, { octaves: 3 }) - 0.5) * 2;
+        const r = Math.max(1, (base * pressureFactor(sm.p[i]) * wobble) / 2);
+        stampDisc(cov, W, H, sm.x[i], sm.y[i], r, 235);
+        stampDisc(inner, W, H, sm.x[i], sm.y[i], Math.max(0.5, r * 0.78), 255);
+      }
     } else if (kind === 'drybrush') {
       const rand = mulberry32(seed * 7 + strokeIndex * 101);
       const count = 5 + Math.floor(rand() * 5);
@@ -247,13 +288,16 @@ export function brushCoverage(shape, w, h, scale) {
     }
   });
 
-  if (kind === 'pencil' || kind === 'chalk' || kind === 'marker') {
+  if (inner) {
+    for (let i = 0; i < cov.length; i++) if (inner[i]) cov[i] = cov[i] * (1 - 0.55 * (inner[i] / 255));
+  }
+  if (kind === 'pencil' || kind === 'chalk' || kind === 'marker' || kind === 'stain') {
     // the marker only gets a light felt-tip texture; being flat colour, its overlaps stay even
     applyGrain(cov, W, H, {
       seed, scale, originX, originY,
-      grain: kind === 'marker' ? grain * 0.4 : kind === 'pencil' ? grain * 0.6 : grain,
-      soft: kind === 'pencil' ? 0.35 : 0.1,
-      size: kind === 'pencil' ? 1.2 : kind === 'chalk' ? 3.2 : 1.6,
+      grain: kind === 'marker' ? grain * 0.4 : kind === 'stain' ? grain * 0.5 : kind === 'pencil' ? grain * 0.6 : grain,
+      soft: kind === 'pencil' || kind === 'stain' ? 0.35 : 0.1,
+      size: kind === 'pencil' ? 1.2 : kind === 'chalk' ? 3.2 : kind === 'stain' ? 4 : 1.6,
     });
   }
   return { width: W, height: H, data: cov };

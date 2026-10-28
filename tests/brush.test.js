@@ -109,7 +109,7 @@ test('brush validation: kinds, grain 0–1 and integer seed; no brush stays vali
     l.shape.brush = { kind: k.id, grain: 0.3, seed: 12 };
     assert.doesNotThrow(() => validateHandout(addLayer(base, l, 1)), k.id);
   }
-  assert.equal(BRUSH_KINDS.length, 6);
+  assert.equal(BRUSH_KINDS.length, 8);
   for (const bad of [{ kind: 'spray', grain: 0.5, seed: 1 }, { kind: 'chalk', grain: 2, seed: 1 }, { kind: 'chalk', grain: -0.1, seed: 1 }, { kind: 'chalk', grain: 0.5, seed: 1.5 }, { kind: 'chalk', grain: 0.5 }, null, 'chalk']) {
     const l = structuredClone(plain);
     l.shape.brush = bad;
@@ -352,4 +352,56 @@ test('period inks: the six colours of the plan; rememberColor keeps the last fou
   assert.deepEqual(recent, ['#222222', '#555555', '#444444', '#333333']);
   assert.equal(rememberColor(recent, 'red'), recent, 'not a colour: unchanged');
   assert.deepEqual(rememberColor(['#aaaaaa'], '#AAAAAA'), ['#aaaaaa']);
+});
+
+// --- Splatter, stain, speed and UV ink ---
+import { speedPressure, SPEED_KINDS } from '../src/domain/brush.js';
+
+test('splatter: deterministic, throws drops beyond the core, more drops with more "Gotas"', () => {
+  const shape = (grain, seed = 7) => ({ type: 'path', stroke: '#111111', strokeWidth: 20, points: wave(), brush: { kind: 'splatter', grain, seed } });
+  const a = brushCoverage(shape(0.5), 400, 200, 1);
+  assert.deepEqual(a.data, brushCoverage(shape(0.5), 400, 200, 1).data);
+  assert.notDeepEqual(a.data, brushCoverage(shape(0.5, 8), 400, 200, 1).data);
+  // far from the core (more than a width away from the path) there are drops
+  const far = cov => {
+    let n = 0;
+    for (let y = 0; y < cov.height; y++) {
+      for (let x = 0; x < cov.width; x++) {
+        const t = x / (cov.width - 1);
+        const pathY = (0.5 + 0.25 * Math.sin(t * 39 / 5)) * cov.height;
+        if (cov.data[y * cov.width + x] && Math.abs(y - pathY) > 18) n++;
+      }
+    }
+    return n;
+  };
+  assert.ok(far(a) > 20, 'drops outside the core');
+  assert.ok(far(brushCoverage(shape(1), 400, 200, 1)) > far(brushCoverage(shape(0), 400, 200, 1)), 'more drops with more density');
+});
+
+test('stain: darker at the rim than inside (coffee ring), and deterministic', () => {
+  const shape = { type: 'path', stroke: '#5b3a1e', strokeWidth: 60, points: [[0.1, 0.5, 0.5], [0.9, 0.5, 0.5]], brush: { kind: 'stain', grain: 0, seed: 3 } };
+  const cov = brushCoverage(shape, 400, 200, 1);
+  assert.deepEqual(cov.data, brushCoverage(shape, 400, 200, 1).data);
+  const column = x => Array.from({ length: cov.height }, (_, y) => cov.data[y * cov.width + x]);
+  const col = column(200);
+  const inside = col[100];
+  const rim = Math.max(...col.slice(60, 80));
+  assert.ok(rim > inside * 1.5, `rim ${rim} vs inside ${inside}`);
+  assert.ok(inside > 0, 'the inside is filled too');
+});
+
+test('speedPressure: no effect at 0 or when slow; faster makes it lighter; eased, never below 30 % of the base', () => {
+  assert.equal(speedPressure(0.5, 0.5, 5, 0), 0.5);
+  assert.equal(speedPressure(undefined, 0.5, 0, 1), 0.5, 'slow keeps the chosen width');
+  assert.ok(speedPressure(0.5, 0.5, 2, 1) < 0.5);
+  assert.ok(speedPressure(0.5, 0.5, 2, 1) > 0.5 * 0.3, 'eased: one step does not jump to the target');
+  let p = 0.5;
+  for (let i = 0; i < 80; i++) p = speedPressure(p, 0.5, 4, 1);
+  assert.ok(Math.abs(p - 0.15) < 0.01, `settles at 30 % of the base (${p})`);
+  let q = 0.5;
+  for (let i = 0; i < 80; i++) q = speedPressure(q, 0.5, 4, 0.5);
+  assert.ok(q > p && q < 0.5, 'less amount, less thinning');
+  for (let i = 0; i < 80; i++) q = speedPressure(q, 0.5, 0, 0.5);
+  assert.ok(Math.abs(q - 0.5) < 0.01, 'slowing down recovers the width');
+  assert.deepEqual(SPEED_KINDS, ['pen', 'nib']);
 });

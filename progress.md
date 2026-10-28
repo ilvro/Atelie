@@ -2025,3 +2025,20 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 - As amostras não reconhecem cores "quase iguais"; uma cor já na lista de tintas ainda aparece também em "recentes".
 - Fim do plano: o que sobrou está em "Ideias para depois" (seleção múltipla, mancha/respingo, tinta UV, velocidade).
 - Sem commit. Sugestão: `feat(brush): [ ] size keys, Alt+click colour pick and period inks in the brush strip`
+
+## Pincel e desenho · Extras (respingo, mancha, tinta UV, velocidade)
+
+### Feito
+- **Respingo** (`splatter`) e **Mancha (café)** (`stain`) em `BRUSH_KINDS`, desenhados em `brush-raster.js` com a mesma semente/grão em px de página. Respingo: núcleo irregular ao longo da mão e gotas jogadas dos dois lados, algumas com rabo; o controle vira "Gotas" (densidade). Mancha: mancha úmida de borda irregular, mais escura na borda que dentro (anel de café), mosqueada por "Manchado"; nasce em `multiply`, `#5b3a1e`, 40 px, opacidade 80%. O marca-texto e a mancha agora vêm de um campo `multiply` em `BRUSH_KINDS` (antes a regra do marca-texto estava escrita no editor). Ícones novos; as pontas aparecem sozinhas no painel de Propriedades.
+- **Tinta UV:** caixa "Tinta UV" na faixa de todas as ferramentas de desenho (menos texto): o desenho nasce com `light: 'uv'` mesmo com a folha em luz comum. Estado guardado em `options.uv`.
+- **Velocidade** (só caneta e pena, `SPEED_KINDS`): `speedPressure` faz a pressão cair com a velocidade da mão, até 30% do valor a 2 px/ms com Velocidade 100, suavizada ponto a ponto, para o mouse imitar pressão. Lenta mantém exatamente a espessura escolhida; padrão 0 (nada muda). Funciona junto do Suavizar.
+- Folha de contato com as 8 pontas (`docs/referencias/pincel-pontas.png`), revista; o respingo tinha o núcleo como fio de contas e foi suavizado.
+
+### Validação
+- `npm test`: 268 passando (respingo determinístico e com gotas fora do núcleo, mais gotas com mais densidade; mancha mais escura na borda; `speedPressure` com 0, lento, rápido, suavização e recuperação).
+- e2e `draw-tools`: Respingo e Mancha criam camadas "Respingo" e "Mancha" (multiply); Tinta UV liga/desliga `light`; Velocidade deixa um golpe rápido mais fino que um lento (o golpe rápido é disparado por eventos de ponteiro no mesmo milissegundo, o mouse do Playwright é lento demais para isso); com 0 a pressão do mouse fica 0,5; o controle some no giz.
+
+### Pendências reais
+- A tinta UV só vale para desenhos novos; não há atalho nem alternador no painel de Propriedades para uma camada já existente (a Iluminação do painel já faz isso).
+- Velocidade não age no Shift+traço da camada de outra ponta (segue a ponta da ferramenta).
+- Sem commit. Sugestão: `feat(brush): splatter and stain tips, UV ink toggle and speed-sensitive pen/nib`

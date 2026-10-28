@@ -1,6 +1,6 @@
 import { renderIcon } from '../ui/icons.js';
 import { drawPathShape } from '../render/handout-path.js';
-import { thinPoints, normalizeStroke, BRUSH_KINDS, brushInfo, newBrushSeed, stabilize, stabilizerRadius, PERIOD_INKS, rememberColor, stepSize } from '../domain/brush.js';
+import { thinPoints, normalizeStroke, BRUSH_KINDS, brushInfo, newBrushSeed, stabilize, stabilizerRadius, PERIOD_INKS, rememberColor, stepSize, speedPressure, SPEED_KINDS } from '../domain/brush.js';
 
 export const TOOLS = [
   { id: 'select', label: 'Selecionar', icon: 'cursor', shortcut: 'tool-select' },
@@ -18,7 +18,7 @@ export const TOOLS = [
 const CUT_IDS = new Set(['scissors', 'tear', 'lighter']);
 
 const OPTIONS_KEY = 'atelie-tool-options';
-const DEFAULT_OPTIONS = { color: '#1d1b24', width: 6, opacity: 100, fill: false, picote: false, rough: 50, flame: 14, speed: 100, char: 50, brush: 'pen', grain: 50, brushes: {}, smooth: 0, eraser: 30, recent: [] };
+const DEFAULT_OPTIONS = { color: '#1d1b24', width: 6, opacity: 100, fill: false, picote: false, rough: 50, flame: 14, speed: 100, char: 50, brush: 'pen', grain: 50, brushes: {}, smooth: 0, eraser: 30, recent: [], velocity: 0, uv: false };
 
 function loadOptions() {
   try {
@@ -131,14 +131,17 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
     const tips = tool === 'brush' ? `
       <span class="stage-brush-tips" role="group" aria-label="Ponta do pincel">${BRUSH_KINDS.map(k => `<button type="button" class="stage-brush-tip" data-tip="${k.id}" aria-pressed="${k.id === options.brush}" title="${k.label}" aria-label="${k.label}">${renderIcon(k.icon, 16)}</button>`).join('')}</span>
       <label class="stage-tool-field" title="Estabilizador: o traço segue o cursor por uma corda, e a mão trêmula some"><span>Suavizar</span><input type="range" data-option="smooth" min="0" max="100" step="5" value="${options.smooth}" /><output data-for="smooth">${options.smooth}</output></label>
-      ${brushInfo(options.brush).hasGrain ? `<label class="stage-tool-field" title="Grão"><span>Grão</span><input type="range" data-option="grain" min="0" max="100" step="5" value="${options.grain}" /><output data-for="grain">${options.grain}</output></label>` : ''}
+      ${SPEED_KINDS.includes(options.brush) ? `<label class="stage-tool-field" title="Velocidade: quanto mais rápida a mão, mais fino o traço"><span>Velocidade</span><input type="range" data-option="velocity" min="0" max="100" step="5" value="${options.velocity}" /><output data-for="velocity">${options.velocity}</output></label>` : ''}
+      ${brushInfo(options.brush).hasGrain ? `<label class="stage-tool-field" title="${brushInfo(options.brush).grainLabel || 'Grão'}"><span>${brushInfo(options.brush).grainLabel || 'Grão'}</span><input type="range" data-option="grain" min="0" max="100" step="5" value="${options.grain}" /><output data-for="grain">${options.grain}</output></label>` : ''}
     ` : '';
+    const uv = tool === 'text' ? '' : `<label class="stage-tool-field stage-uv-toggle" title="Tinta UV: o desenho só aparece sob a luz negra"><input type="checkbox" data-option="uv" ${options.uv ? 'checked' : ''} /><span>Tinta UV</span></label>`;
     strip.innerHTML = `${tips}
       <label class="stage-tool-field" title="Cor"><span>Cor</span><input type="color" data-option="color" value="${options.color}" /></label>
       <span class="stage-inks" role="group" aria-label="Tintas de época">${[...PERIOD_INKS.map(i => [i.color, i.label]), ...options.recent.map(c => [c, `Usada há pouco · ${c}`])].map(([c, name], n) => `<button type="button" class="stage-ink${n === PERIOD_INKS.length ? ' is-first-recent' : ''}" data-ink="${c}" style="background:${c}" title="${name}" aria-label="${name}" aria-pressed="${c === options.color.toLowerCase()}"></button>`).join('')}</span>
       <label class="stage-tool-field" title="Espessura"><span>Espessura</span><input type="number" data-option="width" min="1" max="200" step="1" value="${options.width}" /></label>
       <label class="stage-tool-field" title="Opacidade"><span>Opacidade</span><input type="range" data-option="opacity" min="5" max="100" step="5" value="${options.opacity}" /><output>${options.opacity}%</output></label>
       ${canFill ? `<label class="stage-tool-field"><input type="checkbox" data-option="fill" ${options.fill ? 'checked' : ''} /><span>Preencher</span></label>` : ''}
+      ${uv}
     `;
   }
 
@@ -161,7 +164,7 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
     const el = e.target.closest('[data-option]');
     if (!el) return;
     const key = el.dataset.option;
-    if (key === 'fill' || key === 'picote') options[key] = el.checked;
+    if (key === 'fill' || key === 'picote' || key === 'uv') options[key] = el.checked;
     else if (key === 'color') options.color = el.value;
     else {
       const min = Number.isFinite(parseFloat(el.min)) ? parseFloat(el.min) : 1;
@@ -170,7 +173,7 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
       options[key] = Math.max(min, Math.min(max, Number.isFinite(value) ? value : min));
     }
     if (key === 'opacity') strip.querySelector('output:not([data-for])').textContent = `${options.opacity}%`;
-    if (key === 'grain' || key === 'smooth' || key === 'eraser') strip.querySelector(`output[data-for="${key}"]`).textContent = options[key];
+    if (key === 'grain' || key === 'smooth' || key === 'eraser' || key === 'velocity') strip.querySelector(`output[data-for="${key}"]`).textContent = options[key];
     persist();
   });
 
@@ -276,6 +279,19 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
   }
 
   pageWrap.addEventListener('pointerleave', () => { if (tool === 'eraser' && !gesture) clearPreview(); });
+
+  /** The pressure for a new point: the device's, or, with "Velocidade" on a pen or nib, one that falls as the hand speeds up. */
+  function pressureAt(point, event) {
+    const base = event.pressure || 0.5;
+    if (!(options.velocity > 0) || !SPEED_KINDS.includes(options.brush)) return base;
+    const last = gesture.motion;
+    gesture.motion = { point, time: event.timeStamp };
+    if (!last) return base;
+    const dt = Math.max(1, event.timeStamp - last.time);
+    const speed = (Math.hypot(point[0] - last.point[0], point[1] - last.point[1]) * getZoom()) / dt;
+    gesture.pressure = speedPressure(gesture.pressure, base, speed, options.velocity / 100);
+    return gesture.pressure;
+  }
 
   function drawPreview() {
     const handout = getHandout();
@@ -403,6 +419,8 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
       shift: event.shiftKey,
       points: [[start[0], start[1], event.pressure || 0.5]],
       rope: [start[0], start[1]], // where the stabilized brush is
+      motion: null,
+      pressure: undefined,
       seed: newBrushSeed(),
       appendTo: tool === 'brush' && event.shiftKey && selected?.kind === 'shape' && selected.shape?.type === 'path' && !selected.locked ? selected.id : null,
     };
@@ -427,7 +445,8 @@ export function createDrawTools(container, { viewport, pageWrap, getZoom, getHan
     if (gesture.tool === 'brush') {
       const radius = stabilizerRadius(options.smooth, getZoom());
       const rope = stabilize(gesture.rope, point, radius);
-      if (rope[0] !== gesture.rope[0] || rope[1] !== gesture.rope[1]) gesture.points.push([rope[0], rope[1], event.pressure || 0.5]);
+      const pressure = pressureAt(point, event);
+      if (rope[0] !== gesture.rope[0] || rope[1] !== gesture.rope[1]) gesture.points.push([rope[0], rope[1], pressure]);
       gesture.rope = rope;
       // a textured tip is rasterized in software: at most once per frame
       if (!previewFrame) previewFrame = requestAnimationFrame(() => { previewFrame = 0; drawPreview(); });

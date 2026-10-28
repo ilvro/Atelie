@@ -666,7 +666,7 @@ export function createPropertiesPanel(container, { state, api, fonts } = {}) {
         <fieldset class="prop-group" ${stateAttr}>
           <legend class="prop-legend">Traço</legend>
           ${choiceField('h:shape.brush.kind', 'Ponta', kind, BRUSH_KINDS.map(k => [k.id, k.label]), { disabled: isLocked })}
-          ${brushInfo(kind).hasGrain ? numberField('h:shape.brush.grain', 'Grão · %', Math.round((shp.brush?.grain ?? DEFAULT_GRAIN) * 100), { min: 0, max: 100, step: 5, disabled: isLocked }) : ''}
+          ${brushInfo(kind).hasGrain ? numberField('h:shape.brush.grain', `${brushInfo(kind).grainLabel || 'Grão'} · %`, Math.round((shp.brush?.grain ?? DEFAULT_GRAIN) * 100), { min: 0, max: 100, step: 5, disabled: isLocked }) : ''}
           ${colorField('h:shape.stroke', 'Cor', shp.stroke || '#000000')}
           ${renderColorSwatchesHTML('h:shape.stroke')}
           ${numberField('h:shape.strokeWidth', 'Espessura · px', shp.strokeWidth || 1, { min: 1, max: 200, step: 1, disabled: isLocked })}

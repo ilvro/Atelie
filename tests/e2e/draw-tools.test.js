@@ -175,7 +175,7 @@ test('draw tools e2e: shapes by dragging, brush stroke paints pixels, Shift appe
 
   // Brush tips: six buttons in the strip; Giz makes a textured stroke whose pixels are partly transparent
   await page.keyboard.press('b');
-  assert.equal(await page.locator('.stage-brush-tip').count(), 6);
+  assert.equal(await page.locator('.stage-brush-tip').count(), 8);
   assert.equal(await page.locator('.stage-brush-tip[aria-pressed="true"]').getAttribute('data-tip'), 'pen');
   await page.click('.stage-brush-tip[data-tip="chalk"]');
   assert.equal(await page.locator('.stage-brush-tip[aria-pressed="true"]').getAttribute('data-tip'), 'chalk');
@@ -376,6 +376,65 @@ test('draw tools e2e: shapes by dragging, brush stroke paints pixels, Shift appe
   assert.match(picked, /^#[0-9a-f]{6}$/);
   assert.notEqual(picked, '#2f5a3a', 'Alt+click took the colour of the page');
   assert.equal((await layers()).length, countAlt, 'and drew nothing');
+  await page.keyboard.press('Escape');
+
+  // Respingo and Mancha tips, Tinta UV, and Velocidade on the pen
+  await page.keyboard.press('b');
+  await blur();
+  await page.click('.stage-brush-tip[data-tip="splatter"]');
+  assert.equal(await page.locator('[data-option="grain"]').count(), 1);
+  assert.equal(await page.locator('.stage-tool-field', { hasText: 'Gotas' }).count(), 1, 'the density control is called Gotas');
+  const strokeAt = async (y, { slowly = false } = {}) => {
+    const a = await toScreen(300, y);
+    const b = await toScreen(900, y);
+    await page.mouse.move(a.x, a.y);
+    await page.mouse.down();
+    if (slowly) {
+      for (let i = 1; i <= 12; i++) {
+        await page.mouse.move(a.x + ((b.x - a.x) * i) / 12, a.y);
+        await page.waitForTimeout(40);
+      }
+    } else {
+      // a real flick: the moves arrive within the same millisecond or two, which Playwright's own mouse cannot do
+      await page.evaluate(([x0, x1, y]) => {
+        const wrap = document.querySelector('.stage-page-wrap');
+        const ev = (type, x) => new PointerEvent(type, { clientX: x, clientY: y, pointerId: 1, pointerType: 'mouse', isPrimary: true, button: 0, buttons: 1, pressure: 0.5, bubbles: true });
+        for (let i = 1; i <= 20; i++) wrap.dispatchEvent(ev('pointermove', x0 + ((x1 - x0) * i) / 20));
+      }, [a.x, b.x, a.y]);
+    }
+    await page.mouse.up();
+    return (await layers()).at(-1);
+  };
+  const splat = await strokeAt(1620);
+  assert.equal(splat.name, 'Respingo');
+  assert.equal(splat.shape.brush.kind, 'splatter');
+  assert.equal(splat.light, 'both');
+  await page.click('.stage-brush-tip[data-tip="stain"]');
+  const stain = await strokeAt(1650);
+  assert.equal(stain.name, 'Mancha');
+  assert.equal(stain.blend, 'multiply', 'a stain multiplies over the paper');
+
+  await page.click('.stage-brush-tip[data-tip="pen"]');
+  await page.locator('[data-option="uv"]').check();
+  const secret = await strokeAt(1580);
+  assert.equal(secret.light, 'uv', 'Tinta UV makes the stroke visible only under black light');
+  await page.locator('[data-option="uv"]').uncheck();
+  assert.equal((await strokeAt(1590)).light, 'both');
+
+  assert.equal(await page.locator('[data-option="velocity"]').count(), 1, 'Velocidade is offered for the pen');
+  await setOption('velocity', 100);
+  await setOption('width', 6);
+  // the pressure eases in, so compare the end of each stroke
+  const meanPressure = l => { const ps = l.shape.points.filter(Boolean).map(p => p[2]).slice(-4); return ps.reduce((a, b) => a + b, 0) / ps.length; };
+  const slowLine = await strokeAt(1540, { slowly: true });
+  const fastLine = await strokeAt(1520);
+  assert.ok(meanPressure(fastLine) < meanPressure(slowLine) - 0.12, `fast ${meanPressure(fastLine).toFixed(2)} vs slow ${meanPressure(slowLine).toFixed(2)}`);
+  await setOption('velocity', 0);
+  const flat = await strokeAt(1500);
+  assert.ok(flat.shape.points.filter(Boolean).every(p => p[2] === 0.5), 'with Velocidade 0 the mouse keeps its flat pressure');
+  await page.click('.stage-brush-tip[data-tip="chalk"]');
+  assert.equal(await page.locator('[data-option="velocity"]').count(), 0, 'not offered for the chalk');
+  await page.click('.stage-brush-tip[data-tip="pen"]');
   await page.keyboard.press('Escape');
 
   assert.deepEqual(errors, []);

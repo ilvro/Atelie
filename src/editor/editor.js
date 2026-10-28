@@ -1695,7 +1695,8 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       return;
     }
     const o = desc.options;
-    const light = currentLight === 'uv' ? 'uv' : 'both';
+    // the strip's "Tinta UV" makes a drawing visible only under black light, whatever light the sheet is in
+    const light = currentLight === 'uv' || o.uv ? 'uv' : 'both';
     const opacity = Math.max(0.05, Math.min(1, o.opacity / 100));
 
     // Shift+brush: the new stroke takes the tip of the target layer, not the tool's (the layer keeps one tip).
@@ -1715,7 +1716,7 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       if (!normalized) return;
       newL = shapeLayer({
         name: desc.brush ? brushInfo(desc.brush.kind).layerName : 'Pincel', ...normalized.box, opacity, light,
-        ...(desc.brush?.kind === 'marker' ? { blend: 'multiply' } : {}),
+        ...(desc.brush && brushInfo(desc.brush.kind).multiply ? { blend: 'multiply' } : {}),
         shape: { type: 'path', fill: null, stroke: o.color, strokeWidth: o.width, points: normalized.points, ...(desc.brush ? { brush: desc.brush } : {}) },
       });
     } else if (desc.type === 'line') {

@@ -1,4 +1,4 @@
-// Contact sheet of the 6 brush tips at 3 pressures on "Ofício creme (Usado)": docs/referencias/pincel-pontas.png
+// Contact sheet of the brush tips at 3 pressures on "Ofício creme (Usado)": docs/referencias/pincel-pontas.png
 import sharp from 'sharp';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -9,11 +9,11 @@ import { drawPathShape } from '../src/render/handout-path.js';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const out = path.join(root, 'docs/referencias/pincel-pontas.png');
 const CELL_W = 520;
-const CELL_H = 150;
+const CELL_H = 170;
 const LABEL_W = 150;
 const PRESSURES = [0.25, 0.5, 0.9];
 const SCALE = 2;
-const INK = { pen: ['#15131a', 6], pencil: ['#4a4a4f', 3], chalk: ['#2b2b30', 14], nib: ['#15131a', 8], drybrush: ['#15131a', 18], marker: ['#f2d23c', 18] };
+const INK = { pen: ['#15131a', 6], pencil: ['#4a4a4f', 3], chalk: ['#2b2b30', 14], nib: ['#15131a', 8], drybrush: ['#15131a', 18], marker: ['#f2d23c', 18], splatter: ['#15131a', 24], stain: ['#5b3a1e', 40] };
 
 const sheetW = LABEL_W + CELL_W * PRESSURES.length;
 const sheetH = CELL_H * BRUSH_KINDS.length;
@@ -22,11 +22,11 @@ const paper = await sharp(path.join(root, 'public/colecao/papeis/oficio-creme-us
 const px = Buffer.from(paper);
 
 const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
-function composite(cov, left, top, color, multiply) {
+function composite(cov, left, top, color, multiply, opacity = 1) {
   const [r, g, b] = hex(color);
   for (let y = 0; y < cov.height; y++) {
     for (let x = 0; x < cov.width; x++) {
-      const a = cov.data[y * cov.width + x] / 255;
+      const a = (cov.data[y * cov.width + x] / 255) * opacity;
       if (!a) continue;
       const X = left + x;
       const Y = top + y;
@@ -54,7 +54,7 @@ BRUSH_KINDS.forEach((k, row) => {
     const top = row * CELL_H;
     // pen has no raster: draw it as a thick polyline with the same widths
     const cov = k.id === 'pen' ? penCoverage(shape, CELL_W, CELL_H) : brushCoverage(shape, CELL_W, CELL_H, SCALE / 2 * 1);
-    composite(cov, left, top, color, k.id === 'marker');
+    composite(cov, left, top, color, k.id === 'marker' || k.id === 'stain', k.id === 'stain' ? 0.8 : 1);
   });
 });
 

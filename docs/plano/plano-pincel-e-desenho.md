@@ -200,9 +200,6 @@ Hoje, apagar parte de um traço exige Ctrl+Z ou excluir a camada inteira. A borr
 
 ## Ideias para depois (fora deste plano)
 
-Fiquei com estas ideias, mas elas não estão especificadas aqui:
+Feitas em 28/10/2026, depois das cinco fases: pincel de mancha e respingo, tinta UV no pincel e sensibilidade à velocidade na caneta e na pena (ver `progress.md`). Continua de fora:
 
 - **Seleção múltipla** para mover, alinhar e agrupar. O `state.selection` hoje guarda um id só, e a mudança afeta o editor inteiro.
-- **Pincel de mancha e respingo** (tinta derramada, café) como ponta extra. Ela se encaixa no mesmo sistema da Fase 1.
-- **Tinta UV no pincel:** um atalho que cria o traço com `light: 'uv'`, para mensagens escondidas à mão. O `editor.js` já usa `currentLight`. Bastaria um alternador visível na faixa.
-- **Sensibilidade à velocidade** no `pen` e no `nib`, para quem desenha com mouse: um traço rápido sai mais fino, o que imita a pressão.

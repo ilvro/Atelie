@@ -114,10 +114,29 @@ export const BRUSH_KINDS = [
   { id: 'chalk', label: 'Giz / carvão', layerName: 'Giz', icon: 'brush-chalk', hasGrain: true, defaults: { width: 14 } },
   { id: 'nib', label: 'Pena (nanquim)', layerName: 'Pena', icon: 'brush-nib', hasGrain: false, defaults: { color: '#15131a' } },
   { id: 'drybrush', label: 'Pincel seco', layerName: 'Pincel seco', icon: 'brush-dry', hasGrain: true, defaults: { width: 18 } },
-  { id: 'marker', label: 'Marca-texto', layerName: 'Marca-texto', icon: 'brush-marker', hasGrain: true, defaults: { color: '#f2d23c', opacity: 45, width: 18 } },
+  { id: 'marker', label: 'Marca-texto', layerName: 'Marca-texto', icon: 'brush-marker', hasGrain: true, multiply: true, defaults: { color: '#f2d23c', opacity: 45, width: 18 } },
+  { id: 'splatter', label: 'Respingo', layerName: 'Respingo', icon: 'brush-splatter', hasGrain: true, grainLabel: 'Gotas', defaults: { color: '#15131a', width: 24 } },
+  { id: 'stain', label: 'Mancha (café)', layerName: 'Mancha', icon: 'brush-stain', hasGrain: true, grainLabel: 'Manchado', multiply: true, defaults: { color: '#5b3a1e', width: 40, opacity: 80 } },
 ];
 
 export const DEFAULT_GRAIN = 0.5;
+
+/** Tips whose width can follow the speed of the hand ("Velocidade"). */
+export const SPEED_KINDS = ['pen', 'nib'];
+
+/**
+ * A mouse always reports the same pressure, so a quick stroke looks as heavy as a slow one. With "Velocidade"
+ * the pressure falls as the hand speeds up (up to 70 % of it at `amount` 1 and 2 px/ms), eased from the previous
+ * value so the width does not jump. Slow strokes keep exactly the width that was chosen.
+ * `speed` is in screen px per ms; `amount` is 0–1.
+ */
+export function speedPressure(previous, base, speed, amount) {
+  if (!(amount > 0)) return base;
+  const fast = Math.max(0, Math.min(1, speed / 2));
+  const target = base * (1 - amount * 0.7 * fast);
+  const from = previous ?? base;
+  return Math.round((from + (target - from) * 0.25) * 10000) / 10000;
+}
 
 export const brushKindOf = shape => shape?.brush?.kind ?? 'pen';
 export const brushInfo = kind => BRUSH_KINDS.find(k => k.id === kind) || BRUSH_KINDS[0];
