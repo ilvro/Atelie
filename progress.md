@@ -2060,5 +2060,5 @@ O Ateliê agora fala o barramento da plataforma da mesa (`Atlas/docs/PLATAFORMA.
 ### Pendências reais
 - O campo extra `revisao` em `atelie.documento-salvo` é opcional e fora do catálogo (o validador só exige `documento`); é útil ao registro da sessão (9.5b). Se o contrato subir de versão, entra no catálogo.
 - O pedido só chega com uma aba do Ateliê aberta. Sem ela, quem pede abre `<endereço>?handout=<id>` (o Atlas já faz isso).
-- O Vite de desenvolvimento do Ateliê não aplica `VITE_ATELIE_STORAGE` (o `define` de `import.meta.env.*` não pega no `dev`): sob o `mesa-dev` ele só entra em modo navegador com `?storage=browser` ou `window.__ATELIE_STORAGE`. Como servir o Ateliê sob o `mesa-dev` (build do Pages com `base` e `preview`, ou ajuste no `vite.config.js`) é decisão da 9.1c.
+- **Resolvido (depois da 9.1c):** `npm run dev:mesa` roda o Ateliê com o Vite de desenvolvimento sob `/Atelie/` e o armazenamento no navegador: `vite.config.js` ganhou um plugin (ativo só com `ATELIE_MESA=1`) que injeta `window.__ATELIE_STORAGE = 'browser'`, já que o `define` de `import.meta.env.*` não vale no `dev`. Sem a variável, nada muda. A cópia de `vendor/mesa-core/` foi atualizada (campo opcional `Sessao.roteiroNotas`).
 - Sem commit. Sugestão: `feat(mesa): join the table contract (manifest, atelie.abrir, documento-salvo)`
