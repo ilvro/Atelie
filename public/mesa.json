@@ -1,0 +1,10 @@
+{
+  "app": "atelie",
+  "nome": "Ateliê",
+  "contrato": 1,
+  "icone": "./icone.svg",
+  "rotas": { "documento": "./?handout={id}" },
+  "oferece": ["documento"],
+  "emite": ["atelie.documento-salvo"],
+  "atende": ["atelie.abrir"]
+}

@@ -50,7 +50,7 @@ import { cutEffect } from '../domain/cut.js';
 import { createTabBar, reorderIds, nextAfterClose, cycleTab, loadTabs, saveTabs } from './tabs.js';
 import { downloadHandoutPng, printHandout, exportScale, printLayout } from './export.js';
 
-export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
+export function createEditor(shell, { api, images, fonts, onOpenReader, onArchived } = {}) {
   const deskStage = document.getElementById('desk-stage');
   if (!deskStage) return null;
 
@@ -553,6 +553,8 @@ export function createEditor(shell, { api, images, fonts, onOpenReader } = {}) {
       }
 
       triggerArchiveAnimation();
+
+      try { onArchived?.(saved); } catch (err) { console.warn('[atelie] onArchived:', err); }
 
       if (typeof window !== 'undefined') {
         const params = new URLSearchParams(window.location.search);

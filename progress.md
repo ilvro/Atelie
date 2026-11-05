@@ -2042,3 +2042,23 @@ Implementação do Ateliê de Documentos (engine de documentos editáveis e imer
 - A tinta UV só vale para desenhos novos; não há atalho nem alternador no painel de Propriedades para uma camada já existente (a Iluminação do painel já faz isso).
 - Velocidade não age no Shift+traço da camada de outra ponta (segue a ponta da ferramenta).
 - Sem commit. Sugestão: `feat(brush): splatter and stain tips, UV ink toggle and speed-sensitive pen/nib`
+
+## Contrato da mesa (tarefa 9.3c do Atlas, autorizada pelo usuário em 5 de novembro de 2026)
+
+O Ateliê agora fala o barramento da plataforma da mesa (`Atlas/docs/PLATAFORMA.md`), **sem mudar o contrato v1 com o Tabletop**: o banco `mesa-handouts-v1`, o canal `mesa:handout`, a janela e o HTTP seguem como estavam.
+
+### Concluído
+- `vendor/mesa-core/`: cópia compilada e fixa do contrato (a fonte vive em `Atlas/mesa-core/`; atualizar com `cp -r ../Atlas/mesa-core/dist/. vendor/mesa-core/`).
+- `public/mesa.json` e `public/icone.svg`: o manifesto (`oferece: ['documento']`, `atende: ['atelie.abrir']`, `emite: ['atelie.documento-salvo']`, rota `./?handout={id}`).
+- `src/mesa.js`: `iniciarMesa({ existe, abrir })` atende `atelie.abrir { ref }` (abre o documento por `openDocumentById`, que traz a aba à frente se já estiver aberta; recusa com motivo ref de outro aplicativo ou documento inexistente) e `documentoSalvo(handout)` emite `atelie.documento-salvo { documento, revisao }` ao arquivar, **mesmo com "Compartilhar com o Tabletop" desligado**. Sem `BroadcastChannel`, nada muda.
+- Ganchos: `main.js` liga o módulo ao editor; `createEditor` aceita `onArchived(saved)`, chamado depois de arquivar (um `try/catch`, nunca atrapalha o arquivar).
+
+### Validação
+- `npm test`: 275 passando (7 novos em `tests/mesa.test.js`: abrir, recusar inexistente, recusar ref alheia, erro ao procurar, `documentoSalvo`, manifesto válido, sem canal).
+- e2e (reconstruído o `dist`): `exchange`, `handoff`, `shell` e `document-tabs` passando. No Atlas, `tests/e2e/atelie.test.ts` roda o Ateliê de verdade sob o `mesa-dev`: arquivar avisa `atelie.documento-salvo`, "Editar no Ateliê" traz o documento de volta à frente sem abrir aba nova, e um documento inexistente é recusado.
+
+### Pendências reais
+- O campo extra `revisao` em `atelie.documento-salvo` é opcional e fora do catálogo (o validador só exige `documento`); é útil ao registro da sessão (9.5b). Se o contrato subir de versão, entra no catálogo.
+- O pedido só chega com uma aba do Ateliê aberta. Sem ela, quem pede abre `<endereço>?handout=<id>` (o Atlas já faz isso).
+- O Vite de desenvolvimento do Ateliê não aplica `VITE_ATELIE_STORAGE` (o `define` de `import.meta.env.*` não pega no `dev`): sob o `mesa-dev` ele só entra em modo navegador com `?storage=browser` ou `window.__ATELIE_STORAGE`. Como servir o Ateliê sob o `mesa-dev` (build do Pages com `base` e `preview`, ou ajuste no `vite.config.js`) é decisão da 9.1c.
+- Sem commit. Sugestão: `feat(mesa): join the table contract (manifest, atelie.abrir, documento-salvo)`

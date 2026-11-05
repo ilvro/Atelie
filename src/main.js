@@ -19,6 +19,7 @@ import { createReading } from './reading/reading.js';
 import { play, getSoundSettings, setSoundSettings, matchTypingVoice, isSoundEnabled } from './ui/sound.js';
 import { notify } from './ui/notify.js';
 import { mountTutorials } from './tutorial/host.js';
+import { iniciarMesa } from './mesa.js';
 
 const appRoot = document.getElementById('app');
 if (appRoot) {
@@ -39,12 +40,22 @@ if (appRoot) {
     const isDiagnostics = window.location.search.includes('diagnostics');
 
     let reading = null;
+    let mesa = null;
     const editor = createEditor(shell, {
       api,
       images,
       fonts,
       onOpenReader: (id) => reading?.open(id),
+      onArchived: (handout) => mesa?.documentoSalvo(handout),
     });
+
+    // Contrato da mesa (Atlas, Mesa…): atende `atelie.abrir` e avisa os documentos salvos.
+    if (editor) {
+      mesa = iniciarMesa({
+        existe: async (id) => Boolean(await api.handouts.read(id)),
+        abrir: (id) => editor.openDocumentById(id),
+      });
+    }
 
     reading = createReading(shell, { api, images, fonts, editor });
 

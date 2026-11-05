@@ -77,6 +77,10 @@ O Ateliê entrega documentos ao Tabletop por três caminhos, descritos em [docs/
 
 > O contrato vale para os dois lados: não o altere em um projeto sem alterar o outro.
 
+## Plataforma da mesa
+
+O Ateliê também fala o barramento da plataforma da campanha ([Atlas/docs/PLATAFORMA.md](../Atlas/docs/PLATAFORMA.md)): `public/mesa.json` o anuncia, `src/mesa.js` atende `atelie.abrir` (abre um documento por id, a pedido do Atlas ou da Mesa) e avisa `atelie.documento-salvo` ao arquivar. É independente do contrato com o Tabletop e não muda nada sem outra aba por perto.
+
 ## Estrutura do projeto
 
 ```
