@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => ({
   base: './',
   plugins: sobMesaDev ? [armazenamentoNoNavegador] : [],
   define: {
-    'import.meta.env.VITE_ATELIE_STORAGE': JSON.stringify(mode === 'pages' ? 'browser' : (process.env.VITE_ATELIE_STORAGE || 'server')),
+    'import.meta.env.VITE_ATELIE_STORAGE': JSON.stringify((mode === 'pages' || mode === 'desktop') ? 'browser' : (process.env.VITE_ATELIE_STORAGE || 'server')),
   },
   server: {
     host: '127.0.0.1',

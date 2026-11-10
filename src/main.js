@@ -57,8 +57,8 @@ if (appRoot) {
       });
     }
 
-    // Ponte do assistente: só no servidor de desenvolvimento (fora do build).
-    if (import.meta.env.DEV && editor) {
+    // Ponte do assistente: em desenvolvimento e no app de desktop (fora do build do Pages).
+    if ((import.meta.env.DEV || import.meta.env.VITE_PONTE === '1') && editor) {
       import('./ponte.js').then(m => m.iniciarPonte({ editor, api, registrarPista, refDoDocumento }))
         .catch(err => console.warn('Ateliê: ponte do assistente indisponível', err));
     }
