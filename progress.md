@@ -2062,3 +2062,18 @@ O Ateliê agora fala o barramento da plataforma da mesa (`Atlas/docs/PLATAFORMA.
 - O pedido só chega com uma aba do Ateliê aberta. Sem ela, quem pede abre `<endereço>?handout=<id>` (o Atlas já faz isso).
 - **Resolvido (depois da 9.1c):** `npm run dev:mesa` roda o Ateliê com o Vite de desenvolvimento sob `/Atelie/` e o armazenamento no navegador: `vite.config.js` ganhou um plugin (ativo só com `ATELIE_MESA=1`) que injeta `window.__ATELIE_STORAGE = 'browser'`, já que o `define` de `import.meta.env.*` não vale no `dev`. Sem a variável, nada muda. A cópia de `vendor/mesa-core/` foi atualizada (campo opcional `Sessao.roteiroNotas`).
 - Sem commit. Sugestão: `feat(mesa): join the table contract (manifest, atelie.abrir, documento-salvo)`
+
+## Ponte do assistente (ficha 14.4a do Atlas, só em desenvolvimento)
+
+### Concluído
+- `vendor/mesa-core/` ganhou `ponte.js` e `ponte.d.ts` (cópia do `Atlas/mesa-core/dist`).
+- `src/ponte.js`: `ferramentasDoAtelie(ctx)` (contexto injetável) com `atelie_modelos_listar`, `atelie_documento_criar`, `atelie_documento_editar`, `atelie_documentos_listar` e `atelie_documento_ler`; `iniciarPonte` monta o contexto real (editor, api, `window.confirm`) e conecta como app `atelie`. Os ids criados pelo assistente ficam em `localStorage['atelie:ponte-criados']`; editar documento que ele não criou pede confirmação (recusa vira erro "O mestre recusou").
+- `src/mesa.js`: `registrarPista(handout)` registra o documento como `pista` na campanha ativa (sem duplicar; atualiza o nome se já existe e é do Ateliê; sem campanha ativa não faz nada).
+- `src/main.js`: carrega a ponte só com `import.meta.env.DEV`; a verificação do build (`vite build` + grep de `atelie_documento_criar`, `conectarPonte`, `__ponte`) não acha nada.
+- As mudanças entram pelo histórico do editor (`state.edit`) e arquivam por `editor.archive()`, o caminho do botão.
+
+### Validação
+- `npm test`: 290 passando (`tests/ponte.test.js`: listar com filtros e limite, criar com UV, campo ignorado, recusa ao editar documento alheio, pista sem duplicar).
+
+### Pendências reais
+- Sem navegador não foi testado: o documento abrindo na aba, `window.confirm` e o registro de pista no IndexedDB reais. Sem commit.

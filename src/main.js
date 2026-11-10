@@ -19,7 +19,7 @@ import { createReading } from './reading/reading.js';
 import { play, getSoundSettings, setSoundSettings, matchTypingVoice, isSoundEnabled } from './ui/sound.js';
 import { notify } from './ui/notify.js';
 import { mountTutorials } from './tutorial/host.js';
-import { iniciarMesa } from './mesa.js';
+import { iniciarMesa, registrarPista, refDoDocumento } from './mesa.js';
 
 const appRoot = document.getElementById('app');
 if (appRoot) {
@@ -55,6 +55,12 @@ if (appRoot) {
         existe: async (id) => Boolean(await api.handouts.read(id)),
         abrir: (id) => editor.openDocumentById(id),
       });
+    }
+
+    // Ponte do assistente: só no servidor de desenvolvimento (fora do build).
+    if (import.meta.env.DEV && editor) {
+      import('./ponte.js').then(m => m.iniciarPonte({ editor, api, registrarPista, refDoDocumento }))
+        .catch(err => console.warn('Ateliê: ponte do assistente indisponível', err));
     }
 
     reading = createReading(shell, { api, images, fonts, editor });

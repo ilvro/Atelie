@@ -2,7 +2,7 @@
 // e avisa `atelie.documento-salvo` quando um documento é arquivado. É só o barramento de eventos da mesa: o contrato com o
 // Tabletop (banco `mesa-handouts-v1`, canal `mesa:handout`, janela e HTTP) continua como está, em `data/exchange.js`.
 // Sem BroadcastChannel, ou sem a campanha ativa, nada muda: o Ateliê funciona como antes.
-import { criarBarramento, criarRef } from '../vendor/mesa-core/index.js';
+import { abrirRepositorioCampanha, criarBarramento, criarRef } from '../vendor/mesa-core/index.js';
 
 const CHAVE_CAMPANHA_ATIVA = 'mesa:campanha-ativa';
 
@@ -49,4 +49,30 @@ export function iniciarMesa(atelie, ambiente = {}) {
     },
     parar() { barramento.fechar(); },
   };
+}
+
+/**
+ * Registra o documento como `pista` na campanha ativa da Mesa (usado pela ponte do assistente, só em desenvolvimento).
+ * Sem duplicar: se a ref já tem entidade e ela é do Ateliê, só atualiza o nome. Sem campanha ativa não faz nada.
+ * `ambiente` (testes): `campanhaId`, `abrir` (padrão: `abrirRepositorioCampanha({ app: 'atelie' })`).
+ * Devolve `{ registrada: boolean, motivo?: string, entidadeId?: string }`.
+ */
+export async function registrarPista(handout, ambiente = {}) {
+  if (!handout?.id) return { registrada: false, motivo: 'documento sem id' };
+  const campanhaId = ambiente.campanhaId === undefined ? campanhaAtiva() : ambiente.campanhaId;
+  if (!campanhaId) return { registrada: false, motivo: 'sem campanha ativa na Mesa' };
+  const abrir = ambiente.abrir ?? (() => abrirRepositorioCampanha({ app: 'atelie' }));
+  const ref = refDoDocumento(handout.id);
+  const repo = await abrir();
+  try {
+    const existente = await repo.entidadeDaRef(campanhaId, ref);
+    if (existente) {
+      if (existente.criadaPor === 'atelie' && existente.nome !== handout.name) await repo.salvarEntidade({ ...existente, nome: handout.name });
+      return { registrada: true, entidadeId: existente.id };
+    }
+    const nova = await repo.criarEntidade({ campanhaId, tipo: 'pista', nome: handout.name || 'Documento', refs: [ref] });
+    return { registrada: true, entidadeId: nova.id };
+  } finally {
+    try { repo.fechar?.(); } catch { /* ignora */ }
+  }
 }
