@@ -186,3 +186,9 @@ test('registrarPista: sem campanha ativa não abre nada', async () => {
   assert.match(r.motivo, /sem campanha ativa na Mesa/);
   assert.equal(abriu, false);
 });
+
+test('orçamento: descrições até 400 caracteres e campos até 80', () => {
+  const nada = new Proxy(function () {}, { get: () => nada, apply: () => nada });
+  const varrer = o => !o || typeof o !== 'object' ? [] : [...(typeof o.description === 'string' && o.description.length > 80 ? [o.description] : []), ...Object.values(o).flatMap(varrer)];
+  for (const t of ferramentasDoAtelie(nada)) { assert.ok(t.descricao.length <= 400, t.nome); assert.deepEqual(varrer(t.esquema), [], t.nome); }
+});

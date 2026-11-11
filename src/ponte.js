@@ -84,7 +84,7 @@ const resumoDoDocumento = (h, ctx) => ({
   revisao: h.revision, criadoPeloAssistente: ctx.criados.tem(h.id),
 });
 
-const esquemaCampos = { type: 'object', additionalProperties: { type: 'string' }, description: 'Texto por campo: { "<rótulo do campo>": "texto" }. Os rótulos vêm de atelie_modelos_listar (ou de atelie_documento_ler).' };
+const esquemaCampos = { type: 'object', additionalProperties: { type: 'string' }, description: 'Texto por rótulo de campo.' };
 
 export function ferramentasDoAtelie(ctx) {
   const exigir = (cond, msg) => { if (!cond) throw new Error(msg); };
@@ -121,14 +121,14 @@ export function ferramentasDoAtelie(ctx) {
   return [
     {
       nome: 'atelie_modelos_listar',
-      descricao: `Lista os modelos de documento do Ateliê (cartas, bilhetes, jornais…) com id, nome, categoria, época, tom e os CAMPOS que cada um aceita (os rótulos para atelie_documento_criar). No máximo ${MAXIMO_DE_MODELOS} por resposta; "total" diz quantos casaram. Filtre por busca, categoria, era ou tom.`,
+      descricao: `Lista modelos de documento (id, nome, categoria, época, tom e os CAMPOS que aceitam), no máximo ${MAXIMO_DE_MODELOS}. Filtra por busca, categoria, era, tom. Detalhes: plataforma_guia ferramentas-atelie.`,
       esquema: {
         type: 'object', additionalProperties: false,
         properties: {
-          busca: { type: 'string', description: 'Texto livre (nome, categoria, campos, tags, época, tom), sem diferenciar maiúsculas e acentos.' },
+          busca: { type: 'string', description: 'Texto livre.' },
           categoria: { type: 'string', description: 'Ex.: "Cartas e bilhetes".' },
-          era: { type: 'string', description: `Uma de: ${Object.entries(ERAS).map(([k, v]) => `${k} (${v})`).join(', ')}.` },
-          tom: { type: 'string', description: `Um de: ${Object.entries(TONS).map(([k, v]) => `${k} (${v})`).join(', ')}.` },
+          era: { type: 'string', description: 'Época (valores no guia).' },
+          tom: { type: 'string', description: 'Tom (valores no guia).' },
         },
       },
       async executar(args) {
@@ -149,14 +149,14 @@ export function ferramentasDoAtelie(ctx) {
     },
     {
       nome: 'atelie_documento_criar',
-      descricao: 'Cria um documento (pista) a partir de um modelo do Ateliê: preenche os campos, acrescenta um texto que só aparece sob a luz UV (textoUV), arquiva (publica para o Atlas e o Tabletop) e registra a pista na campanha ativa da Mesa. O documento abre numa aba do Ateliê. Use atelie_modelos_listar para achar o modelo e os rótulos dos campos; campos que o modelo não tem voltam em "ignorados".',
+      descricao: 'Cria um documento (pista) de um modelo: preenche campos, texto UV opcional, arquiva e registra na campanha. Modelo e rótulos vêm de atelie_modelos_listar. Detalhes: plataforma_guia ferramentas-atelie.',
       esquema: {
         type: 'object', required: ['modelo', 'nome'], additionalProperties: false,
         properties: {
-          modelo: { type: 'string', description: 'Id do modelo (de atelie_modelos_listar).' },
-          nome: { type: 'string', description: 'Nome do documento, ex.: "Carta do informante".' },
+          modelo: { type: 'string', description: 'De atelie_modelos_listar.' },
+          nome: { type: 'string', description: 'Nome do documento.' },
           campos: esquemaCampos,
-          textoUV: { type: 'string', description: 'Texto escondido, visível só sob a luz UV (o segredo do documento).' },
+          textoUV: { type: 'string', description: 'Visível só sob a luz UV.' },
           categoria: { type: 'string' },
           tags: { type: 'array', items: { type: 'string' } },
         },
@@ -182,14 +182,14 @@ export function ferramentasDoAtelie(ctx) {
     },
     {
       nome: 'atelie_documento_editar',
-      descricao: 'Edita um documento existente: renomeia, troca o texto dos campos e/ou o texto UV, e arquiva de novo. Se o documento não foi criado pelo assistente, o mestre precisa confirmar na aba do Ateliê (uma recusa volta como erro; não insista). Textos omitidos não mudam; textoUV vazio remove o texto UV.',
+      descricao: 'Edita um documento: nome, campos e/ou texto UV; arquiva de novo. O mestre confirma se não é do assistente (recusa: não insista). Detalhes: plataforma_guia ferramentas-atelie.',
       esquema: {
         type: 'object', required: ['id'], additionalProperties: false,
         properties: {
-          id: { type: 'string', description: 'Id do documento (de atelie_documentos_listar).' },
+          id: { type: 'string', description: 'De atelie_documentos_listar.' },
           nome: { type: 'string' },
           campos: esquemaCampos,
-          textoUV: { type: 'string', description: 'Texto visível só sob a luz UV; "" remove o texto UV.' },
+          textoUV: { type: 'string', description: '"" remove.' },
         },
       },
       async executar(args) {
@@ -209,8 +209,8 @@ export function ferramentasDoAtelie(ctx) {
     },
     {
       nome: 'atelie_documentos_listar',
-      descricao: 'Lista os documentos arquivados no Ateliê (mais recentes primeiro): id, nome, categoria, tags, se tem texto UV, revisão e se foi criado pelo assistente.',
-      esquema: { type: 'object', additionalProperties: false, properties: { busca: { type: 'string', description: 'Filtra por nome, categoria ou tag.' } } },
+      descricao: 'Lista os documentos arquivados (recentes primeiro): id, nome, categoria, tags, UV, revisão.',
+      esquema: { type: 'object', additionalProperties: false, properties: { busca: { type: 'string', description: 'Nome, categoria ou tag.' } } },
       async executar(args) {
         const busca = norm(args.busca);
         const lista = (await ctx.listarDocumentos()).filter(d => !busca || norm([d.name, d.category, (d.tags || []).join(' ')].join(' ')).includes(busca));
@@ -221,7 +221,7 @@ export function ferramentasDoAtelie(ctx) {
     },
     {
       nome: 'atelie_documento_ler',
-      descricao: 'Lê um documento: nome, categoria, tags, os campos com o texto atual, o texto UV (se houver) e a revisão.',
+      descricao: 'Lê um documento: campos com o texto atual, texto UV e revisão.',
       esquema: { type: 'object', required: ['id'], additionalProperties: false, properties: { id: { type: 'string' } } },
       async executar(args) {
         const h = await achar(args.id);
