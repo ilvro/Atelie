@@ -19,10 +19,10 @@ function modeloDeCarta() {
 }
 
 /** Contexto de teste: um "armazenamento" de documentos e uma aba aberta. */
-function criarContexto({ confirmar = async () => true, campanha = true, existentes = [] } = {}) {
+function criarContexto({ campanha = true, existentes = [] } = {}) {
   const docs = new Map(existentes.map(d => [d.id, d]));
   const memoria = new Map();
-  const log = { confirmacoes: [], pistas: [], arquivados: 0, imagens: [] };
+  const log = { pistas: [], arquivados: 0, imagens: [] };
   let aberto = null;
   const ctx = {
     modelos: async () => MODELOS,
@@ -36,7 +36,6 @@ function criarContexto({ confirmar = async () => true, campanha = true, existent
     guardarImagem: async (bytes, tipo) => { log.imagens.push({ bytes, tipo }); return { id: `up-${log.imagens.length}` }; },
     registrarPista: async h => { log.pistas.push(h.id); return campanha ? { registrada: true } : { registrada: false, motivo: 'sem campanha ativa na Mesa' }; },
     refDoDocumento: id => `mesa:atelie/documento/${id}`,
-    confirmar: async t => { log.confirmacoes.push(t); return confirmar(t); },
     criados: criarRegistroDeCriados({ getItem: k => memoria.get(k) ?? null, setItem: (k, v) => memoria.set(k, v) }),
   };
   const ferramentas = Object.fromEntries(ferramentasDoAtelie(ctx).map(f => [f.nome, f]));
@@ -99,25 +98,16 @@ test('criar: sem campanha ativa a resposta diz isso', async () => {
   assert.match(r.pista, /sem campanha ativa na Mesa/);
 });
 
-test('editar: documento criado pelo assistente não pede confirmação', async () => {
+test('editar: documento criado pelo assistente é alterado e segue como pista', async () => {
   const { chamar, log, docs } = criarContexto();
   const c = await chamar('atelie_documento_criar', { modelo: 'tpl-carta', nome: 'A' });
   const r = await chamar('atelie_documento_editar', { id: c.id, nome: 'B', textoUV: 'segredo' });
-  assert.equal(log.confirmacoes.length, 0);
   assert.equal(r.revisao, 2);
   assert.equal(docs.get(c.id).name, 'B');
   assert.equal(docs.get(c.id).layers.filter(l => l.light === 'uv').length, 1);
 });
 
-test('editar: documento alheio sem confirmação volta "o mestre recusou" e não arquiva', async () => {
-  const alheio = { ...modeloDeCarta(), id: '11111111-1111-4111-8111-111111111111', revision: 3 };
-  const { chamar, log } = criarContexto({ confirmar: async () => false, existentes: [alheio] });
-  await assert.rejects(chamar('atelie_documento_editar', { id: alheio.id, nome: 'Outro' }), /O mestre recusou/);
-  assert.equal(log.confirmacoes.length, 1);
-  assert.equal(log.arquivados, 0);
-});
-
-test('editar: documento alheio confirmado é alterado e não vira pista', async () => {
+test('editar: documento alheio é alterado direto e não vira pista', async () => {
   const alheio = { ...modeloDeCarta(), id: '11111111-1111-4111-8111-111111111111', revision: 3 };
   const { chamar, log, docs } = criarContexto({ existentes: [alheio] });
   const r = await chamar('atelie_documento_editar', { id: alheio.id, campos: { Corpo: 'novo' } });
@@ -250,9 +240,10 @@ test('imagem_receber: recusa tipo inválido, base64 inválido e documento sem ca
   assert.equal(log.arquivados, 0);
 });
 
-test('imagem_receber: documento alheio recusado pelo mestre não guarda nada', async () => {
+test('imagem_receber: documento alheio é alterado direto, sem confirmação', async () => {
   const doc = documentoComImagem();
-  const { chamar, log } = criarContexto({ confirmar: async () => false, existentes: [doc] });
-  await assert.rejects(chamar('atelie_imagem_receber', { id: doc.id, campo: 'Mapa', imagem: PNG_B64, tipo: 'image/png' }), /O mestre recusou/);
-  assert.equal(log.imagens.length, 0);
+  const { chamar, log } = criarContexto({ existentes: [doc] });
+  const r = await chamar('atelie_imagem_receber', { id: doc.id, campo: 'Mapa', imagem: PNG_B64, tipo: 'image/png' });
+  assert.equal(r.definido, true);
+  assert.equal(log.imagens.length, 1);
 });

@@ -127,11 +127,6 @@ export function ferramentasDoAtelie(ctx) {
       return `não registrada (${erro?.message ?? erro})`;
     }
   };
-  const confirmarAlheio = async (h) => {
-    if (ctx.criados.tem(h.id)) return;
-    const ok = await ctx.confirmar(`O assistente quer alterar o documento "${h.name}", que ele não criou. Permitir?`);
-    if (!ok) throw new Error(`O mestre recusou a alteração do documento "${h.name}". Não insista; pergunte o que fazer ou crie um documento novo com atelie_documento_criar.`);
-  };
   const validarPedido = args => {
     if (args.campos !== undefined && (typeof args.campos !== 'object' || args.campos === null || Array.isArray(args.campos))) throw new Error('"campos" deve ser um objeto { rótulo: texto }.');
     if (args.textoUV !== undefined && typeof args.textoUV !== 'string') throw new Error('"textoUV" deve ser texto.');
@@ -202,7 +197,7 @@ export function ferramentasDoAtelie(ctx) {
     },
     {
       nome: 'atelie_documento_editar',
-      descricao: 'Edita um documento: nome, campos e/ou texto UV; arquiva de novo. O mestre confirma se não é do assistente (recusa: não insista). Detalhes: plataforma_guia ferramentas-atelie.',
+      descricao: 'Edita um documento: nome, campos e/ou texto UV; arquiva de novo. Detalhes: plataforma_guia ferramentas-atelie.',
       esquema: {
         type: 'object', required: ['id'], additionalProperties: false,
         properties: {
@@ -215,7 +210,6 @@ export function ferramentasDoAtelie(ctx) {
       async executar(args) {
         validarPedido(args);
         const atual = await achar(args.id);
-        await confirmarAlheio(atual);
         await ctx.abrir(atual.id);
         const aberto = ctx.documentoAberto();
         if (!aberto || aberto.id !== atual.id) throw new Error('Não consegui abrir o documento no Ateliê. Peça ao mestre para abrir o Ateliê e tente de novo.');
@@ -252,7 +246,6 @@ export function ferramentasDoAtelie(ctx) {
         const lista = campos.length ? campos.map(c => `"${c.rotulo}"`).join(', ') : '(este documento não tem campos de imagem)';
         const alvo = campos.find(c => c.layerId === args.campo) ?? campos.find(c => c.rotulo === args.campo) ?? campos.find(c => mesmo(c.rotulo, args.campo));
         if (!alvo) throw new Error(`O documento "${atual.name}" não tem o campo de imagem "${args.campo}". Campos de imagem: ${lista}.`);
-        await confirmarAlheio(atual);
         await ctx.abrir(atual.id);
         const aberto = ctx.documentoAberto();
         if (!aberto || aberto.id !== atual.id) throw new Error('Não consegui abrir o documento no Ateliê. Peça ao mestre para abrir o Ateliê e tente de novo.');
@@ -294,13 +287,13 @@ export function ferramentasDoAtelie(ctx) {
   ];
 }
 
-/** Ids criados pelo assistente, no `localStorage` (só em desenvolvimento); `armazenamento` injetável. */
+/** Ids criados pelo assistente, no `localStorage` (só em desenvolvimento); `armazenamento` injetável. Decide quais edições também registram a pista na campanha. */
 export function criarRegistroDeCriados(armazenamento = globalThis.localStorage) {
   const ler = () => { try { const v = JSON.parse(armazenamento?.getItem(CHAVE_CRIADOS) ?? '[]'); return Array.isArray(v) ? v.map(String) : []; } catch { return []; } };
   return {
     tem: id => ler().includes(String(id)),
     marcar(id) {
-      try { const l = ler().filter(x => x !== String(id)); l.push(String(id)); armazenamento?.setItem(CHAVE_CRIADOS, JSON.stringify(l.slice(-MAXIMO_DE_CRIADOS))); } catch { /* sem armazenamento: o assistente passa a pedir confirmação */ }
+      try { const l = ler().filter(x => x !== String(id)); l.push(String(id)); armazenamento?.setItem(CHAVE_CRIADOS, JSON.stringify(l.slice(-MAXIMO_DE_CRIADOS))); } catch { /* sem armazenamento: edições do assistente não registram pista */ }
     },
   };
 }
@@ -327,7 +320,6 @@ export async function iniciarPonte(adaptador) {
     },
     registrarPista: adaptador.registrarPista,
     refDoDocumento: adaptador.refDoDocumento,
-    confirmar: async texto => globalThis.confirm(texto),
     criados: criarRegistroDeCriados(),
   };
   return conectarPonte({ app: 'atelie', titulo: 'Ateliê', ferramentas: ferramentasDoAtelie(ctx) });
