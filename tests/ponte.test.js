@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { ferramentasDoAtelie, criarRegistroDeCriados, aplicarPedido, NOME_DA_CAMADA_UV } from '../src/ponte.js';
 import { registrarPista, refDoDocumento } from '../src/mesa.js';
-import { createHandout, textLayer, setField, addLayer } from '../src/domain/handouts.js';
+import { createHandout, textLayer, imageLayer, setField, addLayer } from '../src/domain/handouts.js';
 
 const MODELOS = [
   { id: 'tpl-carta', kind: 'template', name: 'Carta envelhecida', category: 'Cartas e bilhetes', era: '1890', tom: 'horror', fields: ['Destinatário', 'Corpo'], tags: ['carta'] },
@@ -22,7 +22,7 @@ function modeloDeCarta() {
 function criarContexto({ confirmar = async () => true, campanha = true, existentes = [] } = {}) {
   const docs = new Map(existentes.map(d => [d.id, d]));
   const memoria = new Map();
-  const log = { confirmacoes: [], pistas: [], arquivados: 0 };
+  const log = { confirmacoes: [], pistas: [], arquivados: 0, imagens: [] };
   let aberto = null;
   const ctx = {
     modelos: async () => MODELOS,
@@ -33,6 +33,7 @@ function criarContexto({ confirmar = async () => true, campanha = true, existent
     arquivar: async () => { log.arquivados++; docs.set(aberto.id, { ...structuredClone(aberto), revision: (docs.get(aberto.id)?.revision ?? 0) + 1 }); },
     listarDocumentos: async () => [...docs.values()].map(d => ({ id: d.id, name: d.name, category: d.category, tags: d.tags, revision: d.revision, hasUv: d.layers.some(l => l.light === 'uv') })),
     lerDocumento: async id => docs.get(id) ?? null,
+    guardarImagem: async (bytes, tipo) => { log.imagens.push({ bytes, tipo }); return { id: `up-${log.imagens.length}` }; },
     registrarPista: async h => { log.pistas.push(h.id); return campanha ? { registrada: true } : { registrada: false, motivo: 'sem campanha ativa na Mesa' }; },
     refDoDocumento: id => `mesa:atelie/documento/${id}`,
     confirmar: async t => { log.confirmacoes.push(t); return confirmar(t); },
@@ -43,9 +44,9 @@ function criarContexto({ confirmar = async () => true, campanha = true, existent
   return { ctx, ferramentas, chamar, docs, log };
 }
 
-test('expõe as cinco ferramentas, com prefixo atelie_', () => {
+test('expõe as seis ferramentas, com prefixo atelie_', () => {
   const { ferramentas } = criarContexto();
-  assert.deepEqual(Object.keys(ferramentas).sort(), ['atelie_documento_criar', 'atelie_documento_editar', 'atelie_documento_ler', 'atelie_documentos_listar', 'atelie_modelos_listar']);
+  assert.deepEqual(Object.keys(ferramentas).sort(), ['atelie_documento_criar', 'atelie_documento_editar', 'atelie_documento_ler', 'atelie_documentos_listar', 'atelie_imagem_receber', 'atelie_modelos_listar']);
 });
 
 test('modelos_listar: filtra por categoria, era (id ou rótulo) e tom, e devolve os campos', async () => {
@@ -191,4 +192,67 @@ test('orçamento: descrições até 400 caracteres e campos até 80', () => {
   const nada = new Proxy(function () {}, { get: () => nada, apply: () => nada });
   const varrer = o => !o || typeof o !== 'object' ? [] : [...(typeof o.description === 'string' && o.description.length > 80 ? [o.description] : []), ...Object.values(o).flatMap(varrer)];
   for (const t of ferramentasDoAtelie(nada)) { assert.ok(t.descricao.length <= 400, t.nome); assert.deepEqual(varrer(t.esquema), [], t.nome); }
+});
+
+function documentoComImagem(id = '22222222-2222-4222-8222-222222222222') {
+  let h = modeloDeCarta();
+  const ilustracao = imageLayer({ name: 'Ilustração' });
+  const mapa = imageLayer({ name: 'Mapa', image: { src: { upload: 'up-antigo' } } });
+  const solta = imageLayer({ name: 'Moldura' });
+  h = addLayer(addLayer(addLayer(h, ilustracao), mapa), solta);
+  h = setField(setField(h, ilustracao.id, 'Ilustração'), mapa.id, 'Mapa');
+  return { ...h, id, revision: 2, _ilu: ilustracao.id, _mapa: mapa.id };
+}
+const PNG_B64 = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]).toString('base64');
+
+test('ler: lista os campos de imagem com layerId e se já têm imagem', async () => {
+  const doc = documentoComImagem();
+  const { chamar } = criarContexto({ existentes: [doc] });
+  const r = await chamar('atelie_documento_ler', { id: doc.id });
+  assert.deepEqual(r.camposDeImagem, [
+    { rotulo: 'Ilustração', layerId: doc._ilu, temImagem: false },
+    { rotulo: 'Mapa', layerId: doc._mapa, temImagem: true },
+  ]);
+  assert.deepEqual(r.campos.map(c => c.rotulo), ['Destinatário', 'Corpo']);
+});
+
+test('imagem_receber: guarda o arquivo, aponta a camada para o upload e arquiva (campo por rótulo sem acento)', async () => {
+  const doc = documentoComImagem();
+  const { chamar, docs, log } = criarContexto({ existentes: [doc] });
+  const r = await chamar('atelie_imagem_receber', { id: doc.id, campo: 'ilustracao', imagem: PNG_B64, tipo: 'image/png' });
+  assert.equal(r.definido, true);
+  assert.equal(r.campo, 'Ilustração');
+  assert.equal(log.imagens.length, 1);
+  assert.equal(log.imagens[0].tipo, 'image/png');
+  assert.deepEqual([...log.imagens[0].bytes.slice(0, 4)], [0x89, 0x50, 0x4e, 0x47]);
+  const salvo = docs.get(doc.id);
+  assert.deepEqual(salvo.layers.find(l => l.id === doc._ilu).image.src, { upload: 'up-1' });
+  assert.equal(salvo.revision, 3);
+  assert.equal(log.arquivados, 1);
+});
+
+test('imagem_receber: campo por layerId; campo desconhecido lista os campos de imagem', async () => {
+  const doc = documentoComImagem();
+  const { chamar, docs, log } = criarContexto({ existentes: [doc] });
+  await chamar('atelie_imagem_receber', { id: doc.id, campo: doc._mapa, imagem: PNG_B64, tipo: 'image/png' });
+  assert.deepEqual(docs.get(doc.id).layers.find(l => l.id === doc._mapa).image.src, { upload: 'up-1' });
+  await assert.rejects(chamar('atelie_imagem_receber', { id: doc.id, campo: 'Corpo', imagem: PNG_B64, tipo: 'image/png' }), /Campos de imagem: "Ilustração", "Mapa"/);
+  assert.equal(log.imagens.length, 1);
+});
+
+test('imagem_receber: recusa tipo inválido, base64 inválido e documento sem campos de imagem', async () => {
+  const doc = documentoComImagem();
+  const { chamar, log } = criarContexto({ existentes: [doc, { ...modeloDeCarta(), id: '33333333-3333-4333-8333-333333333333', revision: 1 }] });
+  await assert.rejects(chamar('atelie_imagem_receber', { id: doc.id, campo: 'Mapa', imagem: PNG_B64, tipo: 'image/gif' }), /não aceito/);
+  await assert.rejects(chamar('atelie_imagem_receber', { id: doc.id, campo: 'Mapa', imagem: '***', tipo: 'image/png' }), /base64/);
+  await assert.rejects(chamar('atelie_imagem_receber', { id: '33333333-3333-4333-8333-333333333333', campo: 'Mapa', imagem: PNG_B64, tipo: 'image/png' }), /não tem campos de imagem/);
+  assert.equal(log.imagens.length, 0);
+  assert.equal(log.arquivados, 0);
+});
+
+test('imagem_receber: documento alheio recusado pelo mestre não guarda nada', async () => {
+  const doc = documentoComImagem();
+  const { chamar, log } = criarContexto({ confirmar: async () => false, existentes: [doc] });
+  await assert.rejects(chamar('atelie_imagem_receber', { id: doc.id, campo: 'Mapa', imagem: PNG_B64, tipo: 'image/png' }), /O mestre recusou/);
+  assert.equal(log.imagens.length, 0);
 });
