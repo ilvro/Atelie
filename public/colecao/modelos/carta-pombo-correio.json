@@ -1,0 +1,327 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-carta-pombo-correio",
+  "revision": 0,
+  "name": "Carta fina de pombo-correio",
+  "category": "Cartas e bilhetes",
+  "tags": [
+    "cartas e bilhetes"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1100,
+    "height": 1400,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-carta-pombo-correio",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-papel-de-seda-novo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-carta-pombo-correio",
+      "name": "Grão fino",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.15,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "grain",
+        "seed": 24831,
+        "amount": 0.5,
+        "params": {}
+      }
+    },
+    {
+      "id": "l-3-carta-pombo-correio",
+      "name": "Dobras",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.45,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1100,
+      "height": 1400,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-dobras-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-carta-pombo-correio",
+      "name": "Data",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 110,
+      "width": 860,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "3 de setembro de 1878",
+        "font": {
+          "family": "Pinyon Script",
+          "library": "casa-font-pinyonscript-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 40,
+        "color": "#1a1a2a",
+        "align": "right",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.22,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-5-carta-pombo-correio",
+      "name": "Destinatário",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 210,
+      "width": 860,
+      "height": 70,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Sr. Albrecht,",
+        "font": {
+          "family": "Pinyon Script",
+          "library": "casa-font-pinyonscript-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 46,
+        "color": "#1a1a2a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.22,
+          "seed": 10
+        }
+      }
+    },
+    {
+      "id": "l-6-carta-pombo-correio",
+      "name": "Texto",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 310,
+      "width": 860,
+      "height": 760,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Conforme combinado, nosso representante seguirá viagem com o senhor. Aguardamos o material antes do fim do mês.",
+        "font": {
+          "family": "Pinyon Script",
+          "library": "casa-font-pinyonscript-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 40,
+        "color": "#1a1a2a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.35,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.22,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-7-carta-pombo-correio",
+      "name": "Assinatura",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 600,
+      "y": 1100,
+      "width": 380,
+      "height": 90,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "— R.",
+        "font": {
+          "family": "Pinyon Script",
+          "library": "casa-font-pinyonscript-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 60,
+        "color": "#1a1a2a",
+        "align": "right",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.22,
+          "seed": 8
+        }
+      }
+    },
+    {
+      "id": "l-8-carta-pombo-correio",
+      "name": "Lacre partido",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 1180,
+      "width": 170,
+      "height": 170,
+      "rotation": 14,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-lacre-vermelho-brasao"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-4-carta-pombo-correio",
+      "label": "Data"
+    },
+    {
+      "layerId": "l-5-carta-pombo-correio",
+      "label": "Destinatário"
+    },
+    {
+      "layerId": "l-6-carta-pombo-correio",
+      "label": "Texto"
+    },
+    {
+      "layerId": "l-7-carta-pombo-correio",
+      "label": "Assinatura"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

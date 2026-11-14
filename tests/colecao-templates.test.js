@@ -352,7 +352,7 @@ test('colecao-c8-c10: lotes novos (investigação e Estado, escrita e imprensa, 
   const templates = lib.items.filter(i => i.kind === 'template');
   const por = c => templates.filter(i => i.category === c && !i.family).length;
   const esperado = { 'Forense e perícia': 6, 'Oficial e jurídico': 7, 'Militar e governo': 6, 'Cadernos, diários e livros': 6, 'Escola e juventude': 5, 'Ciência e laboratório': 6 };
-  for (const [c, n] of Object.entries(esperado)) assert.equal(por(c), n, c);
+  for (const [c, n] of Object.entries(esperado)) assert.ok(por(c) >= n, `${c}: ${por(c)} >= ${n}`);
   assert.ok(templates.filter(i => !i.family).length >= 39 + 65, 'ao menos 65 modelos novos além dos 39');
   for (const i of templates) {
     assert.ok(ERAS.includes(i.era), `${i.id}: época "${i.era}" fora de ERAS`);
@@ -379,7 +379,7 @@ test('colecao-c11: tecnologia, fotografias e objetos, cotidiano e destruídos co
   assert.equal(bases('Fotografias e objetos'), 6);
   assert.equal(bases('Destruídos e composições'), 5);
   assert.ok(bases('Tecnologia') >= 3 + 9 && bases('Cotidiano') >= 6 + 6);
-  assert.equal(templates.length, 157, 'manifesto com 157 modelos (132 documentos e 25 variações)');
+  assert.equal(templates.length, 188, 'manifesto com 188 modelos (163 documentos e 25 variações)');
   assert.equal(new Set(templates.map(i => i.category)).size, 16, '16 categorias');
   // A página rasgada em pedaços: cada pedaço tem papel + corte rasgado preso a ele (grupo de recorte)
   const doc = JSON.parse(await fs.readFile(path.join(colecaoDir, 'modelos/pagina-rasgada-pedacos.json'), 'utf8'));

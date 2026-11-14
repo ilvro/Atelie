@@ -1,0 +1,407 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-tres-papeis-soltos",
+  "revision": 0,
+  "name": "Três papéis soltos sobre a mesa",
+  "category": "Cartas e bilhetes",
+  "tags": [
+    "cartas e bilhetes"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1400,
+    "height": 1500,
+    "background": "#2a2018"
+  },
+  "layers": [
+    {
+      "id": "l-1-tres-papeis-soltos",
+      "name": "Fundo",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1400,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-superficie-wood026"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-tres-papeis-soltos",
+      "name": "Papel 1",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 80,
+      "y": 70,
+      "width": 760,
+      "height": 420,
+      "rotation": -3,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-creme-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-3-tres-papeis-soltos",
+      "name": "Papel 2",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 560,
+      "y": 520,
+      "width": 760,
+      "height": 420,
+      "rotation": 4,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-papel-de-embrulho-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-tres-papeis-soltos",
+      "name": "Papel 3",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 990,
+      "width": 820,
+      "height": 440,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-caderno-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-tres-papeis-soltos",
+      "name": "Dobras",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 80,
+      "y": 70,
+      "width": 760,
+      "height": 420,
+      "rotation": -3,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-dobras-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-6-tres-papeis-soltos",
+      "name": "Mancha",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 900,
+      "y": 600,
+      "width": 300,
+      "height": 260,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-manchas-cafe-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-tres-papeis-soltos",
+      "name": "Digitais",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 700,
+      "y": 1150,
+      "width": 200,
+      "height": 200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-digitais-1"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-8-tres-papeis-soltos",
+      "name": "Papel 1 (texto)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 130,
+      "y": 110,
+      "width": 660,
+      "height": 340,
+      "rotation": -3,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Primeiro papel",
+        "font": {
+          "family": "Gloria Hallelujah",
+          "library": "casa-font-gloriahallelujah",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 30,
+        "color": "#2a2a3a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.3,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.22,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-9-tres-papeis-soltos",
+      "name": "Papel 2 (texto)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 610,
+      "y": 560,
+      "width": 660,
+      "height": 340,
+      "rotation": 4,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Segundo papel",
+        "font": {
+          "family": "Gloria Hallelujah",
+          "library": "casa-font-gloriahallelujah",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 30,
+        "color": "#2a2a3a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.3,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.22,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-10-tres-papeis-soltos",
+      "name": "Papel 3 (texto)",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 170,
+      "y": 1030,
+      "width": 720,
+      "height": 360,
+      "rotation": -2,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Terceiro papel",
+        "font": {
+          "family": "Gloria Hallelujah",
+          "library": "casa-font-gloriahallelujah",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 30,
+        "color": "#2a2a3a",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.3,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.22,
+          "seed": 13
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-8-tres-papeis-soltos",
+      "label": "Primeiro"
+    },
+    {
+      "layerId": "l-9-tres-papeis-soltos",
+      "label": "Segundo"
+    },
+    {
+      "layerId": "l-10-tres-papeis-soltos",
+      "label": "Terceiro"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

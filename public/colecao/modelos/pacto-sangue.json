@@ -197,10 +197,10 @@
       "locked": false,
       "opacity": 1,
       "blend": "normal",
-      "x": 150,
-      "y": 130,
-      "width": 940,
-      "height": 100,
+      "x": 100,
+      "y": 120,
+      "width": 1040,
+      "height": 110,
       "rotation": 0,
       "clip": false,
       "light": "both",
@@ -212,7 +212,7 @@
           "weight": 400,
           "italic": false
         },
-        "size": 64,
+        "size": 54,
         "color": "#4a1410",
         "align": "center",
         "valign": "top",
@@ -425,6 +425,10 @@
     }
   ],
   "fields": [
+    {
+      "layerId": "l-7-pacto-sangue",
+      "label": "Título"
+    },
     {
       "layerId": "l-9-pacto-sangue",
       "label": "Termos"

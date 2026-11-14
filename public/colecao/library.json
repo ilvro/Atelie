@@ -10722,10 +10722,11 @@
       "file": "modelos/pacto-sangue.json",
       "preview": "previews/casa-tpl-pacto-sangue.webp",
       "fields": [
+        "Título",
         "Termos",
         "Assinatura"
       ],
-      "texto": "Eu, abaixo assinado, em plena posse de minha vontade, entrego à Casa que habita sob estas terras o que me resta de dias, de sono e de nome, em troca de que o que dela se ouviu não seja jamais dito. Obrigo-me a descer ao porão a cada lua nova e a nada trazer de lá senão o silêncio. Se faltar a este pacto, a Casa tomará de mim o que lhe devo, e de meus filhos, se os tiver. · Cornélio de A. Pinhais",
+      "texto": "INSTRUMENTO DE PACTO · Eu, abaixo assinado, em plena posse de minha vontade, entrego à Casa que habita sob estas terras o que me resta de dias, de sono e de nome, em troca de que o que dela se ouviu não seja jamais dito. Obrigo-me a descer ao porão a cada lua nova e a nada trazer de lá senão o silêncio. Se faltar a este pacto, a Casa tomará de mim o que lhe devo, e de meus filhos, se os tiver. · Cornélio de A. Pinhais",
       "era": "1890",
       "tom": "horror",
       "tags": [
@@ -13403,6 +13404,754 @@
       ],
       "addedIn": "2026-10-27",
       "family": "caderno-espiral-pagina"
+    },
+    {
+      "id": "casa-tpl-ritual-runa-raizes",
+      "kind": "template",
+      "name": "Ritual · Runa de chão (raízes)",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/ritual-runa-raizes.json",
+      "preview": "previews/casa-tpl-ritual-runa-raizes.webp",
+      "fields": [
+        "Inscrição"
+      ],
+      "texto": "A VIDA ABRE O CAMINHO",
+      "era": "medieval",
+      "tom": "horror",
+      "tags": [
+        "ritual",
+        "sigilo",
+        "runa",
+        "ordem-paranormal"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-carta-pombo-correio",
+      "kind": "template",
+      "name": "Carta fina de pombo-correio",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/carta-pombo-correio.json",
+      "preview": "previews/casa-tpl-carta-pombo-correio.webp",
+      "fields": [
+        "Data",
+        "Destinatário",
+        "Texto",
+        "Assinatura"
+      ],
+      "texto": "3 de setembro de 1878 · Sr. Albrecht, · Conforme combinado, nosso representante seguirá viagem com o senhor. Aguardamos o material antes do fim do mês. · — R.",
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "carta",
+        "pombo-correio"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-bilhete-lapis-embrulho",
+      "kind": "template",
+      "name": "Papel de embrulho escrito a lápis",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/bilhete-lapis-embrulho.json",
+      "preview": "previews/casa-tpl-bilhete-lapis-embrulho.webp",
+      "fields": [
+        "Texto"
+      ],
+      "texto": "Botas — 6 Carroça até a cidade — 4 Falta 3.",
+      "era": "1890",
+      "tom": "cotidiano",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "bilhete",
+        "lápis"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-lista-kraft-tinta",
+      "kind": "template",
+      "name": "Lista a tinta em papel kraft",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/lista-kraft-tinta.json",
+      "preview": "previews/casa-tpl-lista-kraft-tinta.webp",
+      "fields": [
+        "Texto"
+      ],
+      "texto": "2 cordas · 1 lampião e óleo · pão para o dia Não sair antes do sino.",
+      "era": "1890",
+      "tom": "investigação",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "lista",
+        "kraft"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-diario-copista-dupla",
+      "kind": "template",
+      "name": "Diário de letra caprichada · página dupla",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/diario-copista-dupla.json",
+      "preview": "previews/casa-tpl-diario-copista-dupla.webp",
+      "fields": [
+        "Data",
+        "Página esquerda",
+        "Página direita"
+      ],
+      "texto": "1858 · 2 de março Hoje copiei duas páginas inteiras sem borrar. · 18 de setembro Neva faz uma semana e ainda é setembro.",
+      "era": "1890",
+      "tom": "cotidiano",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "diário",
+        "copista"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-carta-letra-redonda",
+      "kind": "template",
+      "name": "Carta de letra redonda, com mancha de água",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/carta-letra-redonda.json",
+      "preview": "previews/casa-tpl-carta-letra-redonda.webp",
+      "fields": [
+        "Destinatário",
+        "Texto",
+        "Assinatura"
+      ],
+      "texto": "Querida irmã, · Você sabe o que aconteceu, mas não sabe tudo. · Tua irmã",
+      "era": "1890",
+      "tom": "cotidiano",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "carta",
+        "mancha-de-água"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-decalque-inscricao",
+      "kind": "template",
+      "name": "Decalque a carvão de inscrição entalhada",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/decalque-inscricao.json",
+      "preview": "previews/casa-tpl-decalque-inscricao.webp",
+      "fields": [
+        "Título",
+        "Texto"
+      ],
+      "texto": "AQUILO QUE É LEMBRADO NUNCA MORRE · O que se escreve aqui não se apaga.",
+      "era": "1890",
+      "tom": "investigação",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "entalhe",
+        "decalque"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-cronica-livro-grosso",
+      "kind": "template",
+      "name": "Crônica em livro grosso, letra antiga",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/cronica-livro-grosso.json",
+      "preview": "previews/casa-tpl-cronica-livro-grosso.webp",
+      "fields": [
+        "Título",
+        "Texto",
+        "Nota na margem"
+      ],
+      "texto": "CRÔNICA · LIVRO PRIMEIRO · No primeiro ano subimos a montanha, quinze almas e mais o senhor… · T. E.",
+      "era": "1890",
+      "tom": "investigação",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "crônica",
+        "livro"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-copia-caderno-costurado",
+      "kind": "template",
+      "name": "Cópia de copista em caderno costurado",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/copia-caderno-costurado.json",
+      "preview": "previews/casa-tpl-copia-caderno-costurado.webp",
+      "fields": [
+        "Título",
+        "Texto",
+        "Notas"
+      ],
+      "texto": "CRÔNICA · LIVRO PRIMEIRO · No mês de junho subimos a montanha… · copiada no ano de 1857",
+      "era": "1890",
+      "tom": "investigação",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "crônica",
+        "cópia"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-inventario-almaco-manuscrito",
+      "kind": "template",
+      "name": "Inventário manuscrito em almaço",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/inventario-almaco-manuscrito.json",
+      "preview": "previews/casa-tpl-inventario-almaco-manuscrito.webp",
+      "fields": [
+        "Título",
+        "Texto",
+        "Notas"
+      ],
+      "texto": "Inventário dos Registros · Livro grande · no atril da sala · 1 · bom · Não se escreve aqui o que está embaixo.",
+      "era": "1890",
+      "tom": "investigação",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "inventário",
+        "almaço"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-recibo-papelaria-vitoriano",
+      "kind": "template",
+      "name": "Recibo de papelaria vitoriana",
+      "category": "Cotidiano",
+      "license": "CC0-1.0",
+      "file": "modelos/recibo-papelaria-vitoriano.json",
+      "preview": "previews/casa-tpl-recibo-papelaria-vitoriano.webp",
+      "fields": [
+        "Timbre",
+        "Endereço",
+        "Cliente",
+        "Itens",
+        "Total",
+        "Data",
+        "Nota a lápis"
+      ],
+      "texto": "PAPELARIA E ENCADERNAÇÃO · Rua dos Cordoeiros, 14 · papéis, couros, tintas e conserto de miudezas · Ao Sr. J. Albrecht · Papel almaço, resma — 2 · Total: 14 xelins e 6 pence · Março de 1851 · Não aceito mais esse serviço.",
+      "era": "1890",
+      "tom": "investigação",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "recibo",
+        "papelaria"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-desenho-crianca-casa",
+      "kind": "template",
+      "name": "Desenho de criança: a casa e o que tem embaixo",
+      "category": "Escola e juventude",
+      "license": "CC0-1.0",
+      "file": "modelos/desenho-crianca-casa.json",
+      "preview": "previews/casa-tpl-desenho-crianca-casa.webp",
+      "fields": [
+        "Título",
+        "Texto"
+      ],
+      "texto": "a minha casa · o lugar de baixo · os dormidos · o papai disse que nao",
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "desenho",
+        "criança"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-caderno-memoria-perdida",
+      "kind": "template",
+      "name": "Caderno de quem está esquecendo · página dupla",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/caderno-memoria-perdida.json",
+      "preview": "previews/casa-tpl-caderno-memoria-perdida.webp",
+      "fields": [
+        "Data",
+        "Página esquerda",
+        "Página direita"
+      ],
+      "texto": "1851 · 1852 · Novembro de 1851. · EU SEI O MEU NOME.",
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "caderno",
+        "memória"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-caderno-receitas-dupla",
+      "kind": "template",
+      "name": "Caderno de receitas e trocas · página dupla",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/caderno-receitas-dupla.json",
+      "preview": "previews/casa-tpl-caderno-receitas-dupla.webp",
+      "fields": [
+        "Data",
+        "Página esquerda",
+        "Página direita"
+      ],
+      "texto": "1851 · 1852 · Outono de 1851 · Inverno de 1852",
+      "era": "1890",
+      "tom": "cotidiano",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "receitas",
+        "cozinha"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-carta-nobre-lacrada",
+      "kind": "template",
+      "name": "Carta de nobre com lacre e cantoneiras",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/carta-nobre-lacrada.json",
+      "preview": "previews/casa-tpl-carta-nobre-lacrada.webp",
+      "fields": [
+        "Data",
+        "Destinatário",
+        "Texto",
+        "Assinatura"
+      ],
+      "texto": "no porto, no ano de 1802 · Ao meu bom amigo · Meu bom amigo, · R. de Montvalle",
+      "era": "1890",
+      "tom": "investigação",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "carta",
+        "nobreza",
+        "lacre"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-livro-registro-anual",
+      "kind": "template",
+      "name": "Livro de registro anual em pergaminho",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/livro-registro-anual.json",
+      "preview": "previews/casa-tpl-livro-registro-anual.webp",
+      "fields": [
+        "Título",
+        "Texto",
+        "Nota na margem"
+      ],
+      "texto": "Registro do ano de 1817 · Os que foram: · —",
+      "era": "1890",
+      "tom": "investigação",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "subida",
+        "registro"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-livro-registro-pautado",
+      "kind": "template",
+      "name": "Livro de registro pautado (nascimentos, óbitos)",
+      "category": "Oficial e jurídico",
+      "license": "CC0-1.0",
+      "file": "modelos/livro-registro-pautado.json",
+      "preview": "previews/casa-tpl-livro-registro-pautado.webp",
+      "fields": [
+        "Título",
+        "Texto"
+      ],
+      "texto": "Livro dos Nascidos · 1786 · Ana, de Pedro e Marta · cabelo preto · olhos castanhos",
+      "era": "1890",
+      "tom": "investigação",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "registro",
+        "nascidos",
+        "óbitos"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-folha-canto-neumas",
+      "kind": "template",
+      "name": "Folha de canto copiado pelo som, com neumas",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/folha-canto-neumas.json",
+      "preview": "previews/casa-tpl-folha-canto-neumas.webp",
+      "fields": [
+        "Canto",
+        "Linha traduzida",
+        "Nota na margem"
+      ],
+      "texto": "ar · na · ve · ly · o que dorme na luz… · Não sei qual.",
+      "era": "1890",
+      "tom": "investigação",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "canto",
+        "música"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-testamento-manuscrito",
+      "kind": "template",
+      "name": "Testamento manuscrito com testemunhas",
+      "category": "Oficial e jurídico",
+      "license": "CC0-1.0",
+      "file": "modelos/testamento-manuscrito.json",
+      "preview": "previews/casa-tpl-testamento-manuscrito.webp",
+      "fields": [
+        "Testador",
+        "Texto",
+        "Assinatura",
+        "Testemunhas"
+      ],
+      "texto": "Escrito no dia 10 de setembro de 1858 · Eu, abaixo assinado, em pleno juízo, deixo o que é meu… · O testador · Testemunhas:",
+      "era": "1890",
+      "tom": "cotidiano",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "testamento",
+        "herança"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-acordo-dois-lacres",
+      "kind": "template",
+      "name": "Acordo em pergaminho com dois lacres",
+      "category": "Oficial e jurídico",
+      "license": "CC0-1.0",
+      "file": "modelos/acordo-dois-lacres.json",
+      "preview": "previews/casa-tpl-acordo-dois-lacres.webp",
+      "fields": [
+        "Título",
+        "Local e data",
+        "Texto",
+        "Pela vila",
+        "Pela Companhia"
+      ],
+      "texto": "Acordo entre a vila e a Companhia de Minas · Feito no dia 4 de julho de 1803 · Fica acertado entre as partes o que segue. · Pela vila: · Pela Companhia:",
+      "era": "1890",
+      "tom": "investigação",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "acordo",
+        "contrato"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-tres-papeis-soltos",
+      "kind": "template",
+      "name": "Três papéis soltos sobre a mesa",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/tres-papeis-soltos.json",
+      "preview": "previews/casa-tpl-tres-papeis-soltos.webp",
+      "fields": [
+        "Primeiro",
+        "Segundo",
+        "Terceiro"
+      ],
+      "texto": "Primeiro papel · Segundo papel · Terceiro papel",
+      "era": "1890",
+      "tom": "cotidiano",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "bilhetes",
+        "papéis"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-carta-fundacao-latim",
+      "kind": "template",
+      "name": "Carta de fundação em latim, letra gótica",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/carta-fundacao-latim.json",
+      "preview": "previews/casa-tpl-carta-fundacao-latim.webp",
+      "fields": [
+        "Título",
+        "Texto",
+        "Assinaturas",
+        "Texto UV"
+      ],
+      "texto": "CARTA PRIMORUM · Nos, qui primi ascendimus, haec iuramus… · signa eorum qui iuraverunt · quod rasum est",
+      "era": "1890",
+      "tom": "investigação",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "pergaminho",
+        "latim",
+        "fundação"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-decalque-lapides",
+      "kind": "template",
+      "name": "Decalque a carvão de lápides",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/decalque-lapides.json",
+      "preview": "previews/casa-tpl-decalque-lapides.webp",
+      "fields": [
+        "Texto"
+      ],
+      "texto": "HIC IACET",
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "decalque",
+        "lápide",
+        "latim"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-pagina-rito-sigilo",
+      "kind": "template",
+      "name": "Página de rito com sigilo, palavra e componentes",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/pagina-rito-sigilo.json",
+      "preview": "previews/casa-tpl-pagina-rito-sigilo.webp",
+      "fields": [
+        "Título",
+        "Palavra",
+        "Componentes",
+        "Texto",
+        "Nota na margem"
+      ],
+      "texto": "Do sono sob a luz · VAKA · a lâmina vermelha · a pedra moída · a cama de quem vigia · Para a febre que não passa… · três noites · sarou.",
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "ritual",
+        "sigilo",
+        "ordem-paranormal"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-carta-papel-embrulho",
+      "kind": "template",
+      "name": "Carta tosca em papel de embrulho",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/carta-papel-embrulho.json",
+      "preview": "previews/casa-tpl-carta-papel-embrulho.webp",
+      "fields": [
+        "Destinatário",
+        "Texto",
+        "Assinatura"
+      ],
+      "texto": "Filho, · hoje fez frio cedo de novo. · — teu pai",
+      "era": "1890",
+      "tom": "cotidiano",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "carta",
+        "luto"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-bilhete-torto-garrafa",
+      "kind": "template",
+      "name": "Bilhete torto com mancha de garrafa",
+      "category": "Cartas e bilhetes",
+      "license": "CC0-1.0",
+      "file": "modelos/bilhete-torto-garrafa.json",
+      "preview": "previews/casa-tpl-bilhete-torto-garrafa.webp",
+      "fields": [
+        "Texto"
+      ],
+      "texto": "Ele não caiu. Eu devia ter ido junto.",
+      "era": "1890",
+      "tom": "cotidiano",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "bilhete",
+        "garrafa"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-livro-receitas-botica",
+      "kind": "template",
+      "name": "Livro de receitas de botica",
+      "category": "Médico",
+      "license": "CC0-1.0",
+      "file": "modelos/livro-receitas-botica.json",
+      "preview": "previews/casa-tpl-livro-receitas-botica.webp",
+      "fields": [
+        "Timbre",
+        "Título",
+        "Texto",
+        "Texto UV"
+      ],
+      "texto": "BOTICA · RECEITUÁRIO · Receitas de 1877 · L. · tosse com sangue · semanas · sem tosse.",
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "botica",
+        "receitas"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-registro-obitos-capela",
+      "kind": "template",
+      "name": "Registro de óbitos de capela",
+      "category": "Oficial e jurídico",
+      "license": "CC0-1.0",
+      "file": "modelos/registro-obitos-capela.json",
+      "preview": "previews/casa-tpl-registro-obitos-capela.webp",
+      "fields": [
+        "Cabeçalho",
+        "Texto",
+        "Nota a lápis"
+      ],
+      "texto": "Registo de Óbitos da Capela · 1858 · Os corpos vieram fechados. Não me deixaram ver.",
+      "era": "1890",
+      "tom": "investigação",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "capela",
+        "óbitos",
+        "registro"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-diario-pastor",
+      "kind": "template",
+      "name": "Diário de pastor",
+      "category": "Cadernos, diários e livros",
+      "license": "CC0-1.0",
+      "file": "modelos/diario-pastor.json",
+      "preview": "previews/casa-tpl-diario-pastor.webp",
+      "fields": [
+        "Data",
+        "Texto"
+      ],
+      "texto": "fim de 1858 · Enterrei hoje três caixões que não me deixaram abrir.",
+      "era": "1890",
+      "tom": "horror",
+      "tags": [
+        "manuscrito",
+        "autor",
+        "diário",
+        "pastor",
+        "capela"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-ritual-entalhe-circulos",
+      "kind": "template",
+      "name": "Ritual · Entalhe de chão com quatro círculos",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/ritual-entalhe-circulos.json",
+      "preview": "previews/casa-tpl-ritual-entalhe-circulos.webp",
+      "fields": [
+        "Inscrição",
+        "Texto UV"
+      ],
+      "texto": "TRACE O CAMINHO · ·",
+      "era": "medieval",
+      "tom": "horror",
+      "tags": [
+        "ritual",
+        "sigilo",
+        "entalhe",
+        "ordem-paranormal"
+      ],
+      "addedIn": "2026-10-27"
+    },
+    {
+      "id": "casa-tpl-ritual-seis-glifos",
+      "kind": "template",
+      "name": "Ritual · Pergaminho com seis glifos",
+      "category": "Ocultismo",
+      "license": "CC0-1.0",
+      "file": "modelos/ritual-seis-glifos.json",
+      "preview": "previews/casa-tpl-ritual-seis-glifos.webp",
+      "fields": [
+        "Título",
+        "Nomes",
+        "Texto UV"
+      ],
+      "texto": "Na língua dos que vieram antes · TALAMH ABHAINN CRANN SLIABH SCAMALL GRIAN · ·",
+      "era": "medieval",
+      "tom": "investigação",
+      "tags": [
+        "ritual",
+        "glifos",
+        "pergaminho"
+      ],
+      "addedIn": "2026-10-27"
     },
     {
       "id": "casa-set-caso-sanatorio-serra-do-mar",

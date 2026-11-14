@@ -1,0 +1,458 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-copia-caderno-costurado",
+  "revision": 0,
+  "name": "Cópia de copista em caderno costurado",
+  "category": "Cadernos, diários e livros",
+  "tags": [
+    "cadernos, diários e livros"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1150,
+    "height": 1650,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-copia-caderno-costurado",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1150,
+      "height": 1650,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-creme-usado"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-copia-caderno-costurado",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1150,
+      "height": 1650,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 25017,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-copia-caderno-costurado",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1150,
+      "height": 1650,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 25034,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-copia-caderno-costurado",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.1,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1150,
+      "height": 1650,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-4"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-copia-caderno-costurado",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1150,
+      "height": 1650,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 25068,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-copia-caderno-costurado",
+      "name": "Pontos de costura",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 40,
+      "y": 80,
+      "width": 30,
+      "height": 1490,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "path",
+        "fill": null,
+        "stroke": "#6a5a44",
+        "strokeWidth": 3,
+        "radius": 0,
+        "dash": [],
+        "points": [
+          [
+            0.5,
+            0.01
+          ],
+          [
+            0.5,
+            0.05
+          ],
+          null,
+          [
+            0.5,
+            0.09333333333333332
+          ],
+          [
+            0.5,
+            0.13333333333333333
+          ],
+          null,
+          [
+            0.5,
+            0.17666666666666667
+          ],
+          [
+            0.5,
+            0.21666666666666667
+          ],
+          null,
+          [
+            0.5,
+            0.26
+          ],
+          [
+            0.5,
+            0.3
+          ],
+          null,
+          [
+            0.5,
+            0.3433333333333333
+          ],
+          [
+            0.5,
+            0.3833333333333333
+          ],
+          null,
+          [
+            0.5,
+            0.4266666666666667
+          ],
+          [
+            0.5,
+            0.4666666666666667
+          ],
+          null,
+          [
+            0.5,
+            0.51
+          ],
+          [
+            0.5,
+            0.55
+          ],
+          null,
+          [
+            0.5,
+            0.5933333333333334
+          ],
+          [
+            0.5,
+            0.6333333333333334
+          ],
+          null,
+          [
+            0.5,
+            0.6766666666666666
+          ],
+          [
+            0.5,
+            0.7166666666666667
+          ],
+          null,
+          [
+            0.5,
+            0.76
+          ],
+          [
+            0.5,
+            0.8
+          ],
+          null,
+          [
+            0.5,
+            0.8433333333333334
+          ],
+          [
+            0.5,
+            0.8833333333333334
+          ],
+          null,
+          [
+            0.5,
+            0.9266666666666666
+          ],
+          [
+            0.5,
+            0.9666666666666667
+          ],
+          null
+        ]
+      }
+    },
+    {
+      "id": "l-7-copia-caderno-costurado",
+      "name": "Título",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 130,
+      "y": 100,
+      "width": 900,
+      "height": 60,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "CRÔNICA · LIVRO PRIMEIRO",
+        "font": {
+          "family": "La Belle Aurore",
+          "library": "casa-font-labelleaurore",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#4a2a14",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.22,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-8-copia-caderno-costurado",
+      "name": "Sublinhado",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 330,
+      "y": 172,
+      "width": 500,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#4a2a14",
+        "strokeWidth": 1.5,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-9-copia-caderno-costurado",
+      "name": "Texto",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 130,
+      "y": 200,
+      "width": 900,
+      "height": 1230,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "No mês de junho subimos a montanha…",
+        "font": {
+          "family": "La Belle Aurore",
+          "library": "casa-font-labelleaurore",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 28,
+        "color": "#3b2412",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.38,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.22,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-10-copia-caderno-costurado",
+      "name": "Notas",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 130,
+      "y": 1470,
+      "width": 900,
+      "height": 110,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "copiada no ano de 1857",
+        "font": {
+          "family": "La Belle Aurore",
+          "library": "casa-font-labelleaurore",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 24,
+        "color": "#5a3a24",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.22,
+          "seed": 12
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-7-copia-caderno-costurado",
+      "label": "Título"
+    },
+    {
+      "layerId": "l-9-copia-caderno-costurado",
+      "label": "Texto"
+    },
+    {
+      "layerId": "l-10-copia-caderno-costurado",
+      "label": "Notas"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

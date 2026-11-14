@@ -1,0 +1,403 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-carta-fundacao-latim",
+  "revision": 0,
+  "name": "Carta de fundação em latim, letra gótica",
+  "category": "Ocultismo",
+  "tags": [
+    "ocultismo"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1754,
+    "background": "#2a1c12"
+  },
+  "layers": [
+    {
+      "id": "l-1-carta-fundacao-latim",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-pergaminho-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-carta-fundacao-latim",
+      "name": "Amassado",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.7,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 25327,
+        "amount": 0.55,
+        "params": {
+          "creases": 16
+        }
+      }
+    },
+    {
+      "id": "l-3-carta-fundacao-latim",
+      "name": "Dobras",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 25344,
+        "amount": 0.5,
+        "params": {
+          "horizontal": 1,
+          "vertical": 1
+        }
+      }
+    },
+    {
+      "id": "l-4-carta-fundacao-latim",
+      "name": "Manchas de idade",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "linear-burn",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "stain",
+        "seed": 25361,
+        "amount": 0.45,
+        "params": {
+          "count": 4,
+          "color": "#8a6a34"
+        }
+      }
+    },
+    {
+      "id": "l-5-carta-fundacao-latim",
+      "name": "Bordas amareladas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.45,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 25378,
+        "amount": 0.6,
+        "params": {
+          "color": "#b0904f"
+        }
+      }
+    },
+    {
+      "id": "l-6-carta-fundacao-latim",
+      "name": "Sujeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.4,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1754,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-2"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-7-carta-fundacao-latim",
+      "name": "Haste de cima",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 90,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-objeto-hastes-pergaminho-topo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-8-carta-fundacao-latim",
+      "name": "Título",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 130,
+      "y": 120,
+      "width": 980,
+      "height": 170,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "CARTA PRIMORUM",
+        "font": {
+          "family": "Grenze Gotisch",
+          "library": "casa-font-grenzegotisch-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 50,
+        "color": "#5a1410",
+        "align": "center",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.35,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-9-carta-fundacao-latim",
+      "name": "Texto",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 310,
+      "width": 960,
+      "height": 1080,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Nos, qui primi ascendimus, haec iuramus…",
+        "font": {
+          "family": "Grenze Gotisch",
+          "library": "casa-font-grenzegotisch-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 30,
+        "color": "#2a1810",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.4,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.4,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-10-carta-fundacao-latim",
+      "name": "Assinaturas",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 1420,
+      "width": 960,
+      "height": 220,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "signa eorum qui iuraverunt",
+        "font": {
+          "family": "Grenze Gotisch",
+          "library": "casa-font-grenzegotisch-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 26,
+        "color": "#2a1810",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.35,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.4,
+          "seed": 9
+        }
+      }
+    },
+    {
+      "id": "l-11-carta-fundacao-latim",
+      "name": "Texto UV",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 1300,
+      "width": 960,
+      "height": 100,
+      "rotation": 0,
+      "clip": false,
+      "light": "uv",
+      "text": {
+        "content": "quod rasum est",
+        "font": {
+          "family": "Grenze Gotisch",
+          "library": "casa-font-grenzegotisch-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 28,
+        "color": "#b8ffd0",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "clean",
+          "wear": 0.2,
+          "seed": 15
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-8-carta-fundacao-latim",
+      "label": "Título"
+    },
+    {
+      "layerId": "l-9-carta-fundacao-latim",
+      "label": "Texto"
+    },
+    {
+      "layerId": "l-10-carta-fundacao-latim",
+      "label": "Assinaturas"
+    },
+    {
+      "layerId": "l-11-carta-fundacao-latim",
+      "label": "Texto UV"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

@@ -2077,3 +2077,18 @@ O Ateliê agora fala o barramento da plataforma da mesa (`Atlas/docs/PLATAFORMA.
 
 ### Pendências reais
 - Sem navegador não foi testado: o documento abrindo na aba, `window.confirm` e o registro de pista no IndexedDB reais. Sem commit.
+
+## Lote C12 · Manuscritos de autor (31 modelos) e título do pacto
+
+### Concluído
+- `scripts/colecao/modelos/lote-c12.js`: 31 modelos genéricos com identidade de autor (papel, letra, tinta, marcas de uso): cartas (pombo-correio, letra redonda, nobre lacrada, papel de embrulho), bilhetes, diários e cadernos em página dupla, crônica em livro grosso, cópia costurada, inventário, recibo de papelaria vitoriana, desenho de criança (traços), registros (anual, pautado, óbitos de capela, receitas de botica), testamento, acordo com dois lacres, três papéis soltos, carta de fundação em latim, decalques a carvão (inscrição e lápides) e rituais no padrão de Ordem Paranormal (página de rito com sigilo + palavra + componentes, entalhe de chão com quatro círculos, runa de raízes, seis glifos). Nada de campanha fica no código: o conteúdo entra pelos campos dos documentos.
+- Registrado em `modelos/index.js` fora de `expandir()` (sem variações automáticas).
+- `pacto-sangue` (lote-c10): o título "INSTRUMENTO DE PACTO" quebrava em duas linhas numa caixa de 100 px e saía cortado. Caixa 1040×110, Uncial 54 e o título virou campo.
+
+### Validação
+- `node scripts/colecao/templates.js`: 188 modelos salvos e registrados. `node scripts/colecao/audit.js`: 0 erros fora do legado (avisos de `fonte-epoca` nas letras manuscritas, aceitos).
+
+### Pendências reais
+- Prévias dos 31 modelos não geradas: o Chromium do Playwright não baixa na VM (allowlist). Rodar `npm run colecao:modelos` na máquina.
+- `templates.js` só acrescenta itens ao `library.json`; modelos removidos ficam órfãos (limpei à mão as entradas `lysdal-*`). Vale o gerador podar `casa-tpl-*` que não existem mais.
+- Sem commit. Sugestão: `feat(colecao): lote C12, manuscritos de autor e rituais; fix pacto-sangue title`

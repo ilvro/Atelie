@@ -1,0 +1,932 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-folha-canto-neumas",
+  "revision": 0,
+  "name": "Folha de canto copiado pelo som, com neumas",
+  "category": "Cadernos, diários e livros",
+  "tags": [
+    "cadernos, diários e livros"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 1240,
+    "height": 1500,
+    "background": "#f3efe6"
+  },
+  "layers": [
+    {
+      "id": "l-1-folha-canto-neumas",
+      "name": "Papel",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-oficio-creme-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-folha-canto-neumas",
+      "name": "Amassado leve",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.55,
+      "blend": "soft-light",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "crumple",
+        "seed": 25234,
+        "amount": 0.35,
+        "params": {
+          "creases": 10
+        }
+      }
+    },
+    {
+      "id": "l-3-folha-canto-neumas",
+      "name": "Dobra",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "fold",
+        "seed": 25251,
+        "amount": 0.4,
+        "params": {
+          "horizontal": 1,
+          "vertical": 0
+        }
+      }
+    },
+    {
+      "id": "l-4-folha-canto-neumas",
+      "name": "Poeira",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.1,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-sujeira-4"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-folha-canto-neumas",
+      "name": "Bordas escurecidas",
+      "kind": "effect",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "multiply",
+      "x": 0,
+      "y": 0,
+      "width": 1240,
+      "height": 1500,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "effect": {
+        "type": "damp",
+        "seed": 25285,
+        "amount": 0.4,
+        "params": {
+          "color": "#a58f63"
+        }
+      }
+    },
+    {
+      "id": "l-6-folha-canto-neumas",
+      "name": "Neumas 1",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 112,
+      "width": 1000,
+      "height": 70,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "path",
+        "fill": null,
+        "stroke": "#3b2412",
+        "strokeWidth": 4,
+        "radius": 0,
+        "dash": [],
+        "points": [
+          [
+            0.03,
+            0.25
+          ],
+          [
+            0.06,
+            0.1
+          ],
+          null,
+          [
+            0.1,
+            0.7458324052262343
+          ],
+          [
+            0.13,
+            0.5958324052262343
+          ],
+          null,
+          [
+            0.17,
+            0.3777705510134156
+          ],
+          [
+            0.2,
+            0.22777055101341562
+          ],
+          null,
+          [
+            0.24000000000000002,
+            0.7129073411638662
+          ],
+          [
+            0.27,
+            0.5629073411638662
+          ],
+          null,
+          [
+            0.31000000000000005,
+            0.4970566755693041
+          ],
+          [
+            0.3400000000000001,
+            0.3470566755693041
+          ],
+          null,
+          [
+            0.38,
+            0.6492435563117451
+          ],
+          [
+            0.41000000000000003,
+            0.4992435563117451
+          ],
+          null,
+          [
+            0.45000000000000007,
+            0.5999373437967712
+          ],
+          [
+            0.4800000000000001,
+            0.4499373437967712
+          ],
+          null,
+          [
+            0.52,
+            0.5590685561185167
+          ],
+          [
+            0.55,
+            0.40906855611851667
+          ],
+          null,
+          [
+            0.5900000000000001,
+            0.679580907428248
+          ],
+          [
+            0.6200000000000001,
+            0.5295809074282479
+          ],
+          null,
+          [
+            0.6600000000000001,
+            0.44837028656530686
+          ],
+          [
+            0.6900000000000002,
+            0.29837028656530684
+          ],
+          null,
+          [
+            0.7300000000000001,
+            0.7306987459397785
+          ],
+          [
+            0.7600000000000001,
+            0.5806987459397784
+          ],
+          null,
+          [
+            0.8,
+            0.3244995129070994
+          ],
+          [
+            0.8300000000000001,
+            0.1744995129070994
+          ],
+          null,
+          [
+            0.8700000000000001,
+            0.7498964500713345
+          ],
+          [
+            0.9000000000000001,
+            0.5998964500713345
+          ],
+          null,
+          [
+            0.9400000000000002,
+            0.3043182977120381
+          ],
+          [
+            0.9700000000000002,
+            0.15431829771203812
+          ],
+          null
+        ]
+      }
+    },
+    {
+      "id": "l-7-folha-canto-neumas",
+      "name": "Neumas 2",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 316,
+      "width": 1000,
+      "height": 70,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "path",
+        "fill": null,
+        "stroke": "#3b2412",
+        "strokeWidth": 4,
+        "radius": 0,
+        "dash": [],
+        "points": [
+          [
+            0.03,
+            0.6707354924039483
+          ],
+          [
+            0.06,
+            0.5207354924039482
+          ],
+          null,
+          [
+            0.1,
+            0.4636899401169149
+          ],
+          [
+            0.13,
+            0.31368994011691487
+          ],
+          null,
+          [
+            0.17,
+            0.7258010369447581
+          ],
+          [
+            0.2,
+            0.575801036944758
+          ],
+          null,
+          [
+            0.24000000000000002,
+            0.34108125213604795
+          ],
+          [
+            0.27,
+            0.19108125213604796
+          ],
+          null,
+          [
+            0.31000000000000005,
+            0.7492716726873025
+          ],
+          [
+            0.3400000000000001,
+            0.5992716726873025
+          ],
+          null,
+          [
+            0.38,
+            0.28757556023090464
+          ],
+          [
+            0.41000000000000003,
+            0.13757556023090464
+          ],
+          null,
+          [
+            0.45000000000000007,
+            0.7395888645756588
+          ],
+          [
+            0.4800000000000001,
+            0.5895888645756587
+          ],
+          null,
+          [
+            0.52,
+            0.4137372195688465
+          ],
+          [
+            0.55,
+            0.26373721956884655
+          ],
+          null,
+          [
+            0.5900000000000001,
+            0.6973955860702521
+          ],
+          [
+            0.6200000000000001,
+            0.5473955860702521
+          ],
+          null,
+          [
+            0.6600000000000001,
+            0.5290261356433882
+          ],
+          [
+            0.6900000000000002,
+            0.37902613564338816
+          ],
+          null,
+          [
+            0.7300000000000001,
+            0.6254936233858381
+          ],
+          [
+            0.7600000000000001,
+            0.4754936233858381
+          ],
+          null,
+          [
+            0.8,
+            0.6257867076760741
+          ],
+          [
+            0.8300000000000001,
+            0.4757867076760741
+          ],
+          null,
+          [
+            0.8700000000000001,
+            0.5286575267588307
+          ],
+          [
+            0.9000000000000001,
+            0.3786575267588307
+          ],
+          null,
+          [
+            0.9400000000000002,
+            0.6975936839098401
+          ],
+          [
+            0.9700000000000002,
+            0.5475936839098401
+          ],
+          null
+        ]
+      }
+    },
+    {
+      "id": "l-8-folha-canto-neumas",
+      "name": "Neumas 3",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 520,
+      "width": 1000,
+      "height": 70,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "path",
+        "fill": null,
+        "stroke": "#3b2412",
+        "strokeWidth": 4,
+        "radius": 0,
+        "dash": [],
+        "points": [
+          [
+            0.03,
+            0.7046487134128409
+          ],
+          [
+            0.06,
+            0.5546487134128408
+          ],
+          null,
+          [
+            0.1,
+            0.5149180704542466
+          ],
+          [
+            0.13,
+            0.3649180704542466
+          ],
+          null,
+          [
+            0.17,
+            0.6363822437779936
+          ],
+          [
+            0.2,
+            0.48638224377799355
+          ],
+          null,
+          [
+            0.24000000000000002,
+            0.614484520062938
+          ],
+          [
+            0.27,
+            0.46448452006293794
+          ],
+          null,
+          [
+            0.31000000000000005,
+            0.5424585964458808
+          ],
+          [
+            0.3400000000000001,
+            0.39245859644588077
+          ],
+          null,
+          [
+            0.38,
+            0.689847879985835
+          ],
+          [
+            0.41000000000000003,
+            0.5398478799858349
+          ],
+          null,
+          [
+            0.45000000000000007,
+            0.42911464111841435
+          ],
+          [
+            0.4800000000000001,
+            0.27911464111841433
+          ],
+          null,
+          [
+            0.52,
+            0.7360037506974879
+          ],
+          [
+            0.55,
+            0.5860037506974879
+          ],
+          null,
+          [
+            0.5900000000000001,
+            0.303876826149722
+          ],
+          [
+            0.6200000000000001,
+            0.153876826149722
+          ],
+          null,
+          [
+            0.6600000000000001,
+            0.7498872155365056
+          ],
+          [
+            0.6900000000000002,
+            0.5998872155365056
+          ],
+          null,
+          [
+            0.7300000000000001,
+            0.3249386048314762
+          ],
+          [
+            0.7600000000000001,
+            0.1749386048314762
+          ],
+          null,
+          [
+            0.8,
+            0.7305763622510583
+          ],
+          [
+            0.8300000000000001,
+            0.5805763622510582
+          ],
+          null,
+          [
+            0.8700000000000001,
+            0.44877784156071643
+          ],
+          [
+            0.9000000000000001,
+            0.2987778415607164
+          ],
+          null,
+          [
+            0.9400000000000002,
+            0.6793535013049656
+          ],
+          [
+            0.9700000000000002,
+            0.5293535013049656
+          ],
+          null
+        ]
+      }
+    },
+    {
+      "id": "l-9-folha-canto-neumas",
+      "name": "Neumas 4",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 724,
+      "width": 1000,
+      "height": 70,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "path",
+        "fill": null,
+        "stroke": "#3b2412",
+        "strokeWidth": 4,
+        "radius": 0,
+        "dash": [],
+        "points": [
+          [
+            0.03,
+            0.3205600040299336
+          ],
+          [
+            0.06,
+            0.17056000402993363
+          ],
+          null,
+          [
+            0.1,
+            0.7499616287820504
+          ],
+          [
+            0.13,
+            0.5999616287820504
+          ],
+          null,
+          [
+            0.17,
+            0.30827460242524685
+          ],
+          [
+            0.2,
+            0.15827460242524685
+          ],
+          null,
+          [
+            0.24000000000000002,
+            0.7349449054225432
+          ],
+          [
+            0.27,
+            0.5849449054225432
+          ],
+          null,
+          [
+            0.31000000000000005,
+            0.4332395646259642
+          ],
+          [
+            0.3400000000000001,
+            0.2832395646259642
+          ],
+          null,
+          [
+            0.38,
+            0.6877260873442143
+          ],
+          [
+            0.41000000000000003,
+            0.5377260873442142
+          ],
+          null,
+          [
+            0.45000000000000007,
+            0.5460367573536116
+          ],
+          [
+            0.4800000000000001,
+            0.39603675735361155
+          ],
+          null,
+          [
+            0.52,
+            0.611440674755988
+          ],
+          [
+            0.55,
+            0.46144067475598793
+          ],
+          null,
+          [
+            0.5900000000000001,
+            0.6391760392671493
+          ],
+          [
+            0.6200000000000001,
+            0.48917603926714925
+          ],
+          null,
+          [
+            0.6600000000000001,
+            0.5111542948133673
+          ],
+          [
+            0.6900000000000002,
+            0.36115429481336725
+          ],
+          null,
+          [
+            0.7300000000000001,
+            0.7064726253638138
+          ],
+          [
+            0.7600000000000001,
+            0.5564726253638138
+          ],
+          null,
+          [
+            0.8,
+            0.39352632566386425
+          ],
+          [
+            0.8300000000000001,
+            0.24352632566386426
+          ],
+          null,
+          [
+            0.8700000000000001,
+            0.7434577790603244
+          ],
+          [
+            0.9000000000000001,
+            0.5934577790603244
+          ],
+          null,
+          [
+            0.9400000000000002,
+            0.26636768966542446
+          ],
+          [
+            0.9700000000000002,
+            0.11636768966542446
+          ],
+          null
+        ]
+      }
+    },
+    {
+      "id": "l-10-folha-canto-neumas",
+      "name": "Canto",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 190,
+      "width": 1000,
+      "height": 820,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "ar · na · ve · ly",
+        "font": {
+          "family": "La Belle Aurore",
+          "library": "casa-font-labelleaurore",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 34,
+        "color": "#3b2412",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 3,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.22,
+          "seed": 12
+        }
+      }
+    },
+    {
+      "id": "l-11-folha-canto-neumas",
+      "name": "Separação",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 1020,
+      "width": 1000,
+      "height": 1,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "line",
+        "fill": null,
+        "stroke": "#3b2412",
+        "strokeWidth": 2,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-12-folha-canto-neumas",
+      "name": "Linha traduzida",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 120,
+      "y": 1050,
+      "width": 1000,
+      "height": 250,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "o que dorme na luz…",
+        "font": {
+          "family": "La Belle Aurore",
+          "library": "casa-font-labelleaurore",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#3b2412",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.4,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.22,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-13-folha-canto-neumas",
+      "name": "Nota na margem",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 600,
+      "y": 1320,
+      "width": 540,
+      "height": 140,
+      "rotation": -3,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Não sei qual.",
+        "font": {
+          "family": "La Belle Aurore",
+          "library": "casa-font-labelleaurore",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 28,
+        "color": "#6a4a30",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.22,
+          "seed": 12
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-10-folha-canto-neumas",
+      "label": "Canto"
+    },
+    {
+      "layerId": "l-12-folha-canto-neumas",
+      "label": "Linha traduzida"
+    },
+    {
+      "layerId": "l-13-folha-canto-neumas",
+      "label": "Nota na margem"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

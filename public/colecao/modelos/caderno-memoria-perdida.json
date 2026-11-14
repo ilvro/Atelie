@@ -1,0 +1,383 @@
+{
+  "schema": 1,
+  "id": "casa-tpl-caderno-memoria-perdida",
+  "revision": 0,
+  "name": "Caderno de quem está esquecendo · página dupla",
+  "category": "Cadernos, diários e livros",
+  "tags": [
+    "cadernos, diários e livros"
+  ],
+  "folder": null,
+  "favorite": false,
+  "guides": {
+    "x": [],
+    "y": []
+  },
+  "page": {
+    "width": 2000,
+    "height": 1300,
+    "background": "#2a2018"
+  },
+  "layers": [
+    {
+      "id": "l-1-caderno-memoria-perdida",
+      "name": "Mesa",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 0,
+      "y": 0,
+      "width": 2000,
+      "height": 1300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-superficie-wood026"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-2-caderno-memoria-perdida",
+      "name": "Página esquerda (papel)",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 60,
+      "y": 50,
+      "width": 940,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-caderno-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-3-caderno-memoria-perdida",
+      "name": "Página direita (papel)",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1000,
+      "y": 50,
+      "width": 940,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-papel-caderno-antigo"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-4-caderno-memoria-perdida",
+      "name": "Mancha",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.25,
+      "blend": "multiply",
+      "x": 120,
+      "y": 900,
+      "width": 380,
+      "height": 300,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-manchas-cafe-3"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-5-caderno-memoria-perdida",
+      "name": "Sombra da lombada",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.4,
+      "blend": "multiply",
+      "x": 930,
+      "y": 50,
+      "width": 140,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#3a2a1a",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-6-caderno-memoria-perdida",
+      "name": "Vinco central",
+      "kind": "shape",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.3,
+      "blend": "normal",
+      "x": 997,
+      "y": 50,
+      "width": 6,
+      "height": 1200,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "shape": {
+        "type": "rect",
+        "fill": "#000000",
+        "stroke": null,
+        "strokeWidth": 1,
+        "radius": 0,
+        "dash": []
+      }
+    },
+    {
+      "id": "l-7-caderno-memoria-perdida",
+      "name": "Mancha",
+      "kind": "image",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.35,
+      "blend": "multiply",
+      "x": 1450,
+      "y": 820,
+      "width": 420,
+      "height": 380,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "image": {
+        "src": {
+          "library": "casa-agua-umidade-5"
+        },
+        "fit": "stretch",
+        "crop": null,
+        "flipX": false,
+        "flipY": false,
+        "filter": {
+          "grayscale": 0,
+          "sepia": 0,
+          "brightness": 0,
+          "contrast": 0,
+          "saturation": 0,
+          "hue": 0,
+          "blur": 0,
+          "invert": false
+        },
+        "tint": null
+      }
+    },
+    {
+      "id": "l-8-caderno-memoria-perdida",
+      "name": "Data",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 80,
+      "width": 780,
+      "height": 50,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "1851 · 1852",
+        "font": {
+          "family": "Dawning of a New Day",
+          "library": "casa-font-dawningofanewday",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 32,
+        "color": "#1f2238",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.25,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.22,
+          "seed": 11
+        }
+      }
+    },
+    {
+      "id": "l-9-caderno-memoria-perdida",
+      "name": "Página esquerda",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 140,
+      "y": 140,
+      "width": 780,
+      "height": 1080,
+      "rotation": 0,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "Novembro de 1851.",
+        "font": {
+          "family": "Dawning of a New Day",
+          "library": "casa-font-dawningofanewday",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 30,
+        "color": "#1f2238",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.4,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.22,
+          "seed": 13
+        }
+      }
+    },
+    {
+      "id": "l-10-caderno-memoria-perdida",
+      "name": "Página direita",
+      "kind": "text",
+      "visible": true,
+      "locked": false,
+      "opacity": 1,
+      "blend": "normal",
+      "x": 1080,
+      "y": 100,
+      "width": 780,
+      "height": 1100,
+      "rotation": 2,
+      "clip": false,
+      "light": "both",
+      "text": {
+        "content": "EU SEI O MEU NOME.",
+        "font": {
+          "family": "Rock Salt",
+          "library": "casa-font-rocksalt-regular",
+          "weight": 400,
+          "italic": false
+        },
+        "size": 40,
+        "color": "#141414",
+        "align": "left",
+        "valign": "top",
+        "lineHeight": 1.45,
+        "letterSpacing": 0,
+        "box": "area",
+        "fit": "overflow",
+        "ink": {
+          "style": "handwriting",
+          "wear": 0.35,
+          "seed": 12
+        }
+      }
+    }
+  ],
+  "fields": [
+    {
+      "layerId": "l-8-caderno-memoria-perdida",
+      "label": "Data"
+    },
+    {
+      "layerId": "l-9-caderno-memoria-perdida",
+      "label": "Página esquerda"
+    },
+    {
+      "layerId": "l-10-caderno-memoria-perdida",
+      "label": "Página direita"
+    }
+  ],
+  "source": {
+    "kind": "blank"
+  },
+  "back": null
+}

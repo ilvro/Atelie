@@ -177,7 +177,7 @@ export default [
     slug: 'pacto-sangue', name: 'Pacto assinado em sangue', category: 'Ocultismo', era: '1890', tom: 'horror', tags: ['ocultismo', 'pacto', 'pergaminho', 'assinatura'],
     layers: [
       ...base({ paper: 'pergaminho', age: 'antigo', aging: 'antigo', seed: 322, intensity: 0.7 }),
-      T('Título', 'INSTRUMENTO DE PACTO', { x: 150, y: 130, w: 940, h: 100 }, { family: 'Uncial Antiqua', size: 64, align: 'center', color: '#4a1410', style: 'clean', wear: 0.1 }),
+      T('Título', 'INSTRUMENTO DE PACTO', { x: 100, y: 120, w: 1040, h: 110 }, { family: 'Uncial Antiqua', size: 54, field: 'Título', align: 'center', color: '#4a1410', style: 'clean', wear: 0.1 }),
       IMG('Ornamento', 'casa-ornamento-divisoria-losangos', { x: 340, y: 250, w: 560, h: 60 }, { blend: 'multiply', opacity: 0.75 }),
       T('Termos', 'Eu, abaixo assinado, em plena posse de minha vontade, entrego à Casa que habita sob estas terras o que me resta de dias, de sono e de nome, em troca de que o que dela se ouviu não seja jamais dito. Obrigo-me a descer ao porão a cada lua nova e a nada trazer de lá senão o silêncio. Se faltar a este pacto, a Casa tomará de mim o que lhe devo, e de meus filhos, se os tiver.', { x: 150, y: 360, w: 940, h: 680 }, { family: 'IM Fell English', size: 36, color: '#2a1f14', style: 'clean', wear: 0.15, lh: 1.5, field: 'Termos' }),
       T('Assinatura', 'Cornélio de A. Pinhais', { x: 480, y: 1210, w: 660, h: 110 }, { family: 'Mrs Saint Delafield', size: 82, color: '#5a0c0c', style: 'handwriting', wear: 0.4, field: 'Assinatura', rot: -3 }),
